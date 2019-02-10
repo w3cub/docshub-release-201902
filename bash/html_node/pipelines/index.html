@@ -1,0 +1,112 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Pipelines - Bash - W3cubDocs</title>
+  
+  <meta name="description" content=" A pipeline is a sequence of one or more commands separated by one of the control operators ‘|’ or ‘|&#38;’. ">
+  <meta name="keywords" content="pipelines, -, bash">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/bash/html_node/pipelines/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/bash.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/bash/" class="_nav-link" title="" style="margin-left:0;">Bash</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _bash">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="subsection">Pipelines</h1>   <p>A <code>pipeline</code> is a sequence of one or more commands separated by one of the control operators ‘<samp>|</samp>’ or ‘<samp>|&amp;</samp>’. </p>    <p>The format for a pipeline is </p>
+<div class="example"> <pre class="example">[time [-p]] [!] command1 [ | or |&amp; command2 ] …
+</pre>
+</div> <p>The output of each command in the pipeline is connected via a pipe to the input of the next command. That is, each command reads the previous command’s output. This connection is performed before any redirections specified by the command. </p> <p>If ‘<samp>|&amp;</samp>’ is used, <var>command1</var>’s standard error, in addition to its standard output, is connected to <var>command2</var>’s standard input through the pipe; it is shorthand for <code>2&gt;&amp;1 |</code>. This implicit redirection of the standard error to the standard output is performed after any redirections specified by the command. </p> <p>The reserved word <code>time</code> causes timing statistics to be printed for the pipeline once it finishes. The statistics currently consist of elapsed (wall-clock) time and user and system time consumed by the command’s execution. The <samp>-p</samp> option changes the output format to that specified by <small>POSIX</small>. When the shell is in <small>POSIX</small> mode (see <a href="../bash-posix-mode/#Bash-POSIX-Mode">Bash POSIX Mode</a>), it does not recognize <code>time</code> as a reserved word if the next token begins with a ‘<samp>-</samp>’. The <code>TIMEFORMAT</code> variable may be set to a format string that specifies how the timing information should be displayed. See <a href="../bash-variables/#Bash-Variables">Bash Variables</a>, for a description of the available formats. The use of <code>time</code> as a reserved word permits the timing of shell builtins, shell functions, and pipelines. An external <code>time</code> command cannot time these easily. </p> <p>When the shell is in <small>POSIX</small> mode (see <a href="../bash-posix-mode/#Bash-POSIX-Mode">Bash POSIX Mode</a>), <code>time</code> may be followed by a newline. In this case, the shell displays the total user and system time consumed by the shell and its children. The <code>TIMEFORMAT</code> variable may be used to specify the format of the time information. </p> <p>If the pipeline is not executed asynchronously (see <a href="../lists/#Lists">Lists</a>), the shell waits for all commands in the pipeline to complete. </p> <p>Each command in a pipeline is executed in its own subshell (see <a href="../command-execution-environment/#Command-Execution-Environment">Command Execution Environment</a>). The exit status of a pipeline is the exit status of the last command in the pipeline, unless the <code>pipefail</code> option is enabled (see <a href="../the-set-builtin/#The-Set-Builtin">The Set Builtin</a>). If <code>pipefail</code> is enabled, the pipeline’s return status is the value of the last (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully. If the reserved word ‘<samp>!</samp>’ precedes the pipeline, the exit status is the logical negation of the exit status as described above. The shell waits for all commands in the pipeline to terminate before returning a value. </p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.<br>Licensed under the GNU Free Documentation License.<br>
+    <a href="https://www.gnu.org/software/bash/manual/html_node/Pipelines.html" class="_attribution-link" target="_blank">https://www.gnu.org/software/bash/manual/html_node/Pipelines.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

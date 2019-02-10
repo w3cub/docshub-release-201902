@@ -1,0 +1,114 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Shell Functions - Bash - W3cubDocs</title>
+  
+  <meta name="description" content="Shell functions are a way to group commands for later execution using a single name for the group. They are executed just like a &#34;regular&#34; &hellip;">
+  <meta name="keywords" content="shell, functions, -, bash">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/bash/html_node/shell-functions/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/bash.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/bash/" class="_nav-link" title="" style="margin-left:0;">Bash</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _bash">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="section">Shell Functions</h1>   <p>Shell functions are a way to group commands for later execution using a single name for the group. They are executed just like a "regular" command. When the name of a shell function is used as a simple command name, the list of commands associated with that function name is executed. Shell functions are executed in the current shell context; no new process is created to interpret them. </p> <p>Functions are declared using this syntax:  </p>
+<div class="example"> <pre class="example">name () compound-command [ redirections ]
+</pre>
+</div> <p>or </p> <div class="example"> <pre class="example">function name [()] compound-command [ redirections ]
+</pre>
+</div> <p>This defines a shell function named <var>name</var>. The reserved word <code>function</code> is optional. If the <code>function</code> reserved word is supplied, the parentheses are optional. The <var>body</var> of the function is the compound command <var>compound-command</var> (see <a href="../compound-commands/#Compound-Commands">Compound Commands</a>). That command is usually a <var>list</var> enclosed between { and }, but may be any compound command listed above, with one exception: If the <code>function</code> reserved word is used, but the parentheses are not supplied, the braces are required. <var>compound-command</var> is executed whenever <var>name</var> is specified as the name of a command. When the shell is in <small>POSIX</small> mode (see <a href="../bash-posix-mode/#Bash-POSIX-Mode">Bash POSIX Mode</a>), <var>name</var> may not be the same as one of the special builtins (see <a href="../special-builtins/#Special-Builtins">Special Builtins</a>). Any redirections (see <a href="../redirections/#Redirections">Redirections</a>) associated with the shell function are performed when the function is executed. </p> <p>A function definition may be deleted using the <samp>-f</samp> option to the <code>unset</code> builtin (see <a href="../bourne-shell-builtins/#Bourne-Shell-Builtins">Bourne Shell Builtins</a>). </p> <p>The exit status of a function definition is zero unless a syntax error occurs or a readonly function with the same name already exists. When executed, the exit status of a function is the exit status of the last command executed in the body. </p> <p>Note that for historical reasons, in the most common usage the curly braces that surround the body of the function must be separated from the body by <code>blank</code>s or newlines. This is because the braces are reserved words and are only recognized as such when they are separated from the command list by whitespace or another shell metacharacter. Also, when using the braces, the <var>list</var> must be terminated by a semicolon, a ‘<samp>&amp;</samp>’, or a newline. </p> <p>When a function is executed, the arguments to the function become the positional parameters during its execution (see <a href="../positional-parameters/#Positional-Parameters">Positional Parameters</a>). The special parameter ‘<samp>#</samp>’ that expands to the number of positional parameters is updated to reflect the change. Special parameter <code>0</code> is unchanged. The first element of the <code>FUNCNAME</code> variable is set to the name of the function while the function is executing. </p> <p>All other aspects of the shell execution environment are identical between a function and its caller with these exceptions: the <code>DEBUG</code> and <code>RETURN</code> traps are not inherited unless the function has been given the <code>trace</code> attribute using the <code>declare</code> builtin or the <code>-o functrace</code> option has been enabled with the <code>set</code> builtin, (in which case all functions inherit the <code>DEBUG</code> and <code>RETURN</code> traps), and the <code>ERR</code> trap is not inherited unless the <code>-o errtrace</code> shell option has been enabled. See <a href="../bourne-shell-builtins/#Bourne-Shell-Builtins">Bourne Shell Builtins</a>, for the description of the <code>trap</code> builtin. </p> <p>The <code>FUNCNEST</code> variable, if set to a numeric value greater than 0, defines a maximum function nesting level. Function invocations that exceed the limit cause the entire command to abort. </p> <p>If the builtin command <code>return</code> is executed in a function, the function completes and execution resumes with the next command after the function call. Any command associated with the <code>RETURN</code> trap is executed before execution resumes. When a function completes, the values of the positional parameters and the special parameter ‘<samp>#</samp>’ are restored to the values they had prior to the function’s execution. If a numeric argument is given to <code>return</code>, that is the function’s return status; otherwise the function’s return status is the exit status of the last command executed before the <code>return</code>. </p> <p>Variables local to the function may be declared with the <code>local</code> builtin. These variables are visible only to the function and the commands it invokes. </p> <p>Function names and definitions may be listed with the <samp>-f</samp> option to the <code>declare</code> (<code>typeset</code>) builtin command (see <a href="../bash-builtins/#Bash-Builtins">Bash Builtins</a>). The <samp>-F</samp> option to <code>declare</code> or <code>typeset</code> will list the function names only (and optionally the source file and line number, if the <code>extdebug</code> shell option is enabled). Functions may be exported so that subshells automatically have them defined with the <samp>-f</samp> option to the <code>export</code> builtin (see <a href="../bourne-shell-builtins/#Bourne-Shell-Builtins">Bourne Shell Builtins</a>). Note that shell functions and variables with the same name may result in multiple identically-named entries in the environment passed to the shell’s children. Care should be taken in cases where this may cause a problem. </p> <p>Functions may be recursive. The <code>FUNCNEST</code> variable may be used to limit the depth of the function call stack and restrict the number of function invocations. By default, no limit is placed on the number of recursive calls. </p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.<br>Licensed under the GNU Free Documentation License.<br>
+    <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html" class="_attribution-link" target="_blank">https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
