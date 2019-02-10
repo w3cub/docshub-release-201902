@@ -1,0 +1,144 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>RouterLinkActive - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" directive stable ">
+  <meta name="keywords" content="routerlinkactive, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/router/routerlinkactive/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="routerlinkactive">RouterLinkActive</h1> <p><code class="api-type-label directive">directive</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body"> 
+<p>Lets you add a CSS class to an element when the link's route becomes active.</p>   <pre data-language="typescript">@Directive({
+    selector: '[routerLinkActive]',
+    exportAs: 'routerLinkActive'
+})
+class RouterLinkActive implements OnChanges, OnDestroy, AfterContentInit {
+  constructor(router: Router, element: ElementRef, renderer: Renderer2, cdr: ChangeDetectorRef)
+  links: QueryList&lt;RouterLink&gt;
+  linksWithHrefs: QueryList&lt;RouterLinkWithHref&gt;
+  get isActive: boolean
+  routerLinkActiveOptions: {...}
+  set routerLinkActive: string[] | string
+  ngAfterContentInit(): void
+  ngOnChanges(changes: SimpleChanges): void
+  ngOnDestroy(): void
+}</pre>   <h2 id="selectors">Selectors</h2> <h3><code>[routerLinkActive]</code></h3>   <h4 id="inputs">Inputs</h4> <div class="input"> <code>routerLinkActiveOptions</code> bound to <code><a href="../routerlinkactive/#routerLinkActiveOptions" class="code-anchor">RouterLinkActive.routerLinkActiveOptions</a></code> </div> <div class="input"> <code><a href="../routerlinkactive/" class="code-anchor">routerLinkActive</a></code> bound to <code><a href="../routerlinkactive/#routerLinkActive" class="code-anchor">RouterLinkActive.routerLinkActive</a></code> </div>   <h2 id="exported-as">Exported as</h2> <div> <code><a href="../routerlinkactive/" class="code-anchor">routerLinkActive</a></code> </div>   <h2 id="description">Description</h2> <p>This directive lets you add a CSS class to an element when the link's route becomes active.</p> <p>Consider the following example:</p> <pre>&lt;a routerLink="/user/bob" routerLinkActive="active-link"&gt;Bob&lt;/a&gt;</pre> <p>When the url is either '/user' or '/user/bob', the active-link class will be added to the <code><a href="../routerlinkwithhref/" class="code-anchor">a</a></code> tag. If the url changes, the class will be removed.</p> <p>You can set more than one class, as follows:</p> <pre>&lt;a routerLink="/user/bob" routerLinkActive="class1 class2"&gt;Bob&lt;/a&gt;
+&lt;a routerLink="/user/bob" [routerLinkActive]="['class1', 'class2']"&gt;Bob&lt;/a&gt;</pre> <p>You can configure RouterLinkActive by passing <code>exact: true</code>. This will add the classes only when the url matches the link exactly.</p> <pre>&lt;a routerLink="/user/bob" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+true}"&gt;Bob&lt;/a&gt;</pre> <p>You can assign the RouterLinkActive instance to a template variable and directly check the <code>isActive</code> status.</p> <pre>&lt;a routerLink="/user/bob" routerLinkActive #rla="routerLinkActive"&gt;
+  Bob {{ rla.isActive ? '(already open)' : ''}}
+&lt;/a&gt;</pre> <p>Finally, you can apply the RouterLinkActive directive to an ancestor of a RouterLink.</p> <pre>&lt;div routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"&gt;
+  &lt;a routerLink="/user/jim"&gt;Jim&lt;/a&gt;
+  &lt;a routerLink="/user/bob"&gt;Bob&lt;/a&gt;
+&lt;/div&gt;</pre> <p>This will set the active-link class on the div tag if the url is either '/user/jim' or '/user/bob'.</p>  <h2 id="constructor">Constructor</h2>  <table> <tbody> <tr> <td> <h3 data-language="typescript"><code>constructor(router: Router, element: ElementRef, renderer: Renderer2, cdr: ChangeDetectorRef)</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <table> <tbody> <tr class="constructor-overload-parameter"> <td class="param-name">
+router</td> <td class="param-description"> <p>Type: <code><a href="../router/" class="code-anchor">Router</a></code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+element</td> <td class="param-description"> <p>Type: <code><a href="../../core/elementref/" class="code-anchor">ElementRef</a></code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+renderer</td> <td class="param-description"> <p>Type: <code><a href="../../core/renderer2/" class="code-anchor">Renderer2</a></code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+cdr</td> <td class="param-description"> <p>Type: <code><a href="../../core/changedetectorref/" class="code-anchor">ChangeDetectorRef</a></code>.</p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table>  <h2 id="properties">Properties</h2> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr class="instance-property"> <td>
+links</td> <td><code class="property-type-label"><a href="../../core/querylist/" class="code-anchor">QueryList</a>&lt;<a href="../routerlink/" class="code-anchor">RouterLink</a>&gt;</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+linksWithHrefs</td> <td><code class="property-type-label"><a href="../../core/querylist/" class="code-anchor">QueryList</a>&lt;<a href="../routerlinkwithhref/" class="code-anchor">RouterLinkWithHref</a>&gt;</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+isActive</td> <td><code class="property-type-label">boolean</code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> <tr class="instance-property"> <td>
+routerLinkActiveOptions</td> <td><code class="property-type-label">{
+    exact: boolean;
+}</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+routerLinkActive</td> <td><code class="property-type-label">string[] | string</code></td> <td> </td> </tr> </tbody> </table>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="ngaftercontentinit"> ngAfterContentInit() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>ngAfterContentInit(): void</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="ngonchanges"> ngOnChanges() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>ngOnChanges(changes: SimpleChanges): void</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+changes</td> <td class="param-description"> <p>Type: <code><a href="../../core/simplechanges/" class="code-anchor">SimpleChanges</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="ngondestroy"> ngOnDestroy() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>ngOnDestroy(): void</code></h3> <h4 class="no-anchor" id="parameters-3">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-2">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/router/RouterLinkActive" class="_attribution-link" target="_blank">https://angular.io/api/router/RouterLinkActive</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,136 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>NgForOf - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" directive stable ">
+  <meta name="keywords" content="ngforof, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/common/ngforof/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ngforof">NgForOf</h1> <p><code class="api-type-label directive">directive</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body"> 
+<p>The <code><a href="../ngforof/" class="code-anchor">NgForOf</a></code> directive instantiates a template once per item from an iterable. The context for each instantiated template inherits from the outer context with the given loop variable set to the current item from the iterable.</p>   <pre data-language="typescript">@Directive({ selector: '[ngFor][ngForOf]' })
+class NgForOf&lt;T&gt; implements DoCheck, OnChanges {
+  constructor(_viewContainer: ViewContainerRef, _template: TemplateRef&lt;NgForOfContext&lt;T&gt;&gt;, _differs: IterableDiffers)
+  ngForOf: NgIterable&lt;T&gt;
+  ngForTrackBy: TrackByFunction&lt;T&gt;
+  set ngForTemplate: TemplateRef&lt;NgForOfContext&lt;T&gt;&gt;
+  ngOnChanges(changes: SimpleChanges): void
+  ngDoCheck(): void
+}</pre>   <h2 id="selectors">Selectors</h2> <h3><code>[ngFor][ngForOf]</code></h3>   <h4 id="inputs">Inputs</h4> <div class="input"> <code><a href="../ngforof/" class="code-anchor">ngForOf</a></code> bound to <code><a href="../ngforof/#ngForOf" class="code-anchor">NgForOf.ngForOf</a></code> </div> <div class="input"> <code>ngForTrackBy</code> bound to <code><a href="../ngforof/#ngForTrackBy" class="code-anchor">NgForOf.ngForTrackBy</a></code> </div> <div class="input"> <code>ngForTemplate</code> bound to <code><a href="../ngforof/#ngForTemplate" class="code-anchor">NgForOf.ngForTemplate</a></code> </div>   <h2 id="description">Description</h2> <h4 id="local-variables">Local Variables</h4> <p><code><a href="../ngforof/" class="code-anchor">NgForOf</a></code> provides several exported values that can be aliased to local variables:</p> <ul> <li>
+<code>$implicit: T</code>: The value of the individual items in the iterable (<code><a href="../ngforof/" class="code-anchor">ngForOf</a></code>).</li> <li>
+<code><a href="../ngforof/" class="code-anchor">ngForOf</a>: <a href="../../core/ngiterable/" class="code-anchor">NgIterable</a>&lt;T&gt;</code>: The value of the iterable expression. Useful when the expression is more complex then a property access, for example when using the async pipe (<code>userStreams | async</code>).</li> <li>
+<code>index: number</code>: The index of the current item in the iterable.</li> <li>
+<code>first: boolean</code>: True when the item is the first item in the iterable.</li> <li>
+<code>last: boolean</code>: True when the item is the last item in the iterable.</li> <li>
+<code>even: boolean</code>: True when the item has an even index in the iterable.</li> <li>
+<code>odd: boolean</code>: True when the item has an odd index in the iterable.</li> </ul> <pre>&lt;li *ngFor="let user of userObservable | async as users; index as i; first as isFirst"&gt;
+   {{i}}/{{users.length}}. {{user}} &lt;span *ngIf="isFirst"&gt;default&lt;/span&gt;
+&lt;/li&gt;</pre> <h4 id="change-propagation">Change Propagation</h4> <p>When the contents of the iterator changes, <code><a href="../ngforof/" class="code-anchor">NgForOf</a></code> makes the corresponding changes to the DOM:</p> <ul> <li>When an item is added, a new instance of the template is added to the DOM.</li> <li>When an item is removed, its template instance is removed from the DOM.</li> <li>When items are reordered, their respective templates are reordered in the DOM.</li> <li>Otherwise, the DOM element for that item will remain the same.</li> </ul> <p>Angular uses object identity to track insertions and deletions within the iterator and reproduce those changes in the DOM. This has important implications for animations and any stateful controls (such as <code>&lt;input&gt;</code> elements which accept user input) that are present. Inserted rows can be animated in, deleted rows can be animated out, and unchanged rows retain any unsaved state such as user input.</p> <p>It is possible for the identities of elements in the iterator to change while the data does not. This can happen, for example, if the iterator produced from an RPC to the server, and that RPC is re-run. Even if the data hasn't changed, the second response will produce objects with different identities, and Angular will tear down the entire DOM and rebuild it (as if all old elements were deleted and all new elements inserted). This is an expensive operation and should be avoided if possible.</p> <p>To customize the default tracking algorithm, <code><a href="../ngforof/" class="code-anchor">NgForOf</a></code> supports <code>trackBy</code> option. <code>trackBy</code> takes a function which has two arguments: <code>index</code> and <code>item</code>. If <code>trackBy</code> is given, Angular tracks changes by the return value of the function.</p> <h4 id="syntax">Syntax</h4> <ul> <li><code>&lt;li *<a href="../ngforof/" class="code-anchor">ngFor</a>="let item of items; index as i; trackBy: trackByFn"&gt;...&lt;/li&gt;</code></li> </ul> <p>With <code>&lt;ng-template&gt;</code> element:</p> <pre>&lt;ng-template ngFor let-item [ngForOf]="items" let-i="index" [ngForTrackBy]="trackByFn"&gt;
+  &lt;li&gt;...&lt;/li&gt;
+&lt;/ng-template&gt;</pre> <h4 id="example">Example</h4> <p>See a <a href="http://plnkr.co/edit/KVuXxDp0qinGDyo307QW?p=preview" target="_blank">live demo</a> for a more detailed example.</p>  <h2 id="constructor">Constructor</h2>  <table> <tbody> <tr> <td> <h3 data-language="typescript"><code>constructor(_viewContainer: ViewContainerRef, _template: TemplateRef&lt;NgForOfContext&lt;T&gt;&gt;, _differs: IterableDiffers)</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <table> <tbody> <tr class="constructor-overload-parameter"> <td class="param-name">
+_viewContainer</td> <td class="param-description"> <p>Type: <code><a href="../../core/viewcontainerref/" class="code-anchor">ViewContainerRef</a></code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+_template</td> <td class="param-description"> <p>Type: <code><a href="../../core/templateref/" class="code-anchor">TemplateRef</a><ngforofcontext>&gt;</ngforofcontext></code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+_differs</td> <td class="param-description"> <p>Type: <code><a href="../../core/iterablediffers/" class="code-anchor">IterableDiffers</a></code>.</p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table>  <h2 id="properties">Properties</h2> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr class="instance-property"> <td>
+ngForOf</td> <td><code class="property-type-label"><a href="../../core/ngiterable/" class="code-anchor">NgIterable</a>&lt;T&gt;</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+ngForTrackBy</td> <td><code class="property-type-label"><a href="../../core/trackbyfunction/" class="code-anchor">TrackByFunction&lt;T&gt;</a></code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+ngForTemplate</td> <td><code class="property-type-label"><a href="../../core/templateref/" class="code-anchor">TemplateRef</a>&lt;<a href="../ngforofcontext/" class="code-anchor">NgForOfContext</a>&lt;T&gt;&gt;</code></td> <td> </td> </tr> </tbody> </table>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="ngonchanges"> ngOnChanges() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>ngOnChanges(changes: SimpleChanges): void</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+changes</td> <td class="param-description"> <p>Type: <code><a href="../../core/simplechanges/" class="code-anchor">SimpleChanges</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="ngdocheck"> ngDoCheck() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>ngDoCheck(): void</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/common/NgForOf" class="_attribution-link" target="_blank">https://angular.io/api/common/NgForOf</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

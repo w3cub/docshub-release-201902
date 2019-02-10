@@ -1,0 +1,315 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Angular Universal&#58; Server-side Rendering - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" This guide describes Angular Universal, a technology that runs your Angular application on the server. ">
+  <meta name="keywords" content="angular, universal, server-side, rendering, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/guide/universal/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="angular-universal-server-side-rendering">Angular Universal: server-side rendering</h1> <p>This guide describes <strong>Angular Universal</strong>, a technology that runs your Angular application on the server.</p> <p>A normal Angular application executes in the <em>browser</em>, rendering pages in the DOM in response to user actions.</p> <p><strong>Angular Universal</strong> generates <em>static</em> application pages on the <em>server</em> through a process called <strong>server-side rendering (SSR)</strong>.</p> <p>It can generate and serve those pages in response to requests from browsers. It can also pre-generate pages as HTML files that you serve later.</p> <p>This guide describes a Universal sample application that launches quickly as a server-rendered page. Meanwhile, the browser downloads the full client version and switches to it automatically after the code loads.</p> <blockquote class="l-sub-section"> <p><a href="https://angular.io/generated/zips/universal/universal.zip" target="_blank">Download the finished sample code</a>, which runs in a <a href="https://expressjs.com/" target="_blank">Node.js® Express</a> server.</p> </blockquote>  <h3 id="why-universal">Why Universal</h3> <p>There are three main reasons to create a Universal version of your app.</p> <ol> <li>Facilitate web crawlers (SEO)</li> <li>Improve performance on mobile and low-powered devices</li> <li>Show the first page quickly</li> </ol>   <h4 id="facilitate-web-crawlers">Facilitate web crawlers</h4> <p>Google, Bing, Facebook, Twitter and other social media sites rely on web crawlers to index your application content and make that content searchable on the web.</p> <p>These web crawlers may be unable to navigate and index your highly-interactive, Angular application as a human user could do.</p> <p>Angular Universal can generate a static version of your app that is easily searchable, linkable, and navigable without JavaScript. It also makes a site preview available since each URL returns a fully-rendered page.</p> <p>Enabling web crawlers is often referred to as <a href="https://static.googleusercontent.com/media/www.google.com/en//webmasters/docs/search-engine-optimization-starter-guide.pdf" target="_blank">Search Engine Optimization (SEO)</a>.</p>  <h4 id="performance-on-mobile-and-low-performance-devices">Performance on mobile and low performance devices</h4> <p>Some devices don't support JavaScript or execute JavaScript so poorly that the user experience is unacceptable. For these cases, you may require a server-rendered, no-JavaScript version of the app. This version, however limited, may be the only practical alternative for people who otherwise would not be able to use the app at all.</p>  <h4 id="show-the-first-page-quickly">Show the first page quickly</h4> <p>Displaying the first page quickly can be critical for user engagement.</p> <p><a href="https://www.doubleclickbygoogle.com/articles/mobile-speed-matters/" target="_blank">53% of mobile site visits are abandoned</a> if pages take longer than 3 seconds to load. Your app may have to launch faster to engage these users before they decide to do something else.</p> <p>With Angular Universal, you can generate landing pages for the app that look like the complete app. The pages are pure HTML, and can display even if JavaScript is disabled. The pages do not handle browser events, but they <em>do</em> support navigation through the site using <a href="../router/#router-link">routerLink</a>.</p> <p>In practice, you'll serve a static version of the landing page to hold the user's attention. At the same time, you'll load the full Angular app behind it in the manner <a href="../universal/#transition">explained below</a>. The user perceives near-instant performance from the landing page and gets the full interactive experience after the full app loads.</p>  <h3 id="how-it-works">How it works</h3> <p>To make a Universal app, you install the <code>platform-server</code> package. The <code>platform-server</code> package has server implementations of the DOM, <code>XMLHttpRequest</code>, and other low-level features that do not rely on a browser.</p> <p>You compile the client application with the <code>platform-server</code> module instead of the <code>platform-browser</code> module. and run the resulting Universal app on a web server.</p> <p>The server (a <a href="https://expressjs.com/" target="_blank">Node Express</a> server in <em>this</em> guide's example) passes client requests for application pages to Universal's <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> function.</p> <p>The <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> function takes as inputs a <em>template</em> HTML page (usually <code>index.html</code>), an Angular <em>module</em> containing components, and a <em>route</em> that determines which components to display.</p> <p>The route comes from the client's request to the server. Each request results in the appropriate view for the requested route.</p> <p>The <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> renders that view within the <code>&lt;app&gt;</code> tag of the template, creating a finished HTML page for the client.</p> <p>Finally, the server returns the rendered page to the client.</p> <h3 id="working-around-the-browser-apis">Working around the browser APIs</h3> <p>Because a Universal <code>platform-server</code> app doesn't execute in the browser, you may have to work around some of the browser APIs and capabilities that are missing on the server.</p> <p>You won't be able reference browser-only native objects such as <code>window</code>, <code>document</code>, <code>navigator</code> or <code>location</code>. If you don't need them on the server-rendered page, side-step them with conditional logic.</p> <p>Alternatively, look for an injectable Angular abstraction over the object you need such as <code><a href="../../api/common/location/" class="code-anchor">Location</a></code> or <code>Document</code>; it may substitute adequately for the specific API that you're calling. If Angular doesn't provide it, you may be able to write your own abstraction that delegates to the browser API while in the browser and to a satisfactory alternative implementation while on the server.</p> <p>Without mouse or keyboard events, a universal app can't rely on a user clicking a button to show a component. A universal app should determine what to render based solely on the incoming client request. This is a good argument for making the app <a href="../router/">routeable</a>.</p> <p>Because the user of a server-rendered page can't do much more than click links, you should <a href="../universal/#transition">swap in the real client app</a> as quickly as possible for a proper interactive experience.</p>  <h2 id="the-example">The example</h2> <p>The <em>Tour of Heroes</em> tutorial is the foundation for the Universal sample described in this guide.</p> <p>The core application files are mostly untouched, with a few exceptions described below. You'll add more files to support building and serving with Universal.</p> <p>In this example, the Angular CLI compiles and bundles the Universal version of the app with the <a href="../aot-compiler/">AOT (Ahead-of-Time) compiler</a>. A Node.js® Express web server turns client requests into the HTML pages rendered by Universal.</p> <p>You will create:</p> <ul> <li>a server-side app module, <code>app.server.module.ts</code>
+</li> <li>an entry point for the server-side, <code>main.server.ts</code>
+</li> <li>an express web server to handle requests, <code>server.ts</code>
+</li> <li>a TypeScript config file, <code>tsconfig.server.json</code>
+</li> <li>a Webpack config file for the server, <code>webpack.server.config.js</code>
+</li> </ul> <p>When you're done, the folder structure will look like this:</p> <pre format="." data-language="none">src/
+  index.html                 app web page
+  main.ts                    bootstrapper for client app
+  main.server.ts             * bootstrapper for server app
+  tsconfig.app.json          TypeScript client configuration
+  tsconfig.server.json       * TypeScript server configuration
+  tsconfig.spec.json         TypeScript spec configuration
+  style.css                  styles for the app
+  app/ ...                   application code
+    app.server.module.ts     * server-side application module
+server.ts                    * express web server
+tsconfig.json                TypeScript client configuration
+package.json                 npm configuration
+webpack.server.config.js     * Webpack server configuration</pre> <p>The files marked with <code>*</code> are new and not in the original tutorial sample. This guide covers them in the sections below.</p>  <h2 id="preparation">Preparation</h2> <p>Download the <a href="https://angular.io/generated/zips/toh-pt6/toh-pt6.zip" target="_blank">Tour of Heroes</a> project and install the dependencies from it.</p>  <h3 id="install-the-tools">Install the tools</h3> <p>To get started, install these packages.</p> <ul> <li>
+<code>@angular/platform-server</code> - Universal server-side components.</li> <li>
+<code>@nguniversal/module-map-ngfactory-loader</code> - For handling lazy-loading in the context of a server-render.</li> <li>
+<code>@nguniversal/express-engine</code> - An express engine for Universal applications.</li> <li>
+<code>ts-loader</code> - To transpile the server application</li> </ul> <p>Install them with the following commands:</p> <pre format="." data-language="bash">npm install --save @angular/platform-server @nguniversal/module-map-ngfactory-loader ts-loader @nguniversal/express-engine</pre>  <h2 id="modify-the-client-app">Modify the client app</h2> <p>A Universal app can act as a dynamic, content-rich "splash screen" that engages the user. It gives the appearance of a near-instant application.</p> <p>Meanwhile, the browser downloads the client app scripts in background. Once loaded, Angular transitions from the static server-rendered page to the dynamically rendered views of the interactive client app.</p> <p>You must make a few changes to your application code to support both server-side rendering and the transition to the client app.</p>  <h3 id="the-root-appmodule">The root <code>AppModule</code>
+</h3> <p>Open file <code>src/app/app.module.ts</code> and find the <code><a href="../../api/platform-browser/browsermodule/" class="code-anchor">BrowserModule</a></code> import in the <code><a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code> metadata. Replace that import with this one:</p> <div class="pre-title">src/app/app.module.ts (withServerTransition)</div>
+<pre data-language="typescript">BrowserModule.withServerTransition({ appId: 'tour-of-heroes' }),</pre> <p>Angular adds the <code>appId</code> value (which can be <em>any</em> string) to the style-names of the server-rendered pages, so that they can be identified and removed when the client app starts.</p> <p>You can get runtime information about the current platform and the <code>appId</code> by injection.</p> <div class="pre-title">src/app/app.module.ts (platform detection)</div>
+<pre data-language="typescript">import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }</pre>  <h3 id="build-destination">Build Destination</h3> <p>A Universal app is distributed in two parts: the server-side code that serves up the initial application, and the client-side code that's loaded in dynamically. </p> <p>The Angular CLI outputs the client-side code in the <code>dist</code> directory by default, so you modify the <code>outputPath</code> for the <strong>build</strong> target in the <code>angular.json</code> to keep the client-side build outputs separate from the server-side code. The client-side build output will be served by the Express server.</p> <pre>...
+"build": {
+  "builder": "@angular-devkit/build-angular:browser",
+  "options": {
+    "outputPath": "dist/browser",
+    ...
+  } 
+}
+...</pre>  <h3 id="absolute-http-urls">Absolute HTTP URLs</h3> <p>The tutorial's <code>HeroService</code> and <code>HeroSearchService</code> delegate to the Angular <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> module to fetch application data. These services send requests to <em>relative</em> URLs such as <code>api/heroes</code>.</p> <p>In a Universal app, HTTP URLs must be <em>absolute</em>, for example, <code>https://my-server.com/api/heroes</code> even when the Universal web server is capable of handling those requests.</p> <p>You'll have to change the services to make requests with absolute URLs when running on the server and with relative URLs when running in the browser.</p> <p>One solution is to provide the server's runtime origin under the Angular <a href="../../api/common/app_base_href/"><code>APP_BASE_REF</code> token</a>, inject it into the service, and prepend the origin to the request URL.</p> <p>Start by changing the <code>HeroService</code> constructor to take a second <code>origin</code> parameter that is optionally injected via the <code><a href="../../api/common/app_base_href/" class="code-anchor">APP_BASE_HREF</a></code> token.</p> <div class="pre-title">src/app/hero.service.ts (constructor with optional origin)</div>
+<pre data-language="typescript">constructor(
+  private http: HttpClient,
+  private messageService: MessageService,
+  @Optional() @Inject(APP_BASE_HREF) origin: string) {
+    this.heroesUrl = `${origin}${this.heroesUrl}`;
+  }</pre> <p>Note how the constructor prepends the origin (if it exists) to the <code>heroesUrl</code>.</p> <p>You don't provide <code><a href="../../api/common/app_base_href/" class="code-anchor">APP_BASE_HREF</a></code> in the browser version, so the <code>heroesUrl</code> remains relative.</p> <blockquote class="l-sub-section"> <p>You can ignore <code><a href="../../api/common/app_base_href/" class="code-anchor">APP_BASE_HREF</a></code> in the browser if you've specified <code>&lt;base href="/"&gt;</code> in the <code>index.html</code> to satisfy the router's need for a base address, as the tutorial sample does.</p> </blockquote>  <h2 id="server-code">Server code</h2> <p>To run an Angular Universal application, you'll need a server that accepts client requests and returns rendered pages.</p>  <h3 id="app-server-module">App server module</h3> <p>The app server module class (conventionally named <code>AppServerModule</code>) is an Angular module that wraps the application's root module (<code>AppModule</code>) so that Universal can mediate between your application and the server. <code>AppServerModule</code> also tells Angular how to bootstrap your application when running as a Universal app.</p> <p>Create an <code>app.server.module.ts</code> file in the <code>src/app/</code> directory with the following <code>AppServerModule</code> code:</p> <div class="pre-title">src/app/app.server.module.ts</div>
+<pre data-language="typescript">import { NgModule } from '@angular/core';
+import { ServerModule } from '@angular/platform-server';
+import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
+
+import { AppModule } from './app.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [
+    AppModule,
+    ServerModule,
+    ModuleMapLoaderModule
+  ],
+  providers: [
+    // Add universal-only providers here
+  ],
+  bootstrap: [ AppComponent ],
+})
+export class AppServerModule {}</pre> <p>Notice that it imports first the client app's <code>AppModule</code>, the Angular Universal's <code><a href="../../api/platform-server/servermodule/" class="code-anchor">ServerModule</a></code> and the <code>ModuleMapLoaderModule</code>.</p> <p>The <code>ModuleMapLoaderModule</code> is a server-side module that allows lazy-loading of routes.</p> <p>This is also the place to register providers that are specific to running your app under Universal.</p>  <h3 id="app-server-entry-point">App server entry point</h3> <p>The <code>Angular CLI</code> uses the <code>AppServerModule</code> to build the server-side bundle. </p> <p>Create a <code>main.server.ts</code> file in the <code>src/</code> directory that exports the <code>AppServerModule</code>:</p> <div class="pre-title">src/main.server.ts</div>
+<pre data-language="typescript">export { AppServerModule } from './app/app.server.module';</pre> <p>The <code>main.server.ts</code> will be referenced later to add a <code>server</code> target to the <code>Angular CLI</code> configuration.</p>  <h3 id="universal-web-server">Universal web server</h3> <p>A <em>Universal</em> web server responds to application <em>page</em> requests with static HTML rendered by the <a href="../universal/#universal-engine">Universal template engine</a>.</p> <p>It receives and responds to HTTP requests from clients (usually browsers). It serves static assets such as scripts, css, and images. It may respond to data requests, perhaps directly or as a proxy to a separate data server.</p> <p>The sample web server for <em>this</em> guide is based on the popular <a href="https://expressjs.com/" target="_blank">Express</a> framework.</p> <blockquote class="l-sub-section"> <p> <em>Any</em> web server technology can serve a Universal app as long as it can call Universal's <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code>. The principles and decision points discussed below apply to any web server technology that you chose.</p> </blockquote> <p>Create a <code>server.ts</code> file in the root directory and add the following code:</p> <div class="pre-title">server.ts</div>
+<pre data-language="typescript">// These are important and needed before anything else
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
+
+import { enableProdMode } from '@angular/core';
+
+import * as express from 'express';
+import { join } from 'path';
+
+// Faster server renders w/ Prod mode (dev mode never needed)
+enableProdMode();
+
+// Express server
+const app = express();
+
+const PORT = process.env.PORT || 4000;
+const DIST_FOLDER = join(process.cwd(), 'dist');
+
+// * NOTE :: leave this as require() since this file is built Dynamically from webpack
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
+
+// Express Engine
+import { ngExpressEngine } from '@nguniversal/express-engine';
+// Import module map for lazy loading
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+
+app.engine('html', ngExpressEngine({
+  bootstrap: AppServerModuleNgFactory,
+  providers: [
+    provideModuleMap(LAZY_MODULE_MAP)
+  ]
+}));
+
+app.set('view engine', 'html');
+app.set('views', join(DIST_FOLDER, 'browser'));
+
+// TODO: implement data requests securely
+app.get('/api/*', (req, res) =&gt; {
+  res.status(404).send('data requests are not supported');
+});
+
+// Server static files from /browser
+app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+
+// All regular routes use the Universal engine
+app.get('*', (req, res) =&gt; {
+  res.render('index', { req });
+});
+
+// Start up the Node server
+app.listen(PORT, () =&gt; {
+  console.log(`Node server listening on http://localhost:${PORT}`);
+});</pre> <blockquote class="alert is-critical"> <p> <strong>This sample server is not secure!</strong> Be sure to add middleware to authenticate and authorize users just as you would for a normal Angular application server.</p> </blockquote>  <h4 id="universal-template-engine">Universal template engine</h4> <p>The important bit in this file is the <code>ngExpressEngine</code> function:</p> <div class="pre-title">server.ts</div>
+<pre data-language="typescript">app.engine('html', ngExpressEngine({
+  bootstrap: AppServerModuleNgFactory,
+  providers: [
+    provideModuleMap(LAZY_MODULE_MAP)
+  ]
+}));</pre> <p>The <code>ngExpressEngine</code> is a wrapper around the universal's <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> function that turns a client's requests into server-rendered HTML pages. You'll call that function within a <em>template engine</em> that's appropriate for your server stack.</p> <p>The first parameter is the <code>AppServerModule</code> that you wrote <a href="../universal/#app-server-module">earlier</a>. It's the bridge between the Universal server-side renderer and your application.</p> <p>The second parameter is the <code>extraProviders</code>. It is an optional Angular dependency injection providers, applicable when running on this server.</p>  <p>You supply <code>extraProviders</code> when your app needs information that can only be determined by the currently running server instance.</p> <p>The required information in this case is the running server's origin, provided under the <code><a href="../../api/common/app_base_href/" class="code-anchor">APP_BASE_HREF</a></code> token, so that the app can <a href="../universal/#http-urls">calculate absolute HTTP URLs</a>.</p> <p>The <code>ngExpressEngine</code> function returns a <em>promise</em> that resolves to the rendered page.</p> <p>It's up to your engine to decide what to do with that page. <em>This engine's</em> promise callback returns the rendered page to the <a href="../universal/#web-server">web server</a>, which then forwards it to the client in the HTTP response.</p> <blockquote class="l-sub-section"> <p> This wrappers are very useful to hide the complexity of the <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code>. There are more wrappers for different backend technologies at the <a href="https://github.com/angular/universal" target="_blank">Universal repository</a>.</p> </blockquote> <h4 id="filter-request-urls">Filter request URLs</h4> <p>The web server must distinguish <em>app page requests</em> from other kinds of requests.</p> <p>It's not as simple as intercepting a request to the root address <code>/</code>. The browser could ask for one of the application routes such as <code>/dashboard</code>, <code>/heroes</code>, or <code>/detail:12</code>. In fact, if the app were <em>only</em> rendered by the server, <em>every</em> app link clicked would arrive at the server as a navigation URL intended for the router.</p> <p>Fortunately, application routes have something in common: their URLs lack file extensions.</p> <p>Data requests also lack extensions but they're easy to recognize because they always begin with <code>/api</code>.</p> <p>All static asset requests have a file extension (e.g., <code>main.js</code> or <code>/node_modules/zone.js/dist/zone.js</code>).</p> <p>So we can easily recognize the three types of requests and handle them differently.</p> <ol> <li>data request - request URL that begins <code>/api</code>
+</li> <li>app navigation - request URL with no file extension</li> <li>static asset - all other requests.</li> </ol> <p>An Express server is a pipeline of middleware that filters and processes URL requests one after the other.</p> <p>You configure the Express server pipeline with calls to <code>app.get()</code> like this one for data requests.</p> <div class="pre-title">server.ts (data URL)</div>
+<pre data-language="typescript">// TODO: implement data requests securely
+app.get('/api/*', (req, res) =&gt; {
+  res.status(404).send('data requests are not supported');
+});</pre> <blockquote class="l-sub-section"> <p>This sample server doesn't handle data requests.</p> <p>The tutorial's "in-memory web api" module, a demo and development tool, intercepts all HTTP calls and simulates the behavior of a remote data server. In practice, you would remove that module and register your web api middleware on the server here.</p> </blockquote> <blockquote class="alert is-critical"> <p><strong>Universal HTTP requests have different security requirements</strong></p> <p>HTTP requests issued from a browser app are not the same as when issued by the universal app on the server.</p> <p>When a browser makes an HTTP request, the server can make assumptions about cookies, XSRF headers, etc.</p> <p>For example, the browser automatically sends auth cookies for the current user. Angular Universal cannot forward these credentials to a separate data server. If your server handles HTTP requests, you'll have to add your own security plumbing.</p> </blockquote> <p>The following code filters for request URLs with no extensions and treats them as navigation requests.</p> <div class="pre-title">server.ts (navigation)</div>
+<pre data-language="typescript">// All regular routes use the Universal engine
+app.get('*', (req, res) =&gt; {
+  res.render('index', { req });
+});</pre> <h4 id="serve-static-files-safely">Serve static files safely</h4> <p>A single <code>app.use()</code> treats all other URLs as requests for static assets such as JavaScript, image, and style files.</p> <p>To ensure that clients can only download the files that they are <em>permitted</em> to see, you will <a href="../universal/#universal-webpack-configuration">put all client-facing asset files in the <code>/dist</code> folder</a> and will only honor requests for files from the <code>/dist</code> folder.</p> <p>The following express code routes all remaining requests to <code>/dist</code>; it returns a <code>404 - NOT FOUND</code> if the file is not found.</p> <div class="pre-title">server.ts (static files)</div>
+<pre data-language="typescript">// Server static files from /browser
+app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));</pre>  <h2 id="configure-for-universal">Configure for Universal</h2> <p>The server application requires its own build configuration.</p>  <h3 id="universal-typescript-configuration">Universal TypeScript configuration</h3> <p>Create a <code>tsconfig.server.json</code> file in the project root directory to configure TypeScript and AOT compilation of the universal app.</p> <div class="pre-title">src/tsconfig.server.json</div>
+<pre data-language="json">{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "commonjs",
+    "types": []
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "entryModule": "app/app.server.module#AppServerModule"
+  }
+}</pre> <p>This config extends from the root's <code>tsconfig.json</code> file. Certain settings are noteworthy for their differences.</p> <ul> <li> <p>The <code>module</code> property must be <strong>commonjs</strong> which can be required into our server application.</p> </li> <li> <p>The <code>angularCompilerOptions</code> section guides the AOT compiler:</p> <ul> <li>
+<code>entryModule</code> - the root module of the server application, expressed as <code>path/to/file#ClassName</code>.</li> </ul> </li> </ul>  <h3 id="universal-webpack-configuration">Universal Webpack configuration</h3> <p>Universal applications doesn't need any extra Webpack configuration, the CLI takes care of that for you, but since the server is a typescript application, you will use Webpack to transpile it.</p> <p>Create a <code>webpack.server.config.js</code> file in the project root directory with the following code.</p> <div class="pre-title">webpack.server.config.js</div>
+<pre data-language="js">const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+  entry: { server: './server.ts' },
+  resolve: { extensions: ['.js', '.ts'] },
+  target: 'node',
+  mode: 'none',
+  // this makes sure we include node_modules and other 3rd party libraries
+  externals: [/node_modules/],
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].js'
+  },
+  module: {
+    rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
+  },
+  plugins: [
+    // Temporary Fix for issue: https://github.com/angular/angular/issues/11580
+    // for 'WARNING Critical dependency: the request of a dependency is an expression'
+    new webpack.ContextReplacementPlugin(
+      /(.+)?angular(\\|\/)core(.+)?/,
+      path.join(__dirname, 'src'), // location of your src
+      {} // a map of your routes
+    ),
+    new webpack.ContextReplacementPlugin(
+      /(.+)?express(\\|\/)(.+)?/,
+      path.join(__dirname, 'src'),
+      {}
+    )
+  ]
+};</pre> <p><strong>Webpack configuration</strong> is a rich topic beyond the scope of this guide.</p>  <h3 id="angular-cli-configuration">Angular CLI configuration</h3> <p>The CLI provides builders for different types of <strong>targets</strong>. Commonly known targets such as <code>build</code> and <code>serve</code> already exist in the <code>angular.json</code> configuration. To target a server-side build, add a <code>server</code> target to the <code>architect</code> configuration object.</p> <ul> <li>The <code>outputPath</code> tells where the resulting build will be created.</li> <li>The <code>main</code> provides the main entry point to the previously created <code>main.server.ts</code>
+</li> <li>The <code>tsConfig</code> uses the <code>tsconfig.server.json</code> as configuration for the TypeScript and AOT compilation.</li> </ul> <pre>"architect": {
+  ...
+  "server": {
+    "builder": "@angular-devkit/build-angular:server",
+    "options": {
+      "outputPath": "dist/server",
+      "main": "src/main.server.ts",
+      "tsConfig": "src/tsconfig.server.json"
+    }
+  }
+  ...
+}</pre> <h2 id="build-and-run-with-universal">Build and run with universal</h2> <p>Now that you've created the TypeScript and Webpack config files and configured the Angular CLI, you can build and run the Universal application.</p> <p>First add the <em>build</em> and <em>serve</em> commands to the <code>scripts</code> section of the <code>package.json</code>:</p> <pre>"scripts": {
+    ...
+    "build:ssr": "npm run build:client-and-server-bundles &amp;&amp; npm run webpack:server",
+    "serve:ssr": "node dist/server",
+    "build:client-and-server-bundles": "ng build --prod &amp;&amp; ng run angular.io-example:server",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
+    ...
+}</pre>  <h4 id="build">Build</h4> <p>From the command prompt, type</p> <pre format="." data-language="bash">npm run build:ssr</pre> <p>The Angular CLI compiles and bundles the universal app into two different folders, <code><a href="../../api/animations/browser/" class="code-anchor">browser</a></code> and <code>server</code>. Webpack transpiles the <code>server.ts</code> file into Javascript.</p>  <h4 id="serve">Serve</h4> <p>After building the application, start the server.</p> <pre format="." data-language="bash">npm run serve:ssr</pre> <p>The console window should say</p> <pre format="." data-language="bash">Node server listening on http://localhost:4000</pre> <h2 id="universal-in-action">Universal in action</h2> <p>Open a browser to <a href="http://localhost:4000/" target="_blank">http://localhost:4000/</a>. You should see the familiar Tour of Heroes dashboard page.</p> <p>Navigation via <code>routerLinks</code> works correctly. You can go from the Dashboard to the Heroes page and back. You can click on a hero on the Dashboard page to display its Details page.</p> <p>But clicks, mouse-moves, and keyboard entries are inert.</p> <ul> <li>Clicking a hero on the Heroes page does nothing.</li> <li>You can't add or delete a hero.</li> <li>The search box on the Dashboard page is ignored.</li> <li>The <em>back</em> and <em>save</em> buttons on the Details page don't work.</li> </ul> <p>User events other than <code><a href="../../api/router/routerlink/" class="code-anchor">routerLink</a></code> clicks aren't supported. The user must wait for the full client app to arrive.</p> <p>It will never arrive until you compile the client app and move the output into the <code>dist/</code> folder, a step you'll take in just a moment.</p> <h2 id="throttling">Throttling</h2> <p>The transition from the server-rendered app to the client app happens quickly on a development machine. You can simulate a slower network to see the transition more clearly and better appreciate the launch-speed advantage of a universal app running on a low powered, poorly connected device.</p> <p>Open the Chrome Dev Tools and go to the Network tab. Find the <a href="https://developers.google.com/web/tools/chrome-devtools/network-performance/reference#throttling" target="_blank">Network Throttling</a> dropdown on the far right of the menu bar.</p> <p>Try one of the "3G" speeds. The server-rendered app still launches quickly but the full client app may take seconds to load.</p>  <h2 id="summary">Summary</h2> <p>This guide showed you how to take an existing Angular application and make it into a Universal app that does server-side rendering. It also explained some of the key reasons for doing so.</p> <ul> <li>Facilitate web crawlers (SEO)</li> <li>Support low-bandwidth or low-power devices</li> <li>Fast first page load</li> </ul> <p>Angular Universal can greatly improve the perceived startup performance of your app. The slower the network, the more advantageous it becomes to have Universal display the first page to the user.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/guide/universal" class="_attribution-link" target="_blank">https://angular.io/guide/universal</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

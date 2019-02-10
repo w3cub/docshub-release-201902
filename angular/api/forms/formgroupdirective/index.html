@@ -1,0 +1,222 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>FormGroupDirective - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" directive stable ">
+  <meta name="keywords" content="formgroupdirective, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/forms/formgroupdirective/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="formgroupdirective">FormGroupDirective</h1> <p><code class="api-type-label directive">directive</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body"> 
+<p>Binds an existing <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code> to a DOM element.</p>   <pre data-language="typescript">@Directive({
+    selector: '[formGroup]',
+    providers: [formDirectiveProvider],
+    host: { '(submit)': 'onSubmit($event)', '(reset)': 'onReset()' },
+    exportAs: 'ngForm'
+})
+class FormGroupDirective extends ControlContainer implements Form, OnChanges {
+  constructor(_validators: any[], _asyncValidators: any[])
+  get submitted: boolean
+  directives: FormControlName[]
+  form: FormGroup
+  ngSubmit: new EventEmitter()
+  get formDirective: Form
+  get control: FormGroup
+  get path: string[]
+  ngOnChanges(changes: SimpleChanges): void
+  addControl(dir: FormControlName): FormControl
+  getControl(dir: FormControlName): FormControl
+  removeControl(dir: FormControlName): void
+  addFormGroup(dir: FormGroupName): void
+  removeFormGroup(dir: FormGroupName): void
+  getFormGroup(dir: FormGroupName): FormGroup
+  addFormArray(dir: FormArrayName): void
+  removeFormArray(dir: FormArrayName): void
+  getFormArray(dir: FormArrayName): FormArray
+  updateModel(dir: FormControlName, value: any): void
+  onSubmit($event: Event): boolean
+  onReset(): void
+  resetForm(value: any = undefined): void
+
+  // inherited from forms/ControlContainer
+  name: string
+  get formDirective: Form | null
+  get path: string[] | null
+
+  // inherited from forms/AbstractControlDirective
+  abstract get control: AbstractControl | null
+  get value: any
+  get valid: boolean | null
+  get invalid: boolean | null
+  get pending: boolean | null
+  get disabled: boolean | null
+  get enabled: boolean | null
+  get errors: ValidationErrors | null
+  get pristine: boolean | null
+  get dirty: boolean | null
+  get touched: boolean | null
+  get status: string | null
+  get untouched: boolean | null
+  get statusChanges: Observable&lt;any&gt; | null
+  get valueChanges: Observable&lt;any&gt; | null
+  get path: string[] | null
+  reset(value: any = undefined): void
+  hasError(errorCode: string, path?: string[]): boolean
+  getError(errorCode: string, path?: string[]): any
+}</pre>   <h2 id="selectors">Selectors</h2> <h3><code>[formGroup]</code></h3>   <h4 id="inputs">Inputs</h4> <div class="input"> <code>formGroup</code> bound to <code><a href="../formgroupdirective/#form" class="code-anchor">FormGroupDirective.form</a></code> </div>   <h2 id="outputs">Outputs</h2> <div class="output"> <code>ngSubmit</code> bound to <code><a href="../formgroupdirective/#ngSubmit" class="code-anchor">FormGroupDirective.ngSubmit</a></code> </div>   <h2 id="exported-as">Exported as</h2> <div> <code><a href="../ngform/" class="code-anchor">ngForm</a></code> </div>   <h2 id="description">Description</h2> <p>This directive accepts an existing <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code> instance. It will then use this <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code> instance to match any child <code><a href="../formcontrol/" class="code-anchor">FormControl</a></code>, <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code>, and <code><a href="../formarray/" class="code-anchor">FormArray</a></code> instances to child <code><a href="../formcontrolname/" class="code-anchor">FormControlName</a></code>, <code><a href="../formgroupname/" class="code-anchor">FormGroupName</a></code>, and <code><a href="../formarrayname/" class="code-anchor">FormArrayName</a></code> directives.</p> <p><strong>Set value</strong>: You can set the form's initial value when instantiating the <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code>, or you can set it programmatically later using the <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code>'s <a href="../abstractcontrol/#setValue">setValue</a> or <a href="../abstractcontrol/#patchValue">patchValue</a> methods.</p> <p><strong>Listen to value</strong>: If you want to listen to changes in the value of the form, you can subscribe to the <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code>'s <a href="../abstractcontrol/#valueChanges">valueChanges</a> event. You can also listen to its <a href="../abstractcontrol/#statusChanges">statusChanges</a> event to be notified when the validation status is re-calculated.</p> <p>Furthermore, you can listen to the directive's <code>ngSubmit</code> event to be notified when the user has triggered a form submission. The <code>ngSubmit</code> event will be emitted with the original form submission event.</p> <h4 id="example">Example</h4> <p>In this example, we create form controls for first name and last name.</p> <pre>import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+
+@Component({
+  selector: 'example-app',
+  template: `
+    &lt;form [formGroup]="form" (ngSubmit)="onSubmit()"&gt;
+      &lt;div *ngIf="first.invalid"&gt; Name is too short. &lt;/div&gt;
+
+      &lt;input formControlName="first" placeholder="First name"&gt;
+      &lt;input formControlName="last" placeholder="Last name"&gt;
+
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+   &lt;/form&gt;
+   &lt;button (click)="setValue()"&gt;Set preset value&lt;/button&gt;
+  `,
+})
+export class SimpleFormGroup {
+  form = new FormGroup({
+    first: new FormControl('Nancy', Validators.minLength(2)),
+    last: new FormControl('Drew'),
+  });
+
+  get first(): any { return this.form.get('first'); }
+
+  onSubmit(): void {
+    console.log(this.form.value);  // {first: 'Nancy', last: 'Drew'}
+  }
+
+  setValue() { this.form.setValue({first: 'Carson', last: 'Drew'}); }
+}</pre> <p><strong>npm package</strong>: <code>@angular/forms</code></p> <p><strong>NgModule</strong>: <code><a href="../reactiveformsmodule/" class="code-anchor">ReactiveFormsModule</a></code></p>  <h2 id="constructor">Constructor</h2>  <table> <tbody> <tr> <td> <h3 data-language="typescript"><code>constructor(_validators: any[], _asyncValidators: any[])</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <table> <tbody> <tr class="constructor-overload-parameter"> <td class="param-name">
+_validators</td> <td class="param-description"> <p>Type: <code>any[]</code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+_asyncValidators</td> <td class="param-description"> <p>Type: <code>any[]</code>.</p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table>  <h2 id="properties">Properties</h2> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr class="instance-property"> <td>
+submitted</td> <td><code class="property-type-label">boolean</code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> <tr class="instance-property"> <td>
+directives</td> <td><code class="property-type-label"><a href="../formcontrolname/" class="code-anchor">FormControlName</a>[]</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+form</td> <td><code class="property-type-label"><a href="../formgroup/" class="code-anchor">FormGroup</a></code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+ngSubmit</td> <td><code class="property-type-label">new <a href="../../core/eventemitter/" class="code-anchor">EventEmitter</a>()</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+formDirective</td> <td><code class="property-type-label"><a href="../form/" class="code-anchor">Form</a></code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> <tr class="instance-property"> <td>
+control</td> <td><code class="property-type-label"><a href="../formgroup/" class="code-anchor">FormGroup</a></code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> <tr class="instance-property"> <td>
+path</td> <td><code class="property-type-label">string[]</code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> </tbody> </table>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="ngonchanges"> ngOnChanges() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>ngOnChanges(changes: SimpleChanges): void</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+changes</td> <td class="param-description"> <p>Type: <code><a href="../../core/simplechanges/" class="code-anchor">SimpleChanges</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="addcontrol"> addControl() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>addControl(dir: FormControlName): FormControl</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formcontrolname/" class="code-anchor">FormControlName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code><a href="../formcontrol/" class="code-anchor">FormControl</a></code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="getcontrol"> getControl() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>getControl(dir: FormControlName): FormControl</code></h3> <h4 class="no-anchor" id="parameters-3">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formcontrolname/" class="code-anchor">FormControlName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-2">Returns</h4> <p><code><a href="../formcontrol/" class="code-anchor">FormControl</a></code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="removecontrol"> removeControl() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>removeControl(dir: FormControlName): void</code></h3> <h4 class="no-anchor" id="parameters-4">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formcontrolname/" class="code-anchor">FormControlName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-3">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="addformgroup"> addFormGroup() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>addFormGroup(dir: FormGroupName): void</code></h3> <h4 class="no-anchor" id="parameters-5">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formgroupname/" class="code-anchor">FormGroupName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-4">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="removeformgroup"> removeFormGroup() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>removeFormGroup(dir: FormGroupName): void</code></h3> <h4 class="no-anchor" id="parameters-6">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formgroupname/" class="code-anchor">FormGroupName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-5">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="getformgroup"> getFormGroup() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>getFormGroup(dir: FormGroupName): FormGroup</code></h3> <h4 class="no-anchor" id="parameters-7">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formgroupname/" class="code-anchor">FormGroupName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-6">Returns</h4> <p><code><a href="../formgroup/" class="code-anchor">FormGroup</a></code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="addformarray"> addFormArray() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>addFormArray(dir: FormArrayName): void</code></h3> <h4 class="no-anchor" id="parameters-8">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formarrayname/" class="code-anchor">FormArrayName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-7">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="removeformarray"> removeFormArray() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>removeFormArray(dir: FormArrayName): void</code></h3> <h4 class="no-anchor" id="parameters-9">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formarrayname/" class="code-anchor">FormArrayName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-8">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="getformarray"> getFormArray() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>getFormArray(dir: FormArrayName): FormArray</code></h3> <h4 class="no-anchor" id="parameters-10">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formarrayname/" class="code-anchor">FormArrayName</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-9">Returns</h4> <p><code><a href="../formarray/" class="code-anchor">FormArray</a></code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="updatemodel"> updateModel() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>updateModel(dir: FormControlName, value: any): void</code></h3> <h4 class="no-anchor" id="parameters-11">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+dir</td> <td class="param-description"> <p>Type: <code><a href="../formcontrolname/" class="code-anchor">FormControlName</a></code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+value</td> <td class="param-description"> <p>Type: <code>any</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-10">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="onsubmit"> onSubmit() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>onSubmit($event: Event): boolean</code></h3> <h4 class="no-anchor" id="parameters-12">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+$event</td> <td class="param-description"> <p>Type: <code><a href="../../router/event/" class="code-anchor">Event</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-11">Returns</h4> <p><code>boolean</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="onreset"> onReset() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>onReset(): void</code></h3> <h4 class="no-anchor" id="parameters-13">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-12">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="resetform"> resetForm() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>resetForm(value: any = undefined): void</code></h3> <h4 class="no-anchor" id="parameters-14">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+value</td> <td class="param-description"> <p>Type: <code>any</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-13">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/forms/FormGroupDirective" class="_attribution-link" target="_blank">https://angular.io/api/forms/FormGroupDirective</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

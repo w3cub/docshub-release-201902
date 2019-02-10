@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SelectMultipleControlValueAccessor - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" directive stable ">
+  <meta name="keywords" content="selectmultiplecontrolvalueaccessor, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/forms/selectmultiplecontrolvalueaccessor/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="selectmultiplecontrolvalueaccessor">SelectMultipleControlValueAccessor</h1> <p><code class="api-type-label directive">directive</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body"> 
+<p>The accessor for writing a value and listening to changes on a select element.</p>   <pre data-language="typescript">@Directive({
+    selector: 'select[multiple][formControlName],select[multiple][formControl],select[multiple][ngModel]',
+    host: { '(change)': 'onChange($event.target)', '(blur)': 'onTouched()' },
+    providers: [SELECT_MULTIPLE_VALUE_ACCESSOR]
+})
+class SelectMultipleControlValueAccessor implements ControlValueAccessor {
+  constructor(_renderer: Renderer2, _elementRef: ElementRef)
+  value: any
+  onChange: (_: any) =&gt; { }
+  onTouched: () =&gt; { }
+  set compareWith: (o1: any, o2: any) =&gt; boolean
+  writeValue(value: any): void
+  registerOnChange(fn: (value: any) =&gt; any): void
+  registerOnTouched(fn: () =&gt; any): void
+  setDisabledState(isDisabled: boolean): void
+}</pre>   <h2 id="selectors">Selectors</h2> <h3><code>select[multiple][formControlName]
+  select[multiple][formControl]
+  select[multiple][ngModel]</code></h3>   <h4 id="inputs">Inputs</h4> <div class="input"> <code>compareWith</code> bound to <code><a href="../selectmultiplecontrolvalueaccessor/#compareWith" class="code-anchor">SelectMultipleControlValueAccessor.compareWith</a></code> </div>   <h2 id="description">Description</h2> <h4 id="caveat-options-selection">Caveat: Options selection</h4> <p>Angular uses object identity to select options. It's possible for the identities of items to change while the data does not. This can happen, for example, if the items are produced from an RPC to the server, and that RPC is re-run. Even if the data hasn't changed, the second response will produce objects with different identities.</p> <p>To customize the default option comparison algorithm, <code>&lt;select <a href="../selectmultiplecontrolvalueaccessor/" class="code-anchor">multiple</a>&gt;</code> supports <code>compareWith</code> input. <code>compareWith</code> takes a <strong>function</strong> which has two arguments: <code>option1</code> and <code>option2</code>. If <code>compareWith</code> is given, Angular selects options by the return value of the function.</p> <h4 id="syntax">Syntax</h4> <pre>&lt;select multiple [compareWith]="compareFn"  [(ngModel)]="selectedCountries"&gt;
+    &lt;option *ngFor="let country of countries" [ngValue]="country"&gt;
+        {{country.name}}
+    &lt;/option&gt;
+&lt;/select&gt;
+
+compareFn(c1: Country, c2: Country): boolean {
+    return c1 &amp;&amp; c2 ? c1.id === c2.id : c1 === c2;
+}</pre>  <h2 id="constructor">Constructor</h2>  <table> <tbody> <tr> <td> <h3 data-language="typescript"><code>constructor(_renderer: Renderer2, _elementRef: ElementRef)</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <table> <tbody> <tr class="constructor-overload-parameter"> <td class="param-name">
+_renderer</td> <td class="param-description"> <p>Type: <code><a href="../../core/renderer2/" class="code-anchor">Renderer2</a></code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+_elementRef</td> <td class="param-description"> <p>Type: <code><a href="../../core/elementref/" class="code-anchor">ElementRef</a></code>.</p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table>  <h2 id="properties">Properties</h2> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr class="instance-property"> <td>
+value</td> <td><code class="property-type-label">any</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+onChange</td> <td><code class="property-type-label">(_: any) =&gt; { }</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+onTouched</td> <td><code class="property-type-label">() =&gt; { }</code></td> <td> </td> </tr> <tr class="instance-property"> <td>
+compareWith</td> <td><code class="property-type-label">(o1: any, o2: any) =&gt; boolean</code></td> <td> </td> </tr> </tbody> </table>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="writevalue"> writeValue() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>writeValue(value: any): void</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+value</td> <td class="param-description"> <p>Type: <code>any</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="registeronchange"> registerOnChange() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>registerOnChange(fn: (value: any) =&gt; any): void</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+fn</td> <td class="param-description"> <p>Type: <code>(value: any) =&gt; any</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="registerontouched"> registerOnTouched() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>registerOnTouched(fn: () =&gt; any): void</code></h3> <h4 class="no-anchor" id="parameters-3">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+fn</td> <td class="param-description"> <p>Type: <code>() =&gt; any</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-2">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="setdisabledstate"> setDisabledState() </span></th></tr></thead> <tbody> <tr> <td> <h3 data-language="typescript"><code>setDisabledState(isDisabled: boolean): void</code></h3> <h4 class="no-anchor" id="parameters-4">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+isDisabled</td> <td class="param-description"> <p>Type: <code>boolean</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-3">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/forms/SelectMultipleControlValueAccessor" class="_attribution-link" target="_blank">https://angular.io/api/forms/SelectMultipleControlValueAccessor</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

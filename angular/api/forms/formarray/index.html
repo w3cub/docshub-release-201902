@@ -1,0 +1,239 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>FormArray - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" class stable ">
+  <meta name="keywords" content="formarray, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/forms/formarray/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="formarray">FormArray</h1> <p><code class="api-type-label class">class</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body"> 
+<p>Tracks the value and validity state of an array of <code><a href="../formcontrol/" class="code-anchor">FormControl</a></code>, <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code> or <code><a href="../formarray/" class="code-anchor">FormArray</a></code> instances.</p>   <pre data-language="typescript">class FormArray extends AbstractControl {
+  constructor(controls: AbstractControl[], validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null)
+  controls: AbstractControl[]
+  get length: number
+  at(index: number): AbstractControl
+  push(control: AbstractControl): void
+  insert(index: number, control: AbstractControl): void
+  removeAt(index: number): void
+  setControl(index: number, control: AbstractControl): void
+  setValue(value: any[], options: {...}): void
+  patchValue(value: any[], options: {...}): void
+  reset(value: any = [], options: {...}): void
+  getRawValue(): any[]
+
+  // inherited from forms/AbstractControl
+  constructor(validator: ValidatorFn | null, asyncValidator: AsyncValidatorFn | null)
+  get value: any
+  validator: ValidatorFn | null
+  asyncValidator: AsyncValidatorFn | null
+  get parent: FormGroup | FormArray
+  get status: string
+  get valid: boolean
+  get invalid: boolean
+  get pending: boolean
+  get disabled: boolean
+  get enabled: boolean
+  get errors: ValidationErrors | null
+  get pristine: boolean
+  get dirty: boolean
+  get touched: boolean
+  get untouched: boolean
+  get valueChanges: Observable&lt;any&gt;
+  get statusChanges: Observable&lt;any&gt;
+  get updateOn: FormHooks
+  get root: AbstractControl
+  setValidators(newValidator: ValidatorFn | ValidatorFn[] | null): void
+  setAsyncValidators(newValidator: AsyncValidatorFn | AsyncValidatorFn[] | null): void
+  clearValidators(): void
+  clearAsyncValidators(): void
+  markAsTouched(opts: {...}): void
+  markAsUntouched(opts: {...}): void
+  markAsDirty(opts: {...}): void
+  markAsPristine(opts: {...}): void
+  markAsPending(opts: {...}): void
+  disable(opts: {...}): void
+  enable(opts: {...}): void
+  setParent(parent: FormGroup | FormArray): void
+  abstract setValue(value: any, options?: Object): void
+  abstract patchValue(value: any, options?: Object): void
+  abstract reset(value?: any, options?: Object): void
+  updateValueAndValidity(opts: {...}): void
+  setErrors(errors: ValidationErrors | null, opts: {...}): void
+  get(path: Array&lt;string | number&gt; | string): AbstractControl | null
+  getError(errorCode: string, path?: string[]): any
+  hasError(errorCode: string, path?: string[]): boolean
+}</pre>   <h2 id="description">Description</h2> <p>A <code><a href="../formarray/" class="code-anchor">FormArray</a></code> aggregates the values of each child <code><a href="../formcontrol/" class="code-anchor">FormControl</a></code> into an array. It calculates its status by reducing the statuses of its children. For example, if one of the controls in a <code><a href="../formarray/" class="code-anchor">FormArray</a></code> is invalid, the entire array becomes invalid.</p> <p><code><a href="../formarray/" class="code-anchor">FormArray</a></code> is one of the three fundamental building blocks used to define forms in Angular, along with <code><a href="../formcontrol/" class="code-anchor">FormControl</a></code> and <code><a href="../formgroup/" class="code-anchor">FormGroup</a></code>.</p> <p>When instantiating a <code><a href="../formarray/" class="code-anchor">FormArray</a></code>, pass in an array of child controls as the first argument.</p> <h3 id="example">Example</h3> <pre>const arr = new FormArray([
+  new FormControl('Nancy', Validators.minLength(2)),
+  new FormControl('Drew'),
+]);
+
+console.log(arr.value);   // ['Nancy', 'Drew']
+console.log(arr.status);  // 'VALID'</pre> <p>You can also include array-level validators and async validators. These come in handy when you want to perform validation that considers the value of more than one child control.</p> <p>The two types of validators can be passed in separately as the second and third arg respectively, or together as part of an options object.</p> <pre>const arr = new FormArray([
+  new FormControl('Nancy'),
+  new FormControl('Drew')
+], {validators: myValidator, asyncValidators: myAsyncValidator});</pre> <p>The options object can also be used to set a default value for each child control's <code>updateOn</code> property. If you set <code>updateOn</code> to <code>'blur'</code> at the array level, all child controls will default to 'blur', unless the child has explicitly specified a different <code>updateOn</code> value.</p> <pre data-language="typescript">const c = new FormArray([
+   new FormControl()
+], {updateOn: 'blur'});</pre> <h3 id="adding-or-removing-controls">Adding or removing controls</h3> <p>To change the controls in the array, use the <code>push</code>, <code>insert</code>, or <code>removeAt</code> methods in <code><a href="../formarray/" class="code-anchor">FormArray</a></code> itself. These methods ensure the controls are properly tracked in the form's hierarchy. Do not modify the array of <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code>s used to instantiate the <code><a href="../formarray/" class="code-anchor">FormArray</a></code> directly, as that will result in strange and unexpected behavior such as broken change detection.</p> <ul> <li>
+<strong>npm package</strong>: <code>@angular/forms</code>
+</li> </ul>  <h2 id="constructor">Constructor</h2>  <table> <tbody> <tr> <td> <h3 data-language="typescript"><code>constructor(controls: AbstractControl[], validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null)</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <table> <tbody> <tr class="constructor-overload-parameter"> <td class="param-name">
+controls</td> <td class="param-description"> <p>Type: <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a>[]</code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+validatorOrOpts</td> <td class="param-description"> <p>Type: <code><a href="../validatorfn/" class="code-anchor">ValidatorFn</a> | <a href="../validatorfn/" class="code-anchor">ValidatorFn</a>[] | <a href="../abstractcontroloptions/" class="code-anchor">AbstractControlOptions</a> | null</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> <tr class="constructor-overload-parameter"> <td class="param-name">
+asyncValidator</td> <td class="param-description"> <p>Type: <code><a href="../asyncvalidatorfn/" class="code-anchor">AsyncValidatorFn</a> | <a href="../asyncvalidatorfn/" class="code-anchor">AsyncValidatorFn</a>[] | null</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table>  <h2 id="properties">Properties</h2> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr class="instance-property"> <td>
+controls</td> <td><code class="property-type-label"><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a>[]</code></td> <td> <span class="from-constructor">Declared in constructor.</span> </td> </tr> <tr class="instance-property"> <td>
+length</td> <td><code class="property-type-label">number</code></td> <td>
+<span class="read-only-property">Read-only.</span> <p>Length of the control array.</p> </td> </tr> </tbody> </table>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="at"> at() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Get the <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code> at the given <code>index</code> in the array.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>at(index: number): AbstractControl</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns">Returns</h4> <p><code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="push"> push() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Insert a new <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code> at the end of the array.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>push(control: AbstractControl): void</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+control</td> <td class="param-description"> <p>Type: <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="insert"> insert() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Insert a new <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code> at the given <code>index</code> in the array.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>insert(index: number, control: AbstractControl): void</code></h3> <h4 class="no-anchor" id="parameters-3">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+control</td> <td class="param-description"> <p>Type: <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-2">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="removeat"> removeAt() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Remove the control at the given <code>index</code> in the array.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>removeAt(index: number): void</code></h3> <h4 class="no-anchor" id="parameters-4">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-3">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="setcontrol"> setControl() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Replace an existing control.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>setControl(index: number, control: AbstractControl): void</code></h3> <h4 class="no-anchor" id="parameters-5">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+control</td> <td class="param-description"> <p>Type: <code><a href="../abstractcontrol/" class="code-anchor">AbstractControl</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-4">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="setvalue"> setValue() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Sets the value of the <code><a href="../formarray/" class="code-anchor">FormArray</a></code>. It accepts an array that matches the structure of the control.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>setValue(value: any[], options: {
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+} = {}): void</code></h3> <h4 class="no-anchor" id="parameters-6">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+value</td> <td class="param-description"> <p>Type: <code>any[]</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+options</td> <td class="param-description"> <p>Type: <code>{
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+}</code>.</p> <p> Optional. Default is <code>{}</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-5">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>This method performs strict checks, so it will throw an error if you try to set the value of a control that doesn't exist or if you exclude the value of a control.</p> <h4 id="example-1">Example</h4> <pre>const arr = new FormArray([
+   new FormControl(),
+   new FormControl()
+]);
+console.log(arr.value);   // [null, null]
+
+arr.setValue(['Nancy', 'Drew']);
+console.log(arr.value);   // ['Nancy', 'Drew']</pre> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="patchvalue"> patchValue() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Patches the value of the <code><a href="../formarray/" class="code-anchor">FormArray</a></code>. It accepts an array that matches the structure of the control, and will do its best to match the values to the correct controls in the group.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>patchValue(value: any[], options: {
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+} = {}): void</code></h3> <h4 class="no-anchor" id="parameters-7">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+value</td> <td class="param-description"> <p>Type: <code>any[]</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+options</td> <td class="param-description"> <p>Type: <code>{
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+}</code>.</p> <p> Optional. Default is <code>{}</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-6">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>It accepts both super-sets and sub-sets of the array without throwing an error.</p> <h4 id="example-2">Example</h4> <pre>const arr = new FormArray([
+   new FormControl(),
+   new FormControl()
+]);
+console.log(arr.value);   // [null, null]
+
+arr.patchValue(['Nancy']);
+console.log(arr.value);   // ['Nancy', null]</pre> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="reset"> reset() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Resets the <code><a href="../formarray/" class="code-anchor">FormArray</a></code>. This means by default:</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>reset(value: any = [], options: {
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+} = {}): void</code></h3> <h4 class="no-anchor" id="parameters-8">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+value</td> <td class="param-description"> <p>Type: <code>any</code>.</p> <p>Optional. Default is <code>[]</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+options</td> <td class="param-description"> <p>Type: <code>{
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+}</code>.</p> <p> Optional. Default is <code>{}</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-7">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <ul> <li>The array and all descendants are marked <code>pristine</code>
+</li> <li>The array and all descendants are marked <code>untouched</code>
+</li> <li>The value of all descendants will be null or null maps</li> </ul> <p>You can also reset to a specific form state by passing in an array of states that matches the structure of the control. The state can be a standalone value or a form state object with both a value and a disabled status.</p> <h4 id="example-3">Example</h4> <pre data-language="typescript">this.arr.reset(['name', 'last name']);
+
+console.log(this.arr.value);  // ['name', 'last name']</pre> <ul> <li>OR -</li> </ul> <pre>this.arr.reset([
+  {value: 'name', disabled: true},
+  'last'
+]);
+
+console.log(this.arr.value);  // ['name', 'last name']
+console.log(this.arr.get(0).status);  // 'DISABLED'</pre> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="getrawvalue"> getRawValue() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>The aggregate value of the array, including any disabled controls.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>getRawValue(): any[]</code></h3> <h4 class="no-anchor" id="parameters-9">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-8">Returns</h4> <p><code>any[]</code></p> </td> </tr> <tr> <td class="description"> <p>If you'd like to include all values regardless of disabled status, use this method. Otherwise, the <code>value</code> property is the best way to get the value of the array.</p> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/forms/FormArray" class="_attribution-link" target="_blank">https://angular.io/api/forms/FormArray</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

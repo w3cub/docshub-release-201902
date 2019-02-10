@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ViewContainerRef - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" class stable ">
+  <meta name="keywords" content="viewcontainerref, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/core/viewcontainerref/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="viewcontainerref">ViewContainerRef</h1> <p><code class="api-type-label class">class</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body"> 
+<p>Represents a container where one or more Views can be attached.</p>   <pre data-language="typescript">abstract class ViewContainerRef {
+  abstract get element: ElementRef
+  abstract get injector: Injector
+  abstract get parentInjector: Injector
+  abstract get length: number
+  abstract clear(): void
+  abstract get(index: number): ViewRef | null
+  abstract createEmbeddedView&lt;C&gt;(templateRef: TemplateRef&lt;C&gt;, context?: C, index?: number): EmbeddedViewRef&lt;C&gt;
+  abstract createComponent&lt;C&gt;(componentFactory: ComponentFactory&lt;C&gt;, index?: number, injector?: Injector, projectableNodes?: any[][], ngModule?: NgModuleRef&lt;any&gt;): ComponentRef&lt;C&gt;
+  abstract insert(viewRef: ViewRef, index?: number): ViewRef
+  abstract move(viewRef: ViewRef, currentIndex: number): ViewRef
+  abstract indexOf(viewRef: ViewRef): number
+  abstract remove(index?: number): void
+  abstract detach(index?: number): ViewRef | null
+}</pre>   <h2 id="description">Description</h2> <p>The container can contain two kinds of Views. Host Views, created by instantiating a <a href="../component/"><code>Component</code></a> via <a href="../viewcontainerref/#createComponent">createComponent</a>, and Embedded Views, created by instantiating an <a href="../templateref/">Embedded Template</a> via <a href="../viewcontainerref/#createEmbeddedView">createEmbeddedView</a>.</p> <p>The location of the View Container within the containing View is specified by the Anchor <code>element</code>. Each View Container can have only one Anchor Element and each Anchor Element can only have a single View Container.</p> <p>Root elements of Views attached to this container become siblings of the Anchor Element in the Rendered View.</p> <p>To access a <code><a href="../viewcontainerref/" class="code-anchor">ViewContainerRef</a></code> of an Element, you can either place a <a href="../directive/"><code>Directive</code></a> injected with <code><a href="../viewcontainerref/" class="code-anchor">ViewContainerRef</a></code> on the Element, or you obtain it via a <a href="../viewchild/"><code>ViewChild</code></a> query.</p>   <h2 id="properties">Properties</h2> <table> <thead> <tr> <th>Property</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr class="instance-property"> <td>
+element</td> <td><code class="property-type-label"><a href="../elementref/" class="code-anchor">ElementRef</a></code></td> <td>
+<span class="read-only-property">Read-only.</span> <p>Anchor element that specifies the location of this container in the containing View.</p>  </td> </tr> <tr class="instance-property"> <td>
+injector</td> <td><code class="property-type-label"><a href="../injector/" class="code-anchor">Injector</a></code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> <tr class="instance-property"> <td>
+parentInjector</td> <td><code class="property-type-label"><a href="../injector/" class="code-anchor">Injector</a></code></td> <td>
+<span class="read-only-property">Read-only.</span> </td> </tr> <tr class="instance-property"> <td>
+length</td> <td><code class="property-type-label">number</code></td> <td>
+<span class="read-only-property">Read-only.</span> <p>Returns the number of Views currently attached to this container.</p> </td> </tr> </tbody> </table>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="clear"> clear() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Destroys all Views in this container.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract clear(): void</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns">Returns</h4> <p><code>void</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="get"> get() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Returns the <a href="../viewref/"><code>ViewRef</code></a> for the View located in this container at the specified index.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract get(index: number): ViewRef | null</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code><a href="../viewref/" class="code-anchor">ViewRef</a> | null</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="createembeddedview"> createEmbeddedView() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Instantiates an Embedded View based on the <a href="../templateref/">`templateRef`</a> and inserts it into this container at the specified <code>index</code>.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract createEmbeddedView&lt;C&gt;(templateRef: TemplateRef&lt;C&gt;, context?: C, index?: number): EmbeddedViewRef&lt;C&gt;</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+templateRef</td> <td class="param-description"> <p>Type: <code><a href="../templateref/" class="code-anchor">TemplateRef</a></code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+context</td> <td class="param-description"> <p>Type: <code>C</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-2">Returns</h4> <p><code><a href="../embeddedviewref/" class="code-anchor">EmbeddedViewRef&lt;C&gt;</a></code></p> </td> </tr> <tr> <td class="description"> <p>If <code>index</code> is not specified, the new View will be inserted as the last View in the container.</p> <p>Returns the <a href="../viewref/"><code>ViewRef</code></a> for the newly created View.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="createcomponent"> createComponent() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Instantiates a single <a href="../component/"><code>Component</code></a> and inserts its Host View into this container at the specified <code>index</code>.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract createComponent&lt;C&gt;(componentFactory: ComponentFactory&lt;C&gt;, index?: number, injector?: Injector, projectableNodes?: any[][], ngModule?: NgModuleRef&lt;any&gt;): ComponentRef&lt;C&gt;</code></h3> <h4 class="no-anchor" id="parameters-3">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+componentFactory</td> <td class="param-description"> <p>Type: <code><a href="../componentfactory/" class="code-anchor">ComponentFactory</a></code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+injector</td> <td class="param-description"> <p>Type: <code><a href="../injector/" class="code-anchor">Injector</a></code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+projectableNodes</td> <td class="param-description"> <p>Type: <code>any[][]</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+ngModule</td> <td class="param-description"> <p>Type: <code><a href="../ngmoduleref/" class="code-anchor">NgModuleRef</a></code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-3">Returns</h4> <p><code><a href="../componentref/" class="code-anchor">ComponentRef&lt;C&gt;</a></code></p> </td> </tr> <tr> <td class="description"> <p>The component is instantiated using its <a href="../componentfactory/"><code>ComponentFactory</code></a> which can be obtained via <a href="../componentfactoryresolver/#resolveComponentFactory">resolveComponentFactory</a>.</p> <p>If <code>index</code> is not specified, the new View will be inserted as the last View in the container.</p> <p>You can optionally specify the <a href="../injector/"><code>Injector</code></a> that will be used as parent for the Component.</p> <p>Returns the <a href="../componentref/"><code>ComponentRef</code></a> of the Host View created for the newly instantiated Component.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="insert"> insert() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Inserts a View identified by a <a href="../viewref/"><code>ViewRef</code></a> into the container at the specified <code>index</code>.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract insert(viewRef: ViewRef, index?: number): ViewRef</code></h3> <h4 class="no-anchor" id="parameters-4">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+viewRef</td> <td class="param-description"> <p>Type: <code><a href="../viewref/" class="code-anchor">ViewRef</a></code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-4">Returns</h4> <p><code><a href="../viewref/" class="code-anchor">ViewRef</a></code></p> </td> </tr> <tr> <td class="description"> <p>If <code>index</code> is not specified, the new View will be inserted as the last View in the container.</p> <p>Returns the inserted <a href="../viewref/"><code>ViewRef</code></a>.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="move"> move() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Moves a View identified by a <a href="../viewref/"><code>ViewRef</code></a> into the container at the specified <code>index</code>.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract move(viewRef: ViewRef, currentIndex: number): ViewRef</code></h3> <h4 class="no-anchor" id="parameters-5">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+viewRef</td> <td class="param-description"> <p>Type: <code><a href="../viewref/" class="code-anchor">ViewRef</a></code>.</p> </td> </tr> <tr class="instance-method-overload-parameter"> <td class="param-name">
+currentIndex</td> <td class="param-description"> <p>Type: <code>number</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-5">Returns</h4> <p><code><a href="../viewref/" class="code-anchor">ViewRef</a></code></p> </td> </tr> <tr> <td class="description"> <p>Returns the inserted <a href="../viewref/"><code>ViewRef</code></a>.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="indexof"> indexOf() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Returns the index of the View, specified via <a href="../viewref/"><code>ViewRef</code></a>, within the current container or <code>-1</code> if this container doesn't contain the View.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract indexOf(viewRef: ViewRef): number</code></h3> <h4 class="no-anchor" id="parameters-6">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+viewRef</td> <td class="param-description"> <p>Type: <code><a href="../viewref/" class="code-anchor">ViewRef</a></code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-6">Returns</h4> <p><code>number</code></p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="remove"> remove() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Destroys a View attached to this container at the specified <code>index</code>.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract remove(index?: number): void</code></h3> <h4 class="no-anchor" id="parameters-7">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-7">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>If <code>index</code> is not specified, the last View in the container will be removed.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="detach"> detach() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Use along with <a href="../viewcontainerref/#insert">insert</a> to move a View within the current container.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract detach(index?: number): ViewRef | null</code></h3> <h4 class="no-anchor" id="parameters-8">Parameters</h4> <table> <tbody> <tr class="instance-method-overload-parameter"> <td class="param-name">
+index</td> <td class="param-description"> <p>Type: <code>number</code>.</p> <p>Optional. Default is <code>undefined</code>.</p> </td> </tr> </tbody> </table> <h4 class="no-anchor" id="returns-8">Returns</h4> <p><code><a href="../viewref/" class="code-anchor">ViewRef</a> | null</code></p> </td> </tr> <tr> <td class="description"> <p>If the <code>index</code> param is omitted, the last <a href="../viewref/"><code>ViewRef</code></a> is detached.</p> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/core/ViewContainerRef" class="_attribution-link" target="_blank">https://angular.io/api/core/ViewContainerRef</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

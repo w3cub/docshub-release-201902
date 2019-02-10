@@ -1,0 +1,197 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ChangeDetectorRef - Angular - W3cubDocs</title>
+  
+  <meta name="description" content=" class stable ">
+  <meta name="keywords" content="changedetectorref, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/api/core/changedetectorref/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="changedetectorref">ChangeDetectorRef</h1> <p><code class="api-type-label class">class</code> <code class="api-status-label stable">stable</code></p>   <aio-toc class="embedded"></aio-toc> <div class="api-body">   <pre data-language="typescript">abstract class ChangeDetectorRef {
+  abstract markForCheck(): void
+  abstract detach(): void
+  abstract detectChanges(): void
+  abstract checkNoChanges(): void
+  abstract reattach(): void
+}</pre> <div class="descendants class"> <h2 id="subclasses">Subclasses</h2> <ul> <li> <code><a href="../viewref/" class="code-anchor">ViewRef</a></code> <ul> <li> <code><a href="../embeddedviewref/" class="code-anchor">EmbeddedViewRef</a></code> </li> </ul> </li> </ul> </div>   <h2 id="methods">Methods</h2>  <table> <thead><tr><th><span id="markforcheck"> markForCheck() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Marks a view and all of its ancestors dirty.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract markForCheck(): void</code></h3> <h4 class="no-anchor" id="parameters">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>This can be used to ensure an <a href="../changedetectionstrategy/#OnPush">OnPush</a> component is checked when it needs to be re-rendered but the two normal triggers haven't marked it dirty (i.e. inputs haven't changed and events haven't fired in the view).</p>  <h4 id="example-live-demo">Example (<a href="https://stackblitz.com/edit/angular-kx7rrw" target="_blank">live demo</a>)</h4> <pre data-language="typescript">@Component({
+  selector: 'my-app',
+  template: `Number of ticks: {{numberOfTicks}}`
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class AppComponent {
+  numberOfTicks = 0;
+
+  constructor(private ref: ChangeDetectorRef) {
+    setInterval(() =&gt; {
+      this.numberOfTicks++;
+      // the following is required, otherwise the view will not be updated
+      this.ref.markForCheck();
+    }, 1000);
+  }
+}</pre> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="detach"> detach() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Detaches the view from the change detection tree.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract detach(): void</code></h3> <h4 class="no-anchor" id="parameters-1">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-1">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>Detached views will not be checked during change detection runs until they are re-attached, even if they are dirty. <code>detach</code> can be used in combination with <a href="../changedetectorref/#detectChanges">detectChanges</a> to implement local change detection checks.</p>   <h4 id="example">Example</h4> <p>The following example defines a component with a large list of readonly data. Imagine the data changes constantly, many times per second. For performance reasons, we want to check and update the list every five seconds. We can do that by detaching the component's change detector and doing a local check every five seconds.</p> <pre data-language="typescript">class DataProvider {
+  // in a real application the returned data will be different every time
+  get data() {
+    return [1,2,3,4,5];
+  }
+}
+
+@Component({
+  selector: 'giant-list',
+  template: `
+    &lt;li *ngFor="let d of dataProvider.data"&gt;Data {{d}}&lt;/li&gt;
+  `,
+})
+class GiantList {
+  constructor(private ref: ChangeDetectorRef, private dataProvider: DataProvider) {
+    ref.detach();
+    setInterval(() =&gt; {
+      this.ref.detectChanges();
+    }, 5000);
+  }
+}
+
+@Component({
+  selector: 'app',
+  providers: [DataProvider],
+  template: `
+    &lt;giant-list&gt;&lt;giant-list&gt;
+  `,
+})
+class App {
+}</pre> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="detectchanges"> detectChanges() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Checks the view and its children.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract detectChanges(): void</code></h3> <h4 class="no-anchor" id="parameters-2">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-2">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>This can also be used in combination with <a href="../changedetectorref/#detach">detach</a> to implement local change detection checks.</p>   <h4 id="example-1">Example</h4> <p>The following example defines a component with a large list of readonly data. Imagine, the data changes constantly, many times per second. For performance reasons, we want to check and update the list every five seconds.</p> <p>We can do that by detaching the component's change detector and doing a local change detection check every five seconds.</p> <p>See <a href="../changedetectorref/#detach">detach</a> for more information.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="checknochanges"> checkNoChanges() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Checks the change detector and its children, and throws if any changes are detected.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract checkNoChanges(): void</code></h3> <h4 class="no-anchor" id="parameters-3">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-3">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>This is used in development mode to verify that running change detection doesn't introduce other changes.</p> </td> </tr> </tbody> </table>  <table> <thead><tr><th><span id="reattach"> reattach() </span></th></tr></thead> <tbody> <tr> <td class="short-description"> <p>Re-attaches the view to the change detection tree.</p> </td> </tr> <tr> <td> <h3 data-language="typescript"><code>abstract reattach(): void</code></h3> <h4 class="no-anchor" id="parameters-4">Parameters</h4> <p>There are no parameters.</p> <h4 class="no-anchor" id="returns-4">Returns</h4> <p><code>void</code></p> </td> </tr> <tr> <td class="description"> <p>This can be used to re-attach views that were previously detached from the tree using <a href="../changedetectorref/#detach">detach</a>. Views are attached to the tree by default.</p>  <h4 id="example-live-demo-1">Example (<a href="https://stackblitz.com/edit/angular-ymgsxw" target="_blank">live demo</a>)</h4> <p>The following example creates a component displaying <code>live</code> data. The component will detach its change detector from the main change detector tree when the component's live property is set to false.</p> <pre data-language="typescript">class DataProvider {
+  data = 1;
+
+  constructor() {
+    setInterval(() =&gt; {
+      this.data = this.data * 2;
+    }, 500);
+  }
+}
+
+@Component({
+  selector: 'live-data',
+  inputs: ['live'],
+  template: 'Data: {{dataProvider.data}}'
+})
+class LiveData {
+  constructor(private ref: ChangeDetectorRef, private dataProvider: DataProvider) {}
+
+  set live(value) {
+    if (value) {
+      this.ref.reattach();
+    } else {
+      this.ref.detach();
+    }
+  }
+}
+
+@Component({
+  selector: 'my-app',
+  providers: [DataProvider],
+  template: `
+    Live Update: &lt;input type="checkbox" [(ngModel)]="live"&gt;
+    &lt;live-data [live]="live"&gt;&lt;live-data&gt;
+  `,
+})
+class AppComponent {
+  live = true;
+}</pre> </td> </tr> </tbody> </table>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/api/core/ChangeDetectorRef" class="_attribution-link" target="_blank">https://angular.io/api/core/ChangeDetectorRef</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
