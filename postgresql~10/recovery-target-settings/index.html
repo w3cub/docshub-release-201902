@@ -1,0 +1,119 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Recovery Target Settings - PostgreSQL 10 - W3cubDocs</title>
+  
+  <meta name="description" content="By default, recovery will recover to the end of the WAL log. The following parameters can be used to specify an earlier stopping point. At most one &hellip;">
+  <meta name="keywords" content="recovery, target, settings, -, postgresql, postgresql~10">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~10/recovery-target-settings/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/postgresql~10.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _postgres">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>27.2. Recovery Target Settings</h1>    <p>By default, recovery will recover to the end of the WAL log. The following parameters can be used to specify an earlier stopping point. At most one of <code class="varname">recovery_target</code>, <code class="varname">recovery_target_lsn</code>, <code class="varname">recovery_target_name</code>, <code class="varname">recovery_target_time</code>, or <code class="varname">recovery_target_xid</code> can be used; if more than one of these is specified in the configuration file, the last entry will be used.</p> <div class="variablelist"> <dl class="variablelist"> <dt id="RECOVERY-TARGET">
+<code class="varname">recovery_target</code> <code class="literal">= 'immediate'</code> </dt> <dd> <p>This parameter specifies that recovery should end as soon as a consistent state is reached, i.e. as early as possible. When restoring from an online backup, this means the point where taking the backup ended.</p> <p>Technically, this is a string parameter, but <code class="literal">'immediate'</code> is currently the only allowed value.</p> </dd> <dt id="RECOVERY-TARGET-NAME">
+<code class="varname">recovery_target_name</code> (<code class="type">string</code>) </dt> <dd> <p>This parameter specifies the named restore point (created with <code class="function">pg_create_restore_point()</code>) to which recovery will proceed.</p> </dd> <dt id="RECOVERY-TARGET-TIME">
+<code class="varname">recovery_target_time</code> (<code class="type">timestamp</code>) </dt> <dd> <p>This parameter specifies the time stamp up to which recovery will proceed. The precise stopping point is also influenced by <a class="xref" href="../recovery-target-settings/#RECOVERY-TARGET-INCLUSIVE">recovery_target_inclusive</a>.</p> </dd> <dt id="RECOVERY-TARGET-XID">
+<code class="varname">recovery_target_xid</code> (<code class="type">string</code>) </dt> <dd> <p>This parameter specifies the transaction ID up to which recovery will proceed. Keep in mind that while transaction IDs are assigned sequentially at transaction start, transactions can complete in a different numeric order. The transactions that will be recovered are those that committed before (and optionally including) the specified one. The precise stopping point is also influenced by <a class="xref" href="../recovery-target-settings/#RECOVERY-TARGET-INCLUSIVE">recovery_target_inclusive</a>.</p> </dd> <dt id="RECOVERY-TARGET-LSN">
+<code class="varname">recovery_target_lsn</code> (<code class="type">pg_lsn</code>) </dt> <dd> <p>This parameter specifies the LSN of the write-ahead log location up to which recovery will proceed. The precise stopping point is also influenced by <a class="xref" href="../recovery-target-settings/#RECOVERY-TARGET-INCLUSIVE">recovery_target_inclusive</a>. This parameter is parsed using the system data type <a class="link" href="../datatype-pg-lsn/" title="8.19. pg_lsn Type"><code class="type">pg_lsn</code></a>.</p> </dd> </dl> </div> <p>The following options further specify the recovery target, and affect what happens when the target is reached:</p> <div class="variablelist"> <dl class="variablelist"> <dt id="RECOVERY-TARGET-INCLUSIVE">
+<code class="varname">recovery_target_inclusive</code> (<code class="type">boolean</code>) </dt> <dd> <p>Specifies whether to stop just after the specified recovery target (<code class="literal">true</code>), or just before the recovery target (<code class="literal">false</code>). Applies when <a class="xref" href="../recovery-target-settings/#RECOVERY-TARGET-LSN">recovery_target_lsn</a>, <a class="xref" href="../recovery-target-settings/#RECOVERY-TARGET-TIME">recovery_target_time</a>, or <a class="xref" href="../recovery-target-settings/#RECOVERY-TARGET-XID">recovery_target_xid</a> is specified. This setting controls whether transactions having exactly the target WAL location (LSN), commit time, or transaction ID, respectively, will be included in the recovery. Default is <code class="literal">true</code>.</p> </dd> <dt id="RECOVERY-TARGET-TIMELINE">
+<code class="varname">recovery_target_timeline</code> (<code class="type">string</code>) </dt> <dd> <p>Specifies recovering into a particular timeline. The default is to recover along the same timeline that was current when the base backup was taken. Setting this to <code class="literal">latest</code> recovers to the latest timeline found in the archive, which is useful in a standby server. Other than that you only need to set this parameter in complex re-recovery situations, where you need to return to a state that itself was reached after a point-in-time recovery. See <a class="xref" href="../continuous-archiving/#BACKUP-TIMELINES" title="25.3.5. Timelines">Section 25.3.5</a> for discussion.</p> </dd> <dt id="RECOVERY-TARGET-ACTION">
+<code class="varname">recovery_target_action</code> (<code class="type">enum</code>) </dt> <dd> <p>Specifies what action the server should take once the recovery target is reached. The default is <code class="literal">pause</code>, which means recovery will be paused. <code class="literal">promote</code> means the recovery process will finish and the server will start to accept connections. Finally <code class="literal">shutdown</code> will stop the server after reaching the recovery target.</p> <p>The intended use of the <code class="literal">pause</code> setting is to allow queries to be executed against the database to check if this recovery target is the most desirable point for recovery. The paused state can be resumed by using <code class="function">pg_wal_replay_resume()</code> (see <a class="xref" href="../functions-admin/#FUNCTIONS-RECOVERY-CONTROL-TABLE" title="Table 9.81. Recovery Control Functions">Table 9.81</a>), which then causes recovery to end. If this recovery target is not the desired stopping point, then shut down the server, change the recovery target settings to a later target and restart to continue recovery.</p> <p>The <code class="literal">shutdown</code> setting is useful to have the instance ready at the exact replay point desired. The instance will still be able to replay more WAL records (and in fact will have to replay WAL records since the last checkpoint next time it is started).</p> <p>Note that because <code class="filename">recovery.conf</code> will not be renamed when <code class="varname">recovery_target_action</code> is set to <code class="literal">shutdown</code>, any subsequent start will end with immediate shutdown unless the configuration is changed or the <code class="filename">recovery.conf</code> file is removed manually.</p> <p>This setting has no effect if no recovery target is set. If <a class="xref" href="../runtime-config-replication/#GUC-HOT-STANDBY">hot_standby</a> is not enabled, a setting of <code class="literal">pause</code> will act the same as <code class="literal">shutdown</code>.</p> </dd> </dl> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../archive-recovery-settings/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/recovery-config.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../standby-settings/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">27.1. Archive Recovery Settings </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/10/static/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 27.3. Standby Server Settings</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2018 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/10/static/recovery-target-settings.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/10/static/recovery-target-settings.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
