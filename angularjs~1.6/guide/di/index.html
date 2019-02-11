@@ -1,0 +1,195 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Guide&#58; Dependency Injection - Angular.js 1.6 - W3cubDocs</title>
+  
+  <meta name="description" content=" Dependency Injection (DI) is a software design pattern that deals with how components get hold of their dependencies. ">
+  <meta name="keywords" content="dependency, injection, guide, -, angular, js, angularjs~1.6">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angularjs~1.6/guide/di/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angularjs~1.6.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angularjs~1.6/" class="_nav-link" title="" style="margin-left:0;">Angular.js 1.6</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angularjs">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="dependency-injection">
+<a href="https://github.com/angular/angular.js/edit/v1.6.x/docs/content/guide/di.ngdoc?message=docs(guide%2FDependency%20Injection)%3A%20describe%20your%20change..." class="improve-docs btn btn-primary" target="_blank">Improve this Doc</a>Dependency Injection</h1> <p>Dependency Injection (DI) is a software design pattern that deals with how components get hold of their dependencies.</p> <p>The Angular injector subsystem is in charge of creating components, resolving their dependencies, and providing them to other components as requested.</p> <h2 id="using-dependency-injection">Using Dependency Injection</h2> <p>DI is pervasive throughout Angular. You can use it when defining components or when providing <code>run</code> and <code>config</code> blocks for a module.</p> <ul> <li>
+<p>Components such as services, directives, filters, and animations are defined by an injectable factory method or constructor function. These components can be injected with "service" and "value" components as dependencies.</p> </li> <li>
+<p>Controllers are defined by a constructor function, which can be injected with any of the "service" and "value" components as dependencies, but they can also be provided with special dependencies. See <a href="../di/#controllers.html">Controllers</a> below for a list of these special dependencies.</p> </li> <li>
+<p>The <code>run</code> method accepts a function, which can be injected with "service", "value" and "constant" components as dependencies. Note that you cannot inject "providers" into <code>run</code> blocks.</p> </li> <li>
+<p>The <code>config</code> method accepts a function, which can be injected with "provider" and "constant" components as dependencies. Note that you cannot inject "service" or "value" components into configuration.</p> </li> </ul> <p>See <a href="../module/#module-loading-dependencies.html">Modules</a> for more details about <code>run</code> and <code>config</code> blocks.</p> <h3 id="factory-methods">Factory Methods</h3> <p>The way you define a directive, service, or filter is with a factory function. The factory methods are registered with modules. The recommended way of declaring factories is:</p> <pre data-language="javascript">angular.module('myModule', [])
+.factory('serviceId', ['depService', function(depService) {
+  // ...
+}])
+.directive('directiveName', ['depService', function(depService) {
+  // ...
+}])
+.filter('filterName', ['depService', function(depService) {
+  // ...
+}]);
+</pre> <h3 id="module-methods">Module Methods</h3> <p>We can specify functions to run at configuration and run time for a module by calling the <code>config</code> and <code>run</code> methods. These functions are injectable with dependencies just like the factory functions above.</p> <pre data-language="javascript">angular.module('myModule', [])
+.config(['depProvider', function(depProvider) {
+  // ...
+}])
+.run(['depService', function(depService) {
+  // ...
+}]);
+</pre> <h3 id="controllers">Controllers</h3> <p>Controllers are "classes" or "constructor functions" that are responsible for providing the application behavior that supports the declarative markup in the template. The recommended way of declaring Controllers is using the array notation:</p> <pre data-language="javascript">someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope, dep1, dep2) {
+  ...
+  $scope.aMethod = function() {
+    ...
+  }
+  ...
+}]);
+</pre> <p>Unlike services, there can be many instances of the same type of controller in an application.</p> <p>Moreover, additional dependencies are made available to Controllers:</p> <ul> <li>
+<a href="../scope/"><code>$scope</code></a>: Controllers are associated with an element in the DOM and so are provided with access to the <a href="../scope/">scope</a>. Other components (like services) only have access to the <a href="../../api/ng/service/%24rootscope/"><code>$rootScope</code></a> service.</li> <li>
+<a href="../../api/ngroute/provider/%24routeprovider/#when.html">resolves</a>: If a controller is instantiated as part of a route, then any values that are resolved as part of the route are made available for injection into the controller.</li> </ul> <h2 id="dependency-annotation">Dependency Annotation</h2> <p>Angular invokes certain functions (like service factories and controllers) via the injector. You need to annotate these functions so that the injector knows what services to inject into the function. There are three ways of annotating your code with service name information:</p> <ul> <li>Using the inline array annotation (preferred)</li> <li>Using the <code>$inject</code> property annotation</li> <li>Implicitly from the function parameter names (has caveats)</li> </ul> <h3 id="inline-array-annotation">Inline Array Annotation</h3> <p>This is the preferred way to annotate application components. This is how the examples in the documentation are written.</p> <p>For example:</p> <pre data-language="javascript">someModule.controller('MyController', ['$scope', 'greeter', function($scope, greeter) {
+  // ...
+}]);
+</pre> <p>Here we pass an array whose elements consist of a list of strings (the names of the dependencies) followed by the function itself.</p> <p>When using this type of annotation, take care to keep the annotation array in sync with the parameters in the function declaration.</p> <h3 id="-inject-property-annotation">$inject Property Annotation</h3> <p>To allow the minifiers to rename the function parameters and still be able to inject the right services, the function needs to be annotated with the <code>$inject</code> property. The <code>$inject</code> property is an array of service names to inject.</p> <pre data-language="javascript">var MyController = function($scope, greeter) {
+  // ...
+}
+MyController.$inject = ['$scope', 'greeter'];
+someModule.controller('MyController', MyController);
+</pre> <p>In this scenario the ordering of the values in the <code>$inject</code> array must match the ordering of the parameters in <code>MyController</code>.</p> <p>Just like with the array annotation, you'll need to take care to keep the <code>$inject</code> in sync with the parameters in the function declaration.</p> <h3 id="implicit-annotation">Implicit Annotation</h3> <div class="alert alert-danger"> <strong>Careful:</strong> If you plan to <a href="http://en.wikipedia.org/wiki/Minification_(programming)" target="_blank">minify</a> your code, your service names will get renamed and break your app. </div> <p>The simplest way to get hold of the dependencies is to assume that the function parameter names are the names of the dependencies.</p> <pre data-language="javascript">someModule.controller('MyController', function($scope, greeter) {
+  // ...
+});
+</pre> <p>Given a function, the injector can infer the names of the services to inject by examining the function declaration and extracting the parameter names. In the above example, <code>$scope</code> and <code>greeter</code> are two services which need to be injected into the function.</p> <p>One advantage of this approach is that there's no array of names to keep in sync with the function parameters. You can also freely reorder dependencies.</p> <p>However this method will not work with JavaScript minifiers/obfuscators because of how they rename parameters.</p> <p>Tools like <a href="https://github.com/olov/ng-annotate" target="_blank">ng-annotate</a> let you use implicit dependency annotations in your app and automatically add inline array annotations prior to minifying. If you decide to take this approach, you probably want to use <code>ng-strict-di</code>.</p> <p>Because of these caveats, we recommend avoiding this style of annotation.</p> <h2 id="using-strict-dependency-injection">Using Strict Dependency Injection</h2> <p>You can add an <code>ng-strict-di</code> directive on the same element as <code>ng-app</code> to opt into strict DI mode:</p> <pre data-language="html">&lt;!doctype html&gt;
+&lt;html ng-app="myApp" ng-strict-di&gt;
+&lt;body&gt;
+  I can add: {{ 1 + 2 }}.
+  &lt;script src="angular.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre> <p>Strict mode throws an error whenever a service tries to use implicit annotations.</p> <p>Consider this module, which includes a <code>willBreak</code> service that uses implicit DI:</p> <pre data-language="javascript">angular.module('myApp', [])
+.factory('willBreak', function($rootScope) {
+  // $rootScope is implicitly injected
+})
+.run(['willBreak', function(willBreak) {
+  // Angular will throw when this runs
+}]);
+</pre> <p>When the <code>willBreak</code> service is instantiated, Angular will throw an error because of strict mode. This is useful when using a tool like <a href="https://github.com/olov/ng-annotate" target="_blank">ng-annotate</a> to ensure that all of your application components have annotations.</p> <p>If you're using manual bootstrapping, you can also use strict DI by providing <code>strictDi: true</code> in the optional config argument:</p> <pre data-language="javascript">angular.bootstrap(document, ['myApp'], {
+  strictDi: true
+});
+</pre> <h2 id="why-dependency-injection-">Why Dependency Injection?</h2> <p>This section motivates and explains Angular's use of DI. For how to use DI, see above.</p> <p>For in-depth discussion about DI, see <a href="http://en.wikipedia.org/wiki/Dependency_injection" target="_blank">Dependency Injection</a> at Wikipedia, <a href="http://martinfowler.com/articles/injection.html" target="_blank">Inversion of Control</a> by Martin Fowler, or read about DI in your favorite software design pattern book.</p> <p>There are only three ways a component (object or function) can get a hold of its dependencies:</p> <ol> <li>The component can create the dependency, typically using the <code>new</code> operator.</li> <li>The component can look up the dependency, by referring to a global variable.</li> <li>The component can have the dependency passed to it where it is needed.</li> </ol> <p>The first two options of creating or looking up dependencies are not optimal because they hard code the dependency to the component. This makes it difficult, if not impossible, to modify the dependencies. This is especially problematic in tests, where it is often desirable to provide mock dependencies for test isolation.</p> <p>The third option is the most viable, since it removes the responsibility of locating the dependency from the component. The dependency is simply handed to the component.</p> <pre data-language="javascript">function SomeClass(greeter) {
+  this.greeter = greeter;
+}
+
+SomeClass.prototype.doSomething = function(name) {
+  this.greeter.greet(name);
+}
+</pre> <p>In the above example <code>SomeClass</code> is not concerned with creating or locating the <code>greeter</code> dependency, it is simply handed the <code>greeter</code> when it is instantiated.</p> <p>This is desirable, but it puts the responsibility of getting hold of the dependency on the code that constructs <code>SomeClass</code>.</p> <p><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="data:image/png;base64,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"></p> <p>To manage the responsibility of dependency creation, each Angular application has an <a href="../../api/ng/function/angular.injector/">injector</a>. The injector is a <a href="http://en.wikipedia.org/wiki/Service_locator_pattern" target="_blank">service locator</a> that is responsible for construction and lookup of dependencies.</p> <p>Here is an example of using the injector service:</p> <pre data-language="javascript">// Provide the wiring information in a module
+var myModule = angular.module('myModule', []);
+</pre> <p>Teach the injector how to build a <code>greeter</code> service. Notice that <code>greeter</code> is dependent on the <code>$window</code> service. The <code>greeter</code> service is an object that contains a <code>greet</code> method.</p> <pre data-language="javascript">myModule.factory('greeter', function($window) {
+  return {
+    greet: function(text) {
+      $window.alert(text);
+    }
+  };
+});
+</pre> <p>Create a new injector that can provide components defined in our <code>myModule</code> module and request our <code>greeter</code> service from the injector. (This is usually done automatically by angular bootstrap).</p> <pre data-language="javascript">var injector = angular.injector(['ng', 'myModule']);
+var greeter = injector.get('greeter');
+</pre> <p>Asking for dependencies solves the issue of hard coding, but it also means that the injector needs to be passed throughout the application. Passing the injector breaks the <a href="http://en.wikipedia.org/wiki/Law_of_Demeter" target="_blank">Law of Demeter</a>. To remedy this, we use a declarative notation in our HTML templates, to hand the responsibility of creating components over to the injector, as in this example:</p> <pre data-language="html">&lt;div ng-controller="MyController"&gt;
+  &lt;button ng-click="sayHello()"&gt;Hello&lt;/button&gt;
+&lt;/div&gt;
+</pre> <pre data-language="javascript">function MyController($scope, greeter) {
+  $scope.sayHello = function() {
+    greeter.greet('Hello World');
+  };
+}
+</pre> <p>When Angular compiles the HTML, it processes the <code>ng-controller</code> directive, which in turn asks the injector to create an instance of the controller and its dependencies.</p> <pre data-language="javascript">injector.instantiate(MyController);
+</pre> <p>This is all done behind the scenes. Notice that by having the <code>ng-controller</code> ask the injector to instantiate the class, it can satisfy all of the dependencies of <code>MyController</code> without the controller ever knowing about the injector.</p> <p>This is the best outcome. The application code simply declares the dependencies it needs, without having to deal with the injector. This setup does not break the Law of Demeter.</p> <div class="alert alert-info"> <strong>Note:</strong> Angular uses <a href="http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/" target="_blank"><strong>constructor injection</strong></a>. </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://code.angularjs.org/1.6.6/docs/guide/di" class="_attribution-link" target="_blank">https://code.angularjs.org/1.6.6/docs/guide/di</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
