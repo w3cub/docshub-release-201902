@@ -1,0 +1,125 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>5. Serving Static Files in Express - Express - W3cubDocs</title>
+  
+  <meta name="description" content=" To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express. ">
+  <meta name="keywords" content="serving, static, files, express, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/express/starter/static-files/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/express.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/express/" class="_nav-link" title="" style="margin-left:0;">Express</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _express">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="serving-static-files-in-express" data-level="5">Serving static files in Express</h1> <p>To serve static files such as images, CSS files, and JavaScript files, use the <code>express.static</code> built-in middleware function in Express.</p> <p>The function signature is:</p> <pre data-language="js">express.static(root, [options])
+</pre> <p>The <code>root</code> argument specifies the root directory from which to serve static assets. For more information on the <code>options</code> argument, see <a href="../../#express.static">express.static</a>.</p> <p>For example, use the following code to serve images, CSS files, and JavaScript files in a directory named <code>public</code>:</p> <pre data-language="js">app.use(express.static('public'))
+</pre> <p>Now, you can load the files that are in the <code>public</code> directory:</p> <pre data-language="plain">http://localhost:3000/images/kitten.jpg
+http://localhost:3000/css/style.css
+http://localhost:3000/js/app.js
+http://localhost:3000/images/bg.png
+http://localhost:3000/hello.html
+</pre> <div class="doc-box doc-info"> Express looks up the files relative to the static directory, so the name of the static directory is not part of the URL. </div> <p>To use multiple static assets directories, call the <code>express.static</code> middleware function multiple times:</p> <pre data-language="js">app.use(express.static('public'))
+app.use(express.static('files'))
+</pre> <p>Express looks up the files in the order in which you set the static directories with the <code>express.static</code> middleware function.</p> <div class="doc-box doc-info"> <p>NOTE: For best results, <a href="../../advanced/best-practice-performance/#use-a-reverse-proxy">use a reverse proxy</a> cache to improve performance of serving static assets.</p> </div> <p>To create a virtual path prefix (where the path does not actually exist in the file system) for files that are served by the <code>express.static</code> function, <a href="../../#app.use">specify a mount path</a> for the static directory, as shown below:</p> <pre data-language="js">app.use('/static', express.static('public'))
+</pre> <p>Now, you can load the files that are in the <code>public</code> directory from the <code>/static</code> path prefix.</p> <pre data-language="plain">http://localhost:3000/static/images/kitten.jpg
+http://localhost:3000/static/css/style.css
+http://localhost:3000/static/js/app.js
+http://localhost:3000/static/images/bg.png
+http://localhost:3000/static/hello.html
+</pre> <p>However, the path that you provide to the <code>express.static</code> function is relative to the directory from where you launch your <code>node</code> process. If you run the express app from another directory, it’s safer to use the absolute path of the directory that you want to serve:</p> <pre data-language="js">app.use('/static', express.static(path.join(__dirname, 'public')))
+</pre> <p>For more details about the <code>serve-static</code> function and its options, see <a href="http://expressjs.com/en/resources/middleware/serve-static.html" target="_blank">serve-static</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 StrongLoop, IBM, and other expressjs.com contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v3.0.<br>
+    <a href="http://expressjs.com/en/starter/static-files.html" class="_attribution-link" target="_blank">http://expressjs.com/en/starter/static-files.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
