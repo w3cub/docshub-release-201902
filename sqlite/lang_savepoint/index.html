@@ -1,0 +1,112 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SAVEPOINT - SQLite - W3cubDocs</title>
+  
+  <meta name="description" content=" [Top] ">
+  <meta name="keywords" content="sql, understood, sqlite, savepoint, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/sqlite/lang_savepoint/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/sqlite.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sqlite">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>SQL As Understood By SQLite</h1>
+<p><a href="../lang/">[Top]</a></p>
+<h2>SAVEPOINT</h2>
+<p><b><a href="../syntax/savepoint-stmt/">savepoint-stmt:</a></b> <button id="x1171" class="_btn" data-toggle="x1172">hide</button></p> <div id="x1172" class="imgcontainer"> <img alt="syntax diagram savepoint-stmt" src="data:image/gif;base64,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"> </div> <p><b><a href="../syntax/release-stmt/">release-stmt:</a></b> <button id="x1173" class="_btn" data-toggle="x1174">hide</button></p> <div id="x1174" class="imgcontainer"> <img alt="syntax diagram release-stmt" src="data:image/gif;base64,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"> </div> <p><b><a href="../syntax/rollback-stmt/">rollback-stmt:</a></b> <button id="x1175" class="_btn" data-toggle="x1176">hide</button></p> <div id="x1176" class="imgcontainer"> <img alt="syntax diagram rollback-stmt" src="data:image/gif;base64,R0lGODlhzAI2APUoAO7u7g4ODhERERQUFBsbGyIiIiQkJCkpKS0tLTMzMzY2Njs7Oz8/P0REREpKSk9PT1VVVVxcXF9fX2ZmZm9vb3BwcHd3d319fYWFhYiIiJOTk5mZmZ+fn6Kioqqqqq+vr7Gxsbu7u76+vsDAwMzMzN3d3f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUAACgALAAAAADMAjYAAAb/QJNwSCwaj8ikcslsOp/QqHRKrVqv2Kx2y+16v+CweEwuM1HmtHrNbrvf8Lh8Tq/b1ei7fs/v+/+AgYKDhGeFh4iJiouMjY6PVHlbJBsWDSeYmZqbnJ2en6ChoicNFhskcAAhlgILo6+wsbKzmwcCpR4lhCEZEwkEswQJExkhcby+wLTLzLLCxMaQ0oSSWCWXmQIJDdzd3t/g4eLj5OXjCQKaDbprABab5vHy8/T18emZEACAHviYB/YOaBLgoU0/TQDtKVy4UGC2gtMi+qlmJUO6AhZySSzhwUKBEwIyqCGRAKQpVBKtcPQIEuIeABAwQbOCDJO+NDBlFksppOaJ/5tsVFmgYKGo0aNIkypdyrSp06dQox7FoNEOxSnXMFngaeQdKXZjvALlisWdzX13DhaIpiXER4Jl1LIl2/OtyzIsm+ndy5eZgLFxrkopmQAl3SEkTyQg8y7k4S1uf94hoRUtF7MnDIOhfMKC5ccmMGsOk1gxsQ4hUqtezbq169ewY8ueTbv2ag6sWs4RDOVdA9BGLm0lDXI08CoAPt6VU1JkmAyKxzQ/XgT64jEbMK2jvkWsHN5OKAsAS71EOuNbpnPHEgLkZzi+yQgPE3/9kPnEHdtv+3H4G/BNqGefdWDUt58V70Awh3jkgWFeZl8weKAJD6KnhYATXlEhHAAu0f/ebxNeMtcWIDWYIRTJnWAiGxOc4BwZ0E3wRYsvHhhjgaScqIV17+FRxTsbMIFNJg1Y5kFJirl0SXAnHLEJYNlBSEReEKC0pBDvJNBjEdn5N0mOSni1SQhDYlIYEVEadomMQlzpTjp/kZdmEVSiIqYmZDYpxJsmobXmfXou8c5ybZS0RCcgAjDBRV4mEZ0XhjKRwUekjPiRgli6OMQ7IpWJiRBPGolkAi6BiUmQoJbSyYhGPOpFiX90RkhMhKYhSQmshoZETBYScUk3/WVKCjbDXelroESAxE1JIAoRk6xDtHjLW7pcmV0BWxZBGaZEAJCtE10usQE36XRDwq/Lgun/rFaASnllixBYckIBRDzrpbQNUDtuA+Vyc26gJd2SznXYWIlsEh5Aq9IVriLRjbKlhFZSAfyewKYSkRaxIhQNI5FdAha0qCJimaBFWbMlVTtsN6Dekq/FwnLDrgmmzosWKfv220CvQmRMxZbbAmJBriaMq0fCjVqTBAmaoQEAknAR4VYG76XThLEA5FiCYuyUkLIJxgLqJMqBZv0RvT0phlZMMi4pHs/JCmBEchPAncSgToQddsZmz9suiFe6KuKe8/qdtpbrXqy3njcKQSPY2rV5MBJbN1vFBA2gKkV7Fx9q+TtsPn0C0dGObgTmmkfBuZAnoPWOf+98pPlH+2RN//DkNCf6EYVcC+H1yDVDq27YS7RI+tUTjIiBwoi8o0flXaCuLaUFoIQGYc82iE3yvqurBNYw4z0E0pAzObbvBaBddGclofQOWyWYAjkJAghgN6AmepXABt86PPLVyNqb+rrUPsmVpCBXqh//KBQCtBBQSu8bQvw0t7ietW4ItoPcAcvXhPpZAxMCsMDGkgCdGinBeyUxEvOOUEIjbM0kI0RCC5cgHF2oAiyyk0ymCpId5xAvVWITnxDIZ6oC1E8Xw8OdDDVVhfbMi2qOM50UcvITXVjgIkEqwHW0WLSzFcQ38wqSogYGEVkpplyYsRzN0EGKfVwxjCYAowAW1cY4lv/rfkfwIBdeGEIbDixg+0DB1q4jgRMQ4BsI0EQBMvABHdJwZUZExQ9z9MMf0mwgasoMdIqlxEsE6wkx2cY3GDCQuqUPAQwoRwCUeITFdaMkFNQktETktytBBxMFgICSZMnJ7wVQT94rHy3pZckjtE8eCjBiABTwDX/gLAIFOAAzyeGAE9TqfEMIZjCNkDBxODNz0JSmOazJhISBEAKaa4+C0mEymLWIHZ4CEZjoR8zJ5chUqpJREp+ANEuUIwEFCIDLvLHKTExABJfAY3Ws6YEGZOAaQ4tJHFVEmYd2JgTvTFAIYlKCRW1go8Dbyrw80ELnFWGkJYQoSCeagYSRapP/2fkoQKlwTHsowAACWGYz1dEiNrUoSChQpxAuMIr9dcx/mrjJJH9TSdxB7JNbo1dUJee/+pHTCUgSRQhhUUAAHksTZ+KdVA23pNcZiwQWgAClgjTVqXLQf8cCYlzL2plitmotfdHEBJQhCvwwwXvaVGNXSDGKCVBKFNVM2hFKkAG1niqKQfrpENJnAm0AyhvD4USn7PkbfJqgJB8SmxOA5KlmzLFF11yCSy2AErS+kXcZgE78xvSO2nUGWlkTqW5BtRXneaWzmd2Ka61mUuHJSxNUmJcT88oJUg7ndSZAQzoyko4RiWyOKPFZEoyFNyGagHxNxeZn5WYC6LgME6ho/5FhVCHJzGRnPE44qgmWmzkhUOK32QJS3n45PmiZV2YQWhIA6qfdIebovwUzgXoxGIJMxvWzFyTcYgRMYFZKzZFJ2MDALCCC9wwYl1AswQdYIgCinSy+lkvhENqj2GMZ58NP3MdK3mLibaoWTAN7GbeAxMS3xq0bqPIuEeX5mw/tc788++1ONJaJ/e2DfFjJwAFZvAo9iVJBEdzUBXOLWzPulma9bdIq5GdcKvsWmMG1qxOECgUNK2ZoHsZHATAAgK0JYANu1gUazCkTJjuZCMZj3YplRZkEdO1r4W0V2Sy4ia20B3ETVdCVstS/tHXuPn08QmK4VQQW7/fBcs1qJv+2ciU+z9dVWVOQqNn1aNc5soITvdjjSp2JJmxyCZxpcaxzZRYBZAskKJ4SzCQmxSRYbbDcm1tjfk3eE/qacArisyba+RGwWHKbhT408IgcM9F20MIJ088RFlU3IkBPChOAQAgSlgEgeWB35X3stlaxDo1y1KMgReKXZfWO0RjX3bsrbnA3uVFOP+HWT8j13Sw2l1tiwjl5iN/QjNBgFvZ4u4Hy9ESHNTN0cYPUK+NGy7jxERm5VaxRnBYmjGGsklza4iYMTeqOkKJaZdCr3s4dyrtXzyE8y4IgY0kuDLdzfFGKLbCGsMAeZayfMyHQGDsBBpSwwDBh+FgxzKblREf/sXS8nMmCLVqlE+S/rLcII0JX8Ak0J1khfOQ6kvsGKmz8W2LJFUwpapaazW3jPVWX6lv6u+qQNAFvefISNsSEA70YaziOMUm8BXPkQ3CLkwYXAIdXkcAj/8adTfEjCoVwzNG0pTGzpUNKEE+lz6quI5lpl+qA3CZAldR9INztEKSUuqnqu3SMHoPnoUJ7ml0E5eCc90IQQAEYyzzQG+tBe6IjKQpyexOAHku6n0vS+RRCPwUK+rh2jxKgE/YopAg9ZP+rGh+PESbERNdLOP8R0p8Ed1CKVMmP8Pp2fPHSGqPvrgd5d9cs3ZRzSvB+SdAi8KcECYMtbWBS0kB/ttZ3/1OAelZncNSBgFWQUEcwfJWmI8Z0cUcQE8fzBOEyN8Y3Bg34gRm2QnuSgvuxgkmgYlTANg9oYYgQbizoc8WGBRZYfzBIHTL4I2uHBBIIgkxgIEkAb1hwYh0ofmHwYSUYfuXngfshhScEd1PwYduhBqsACZiRWkjAhFnwg0kwfKEHCfTTg1OgAQVwAUiQIr+HhJ0GK0twAFp4BQOQh8IGGJehgVawhwvnh6CRE/A3Arl0BYkREllHh6HxbroRBXjIBWa4cC5IFl6xgE2gcU/4FY5Ic14xh8lSflNgVymyFl4QGQ54BaZ4NlMYEarYP5yIINnQABIgFbiYi7q4i7x4FP8OcFiE2AQUWIFZYBGKkYaJsIii+ASzaASLKIYnEhlRo35boGZU5BlagBnBKAXWaC872AjaWGnNWAVoVTHMdY7oqBfAADLQeEKkSIxZkBWmsWSQgAxI0oXscYl0AkK40IiPIRSO9RPfOIxRsHffhQ+lcApScF/YMI1YYJAHQQonEREMCULteGqaKAW4Yhsc2ZEe+ZEguRoikAUEGQWVKCmrlo4qKQsJsIyqo4+dViYGsJI0mY6HNX1RUJJPYJChYVh9UQCFxwU8qSg3WZNGGQpAuYPj+Il9oJNPcJJr1gsLwBBUWZXjsAAz4QUicABftzSVIAFWGZZiWZUSQAzIGBr/BSAB1YiDRQAAHQGW9XCLHvCNUPAA6tMEbmkBcDmWfMkQckmXJgACc8aUguCUTgCVhFkF55aYYLA6WsCTgIB4jDl+UjeZfmCYTYCYlhkFx7aZXMApa+kI3uWZUfSKpLkGmGkIp/kFtLKaWdBVWQCZf5AdGLiZH+aadpCaS6CZuHmGUPgSKaGED8mWgVBzcOCPfACIvRkHuqkEvLmc89c7ezA1gPkH5oWcn+YIw2eaM1JfhRA71Qmdr/KOUvCc4tktAfNQe7A93NkHeVKEQkmcgpCJZ/lBMBQIrldi58mc5GmS+6kFYqINfWmViZQJi4RQA5qg35BVYRWf0hCRIaeg/+HwTXgmoVXpEJ74n2/QnElgnhpqX8d1lM2QABVQlCKqFweQSy5JBbIpCO7QAAHgCifqCRMgASY6o5/wDDP3oajZn1DgoTzaB9dVbp/YookJY4sUnkEKGhyKBEC6pHcwSFXHlHa5n6DTnlBKHcmhllvwpFlKBxU3mZIpnlP6pY7omFrgpWa6plkwmmz6po8Bml0Kp3TqBrRZp3hKFrBZhnnap2RgnH6qNIEKH03qpIN6qF2wnYhKBeYhQouaBtfZBWr6qIFKn5QKBSLjnZeaitiwoz64qaAaBRBqoaRaqqZalaLWR9N0qqzaqq5aDwxan7sZqrTqBC/aCjiaq7q6q0KLtKu++qu6mqIQsKKRUKvGeqxEKBNYiqxrMKnM+qx5OmBJCq194KzUeq1rSgLLiq22wq3e+q3g+h/hOq7kWq6SGgQAOw=="> </div> <p> SAVEPOINTs are a method of creating transactions, similar to <a href="../lang_transaction/">BEGIN</a> and <a href="../lang_transaction/">COMMIT</a>, except that the SAVEPOINT and RELEASE commands are named and may be nested.</p> <p> The SAVEPOINT command starts a new transaction with a name. The transaction names need not be unique. A SAVEPOINT can be started either within or outside of a <a href="../lang_transaction/">BEGIN</a>...<a href="../lang_transaction/">COMMIT</a>. When a SAVEPOINT is the outer-most savepoint and it is not within a <a href="../lang_transaction/">BEGIN</a>...<a href="../lang_transaction/">COMMIT</a> then the behavior is the same as BEGIN DEFERRED TRANSACTION.</p> <p>The ROLLBACK TO command reverts the state of the database back to what it was just after the corresponding SAVEPOINT. Note that unlike that plain <a href="../lang_transaction/">ROLLBACK</a> command (without the TO keyword) the ROLLBACK TO command does not cancel the transaction. Instead of cancelling the transaction, the ROLLBACK TO command restarts the transaction again at the beginning. All intervening SAVEPOINTs are canceled, however.</p> <p>The RELEASE command is like a <a href="../lang_transaction/">COMMIT</a> for a SAVEPOINT. The RELEASE command causes all savepoints back to and including the most recent savepoint with a matching name to be removed from the transaction stack. The RELEASE of an inner transaction does not cause any changes to be written to the database file; it merely removes savepoints from the transaction stack such that it is no longer possible to ROLLBACK TO those savepoints. If a RELEASE command releases the outermost savepoint, so that the transaction stack becomes empty, then RELEASE is the same as <a href="../lang_transaction/">COMMIT</a>. The <a href="../lang_transaction/">COMMIT</a> command may be used to release all savepoints and commit the transaction even if the transaction was originally started by a SAVEPOINT command instead of a <a href="../lang_transaction/">BEGIN</a> command.</p> <p>If the savepoint-name in a RELEASE command does not match any savepoint currently in the transaction stack, then no savepoints are released, the database is unchanged, and the RELEASE command returns an error.</p> <p>Note that an inner transaction might commit (using the RELEASE command) but then later have its work undone by a ROLLBACK in an outer transaction. A power failure or program crash or OS crash will cause the outer-most transaction to rollback, undoing all changes that have occurred within that outer transaction, even changes that have supposedly been "committed" by the RELEASE command. Content is not actually committed on the disk until the outermost transaction commits.</p> <p>There are several ways of thinking about the RELEASE command:</p> <ul> <li><p> Some people view RELEASE as the equivalent of COMMIT for a SAVEPOINT. This is an acceptable point of view as long as one remembers that the changes committed by an inner transaction might later be undone by a rollback in an outer transaction.</p></li> <li><p> Another view of RELEASE is that it merges a named transaction into its parent transaction, so that the named transaction and its parent become the same transaction. After RELEASE, the named transaction and its parent will commit or rollback together, whatever their fate may be. </p></li> <li><p> One can also think of savepoints as "marks" in the transaction timeline. In this view, the SAVEPOINT command creates a new mark, the ROLLBACK TO command rewinds the timeline back to a point just after the named mark, and the RELEASE command erases marks from the timeline without actually making any changes to the database. </p></li> </ul> <h3>Transaction Nesting Rules</h3> <p>The last transaction started will be the first transaction committed or rolled back.</p> <p>The <a href="../lang_transaction/">BEGIN</a> command only works if the transaction stack is empty, or in other words if there are no pending transactions. If the transaction stack is not empty when the <a href="../lang_transaction/">BEGIN</a> command is invoked, then the command fails with an error.</p> <p>The <a href="../lang_transaction/">COMMIT</a> command commits all outstanding transactions and leaves the transaction stack empty.</p> <p>The RELEASE command starts with the most recent addition to the transaction stack and releases savepoints backwards in time until it releases a savepoint with a matching savepoint-name. Prior savepoints, even savepoints with matching savepoint-names, are unchanged. If the RELEASE command causes the transaction stack to become empty (if the RELEASE command releases the outermost transaction from the stack) then the transaction commits.</p> <p>The <a href="../lang_transaction/">ROLLBACK</a> command without a TO clause rolls backs all transactions and leaves the transaction stack empty.</p> <p>The ROLLBACK command with a TO clause rolls back transactions going backwards in time back to the most recent SAVEPOINT with a matching name. The SAVEPOINT with the matching name remains on the transaction stack, but all database changes that occurred after that SAVEPOINT was created are rolled back. If the savepoint-name in a ROLLBACK TO command does not match any SAVEPOINT on the stack, then the ROLLBACK command fails with an error and leaves the state of the database unchanged.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    SQLite is in the Public Domain.<br>
+    <a href="https://sqlite.org/lang_savepoint.html" class="_attribution-link" target="_blank">https://sqlite.org/lang_savepoint.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

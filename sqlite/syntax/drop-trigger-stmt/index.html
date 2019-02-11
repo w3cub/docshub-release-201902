@@ -1,0 +1,109 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SQLite Syntax&#58; Drop-trigger-stmt - SQLite - W3cubDocs</title>
+  
+  <meta name="description" content=" SQLite is in the Public Domain. https&#58;&#47;&#47;sqlite.org&#47;syntax&#47;drop-trigger-stmt.html ">
+  <meta name="keywords" content="drop-trigger-stmt, sqlite, syntax, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/sqlite/syntax/drop-trigger-stmt/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/sqlite.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sqlite">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>drop-trigger-stmt</h1> <div class="imgcontainer"> <img alt="syntax diagram drop-trigger-stmt" src="data:image/gif;base64,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"><br> Used by: <a href="../sql-stmt/">sql-stmt</a><br> See also: <a href="../../lang_droptrigger/">lang_droptrigger.html</a> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    SQLite is in the Public Domain.<br>
+    <a href="https://sqlite.org/syntax/drop-trigger-stmt.html" class="_attribution-link" target="_blank">https://sqlite.org/syntax/drop-trigger-stmt.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
