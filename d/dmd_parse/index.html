@@ -1,0 +1,269 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>dmd.parse - D - W3cubDocs</title>
+  
+  <meta name="description" content=" Compiler implementation of the D programming language. ">
+  <meta name="keywords" content="dmd, parse, -, d">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/d/dmd_parse/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/d.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/d/" class="_nav-link" title="" style="margin-left:0;">D</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _d">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>dmd.parse</h1>  <p>Compiler implementation of the <a href="http://www.dlang.org" target="_blank">D programming language</a>. </p>
+<dl>
+<dt>Authors:</dt>
+<dd>
+<a href="http://www.digitalmars.com" target="_blank">Walter Bright</a> </dd>
+</dl> <dl>
+<dt>License:</dt>
+<dd>
+<a href="http://www.boost.org/LICENSE_1_0.txt" target="_blank">Boost License 1.0</a> </dd>
+</dl> <dl>
+<dt>Source</dt>
+<dd> <a href="https://github.com/dlang/dmd/blob/master/src/dmd/parse.d" target="_blank">parse.d</a> </dd>
+</dl> <dl>
+<dt>Documentation</dt>
+<dd> <a href="../dmd_parse/">https://dlang.org/phobos/dmd_parse.html</a> </dd>
+</dl> <dl>
+<dt>Coverage</dt>
+<dd> <a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/parse.d" target="_blank">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/parse.d</a>
+</dd>
+</dl> <dl>
+<dt class="d_decl" id="precedence">PREC[TOK.max_] <strong id="precedence">precedence</strong>; </dt> <dd>
+<p>Set operator precedence for each operator.</p> </dd> <dt class="d_decl" id="Parser">class <strong id="Parser">Parser</strong>(AST): Lexer; </dt> <dd> <dl>
+<dt class="d_decl" id="Parser.this">this(ref const Loc loc, AST.Module _module, const(char)[] input, bool doDocComment); </dt> <dd>
+<p>Use this constructor for string mixins. </p>
+<dl>
+<dt>Input</dt>
+<dd> loc location in source file of mixin</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseAutoDeclarations">AST.Dsymbols* <strong id="parseAutoDeclarations">parseAutoDeclarations</strong>(StorageClass storageClass, const(char)* comment); </dt> <dd>
+<p>Parse auto declarations of the form: storageClass ident = init, ident = init, ... ; and return the array of them. Starts with token on the first ident. Ends with scanner past closing ';'</p> </dd> <dt class="d_decl" id="Parser.parseBlock">AST.Dsymbols* <strong id="parseBlock">parseBlock</strong>(AST.Dsymbol* pLastDecl, PrefixAttributes!AST* pAttrs = null); </dt> <dd>
+<p>Parse declarations after an align, protection, or extern decl.</p> </dd> <dt class="d_decl" id="Parser.appendStorageClass">StorageClass <strong id="appendStorageClass">appendStorageClass</strong>(StorageClass storageClass, StorageClass stc); </dt> <dd>
+<p>Give error on redundant/conflicting storage class.</p> </dd> <dt class="d_decl" id="Parser.parseAttribute">StorageClass <strong id="parseAttribute">parseAttribute</strong>(AST.Expressions** pudas); </dt> <dd>
+<p>Parse attribute, lexer is on '@'. </p>
+<dl>
+<dt>Input</dt>
+<dd> pudas array of UDAs to append to </dd>
+</dl> <dl>
+<dt>Returns:</dt>
+<dd>storage class if a predefined attribute; also scanner remains on identifier. 0 if not a predefined attribute *pudas set if user defined attribute, scanner is past UDA *pudas NULL if not a user defined attribute</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parsePostfix">StorageClass <strong id="parsePostfix">parsePostfix</strong>(StorageClass storageClass, AST.Expressions** pudas); </dt> <dd>
+<p>Parse const/immutable/shared/inout/nothrow/pure postfix</p> </dd> <dt class="d_decl" id="Parser.parseConstraint">AST.Expression <strong id="parseConstraint">parseConstraint</strong>(); </dt> <dd>
+<p>Parse constraint. Constraint is of the form: if ( ConstraintExpression )</p> </dd> <dt class="d_decl" id="Parser.parseTemplateDeclaration">AST.TemplateDeclaration <strong id="parseTemplateDeclaration">parseTemplateDeclaration</strong>(bool ismixin = false); </dt> <dd>
+<p>Parse a TemplateDeclaration.</p> </dd> <dt class="d_decl" id="Parser.parseTemplateParameterList">AST.TemplateParameters* <strong id="parseTemplateParameterList">parseTemplateParameterList</strong>(int flag = 0); </dt> <dd>
+<p>Parse template parameter list. </p>
+<dl>
+<dt>Input</dt>
+<dd> flag 0: parsing "( list )" 1: parsing non-empty "list )"</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseMixin">AST.Dsymbol <strong id="parseMixin">parseMixin</strong>(); </dt> <dd>
+<p>Parse template mixin. mixin Foo; mixin Foo!(args); mixin a.b.c!(args).Foo!(args); mixin Foo!(args) identifier; mixin typeof(expr).identifier!(args);</p> </dd> <dt class="d_decl" id="Parser.parseTemplateArguments">AST.Objects* <strong id="parseTemplateArguments">parseTemplateArguments</strong>(); </dt> <dd>
+<p>Parse template arguments. </p>
+<dl>
+<dt>Input</dt>
+<dd> current token is opening '!' </dd>
+</dl> <dl>
+<dt>Output</dt>
+<dd> current token is one after closing ')'</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseTemplateArgumentList">AST.Objects* <strong id="parseTemplateArgumentList">parseTemplateArgumentList</strong>(); </dt> <dd>
+<p>Parse template argument list. </p>
+<dl>
+<dt>Input</dt>
+<dd> current token is opening '(', or ',' for _traits </dd>
+</dl> <dl>
+<dt>Output</dt>
+<dd> current token is one after closing ')'</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseTemplateSingleArgument">AST.Objects* <strong id="parseTemplateSingleArgument">parseTemplateSingleArgument</strong>(); </dt> <dd>
+<p>Parse single template argument, to support the syntax: foo!arg </p>
+<dl>
+<dt>Input</dt>
+<dd> current token is the arg</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseStaticAssert">AST.StaticAssert <strong id="parseStaticAssert">parseStaticAssert</strong>(); </dt> <dd>
+<p>Parse a static assertion. Current token is 'static'.</p> </dd> <dt class="d_decl" id="Parser.parseTypeof">AST.TypeQualified <strong id="parseTypeof">parseTypeof</strong>(); </dt> <dd>
+<p>Parse typeof(expression). Current token is on the 'typeof'.</p> </dd> <dt class="d_decl" id="Parser.parseVector">AST.Type <strong id="parseVector">parseVector</strong>(); </dt> <dd>
+<p>Parse _vector(type). Current token is on the '_vector'.</p> </dd> <dt class="d_decl" id="Parser.parseLinkage">LINK <strong id="parseLinkage">parseLinkage</strong>(AST.Identifiers** pidents, out CPPMANGLE cppmangle, out bool cppMangleOnly); </dt> <dd>
+<dl>
+<dt>Parse</dt>
+<dd> extern (linkage) extern (C++, namespaces) extern (C++, "namespace", "namespaces", ...) The parser is on the 'extern' token.</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseQualifiedIdentifier">AST.Identifiers* <strong id="parseQualifiedIdentifier">parseQualifiedIdentifier</strong>(const(char)* entity); </dt> <dd>
+<p>Parse ident1.ident2.ident3 </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>const(char)* <code>entity</code>
+</td> <td>what qualified identifier is expected to resolve into. Used only for better error message</td>
+</tr> </table></dd>
+</dl> <dl>
+<dt>Returns:</dt>
+<dd>array of identifiers with actual qualified one stored last</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseDebugCondition">AST.Condition <strong id="parseDebugCondition">parseDebugCondition</strong>(); </dt> <dd>
+<p>Parse a debug conditional</p> </dd> <dt class="d_decl" id="Parser.parseVersionCondition">AST.Condition <strong id="parseVersionCondition">parseVersionCondition</strong>(); </dt> <dd>
+<p>Parse a version conditional</p> </dd> <dt class="d_decl" id="Parser.parseStaticIfCondition">AST.Condition <strong id="parseStaticIfCondition">parseStaticIfCondition</strong>(); </dt> <dd>
+<p>static if (expression) body else body Current token is 'static'.</p> </dd> <dt class="d_decl" id="Parser.parseCtor">AST.Dsymbol <strong id="parseCtor">parseCtor</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a constructor definition: this(parameters) { body } or postblit: this(this) { body } or constructor template: this(templateparameters)(parameters) { body } Current token is 'this'.</p> </dd> <dt class="d_decl" id="Parser.parseDtor">AST.Dsymbol <strong id="parseDtor">parseDtor</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a destructor definition: ~this() { body } Current token is '~'.</p> </dd> <dt class="d_decl" id="Parser.parseStaticCtor">AST.Dsymbol <strong id="parseStaticCtor">parseStaticCtor</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a static constructor definition: static this() { body } Current token is 'static'.</p> </dd> <dt class="d_decl" id="Parser.parseStaticDtor">AST.Dsymbol <strong id="parseStaticDtor">parseStaticDtor</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a static destructor definition: static ~this() { body } Current token is 'static'.</p> </dd> <dt class="d_decl" id="Parser.parseSharedStaticCtor">AST.Dsymbol <strong id="parseSharedStaticCtor">parseSharedStaticCtor</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a shared static constructor definition: shared static this() { body } Current token is 'shared'.</p> </dd> <dt class="d_decl" id="Parser.parseSharedStaticDtor">AST.Dsymbol <strong id="parseSharedStaticDtor">parseSharedStaticDtor</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a shared static destructor definition: shared static ~this() { body } Current token is 'shared'.</p> </dd> <dt class="d_decl" id="Parser.parseInvariant">AST.Dsymbol <strong id="parseInvariant">parseInvariant</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse an invariant definition: invariant { statements... } invariant() { statements... } invariant (expression); Current token is 'invariant'.</p> </dd> <dt class="d_decl" id="Parser.parseUnitTest">AST.Dsymbol <strong id="parseUnitTest">parseUnitTest</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a unittest definition: unittest { body } Current token is 'unittest'.</p> </dd> <dt class="d_decl" id="Parser.parseNew">AST.Dsymbol <strong id="parseNew">parseNew</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a new definition: new(parameters) { body } Current token is 'new'.</p> </dd> <dt class="d_decl" id="Parser.parseDelete">AST.Dsymbol <strong id="parseDelete">parseDelete</strong>(PrefixAttributes!AST* pAttrs); </dt> <dd>
+<p>Parse a delete definition: delete(parameters) { body } Current token is 'delete'.</p> </dd> <dt class="d_decl" id="Parser.parseParameters">AST.Parameters* <strong id="parseParameters">parseParameters</strong>(int* pvarargs, AST.TemplateParameters** tpl = null); </dt> <dd>
+<p>Parse parameter list.</p> </dd> <dt class="d_decl" id="Parser.parseEnum">AST.EnumDeclaration <strong id="parseEnum">parseEnum</strong>(); </dt>  <dt class="d_decl" id="Parser.parseAggregate">AST.Dsymbol <strong id="parseAggregate">parseAggregate</strong>(); </dt> <dd>
+<p>Parse struct, union, interface, class.</p> </dd> <dt class="d_decl" id="Parser.parseBaseClasses">AST.BaseClasses* <strong id="parseBaseClasses">parseBaseClasses</strong>(); </dt>  <dt class="d_decl" id="Parser.parseBasicType2">AST.Type <strong id="parseBasicType2">parseBasicType2</strong>(AST.Type t); </dt> <dd>
+<p>Parse things that follow the initial type t. t * t [] t [type] t [expression] t [expression .. expression] t function t delegate</p> </dd> <dt class="d_decl" id="Parser.parseDeclarations">AST.Dsymbols* <strong id="parseDeclarations">parseDeclarations</strong>(bool autodecl, PrefixAttributes!AST* pAttrs, const(char)* comment); </dt> <dd>
+<p>Parse Declarations. These can be: 1. declarations at global/class level 2. declarations at statement level Return array of Declaration *'s.</p> </dd> <dt class="d_decl" id="Parser.parseContracts">AST.FuncDeclaration <strong id="parseContracts">parseContracts</strong>(AST.FuncDeclaration f); </dt> <dd>
+<p>Parse contracts following function declaration.</p> </dd> <dt class="d_decl" id="Parser.checkDanglingElse">void <strong id="checkDanglingElse">checkDanglingElse</strong>(Loc elseloc); </dt>  <dt class="d_decl" id="Parser.parseForeach">ParseForeachRet!(isStatic, isDecl) <strong id="parseForeach">parseForeach</strong>(bool isStatic, bool isDecl)(Loc loc, ParseForeachArgs!(isStatic, isDecl) args); </dt> <dd>
+<p>Parses <code>foreach</code> statements, <code>static foreach</code> statements and <code>static foreach</code> declarations. The template parameter <code>isStatic</code> is true, iff a <code>static foreach</code> should be parsed. If <code>isStatic</code> is true, <code>isDecl</code> can be true to indicate that a <code>static foreach</code> declaration should be parsed.</p> </dd> <dt class="d_decl" id="Parser.parseStatement">AST.Statement <strong id="parseStatement">parseStatement</strong>(int flags, const(char)** endPtr = null, Loc* pEndloc = null); </dt> <dd>
+<dl>
+<dt>Input</dt>
+<dd> flags PSxxxx </dd>
+</dl> <dl>
+<dt>Output</dt>
+<dd> pEndloc if { ... statements ... }, store location of closing brace, otherwise loc of last token of statement</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parseInitializer">AST.Initializer <strong id="parseInitializer">parseInitializer</strong>(); </dt> <dd>
+<p>Parse initializer for variable declaration.</p> </dd> <dt class="d_decl" id="Parser.parseDefaultInitExp">AST.Expression <strong id="parseDefaultInitExp">parseDefaultInitExp</strong>(); </dt> <dd>
+<p>Parses default argument initializer expression that is an assign expression, with special handling for __FILE__, _FILE_DIR__, __LINE__, __MODULE__, __FUNCTION__, and __PRETTY_FUNCTION__.</p> </dd> <dt class="d_decl" id="Parser.NeedDeclaratorId">enum <strong id="NeedDeclaratorId">NeedDeclaratorId</strong>; </dt>  <dt class="d_decl" id="Parser.isDeclaration">bool <strong id="isDeclaration">isDeclaration</strong>(Token* t, NeedDeclaratorId needId, TOK endtok, Token** pt); </dt> <dd>
+<p>Determine if the scanner is sitting on the start of a declaration. </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>Token* <code>t</code>
+</td> <td>current token of the scanner</td>
+</tr> <tr>
+<td>NeedDeclaratorId <code>needId</code>
+</td> <td>flag with additional requirements for a declaration</td>
+</tr> <tr>
+<td>TOK <code>endtok</code>
+</td> <td>ending token</td>
+</tr> <tr>
+<td>Token** <code>pt</code>
+</td> <td>will be set ending token (if not null)</td>
+</tr> </table></dd>
+</dl> <dl>
+<dt>Output</dt>
+<dd> true if the token <code>t</code> is a declaration, false otherwise</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.skipParens">bool <strong id="skipParens">skipParens</strong>(Token* t, Token** pt); </dt> <dd>
+<p>Skip parens, brackets. </p>
+<dl>
+<dt>Input</dt>
+<dd> t is on opening ( </dd>
+</dl> <dl>
+<dt>Output</dt>
+<dd> *pt is set to closing token, which is ')' on success </dd>
+</dl> <dl>
+<dt>Returns:</dt>
+<dd>true successful false some parsing error</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.skipAttributes">bool <strong id="skipAttributes">skipAttributes</strong>(Token* t, Token** pt); </dt> <dd>
+<p>Skip attributes. </p>
+<dl>
+<dt>Input</dt>
+<dd> t is on a candidate attribute </dd>
+</dl> <dl>
+<dt>Output</dt>
+<dd> *pt is set to first non-attribute token on success </dd>
+</dl> <dl>
+<dt>Returns:</dt>
+<dd>true successful false some parsing error</dd>
+</dl> </dd> <dt class="d_decl" id="Parser.parsePrimaryExp">AST.Expression <strong id="parsePrimaryExp">parsePrimaryExp</strong>(); </dt> <dd>
+<p>Expression Parser</p> </dd> <dt class="d_decl" id="Parser.parseArguments">AST.Expressions* <strong id="parseArguments">parseArguments</strong>(); </dt> <dd>
+<p>Collect argument list. Assume current token is ',', '(' or '['.</p> </dd> <dt class="d_decl" id="Parser.parseNewExp">AST.Expression <strong id="parseNewExp">parseNewExp</strong>(AST.Expression thisexp); </dt>  <dt class="d_decl" id="Parser.addComment">void <strong id="addComment">addComment</strong>(AST.Dsymbol s, const(char)* blockComment); </dt>  </dl> </dd> </dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1999–2018 The D Language Foundation<br>Licensed under the Boost License 1.0.<br>
+    <a href="https://dlang.org/phobos/dmd_parse.html" class="_attribution-link" target="_blank">https://dlang.org/phobos/dmd_parse.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,151 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>rt.util.utf - D - W3cubDocs</title>
+  
+  <meta name="description" content=" Encode and decode UTF-8, UTF-16 and UTF-32 strings. ">
+  <meta name="keywords" content="rt, util, utf, -, d">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/d/rt_util_utf/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/d.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/d/" class="_nav-link" title="" style="margin-left:0;">D</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _d">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>rt.util.utf</h1>  <p>Encode and decode UTF-8, UTF-16 and UTF-32 strings. </p>
+<p>For Win32 systems, the C wchar_t type is UTF-16 and corresponds to the D wchar type. For Posix systems, the C wchar_t type is UTF-32 and corresponds to the D utf.dchar type. <br><br> UTF character support is restricted to (\u0000 &lt;= character &lt;= \U0010FFFF). </p> <dl>
+<dt>See Also:</dt>
+<dd>
+<a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Wikipedia</a><br> <a href="http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8" target="_blank">http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8</a><br> <a href="http://anubis.dkuug.dk/JTC1/SC2/WG2/docs/n1335" target="_blank">http://anubis.dkuug.dk/JTC1/SC2/WG2/docs/n1335</a> </dd>
+</dl> <dl>
+<dt>License:</dt>
+<dd>
+<a href="http://www.boost.org/LICENSE_1_0.txt" target="_blank">Boost License 1.0</a>. </dd>
+</dl> <dl>
+<dt>Authors:</dt>
+<dd>Walter Bright, Sean Kelly </dd>
+</dl> <dl>
+<dt>Source</dt>
+<dd> <a href="https://github.com/dlang/druntime/blob/master/src/rt/util/utf.d" target="_blank">rt/util/utf.d</a>
+</dd>
+</dl> <dl>
+<dt class="d_decl" id="isValidDchar">pure nothrow @nogc @safe bool <strong id="isValidDchar">isValidDchar</strong>(dchar c); </dt> <dd>
+<p>Test if c is a valid UTF-32 character. </p>
+<p>\uFFFE and \uFFFF are considered valid by this function, as they are permitted for internal use by an application, but they are not allowed for interchange by the Unicode standard. </p> <dl>
+<dt>Returns:</dt>
+<dd>true if it is, false if not.</dd>
+</dl> </dd> <dt class="d_decl" id="stride">pure nothrow @nogc @safe uint <strong id="stride">stride</strong>(in char[] s, size_t i); </dt> <dd>
+<p>stride() returns the length of a UTF-8 sequence starting at index i in string s. </p>
+<dl>
+<dt>Returns:</dt>
+<dd>The number of bytes in the UTF-8 sequence or 0xFF meaning s[i] is not the start of of UTF-8 sequence.</dd>
+</dl> </dd> <dt class="d_decl" id="stride.2">pure nothrow @nogc @safe uint <strong id="stride">stride</strong>(in wchar[] s, size_t i); </dt> <dd>
+<p>stride() returns the length of a UTF-16 sequence starting at index i in string s.</p> </dd> <dt class="d_decl" id="stride.3">pure nothrow @nogc @safe uint <strong id="stride">stride</strong>(in dchar[] s, size_t i); </dt> <dd>
+<p>stride() returns the length of a UTF-32 sequence starting at index i in string s. </p>
+<dl>
+<dt>Returns:</dt>
+<dd>The return value will always be 1.</dd>
+</dl> </dd> <dt class="d_decl" id="toUCSindex">pure @safe size_t <strong id="toUCSindex">toUCSindex</strong>(in char[] s, size_t i); <br><br>pure @safe size_t <strong id="toUCSindex">toUCSindex</strong>(in wchar[] s, size_t i); <br><br>pure nothrow @nogc @safe size_t <strong id="toUCSindex">toUCSindex</strong>(in dchar[] s, size_t i); </dt> <dd>
+<p>Given an index i into an array of characters s[], and assuming that index i is at the start of a UTF character, determine the number of UCS characters up to that index i.</p> </dd> <dt class="d_decl" id="toUTFindex">pure @safe size_t <strong id="toUTFindex">toUTFindex</strong>(in char[] s, size_t n); <br><br>pure nothrow @nogc @safe size_t <strong id="toUTFindex">toUTFindex</strong>(in wchar[] s, size_t n); <br><br>pure nothrow @nogc @safe size_t <strong id="toUTFindex">toUTFindex</strong>(in dchar[] s, size_t n); </dt> <dd>
+<p>Given a UCS index n into an array of characters s[], return the UTF index.</p> </dd> <dt class="d_decl" id="decode">pure @safe dchar <strong id="decode">decode</strong>(in char[] s, ref size_t idx); <br><br>pure @safe dchar <strong id="decode">decode</strong>(in wchar[] s, ref size_t idx); <br><br>pure @safe dchar <strong id="decode">decode</strong>(in dchar[] s, ref size_t idx); </dt> <dd>
+<p>Decodes and returns character starting at s[idx]. idx is advanced past the decoded character. If the character is not well formed, a UtfException is thrown and idx remains unchanged.</p> </dd> <dt class="d_decl" id="encode">pure nothrow @safe void <strong id="encode">encode</strong>(ref char[] s, dchar c); <br><br>pure nothrow @safe void <strong id="encode">encode</strong>(ref wchar[] s, dchar c); <br><br>pure nothrow @safe void <strong id="encode">encode</strong>(ref dchar[] s, dchar c); </dt> <dd>
+<p>Encodes character c and appends it to array s[].</p> </dd> <dt class="d_decl" id="codeLength">pure nothrow @nogc @safe ubyte <strong id="codeLength">codeLength</strong>(C)(dchar c); </dt> <dd>
+<p>Returns the code length of <code>c</code> in the encoding using <code>C</code> as a code point. The code is returned in character count, not in bytes.</p> </dd> <dt class="d_decl" id="validate">pure @safe void <strong id="validate">validate</strong>(S)(in S s); </dt> <dd>
+<p>Checks to see if string is well formed or not. <code>S</code> can be an array of <code>char</code>, <code>wchar</code>, or <code>dchar</code>. Throws a <code>UtfException</code> if it is not. Use to check all untrusted input for correctness.</p> </dd> <dt class="d_decl" id="toUTF8">pure nothrow @safe string <strong id="toUTF8">toUTF8</strong>(string s); <br><br>pure @trusted string <strong id="toUTF8">toUTF8</strong>(in wchar[] s); <br><br>pure @trusted string <strong id="toUTF8">toUTF8</strong>(in dchar[] s); </dt> <dd>
+<p>Encodes string s into UTF-8 and returns the encoded string.</p> </dd> <dt class="d_decl" id="toUTF16">pure @trusted wstring <strong id="toUTF16">toUTF16</strong>(in char[] s); <br><br>pure @safe wptr <strong id="toUTF16z">toUTF16z</strong>(in char[] s); <br><br>pure nothrow @safe wstring <strong id="toUTF16">toUTF16</strong>(wstring s); <br><br>pure nothrow @trusted wstring <strong id="toUTF16">toUTF16</strong>(in dchar[] s); </dt> <dd>
+<p>Encodes string s into UTF-16 and returns the encoded string. toUTF16z() is suitable for calling the 'W' functions in the Win32 API that take an LPWSTR or LPCWSTR argument.</p> </dd> <dt class="d_decl" id="toUTF32">pure @trusted dstring <strong id="toUTF32">toUTF32</strong>(in char[] s); <br><br>pure @trusted dstring <strong id="toUTF32">toUTF32</strong>(in wchar[] s); <br><br>pure nothrow @safe dstring <strong id="toUTF32">toUTF32</strong>(dstring s); </dt> <dd>
+<p>Encodes string s into UTF-32 and returns the encoded string.</p> </dd> </dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1999–2018 The D Language Foundation<br>Licensed under the Boost License 1.0.<br>
+    <a href="https://dlang.org/phobos/rt_util_utf.html" class="_attribution-link" target="_blank">https://dlang.org/phobos/rt_util_utf.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,266 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>dmd.lexer - D - W3cubDocs</title>
+  
+  <meta name="description" content=" Compiler implementation of the D programming language. ">
+  <meta name="keywords" content="dmd, lexer, -, d">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/d/dmd_lexer/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/d.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/d/" class="_nav-link" title="" style="margin-left:0;">D</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _d">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>dmd.lexer</h1>  <p>Compiler implementation of the <a href="http://www.dlang.org" target="_blank">D programming language</a>. </p>
+<dl>
+<dt>Authors:</dt>
+<dd>
+<a href="http://www.digitalmars.com" target="_blank">Walter Bright</a> </dd>
+</dl> <dl>
+<dt>License:</dt>
+<dd>
+<a href="http://www.boost.org/LICENSE_1_0.txt" target="_blank">Boost License 1.0</a> </dd>
+</dl> <dl>
+<dt>Source</dt>
+<dd> <a href="https://github.com/dlang/dmd/blob/master/src/dmd/lexer.d" target="_blank">lexer.d</a> </dd>
+</dl> <dl>
+<dt>Documentation</dt>
+<dd> <a href="../dmd_lexer/">https://dlang.org/phobos/dmd_lexer.html</a> </dd>
+</dl> <dl>
+<dt>Coverage</dt>
+<dd> <a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/lexer.d" target="_blank">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/lexer.d</a>
+</dd>
+</dl> <dl>
+<dt class="d_decl" id="cmtable">static immutable ubyte[256] <strong id="cmtable">cmtable</strong>; </dt> <dd>
+<p>Do our own char maps</p> </dd> <dt class="d_decl" id="ErrorHandler">abstract class <strong id="ErrorHandler">ErrorHandler</strong>; </dt> <dd>
+<p>Handles error messages</p> <dl>
+<dt class="d_decl" id="ErrorHandler.error">abstract void <strong id="error">error</strong>(const(char)* format, ...); </dt> <dd>
+<p>Report an error message. </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>const(char)* <code>format</code>
+</td> <td>format string for error</td>
+</tr> <tr>
+<td>...</td> <td>format string arguments</td>
+</tr> </table></dd>
+</dl> </dd> <dt class="d_decl" id="ErrorHandler.error.2">abstract void <strong id="error">error</strong>(Loc loc, const(char)* format, ...); </dt> <dd>
+<p>Report an error message. </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>Loc <code>loc</code>
+</td> <td>Location of error</td>
+</tr> <tr>
+<td>const(char)* <code>format</code>
+</td> <td>format string for error</td>
+</tr> <tr>
+<td>...</td> <td>format string arguments</td>
+</tr> </table></dd>
+</dl> </dd> </dl> </dd> <dt class="d_decl" id="Lexer">class <strong id="Lexer">Lexer</strong>: dmd.lexer.ErrorHandler; </dt> <dd> <dl>
+<dt class="d_decl" id="Lexer.this">this(const(char)* filename, const(char)* base, size_t begoffset, size_t endoffset, bool doDocComment, bool commentToken); </dt> <dd>
+<p>Creates a Lexer for the source code base[begoffset..endoffset+1]. The last character, base[endoffset], must be null (0) or EOF (0x1A). </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>const(char)* <code>filename</code>
+</td> <td>used for error messages</td>
+</tr> <tr>
+<td>const(char)* <code>base</code>
+</td> <td>source code, must be terminated by a null (0) or EOF (0x1A) character</td>
+</tr> <tr>
+<td>size_t <code>begoffset</code>
+</td> <td>starting offset into base[]</td>
+</tr> <tr>
+<td>size_t <code>endoffset</code>
+</td> <td>the last offset to read into base[]</td>
+</tr> <tr>
+<td>bool <code>doDocComment</code>
+</td> <td>handle documentation comments</td>
+</tr> <tr>
+<td>bool <code>commentToken</code>
+</td> <td>comments become TOK.comment's</td>
+</tr> </table></dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.peekNext">final TOK <strong id="peekNext">peekNext</strong>(); </dt> <dd>
+<p>Look ahead at next token's value.</p> </dd> <dt class="d_decl" id="Lexer.peekNext2">final TOK <strong id="peekNext2">peekNext2</strong>(); </dt> <dd>
+<p>Look 2 tokens ahead at value.</p> </dd> <dt class="d_decl" id="Lexer.scan">final void <strong id="scan">scan</strong>(Token* t); </dt> <dd>
+<p>Turn next token in buffer into a token.</p> </dd> <dt class="d_decl" id="Lexer.peekPastParen">final Token* <strong id="peekPastParen">peekPastParen</strong>(Token* tk); </dt> <dd>
+<p>tk is on the opening (. Look ahead and return token that is past the closing ).</p> </dd> <dt class="d_decl" id="Lexer.escapeSequence">final uint <strong id="escapeSequence">escapeSequence</strong>(); </dt> <dd>
+<p>Parse escape sequence.</p> </dd> <dt class="d_decl" id="Lexer.escapeSequence.2">static dchar <strong id="escapeSequence">escapeSequence</strong>(ErrorHandler handler, ref const(char)* sequence); </dt> <dd>
+<p>Parse the given string literal escape sequence into a single character. </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>ErrorHandler <code>handler</code>
+</td> <td>the error handler object</td>
+</tr> <tr>
+<td>const(char)* <code>sequence</code>
+</td> <td>pointer to string with escape sequence to parse. this is a reference variable that is also used to return the position after the sequence</td>
+</tr> </table></dd>
+</dl> <dl>
+<dt>Returns:</dt>
+<dd>the escaped sequence as a single character</dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.wysiwygStringConstant">final void <strong id="wysiwygStringConstant">wysiwygStringConstant</strong>(Token* result); </dt> <dd>
+<p>Lex a wysiwyg string. <code>p</code> must be pointing to the first character before the contents of the string literal. The character pointed to by <code>p</code> will be used as the terminating character (i.e. backtick or double-quote). </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>Token* <code>result</code>
+</td> <td>pointer to the token that accepts the result</td>
+</tr> </table></dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.hexStringConstant">final TOK <strong id="hexStringConstant">hexStringConstant</strong>(Token* t); </dt> <dd>
+<p>Lex hex strings: x"0A ae 34FE BD"</p> </dd> <dt class="d_decl" id="Lexer.delimitedStringConstant">final void <strong id="delimitedStringConstant">delimitedStringConstant</strong>(Token* result); </dt> <dd>
+<p> Lex a delimited string. Some examples of delimited strings are: </p>
+<pre data-language="d">q"(foo(xxx))"      // "foo(xxx)"
+q"[foo&amp;dollar;(LPAREN)]"  // "foo&amp;dollar;(LPAREN)"
+q"/foo]/"          // "foo]"
+q"HERE
+foo
+HERE"              // "foo\n"
+</pre> It is assumed that <code>p</code> points to the opening double-quote '"'. 
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>Token* <code>result</code>
+</td> <td>pointer to the token that accepts the result</td>
+</tr> </table></dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.tokenStringConstant">final void <strong id="tokenStringConstant">tokenStringConstant</strong>(Token* result); </dt> <dd>
+<p> Lex a token string. Some examples of token strings are: </p>
+<pre data-language="d">q{ foo(xxx) }    // " foo(xxx) "
+q{foo&amp;dollar;(LPAREN)}  // "foo&amp;dollar;(LPAREN)"
+q{{foo}"}"}      // "{foo}"}""
+</pre> It is assumed that <code>p</code> points to the opening curly-brace '{'. 
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>Token* <code>result</code>
+</td> <td>pointer to the token that accepts the result</td>
+</tr> </table></dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.escapeStringConstant">final void <strong id="escapeStringConstant">escapeStringConstant</strong>(Token* t); </dt> <dd>
+<p>Scan a double-quoted string while building the processed string value by handling escape sequences. The result is returned in the given <code>t</code> token. This function assumes that <code>p</code> currently points to the opening double-quote of the string. </p>
+<dl>
+<dt>Parameters:</dt>
+<dd><table>
+<tr>
+<td>Token* <code>t</code>
+</td> <td>the token to set the resulting string to</td>
+</tr> </table></dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.charConstant">final TOK <strong id="charConstant">charConstant</strong>(Token* t); </dt>  <dt class="d_decl" id="Lexer.stringPostfix">final void <strong id="stringPostfix">stringPostfix</strong>(Token* t); </dt> <dd>
+<p>Get postfix of string literal.</p> </dd> <dt class="d_decl" id="Lexer.number">final TOK <strong id="number">number</strong>(Token* t); </dt> <dd>
+<p>Read in a number. If it's an integer, store it in tok.TKutok.Vlong. integers can be decimal, octal or hex Handle the suffixes U, UL, LU, L, etc. If it's double, store it in tok.TKutok.Vdouble. </p>
+<dl>
+<dt>Returns:</dt>
+<dd>TKnum TKdouble,...</dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.inreal">final TOK <strong id="inreal">inreal</strong>(Token* t); </dt> <dd>
+<p>Read in characters, converting them to real. </p>
+<dl>
+<dt>Bugs:</dt>
+<dd>Exponent overflow not detected. Too much requested precision is not detected.</dd>
+</dl> </dd> <dt class="d_decl" id="Lexer.poundLine">final void <strong id="poundLine">poundLine</strong>(); </dt> <dd>
+<p>parse: #line linnum [filespec] also allow __LINE__ for linnum, and __FILE__ for filespec</p> </dd> <dt class="d_decl" id="Lexer.decodeUTF">final uint <strong id="decodeUTF">decodeUTF</strong>(); </dt> <dd>
+<p>Decode UTF character. Issue error messages for invalid sequences. Return decoded character, advance p to last character in UTF sequence.</p> </dd> <dt class="d_decl" id="Lexer.getDocComment">final void <strong id="getDocComment">getDocComment</strong>(Token* t, uint lineComment, bool newParagraph); </dt> <dd>
+<p>Parse doc comment embedded between t.ptr and p. Remove trailing blanks and tabs from lines. Replace all newlines with \n. Remove leading comment character from each line. Decide if it's a lineComment or a blockComment. Append to previous one for this token. </p>
+<p>If newParagraph is true, an extra newline will be added between adjoining doc comments.</p> </dd> <dt class="d_decl" id="Lexer.combineComments">static const(char)* <strong id="combineComments">combineComments</strong>(const(char)* c1, const(char)* c2, bool newParagraph); </dt> <dd>
+<p>Combine two document comments into one, separated by an extra newline if newParagraph is true.</p> </dd> </dl> </dd> </dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1999–2018 The D Language Foundation<br>Licensed under the Boost License 1.0.<br>
+    <a href="https://dlang.org/phobos/dmd_lexer.html" class="_attribution-link" target="_blank">https://dlang.org/phobos/dmd_lexer.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
