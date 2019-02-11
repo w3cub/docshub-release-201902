@@ -1,0 +1,310 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>6. Displaying Data - Angular 2 - W3cubDocs</title>
+  
+  <meta name="description" content=" Property binding helps show app data in the UI. ">
+  <meta name="keywords" content="displaying, data, contents, -, angular, angular~2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~2/guide/displaying-data/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~2/" class="_nav-link" title="" style="margin-left:0;">Angular 2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Displaying Data </h1>
+
+<blockquote class="banner"><p class="text-body">Property binding helps show app data in the UI.</p></blockquote>
+<p>You can display data by binding controls in an HTML template to properties of an Angular component.</p> <p>In this page, you'll create a component with a list of heroes. You'll display the list of hero names and conditionally show a message below the list.</p> <p>The final UI looks like this:</p> <img src="data:image/png;base64,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" alt="Final UI"><h1 id="contents">Contents</h1> <ul> <li>
+<a href="#interpolation">Showing component properties with interpolation</a>.</li> <li>
+<a href="#ngFor">Showing an array property with NgFor</a>.</li> <li>
+<a href="#ngIf">Conditional display with NgIf</a>.</li> </ul> <blockquote class="l-sub-section">
+<p>The live example demonstrates all of the syntax and code snippets described in this page.</p> </blockquote>
+<h2 id="showing-component-properties-with-interpolation">Showing component properties with interpolation</h2> <p>The easiest way to display a component property is to bind the property name through interpolation. With interpolation, you put the property name in the view template, enclosed in double curly braces: <code>{{myHero}}</code>.</p> <p>Follow the <a href="../setup/">setup</a> instructions for creating a new project named <ngio-ex path="displaying-data"></ngio-ex>.</p> <p>Then modify the <ngio-ex path="app.component.ts"></ngio-ex> file by changing the template and the body of the component.</p> <p>When you're done, it should look like this:</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts</h4>
+<pre data-language="typescript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  template: `
+    &lt;h1&gt;{{title}}&lt;/h1&gt;
+    &lt;h2&gt;My favorite hero is: {{myHero}}&lt;/h2&gt;
+    `
+})
+export class AppComponent {
+  title = 'Tour of Heroes';
+  myHero = 'Windstorm';
+}
+</pre>
+</div>
+<p>You added two properties to the formerly empty component: <code>title</code> and <code>myHero</code>.</p> <p>The revised template displays the two component properties using double curly brace interpolation:</p> <div class="code-example"><pre data-language="typescript">template: `
+  &lt;h1&gt;{{title}}&lt;/h1&gt;
+  &lt;h2&gt;My favorite hero is: {{myHero}}&lt;/h2&gt;
+  `
+</pre></div>
+<blockquote class="l-sub-section">
+<p>The template is a multi-line string within ECMAScript 2015 backticks (<code>`</code>). The backtick (<code>`</code>)—which is <em>not</em> the same character as a single quote (<code>'</code>)—allows you to compose a string over several lines, which makes the HTML more readable.</p> </blockquote>
+<p>Angular automatically pulls the value of the <code>title</code> and <code>myHero</code> properties from the component and inserts those values into the browser. Angular updates the display when these properties change.</p> <blockquote class="l-sub-section">
+<p>More precisely, the redisplay occurs after some kind of asynchronous event related to the view, such as a keystroke, a timer completion, or a response to an HTTP request.</p> </blockquote>
+<p>Notice that you don't call <strong>new</strong> to create an instance of the <code>AppComponent</code> class. Angular is creating an instance for you. How?</p> <p>The CSS <code>selector</code> in the <code>@Component</code> decorator specifies an element named <code>&lt;my-app&gt;</code>. That element is a placeholder in the body of your <code>index.html</code> file:</p> <div class="code-example">
+<h4 class="pre-title">src/index.html (body)</h4>
+<pre data-language="html">&lt;body&gt;
+  &lt;my-app&gt;loading...&lt;/my-app&gt;
+&lt;/body&gt;
+</pre>
+</div>
+<p>When you bootstrap with the <code>AppComponent</code> class (in <ngio-ex path="main.ts"></ngio-ex>), Angular looks for a <code>&lt;my-app&gt;</code> in the <code>index.html</code>, finds it, instantiates an instance of <code>AppComponent</code>, and renders it inside the <code>&lt;my-app&gt;</code> tag.</p> <p>Now run the app. It should display the title and hero name:</p> <img src="data:image/png;base64,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" alt="Title and Hero"><p>The next few sections review some of the coding choices in the app.</p> <h2 id="template-inline-or-template-file-">Template inline or template file?</h2> <p>You can store your component's template in one of two places. You can define it <em>inline</em> using the <code>template</code> property, or you can define the template in a separate HTML file and link to it in the component metadata using the <code>@Component</code> decorator's <code>templateUrl</code> property.</p> <p>The choice between inline and separate HTML is a matter of taste, circumstances, and organization policy. Here the app uses inline HTML because the template is small and the demo is simpler without the additional HTML file.</p> <p>In either style, the template data bindings have the same access to the component's properties.</p> <h2 id="constructor-or-variable-initialization-">Constructor or variable initialization?</h2> <p>Although this example uses variable assignment to initialize the components, you can instead declare and initialize the properties using a constructor:</p> <div class="code-example">
+<h4 class="pre-title">src/app/app-ctor.component.ts (class)</h4>
+<pre data-language="typescript">export class AppCtorComponent {
+  title: string;
+  myHero: string;
+
+  constructor() {
+    this.title = 'Tour of Heroes';
+    this.myHero = 'Windstorm';
+  }
+}
+</pre>
+</div>
+<p>This app uses more terse "variable assignment" style simply for brevity.</p> <h2 id="showing-_an-_array-property-with-ngfor-">Showing an array property with <strong>*ngFor</strong>
+</h2> <p>To display a list of heroes, begin by adding an array of hero names to the component and redefine <code>myHero</code> to be the first name in the array.</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts (class)</h4>
+<pre data-language="typescript">export class AppComponent {
+  title = 'Tour of Heroes';
+  heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+  myHero = this.heroes[0];
+}
+</pre>
+</div>
+<p>Now use the Angular <code>ngFor</code> directive in the template to display each item in the <code>heroes</code> list.</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts (template)</h4>
+<pre data-language="typescript">  template: `
+    &lt;h1&gt;{{title}}&lt;/h1&gt;
+    &lt;h2&gt;My favorite hero is: {{myHero}}&lt;/h2&gt;
+    &lt;p&gt;Heroes:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li *ngFor="let hero of heroes"&gt;
+        {{ hero }}
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  `
+</pre>
+</div>
+<p>This UI uses the HTML unordered list with <code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code> tags. The <code>*ngFor</code> in the <code>&lt;li&gt;</code> element is the Angular "repeater" directive. It marks that <code>&lt;li&gt;</code> element (and its children) as the "repeater template":</p> <div class="code-example"><pre data-language="html">&lt;li *ngFor="let hero of heroes"&gt;
+  {{ hero }}
+&lt;/li&gt;
+</pre></div>
+<blockquote class="alert is-important">
+<p>Don't forget the leading asterisk (*) in <code>*ngFor</code>. It is an essential part of the syntax. For more information, see the <a href="../template-syntax/#ngFor">Template Syntax</a> page.</p> </blockquote>
+<p>Notice the <code>hero</code> in the <code>ngFor</code> double-quoted instruction; it is an example of a template input variable. Read more about template input variables in the <a href="../template-syntax/#microsyntax">microsyntax</a> section of the <a href="../template-syntax/">Template Syntax</a> page.</p> <p>Angular duplicates the <code>&lt;li&gt;</code> for each item in the list, setting the <code>hero</code> variable to the item (the hero) in the current iteration. Angular uses that variable as the context for the interpolation in the double curly braces.</p> <blockquote class="l-sub-section">
+<p>In this case, <code>ngFor</code> is displaying an array, but <code>ngFor</code> can repeat items for any <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols" target="_blank">iterable</a> object.</p> </blockquote>
+<p>Now the heroes appear in an unordered list.</p> <img src="data:image/png;base64,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" alt="After ngfor"><h2 id="creating-a-class-for-the-data">Creating a class for the data</h2> <p>The app's code defines the data directly inside the component, which isn't best practice. In a simple demo, however, it's fine.</p> <p>At the moment, the binding is to an array of strings. In real applications, most bindings are to more specialized objects.</p> <p>To convert this binding to use specialized objects, turn the array of hero names into an array of <code>Hero</code> objects. For that you'll need a <code>Hero</code> class.</p> <p>Create a new file in the <code>app</code> folder called <ngio-ex path="hero.ts"></ngio-ex> with the following code:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero.ts (excerpt)</h4>
+<pre data-language="typescript">export class Hero {
+  constructor(
+    public id: number,
+    public name: string) { }
+}
+</pre>
+</div>
+<p>You've defined a class with a constructor and two properties: <code>id</code> and <code>name</code>.</p> <p>It might not look like the class has properties, but it does. The declaration of the constructor parameters takes advantage of a TypeScript shortcut.</p> <p>Consider the first parameter:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero.ts (id)</h4>
+<pre data-language="typescript">public id: number,
+</pre>
+</div>
+<p>That brief syntax does a lot:</p> <ul> <li>Declares a constructor parameter and its type.</li> <li>Declares a public property of the same name.</li> <li>Initializes that property with the corresponding argument when creating an instance of the class.</li> </ul> <h2 id="using-the-hero-class">Using the Hero class</h2> <p>After importing the <code>Hero</code> class, the <code>AppComponent.heroes</code> property can return a <em>typed</em> array of <code>Hero</code> objects:</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts (heroes)</h4>
+<pre data-language="typescript">heroes = [
+  new Hero(1, 'Windstorm'),
+  new Hero(13, 'Bombasto'),
+  new Hero(15, 'Magneta'),
+  new Hero(20, 'Tornado')
+];
+myHero = this.heroes[0];
+</pre>
+</div>
+<p>Next, update the template. At the moment it displays the hero's <code>id</code> and <code>name</code>. Fix that to display only the hero's <code>name</code> property.</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts (template)</h4>
+<pre data-language="typescript">template: `
+  &lt;h1&gt;{{title}}&lt;/h1&gt;
+  &lt;h2&gt;My favorite hero is: {{myHero.name}}&lt;/h2&gt;
+  &lt;p&gt;Heroes:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li *ngFor="let hero of heroes"&gt;
+      {{ hero.name }}
+    &lt;/li&gt;
+  &lt;/ul&gt;
+`
+</pre>
+</div>
+<p>The display looks the same, but the code is clearer.</p> <h2 id="conditional-display-with-ngif">Conditional display with NgIf</h2> <p>Sometimes an app needs to display a view or a portion of a view only under specific circumstances.</p> <p>Let's change the example to display a message if there are more than three heroes.</p> <p>The Angular <code>ngIf</code> directive inserts or removes an element based on a truthy/falsy condition. To see it in action, add the following paragraph at the bottom of the template:</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts (message)</h4>
+<pre data-language="html">&lt;p *ngIf="heroes.length &gt; 3"&gt;There are many heroes!&lt;/p&gt;
+</pre>
+</div>
+<blockquote class="alert is-important">
+<p>Don't forget the leading asterisk (*) in <code>*ngIf</code>. It is an essential part of the syntax. Read more about <code>ngIf</code> and <code>*</code> in the <a href="../template-syntax/#ngIf">ngIf section</a> of the <a href="../template-syntax/">Template Syntax</a> page.</p> </blockquote>
+<p>The template expression inside the double quotes, <code>*ngIf="heros.length &gt; 3"</code>, looks and behaves much like TypeScript. When the component's list of heroes has more than three items, Angular adds the paragraph to the DOM and the message appears. If there are three or fewer items, Angular omits the paragraph, so no message appears. For more information, see the <a href="../template-syntax/#template-expressions">template expressions</a> section of the <a href="../template-syntax/">Template Syntax</a> page.</p> <blockquote class="alert is-helpful">
+<p>Angular isn't showing and hiding the message. It is adding and removing the paragraph element from the DOM. That improves performance, especially in larger projects when conditionally including or excluding big chunks of HTML with many data bindings.</p> </blockquote>
+<p>Try it out. Because the array has four items, the message should appear. Go back into <ngio-ex path="app.component.ts"></ngio-ex> and delete or comment out one of the elements from the hero array. The browser should refresh automatically and the message should disappear.</p> <h2 id="summary">Summary</h2> <p>Now you know how to use:</p> <ul> <li>
+<strong>Interpolation</strong> with double curly braces to display a component property.</li> <li>
+<strong>ngFor</strong> to display an array of items.</li> <li>A TypeScript class to shape the <strong>model data</strong> for your component and display properties of that model.</li> <li>
+<strong>ngIf</strong> to conditionally display a chunk of HTML based on a boolean expression.</li> </ul> <p>Here's the final code:</p> <div class="pre-title">src/app/app.component.ts</div>
+<pre name="src/app/app.component.ts" data-language="typescript">import { Component } from '@angular/core';
+
+import { Hero } from './hero';
+
+@Component({
+  selector: 'my-app',
+  template: `
+  &lt;h1&gt;{{title}}&lt;/h1&gt;
+  &lt;h2&gt;My favorite hero is: {{myHero.name}}&lt;/h2&gt;
+  &lt;p&gt;Heroes:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li *ngFor="let hero of heroes"&gt;
+      {{ hero.name }}
+      &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p *ngIf="heroes.length &gt; 3"&gt;There are many heroes!&lt;/p&gt;
+`
+})
+export class AppComponent {
+  title = 'Tour of Heroes';
+  heroes = [
+    new Hero(1, 'Windstorm'),
+    new Hero(13, 'Bombasto'),
+    new Hero(15, 'Magneta'),
+    new Hero(20, 'Tornado')
+  ];
+  myHero = this.heroes[0];
+}
+</pre>
+<div class="pre-title">src/app/hero.ts</div>
+<pre name="src/app/hero.ts" data-language="typescript">export class Hero {
+  constructor(
+    public id: number,
+    public name: string) { }
+}
+</pre>
+<div class="pre-title">src/app/app.module.ts</div>
+<pre name="src/app/app.module.ts" data-language="typescript">import { NgModule } from '@angular/core';
+import { BrowserModule }  from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [
+    BrowserModule
+  ],
+  declarations: [
+    AppComponent
+  ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+</pre>
+<div class="pre-title">main.ts</div>
+<pre name="main.ts" data-language="typescript">import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+</pre>
+<blockquote class="l-sub-section">
+<h4>Next Step</h4>
+<a href="../user-input/">User Input</a>
+</blockquote>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v2.angular.io/docs/ts/latest/guide/displaying-data.html" class="_attribution-link" target="_blank">https://v2.angular.io/docs/ts/latest/guide/displaying-data.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

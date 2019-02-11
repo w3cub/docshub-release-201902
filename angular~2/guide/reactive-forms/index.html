@@ -1,0 +1,1106 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Reactive Forms - Angular 2 - W3cubDocs</title>
+  
+  <meta name="description" content=" Create a reactive form using FormBuilder, groups, and arrays. ">
+  <meta name="keywords" content="reactive, forms, -, angular, angular~2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~2/guide/reactive-forms/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~2/" class="_nav-link" title="" style="margin-left:0;">Angular 2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Reactive Forms </h1>
+
+<blockquote class="banner"><p class="text-body">Create a reactive form using FormBuilder, groups, and arrays.</p></blockquote>
+<p><em>Reactive forms</em> is an Angular technique for creating forms in a <em>reactive</em> style. This guide explains reactive forms as you follow the steps to build a "Hero Detail Editor" form.</p> <h2 id="toc">Contents</h2> <ul> <li><a href="#intro">Introduction to reactive forms</a></li> <li><a href="#setup">Setup</a></li> <li><a href="#data-model">Create a data model</a></li> <li><a href="#create-component">Create a <em>reactive forms</em> component</a></li> <li><a href="#create-template">Create its template file</a></li> <li><a href="#import">Import the <em>ReactiveFormsModule</em></a></li> <li><a href="#update">Display the <em>HeroDetailComponent</em></a></li> <li><a href="#formgroup">Add a FormGroup</a></li> <li><a href="#json">Taking a look at the form model</a></li> <li><a href="#formbuilder">Introduction to <em>FormBuilder</em></a></li> <li><a href="#validators">Validators.required</a></li> <li><a href="#grouping">Nested FormGroups</a></li> <li><a href="#properties">Inspect <em>FormControl</em> properties</a></li> <li><a href="#set-data">Set form model data using <em>setValue</em> and <em>patchValue</em></a></li> <li><a href="#form-array">Use <em>FormArray</em> to present an array of <em>FormGroups</em></a></li> <li><a href="#observe-control">Observe control changes</a></li> <li><a href="#save">Save form data</a></li> </ul> <p>Try the <span plnkr="final" title="Reactive Forms (final) in Plunker">Reactive Forms live-example</span>.</p> <p>You can also run the <span title="Reactive Forms Demo in Plunker">Reactive Forms Demo</span> version and choose one of the intermediate steps from the "demo picker" at the top.</p> <h2 id="intro">Introduction to Reactive Forms</h2> <p>Angular offers two form-building technologies: <em>reactive</em> forms and <em>template-driven</em> forms. The two technologies belong to the <code>@angular/forms</code> library and share a common set of form control classes.</p> <p>But they diverge markedly in philosophy, programming style, and technique. They even have their own modules: the <code>ReactiveFormsModule</code> and the <code>FormsModule</code>.</p> <h3 id="_reactive_-forms">
+<em>Reactive</em> forms</h3> <p>Angular <em>reactive</em> forms facilitate a <em>reactive style</em> of programming that favors explicit management of the data flowing between a non-UI <em>data model</em> (typically retrieved from a server) and a UI-oriented <em>form model</em> that retains the states and values of the HTML controls on screen. Reactive forms offer the ease of using reactive patterns, testing, and validation.</p> <p>With <em>reactive</em> forms, you create a tree of Angular form control objects in the component class and bind them to native form control elements in the component template, using techniques described in this guide. </p> <p>You create and manipulate form control objects directly in the component class. As the component class has immediate access to both the data model and the form control structure, you can push data model values into the form controls and pull user-changed values back out. The component can observe changes in form control state and react to those changes.</p> <p>One advantage of working with form control objects directly is that value and validity updates are <a href="#async-vs-sync" title="Async vs sync">always synchronous and under your control</a>. You won't encounter the timing issues that sometimes plague a template-driven form and reactive forms can be easier to unit test.</p> <p>In keeping with the reactive paradigm, the component preserves the immutability of the <em>data model</em>, treating it as a pure source of original values. Rather than update the data model directly, the component extracts user changes and forwards them to an external component or service, which does something with them (such as saving them) and returns a new <em>data model</em> to the component that reflects the updated model state. </p> <p>Using reactive form directives does not require you to follow all reactive priniciples, but it does facilitate the reactive programming approach should you choose to use it.</p> <h3 id="_template-driven_-forms">
+<em>Template-driven</em> forms</h3> <p><em>Template-driven</em> forms, introduced in the <a href="../forms/">Template guide</a>, take a completely different approach.</p> <p>You place HTML form controls (such as <code>&lt;input&gt;</code> and <code>&lt;select&gt;</code>) in the component template and bind them to <em>data model</em> properties in the component, using directives like <code>ngModel</code>.</p> <p>You don't create Angular form control objects. Angular directives create them for you, using the information in your data bindings. You don't push and pull data values. Angular handles that for you with <code>ngModel</code>. Angular updates the mutable <em>data model</em> with user changes as they happen.</p> <p>For this reason, the <code>ngModel</code> directive is not part of the ReactiveFormsModule.</p> <p>While this means less code in the component class, <a href="#async-vs-sync" title="Async vs sync">template-driven forms are asynchronous</a> which may complicate development in more advanced scenarios. </p> <h3 id="async-vs-sync">Async vs. sync</h3> <p>Reactive forms are synchronous. Template-driven forms are asynchronous. It's a difference that matters.</p> <p>In reactive forms, you create the entire form control tree in code. You can immediately update a value or drill down through the descendents of the parent form because all controls are always available.</p> <p>Template-driven forms delegate creation of their form controls to directives. To avoid "<em>changed after checked</em>" errors, these directives take more than one cycle to build the entire control tree. That means you must wait a tick before manipulating any of the controls from within the component class.</p> <p>For example, if you inject the form control with a <code>@ViewChild(NgForm)</code> query and examine it in the <a href="../lifecycle-hooks/#afterview" title="Lifecycle hooks guide: AfterView"><code>ngAfterViewInit</code> lifecycle hook</a>, you'll discover that it has no children. You must wait a tick, using <code>setTimeout</code>, before you can extract a value from a control, test its validity, or set it to a new value.</p> <p>The asynchrony of template-driven forms also complicates unit testing. You must wrap your test block in <code>async()</code> or <code>fakeAsync()</code> to avoid looking for values in the form that aren't there yet. With reactive forms, everything is available when you expect it to be.</p> <h3 id="which-is-better-reactive-or-template-driven-">Which is better, reactive or template-driven?</h3> <p>Neither is "better". They're two different architectural paradigms, with their own strengths and weaknesses. Choose the approach that works best for you. You may decide to use both in the same application.</p> <p>The balance of this <em>reactive forms</em> guide explores the <em>reactive</em> paradigm and concentrates exclusively on reactive forms techniques. For information on <em>template-driven forms</em>, see the <a href="../forms/"><em>Forms</em></a> guide.</p> <p>In the next section, you'll set up your project for the reactive form demo. Then you'll learn about the <a href="#essentials">Angular form classes</a> and how to use them in a reactive form.</p> <h2 id="setup">Setup</h2> <p>Follow the steps in the <a href="../../setup/" title="Setup guide"><em>Setup</em> guide</a> for creating a new project folder (perhaps called <code>reactive-forms</code>) based on the <em>QuickStart seed</em>.</p> <h2 id="data-model">Create a data model</h2> <p>The focus of this guide is a reactive forms component that edits a hero. You'll need a <code>hero</code> class and some hero data. Create a new <code>data-model.ts</code> file in the <code>app</code> directory and copy the content below into it.</p> <div class="code-example">
+<h4 class="pre-title">src/app/data-model.ts</h4>
+<pre data-language="typescript">export class Hero {
+  id = 0;
+  name = '';
+  addresses: Address[];
+}
+
+export class Address {
+  street = '';
+  city   = '';
+  state  = '';
+  zip    = '';
+}
+
+export const heroes: Hero[] = [
+  {
+    id: 1,
+    name: 'Whirlwind',
+    addresses: [
+      {street: '123 Main',  city: 'Anywhere', state: 'CA',  zip: '94801'},
+      {street: '456 Maple', city: 'Somewhere', state: 'VA', zip: '23226'},
+    ]
+  },
+  {
+    id: 2,
+    name: 'Bombastic',
+    addresses: [
+      {street: '789 Elm',  city: 'Smallville', state: 'OH',  zip: '04501'},
+    ]
+  },
+  {
+    id: 3,
+    name: 'Magneta',
+    addresses: [ ]
+  },
+];
+
+export const states = ['CA', 'MD', 'OH', 'VA'];
+</pre>
+</div>
+<p>The file exports two classes and two constants. The <code>Address</code> and <code>Hero</code> classes define the application <em>data model</em>. The <code>heroes</code> and <code>states</code> constants supply the test data. </p> <h2 id="create-component">Create a <em>reactive forms</em> component</h2> <p>Make a new file called <code>hero-detail.component.ts</code> in the <code>app</code> directory and import these symbols:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts</h4>
+<pre data-language="typescript">import { Component }              from '@angular/core';
+import { FormControl }            from '@angular/forms';
+</pre>
+</div>
+<p>Now enter the <code>@Component</code> decorator that specifies the <code>HeroDetailComponent</code> metadata:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">@Component({
+  selector: 'hero-detail',
+  templateUrl: './hero-detail.component.html'
+})
+</pre>
+</div>
+<p>Next, create an exported <code>HeroDetailComponent</code> class with a <code>FormControl</code>. <code>FormControl</code> is a directive that allows you to create and manage a <code>FormControl</code> instance directly.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">export class HeroDetailComponent1 {
+  name = new FormControl();
+}
+</pre>
+</div>
+<p>Here you are creating a <code>FormControl</code> called <code>name</code>. It will be bound in the template to an HTML <code>input</code> box for the hero name. </p> <p>A <code>FormControl</code> constructor accepts three, optional arguments: the initial data value, an array of validators, and an array of async validators.</p> <p>This simple control doesn't have data or validators. In real apps, most form controls have both. </p> <blockquote class="l-sub-section">
+<p>This guide touches only briefly on <code>Validators</code>. For an in-depth look at them, read the <a href="../../cookbook/form-validation/">Form Validation</a> cookbook.</p> </blockquote>
+<h2 id="create-template">Create the template</h2> <p>Now create the component's template, <code>src/app/hero-detail.component.html</code>, with the following markup.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html</h4>
+<pre data-language="html">&lt;h2&gt;Hero Detail&lt;/h2&gt;
+&lt;h3&gt;&lt;i&gt;Just a FormControl&lt;/i&gt;&lt;/h3&gt;
+&lt;label class="center-block"&gt;Name:
+  &lt;input class="form-control" [formControl]="name"&gt;
+&lt;/label&gt;
+</pre>
+</div>
+<p>To let Angular know that this is the input that you want to associate to the <code>name</code> <code>FormControl</code> in the class, you need <code>[formControl]="name"</code> in the template on the <code>&lt;input&gt;</code>. </p> <blockquote class="l-sub-section">
+<p>Disregard the <code>form-control</code> <em>CSS</em> class. It belongs to the <a href="http://getbootstrap.com/" target="_blank" title="Bootstrap CSS">Bootstrap CSS library</a>, not Angular. It <em>styles</em> the form but in no way impacts the logic of the form.</p> </blockquote>
+<h2 id="import">Import the <em>ReactiveFormsModule</em>
+</h2> <p>The HeroDetailComponent template uses <code>formControlName</code> directive from the <code>ReactiveFormsModule</code>.</p> <p>In this sample, you declare the <code>HeroDetailComponent</code> in the <code>AppModule</code>. Therefore, do the following three things in <code>app.module.ts</code>:</p> <ol> <li>Use a JavaScript <code>import</code> statement to access the <code>ReactiveFormsModule</code> and the <code>HeroDetailComponent</code>.</li> <li>Add <code>ReactiveFormsModule</code> to the <code>AppModule</code>'s <code>imports</code> list.</li> <li>Add <code>HeroDetailComponent</code> to the declarations array.</li> </ol> <div class="code-example">
+<h4 class="pre-title">src/app/app.module.ts (excerpt)</h4>
+<pre data-language="typescript">import { NgModule }            from '@angular/core';
+import { BrowserModule }       from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';  // &lt;-- #1 import module
+
+import { AppComponent }        from './app.component';
+import { HeroDetailComponent } from './hero-detail.component'; // &lt;-- #1 import component
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule // &lt;-- #2 add to Angular module imports
+  ],
+  declarations: [
+    AppComponent,
+    HeroDetailComponent, // &lt;-- #3 declare app component
+  ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+</pre>
+</div>
+<h2 id="update">Display the <em>HeroDetailComponent</em>
+</h2> <p>Revise the <code>AppComponent</code> template so it displays the <code>HeroDetailComponent</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/app.component.ts</h4>
+<pre data-language="typescript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  template: `
+  &lt;div class="container"&gt;
+    &lt;h1&gt;Reactive Forms&lt;/h1&gt;
+    &lt;hero-detail&gt;&lt;/hero-detail&gt;
+  &lt;/div&gt;`
+})
+export class AppComponent { }
+</pre>
+</div>
+<h3 id="essentials">Essential form classes</h3> <p>It may be helpful to read a brief description of the core form classes.</p> <ul> <li>
+<p><a href="../../api/forms/index/abstractcontrol-class/" title="API Reference: AbstractControl"><em>AbstractControl</em></a> is the abstract base class for the three concrete form control classes: <code>FormControl</code>, <code>FormGroup</code>, and <code>FormArray</code>. It provides their common behaviors and properties, some of which are <em>observable</em>.</p> </li> <li>
+<p><a href="../../api/forms/index/formcontrol-class/" title="API Reference: FormControl"><em>FormControl</em></a> tracks the value and validity status of an <em>individual</em> form control. It corresponds to an HTML form control such as an input box or selector.</p> </li> <li>
+<p><a href="../../api/forms/index/formgroup-class/" title="API Reference: FormGroup"><em>FormGroup</em></a> tracks the value and validity state of a <em>group</em> of <code>AbstractControl</code> instances. The group's properties include its child controls. The top-level form in your component is a <code>FormGroup</code>.</p> </li> <li>
+<p><a href="../../api/forms/index/formarray-class/" title="API Reference: FormArray"><em>FormArray</em></a> tracks the value and validity state of a numerically indexed <em>array</em> of <code>AbstractControl</code> instances.</p> </li> </ul> <p>You'll learn more about these classes as you work through this guide.</p> <h3 id="style-the-app">Style the app</h3> <p>You used bootstrap CSS classes in the template HTML of both the <code>AppComponent</code> and the <code>HeroDetailComponent</code>. Add the <code>bootstrap</code> <em>CSS stylesheet</em> to the head of <code>index.html</code>:</p> <div class="code-example">
+<h4 class="pre-title">index.html</h4>
+<pre data-language="html">&lt;link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css"&gt;
+</pre>
+</div>
+<p>Now that everything is wired up, the browser should display something like this: </p> <img src="data:image/png;base64,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" width="400px" alt="Single FormControl"><h2 id="formgroup">Add a FormGroup</h2> <p>Usually, if you have multiple <em>FormControls</em>, you'll want to register them within a parent <code>FormGroup</code>. This is simple to do. To add a <code>FormGroup</code>, add it to the imports section of <code>hero-detail.component.ts</code>:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts</h4>
+<pre data-language="typescript">import { Component }              from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+</pre>
+</div>
+<p>In the class, wrap the <code>FormControl</code> in a <code>FormGroup</code> called <code>heroForm</code> as follows:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts</h4>
+<pre data-language="typescript">export class HeroDetailComponent2 {
+  heroForm = new FormGroup ({
+    name: new FormControl()
+  });
+}
+</pre>
+</div>
+<p>Now that you've made changes in the class, they need to be reflected in the template. Update <code>hero-detail.component.html</code> by replacing it with the following.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html</h4>
+<pre data-language="html">&lt;h2&gt;Hero Detail&lt;/h2&gt;
+&lt;h3&gt;&lt;i&gt;FormControl in a FormGroup&lt;/i&gt;&lt;/h3&gt;
+&lt;form [formGroup]="heroForm" novalidate&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;Name:
+      &lt;input class="form-control" formControlName="name"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+</pre>
+</div>
+<p>Notice that now the single input is in a <code>form</code> element. The <code>novalidate</code> attribute in the <code>&lt;form&gt;</code> element prevents the browser from attempting native HTML validations. </p> <p><code>formGroup</code> is a reactive form directive that takes an existing <code>FormGroup</code> instance and associates it with an HTML element. In this case, it associates the <code>FormGroup</code> you saved as <code>heroForm</code> with the form element.</p> <p>Because the class now has a <code>FormGroup</code>, you must update the template syntax for associating the input with the corresponding <code>FormControl</code> in the component class. Without a parent <code>FormGroup</code>, <code>[formControl]="name"</code> worked earlier because that directive can stand alone, that is, it works without being in a <code>FormGroup</code>. With a parent <code>FormGroup</code>, the <code>name</code> input needs the syntax <code>formControlName=name</code> in order to be associated with the correct <code>FormControl</code> in the class. This syntax tells Angular to look for the parent <code>FormGroup</code>, in this case <code>heroForm</code>, and then <em>inside</em> that group to look for a <code>FormControl</code> called <code>name</code>.</p> <blockquote class="l-sub-section">
+<p>Disregard the <code>form-group</code> <em>CSS</em> class. It belongs to the <a href="http://getbootstrap.com/" target="_blank" title="Bootstrap CSS">Bootstrap CSS library</a>, not Angular. Like the <code>form-control</code> class, it <em>styles</em> the form but in no way impacts its logic.</p> </blockquote>
+<p>The form looks great. But does it work? When the user enters a name, where does the value go? </p> <h2 id="json">Taking a look at the form model</h2> <p>The value goes into the <strong><em>form model</em></strong> that backs the group's <code>FormControls</code>. To see the form model, add the following line after the closing <code>form</code> tag in the <code>hero-detail.component.html</code>:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html</h4>
+<pre data-language="html">&lt;p&gt;Form value: {{ heroForm.value | json }}&lt;/p&gt;
+&lt;p&gt;Form status: {{ heroForm.status | json }}&lt;/p&gt;
+</pre>
+</div>
+<p>The <code>heroForm.value</code> returns the <em>form model</em>. Piping it through the <code>JsonPipe</code> renders the model as JSON in the browser:</p> <img src="data:image/png;base64,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" width="400px" alt="JSON output"><p>The initial <code>name</code> property value is the empty string. Type into the <em>name</em> input box and watch the keystokes appear in the JSON.</p> <p>Great! You have the basics of a form. </p> <p>In real life apps, forms get big fast. <code>FormBuilder</code> makes form development and maintenance easier.</p> <h2 id="formbuilder">Introduction to <em>FormBuilder</em>
+</h2> <p>The <code>FormBuilder</code> class helps reduce repetition and clutter by handling details of control creation for you. </p> <p>To use <code>FormBuilder</code>, you need to import it into <code>hero-detail.component.ts</code>:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">import { Component }              from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+</pre>
+</div>
+<p>Use it now to refactor the <code>HeroDetailComponent</code> into something that's a little easier to read and write, by following this plan:</p> <ul> <li>Explicitly declare the type of the <code>heroForm</code> property to be <code>FormGroup</code>; you'll initialize it later.</li> <li>Inject a <code>FormBuilder</code> into the constructor.</li> <li>Add a new method that uses the <code>FormBuilder</code> to define the <code>heroForm</code>; call it <code>createForm</code>.</li> <li>Call <code>createForm</code> in the constructor.</li> </ul> <p>The revised <code>HeroDetailComponent</code> looks like this:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">export class HeroDetailComponent3 {
+  heroForm: FormGroup; // &lt;--- heroForm is of type FormGroup
+
+  constructor(private fb: FormBuilder) { // &lt;--- inject FormBuilder
+    this.createForm();
+  }
+
+  createForm() {
+    this.heroForm = this.fb.group({
+      name: '', // &lt;--- the FormControl called "name"
+    });
+  }
+}
+</pre>
+</div>
+<p><code>FormBuilder.group</code> is a factory method that creates a <code>FormGroup</code>. <code>FormBuilder.group</code> takes an object whose keys and values are <code>FormControl</code> names and their definitions. In this example, the <code>name</code> control is defined by its initial data value, an empty string.</p> <p>Defining a group of controls in a single object makes for a compact, readable style. It beats writing an equivalent series of <code>new FormControl(...)</code> statements.</p> <h3 id="validators">Validators.required</h3> <p>Though this guide doesn't go deeply into validations, here is one example that demonstrates the simplicity of using <code>Validators.required</code> in reactive forms. </p> <p>First, import the <code>Validators</code> symbol.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">import { Component }                          from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+</pre>
+</div>
+<p>To make the <code>name</code> <code>FormControl</code> required, replace the <code>name</code> property in the <code>FormGroup</code> with an array. The first item is the initial value for <code>name</code>; the second is the required validator, <code>Validators.required</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">this.heroForm = this.fb.group({
+  name: ['', Validators.required ],
+});
+</pre>
+</div>
+<blockquote class="l-sub-section">
+<p>Reactive validators are simple, composable functions. Configuring validation is harder in template-driven forms where you must wrap validators in a directive. </p> </blockquote>
+<p>Update the diagnostic message at the bottom of the template to display the form's validity status.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (excerpt)</h4>
+<pre data-language="html">&lt;p&gt;Form value: {{ heroForm.value | json }}&lt;/p&gt;
+&lt;p&gt;Form status: {{ heroForm.status | json }}&lt;/p&gt;
+</pre>
+</div>
+<p>The browser displays the following:</p> <img src="data:image/png;base64,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" width="400px" alt="Single FormControl"><p><code>Validators.required</code> is working. The status is <code>INVALID</code> because the input box has no value. Type into the input box to see the status change from <code>INVALID</code> to <code>VALID</code>. </p> <p>In a real app, you'd replace the diagnosic message with a user-friendly experience.</p> <p>Using <code>Validators.required</code> is optional for the rest of the guide. It remains in each of the following examples with the same configuration.</p> <p>For more on validating Angular forms, see the <a href="../../cookbook/form-validation/">Form Validation</a> guide. </p> <h3 id="more-formcontrols">More FormControls</h3> <p>A hero has more than a name. A hero has an address, a super power and sometimes a sidekick too. </p> <p>The address has a state property. The user will select a state with a <code>&lt;select&gt;</code> box and you'll populate the <code>&lt;option&gt;</code> elements with states. So import <code>states</code> from <code>data-model.ts</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">import { Component }                          from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { states } from './data-model';
+</pre>
+</div>
+<p>Declare the <code>states</code> property and add some address <code>FormControls</code> to the <code>heroForm</code> as follows. </p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">export class HeroDetailComponent4 {
+  heroForm: FormGroup;
+  states = states;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.heroForm = this.fb.group({
+      name: ['', Validators.required ],
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      power: '',
+      sidekick: ''
+    });
+  }
+}
+</pre>
+</div>
+<p>Then add corresponding markup in <code>hero-detail.component.html</code> within the <code>form</code> element.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html</h4>
+<pre data-language="html">&lt;h2&gt;Hero Detail&lt;/h2&gt;
+&lt;h3&gt;&lt;i&gt;A FormGroup with multiple FormControls&lt;/i&gt;&lt;/h3&gt;
+&lt;form [formGroup]="heroForm" novalidate&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;Name:
+      &lt;input class="form-control" formControlName="name"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;Street:
+      &lt;input class="form-control" formControlName="street"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;City:
+      &lt;input class="form-control" formControlName="city"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;State:
+      &lt;select class="form-control" formControlName="state"&gt;
+          &lt;option *ngFor="let state of states" [value]="state"&gt;{{state}}&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;Zip Code:
+      &lt;input class="form-control" formControlName="zip"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group radio"&gt;
+    &lt;h4&gt;Super power:&lt;/h4&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="flight"&gt;Flight&lt;/label&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="x-ray vision"&gt;X-ray vision&lt;/label&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="strength"&gt;Strength&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="checkbox"&gt;
+    &lt;label class="center-block"&gt;
+      &lt;input type="checkbox" formControlName="sidekick"&gt;I have a sidekick.
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+
+&lt;p&gt;Form value: {{ heroForm.value | json }}&lt;/p&gt;
+</pre>
+</div>
+<blockquote class="alert is-helpful">
+<p><em>Reminder</em>: Ignore the many mentions of <code>form-group</code>, <code>form-control</code>, <code>center-block</code>, and <code>checkbox</code> in this markup. Those are <em>bootstrap</em> CSS classes that Angular itself ignores. Pay attention to the <code>formGroupName</code> and <code>formControlName</code> attributes. They are the Angular directives that bind the HTML controls to the Angular <code>FormGroup</code> and <code>FormControl</code> properties in the component class.</p> </blockquote>
+<p>The revised template includes more text inputs, a select box for the <code>state</code>, radio buttons for the <code>power</code>, and a checkbox for the <code>sidekick</code>. </p> <p>You must bind the option's value property with <code>[value]="state"</code>. If you do not bind the value, the select shows the first option form the data model.</p> <p>The component <em>class</em> defines control properties without regard for their representation in the template. You define the <code>state</code>, <code>power</code>, and <code>sidekick</code> controls the same way you defined the <code>name</code> control. You tie these controls to the template HTML elements in the same way, specifiying the <code>FormControl</code> name with the <code>formControlName</code> directive. </p> <p>See the API reference for more information about <a href="../../api/forms/index/radiocontrolvalueaccessor-directive/" title="API: RadioControlValueAccessor">radio buttons</a>, <a href="../../api/forms/index/selectcontrolvalueaccessor-directive/" title="API: SelectControlValueAccessor">selects</a>, and <a href="../../api/forms/index/checkboxcontrolvalueaccessor-directive/" title="API: CheckboxControlValueAccessor">checkboxes</a>.</p> <h3 id="grouping">Nested FormGroups</h3> <p>This form is getting big and unwieldy. You can group some of the related <code>FormControls</code> into a nested <code>FormGroup</code>. The <code>street</code>, <code>city</code>, <code>state</code>, and <code>zip</code> are properties that would make a good <em>address</em> <code>FormGroup</code>. Nesting groups and controls in this way allows you to mirror the hierarchical structure of the data model and helps track validation and state for related sets of controls. </p> <p>You used the <code>FormBuilder</code> to create one <code>FormGroup</code> in this component called <code>heroForm</code>. Let that be the parent <code>FormGroup</code>. Use <code>FormBuilder</code> again to create a child <code>FormGroup</code> that encapsulates the address controls; assign the result to a new <code>address</code> property of the parent <code>FormGroup</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">export class HeroDetailComponent5 {
+  heroForm: FormGroup;
+  states = states;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.heroForm = this.fb.group({ // &lt;-- the parent FormGroup
+      name: ['', Validators.required ],
+      address: this.fb.group({ // &lt;-- the child FormGroup
+        street: '',
+        city: '',
+        state: '',
+        zip: ''
+      }),
+      power: '',
+      sidekick: ''
+    });
+  }
+}
+</pre>
+</div>
+<p>You’ve changed the structure of the form controls in the component class; you must make corresponding adjustments to the component template.</p> <p>In <code>hero-detail.component.html</code>, wrap the address-related <code>FormControls</code> in a <code>div</code>. Add a <code>formGroupName</code> directive to the <code>div</code> and bind it to <code>"address"</code>. That's the property of the <em>address</em> child <code>FormGroup</code> within the parent <code>FormGroup</code> called <code>heroForm</code>.</p> <p>To make this change visually obvious, slip in an <code>&lt;h4&gt;</code> header near the top with the text, <em>Secret Lair</em>. The new <em>address</em> HTML looks like this:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (excerpt)</h4>
+<pre data-language="html">&lt;div formGroupName="address" class="well well-lg"&gt;
+  &lt;h4&gt;Secret Lair&lt;/h4&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;Street:
+      &lt;input class="form-control" formControlName="street"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;City:
+      &lt;input class="form-control" formControlName="city"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;State:
+      &lt;select class="form-control" formControlName="state"&gt;
+        &lt;option *ngFor="let state of states" [value]="state"&gt;{{state}}&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label class="center-block"&gt;Zip Code:
+      &lt;input class="form-control" formControlName="zip"&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+</div>
+<p>After these changes, the JSON output in the browser shows the revised <em>form model</em> with the nested address <code>FormGroup</code>: </p> <img src="data:image/png;base64,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" width="400px" alt="JSON output"><p>Great! You’ve made a group and you can see that the template and the form model are talking to one another.</p> <h2 id="properties">Inspect <em>FormControl</em> Properties</h2> <p>At the moment, you're dumping the entire form model onto the page. Sometimes you're interested only in the state of one particular <code>FormControl</code>.</p> <p>You can inspect an individual <code>FormControl</code> within a form by extracting it with the <code>.get()</code> method. You can do this <em>within</em> the component class or display it on the page by adding the following to the template, immediately after the <code>{{form.value | json}}</code> interpolation as follows: </p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html</h4>
+<pre data-language="html">&lt;p&gt;Name value: {{ heroForm.get('name').value }}&lt;/p&gt;
+</pre>
+</div>
+<p>To get the state of a <code>FormControl</code> that’s inside a <code>FormGroup</code>, use dot notation to path to the control.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html</h4>
+<pre data-language="html">&lt;p&gt;Street value: {{ heroForm.get('address.street').value}}&lt;/p&gt;
+</pre>
+</div>
+<p>You can use this technique to display <em>any</em> property of a <code>FormControl</code> such as one of the following:</p> <table width="100%">
+<col width="10%">
+<col width="90%">
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><code>myControl.value</code></td>
+<td>
+<p>the value of a <code>FormControl</code>.</p> </td>
+</tr>
+<tr>
+<td><code>myControl.status</code></td>
+<td>
+<p>the validity of a <code>FormControl</code>. Possible values: <code>VALID</code>, <code>INVALID</code>, <code>PENDING</code>, or <code>DISABLED</code>.</p> </td>
+</tr>
+<tr>
+<td><code>myControl.pristine</code></td>
+<td>
+<p><code>true</code> if the user has <em>not</em> changed the value in the UI. Its opposite is <code>myControl.dirty</code>.</p> </td>
+</tr>
+<tr>
+<td><code>myControl.untouched</code></td>
+<td>
+<p><code>true</code> if the control user has not yet entered the HTML control and triggered its blur event. Its opposite is <code>myControl.touched</code>.</p> </td>
+</tr>
+</table>
+<p>Learn about other <code>FormControl</code> properties in the <a href="../../api/forms/index/abstractcontrol-class/"><em>AbstractControl</em></a> API reference.</p> <p>One common reason for inspecting <code>FormControl</code> properties is to make sure the user entered valid values. Read more about validating Angular forms in the <a href="../../cookbook/form-validation/">Form Validation</a> guide. </p> <h2 id="data-model-form-model">The <em>data model</em> and the <em>form model</em>
+</h2> <p>At the moment, the form is displaying empty values. The <code>HeroDetailComponent</code> should display values of a hero, possibly a hero retrieved from a remote server.</p> <p>In this app, the <code>HeroDetailComponent</code> gets its hero from a parent <code>HeroListComponent</code></p> <p>The <code>hero</code> from the server is the <strong><em>data model</em></strong>. The <code>FormControl</code> structure is the <strong><em>form model</em></strong>.</p> <p>The component must copy the hero values in the <em>data model</em> into the <em>form model</em>. There are two important implications:</p> <ol> <li>
+<p>The developer must understand how the properties of the <em>data model</em> map to the properties of the <em>form model</em>.</p> </li> <li>
+<p>User changes flow from the DOM elements to the <em>form model</em>, not to the <em>data model</em>. The form controls never update the <em>data model</em>.</p> </li> </ol> <p>The <em>form</em> and <em>data</em> model structures need not match exactly. You often present a subset of the <em>data model</em> on a particular screen. But it makes things easier if the shape of the <em>form model</em> is close to the shape of the <em>data model</em>.</p> <p>In this <code>HeroDetailComponent</code>, the two models are quite close.</p> <p>Recall the definition of <code>Hero</code> in <code>data-model.ts</code>:</p> <div class="code-example">
+<h4 class="pre-title">src/app/data-model.ts (classes)</h4>
+<pre data-language="typescript">export class Hero {
+  id = 0;
+  name = '';
+  addresses: Address[];
+}
+
+export class Address {
+  street = '';
+  city   = '';
+  state  = '';
+  zip    = '';
+}
+</pre>
+</div>
+<p>Here, again, is the component's <code>FormGroup</code> definition.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">this.heroForm = this.fb.group({
+  name: ['', Validators.required ],
+  address: this.fb.group({
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  }),
+  power: '',
+  sidekick: ''
+});
+</pre>
+</div>
+<p>There are two significant differences between these models:</p> <ol> <li>
+<p>The <code>Hero</code> has an <code>id</code>. The form model does not because you generally don't show primary keys to users.</p> </li> <li>
+<p>The <code>Hero</code> has an array of addresses. This form model presents only one address, a choice <a href="#form-array" title="Form arrays">revisited below</a>.</p> </li> </ol> <p>Nonetheless, the two models are pretty close in shape and you'll see in a moment how this alignment facilitates copying the <em>data model</em> properties to the <em>form model</em> with the <code>patchValue</code> and <code>setValue</code> methods.</p> <p>Take a moment to refactor the <em>address</em> <code>FormGroup</code> definition for brevity and clarity as follows:</p> <div class="code-example"><pre data-language="typescript">this.heroForm = this.fb.group({
+  name: ['', Validators.required ],
+  address: this.fb.group(new Address()), // &lt;-- a FormGroup with a new address
+  power: '',
+  sidekick: ''
+});
+</pre></div>
+<p>Also be sure to update the import from <code>data-model</code> so you can reference the <code>Hero</code> and <code>Address</code> classes:</p> <div class="code-example"><pre data-language="typescript">import { Address, Hero, states } from './data-model';
+</pre></div>
+<h2 id="set-data">Populate the form model with <em>setValue</em> and <em>patchValue</em>
+</h2> <p>Previously you created a control and initialized its value at the same time. You can also initialize or reset the values <em>later</em> with the <code>setValue</code> and <code>patchValue</code> methods.</p> <h3 id="_setvalue_"><em>setValue</em></h3> <p>With <strong><code>setValue</code></strong>, you assign <em>every</em> form control value <em>at once</em> by passing in a data object whose properties exactly match the <em>form model</em> behind the <code>FormGroup</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">    this.heroForm.setValue({
+      name:    this.hero.name,
+      address: this.hero.addresses[0] || new Address()
+    });
+</pre>
+</div>
+<p>The <code>setValue</code> method checks the data object thoroughly before assigning any form control values.</p> <p>It will not accept a data object that doesn't match the FormGroup structure or is missing values for any control in the group. This way, it can return helpful error messages if you have a typo or if you've nested controls incorrectly. <code>patchValue</code> will fail silently.</p> <p>On the other hand,<code>setValue</code> will catch the error and report it clearly. </p> <p>Notice that you can <em>almost</em> use the entire <code>hero</code> as the argument to <code>setValue</code> because its shape is similar to the component's <code>FormGroup</code> structure.</p> <p>You can only show the hero's first address and you must account for the possibility that the <code>hero</code> has no addresses at all. This explains the conditional setting of the <code>address</code> property in the data object argument:</p> <div class="code-example"><pre data-language="typescript">address: this.hero.addresses[0] || new Address()
+</pre></div>
+<h3 id="_patchvalue_"><em>patchValue</em></h3> <p>With <strong><code>patchValue</code></strong>, you can assign values to specific controls in a <code>FormGroup</code> by supplying an object of key/value pairs for just the controls of interest. </p> <p>This example sets only the form's <code>name</code> control.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">this.heroForm.patchValue({
+  name: this.hero.name
+});
+</pre>
+</div>
+<p>With <strong><code>patchValue</code></strong> you have more flexibility to cope with wildly divergent data and form models. But unlike <code>setValue</code>, <code>patchValue</code> cannot check for missing control values and does not throw helpful errors.</p> <h3 id="when-to-set-form-model-values-_ngonchanges_-">When to set form model values (<em>ngOnChanges</em>)</h3> <p>Now you know <em>how</em> to set the <em>form model</em> values. But <em>when</em> do you set them? The answer depends upon when the component gets the <em>data model</em> values.</p> <p>The <code>HeroDetailComponent</code> in this reactive forms sample is nested within a <em>master/detail</em> <code>HeroListComponent</code> (<a href="#hero-list">discussed below</a>). The <code>HeroListComponent</code> displays hero names to the user. When the user clicks on a hero, the list component passes the selected hero into the <code>HeroDetailComponent</code> by binding to its <code>hero</code> input property.</p> <div class="code-example">
+<h4 class="pre-title">hero-list.component.html (simplified)</h4>
+<pre data-language="html">&lt;nav&gt;
+  &lt;a *ngFor="let hero of heroes | async" (click)="select(hero)"&gt;{{hero.name}}&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;div *ngIf="selectedHero"&gt;
+  &lt;hero-detail [hero]="selectedHero"&gt;&lt;/hero-detail&gt;
+&lt;/div&gt;
+</pre>
+</div>
+<p>In this approach, the value of <code>hero</code> in the <code>HeroDetailComponent</code> changes every time the user selects a new hero. You should call <em>setValue</em> in the <a href="../lifecyle-hooks/#onchanges">ngOnChanges</a> hook, which Angular calls whenever the input <code>hero</code> property changes as the following steps demonstrate.</p> <p>First, import the <code>OnChanges</code> and <code>Input</code> symbols in <code>hero-detail.component.ts</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (core imports)</h4>
+<pre data-language="typescript">import { Component, Input, OnChanges }             from '@angular/core';
+</pre>
+</div>
+<p>Add the <code>hero</code> input property.</p> <div class="code-example"><pre data-language="typescript">@Input() hero: Hero;
+</pre></div>
+<p>Add the <code>ngOnChanges</code> method to the class as follows:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (ngOnchanges)</h4>
+<pre data-language="typescript">  ngOnChanges()
+    this.heroForm.setValue({
+      name:    this.hero.name,
+      address: this.hero.addresses[0] || new Address()
+    });
+  }
+</pre>
+</div>
+<h3 id="_reset_-the-form-flags">
+<em>reset</em> the form flags</h3> <p>You should reset the form when the hero changes so that control values from the previous hero are cleared and status flags are restored to the <em>pristine</em> state. You could call <code>reset</code> at the top of <code>ngOnChanges</code> like this.</p> <div class="code-example"><pre data-language="typescript">this.heroForm.reset();
+</pre></div>
+<p>The <code>reset</code> method has an optional <code>state</code> value so you can reset the flags <em>and</em> the control values at the same. Internally, <code>reset</code> passes the argument to <code>setValue</code>. A little refactoring and <code>ngOnChanges</code> becomes this:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (ngOnchanges - revised)</h4>
+<pre data-language="typescript">ngOnChanges() {
+  this.heroForm.reset({
+    name: this.hero.name,
+    address: this.hero.addresses[0] || new Address()
+  });
+}
+</pre>
+</div>
+<h3 id="hero-list">Create the <em>HeroListComponent</em> and <em>HeroService</em>
+</h3> <p>The <code>HeroDetailComponent</code> is a nested sub-component of the <code>HeroListComponent</code> in a <em>master/detail</em> view. Together they look a bit like this:</p> <img src="data:image/png;base64,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" width="420px" alt="HeroListComponent"><p>The <code>HeroListComponent</code> uses an injected <code>HeroService</code> to retrieve heroes from the server and then presents those heroes to the user as a series of buttons. The <code>HeroService</code> emulates an HTTP service. It returns an <code>Observable</code> of heroes that resolves after a short delay, both to simulate network latency and to indicate visually the necessarily asynchronous nature of the application.</p> <p>When the user clicks on a hero, the component sets its <code>selectedHero</code> property which is bound to the <code>hero</code> input property of the <code>HeroDetailComponent</code>. The <code>HeroDetailComponent</code> detects the changed hero and re-sets its form with that hero's data values.</p> <p>A "Refresh" button clears the hero list and the current selected hero before refetching the heroes.</p> <p>The remaining <code>HeroListComponent</code> and <code>HeroService</code> implementation details are not relevant to understanding reactive forms. The techniques involved are covered elsewhere in the documentation, including the <em>Tour of Heroes</em> <a href="../../tutorial/toh-pt3/" title="ToH: Multiple Components">here</a> and <a href="../../tutorial/toh-pt4/" title="ToH: Services">here</a>.</p> <p>If you're coding along with the steps in this reactive forms tutorial, create the pertinent files based on the <a href="#source-code" title="Reactive Forms source code">source code displayed below</a>. Notice that <code>hero-list.component.ts</code> imports <code>Observable</code> and <code>finally</code> while <code>hero.service.ts</code> imports <code>Observable</code>, <code>of</code>, and <code>delay</code> from <code>rxjs</code>. Then return here to learn about <em>form array</em> properties.</p> <h2 id="form-array">Use <em>FormArray</em> to present an array of <em>FormGroups</em>
+</h2> <p>So far, you've seen <code>FormControls</code> and <code>FormGroups</code>. A <code>FormGroup</code> is a named object whose property values are <code>FormControls</code> and other <code>FormGroups</code>.</p> <p>Sometimes you need to present an arbitrary number of controls or groups. For example, a hero may have zero, one, or any number of addresses.</p> <p>The <code>Hero.addresses</code> property is an array of <code>Address</code> instances. An <em>address</em> <code>FormGroup</code> can display one <code>Address</code>. An Angular <code>FormArray</code> can display an array of <em>address</em> <code>FormGroups</code>.</p> <p>To get access to the <code>FormArray</code> class, import it into <code>hero-detail.component.ts</code>:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (excerpt)</h4>
+<pre data-language="typescript">import { Component, Input, OnChanges }                   from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Address, Hero, states } from './data-model';
+</pre>
+</div>
+<p>To <em>work</em> with a <code>FormArray</code> you do the following:</p> <ol> <li>Define the items (<code>FormControls</code> or <code>FormGroups</code>) in the array.</li> <li>Initialize the array with items created from data in the <em>data model</em>.</li> <li>Add and remove items as the user requires.</li> </ol> <p>In this guide, you define a <code>FormArray</code> for <code>Hero.addresses</code> and let the user add or modify addresses (removing addresses is your homework).</p> <p>You’ll need to redefine the form model in the <code>HeroDetailComponent</code> constructor, which currently only displays the first hero address in an <em>address</em> <code>FormGroup</code>. </p> <div class="code-example"><pre data-language="typescript">this.heroForm = this.fb.group({
+  name: ['', Validators.required ],
+  address: this.fb.group(new Address()), // &lt;-- a FormGroup with a new address
+  power: '',
+  sidekick: ''
+});
+</pre></div>
+<h3 id="from-_address_-to-_secret-lairs_">From <em>address</em> to <em>secret lairs</em>
+</h3> <p>From the user's point of view, heroes don't have <em>addresses</em>. <em>Addresses</em> are for mere mortals. Heroes have <em>secret lairs</em>! Replace the <em>address</em> <code>FormGroup</code> definition with a <em>secretLairs</em> <code>FormArray</code> definition:</p> <div class="code-example"><pre data-language="typescript">this.heroForm = this.fb.group({
+  name: ['', Validators.required ],
+  secretLairs: this.fb.array([]), // &lt;-- secretLairs as an empty FormArray
+  power: '',
+  sidekick: ''
+});
+</pre></div>
+<blockquote class="alert is-helpful">
+<p>Changing the form control name from <code>address</code> to <code>secretLairs</code> drives home an important point: the <em>form model</em> doesn't have to match the <em>data model</em>.</p> <p>Obviously there has to be a relationship between the two. But it can be anything that makes sense within the application domain.</p> <p><em>Presentation</em> requirements often differ from <em>data</em> requirements. The reactive forms approach both emphasizes and facilitates this distinction.</p> </blockquote>
+<h3 id="initialize-the-secretlairs-_formarray_">Initialize the "secretLairs" <em>FormArray</em>
+</h3> <p>The default form displays a nameless hero with no addresses.</p> <p>You need a method to populate (or repopulate) the <em>secretLairs</em> with actual hero addresses whenever the parent <code>HeroListComponent</code> sets the <code>HeroListComponent.hero</code> input property to a new <code>Hero</code>.</p> <p>The following <code>setAddresses</code> method replaces the <em>secretLairs</em> <code>FormArray</code> with a new <code>FormArray</code>, initialized by an array of hero address <code>FormGroups</code>.</p> <div class="code-example"><pre data-language="typescript">setAddresses(addresses: Address[]) {
+  const addressFGs = addresses.map(address =&gt; this.fb.group(address));
+  const addressFormArray = this.fb.array(addressFGs);
+  this.heroForm.setControl('secretLairs', addressFormArray);
+}
+</pre></div>
+<p>Notice that you replace the previous <code>FormArray</code> with the <strong><code>FormGroup.setControl</code> method</strong>, not with <code>setValue</code>. You're replacing a <em>control</em>, not the <em>value</em> of a control.</p> <p>Notice also that the <em>secretLairs</em> <code>FormArray</code> contains <strong><code>FormGroups</code></strong>, not <code>Addresses</code>.</p> <h3 id="get-the-_formarray_">Get the <em>FormArray</em>
+</h3> <p>The <code>HeroDetailComponent</code> should be able to display, add, and remove items from the <em>secretLairs</em> <code>FormArray</code>.</p> <p>Use the <code>FormGroup.get</code> method to acquire a reference to that <code>FormArray</code>. Wrap the expression in a <code>secretLairs</code> convenience property for clarity and re-use.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (secretLayers property)</h4>
+<pre data-language="typescript">get secretLairs(): FormArray {
+  return this.heroForm.get('secretLairs') as FormArray;
+};
+</pre>
+</div>
+<h3 id="display-the-_formarray_">Display the <em>FormArray</em>
+</h3> <p>The current HTML template displays a single <em>address</em> <code>FormGroup</code>. Revise it to display zero, one, or more of the hero's <em>address</em> <code>FormGroups</code>.</p> <p>This is mostly a matter of wrapping the previous template HTML for an address in a <code>&lt;div&gt;</code> and repeating that <code>&lt;div&gt;</code> with <code>*ngFor</code>.</p> <p>The trick lies in knowing how to write the <code>*ngFor</code>. There are three key points:</p> <ol> <li>
+<p>Add another wrapping <code>&lt;div&gt;</code>, around the <code>&lt;div&gt;</code> with <code>*ngFor</code>, and set its <code>formArrayName</code> directive to <code>"secretLairs"</code>. This step establishes the <em>secretLairs</em> <code>FormArray</code> as the context for form controls in the inner, repeated HTML template. </p> </li> <li>
+<p>The source of the repeated items is the <code>FormArray.controls</code>, not the <code>FormArray</code> itself. Each control is an <em>address</em> <code>FormGroup</code>, exactly what the previous (now repeated) template HTML expected.</p> </li> <li>
+<p>Each repeated <code>FormGroup</code> needs a unique <code>formGroupName</code> which must be the index of the <code>FormGroup</code> in the <code>FormArray</code>. You'll re-use that index to compose a unique label for each address.</p> </li> </ol> <p>Here's the skeleton for the <em>secret lairs</em> section of the HTML template:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (*ngFor)</h4>
+<pre data-language="html">&lt;div formArrayName="secretLairs" class="well well-lg"&gt;
+  &lt;div *ngFor="let address of secretLairs.controls; let i=index" [formGroupName]="i" &gt;
+    &lt;!-- The repeated address template --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+</div>
+<p>Here's the complete template for the <em>secret lairs</em> section:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (excerpt)</h4>
+<pre data-language="html">    &lt;div formArrayName="secretLairs" class="well well-lg"&gt;
+      &lt;div *ngFor="let address of secretLairs.controls; let i=index" [formGroupName]="i" &gt;
+        &lt;!-- The repeated address template --&gt;
+        &lt;h4&gt;Address #{{i + 1}}&lt;/h4&gt;
+        &lt;div style="margin-left: 1em;"&gt;
+          &lt;div class="form-group"&gt;
+            &lt;label class="center-block"&gt;Street:
+              &lt;input class="form-control" formControlName="street"&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class="form-group"&gt;
+            &lt;label class="center-block"&gt;City:
+              &lt;input class="form-control" formControlName="city"&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class="form-group"&gt;
+            &lt;label class="center-block"&gt;State:
+              &lt;select class="form-control" formControlName="state"&gt;
+                &lt;option *ngFor="let state of states" [value]="state"&gt;{{state}}&lt;/option&gt;
+              &lt;/select&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class="form-group"&gt;
+            &lt;label class="center-block"&gt;Zip Code:
+              &lt;input class="form-control" formControlName="zip"&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;br&gt;
+        &lt;!-- End of the repeated address template --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+</pre>
+</div>
+<h3 id="add-a-new-lair-to-the-_formarray_">Add a new lair to the <em>FormArray</em>
+</h3> <p>Add an <code>addLair</code> method that gets the <em>secretLairs</em> <code>FormArray</code> and appends a new <em>address</em> <code>FormGroup</code> to it. </p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (addLair method)</h4>
+<pre data-language="typescript">addLair() {
+  this.secretLairs.push(this.fb.group(new Address()));
+}
+</pre>
+</div>
+<p>Place a button on the form so the user can add a new <em>secret lair</em> and wire it to the component's <code>addLair</code> method.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (addLair button)</h4>
+<pre data-language="html">&lt;button (click)="addLair()" type="button"&gt;Add a Secret Lair&lt;/button&gt;
+</pre>
+</div>
+<blockquote class="alert is-important">
+<p>Be sure to <strong>add the <code>type="button"</code> attribute</strong>. In fact, you should always specify a button's <code>type</code>. Without an explict type, the button type defaults to "submit". When you later add a <em>form submit</em> action, every "submit" button triggers the submit action which might do something like save the current changes. You do not want to save changes when the user clicks the <em>Add a Secret Lair</em> button.</p> </blockquote>
+<h3 id="try-it-">Try it!</h3> <p>Back in the browser, select the hero named "Magneta". "Magneta" doesn't have an address, as you can see in the diagnostic JSON at the bottom of the form.</p> <img src="data:image/png;base64,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" width="400px" alt="JSON output of addresses array"><p>Click the "<em>Add a Secret Lair</em>" button. A new address section appears. Well done!</p> <h3 id="remove-a-lair">Remove a lair</h3> <p>This example can <em>add</em> addresses but it can't <em>remove</em> them. For extra credit, write a <code>removeLair</code> method and wire it to a button on the repeating address HTML.</p> <h2 id="observe-control">Observe control changes</h2> <p>Angular calls <code>ngOnChanges</code> when the user picks a hero in the parent <code>HeroListComponent</code>. Picking a hero changes the <code>HeroDetailComponent.hero</code> input property.</p> <p>Angular does <em>not</em> call <code>ngOnChanges</code> when the user modifies the hero's <em>name</em> or <em>secret lairs</em>. Fortunately, you can learn about such changes by subscribing to one of the form control properties that raises a change event.</p> <p>These are properties, such as <code>valueChanges</code>, that return an RxJS <code>Observable</code>. You don't need to know much about RxJS <code>Observable</code> to monitor form control values.</p> <p>Add the following method to log changes to the value of the <em>name</em> <code>FormControl</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (logNameChange)</h4>
+<pre data-language="typescript">nameChangeLog: string[] = [];
+logNameChange() {
+  const nameControl = this.heroForm.get('name');
+  nameControl.valueChanges.forEach(
+    (value: string) =&gt; this.nameChangeLog.push(value)
+  );
+}
+</pre>
+</div>
+<p>Call it in the constructor, after creating the form.</p> <div class="code-example"><pre data-language="typescript">constructor(private fb: FormBuilder) {
+  this.createForm();
+  this.logNameChange();
+}
+</pre></div>
+<p>The <code>logNameChange</code> method pushes name-change values into a <code>nameChangeLog</code> array. Display that array at the bottom of the component template with this <code>*ngFor</code> binding:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (Name change log)</h4>
+<pre data-language="html">&lt;h4&gt;Name change log&lt;/h4&gt;
+&lt;div *ngFor="let name of nameChangeLog"&gt;{{name}}&lt;/div&gt;
+</pre>
+</div>
+<p>Return to the browser, select a hero (e.g, "Magneta"), and start typing in the <em>name</em> input box. You should see a new name in the log after each keystroke.</p> <h3 id="when-to-use-it">When to use it</h3> <p>An interpolation binding is the easier way to <em>display</em> a name change. Subscribing to an observable form control property is handy for triggering application logic <em>within</em> the component class.</p> <h2 id="save">Save form data</h2> <p>The <code>HeroDetailComponent</code> captures user input but it doesn't do anything with it. In a real app, you'd probably save those hero changes. In a real app, you'd also be able to revert unsaved changes and resume editing. After you implement both features in this section, the form will look like this:</p> <img src="data:image/png;base64,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" width="389px" alt="Form with save &amp; revert buttons"><h3 id="save">Save</h3> <p>In this sample application, when the user submits the form, the <code>HeroDetailComponent</code> will pass an instance of the hero <em>data model</em> to a save method on the injected <code>HeroService</code>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (onSubmit)</h4>
+<pre data-language="typescript">onSubmit() {
+  this.hero = this.prepareSaveHero();
+  this.heroService.updateHero(this.hero).subscribe(/* error handling */);
+  this.ngOnChanges();
+}
+</pre>
+</div>
+<p>This original <code>hero</code> had the pre-save values. The user's changes are still in the <em>form model</em>. So you create a new <code>hero</code> from a combination of original hero values (the <code>hero.id</code>) and deep copies of the changed form model values, using the <code>prepareSaveHero</code> helper. </p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (prepareSaveHero)</h4>
+<pre data-language="typescript">prepareSaveHero(): Hero {
+  const formModel = this.heroForm.value;
+
+  // deep copy of form model lairs
+  const secretLairsDeepCopy: Address[] = formModel.secretLairs.map(
+    (address: Address) =&gt; Object.assign({}, address)
+  );
+
+  // return new `Hero` object containing a combination of original hero value(s)
+  // and deep copies of changed form model values
+  const saveHero: Hero = {
+    id: this.hero.id,
+    name: formModel.name as string,
+    // addresses: formModel.secretLairs // &lt;-- bad!
+    addresses: secretLairsDeepCopy
+  };
+  return saveHero;
+}
+</pre>
+</div>
+<blockquote class="l-sub-section">
+<p><strong>Address deep copy</strong></p> <p>Had you assigned the <code>formModel.secretLairs</code> to <code>saveHero.addresses</code> (see line commented out), the addresses in <code>saveHero.addresses</code> array would be the same objects as the lairs in the <code>formModel.secretLairs</code>. A user's subsequent changes to a lair street would mutate an address street in the <code>saveHero</code>.</p> <p>The <code>prepareSaveHero</code> method makes copies of the form model's <code>secretLairs</code> objects so that can't happen.</p> </blockquote>
+<h3 id="revert-cancel-changes-">Revert (cancel changes)</h3> <p>The user cancels changes and reverts the form to the original state by pressing the <em>Revert</em> button.</p> <p>Reverting is easy. Simply re-execute the <code>ngOnChanges</code> method that built the <em>form model</em> from the original, unchanged <code>hero</code> <em>data model</em>.</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.ts (revert)</h4>
+<pre data-language="typescript">revert() { this.ngOnChanges(); }
+</pre>
+</div>
+<h3 id="buttons">Buttons</h3> <p>Add the "Save" and "Revert" buttons near the top of the component's template:</p> <div class="code-example">
+<h4 class="pre-title">src/app/hero-detail.component.html (Save and Revert buttons)</h4>
+<pre data-language="html">&lt;form [formGroup]="heroForm" (ngSubmit)="onSubmit()" novalidate&gt;
+  &lt;div style="margin-bottom: 1em"&gt;
+    &lt;button type="submit"
+            [disabled]="heroForm.pristine" class="btn btn-success"&gt;Save&lt;/button&gt; &amp;nbsp;
+    &lt;button type="reset" (click)="revert()"
+            [disabled]="heroForm.pristine" class="btn btn-danger"&gt;Revert&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Hero Detail Controls --&gt;
+  &lt;div class="form-group radio"&gt;
+    &lt;h4&gt;Super power:&lt;/h4&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="flight"&gt;Flight&lt;/label&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="x-ray vision"&gt;X-ray vision&lt;/label&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="strength"&gt;Strength&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="checkbox"&gt;
+    &lt;label class="center-block"&gt;
+      &lt;input type="checkbox" formControlName="sidekick"&gt;I have a sidekick.
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+</pre>
+</div>
+<p>The buttons are disabled until the user "dirties" the form by changing a value in any of its form controls (<code>heroForm.dirty</code>).</p> <p>Clicking a button of type <code>"submit"</code> triggers the <code>ngSubmit</code> event which calls the component's <code>onSubmit</code> method. Clicking the revert button triggers a call to the component's <code>revert</code> method. Users now can save or revert changes.</p> <p>This is the final step in the demo. Try the .</p> <h2 id="conclusion">Conclusion</h2> <p>This page covered:</p> <ul> <li>How to create a reactive form component and its corresponding template.</li> <li>How to use <code>FormBuilder</code> to simplify coding a reactive form.</li> <li>Grouping <code>FormControls</code>.</li> <li>Inspecting <code>FormControl</code> properties.</li> <li>Setting data with <code>patchValue</code> and <code>setValue</code>.</li> <li>Adding groups dynamically with <code>FormArray</code>.</li> <li>Observing changes to the value of a <code>FormControl</code>.</li> <li>Saving form changes.</li> </ul> <p id="source-code">The key files of the final version are as follows:</p> <div class="pre-title">src/app/app.component.ts</div>
+<pre name="src/app/app.component.ts" data-language="typescript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  template: `
+  &lt;div class="container"&gt;
+    &lt;h1&gt;Reactive Forms&lt;/h1&gt;
+    &lt;hero-list&gt;&lt;/hero-list&gt;
+  &lt;/div&gt;`
+})
+export class AppComponent { }
+</pre>
+<div class="pre-title">src/app/app.module.ts</div>
+<pre name="src/app/app.module.ts" data-language="typescript">import { NgModule }            from '@angular/core';
+import { BrowserModule }       from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';  // &lt;-- #1 import module
+
+import { AppComponent }        from './app.component';
+import { HeroDetailComponent } from './hero-detail.component'; // &lt;-- #1 import component
+import { HeroListComponent }   from './hero-list.component';
+
+import { HeroService }         from './hero.service'; //  &lt;-- #1 import service
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule // &lt;-- #2 add to Angular module imports
+  ],
+  declarations: [
+    AppComponent,
+    HeroDetailComponent, // &lt;-- #3 declare app component
+    HeroListComponent
+  ],
+  exports: [ // export for the DemoModule
+    AppComponent,
+    HeroDetailComponent,
+    HeroListComponent
+  ],
+  providers: [ HeroService ], // &lt;-- #4 provide HeroService
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+</pre>
+<div class="pre-title">src/app/hero-detail.component.ts</div>
+<pre name="src/app/hero-detail.component.ts" data-language="typescript">import { Component, Input, OnChanges }       from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+
+import { Address, Hero, states } from './data-model';
+import { HeroService }           from './hero.service';
+
+@Component({
+  selector: 'hero-detail',
+  templateUrl: './hero-detail.component.html'
+})
+export class HeroDetailComponent implements OnChanges {
+  @Input() hero: Hero;
+
+  heroForm: FormGroup;
+  nameChangeLog: string[] = [];
+  states = states;
+
+  constructor(
+    private fb: FormBuilder,
+    private heroService: HeroService) {
+
+    this.createForm();
+    this.logNameChange();
+  }
+
+  createForm() {
+    this.heroForm = this.fb.group({
+      name: '',
+      secretLairs: this.fb.array([]),
+      power: '',
+      sidekick: ''
+    });
+  }
+
+  ngOnChanges() {
+    this.heroForm.reset({
+      name: this.hero.name
+    });
+    this.setAddresses(this.hero.addresses);
+  }
+
+  get secretLairs(): FormArray {
+    return this.heroForm.get('secretLairs') as FormArray;
+  };
+
+  setAddresses(addresses: Address[]) {
+    const addressFGs = addresses.map(address =&gt; this.fb.group(address));
+    const addressFormArray = this.fb.array(addressFGs);
+    this.heroForm.setControl('secretLairs', addressFormArray);
+  }
+
+  addLair() {
+    this.secretLairs.push(this.fb.group(new Address()));
+  }
+
+  onSubmit() {
+    this.hero = this.prepareSaveHero();
+    this.heroService.updateHero(this.hero).subscribe(/* error handling */);
+    this.ngOnChanges();
+  }
+
+  prepareSaveHero(): Hero {
+    const formModel = this.heroForm.value;
+
+    // deep copy of form model lairs
+    const secretLairsDeepCopy: Address[] = formModel.secretLairs.map(
+      (address: Address) =&gt; Object.assign({}, address)
+    );
+
+    // return new `Hero` object containing a combination of original hero value(s)
+    // and deep copies of changed form model values
+    const saveHero: Hero = {
+      id: this.hero.id,
+      name: formModel.name as string,
+      // addresses: formModel.secretLairs // &lt;-- bad!
+      addresses: secretLairsDeepCopy
+    };
+    return saveHero;
+  }
+
+  revert() { this.ngOnChanges(); }
+
+  logNameChange() {
+    const nameControl = this.heroForm.get('name');
+    nameControl.valueChanges.forEach(
+      (value: string) =&gt; this.nameChangeLog.push(value)
+    );
+  }
+}
+</pre>
+<div class="pre-title">src/app/hero-detail.component.html</div>
+<pre name="src/app/hero-detail.component.html" data-language="html">&lt;form [formGroup]="heroForm" (ngSubmit)="onSubmit()" novalidate&gt;
+  &lt;div style="margin-bottom: 1em"&gt;
+    &lt;button type="submit"
+            [disabled]="heroForm.pristine" class="btn btn-success"&gt;Save&lt;/button&gt; &amp;nbsp;
+    &lt;button type="reset" (click)="revert()"
+            [disabled]="heroForm.pristine" class="btn btn-danger"&gt;Revert&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Hero Detail Controls --&gt;
+  &lt;div class="form-group"&gt;
+      &lt;label class="center-block"&gt;Name:
+        &lt;input class="form-control" formControlName="name"&gt;
+      &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div formArrayName="secretLairs" class="well well-lg"&gt;
+    &lt;div *ngFor="let address of secretLairs.controls; let i=index" [formGroupName]="i" &gt;
+      &lt;!-- The repeated address template --&gt;
+      &lt;h4&gt;Address #{{i + 1}}&lt;/h4&gt;
+      &lt;div style="margin-left: 1em;"&gt;
+        &lt;div class="form-group"&gt;
+          &lt;label class="center-block"&gt;Street:
+            &lt;input class="form-control" formControlName="street"&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+          &lt;label class="center-block"&gt;City:
+            &lt;input class="form-control" formControlName="city"&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+          &lt;label class="center-block"&gt;State:
+            &lt;select class="form-control" formControlName="state"&gt;
+              &lt;option *ngFor="let state of states" [value]="state"&gt;{{state}}&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+          &lt;label class="center-block"&gt;Zip Code:
+            &lt;input class="form-control" formControlName="zip"&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;br&gt;
+      &lt;!-- End of the repeated address template --&gt;
+    &lt;/div&gt;
+    &lt;button (click)="addLair()" type="button"&gt;Add a Secret Lair&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group radio"&gt;
+    &lt;h4&gt;Super power:&lt;/h4&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="flight"&gt;Flight&lt;/label&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="x-ray vision"&gt;X-ray vision&lt;/label&gt;
+    &lt;label class="center-block"&gt;&lt;input type="radio" formControlName="power" value="strength"&gt;Strength&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="checkbox"&gt;
+    &lt;label class="center-block"&gt;
+      &lt;input type="checkbox" formControlName="sidekick"&gt;I have a sidekick.
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;p&gt;heroForm value: {{ heroForm.value | json}}&lt;/p&gt;
+
+&lt;h4&gt;Name change log&lt;/h4&gt;
+&lt;div *ngFor="let name of nameChangeLog"&gt;{{name}}&lt;/div&gt;
+</pre>
+<div class="pre-title">src/app/hero-list.component.html</div>
+<pre name="src/app/hero-list.component.html" data-language="html">&lt;h3 *ngIf="isLoading"&gt;&lt;i&gt;Loading heroes ... &lt;/i&gt;&lt;/h3&gt;
+&lt;h3 *ngIf="!isLoading"&gt;Select a hero:&lt;/h3&gt;
+
+&lt;nav&gt;
+  &lt;button (click)="getHeroes()" class="btn btn-primary"&gt;Refresh&lt;/button&gt;
+  &lt;a *ngFor="let hero of heroes | async" (click)="select(hero)"&gt;{{hero.name}}&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;div *ngIf="selectedHero"&gt;
+  &lt;hr&gt;
+  &lt;h2&gt;Hero Detail&lt;/h2&gt;
+  &lt;h3&gt;Editing: {{selectedHero.name}}&lt;/h3&gt;
+  &lt;hero-detail [hero]="selectedHero"&gt;&lt;/hero-detail&gt;
+&lt;/div&gt;
+</pre>
+<div class="pre-title">src/app/hero-list.component.ts</div>
+<pre name="src/app/hero-list.component.ts" data-language="typescript">import { Component, OnInit } from '@angular/core';
+import { Observable }        from 'rxjs/Observable';
+import 'rxjs/add/operator/finally';
+
+import { Hero }        from './data-model';
+import { HeroService } from './hero.service';
+
+@Component({
+  selector: 'hero-list',
+  templateUrl: './hero-list.component.html'
+})
+export class HeroListComponent implements OnInit {
+  heroes: Observable&lt;Hero[]&gt;;
+  isLoading = false;
+  selectedHero: Hero;
+
+  constructor(private heroService: HeroService) { }
+
+  ngOnInit() { this.getHeroes(); }
+
+  getHeroes() {
+    this.isLoading = true;
+    this.heroes = this.heroService.getHeroes()
+                      // Todo: error handling
+                      .finally(() =&gt; this.isLoading = false);
+    this.selectedHero = undefined;
+  }
+
+  select(hero: Hero) { this.selectedHero = hero; }
+}
+</pre>
+<div class="pre-title">src/app/data-model.ts</div>
+<pre name="src/app/data-model.ts" data-language="typescript">export class Hero {
+  id = 0;
+  name = '';
+  addresses: Address[];
+}
+
+export class Address {
+  street = '';
+  city   = '';
+  state  = '';
+  zip    = '';
+}
+
+export const heroes: Hero[] = [
+  {
+    id: 1,
+    name: 'Whirlwind',
+    addresses: [
+      {street: '123 Main',  city: 'Anywhere', state: 'CA',  zip: '94801'},
+      {street: '456 Maple', city: 'Somewhere', state: 'VA', zip: '23226'},
+    ]
+  },
+  {
+    id: 2,
+    name: 'Bombastic',
+    addresses: [
+      {street: '789 Elm',  city: 'Smallville', state: 'OH',  zip: '04501'},
+    ]
+  },
+  {
+    id: 3,
+    name: 'Magneta',
+    addresses: [ ]
+  },
+];
+
+export const states = ['CA', 'MD', 'OH', 'VA'];
+</pre>
+<div class="pre-title">src/app/hero.service.ts</div>
+<pre name="src/app/hero.service.ts" data-language="typescript">import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+import { of }         from 'rxjs/observable/of';
+import 'rxjs/add/operator/delay';
+
+import { Hero, heroes } from './data-model';
+
+@Injectable()
+export class HeroService {
+
+  delayMs = 500;
+
+  // Fake server get; assume nothing can go wrong
+  getHeroes(): Observable&lt;Hero[]&gt; {
+    return of(heroes).delay(this.delayMs); // simulate latency with delay
+  }
+
+  // Fake server update; assume nothing can go wrong
+  updateHero(hero: Hero): Observable&lt;Hero&gt;  {
+    const oldHero = heroes.find(h =&gt; h.id === hero.id);
+    const newHero = Object.assign(oldHero, hero); // Demo: mutate cached hero
+    return of(newHero).delay(this.delayMs); // simulate latency with delay
+  }
+}
+</pre>
+<p>You can download the complete source for all steps in this guide from the <span title="Reactive Forms Demo in Plunker">Reactive Forms Demo</span> live example.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v2.angular.io/docs/ts/latest/guide/reactive-forms.html" class="_attribution-link" target="_blank">https://v2.angular.io/docs/ts/latest/guide/reactive-forms.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

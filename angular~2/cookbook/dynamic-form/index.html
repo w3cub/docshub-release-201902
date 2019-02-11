@@ -1,0 +1,373 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dynamic Forms - Angular 2 - W3cubDocs</title>
+  
+  <meta name="description" content=" Render dynamic forms with FormGroup. ">
+  <meta name="keywords" content="dynamic, forms, -, angular, angular~2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~2/cookbook/dynamic-form/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~2/" class="_nav-link" title="" style="margin-left:0;">Angular 2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Dynamic Forms </h1>
+
+<blockquote class="banner"><p class="text-body">Render dynamic forms with FormGroup.</p></blockquote>
+<p>We can't always justify the cost and time to build handcrafted forms, especially if we'll need a great number of them, they're similar to each other, and they change frequently to meet rapidly changing business and regulatory requirements.</p> <p>It may be more economical to create the forms dynamically, based on metadata that describe the business object model.</p> <p>In this cookbook we show how to use <code>formGroup</code> to dynamically render a simple form with different control types and validation. It's a primitive start. It might evolve to support a much richer variety of questions, more graceful rendering, and superior user experience. All such greatness has humble beginnings.</p> <p>In our example we use a dynamic form to build an online application experience for heroes seeking employment. The agency is constantly tinkering with the application process. We can create the forms on the fly <em>without changing our application code</em>. </p> <h2 id="toc">Table of contents</h2> <p> <a href="#bootstrap">Bootstrap</a></p> <p> <a href="#object-model">Question Model</a></p> <p> <a href="#form-component">Form Component</a></p> <p> <a href="#questionnaire-metadata">Questionnaire Metadata</a></p> <p> <a href="#dynamic-template">Dynamic Template</a></p> <p><strong>See the </strong>.</p> <h2 id="bootstrap">Bootstrap</h2> <p>We start by creating an <code>NgModule</code> called <code>AppModule</code>.</p> <p>In our example we will be using Reactive Forms. </p> <p>Reactive Forms belongs to a different <code>NgModule</code> called <code>ReactiveFormsModule</code>, so in order to access any Reactive Forms directives, we have to import <code>ReactiveFormsModule</code> from the <code>@angular/forms</code> library. </p> <p>We bootstrap our <code>AppModule</code> in main.ts.</p> <div class="pre-title">app.module.ts</div>
+<pre name="app.module.ts" data-language="typescript">import { BrowserModule }                from '@angular/platform-browser';
+import { ReactiveFormsModule }          from '@angular/forms';
+import { NgModule }                     from '@angular/core';
+
+import { AppComponent }                 from './app.component';
+import { DynamicFormComponent }         from './dynamic-form.component';
+import { DynamicFormQuestionComponent } from './dynamic-form-question.component';
+
+@NgModule({
+  imports: [ BrowserModule, ReactiveFormsModule ],
+  declarations: [ AppComponent, DynamicFormComponent, DynamicFormQuestionComponent ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule {
+  constructor() {
+  }
+}
+</pre>
+<div class="pre-title">main.ts</div>
+<pre name="main.ts" data-language="typescript">import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+</pre>
+<h2 id="object-model">Question Model</h2> <p>The next step is to define an object model that can describe all scenarios needed by the form functionality. The hero application process involves a form with a lot of questions. The "question" is the most fundamental object in the model.</p> <p>We have created <code>QuestionBase</code> as the most fundamental question class.</p> <div class="code-example">
+<h4 class="pre-title">src/app/question-base.ts</h4>
+<pre data-language="typescript">export class QuestionBase&lt;T&gt;{
+  value: T;
+  key: string;
+  label: string;
+  required: boolean;
+  order: number;
+  controlType: string;
+
+  constructor(options: {
+      value?: T,
+      key?: string,
+      label?: string,
+      required?: boolean,
+      order?: number,
+      controlType?: string
+    } = {}) {
+    this.value = options.value;
+    this.key = options.key || '';
+    this.label = options.label || '';
+    this.required = !!options.required;
+    this.order = options.order === undefined ? 1 : options.order;
+    this.controlType = options.controlType || '';
+  }
+}
+</pre>
+</div>
+<p>From this base we derived two new classes in <code>TextboxQuestion</code> and <code>DropdownQuestion</code> that represent Textbox and Dropdown questions. The idea is that the form will be bound to specific question types and render the appropriate controls dynamically. </p> <p><code>TextboxQuestion</code> supports multiple html5 types like text, email, url etc via the <code>type</code> property.</p> <div class="code-example">
+<h4 class="pre-title">src/app/question-textbox.ts</h4>
+<pre data-language="typescript">import { QuestionBase } from './question-base';
+
+export class TextboxQuestion extends QuestionBase&lt;string&gt; {
+  controlType = 'textbox';
+  type: string;
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}
+</pre>
+</div>
+<p><code>DropdownQuestion</code> presents a list of choices in a select box.</p> <div class="code-example">
+<h4 class="pre-title">src/app/question-dropdown.ts</h4>
+<pre data-language="typescript">import { QuestionBase } from './question-base';
+
+export class DropdownQuestion extends QuestionBase&lt;string&gt; {
+  controlType = 'dropdown';
+  options: {key: string, value: string}[] = [];
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.options = options['options'] || [];
+  }
+}
+</pre>
+</div>
+<p>Next we have defined <code>QuestionControlService</code>, a simple service for transforming our questions to a <code>FormGroup</code>. In a nutshell, the form group consumes the metadata from the question model and allows us to specify default values and validation rules.</p> <div class="code-example">
+<h4 class="pre-title">src/app/question-control.service.ts</h4>
+<pre data-language="typescript">import { Injectable }   from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { QuestionBase } from './question-base';
+
+@Injectable()
+export class QuestionControlService {
+  constructor() { }
+
+  toFormGroup(questions: QuestionBase&lt;any&gt;[] ) {
+    let group: any = {};
+
+    questions.forEach(question =&gt; {
+      group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
+                                              : new FormControl(question.value || '');
+    });
+    return new FormGroup(group);
+  }
+}
+</pre>
+</div>
+<h2 id="form-component">Question form components</h2> <p>Now that we have defined the complete model we are ready to create components to represent the dynamic form.</p> <p><code>DynamicFormComponent</code> is the entry point and the main container for the form. </p> <div class="pre-title">dynamic-form.component.html</div>
+<pre name="dynamic-form.component.html" data-language="html">&lt;div&gt;
+  &lt;form (ngSubmit)="onSubmit()" [formGroup]="form"&gt;
+
+    &lt;div *ngFor="let question of questions" class="form-row"&gt;
+      &lt;df-question [question]="question" [form]="form"&gt;&lt;/df-question&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-row"&gt;
+      &lt;button type="submit" [disabled]="!form.valid"&gt;Save&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+
+  &lt;div *ngIf="payLoad" class="form-row"&gt;
+    &lt;strong&gt;Saved the following values&lt;/strong&gt;&lt;br&gt;{{payLoad}}
+  &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+<div class="pre-title">dynamic-form.component.ts</div>
+<pre name="dynamic-form.component.ts" data-language="typescript">import { Component, Input, OnInit }  from '@angular/core';
+import { FormGroup }                 from '@angular/forms';
+
+import { QuestionBase }              from './question-base';
+import { QuestionControlService }    from './question-control.service';
+
+@Component({
+  selector: 'dynamic-form',
+  templateUrl: './dynamic-form.component.html',
+  providers: [ QuestionControlService ]
+})
+export class DynamicFormComponent implements OnInit {
+
+  @Input() questions: QuestionBase&lt;any&gt;[] = [];
+  form: FormGroup;
+  payLoad = '';
+
+  constructor(private qcs: QuestionControlService) {  }
+
+  ngOnInit() {
+    this.form = this.qcs.toFormGroup(this.questions);
+  }
+
+  onSubmit() {
+    this.payLoad = JSON.stringify(this.form.value);
+  }
+}
+</pre>
+<p>It presents a list of questions, each question bound to a <code>&lt;df-question&gt;</code> component element. The <code>&lt;df-question&gt;</code> tag matches the <code>DynamicFormQuestionComponent</code>, the component responsible for rendering the details of each <em>individual</em> question based on values in the data-bound question object. </p> <div class="pre-title">dynamic-form-question.component.html</div>
+<pre name="dynamic-form-question.component.html" data-language="html">&lt;div [formGroup]="form"&gt;
+  &lt;label [attr.for]="question.key"&gt;{{question.label}}&lt;/label&gt;
+
+  &lt;div [ngSwitch]="question.controlType"&gt;
+
+    &lt;input *ngSwitchCase="'textbox'" [formControlName]="question.key"
+            [id]="question.key" [type]="question.type"&gt;
+
+    &lt;select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key"&gt;
+      &lt;option *ngFor="let opt of question.options" [value]="opt.key"&gt;{{opt.value}}&lt;/option&gt;
+    &lt;/select&gt;
+
+  &lt;/div&gt; 
+
+  &lt;div class="errorMessage" *ngIf="!isValid"&gt;{{question.label}} is required&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+<div class="pre-title">dynamic-form-question.component.ts</div>
+<pre name="dynamic-form-question.component.ts" data-language="typescript">import { Component, Input } from '@angular/core';
+import { FormGroup }        from '@angular/forms';
+
+import { QuestionBase }     from './question-base';
+
+@Component({
+  selector: 'df-question',
+  templateUrl: './dynamic-form-question.component.html'
+})
+export class DynamicFormQuestionComponent {
+  @Input() question: QuestionBase&lt;any&gt;;
+  @Input() form: FormGroup;
+  get isValid() { return this.form.controls[this.question.key].valid; }
+}
+</pre>
+<p>Notice this component can present any type of question in our model. We only have two types of questions at this point but we can imagine many more. The <code>ngSwitch</code> determines which type of question to display.</p> <p>In both components we're relying on Angular's <strong>formGroup</strong> to connect the template HTML to the underlying control objects, populated from the question model with display and validation rules.</p> <p><code>formControlName</code> and <code>formGroup</code> are directives defined in <code>ReactiveFormsModule</code>. Our templates can access these directives directly since we imported <code>ReactiveFormsModule</code> from <code>AppModule</code>. </p> <h2 id="questionnaire-metadata">Questionnaire data</h2> <p><code>DynamicFormComponent</code> expects the list of questions in the form of an array bound to <code>@Input() questions</code>.</p> <p> The set of questions we have defined for the job application is returned from the <code>QuestionService</code>. In a real app we'd retrieve these questions from storage.</p> <p> The key point is that we control the hero job application questions entirely through the objects returned from <code>QuestionService</code>. Questionnaire maintenance is a simple matter of adding, updating, and removing objects from the <code>questions</code> array.</p> <div class="code-example">
+<h4 class="pre-title">src/app/question.service.ts</h4>
+<pre data-language="typescript">import { Injectable }       from '@angular/core';
+
+import { DropdownQuestion } from './question-dropdown';
+import { QuestionBase }     from './question-base';
+import { TextboxQuestion }  from './question-textbox';
+
+@Injectable()
+export class QuestionService {
+
+  // Todo: get from a remote source of question metadata
+  // Todo: make asynchronous
+  getQuestions() {
+
+    let questions: QuestionBase&lt;any&gt;[] = [
+
+      new DropdownQuestion({
+        key: 'brave',
+        label: 'Bravery Rating',
+        options: [
+          {key: 'solid',  value: 'Solid'},
+          {key: 'great',  value: 'Great'},
+          {key: 'good',   value: 'Good'},
+          {key: 'unproven', value: 'Unproven'}
+        ],
+        order: 3
+      }),
+
+      new TextboxQuestion({
+        key: 'firstName',
+        label: 'First name',
+        value: 'Bombasto',
+        required: true,
+        order: 1
+      }),
+
+      new TextboxQuestion({
+        key: 'emailAddress',
+        label: 'Email',
+        type: 'email',
+        order: 2
+      })
+    ];
+
+    return questions.sort((a, b) =&gt; a.order - b.order);
+  }
+}
+</pre>
+</div>
+<p>Finally, we display an instance of the form in the <code>AppComponent</code> shell.</p> <div class="code-example">
+<h4 class="pre-title">app.component.ts</h4>
+<pre data-language="typescript">import { Component }       from '@angular/core';
+
+import { QuestionService } from './question.service';
+
+@Component({
+  selector: 'my-app',
+  template: `
+    &lt;div&gt;
+      &lt;h2&gt;Job Application for Heroes&lt;/h2&gt;
+      &lt;dynamic-form [questions]="questions"&gt;&lt;/dynamic-form&gt;
+    &lt;/div&gt;
+  `,
+  providers:  [QuestionService]
+})
+export class AppComponent {
+  questions: any[];
+
+  constructor(service: QuestionService) {
+    this.questions = service.getQuestions();
+  }
+}
+</pre>
+</div>
+<h2 id="dynamic-template">Dynamic Template</h2> <p>Although in this example we're modelling a job application for heroes, there are no references to any specific hero question outside the objects returned by <code>QuestionService</code>. </p> <p>This is very important since it allows us to repurpose the components for any type of survey as long as it's compatible with our <em>question</em> object model. The key is the dynamic data binding of metadata used to render the form without making any hardcoded assumptions about specific questions. In addition to control metadata, we are also adding validation dynamically.</p> <p>The <em>Save</em> button is disabled until the form is in a valid state. When the form is valid, we can click <em>Save</em> and the app renders the current form values as JSON. This proves that any user input is bound back to the data model. Saving and retrieving the data is an exercise for another time.</p> <p>The final form looks like this:</p> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATwAAADmCAMAAAB/CcnJAAADAFBMVEX///////Pz//+ayfuIiIidzP2gzv5ERETu7u7MzMyLuuyV0POtj4jz1pt7qttnRETS8//z1q3/+deIiI/5////+dFhldCnYUOp0vH///jWrZCPiIgAAABCnfzY+f+Ii63z+P9nsfterPvh/f//89CJiYthRESb1fVEVZuViIj//+G83f7o6OkQgv8wkf3q//9ERFU5mP37/PrQ5/6Gueas1vTb29tERGFERHPWm2b52aj847zy9PQhiP7z0JXy7eaQrNJEREn+/+jO9P2IiJhNofyIiZOIka+Sn6/n4uKLiIip0/5EZaqhiYiKqdL3+fdESI2Hi6iJnbyRj47//+/h4uL/9t7b3eNUp/vkx6EXhv+anJy+noyTlJS55/3Q+f/bup789/JERGewno/LpYuIiqGJocfmz67aqXGJkZr958np9v/a9P9FZpjw//9JRET027q33/eMk6Hi6OrJtKLH7f9FdbYgfP2Uu+Kbkoskjf5VlNG72vDo9PlVRESKSESs0OYvmNfc7v66saFeoNbXnz/u38e7vLRXV1b+4q+qZ0TZ1M2u1v3PlmGhxeT98+xwZ260lYiUdFvj3dmgpKXr6ONYfJrp7u48ADvNw7Wr3vnE4vfitXeesL6pppyzub9ucnGsxNuZuddsqtv11qLl6fTc7vF0s+HbuJG1c0aUxPVyRUTL3uqtiGn/78KhLwC+1efz69ObYkSaVUS/l3drns8AAJVMAAAAAC/QkFWO0PEACD+VTUkAAFtCi8LM0tlAVXGNyO758N/qxI7lvobk1Lr08PNVga9jdJPBhiHCl2vBgEcAX6tLjMx4RERAVYyUAACCvPysv8x8AABgs+S/ztHM8O92l8CJqsqquaZ1WEjl8vGTY0HX5vSkPwBEVZWMbnKmnZJVMwAvAABNY3x0cmcAN3dli7Qke62LtdAAAHGVckmbckmCOQA/n9cAL6QAer14SUQbgOMAN1+/ZwB3v+7Ln1ffq1uTLz/P7894eI8ffP2PbwAvX59XVy+Hby/ax3rkAAASRUlEQVR42uycC0xUVxrHz0xuctcgK8KADExGkgEslARClYcSYcDwMCL1AcaoID4WBBFQISUgZYtFLQu4omYVEJf1gUGstlWsSH1Vq1Zro+2qq7W21Zq62203u902m+xmv++c+5oXDN0Et+X8E+Heud+95zu/+53vO+cOV0K4uLi4uLi4uLi4uLhGQNO2bi13+Oiy2alt997Hs4e+4oq9tw0kZ5vDZW2VGESI8a2tL7nl5MJQUbROGcSgSO1F+MPHL40UvOmi6OHwUayXM9Pkl0UxzjzUBXVvis/pSXCow2VtjN4ST1HTand83CeCorzc6wW0XD1S8Dwd4Xm6gDcV+zB5SHgTKLxapDNEZ3Wnxevu+Ngkipc3dUS61wvfcaLf/yG89xHep3q34JEdEUFDt5oYscEdH+PF2Dy3e/FM4OkyYhZskOHl6VpjIuwswavKq6K4W8WUEbPOoCaxVna6BE9WPlxW3m2B7f1y5GkDU22baofNHkbejUgndi2t6waFlxgTs0DxT9fK3GhpjVkQpGkpZj9RvVun/1HwIAmhdq5m8O6GYpZptrF8VxS/2yKK70inLdtTCzaxzYzXk23y6QwedAEvG0w/tt5Bpwr+RJtY5k90r9GtSWDqZ9e27zjrzTdwr0QJ/kKRWdvZxdWXqinYCbyi+6LGv46/0ZKTQ/0RbzNIBeNw52wbNWfePYkcPrzwl5mHYlQu/UjSQW10vAGjGWoGG9LMppTZ6Gh3rfAvzmIDLzhUulAlIReUq+ZCoUCdgvP87Nr2HSdbvRipDFpm7cxONvJEuEzeDN4++Tp+FB49r2JaqfThDYt6V0TxnMbTWfphw3sb+l1Dzv+FuoNgZq3WrRBtct80iqBQIuoJrCqLSTe1AedKo+pIDtzrai08jLCSV8jFUNGai6X6qyBy7D52JxqieHKCgUWeTdsI5ezhhALoizw10SVcFW/cu2RwtOvcNlntxaMQqpkPKa/wHoiiYlJQi9dBeFEdvU/mgw8lB0gDHINCBaPI2qXHbi4z4x0C7xogPnOHCw+4xyEn7O05/IjyL7QJvSZK+Ugpu9uyTbsobqTO4Y0P/wCzpQpvi1RfIMNVTxVZZfUNxb6xSKHwbNuG8+IwKi5o61i8WKJ3Yme26YVGfjTH0MELsVZJ/dvN/KBOe/dAFGL985DS0UFowppHLaKmDBceXPUPdG8Lxo6ndNdhAMxSEi6AodQOMU7yOIGPKzGCWLS3i9ZyDTxPOiIImb/pzAZjYmMx1g+IBT853ik827bhvGppRwsPruhg52fbC+tmplqK7ZBorZBmnS9a5BrWJJc7uOUecodwVlWJkRfXtf9HVVslZdCEAcUgz6Fugu/i2iVLFo2joxdtzIoN/DguzwQ9NPAK8QarSXPXvMebpcDQwLNtG87bKO3YwXNu56TaYmhLWZUq1ku+ufGS09RPJcuBntOzbBg15/Dw4cHFPlJLlac08CGfK/CMh9SmolKIajMBhhT8qFQupoEHzqpJ84J2VGng2bYtVWnltwrPuZ2rqUqT6q7VS6rqmIdyFXO1NEES1ZMyVm3FkmJ3qDVU/css3QTHyJOjSpkSQ2xH7aUKpcNHE52fIryNziKvSY48owHrjXh2VefhY6FDRZ4LeM7tXMCDyFt2uDUGJnrrIrL1Mjz7yCvJjkGTiAg6X0xc/xDDz6213dtstdhuk/Omiqw7u6VVYqVmsiUVjy1yRd4tuXodIVQamHdRFRp406WcB5V2FoQCHdreoa5yHm3bNTzndi7gwUDB8QG62HlGgafkvELMeT3iDT1LJ52HSUM9nRB2l9rM8F2qna5TcTjuRkzL5EpG45CyaFJXstB9OX3NP621iccuydUsGEugbbUt0bPuVkM5y5VmbQ7VVtO2a3jO7VwN23ZpNg+5LM4iw5OrbXAPTrAOSd2DajsL+kerR/IH7sGDnol3GntFum7EOdRRcuzPUlRZxfeK86+KbNYg3W2l8LbjNs4NFBs6j6qj86eD2nmeEed5B4w4aSuPR3vSgouEEprASj4+oM7zlLZdw3Nu5woejG3xvQ3Giz3SzfWTSq9Y8gkp66Fk8TnHneJ8CDa48xAoOz8h53vdHLZKCcDhmHza6QrDX/NMQHmcEoxzXtVmkjKDZ/NzVmZ86SOpYDkpHydHaqUVCe27N5a662yFYdO2r/QoyzfUAZ5TOxfVls0O5NZYO7gGC9UuX+JlEyBJ3aOrRy+36qyul3ryFdtZzNaNr9CVTdzdWmXRJ41azZQUSXqKUYvQ5lENqxo7cdFoxTUj3BRACHce03sybSO2CzZZOXtUU0jHbzeSznqNrW01bUvnKb+lFEVHm9bOV3ucRpFmeUaTaxFbVt+OpCOdTaVIDvXHOjdSs7al3pFjbNV72cvdaUpLa3aE+thhR7bmKVJ+Rvb+wWc4sWZdhGRDq21iRoSzbNGSobSRmL1OfSRiTEhQn8jYtj3I/XbTTmo6O9vRJY0/1CW1m9DlYVz8f3uSpVn3yjmFi8Mbga8+tPDeHLmvDX4eX7ppvmFz+1swLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi5VurECVarXeMH+L8Abfs/5DAXPZx5oJcDztz3kO3M25zMEPB/5bbhou0PegUmcz1DwvNhWWViNcXHHcmGuYX2gEJJu8c4UQtbSP6ZYunZToJCKY7hgnoAbxsXp9YKQfm+xIMxdQ0jOckFYdXRUwgt5IRpECAxbmgDTlgo+26uEuTljASG+HUcCgE2VIDxPFgrC9s8EoRztFoWB7aJAIYnkZAqr9ghC3egtGP4SvGZjQkBIBZmfudKiDNsAIESW0sMVBAjiRh0JninUkGlwqFvoIqQobI5lNMJbtQRUw+CttCCrkO1ngggJDpQKBtLEwyT6UmLrrs8ku+SxE/WQF2frfit0jBkzJswnZTTmPOmPxCg84EHCl2MoJhl8FXiYFhFeURWLUmpHf4CNHLshoxJeih08Y/R5CC/heV9l2ErwwjOF9DP7xzvCO5oYEZGhvk49CqutCmWGGceuv0PkBQdOBEAr7OCBaTOEa2aqmUceclvVWT/TxwsqQrrFLvI6GmFMJ8nw1kBeTCJFMGvZVCX8ajRW2xlKzpuiG5sm57zUGqKDaVy5Tc4rmykIPncD07LQjhp7hyXhDBFOSI8kXKj8iEvsd5bdAWPiPaeZLXGEXl3g4uLi4npmGvPM9VOGN+od4PA4PA5vlMGbagIdt185GF+fZG+7y8zh2fvueeLALy72eQwJz/hDHodn7/u+bxDVd6Sgz/Tv1cZewfTlpj7TL40P+k0D5cT7PkZl2eemL18oND01H/va9Pc2Dk87bDdv/nzAcsRUl3/lWvSDawlX+tsWDphh492nln98ayg7mfLhR+TKX3N+aEu+tTG6e8DM4amR9/TmmPq+jdNPGMiR/hQYra9+S7x/hxvhfbn5jfXbBsyvmi5/bDCezjty0kySb03i8DTDForF9ycuqPB+LcO7NeVKf/r6frOxsfeLa9EIL4/M5/C08KBgNHx9bcvJNuM/v4lW4D14xzB9wPLhKeJp+uOtc+TCiejXPcL7JhPPfj5s7aYqJatJgMk0UIFF9nuEZ57wH5PJnxSaTGf7Ti0Ei2byvmnS+C9wg8Nz9N1o9+A4C+d++UG2h7L4VIWvMDg8Du8nDI8/DOXi4uLi4uLi4uLi4uLiGr2S36IQklwY4F8dB6R6cVLO4eEbo/MCu1wY4IujAT4cnnN4E4d4+SSacHiu4cn/ZX/ZvM4qwaeuLAzfIyA5e2YKQvpqkpPZxeG5hDfHkoXCNy2EVHy5bEaVkGoOx/dAA4U0A76+x+ENUTDwndG0SLJCmKsnK3xSxuMbPcmZE9f4cniDwAtZRNUG8JrZiz4Iy3gpIaOxPnCinsNzq2DQ/95CgbeexmMahzc4vDUKPH8V3kJhxs0F+D4yh+dm5GngLRV+Q0hR4H/bO7+Qtq4wgF/ruRKzdKhJwfxdooYRo5b02pcalzITKwluJGad8Q+NxMRaR9HY0lpacLXVB6UQqlhpO9GHMqSM9mGtMNY+jAodg7VlK9tDx7bCHgYrg43B2GD7zrnXJNquiUlhW+73e0iPyTWWH993zrkn+fj8OOc9f8GgVfK9HfHqTZE3+OURL1G3oLwsVttWkzTnwcP76rJgDy0DjZDdeHuWC2tYBoogCIKkwG9J5SNP9v8BlIfyUB7KQ3koD+WhPJSH8lAeykN5KA/loTyUh/L+R/LwMBRBEARBEARBEARB5EuFjbXdahNy+N1y8dvM6svb0p7cv6iRzXeYa/SktaODELcpF3mD3d3dYyS9d1KRyn+Y08mkB9oO2z4NxwUTm/uzZiePdcQd9rpTnQq1rK5DJi3QQB5NuhDtLRWf8qpHpFLRop59YCQYadumpeUYSxrx5fdaaT+qsFsQ5VWKvtQtXNERPSHxi7RjVetIOG6qGLscIaz1F+1B2jYRry5Ief5TTuekjYyIU9j4eqloPw2rJhLT9pDWWdpMlL38NU3R2nYx1MTI04YJ/NgPV41B8oO83hFI2xob60Ea0ARVZPA7mBhbClKeOOvHqAt/9VqyVLSJDsBgE4HQrFVZj7KXwZuJGwaVojwrAL98jqvQ0xab/eoWlrY6ddkOPURnhc1/uBwEwpUFWUO0w2adnYWYAQGsZDRZKhpUuU21Nv9OHQmUlpaqSCV7mbYxBKX2pDzIcfcjGPetzU0vjKnLWCEgkxcQy8h19GJtokDl0QWDRt1hloXJUlHa0HYPWaadgcViZjFJm0ig1iYVSrJnBgib+Qb0Ylt1VnbP5O2V5LG217pClUdN0HRk83+yVBQ2MYEe61GQt+yqq5t72ywuD0Uq9wI5vr7a0mfCoIw7RKyXb5/SqdPkvSGbyAuRV7YxF8lSUQ5WClg3ODYJwni3tLaGUpO/pDMBs1o5nQZrYdktSs55krwQnfOGvQUpDzbJvb29kHPLnBR5Uqkou4FgvVdJfCpCotWSPFhGA5p0edwhLxlvIuoHC7D2VMLiGr+YLu91Fev4XZCrrXh7RgaXpCksWSoqpjK936JFpXFhfUtM+9tyG+RBtPp3huGi6ATEHwyWQR5rP1qUgBwORuimxS+PJqRPl4qu1TnT77/cz9zv9q1fpHVuuL841C2Iex88RwguRKRNXvb3cNHb5yPJVJf1IYyXRNOPEE7PlKTw2Z9xNqPtZ1uf6oLUIdh9JVvguLI4/Ud+Iz67+em/4Jq+/agwQ8nu418oM2b5pKGdL15R5oUxhcdyn+ftsnEn+IqVypW8Qq3TkqTK03mf9wnyCbwVJX86r0xLcwf2LDIKPR+vXDmd31tUpdPpgUVDLvJKeCW/HnfaNXOu8jqrLDMWNnDwfIl85DXykrqDBoPh1vpO9uy7FRcOiINMb9FJsZjNZgsdyFPentWT3PDNL5LygqWa7OR5gKohoVMYqoJRgyzlbf/xHY4bHudoP9GL4Gz/t6aanwyf//kk01sYPUaPXYAHwQ5Decrb/43hl7ZHXM3jD/t++9hE0/bhvZ+dIcOZjPKMRkdqqydPeRw3t/CX4cz2GxoueO9VKu93Ouv9mjFtHRuQp7yDNMReu0Hlae+9lJR3N6O8BmBGcDQ4hBk6lKW8S6vjmr67n31gOK699NEBMW1vacofn8lGnnHI7rAPGWHULM+tyqewVfmhjPvEYFit5M4+qbhgGr5pWP0+o7wTFM+QechDB3KTl9wkvymO0tqIZtNRtJnhKHaIAxnJewG3Z13pNDfI6PbMzq805nkwUF9f31XP6KrvavbI6GBA8BU3NuZ3JHWiPkVzg5yOpDT0TOrlvDgm8cexY80eWR2Ggj0fX/zikNcxPKfZ4gdAm8jmAyDkH8j80SOCIAiCIAjy77DLqcgO5y6UtdmdInvQ3iacW5DnRF0bUWwF1IXyUN5/TZ7rrXmUl6M8WrLXdgXl5SLvDlmqu6Pfi/JykReyXlMoBpZoALZeC0WvKEL+URgH5lFeZnmuBLG2XVMMkHFXIjapH1ckYmH11evte1FeNgvG9MQY+UoxPfWePqboiU16T/arZ2f1/nmUl1GeLgYP4egdEl9UxRQD7gn/fH90anFqEeVlMeeRB6PnVftgtrveHph3tZNzCp37oUsVwLTNLK+OblWiVydthHTAchF2P1S4IvQZlJfdJnmU/pO+VZ4bxa0K3p6hPJRXQOBhaB7gMXxe9vADIARBEARBEARBEARBkOfzN7f07lMFhDV7AAAAAElFTkSuQmCC" alt="Dynamic-Form"><div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v2.angular.io/docs/ts/latest/cookbook/dynamic-form.html" class="_attribution-link" target="_blank">https://v2.angular.io/docs/ts/latest/cookbook/dynamic-form.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
