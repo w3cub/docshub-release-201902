@@ -1,0 +1,137 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Errors&#58; Cyclic Object Value - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content=" TypeError ">
+  <meta name="keywords" content="errors, cyclic, object, value, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/errors/cyclic_object_value/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _mdn">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Errors: Cyclic object value</h1> <h2 id="Message">Message</h2> <pre class="syntaxbox">TypeError: cyclic object value (Firefox)
+TypeError: Converting circular structure to JSON (Chrome and Opera)
+TypeError: Circular reference in value argument not supported (Edge)
+</pre> <h2 id="Error_type">Error type</h2> <p><a href="../../global_objects/typeerror/"><code>TypeError</code></a></p> <h2 id="What_went_wrong">What went wrong?</h2> <p>The <a href="https://www.json.org/" target="_blank">JSON format</a> per se doesn't support object references (although an <a href="http://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03" target="_blank">IETF draft exists</a>), hence <a href="../../global_objects/json/stringify/"><code>JSON.stringify()</code></a> doesn't try to solve them and fail accordingly.</p> <h2 id="Examples">Examples</h2> <p>In a circular structure like the following</p> <pre data-language="js">var circularReference = {otherData: 123};
+circularReference.myself = circularReference;
+</pre> <p><a href="../../global_objects/json/stringify/"><code>JSON.stringify()</code></a> will fail</p> <pre data-language="js">JSON.stringify(circularReference);
+// TypeError: cyclic object value
+</pre> <p>To serialize circular references you can use a library that supports them (e.g. <a href="https://github.com/douglascrockford/JSON-js/blob/master/cycle.js" target="_blank">cycle.js</a>) or implement a solution by yourself, which will require finding and replacing (or removing) the cyclic references by serializable values.</p> <p>The snippet below illustrates how to find and filter (thus causing data loss) a cyclic reference by using the <code>replacer</code> parameter of <a href="../../global_objects/json/stringify/"><code>JSON.stringify()</code></a>:</p> <pre data-language="js">const getCircularReplacer = () =&gt; {
+  const seen = new WeakSet();
+  return (key, value) =&gt; {
+    if (typeof value === "object" &amp;&amp; value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
+JSON.stringify(circularReference, getCircularReplacer());
+// {"otherData":123}
+</pre> <h2 id="See_also">See also</h2> <ul> <li><a href="../../global_objects/json/stringify/"><code>JSON.stringify</code></a></li> <li>
+<a href="https://github.com/douglascrockford/JSON-js/blob/master/cycle.js" target="_blank">cycle.js</a> – Introduces two functions, <code>JSON.decycle</code> and <code>JSON.retrocycle</code>, which makes it possible to encode and decode cyclical structures and dags into an extended and retrocompatible JSON format.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
