@@ -1,0 +1,229 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ovirt_template - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.3. ">
+  <meta name="keywords" content="ovirt, template, -, module, manage, virtual, machine, templates, rhv, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/ovirt_template_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ovirt-template-module">ovirt_template - Module to manage virtual machine templates in oVirt/RHV</h1> <div class="versionadded" id="ovirt-template-module-to-manage-virtual-machine-templates-in-ovirt-rhv"> <p><span class="versionmodified">New in version 2.3.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Module to manage virtual machine templates in oVirt/RHV.</li> </ul> <p>Aliases: ovirt_templates</p>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.7</li> <li>ovirt-engine-sdk-python &gt;= 4.2.4</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>allow_partial_import</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Boolean indication whether to allow partial registration of a template when <code>state</code> is registered.</div> </td> </tr> <tr> <td colspan="1"> <b>auth</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Dictionary with values needed to create HTTP/HTTPS connection to oVirt:</div> <div>
+<code>username</code>[<em>required</em>] - The name of the user, something like <em>admin@internal</em>. Default value is set by <em>OVIRT_USERNAME</em> environment variable.</div> <div>
+<code>password</code>[<em>required</em>] - The password of the user. Default value is set by <em>OVIRT_PASSWORD</em> environment variable.</div> <div>
+<code>url</code> - A string containing the API URL of the server, usually something like `<em>https://server.example.com/ovirt-engine/api</em>`. Default value is set by <em>OVIRT_URL</em> environment variable. Either <code>url</code> or <code>hostname</code> is required.</div> <div>
+<code>hostname</code> - A string containing the hostname of the server, usually something like `<em>server.example.com</em>`. Default value is set by <em>OVIRT_HOSTNAME</em> environment variable. Either <code>url</code> or <code>hostname</code> is required.</div> <div>
+<code>token</code> - Token to be used instead of login with username/password. Default value is set by <em>OVIRT_TOKEN</em> environment variable.</div> <div>
+<code>insecure</code> - A boolean flag that indicates if the server TLS certificate and host name should be checked.</div> <div>
+<code>ca_file</code> - A PEM file containing the trusted CA certificates. The certificate presented by the server will be verified using these CA certificates. If `<code>ca_file</code>` parameter is not set, system wide CA certificate store is used. Default value is set by <em>OVIRT_CAFILE</em> environment variable.</div> <div>
+<code>kerberos</code> - A boolean flag indicating if Kerberos authentication should be used instead of the default basic authentication.</div> <div>
+<code>headers</code> - Dictionary of HTTP headers to be added to each API call.</div> </td> </tr> <tr> <td colspan="1"> <b>clone_permissions</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If <em>True</em> then the permissions of the VM (only the direct ones, not the inherited ones) will be copied to the created template.</div> <div>This parameter is used only when <code>state</code> <em>present</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>cluster</b> </td> <td> </td> <td> <div>Name of the cluster, where template should be created/imported.</div> </td> </tr> <tr> <td colspan="1"> <b>cluster_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps cluster name between Template's OVF and the destination cluster this Template should be registered to, relevant when <code>state</code> is registered. Cluster mapping is described by the following dictionary:</div> <div>
+<code>source_name</code>: The name of the source cluster.</div> <div>
+<code>dest_name</code>: The name of the destination cluster.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_profile</b> </td> <td> </td> <td> <div>CPU profile to be set to template.</div> </td> </tr> <tr> <td colspan="1"> <b>description</b> </td> <td> </td> <td> <div>Description of the template.</div> </td> </tr> <tr> <td colspan="1"> <b>domain_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps aaa domain name between Template's OVF and the destination aaa domain this Template should be registered to, relevant when <code>state</code> is registered. The aaa domain mapping is described by the following dictionary:</div> <div>
+<code>source_name</code>: The name of the source aaa domain.</div> <div>
+<code>dest_name</code>: The name of the destination aaa domain.</div> </td> </tr> <tr> <td colspan="1"> <b>exclusive</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>When <code>state</code> is <em>exported</em> this parameter indicates if the existing templates with the same name should be overwritten.</div> </td> </tr> <tr> <td colspan="1"> <b>export_domain</b> </td> <td> </td> <td> <div>When <code>state</code> is <em>exported</em> or <em>imported</em> this parameter specifies the name of the export storage domain.</div> </td> </tr> <tr> <td colspan="1"> <b>fetch_nested</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>True</em> the module will fetch additional data from the API.</div> <div>It will fetch IDs of the VMs disks, snapshots, etc. User can configure to fetch other attributes of the nested entities by specifying <code>nested_attributes</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>ID of the template to be registered.</div> </td> </tr> <tr> <td colspan="1"> <b>image_disk</b> </td> <td> </td> <td> <div>When <code>state</code> is <em>imported</em> and <code>image_provider</code> is used this parameter specifies the name of disk to be imported as template.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: glance_image_disk_name</div> </td> </tr> <tr> <td colspan="1"> <b>image_provider</b> </td> <td> </td> <td> <div>When <code>state</code> is <em>imported</em> this parameter specifies the name of the image provider to be used.</div> </td> </tr> <tr> <td colspan="1"> <b>io_threads</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Number of IO threads used by virtual machine. <em>0</em> means IO threading disabled.</div> </td> </tr> <tr> <td colspan="1"> <b>memory</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> </td> <td> <div>Amount of memory of the template. Prefix uses IEC 60027-2 standard (for example 1GiB, 1024MiB).</div> </td> </tr> <tr> <td colspan="1"> <b>memory_guaranteed</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> </td> <td> <div>Amount of minimal guaranteed memory of the template. Prefix uses IEC 60027-2 standard (for example 1GiB, 1024MiB).</div> <div>
+<code>memory_guaranteed</code> parameter can't be lower than <code>memory</code> parameter.</div> </td> </tr> <tr> <td colspan="1"> <b>memory_max</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> </td> <td> <div>Upper bound of template memory up to which memory hot-plug can be performed. Prefix uses IEC 60027-2 standard (for example 1GiB, 1024MiB).</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> </td> <td> </td> <td> <div>Name of the template to manage.</div> </td> </tr> <tr> <td colspan="1"> <b>nested_attributes</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Specifies list of the attributes which should be fetched from the API.</div> <div>This parameter apply only when <code>fetch_nested</code> is <em>true</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>operating_system</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> </td> <td> <div>Operating system of the template.</div> <div>Default value is set by oVirt/RHV engine.</div> <div>Possible values are: debian_7, freebsd, freebsdx64, other, other_linux, other_linux_ppc64, other_ppc64, rhel_3, rhel_4, rhel_4x64, rhel_5, rhel_5x64, rhel_6, rhel_6x64, rhel_6_ppc64, rhel_7x64, rhel_7_ppc64, sles_11, sles_11_ppc64, ubuntu_12_04, ubuntu_12_10, ubuntu_13_04, ubuntu_13_10, ubuntu_14_04, ubuntu_14_04_ppc64, windows_10, windows_10x64, windows_2003, windows_2003x64, windows_2008, windows_2008x64, windows_2008r2x64, windows_2008R2x64, windows_2012x64, windows_2012R2x64, windows_7, windows_7x64, windows_8, windows_8x64, windows_xp</div> </td> </tr> <tr> <td colspan="1"> <b>poll_interval</b> </td> <td> <b>Default:</b><br><div style="color: blue">3</div> </td> <td> <div>Number of the seconds the module waits until another poll request on entity status is sent.</div> </td> </tr> <tr> <td colspan="1"> <b>role_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps role name between Template's OVF and the destination role this Template should be registered to, relevant when <code>state</code> is registered. Role mapping is described by the following dictionary:</div> <div>
+<code>source_name</code>: The name of the source role.</div> <div>
+<code>dest_name</code>: The name of the destination role.</div> </td> </tr> <tr> <td colspan="1"> <b>seal</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>'Sealing' is an operation that erases all machine-specific configurations from a filesystem: This includes SSH keys, UDEV rules, MAC addresses, system ID, hostname, etc. If <em>true</em> subsequent virtual machines made from this template will avoid configuration inheritance.</div> <div>This parameter is used only when <code>state</code> <em>present</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>absent</li> <li>exported</li> <li>imported</li> <li>registered</li> </ul> </td> <td> <div>Should the template be present/absent/exported/imported/registered. When <code>state</code> is <em>registered</em> and the unregistered template's name belongs to an already registered in engine template in the same DC then we fail to register the unregistered template.</div> </td> </tr> <tr> <td colspan="1"> <b>storage_domain</b> </td> <td> </td> <td> <div>When <code>state</code> is <em>imported</em> this parameter specifies the name of the destination data storage domain. When <code>state</code> is <em>registered</em> this parameter specifies the name of the data storage domain of the unregistered template.</div> </td> </tr> <tr> <td colspan="1"> <b>template_image_disk_name</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>When <code>state</code> is <em>imported</em> and <code>image_provider</code> is used this parameter specifies the new name for imported disk, if omitted then <em>image_disk</em> name is used by default. This parameter is used only in case of importing disk image from Glance domain.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">180</div> </td> <td> <div>The amount of time in seconds the module should wait for the instance to get into desired state.</div> </td> </tr> <tr> <td colspan="1"> <b>vm</b> </td> <td> </td> <td> <div>Name of the VM, which will be used to create template.</div> </td> </tr> <tr> <td colspan="1"> <b>vnic_profile_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps an external virtual NIC profile to one that exists in the engine when <code>state</code> is registered. vnic_profile is described by the following dictionary:</div> <div>
+<code>source_network_name</code>: The network name of the source network.</div> <div>
+<code>source_profile_name</code>: The profile name related to the source network.</div> <div>
+<code>target_profile_id</code>: The id of the target profile id to be mapped to in the engine.</div> </td> </tr> <tr> <td colspan="1"> <b>wait</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>
+<em>True</em> if the module should wait for the entity to get into desired state.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>In order to use this module you have to install oVirt Python SDK. To ensure it’s installed with correct version you can create the following task: <em>pip: name=ovirt-engine-sdk-python version=4.2.4</em>
+</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Examples don't contain auth parameter for simplicity,
+# look at ovirt_auth module to see how to reuse authentication:
+
+# Create template from vm
+- ovirt_template:
+    cluster: Default
+    name: mytemplate
+    vm: rhel7
+    cpu_profile: Default
+    description: Test
+
+# Import template
+- ovirt_template:
+  state: imported
+  name: mytemplate
+  export_domain: myexport
+  storage_domain: mystorage
+  cluster: mycluster
+
+# Remove template
+- ovirt_template:
+    state: absent
+    name: mytemplate
+
+# Register template
+- ovirt_template:
+  state: registered
+  storage_domain: mystorage
+  cluster: mycluster
+  name: mytemplate
+
+# Register template using id
+- ovirt_template:
+  state: registered
+  storage_domain: mystorage
+  cluster: mycluster
+  id: 1111-1111-1111-1111
+
+# Register template, allowing partial import
+- ovirt_template:
+  state: registered
+  storage_domain: mystorage
+  allow_partial_import: "True"
+  cluster: mycluster
+  id: 1111-1111-1111-1111
+
+# Register template with vnic profile mappings
+- ovirt_template:
+    state: registered
+    storage_domain: mystorage
+    cluster: mycluster
+    id: 1111-1111-1111-1111
+    vnic_profile_mappings:
+      - source_network_name: mynetwork
+        source_profile_name: mynetwork
+        target_profile_id: 3333-3333-3333-3333
+      - source_network_name: mynetwork2
+        source_profile_name: mynetwork2
+        target_profile_id: 4444-4444-4444-4444
+
+# Register template with mapping
+- ovirt_template:
+    state: registered
+    storage_domain: mystorage
+    cluster: mycluster
+    id: 1111-1111-1111-1111
+    role_mappings:
+      - source_name: Role_A
+        dest_name: Role_B
+    domain_mappings:
+      - source_name: Domain_A
+        dest_name: Domain_B
+    cluster_mappings:
+      - source_name: cluster_A
+        dest_name: cluster_B
+
+# Import image from Glance s a template
+- ovirt_template:
+    state: imported
+    name: mytemplate
+    image_disk: "centos7"
+    template_image_disk_name: centos7_from_glance
+    image_provider: "glance_domain"
+    storage_domain: mystorage
+    cluster: mycluster
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">str</div> </td> <td>On success if template is found.</td> <td> <div>ID of the template which is managed</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">7de90f31-222c-436c-a1ca-7e655bd5b60c</div> </td> </tr> <tr> <td colspan="1"> <b>template</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>On success if template is found.</td> <td> <div>Dictionary of all the template attributes. Template attributes can be found on your oVirt/RHV instance at following url: http://ovirt.github.io/ovirt-engine-api-model/master/#types/template.</div> <br> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Ondra Machacek (@machacekondra)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/ovirt/ovirt_template.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/ovirt_template_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/ovirt_template_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

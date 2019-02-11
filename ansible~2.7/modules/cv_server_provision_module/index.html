@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cv_server_provision - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.4. ">
+  <meta name="keywords" content="cv, server, provision, -, port, applying, or, removing, template, configuration, arista, cloudvision, portal, configlet, that, is, applied, switch, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/cv_server_provision_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="cv-server-provision-module">cv_server_provision - Provision server port by applying or removing template configuration to an Arista CloudVision Portal configlet that is applied to a switch.</h1> <div class="versionadded" id="cv-server-provision-provision-server-port-by-applying-or-removing-template-configuration-to-an-arista-cloudvision-portal-configlet-that-is-applied-to-a-switch"> <p><span class="versionmodified">New in version 2.4.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#examples" id="id4">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id5">Return Values</a></li> <li><a class="reference internal" href="#status" id="id6">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id7">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id8">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>This module allows a server team to provision server network ports for new servers without having to access Arista CVP or asking the network team to do it for them. Provide the information for connecting to CVP, switch rack, port the new server is connected to, optional vlan, and an action and the module will apply the configuration to the switch port via CVP. Actions are add (applies template config to port), remove (defaults the interface config) and show (returns the current port config).</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>Jinja2</li> <li>cvprac &gt;= 0.7.0</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>action</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>show</b> ←</div></li> <li>add</li> <li>remove</li> </ul> </td> <td> <div>The action for the module to take. The actions are add, which applies the specified template config to port, remove, which defaults the specified interface configuration, and show, which will return the current port configuration with no changes.</div> </td> </tr> <tr> <td colspan="1"> <b>auto_run</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Flag that determines whether or not the module will execute the CVP task spawned as a result of changes to a switch configlet. When an add or remove action is taken which results in a change to a switch configlet, CVP will spawn a task that needs to be executed for the configuration to be applied to the switch. If this option is True then the module will determined the task number created by the configuration change, execute it and wait for the task to complete. If the option is False then the task will remain in the Pending state in CVP for a network administrator to review and execute.</div> </td> </tr> <tr> <td colspan="1"> <b>host</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The hostname or IP address of the CVP node being connected to.</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The password of the user that will be used to connect to CVP for API calls.</div> </td> </tr> <tr> <td colspan="1"> <b>port</b> </td> <td> </td> <td> <div>The port number to use when making API calls to the CVP node. This will default to the default port for the specified protocol. Port 80 for http and port 443 for https.</div> </td> </tr> <tr> <td colspan="1"> <b>port_vlan</b> </td> <td> </td> <td> <div>The vlan that should be applied to the port for this server. This parameter is dependent on a proper template that supports single vlan provisioning with it. If a port vlan is specified by the template specified does not support this the module will exit out with no changes. If a template is specified that requires a port vlan but no port vlan is specified the module will exit out with no changes.</div> </td> </tr> <tr> <td colspan="1"> <b>protocol</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>https</b> ←</div></li> <li>http</li> </ul> </td> <td> <div>The protocol to use when making API calls to CVP. CVP defaults to https and newer versions of CVP no longer support http.</div> </td> </tr> <tr> <td colspan="1"> <b>server_name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The hostname or identifier for the server that is having it's switch port provisioned.</div> </td> </tr> <tr> <td colspan="1"> <b>switch_name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The hostname of the switch is being configured for the server being provisioned.</div> </td> </tr> <tr> <td colspan="1"> <b>switch_port</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The physical port number on the switch that the new server is connected to.</div> </td> </tr> <tr> <td colspan="1"> <b>template</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>A path to a Jinja formatted template file that contains the configuration block that will be applied to the specified switch port. This template will have variable fields replaced by the module before being applied to the switch configuration.</div> </td> </tr> <tr> <td colspan="1"> <b>username</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The user that will be used to connect to CVP for making API calls.</div> </td> </tr> </table> <br>  <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Get current configuration for interface Ethernet2
+  cv_server_provision:
+    host: cvp_node
+    username: cvp_user
+    password: cvp_pass
+    protocol: https
+    server_name: new_server
+    switch_name: eos_switch_1
+    switch_port: 2
+    template: template_file.j2
+    action: show
+
+- name: Remove existing configuration from interface Ethernet2. Run task.
+  cv_server_provision:
+    host: cvp_node
+    username: cvp_user
+    password: cvp_pass
+    protocol: https
+    server_name: new_server
+    switch_name: eos_switch_1
+    switch_port: 2
+    template: template_file.j2
+    action: remove
+    auto_run: True
+
+- name: Add template configuration to interface Ethernet2. No VLAN. Run task.
+  cv_server_provision:
+    host: cvp_node
+    username: cvp_user
+    password: cvp_pass
+    protocol: https
+    server_name: new_server
+    switch_name: eos_switch_1
+    switch_port: 2
+    template: single_attached_trunk.j2
+    action: add
+    auto_run: True
+
+- name: Add template with VLAN configuration to interface Ethernet2. Run task.
+  cv_server_provision:
+    host: cvp_node
+    username: cvp_user
+    password: cvp_pass
+    protocol: https
+    server_name: new_server
+    switch_name: eos_switch_1
+    switch_port: 2
+    port_vlan: 22
+    template: single_attached_vlan.j2
+    action: add
+    auto_run: True
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>changed</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>success</td> <td> <div>Signifies if a change was made to the configlet</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> <tr> <td colspan="1"> <b>currentConfigBlock</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when action = show</td> <td> <div>The current config block for the user specified interface</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">interface Ethernet4 !</div> </td> </tr> <tr> <td colspan="1"> <b>fullConfig</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when action = add or remove</td> <td> <div>The full config of the configlet after being updated</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">! interface Ethernet3 ! interface Ethernet4 !</div> </td> </tr> <tr> <td colspan="1"> <b>newConfigBlock</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when action = add or remove</td> <td> <div>The new config block for the user specified interface</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">interface Ethernet3 description example no switchport !</div> </td> </tr> <tr> <td colspan="1"> <b>oldConfigBlock</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when action = add or remove</td> <td> <div>The current config block for the user specified interface before any changes are made</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">interface Ethernet3 !</div> </td> </tr> <tr> <td colspan="1"> <b>portConfigurable</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>success</td> <td> <div>Signifies if the user specified port has an entry in the configlet that Ansible has access to</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> <tr> <td colspan="1"> <b>switchConfigurable</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>success</td> <td> <div>Signifies if the user specified switch has a configlet applied to it that CVP is allowed to edit</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> <tr> <td colspan="1"> <b>switchInfo</b> <br><div style="font-size: small; color: red">dictionary</div> </td> <td>success</td> <td> <div>Information from CVP describing the switch being configured</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{'memTotal': 1893460, 'internalVersion': '4.17.1F-11111.4171F', 'ztpMode': 'false', 'systemMacAddress': '00:50:56:5d:e5:e0', 'tempAction': None, 'deviceStatus': 'Registered', 'taskIdList': [], 'hardwareRevision': '', 'key': '00:50:56:5d:e5:e0', 'internalBuildId': '12-12', 'lastSyncUp': 1496432895799, 'modelName': 'vEOS', 'unAuthorized': False, 'ipAddress': '192.168.1.20', 'serialNumber': '', 'fqdn': 'veos1', 'bootupTimeStamp': 1491264298.21, 'isMLAGEnabled': 'no', 'complianceCode': '0000', 'memFree': 472976, 'version': '4.17.1F', 'architecture': 'i386', 'deviceInfo': 'Registered', 'complianceIndication': 'NONE', 'type': 'netelement', 'isDANZEnabled': 'no', 'parentContainerId': 'container_13_5776759195930'}</div> </td> </tr> <tr> <td colspan="1"> <b>taskCompleted</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>when action = add or remove, and auto_run = true, and configuration changes</td> <td> <div>Signifies if the task created and executed has completed successfully</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> <tr> <td colspan="1"> <b>taskCreated</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>when action = add or remove, and auto_run = true or false, and configuration changes</td> <td> <div>Signifies if a task was created due to configlet changes</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> <tr> <td colspan="1"> <b>taskExecuted</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>when action = add or remove, and auto_run = true, and configuration changes</td> <td> <div>Signifies if the automation executed the spawned task</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> <tr> <td colspan="1"> <b>taskId</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when action = add or remove, and auto_run = true or false, and configuration changes</td> <td> <div>The task ID created by CVP because of changes to configlet</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">500</div> </td> </tr> <tr> <td colspan="1"> <b>updateConfigletResponse</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when action = add or remove and configuration changes</td> <td> <div>Response returned from CVP when configlet update is triggered</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Configlet veos1-server successfully updated and task initiated.</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>EOS+ CS (<a class="reference external" href="https://docs.ansible.com/cdn-cgi/l/email-protection#167778657f747a733b727360303525212d303523242d3035222e2d77647f656277303522202d75797b" target="_blank">ansible-dev<span>@</span>arista<span>.</span>com</a>) (@mharista)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/network/cloudvision/cv_server_provision.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/cv_server_provision_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/cv_server_provision_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

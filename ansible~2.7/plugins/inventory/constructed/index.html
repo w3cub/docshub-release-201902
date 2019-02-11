@@ -1,0 +1,142 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Constructed - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.4. ">
+  <meta name="keywords" content="constructed, -, uses, jinja, construct, vars, and, groups, based, on, existing, inventory, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/plugins/inventory/constructed/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="constructed-inventory">constructed - Uses Jinja2 to construct vars and groups based on existing inventory.</h1> <div class="versionadded" id="constructed-uses-jinja2-to-construct-vars-and-groups-based-on-existing-inventory"> <p><span class="versionmodified">New in version 2.4.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li><a class="reference internal" href="#examples" id="id3">Examples</a></li> <li>
+<a class="reference internal" href="#status" id="id4">Status</a><ul> <li><a class="reference internal" href="#author" id="id5">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Uses a YAML configuration file with a valid YAML or <code>.config</code> extension to define var expressions and group conditionals</li> <li>The Jinja2 conditionals that qualify a host for membership.</li> <li>The JInja2 exprpessions are calculated and assigned to the variables</li> <li>Only variables already available from previous inventories or the fact cache can be used for templating.</li> <li>When <em>strict</em> is False, failed expressions will be ignored (assumes vars were missing).</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th>Configuration</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>compose</b> <br><div style="font-size: small; color: red">dictionary</div> </td> <td> <b>Default:</b><br><div style="color: blue">{}</div> </td> <td> </td> <td> <div>create vars from jinja2 expressions</div> </td> </tr> <tr> <td colspan="1"> <b>groups</b> <br><div style="font-size: small; color: red">dictionary</div> </td> <td> <b>Default:</b><br><div style="color: blue">{}</div> </td> <td> </td> <td> <div>add hosts to group based on Jinja2 conditionals</div> </td> </tr> <tr> <td colspan="1"> <b>keyed_groups</b> <br><div style="font-size: small; color: red">list</div> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> </td> <td> <div>add hosts to group based on the values of a variable</div> </td> </tr> <tr> <td colspan="1"> <b>plugin</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li>constructed</li> </ul> </td> <td> </td> <td> <div>token that ensures this is a source file for the 'constructed' plugin.</div> </td> </tr> <tr> <td colspan="1"> <b>strict</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td> <b>Default:</b><br><div style="color: blue">no</div> </td> <td> </td> <td> <div>If true make invalid entries a fatal error, otherwise skip and continue</div> <div>Since it is possible to use facts in the expressions they might not always be available and we ignore those errors by default.</div> </td> </tr> </table> <br>  <h2 id="examples">Examples</h2> <pre data-language="yaml"># inventory.config file in YAML format
+plugin: constructed
+strict: False
+compose:
+    var_sum: var1 + var2
+
+    # this variable will only be set if I have a persistent fact cache enabled (and have non expired facts)
+    # `strict: False` will skip this instead of producing an error if it is missing facts.
+    server_type: "ansible_hostname | regex_replace ('(.{6})(.{2}).*', '\\2')"
+groups:
+    # simple name matching
+    webservers: inventory_hostname.startswith('web')
+
+    # using ec2 'tags' (assumes aws inventory)
+    development: "'devel' in (ec2_tags|list)"
+
+    # using other host properties populated in inventory
+    private_only: not (public_dns_name is defined or ip_address is defined)
+
+    # complex group membership
+    multi_group: (group_names|intersection(['alpha', 'beta', 'omega']))|length &gt;= 2
+
+keyed_groups:
+    # this creates a group per distro (distro_CentOS, distro_Debian) and assigns the hosts that have matching values to it,
+    # using the default separator "_"
+    - prefix: distro
+      key: ansible_distribution
+
+    # this creates a group per ec2 architecture and assign hosts to the matching ones (arch_x86_64, arch_sparc, etc)
+    - prefix: arch
+      key: ec2_architecture
+</pre>   <h2 id="status">Status</h2>  <h3 id="author">Author</h3> <ul class="simple"> <li>UNKNOWN</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/plugins/inventory/constructed.py" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/plugins/inventory/constructed.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/plugins/inventory/constructed.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

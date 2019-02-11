@@ -1,0 +1,280 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Vsphere_guest - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 1.6. ">
+  <meta name="keywords" content="vsphere, guest, -, create, delete, manage, vm, through, vmware, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/vsphere_guest_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="vsphere-guest-module">vsphere_guest - Create/delete/manage a guest VM through VMware vSphere.</h1> <div class="versionadded" id="vsphere-guest-create-delete-manage-a-guest-vm-through-vmware-vsphere"> <p><span class="versionmodified">New in version 1.6.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#deprecated" id="id1">DEPRECATED</a></li> <li>
+<a class="reference internal" href="#synopsis" id="id2">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id3">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id4">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id5">Notes</a></li> <li><a class="reference internal" href="#examples" id="id6">Examples</a></li> <li>
+<a class="reference internal" href="#status" id="id7">Status</a><ul> <li><a class="reference internal" href="#author" id="id8">Author</a></li> </ul> </li> </ul>   <h2 id="deprecated">DEPRECATED</h2> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr><th class="field-name" colspan="2">Removed in Ansible:</th></tr> <tr>
+<td> </td>
+<td class="field-body">version: 2.9</td> </tr> <tr>
+<th class="field-name">Why:</th>
+<td class="field-body">Replaced by <a class="reference internal" href="../vmware_guest_module/#vmware-guest-module"><span class="std std-ref">vmware_guest</span></a> module. Also, ‘Pysphere’ is deprecated in favor of VMware’s Official Python bindings - ‘Pyvmomi’.</td> </tr> <tr>
+<th class="field-name">Alternative:</th>
+<td class="field-body">Use <a class="reference internal" href="../vmware_guest_module/#vmware-guest-module"><span class="std std-ref">vmware_guest</span></a> and other vmware guest related modules instead.</td> </tr>  </table>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Create/delete/reconfigure a guest VM through VMware vSphere. This module has a dependency on pysphere &gt;= 1.7</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>pysphere</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>cluster</b> </td> <td> </td> <td> <div>The name of the cluster to create the VM in. By default this is derived from the host you tell the module to build the guest on.</div> </td> </tr> <tr> <td colspan="1"> <b>esxi</b> </td> <td> </td> <td> <div>Dictionary which includes datacenter and hostname on which the VM should be created. For standalone ESXi hosts, ha-datacenter should be used as the datacenter name</div> </td> </tr> <tr> <td colspan="1"> <b>force</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Boolean. Allows you to run commands which may alter the running state of a guest. Also used to reconfigure and destroy.</div> </td> </tr> <tr> <td colspan="1"> <b>from_template</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 1.9)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Specifies if the VM should be deployed from a template (mutually exclusive with 'state' parameter). No guest customization changes to hardware such as CPU, RAM, NICs or Disks can be applied when launching from template.</div> </td> </tr> <tr> <td colspan="1"> <b>guest</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The virtual server name you wish to manage.</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Password of the user to connect to vcenter as.</div> </td> </tr> <tr> <td colspan="1"> <b>power_on_after_clone</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>Specifies if the VM should be powered on after the clone.</div> </td> </tr> <tr> <td colspan="1"> <b>resource_pool</b> </td> <td> </td> <td> <div>The name of the resource_pool to create the VM in.</div> </td> </tr> <tr> <td colspan="1"> <b>snapshot_to_clone</b> <br><div style="font-size: small; color: darkgreen">(added in 2.0)</div> </td> <td> </td> <td> <div>A string that when specified, will create a linked clone copy of the VM. Snapshot must already be taken in vCenter.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>powered_off</li> <li>absent</li> <li>powered_on</li> <li>restarted</li> <li>reconfigured</li> <li>reboot_guest</li> <li>poweroff_guest</li> </ul> </td> <td> <div>Indicate desired state of the vm. 'reconfigured' only applies changes to 'vm_cdrom', 'memory_mb', and 'num_cpus' in vm_hardware parameter. The 'memory_mb' and 'num_cpus' changes are applied to powered-on vms when hot-plugging is enabled for the guest.</div> </td> </tr> <tr> <td colspan="1"> <b>template_src</b> <br><div style="font-size: small; color: darkgreen">(added in 1.9)</div> </td> <td> </td> <td> <div>Name of the source template to deploy from</div> </td> </tr> <tr> <td colspan="1"> <b>username</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Username to connect to vcenter as.</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>Validate SSL certs. Note, if running on python without SSLContext support (typically, python &lt; 2.7.9) you will have to set this to <code>no</code> as pysphere does not support validating certificates on older python. Prior to 2.1, this module would always validate on python &gt;= 2.7.9 and never validate on python &lt;= 2.7.8.</div> </td> </tr> <tr> <td colspan="1"> <b>vcenter_hostname</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The hostname of the vcenter server the module will connect to, to create the guest.</div> </td> </tr> <tr> <td colspan="1"> <b>vm_disk</b> </td> <td> </td> <td> <div>A key, value list of disks and their sizes and which datastore to keep it in.</div> </td> </tr> <tr> <td colspan="1"> <b>vm_extra_config</b> </td> <td> </td> <td> <div>A key, value pair of any extra values you want set or changed in the vmx file of the VM. Useful to set advanced options on the VM.</div> </td> </tr> <tr> <td colspan="1"> <b>vm_hardware</b> </td> <td> </td> <td> <div>A key, value list of VM config settings. Must include ['memory_mb', 'num_cpus', 'osid', 'scsi'].</div> </td> </tr> <tr> <td colspan="1"> <b>vm_hw_version</b> <br><div style="font-size: small; color: darkgreen">(added in 1.7)</div> </td> <td> </td> <td> <div>Desired hardware version identifier (for example, "vmx-08" for vms that needs to be managed with vSphere Client). Note that changing hardware version of existing vm is not supported.</div> </td> </tr> <tr> <td colspan="1"> <b>vm_nic</b> </td> <td> </td> <td> <div>A key, value list of nics, their types and what network to put them on.</div> <div>Optionaly with their MAC address.</div> </td> </tr> <tr> <td colspan="1"> <b>vmware_guest_facts</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Gather facts from vCenter on a particular VM</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>This module should run from a system that can access vSphere directly. Either by using local_action, or using delegate_to.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">---
+# Create a new VM on an ESX server
+# Returns changed = False when the VM already exists
+# Returns changed = True and a adds ansible_facts from the new VM
+# State will set the power status of a guest upon creation. Use powered_on to create and boot.
+# Options ['state', 'vm_extra_config', 'vm_disk', 'vm_nic', 'vm_hardware', 'esxi'] are required together
+# Note: vm_floppy support added in 2.0
+
+- vsphere_guest:
+    vcenter_hostname: vcenter.mydomain.local
+    username: myuser
+    password: mypass
+    guest: newvm001
+    state: powered_on
+    vm_extra_config:
+      vcpu.hotadd: yes
+      mem.hotadd:  yes
+      notes: This is a test VM
+      folder: MyFolder
+    vm_disk:
+      disk1:
+        size_gb: 10
+        type: thin
+        datastore: storage001
+        # VMs can be put into folders. The value given here is either the full path
+        # to the folder (e.g. production/customerA/lamp) or just the last component
+        # of the path (e.g. lamp):
+        folder: production/customerA/lamp
+    vm_nic:
+      nic1:
+        type: vmxnet3
+        network: VM Network
+        network_type: standard
+      nic2:
+        type: vmxnet3
+        network: dvSwitch Network
+        network_type: dvs
+    vm_hardware:
+      memory_mb: 2048
+      num_cpus: 2
+      osid: centos64Guest
+      scsi: paravirtual
+      vm_cdrom:
+        type: "iso"
+        iso_path: "DatastoreName/cd-image.iso"
+      vm_floppy:
+        type: "image"
+        image_path: "DatastoreName/floppy-image.flp"
+    esxi:
+      datacenter: MyDatacenter
+      hostname: esx001.mydomain.local
+  delegate_to: localhost
+
+# Reconfigure the CPU and Memory on the newly created VM
+# Will return the changes made
+
+- vsphere_guest:
+    vcenter_hostname: vcenter.mydomain.local
+    username: myuser
+    password: mypass
+    guest: newvm001
+    state: reconfigured
+    vm_extra_config:
+      vcpu.hotadd: yes
+      mem.hotadd:  yes
+      notes: This is a test VM
+    vm_disk:
+      disk1:
+        size_gb: 10
+        type: thin
+        datastore: storage001
+    vm_nic:
+      nic1:
+        type: vmxnet3
+        network: VM Network
+        network_type: standard
+    vm_hardware:
+      memory_mb: 4096
+      num_cpus: 4
+      osid: centos64Guest
+      scsi: paravirtual
+    esxi:
+      datacenter: MyDatacenter
+      hostname: esx001.mydomain.local
+  delegate_to: localhost
+
+# Deploy a guest from a template
+- vsphere_guest:
+    vcenter_hostname: vcenter.mydomain.local
+    username: myuser
+    password: mypass
+    guest: newvm001
+    from_template: yes
+    template_src: centosTemplate
+    cluster: MainCluster
+    resource_pool: "/Resources"
+    vm_extra_config:
+      folder: MyFolder
+  delegate_to: localhost
+
+# Task to gather facts from a vSphere cluster only if the system is a VMware guest
+- vsphere_guest:
+    vcenter_hostname: vcenter.mydomain.local
+    username: myuser
+    password: mypass
+    guest: newvm001
+    vmware_guest_facts: yes
+  delegate_to: localhost
+
+---
+# Typical output of a vsphere_facts run on a guest
+# If vmware tools is not installed, ipadresses with return None
+
+- hw_eth0:
+  - addresstype: "assigned"
+    label: "Network adapter 1"
+    macaddress: "00:22:33:33:44:55"
+    macaddress_dash: "00-22-33-33-44-55"
+    ipaddresses: ['192.0.2.100', '2001:DB8:56ff:feac:4d8a']
+    summary: "VM Network"
+  hw_guest_full_name: "newvm001"
+  hw_guest_id: "rhel6_64Guest"
+  hw_memtotal_mb: 2048
+  hw_name: "centos64Guest"
+  hw_power_status: "POWERED ON"
+  hw_processor_count: 2
+  hw_product_uuid: "ef50bac8-2845-40ff-81d9-675315501dac"
+
+# hw_power_status will be one of the following values:
+#   - POWERED ON
+#   - POWERED OFF
+#   - SUSPENDED
+#   - POWERING ON
+#   - POWERING OFF
+#   - SUSPENDING
+#   - RESETTING
+#   - BLOCKED ON MSG
+#   - REVERTING TO SNAPSHOT
+#   - UNKNOWN
+# as seen in the VMPowerState-Class of PySphere: http://git.io/vlwOq
+
+---
+# Remove a vm from vSphere
+# The VM must be powered_off or you need to use force to force a shutdown
+- vsphere_guest:
+    vcenter_hostname: vcenter.mydomain.local
+    username: myuser
+    password: mypass
+    guest: newvm001
+    state: absent
+    force: yes
+  delegate_to: localhost
+</pre>   <h2 id="status">Status</h2> <p>This module is flagged as <strong>deprecated</strong> and will be removed in version 2.9. For more information see <a class="reference internal" href="#deprecated">DEPRECATED</a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Richard Hoop (@rhoop) &lt;<a class="reference external" href="https://docs.ansible.com/cdn-cgi/l/email-protection#b7c0c5dfd8d8c7919484808c919482858c9194838f8cd0dad6dedb919483818cd4d8da" target="_blank">wrhoop<span>@</span>gmail<span>.</span>com</a>&gt;</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/vmware/_vsphere_guest.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/vsphere_guest_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/vsphere_guest_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

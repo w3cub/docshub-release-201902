@@ -1,0 +1,244 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Understanding Privilege Escalation - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" Ansible can use existing privilege escalation systems to allow a user to execute tasks as another. ">
+  <meta name="keywords" content="understanding, privilege, escalation, -, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/become/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="become">Understanding Privilege Escalation</h1> <p id="understanding-privilege-escalation">Ansible can use existing privilege escalation systems to allow a user to execute tasks as another.</p>   <ul> <li><a class="reference internal" href="#id1" id="id4">Become</a></li> <li>
+<a class="reference internal" href="#directives" id="id5">Directives</a><ul> <li><a class="reference internal" href="#connection-variables" id="id6">Connection variables</a></li> <li><a class="reference internal" href="#command-line-options" id="id7">Command line options</a></li> <li><a class="reference internal" href="#for-those-from-pre-1-9-sudo-and-su-still-work" id="id8">For those from Pre 1.9 , sudo and su still work!</a></li> <li>
+<a class="reference internal" href="#limitations" id="id9">Limitations</a><ul> <li><a class="reference internal" href="#becoming-an-unprivileged-user" id="id10">Becoming an Unprivileged User</a></li> <li><a class="reference internal" href="#connection-plugin-support" id="id11">Connection Plugin Support</a></li> <li><a class="reference internal" href="#only-one-method-may-be-enabled-per-host" id="id12">Only one method may be enabled per host</a></li> <li><a class="reference internal" href="#can-t-limit-escalation-to-certain-commands" id="id13">Can’t limit escalation to certain commands</a></li> <li><a class="reference internal" href="#environment-variables-populated-by-pam-systemd" id="id14">Environment variables populated by pam_systemd</a></li> </ul> </li> </ul> </li> <li>
+<a class="reference internal" href="#become-and-networks" id="id15">Become and Networks</a><ul> <li>
+<a class="reference internal" href="#setting-enable-mode-for-all-tasks" id="id16">Setting enable mode for all tasks</a><ul> <li><a class="reference internal" href="#passwords-for-enable-mode" id="id17">Passwords for enable mode</a></li> </ul> </li> <li><a class="reference internal" href="#authorize-and-auth-pass" id="id18">authorize and auth_pass</a></li> </ul> </li> <li>
+<a class="reference internal" href="#become-and-windows" id="id19">Become and Windows</a><ul> <li><a class="reference internal" href="#administrative-rights" id="id20">Administrative Rights</a></li> <li><a class="reference internal" href="#local-service-accounts" id="id21">Local Service Accounts</a></li> <li><a class="reference internal" href="#accounts-without-a-password" id="id22">Accounts without a Password</a></li> <li><a class="reference internal" href="#become-flags" id="id23">Become Flags</a></li> <li><a class="reference internal" href="#id2" id="id24">Limitations</a></li> </ul> </li> </ul>
+   <h2 id="id1">Become</h2> <p>Ansible allows you to ‘become’ another user, different from the user that logged into the machine (remote user). This is done using existing privilege escalation tools such as <code>sudo</code>, <code>su</code>, <code>pfexec</code>, <code>doas</code>, <code>pbrun</code>, <code>dzdo</code>, <code>ksu</code>, <code>runas</code>, <code>machinectl</code> and others.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Prior to version 1.9, Ansible mostly allowed the use of <code>sudo</code> and a limited use of <code>su</code> to allow a login/remote user to become a different user and execute tasks and create resources with the second user’s permissions. As of Ansible version 1.9, <code>become</code> supersedes the old sudo/su, while still being backwards compatible. This new implementation also makes it easier to add other privilege escalation tools, including <code>pbrun</code> (Powerbroker), <code>pfexec</code>, <code>dzdo</code> (Centrify), and others.</p> </div> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Become vars and directives are independent. For example, setting <code>become_user</code> does not set <code>become</code>.</p> </div>   <h2 id="directives">Directives</h2> <p>These can be set from play to task level, but are overridden by connection variables as they can be host specific.</p> <dl class="docutils"> <dt>become</dt> <dd>set to <code>yes</code> to activate privilege escalation.</dd> <dt>become_user</dt> <dd>set to user with desired privileges — the user you <code>become</code>, NOT the user you login as. Does NOT imply <code>become: yes</code>, to allow it to be set at host level.</dd> <dt>become_method</dt> <dd>(at play or task level) overrides the default method set in ansible.cfg, set to <code>sudo</code>/<code>su</code>/<code>pbrun</code>/<code>pfexec</code>/<code>doas</code>/<code>dzdo</code>/<code>ksu</code>/<code>runas</code>/<code>machinectl</code>
+</dd> <dt>become_flags</dt> <dd>(at play or task level) permit the use of specific flags for the tasks or role. One common use is to change the user to nobody when the shell is set to no login. Added in Ansible 2.2.</dd> </dl> <p>For example, to manage a system service (which requires <code>root</code> privileges) when connected as a non-<code>root</code> user (this takes advantage of the fact that the default value of <code>become_user</code> is <code>root</code>):</p> <pre data-language="YAML">- name: Ensure the httpd service is running
+  service:
+    name: httpd
+    state: started
+  become: yes
+</pre> <p>To run a command as the <code>apache</code> user:</p> <pre data-language="YAML">- name: Run a command as the apache user
+  command: somecommand
+  become: yes
+  become_user: apache
+</pre> <p>To do something as the <code>nobody</code> user when the shell is nologin:</p> <pre data-language="YAML">- name: Run a command as nobody
+  command: somecommand
+  become: yes
+  become_method: su
+  become_user: nobody
+  become_flags: '-s /bin/sh'
+</pre>  <h3 id="connection-variables">Connection variables</h3> <p>Each allows you to set an option per group and/or host, these are normally defined in inventory but can be used as normal variables.</p> <dl class="docutils"> <dt>ansible_become</dt> <dd>equivalent of the become directive, decides if privilege escalation is used or not.</dd> <dt>ansible_become_method</dt> <dd>which privilege escalation method should be used</dd> <dt>ansible_become_user</dt> <dd>set the user you become through privilege escalation; does not imply <code>ansible_become: yes</code>
+</dd> <dt>ansible_become_pass</dt> <dd>set the privilege escalation password. See <a class="reference internal" href="../playbooks_vault/"><span class="doc">Using Vault in playbooks</span></a> for details on how to avoid having secrets in plain text</dd> </dl> <p>For example, if you want to run all tasks as <code>root</code> on a server named <code>webserver</code>, but you can only connect as the <code>manager</code> user, you could use an inventory entry like this:</p> <pre data-language="YAML">webserver ansible_user=manager ansible_become=yes
+</pre>   <h3 id="command-line-options">Command line options</h3> <table class="docutils option-list" frame="void" rules="none"> <col class="option"> <col class="description">  <tr>
+<td class="option-group" colspan="2"> <kbd><span class="option">--ask-become-pass</span>, <span class="option">-K</span></kbd>
+</td> </tr> <tr>
+<td> </td>
+<td>ask for privilege escalation password; does not imply become will be used. Note that this password will be used for all hosts.</td>
+</tr> <tr>
+<td class="option-group"> <kbd><span class="option">--become</span>, <span class="option">-b</span></kbd>
+</td> <td>run operations with become (no password implied)</td>
+</tr> <tr>
+<td class="option-group" colspan="2"> <kbd><span class="option">--become-method=<var>BECOME_METHOD</var></span></kbd>
+</td> </tr> <tr>
+<td> </td>
+<td>privilege escalation method to use (default=sudo), valid choices: [ sudo | su | pbrun | pfexec | doas | dzdo | ksu | runas | machinectl ]</td>
+</tr> <tr>
+<td class="option-group" colspan="2"> <kbd><span class="option">--become-user=<var>BECOME_USER</var></span></kbd>
+</td> </tr> <tr>
+<td> </td>
+<td>run operations as this user (default=root), does not imply –become/-b</td>
+</tr>  </table>   <h3 id="for-those-from-pre-1-9-sudo-and-su-still-work">For those from Pre 1.9 , sudo and su still work!</h3> <p>For those using old playbooks will not need to be changed, even though they are deprecated, sudo and su directives, variables and options will continue to work. It is recommended to move to become as they may be retired at one point. You cannot mix directives on the same object (become and sudo) though, Ansible will complain if you try to.</p> <p>Become will default to using the old sudo/su configs and variables if they exist, but will override them if you specify any of the new ones.</p>   <h3 id="limitations">Limitations</h3> <p>Although privilege escalation is mostly intuitive, there are a few limitations on how it works. Users should be aware of these to avoid surprises.</p>  <h4 id="becoming-an-unprivileged-user">Becoming an Unprivileged User</h4> <p>Ansible 2.0.x and below has a limitation with regards to becoming an unprivileged user that can be a security risk if users are not aware of it. Ansible modules are executed on the remote machine by first substituting the parameters into the module file, then copying the file to the remote machine, and finally executing it there.</p> <p>Everything is fine if the module file is executed without using <code>become</code>, when the <code>become_user</code> is root, or when the connection to the remote machine is made as root. In these cases the module file is created with permissions that only allow reading by the user and root.</p> <p>The problem occurs when the <code>become_user</code> is an unprivileged user. Ansible 2.0.x and below make the module file world readable in this case, as the module file is written as the user that Ansible connects as, but the file needs to be readable by the user Ansible is set to <code>become</code>.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">In Ansible 2.1, this window is further narrowed: If the connection is made as a privileged user (root), then Ansible 2.1 and above will use chown to set the file’s owner to the unprivileged user being switched to. This means both the user making the connection and the user being switched to via <code>become</code> must be unprivileged in order to trigger this problem.</p> </div> <p>If any of the parameters passed to the module are sensitive in nature, then those pieces of data are located in a world readable module file for the duration of the Ansible module execution. Once the module is done executing, Ansible will delete the temporary file. If you trust the client machines then there’s no problem here. If you do not trust the client machines then this is a potential danger.</p> <p>Ways to resolve this include:</p> <ul class="simple"> <li>Use <code>pipelining</code>. When pipelining is enabled, Ansible doesn’t save the module to a temporary file on the client. Instead it pipes the module to the remote python interpreter’s stdin. Pipelining does not work for python modules involving file transfer (for example: <a class="reference internal" href="../../modules/copy_module/#copy-module"><span class="std std-ref">copy</span></a>, <a class="reference internal" href="../../modules/fetch_module/#fetch-module"><span class="std std-ref">fetch</span></a>, <a class="reference internal" href="../../modules/template_module/#template-module"><span class="std std-ref">template</span></a>), or for non-python modules.</li> <li>(Available in Ansible 2.1) Install POSIX.1e filesystem acl support on the managed host. If the temporary directory on the remote host is mounted with POSIX acls enabled and the <strong class="command">setfacl</strong> tool is in the remote <code>PATH</code> then Ansible will use POSIX acls to share the module file with the second unprivileged user instead of having to make the file readable by everyone.</li> <li>Don’t perform an action on the remote machine by becoming an unprivileged user. Temporary files are protected by UNIX file permissions when you <code>become</code> root or do not use <code>become</code>. In Ansible 2.1 and above, UNIX file permissions are also secure if you make the connection to the managed machine as root and then use <code>become</code> to an unprivileged account.</li> </ul> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">Although the Solaris ZFS filesystem has filesystem ACLs, the ACLs are not POSIX.1e filesystem acls (they are NFSv4 ACLs instead). Ansible cannot use these ACLs to manage its temp file permissions so you may have to resort to <code>allow_world_readable_tmpfiles</code> if the remote machines use ZFS.</p> </div> <div class="versionchanged"> <p><span class="versionmodified">Changed in version 2.1.</span></p> </div> <p>In addition to the additional means of doing this securely, Ansible 2.1 also makes it harder to unknowingly do this insecurely. Whereas in Ansible 2.0.x and below, Ansible will silently allow the insecure behaviour if it was unable to find another way to share the files with the unprivileged user, in Ansible 2.1 and above Ansible defaults to issuing an error if it can’t do this securely. If you can’t make any of the changes above to resolve the problem, and you decide that the machine you’re running on is secure enough for the modules you want to run there to be world readable, you can turn on <code>allow_world_readable_tmpfiles</code> in the <code>ansible.cfg</code> file. Setting <code>allow_world_readable_tmpfiles</code> will change this from an error into a warning and allow the task to run as it did prior to 2.1.</p>   <h4 id="connection-plugin-support">Connection Plugin Support</h4> <p>Privilege escalation methods must also be supported by the connection plugin used. Most connection plugins will warn if they do not support become. Some will just ignore it as they always run as root (jail, chroot, etc).</p>   <h4 id="only-one-method-may-be-enabled-per-host">Only one method may be enabled per host</h4> <p>Methods cannot be chained. You cannot use <code>sudo /bin/su -</code> to become a user, you need to have privileges to run the command as that user in sudo or be able to su directly to it (the same for pbrun, pfexec or other supported methods).</p>   <h4 id="can-t-limit-escalation-to-certain-commands">Can’t limit escalation to certain commands</h4> <p>Privilege escalation permissions have to be general. Ansible does not always use a specific command to do something but runs modules (code) from a temporary file name which changes every time. If you have ‘/sbin/service’ or ‘/bin/chmod’ as the allowed commands this will fail with ansible as those paths won’t match with the temporary file that ansible creates to run the module.</p>   <h4 id="environment-variables-populated-by-pam-systemd">Environment variables populated by pam_systemd</h4> <p>For most Linux distributions using <code>systemd</code> as their init, the default methods used by <code>become</code> do not open a new “session”, in the sense of systemd. Because the <code>pam_systemd</code> module will not fully initialize a new session, you might have surprises compared to a normal session opened through ssh: some environment variables set by <code>pam_systemd</code>, most notably <code>XDG_RUNTIME_DIR</code>, are not populated for the new user and instead inherited or just emptied.</p> <p>This might cause trouble when trying to invoke systemd commands that depend on <code>XDG_RUNTIME_DIR</code> to access the bus:</p> <pre data-language="console">$ echo $XDG_RUNTIME_DIR
+
+$ systemctl --user status
+Failed to connect to bus: Permission denied
+</pre> <p>To force <code>become</code> to open a new systemd session that goes through <code>pam_systemd</code>, you can use <code>become_method: machinectl</code>.</p> <p>For more information, see <a class="reference external" href="https://github.com/systemd/systemd/issues/825#issuecomment-127917622" target="_blank">this systemd issue</a>.</p>     <h2 id="become-network">Become and Networks</h2> <p id="become-and-networks">As of version 2.6, Ansible supports <code>become</code> for privilege escalation (entering <code>enable</code> mode or privileged EXEC mode) on all <a class="reference internal" href="../../modules/network_maintained/#network-supported"><span class="std std-ref">Ansible-maintained platforms</span></a> that support <code>enable</code> mode: <code>eos`</code>, <code>ios</code>, and <code>nxos</code>. Using <code>become</code> replaces the <code>authorize</code> and <code>auth_pass</code> options in a <code>provider</code> dictionary.</p> <p>You must set the connection type to either <code>connection: network_cli</code> or <code>connection: httpapi</code> to use <code>become</code> for privilege escalation on network devices. Check the <a class="reference internal" href="../../network/user_guide/platform_index/#platform-options"><span class="std std-ref">Platform Options</span></a> and <a class="reference internal" href="../../modules/list_of_network_modules/#network-modules"><span class="std std-ref">Network modules</span></a> documentation for details.</p> <p>You can use escalated privileges on only the specific tasks that need them, on an entire play, or on all plays. Adding <code>become: yes</code> and <code>become_method: enable</code> instructs Ansible to enter <code>enable</code> mode before executing the task, play, or playbook where those parameters are set.</p> <p>If you see this error message, the task that generated it requires <code>enable</code> mode to succeed:</p> <pre data-language="console">Invalid input (privileged mode required)
+</pre> <p>To set <code>enable</code> mode for a specific task, add <code>become</code> at the task level:</p> <pre data-language="yaml">- name: Gather facts (eos)
+  eos_facts:
+    gather_subset:
+      - "!hardware"
+  become: yes
+  become_method: enable
+</pre> <p>To set enable mode for all tasks in a single play, add <code>become</code> at the play level:</p> <pre data-language="yaml">- hosts: eos-switches
+  become: yes
+  become_method: enable
+  tasks:
+    - name: Gather facts (eos)
+      eos_facts:
+        gather_subset:
+          - "!hardware"
+</pre>  <h3 id="setting-enable-mode-for-all-tasks">Setting enable mode for all tasks</h3> <p>Often you wish for all tasks in all plays to run using privilege mode, that is best achieved by using <code>group_vars</code>:</p> <p><strong>group_vars/eos.yml</strong></p> <pre data-language="yaml">ansible_connection: network_cli
+ansible_network_os: eos
+ansible_user: myuser
+ansible_become: yes
+ansible_become_method: enable
+</pre>  <h4 id="passwords-for-enable-mode">Passwords for enable mode</h4> <p>If you need a password to enter <code>enable</code> mode, you can specify it in one of two ways:</p> <ul class="simple"> <li>providing the <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-k"><code>--ask-become-pass</code></a> command line option</li> <li>setting the <code>ansible_become_pass</code> connection variable</li> </ul> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">As a reminder passwords should never be stored in plain text. For information on encrypting your passwords and other secrets with Ansible Vault, see <a class="reference internal" href="../playbooks_vault/"><span class="doc">Using Vault in playbooks</span></a>.</p> </div>    <h3 id="authorize-and-auth-pass">authorize and auth_pass</h3> <p>Ansible still supports <code>enable</code> mode with <code>connection: local</code> for legacy playbooks. To enter <code>enable</code> mode with <code>connection: local</code>, use the module options <code>authorize</code> and <code>auth_pass</code>:</p> <pre data-language="yaml">- hosts: eos-switches
+  ansible_connection: local
+  tasks:
+    - name: Gather facts (eos)
+      eos_facts:
+        gather_subset:
+          - "!hardware"
+      provider:
+        authorize: yes
+        auth_pass: " {{ secret_auth_pass }}"
+</pre> <p>We recommend updating your playbooks to use <code>become</code> for network-device <code>enable</code> mode consistently. The use of <code>authorize</code> and of <code>provider</code> dictionaries will be deprecated in future. Check the <a class="reference internal" href="../../network/user_guide/platform_index/#platform-options"><span class="std std-ref">Platform Options</span></a> and <a class="reference internal" href="../../modules/list_of_network_modules/#network-modules"><span class="std std-ref">Network modules</span></a> documentation for details.</p>    <h2 id="become-windows">Become and Windows</h2> <p id="become-and-windows">Since Ansible 2.3, <code>become</code> can be used on Windows hosts through the <code>runas</code> method. Become on Windows uses the same inventory setup and invocation arguments as <code>become</code> on a non-Windows host, so the setup and variable names are the same as what is defined in this document.</p> <p>While <code>become</code> can be used to assume the identity of another user, there are other uses for it with Windows hosts. One important use is to bypass some of the limitations that are imposed when running on WinRM, such as constrained network delegation or accessing forbidden system calls like the WUA API. You can use <code>become</code> with the same user as <code>ansible_user</code> to bypass these limitations and run commands that are not normally accessible in a WinRM session.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Prior to Ansible 2.4, become would only work when <code>ansible_winrm_transport</code> was set to either <code>basic</code> or <code>credssp</code>, but since Ansible 2.4 become now works on all transport types.</p> </div>  <h3 id="administrative-rights">Administrative Rights</h3> <p>Many tasks in Windows require administrative privileges to complete. When using the <code>runas</code> become method, Ansible will attempt to run the module with the full privileges that are available to the remote user. If it fails to elevate the user token, it will continue to use the limited token during execution.</p> <p>Before Ansible 2.5, a token was only able to be elevated when UAC was disabled or the remote user had the <code>SeTcbPrivilege</code> assigned. This restriction has been lifted in Ansible 2.5 and a user that is a member of the <code>BUILTIN\Administrators</code> group should have an elevated token during the module execution.</p> <p>To determine the type of token that Ansible was able to get, run the following task and check the output:</p> <pre data-language="YAML">- win_whoami:
+  become: yes
+</pre> <p>Under the <code>GROUP INFORMATION</code> section, the <code>Mandatory Label</code> entry determines whether the user has Administrative rights. Here are the labels that can be returned and what they mean:</p> <ul class="simple"> <li>
+<code>Medium</code>: Ansible failed to get an elevated token and ran under a limited token. Only a subset of the privileges assigned to user are available during the module execution and the user does not have administrative rights.</li> <li>
+<code>High</code>: An elevated token was used and all the privileges assigned to the user are available during the module execution.</li> <li>
+<code>System</code>: The <code>NT AUTHORITY\System</code> account is used and has the highest level of privileges available.</li> </ul> <p>The output will also show the list of privileges that have been granted to the user. When <code>State==Disabled</code>, the privileges have not been enabled but can be if required. In most scenarios these privileges are automatically enabled when required.</p> <p>If running on a version of Ansible that is older than 2.5 or the normal <code>runas</code> escalation process fails, an elevated token can be retrieved by:</p> <ul> <li>Set the <code>become_user</code> to <code>System</code> which has full control over the operating system. </li> <li>
+<p class="first">Grant <code>SeTcbPrivilege</code> to the user Ansible connects with on WinRM. <code>SeTcbPrivilege</code> is a high-level privilege that grants full control over the operating system. No user is given this privilege by default, and care should be taken if you grant this privilege to a user or group. For more information on this privilege, please see <a class="reference external" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn221957(v=ws.11)" target="_blank">Act as part of the operating system</a>. You can use the below task to set this privilege on a Windows host:</p> <pre data-language="YAML">- name: grant the ansible user the SeTcbPrivilege right
+  win_user_right:
+    name: SeTcbPrivilege
+    users: '{{ansible_user}}'
+    action: add
+</pre> </li> <li>
+<p class="first">Turn UAC off on the host and reboot before trying to become the user. UAC is a security protocol that is designed to run accounts with the <code>least privilege</code> principle. You can turn UAC off by running the following tasks:</p> <pre data-language="YAML">- name: turn UAC off
+  win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system
+    name: EnableLUA
+    data: 0
+    type: dword
+    state: present
+  register: uac_result
+
+- name: reboot after disabling UAC
+  win_reboot:
+  when: uac_result is changed
+</pre> </li> </ul> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Granting the <code>SeTcbPrivilege</code> or turning UAC off can cause Windows security vulnerabilities and care should be given if these steps are taken.</p> </div>   <h3 id="local-service-accounts">Local Service Accounts</h3> <p>Prior to Ansible version 2.5, <code>become</code> only worked with a local or domain user account. Local service accounts like <code>System</code> or <code>NetworkService</code> could not be used as <code>become_user</code> in these older versions. This restriction has been lifted since the 2.5 release of Ansible. The three service accounts that can be set under <code>become_user</code> are:</p> <ul class="simple"> <li>System</li> <li>NetworkService</li> <li>LocalService</li> </ul> <p>Because local service accounts do not have passwords, the <code>ansible_become_password</code> parameter is not required and is ignored if specified.</p>   <h3 id="accounts-without-a-password">Accounts without a Password</h3> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">As a general security best practice, you should avoid allowing accounts without passwords.</p> </div> <p>Ansible can be used to become an account that does not have a password (like the <code>Guest</code> account). To become an account without a password, set up the variables like normal but either do not define <code>ansible_become_pass</code> or set <code>ansible_become_pass: ''</code>.</p> <p>Before become can work on an account like this, the local policy <a class="reference external" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/jj852174(v=ws.11)" target="_blank">Accounts: Limit local account use of blank passwords to console logon only</a> must be disabled. This can either be done through a Group Policy Object (GPO) or with this Ansible task:</p> <pre data-language="yaml">- name: allow blank password on become
+  win_regedit:
+    path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
+    name: LimitBlankPasswordUse
+    data: 0
+    type: dword
+    state: present
+</pre> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">This is only for accounts that do not have a password. You still need to set the account’s password under <code>ansible_become_pass</code> if the become_user has a password.</p> </div>   <h3 id="become-flags">Become Flags</h3> <p>Ansible 2.5 adds the <code>become_flags</code> parameter to the <code>runas</code> become method. This parameter can be set using the <code>become_flags</code> task directive or set in Ansible’s configuration using <code>ansible_become_flags</code>. The two valid values that are initially supported for this parameter are <code>logon_type</code> and <code>logon_flags</code>.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">These flags should only be set when becoming a normal user account, not a local service account like LocalSystem.</p> </div> <p>The key <code>logon_type</code> sets the type of logon operation to perform. The value can be set to one of the following:</p> <ul class="simple"> <li>
+<code>interactive</code>: The default logon type. The process will be run under a context that is the same as when running a process locally. This bypasses all WinRM restrictions and is the recommended method to use.</li> <li>
+<code>batch</code>: Runs the process under a batch context that is similar to a scheduled task with a password set. This should bypass most WinRM restrictions and is useful if the <code>become_user</code> is not allowed to log on interactively.</li> <li>
+<code>new_credentials</code>: Runs under the same credentials as the calling user, but outbound connections are run under the context of the <code>become_user</code> and <code>become_password</code>, similar to <code>runas.exe /netonly</code>. The <code>logon_flags</code> flag should also be set to <code>netcredentials_only</code>. Use this flag if the process needs to access a network resource (like an SMB share) using a different set of credentials.</li> <li>
+<code>network</code>: Runs the process under a network context without any cached credentials. This results in the same type of logon session as running a normal WinRM process without credential delegation, and operates under the same restrictions.</li> <li>
+<code>network_cleartext</code>: Like the <code>network</code> logon type, but instead caches the credentials so it can access network resources. This is the same type of logon session as running a normal WinRM process with credential delegation.</li> </ul> <p>For more information, see <a class="reference external" href="https://docs.microsoft.com/en-gb/windows/desktop/api/winbase/nf-winbase-logonusera" target="_blank">dwLogonType</a>.</p> <p>The <code>logon_flags</code> key specifies how Windows will log the user on when creating the new process. The value can be set to none or multiple of the following:</p> <ul class="simple"> <li>
+<code>with_profile</code>: The default logon flag set. The process will load the user’s profile in the <code>HKEY_USERS</code> registry key to <code>HKEY_CURRENT_USER</code>.</li> <li>
+<code>netcredentials_only</code>: The process will use the same token as the caller but will use the <code>become_user</code> and <code>become_password</code> when accessing a remote resource. This is useful in inter-domain scenarios where there is no trust relationship, and should be used with the <code>new_credentials</code> <code>logon_type</code>.</li> </ul> <p>By default <code>logon_flags=with_profile</code> is set, if the profile should not be loaded set <code>logon_flags=</code> or if the profile should be loaded with <code>netcredentials_only</code>, set <code>logon_flags=with_profile,netcredentials_only</code>.</p> <p>For more information, see <a class="reference external" href="https://docs.microsoft.com/en-gb/windows/desktop/api/winbase/nf-winbase-createprocesswithtokenw" target="_blank">dwLogonFlags</a>.</p> <p>Here are some examples of how to use <code>become_flags</code> with Windows tasks:</p> <pre data-language="yaml">- name: copy a file from a fileshare with custom credentials
+  win_copy:
+    src: \\server\share\data\file.txt
+    dest: C:\temp\file.txt
+    remote_src: yex
+  vars:
+    ansible_become: yes
+    ansible_become_method: runas
+    ansible_become_user: DOMAIN\user
+    ansible_become_pass: Password01
+    ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+
+- name: run a command under a batch logon
+  win_whoami:
+  become: yes
+  become_flags: logon_type=batch
+
+- name: run a command and not load the user profile
+  win_whomai:
+  become: yes
+  become_flags: logon_flags=
+</pre>   <h3 id="id2">Limitations</h3> <p>Be aware of the following limitations with <code>become</code> on Windows:</p> <ul class="simple"> <li>Running a task with <code>async</code> and <code>become</code> on Windows Server 2008, 2008 R2 and Windows 7 only works when using Ansible 2.7 or newer.</li> <li>By default, the become user logs on with an interactive session, so it must have the right to do so on the Windows host. If it does not inherit the <code>SeAllowLogOnLocally</code> privilege or inherits the <code>SeDenyLogOnLocally</code> privilege, the become process will fail. Either add the privilege or set the <code>logon_type</code> flag to change the logon type used.</li> <li>Prior to Ansible version 2.3, become only worked when <code>ansible_winrm_transport</code> was either <code>basic</code> or <code>credssp</code>. This restriction has been lifted since the 2.4 release of Ansible for all hosts except Windows Server 2008 (non R2 version).</li> </ul> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt><a class="reference external" href="https://groups.google.com/forum/#!forum/ansible-project" target="_blank">Mailing List</a></dt> <dd>Questions? Help? Ideas? Stop by the list on Google Groups</dd> <dt><a class="reference external" href="https://webchat.freenode.net" target="_blank">webchat.freenode.net</a></dt> <dd>#ansible IRC chat channel</dd> </dl> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/user_guide/become.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/user_guide/become.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

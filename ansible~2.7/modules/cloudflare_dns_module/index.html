@@ -1,0 +1,232 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cloudflare_dns - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.1. ">
+  <meta name="keywords" content="cloudflare, dns, -, manage, records, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/cloudflare_dns_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="cloudflare-dns-module">cloudflare_dns - manage Cloudflare DNS records</h1> <div class="versionadded" id="cloudflare-dns-manage-cloudflare-dns-records"> <p><span class="versionmodified">New in version 2.1.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#examples" id="id4">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id5">Return Values</a></li> <li><a class="reference internal" href="#status" id="id6">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id7">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id8">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Manages dns records via the Cloudflare API, see the docs: <a class="reference external" href="https://api.cloudflare.com/" target="_blank">https://api.cloudflare.com/</a>
+</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>account_api_token</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Account API token. You can obtain your API key from the bottom of the Cloudflare 'My Account' page, found here: <a href="https://dash.cloudflare.com/" target="_blank">https://dash.cloudflare.com/</a>
+</div> </td> </tr> <tr> <td colspan="1"> <b>account_email</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Account email.</div> </td> </tr> <tr> <td colspan="1"> <b>algorithm</b> <br><div style="font-size: small; color: red">int</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Algorithm number. Required for <code>type=DS</code> and <code>type=SSHFP</code> when <code>state=present</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>cert_usage</b> <br><div style="font-size: small; color: red">int</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>0</li> <li>1</li> <li>2</li> <li>3</li> </ul> </td> <td> <div>Certificate usage number. Required for <code>type=TLSA</code> when <code>state=present</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>hash_type</b> <br><div style="font-size: small; color: red">int</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>1</li> <li>2</li> </ul> </td> <td> <div>Hash type number. Required for <code>type=DS</code>, <code>type=SSHFP</code> and <code>type=TLSA</code> when <code>state=present</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>key_tag</b> <br><div style="font-size: small; color: red">int</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>DNSSEC key tag. Needed for <code>type=DS</code> when <code>state=present</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>port</b> </td> <td> </td> <td> <div>Service port. Required for <code>type=SRV</code> and <code>type=TLSA</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>priority</b> </td> <td> <b>Default:</b><br><div style="color: blue">1</div> </td> <td> <div>Record priority. Required for <code>type=MX</code> and <code>type=SRV</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>proto</b> </td> <td> </td> <td> <div>Service protocol. Required for <code>type=SRV</code> and <code>type=TLSA</code>.</div> <div>Common values are tcp and udp.</div> <div>Before Ansible 2.6 only tcp and udp were available.</div> </td> </tr> <tr> <td colspan="1"> <b>proxied</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Proxy through cloudflare network or just use DNS</div> </td> </tr> <tr> <td colspan="1"> <b>record</b> </td> <td> <b>Default:</b><br><div style="color: blue">@</div> </td> <td> <div>Record to add. Required if <code>state=present</code>. Default is <code>@</code> (e.g. the zone name)</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: name</div> </td> </tr> <tr> <td colspan="1"> <b>selector</b> <br><div style="font-size: small; color: red">int</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>0</li> <li>1</li> </ul> </td> <td> <div>Selector number. Required for <code>type=TLSA</code> when <code>state=present</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>service</b> </td> <td> </td> <td> <div>Record service. Required for <code>type=SRV</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>solo</b> </td> <td> </td> <td> <div>Whether the record should be the only one for that record type and record name. Only use with <code>state=present</code>
+</div> <div>This will delete all other records with the same record name and type.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>absent</li> </ul> </td> <td> <div>Whether the record(s) should exist or not</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">30</div> </td> <td> <div>Timeout for Cloudflare API calls</div> </td> </tr> <tr> <td colspan="1"> <b>ttl</b> </td> <td> <b>Default:</b><br><div style="color: blue">1 (automatic)</div> </td> <td> <div>The TTL to give the new record. Must be between 120 and 2,147,483,647 seconds, or 1 for automatic.</div> </td> </tr> <tr> <td colspan="1"> <b>type</b> </td> <td> <ul>
+<b>Choices:</b> <li>A</li> <li>AAAA</li> <li>CNAME</li> <li>TXT</li> <li>SRV</li> <li>MX</li> <li>NS</li> <li>DS</li> <li>SPF</li> <li>SSHFP</li> <li>TLSA</li> </ul> </td> <td> <div>The type of DNS record to create. Required if <code>state=present</code>
+</div> <div>
+<code>type=DS</code>, <code>type=SSHFP</code> and <code>type=TLSA</code> added in Ansible 2.7.</div> </td> </tr> <tr> <td colspan="1"> <b>value</b> </td> <td> </td> <td> <div>The record value. Required for <code>state=present</code>
+</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: content</div> </td> </tr> <tr> <td colspan="1"> <b>weight</b> </td> <td> <b>Default:</b><br><div style="color: blue">1</div> </td> <td> <div>Service weight. Required for <code>type=SRV</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>zone</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The name of the Zone to work with (e.g. "example.com"). The Zone must already exist.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: domain</div> </td> </tr> </table> <br>  <h2 id="examples">Examples</h2> <pre data-language="yaml"># create a test.my.com A record to point to 127.0.0.1
+- cloudflare_dns:
+    zone: my.com
+    record: test
+    type: A
+    value: 127.0.0.1
+    account_email: test@example.com
+    account_api_token: dummyapitoken
+  register: record
+
+# create a my.com CNAME record to example.com
+- cloudflare_dns:
+    zone: my.com
+    type: CNAME
+    value: example.com
+    state: present
+    account_email: test@example.com
+    account_api_token: dummyapitoken
+
+# change it's ttl
+- cloudflare_dns:
+    zone: my.com
+    type: CNAME
+    value: example.com
+    ttl: 600
+    state: present
+    account_email: test@example.com
+    account_api_token: dummyapitoken
+
+# and delete the record
+- cloudflare_dns:
+    zone: my.com
+    type: CNAME
+    value: example.com
+    state: absent
+    account_email: test@example.com
+    account_api_token: dummyapitoken
+
+# create a my.com CNAME record to example.com and proxy through cloudflare's network
+- cloudflare_dns:
+    zone: my.com
+    type: CNAME
+    value: example.com
+    state: present
+    proxied: yes
+    account_email: test@example.com
+    account_api_token: dummyapitoken
+
+# create TXT record "test.my.com" with value "unique value"
+# delete all other TXT records named "test.my.com"
+- cloudflare_dns:
+    domain: my.com
+    record: test
+    type: TXT
+    value: unique value
+    state: present
+    solo: true
+    account_email: test@example.com
+    account_api_token: dummyapitoken
+
+# create a SRV record _foo._tcp.my.com
+- cloudflare_dns:
+    domain: my.com
+    service: foo
+    proto: tcp
+    port: 3500
+    priority: 10
+    weight: 20
+    type: SRV
+    value: fooserver.my.com
+
+# create a SSHFP record login.example.com
+- cloudflare_dns:
+    zone: example.com
+    record: login
+    type: SSHFP
+    algorithm: 4
+    hash_type: 2
+    value: 9dc1d6742696d2f51ca1f1a78b3d16a840f7d111eb9454239e70db31363f33e1
+
+# create a TLSA record _25._tcp.mail.example.com
+- cloudflare_dns:
+    zone: example.com
+    record: mail
+    port: 25
+    proto: tcp
+    type: TLSA
+    cert_usage: 3
+    selector: 1
+    hash_type: 1
+    value: 6b76d034492b493e15a7376fccd08e63befdad0edab8e442562f532338364bf3
+
+# Create a DS record for subdomain.example.com
+- cloudflare_dns:
+    zone: example.com
+    record: subdomain
+    type: DS
+    key_tag: 5464
+    algorithm: 8
+    hash_type: 2
+    value: B4EB5AC4467D2DFB3BAF9FB9961DC1B6FED54A58CDFAA3E465081EC86F89BFAB
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="2">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="2"> <b>record</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success, except on record deletion</td> <td> <div>dictionary containing the record data</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>proxiable</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>success</td> <td> <div>whether this record can be proxied through cloudflare</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>locked</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>success</td> <td> <div>No documentation available</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the record name as FQDN (including _service and _proto for SRV)</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">www.sample.com</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>data</b> <br><div style="font-size: small; color: red">dictionary</div> </td> <td>success, if type is SRV, DS, SSHFP or TLSA</td> <td> <div>additional record data</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{'priority': 10, 'target': 'jabberhost.sample.com', 'service': '_xmpp', 'proto': '_tcp', 'port': 8080, 'weight': 5, 'name': 'jabber'}</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>proxied</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>success</td> <td> <div>whether the record is proxied through cloudflare</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>priority</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success, if type is MX</td> <td> <div>priority of the MX record</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">10</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>created_on</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the record creation date</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2016-03-25 19:09:42.516553</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>meta</b> <br><div style="font-size: small; color: red">dictionary</div> </td> <td>success</td> <td> <div>No documentation available</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{'auto_added': False}</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>ttl</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>the time-to-live for the record</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">300</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>modified_on</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>record modification date</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2016-03-25 19:09:42.516553</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>zone_name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the name of the zone containing the record</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">sample.com</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>content</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the record content (details depend on record type)</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">192.0.2.91</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>type</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the record type</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">A</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the record id</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">f9efb0549e96abcb750de63b38c9576e</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>zone_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of the zone containing the record</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">abcede0bf9f0066f94029d2e6b73856a</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Michael Gruener (@mgruener)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/net_tools/cloudflare_dns.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/cloudflare_dns_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/cloudflare_dns_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

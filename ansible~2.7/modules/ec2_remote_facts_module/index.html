@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ec2_remote_facts - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.0. ">
+  <meta name="keywords" content="ec, remote, facts, -, gather, about, instances, aws, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/ec2_remote_facts_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ec2-remote-facts-module">ec2_remote_facts - Gather facts about ec2 instances in AWS</h1> <div class="versionadded" id="ec2-remote-facts-gather-facts-about-ec2-instances-in-aws"> <p><span class="versionmodified">New in version 2.0.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#deprecated" id="id1">DEPRECATED</a></li> <li>
+<a class="reference internal" href="#synopsis" id="id2">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id3">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id4">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id5">Notes</a></li> <li><a class="reference internal" href="#examples" id="id6">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id7">Return Values</a></li> <li>
+<a class="reference internal" href="#status" id="id8">Status</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="deprecated">DEPRECATED</h2> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr><th class="field-name" colspan="2">Removed in Ansible:</th></tr> <tr>
+<td> </td>
+<td class="field-body">version: 2.8</td> </tr> <tr>
+<th class="field-name">Why:</th>
+<td class="field-body">Replaced with boto3 version.</td> </tr> <tr>
+<th class="field-name">Alternative:</th>
+<td class="field-body">Use <a class="reference internal" href="../ec2_instance_facts_module/#ec2-instance-facts-module"><span class="std std-ref">ec2_instance_facts</span></a> instead.</td> </tr>  </table>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Gather facts about ec2 instances in AWS</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>boto</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>aws_access_key</b> </td> <td> </td> <td> <div>AWS access key. If not set then the value of the AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY or EC2_ACCESS_KEY environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ec2_access_key, access_key</div> </td> </tr> <tr> <td colspan="1"> <b>aws_secret_key</b> </td> <td> </td> <td> <div>AWS secret key. If not set then the value of the AWS_SECRET_ACCESS_KEY, AWS_SECRET_KEY, or EC2_SECRET_KEY environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ec2_secret_key, secret_key</div> </td> </tr> <tr> <td colspan="1"> <b>ec2_url</b> </td> <td> </td> <td> <div>Url to use to connect to EC2 or your Eucalyptus cloud (by default the module will use EC2 endpoints). Ignored for modules where region is required. Must be specified for all other modules if region is not used. If not set then the value of the EC2_URL environment variable, if any, is used.</div> </td> </tr> <tr> <td colspan="1"> <b>filters</b> </td> <td> </td> <td> <div>A dict of filters to apply. Each dict item consists of a filter key and a filter value. See <a href="http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html" target="_blank">http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html</a> for possible filters.</div> </td> </tr> <tr> <td colspan="1"> <b>profile</b> <br><div style="font-size: small; color: darkgreen">(added in 1.6)</div> </td> <td> </td> <td> <div>Uses a boto profile. Only works with boto &gt;= 2.24.0.</div> </td> </tr> <tr> <td colspan="1"> <b>region</b> </td> <td> </td> <td> <div>The AWS region to use. If not specified then the value of the AWS_REGION or EC2_REGION environment variable, if any, is used. See <a href="http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region" target="_blank">http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region</a>
+</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: aws_region, ec2_region</div> </td> </tr> <tr> <td colspan="1"> <b>security_token</b> <br><div style="font-size: small; color: darkgreen">(added in 1.6)</div> </td> <td> </td> <td> <div>AWS STS security token. If not set then the value of the AWS_SECURITY_TOKEN or EC2_SECURITY_TOKEN environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: access_token</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 1.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>When set to "no", SSL certificates will not be validated for boto versions &gt;= 2.6.0.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>If parameters are not set within the module, the following environment variables can be used in decreasing order of precedence <code>AWS_URL</code> or <code>EC2_URL</code>, <code>AWS_ACCESS_KEY_ID</code> or <code>AWS_ACCESS_KEY</code> or <code>EC2_ACCESS_KEY</code>, <code>AWS_SECRET_ACCESS_KEY</code> or <code>AWS_SECRET_KEY</code> or <code>EC2_SECRET_KEY</code>, <code>AWS_SECURITY_TOKEN</code> or <code>EC2_SECURITY_TOKEN</code>, <code>AWS_REGION</code> or <code>EC2_REGION</code>
+</li> <li>Ansible uses the boto configuration file (typically ~/.boto) if no credentials are provided. See <a class="reference external" href="https://boto.readthedocs.io/en/latest/boto_config_tut.html" target="_blank">https://boto.readthedocs.io/en/latest/boto_config_tut.html</a>
+</li> <li>
+<code>AWS_REGION</code> or <code>EC2_REGION</code> can be typically be used to specify the AWS region, when required, but this can also be configured in the boto config file</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Note: These examples do not set authentication details, see the AWS Guide for details.
+
+# Gather facts about all ec2 instances
+- ec2_remote_facts:
+
+# Gather facts about all running ec2 instances with a tag of Name:Example
+- ec2_remote_facts:
+    filters:
+      instance-state-name: running
+      "tag:Name": Example
+
+# Gather facts about instance i-123456
+- ec2_remote_facts:
+    filters:
+      instance-id: i-123456
+
+# Gather facts about all instances in vpc-123456 that are t2.small type
+- ec2_remote_facts:
+    filters:
+      vpc-id: vpc-123456
+      instance-type: t2.small
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="3">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="3"> <b>instances</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>when EC2 instances are found in AWS region otherwise empty</td> <td> <div>provides details about EC2 instance(s) found in AWS region</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>ramdisk</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the RAM disk id</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">null</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>kernel</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the kernel id</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">null</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>instance_profile</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>the instance profile associated with the instance</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>instance profile id</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">AIPAD5WIZGNR9TH6LBFE4</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>arn</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>specifies an ARN of instance profile</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">arn:aws:iam::171455704129:instance-profile/Sample-IamProfile</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>root_device_type</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the type of root device that the instance uses</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ebs</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>private_dns_name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the private IPv4 DNS name of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ip-10-21-39-23.ag-net.com</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>block_device_mapping</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>a structure describing the attached volumes to instance</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>status</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the status for the EBS volume</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">attaching</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>device_name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the device name for the EBS volume</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">/dev/sda1</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>delete_on_termination</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>success</td> <td> <div>indicates whether the EBS volume is deleted on instance termination</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">true</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>attach_time</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the attach time for an EBS volume mapped to the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2017-01-03T15:19:52.000Z</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>volume_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the volume id of the EBS volume</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">vol-3160f90df06b24080</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>key_name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the name of the key pair used when the instance was launched</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">MyKey</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>interfaces</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>a list of ENI associated to instance</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of ENI</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">eni-cf96b081</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>mac_address</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the MAC address of ENI</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">06:c4:fd:90:dc:61</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>image_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of the image used to launch the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ami-1748d2f5</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>groups</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>a list security groups to which the network interface belongs</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>security group id</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">sg-e203cf94</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Sample-Common-Sg</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>spot_instance_request_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of the spot instance request</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">null</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>requester_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of the entity that launched the instance on your behalf</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">null</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>source_destination_check</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>success</td> <td> <div>indicates whether the instance performs source/destination checking</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">true</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">i-09275d68c04c1a16c</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>tags</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>a dictionary of key/value pairs assigned to the resource</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>key</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the key of a tag assigned to the resource</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Environment</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>public_ip_address</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the public IPv4 address of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">54.194.252.215</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>monitoring_state</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>indicates whether detailed monitoring is enabled</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">disabled</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>launch_time"</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the time when the instance was launched</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2017-06-16T15:44:54.000Z</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>ami_launch_index</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>if more than one instance is started at the same time, this value indicates the order in which the instance was launched, the value of the first instance launched is 0</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">0</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>hypervisor</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the hypervisor type of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">xen</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>region</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the AWS region in which instance is running in</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">eu-west-1</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>ebs_optimized</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>success</td> <td> <div>whether instance class has EBS optimized flag turned on</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">true</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>public_dns_name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the public DNS name of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ec2-54-194-252-215.eu-west-1.compute.amazonaws.com</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>state</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>a message that describes the state change</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">running</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>architecture</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the instance architecture</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">x86_64</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>private_ip_address</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the private IPv4 address of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">10.216.139.23</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>vpc_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the id of the VPC that the instance is running in</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">vpc-12c9ae4f</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>client_token</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the idempotency token provided when instance was launched</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Sample-awsmp-DFNBSML8ZMJ9</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>virtualization_type</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>the virtualization type of the instance</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">hvm</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>deprecated</strong> and will be removed in version 2.8. For more information see <a class="reference internal" href="#deprecated">DEPRECATED</a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Michael Schuett (@michaeljs1990)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/amazon/_ec2_remote_facts.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/ec2_remote_facts_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/ec2_remote_facts_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

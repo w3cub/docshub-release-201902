@@ -1,0 +1,162 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ansible Vault - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content="Ansible Vault is a feature of ansible that allows you to keep sensitive data such as passwords or keys in encrypted files, rather than as plaintext &hellip;">
+  <meta name="keywords" content="ansible, vault, -, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/vault/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ansible-vault">Ansible Vault</h1>   <ul> <li><a class="reference internal" href="#what-can-be-encrypted-with-vault" id="id6">What Can Be Encrypted With Vault</a></li> <li><a class="reference internal" href="#creating-encrypted-files" id="id7">Creating Encrypted Files</a></li> <li><a class="reference internal" href="#editing-encrypted-files" id="id8">Editing Encrypted Files</a></li> <li><a class="reference internal" href="#rekeying-encrypted-files" id="id9">Rekeying Encrypted Files</a></li> <li><a class="reference internal" href="#encrypting-unencrypted-files" id="id10">Encrypting Unencrypted Files</a></li> <li><a class="reference internal" href="#decrypting-encrypted-files" id="id11">Decrypting Encrypted Files</a></li> <li><a class="reference internal" href="#viewing-encrypted-files" id="id12">Viewing Encrypted Files</a></li> <li><a class="reference internal" href="#use-encrypt-string-to-create-encrypted-variables-to-embed-in-yaml" id="id13">Use encrypt_string to create encrypted variables to embed in yaml</a></li> <li><a class="reference internal" href="#vault-ids-and-multiple-vault-passwords" id="id14">Vault Ids and Multiple Vault Passwords</a></li> <li>
+<a class="reference internal" href="#providing-vault-passwords" id="id15">Providing Vault Passwords</a><ul> <li><a class="reference internal" href="#multiple-vault-passwords" id="id16">Multiple vault passwords</a></li> </ul> </li> <li><a class="reference internal" href="#speeding-up-vault-operations" id="id17">Speeding Up Vault Operations</a></li> <li><a class="reference internal" href="#vault-format" id="id18">Vault Format</a></li> <li><a class="reference internal" href="#vault-payload-format-1-1" id="id19">Vault Payload Format 1.1</a></li> </ul>
+  <p>Ansible Vault is a feature of ansible that allows you to keep sensitive data such as passwords or keys in encrypted files, rather than as plaintext in playbooks or roles. These vault files can then be distributed or placed in source control.</p> <p>To enable this feature, a command line tool - <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault"><span class="std std-ref">ansible-vault</span></a> - is used to edit files, and a command line flag (<a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-ask-vault-pass"><code>--ask-vault-pass</code></a> or <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-password-file"><code>--vault-password-file</code></a>) is used. Alternately, you may specify the location of a password file or command Ansible to always prompt for the password in your ansible.cfg file. These options require no command line flag usage.</p> <p>For best practices advice, refer to <a class="reference internal" href="../playbooks_best_practices/#best-practices-for-variables-and-vaults"><span class="std std-ref">Variables and Vaults</span></a>.</p>  <h2 id="id1">What Can Be Encrypted With Vault</h2> <p id="what-can-be-encrypted-with-vault">Ansible Vault can encrypt any structured data file used by Ansible. This can include “group_vars/” or “host_vars/” inventory variables, variables loaded by “include_vars” or “vars_files”, or variable files passed on the ansible-playbook command line with <code>-e @file.yml</code> or <code>-e @file.json</code>. Role variables and defaults are also included.</p> <p>Ansible tasks, handlers, and so on are also data so these can be encrypted with vault as well. To hide the names of variables that you’re using, you can encrypt the task files in their entirety.</p> <p>Ansible Vault can also encrypt arbitrary files, even binary files. If a vault-encrypted file is given as the <code>src</code> argument to the <a class="reference internal" href="../../modules/copy_module/#copy-module"><span class="std std-ref">copy</span></a>, <a class="reference internal" href="../../modules/template_module/#template-module"><span class="std std-ref">template</span></a>, <a class="reference internal" href="../../modules/unarchive_module/#unarchive-module"><span class="std std-ref">unarchive</span></a>, <a class="reference internal" href="../../modules/script_module/#script-module"><span class="std std-ref">script</span></a> or <a class="reference internal" href="../../modules/assemble_module/#assemble-module"><span class="std std-ref">assemble</span></a> modules, the file will be placed at the destination on the target host decrypted (assuming a valid vault password is supplied when running the play).</p> <p>As of version 2.3, Ansible supports encrypting single values inside a YAML file, using the <code>!vault</code> tag to let YAML and Ansible know it uses special processing. This feature is covered in more details below.</p>   <h2 id="creating-files">Creating Encrypted Files</h2> <p id="creating-encrypted-files">To create a new encrypted data file, run the following command:</p> <pre data-language="bash">ansible-vault create foo.yml
+</pre> <p>First you will be prompted for a password. The password used with vault currently must be the same for all files you wish to use together at the same time.</p> <p>After providing a password, the tool will launch whatever editor you have defined with $EDITOR, and defaults to vi (before 2.1 the default was vim). Once you are done with the editor session, the file will be saved as encrypted data.</p> <p>The default cipher is AES (which is shared-secret based).</p>   <h2 id="id2">Editing Encrypted Files</h2> <p id="editing-encrypted-files">To edit an encrypted file in place, use the <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-edit"><span class="std std-ref">ansible-vault edit</span></a> command. This command will decrypt the file to a temporary file and allow you to edit the file, saving it back when done and removing the temporary file:</p> <pre data-language="bash">ansible-vault edit foo.yml
+</pre>   <h2 id="rekeying-files">Rekeying Encrypted Files</h2> <p id="rekeying-encrypted-files">Should you wish to change your password on a vault-encrypted file or files, you can do so with the rekey command:</p> <pre data-language="bash">ansible-vault rekey foo.yml bar.yml baz.yml
+</pre> <p>This command can rekey multiple data files at once and will ask for the original password and also the new password.</p>   <h2 id="encrypting-files">Encrypting Unencrypted Files</h2> <p id="encrypting-unencrypted-files">If you have existing files that you wish to encrypt, use the <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-encrypt"><span class="std std-ref">ansible-vault encrypt</span></a> command. This command can operate on multiple files at once:</p> <pre data-language="bash">ansible-vault encrypt foo.yml bar.yml baz.yml
+</pre>   <h2 id="decrypting-files">Decrypting Encrypted Files</h2> <p id="decrypting-encrypted-files">If you have existing files that you no longer want to keep encrypted, you can permanently decrypt them by running the <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-decrypt"><span class="std std-ref">ansible-vault decrypt</span></a> command. This command will save them unencrypted to the disk, so be sure you do not want <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-edit"><span class="std std-ref">ansible-vault edit</span></a> instead:</p> <pre data-language="bash">ansible-vault decrypt foo.yml bar.yml baz.yml
+</pre>   <h2 id="viewing-files">Viewing Encrypted Files</h2> <p id="viewing-encrypted-files">If you want to view the contents of an encrypted file without editing it, you can use the <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-view"><span class="std std-ref">ansible-vault view</span></a> command:</p> <pre data-language="bash">ansible-vault view foo.yml bar.yml baz.yml
+</pre>   <h2 id="encrypt-string-for-use-in-yaml">Use encrypt_string to create encrypted variables to embed in yaml</h2> <p id="use-encrypt-string-to-create-encrypted-variables-to-embed-in-yaml">The <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-encrypt-string"><span class="std std-ref">ansible-vault encrypt_string</span></a> command will encrypt and format a provided string into a format that can be included in <a class="reference internal" href="../../cli/ansible-playbook/#ansible-playbook"><span class="std std-ref">ansible-playbook</span></a> YAML files.</p> <p>To encrypt a string provided as a cli arg:</p> <pre data-language="bash">ansible-vault encrypt_string --vault-id a_password_file 'foobar' --name 'the_secret'
+</pre> <p>Result:</p> <pre data-language="YAML">the_secret: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      62313365396662343061393464336163383764373764613633653634306231386433626436623361
+      6134333665353966363534333632666535333761666131620a663537646436643839616531643561
+      63396265333966386166373632626539326166353965363262633030333630313338646335303630
+      3438626666666137650a353638643435666633633964366338633066623234616432373231333331
+      6564
+</pre> <p>To use a vault-id label for ‘dev’ vault-id:</p> <pre data-language="bash">ansible-vault encrypt_string --vault-id dev@password 'foooodev' --name 'the_dev_secret'
+</pre> <p>Result:</p> <pre data-language="YAML">the_dev_secret: !vault |
+          $ANSIBLE_VAULT;1.2;AES256;dev
+          30613233633461343837653833666333643061636561303338373661313838333565653635353162
+          3263363434623733343538653462613064333634333464660a663633623939393439316636633863
+          61636237636537333938306331383339353265363239643939666639386530626330633337633833
+          6664656334373166630a363736393262666465663432613932613036303963343263623137386239
+          6330
+</pre> <p>To encrypt a string read from stdin and name it ‘db_password’:</p> <pre data-language="bash">echo -n 'letmein' | ansible-vault encrypt_string --vault-id dev@password --stdin-name 'db_password'
+</pre> <p>Result:</p> <pre data-language="YAML">Reading plaintext input from stdin. (ctrl-d to end input)
+db_password: !vault |
+          $ANSIBLE_VAULT;1.2;AES256;dev
+          61323931353866666336306139373937316366366138656131323863373866376666353364373761
+          3539633234313836346435323766306164626134376564330a373530313635343535343133316133
+          36643666306434616266376434363239346433643238336464643566386135356334303736353136
+          6565633133366366360a326566323363363936613664616364623437336130623133343530333739
+          3039
+</pre> <p>To be prompted for a string to encrypt, encrypt it, and give it the name ‘new_user_password’:</p> <pre data-language="bash">ansible-vault encrypt_string --vault-id dev@./password --stdin-name 'new_user_password'
+</pre> <p>Output:</p> <pre data-language="YAML">Reading plaintext input from stdin. (ctrl-d to end input)
+</pre> <p>User enters ‘hunter2’ and hits ctrl-d.</p> <p>Result:</p> <pre data-language="YAML">new_user_password: !vault |
+          $ANSIBLE_VAULT;1.2;AES256;dev
+          37636561366636643464376336303466613062633537323632306566653533383833366462366662
+          6565353063303065303831323539656138653863353230620a653638643639333133306331336365
+          62373737623337616130386137373461306535383538373162316263386165376131623631323434
+          3866363862363335620a376466656164383032633338306162326639643635663936623939666238
+          3161
+</pre> <p>See also <a class="reference internal" href="../playbooks_vault/#single-encrypted-variable"><span class="std std-ref">Single Encrypted Variable</span></a></p>   <h2 id="vault-ids">Vault Ids and Multiple Vault Passwords</h2> <p id="vault-ids-and-multiple-vault-passwords"><em>Available since Ansible 2.4</em></p> <p>A vault id is an identifier for one or more vault secrets. Since Ansible 2.4, Ansible supports multiple vault passwords. Vault ids is a way to provide a label for a particular vault password.</p> <p>Vault encrypted content can specify which vault id it was encrypted with.</p> <p>Prior to Ansible 2.4, only one vault password could be used at a time. Post Ansible 2.4, multiple vault passwords can be used each time Ansible runs, so any vault files or vars that needed to be decrypted all had to use the same password.</p> <p>Since Ansible 2.4, vault files or vars that are encrypted with different passwords can be used at the same time.</p> <p>For example, a playbook can now include a vars file encrypted with a ‘dev’ vault id and a ‘prod’ vault id.</p>   <h2 id="id3">Providing Vault Passwords</h2> <p id="providing-vault-passwords">Since Ansible 2.4, the recommended way to provide a vault password from the cli is to use the <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-id"><code>--vault-id</code></a> cli option.</p> <p>For example, to use a password store in the text file <code>/path/to/my/vault-password-file</code>:</p> <pre data-language="bash">ansible-playbook --vault-id /path/to/my/vault-password-file site.yml
+</pre> <p>To prompt for a password:</p> <pre data-language="bash">ansible-playbook --vault-id @prompt site.yml
+</pre> <p>To get the password from a vault password executable script <code>my-vault-password.py</code>:</p> <pre data-language="bash">ansible-playbook --vault-id my-vault-password.py
+</pre> <p>The value for <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-id"><code>--vault-id</code></a> can specify the type of vault id (prompt, a file path, etc) and a label for the vault id (‘dev’, ‘prod’, ‘cloud’, etc)</p> <p>For example, to use a password file <code>dev-password</code> for the vault-id ‘dev’:</p> <pre data-language="bash">ansible-playbook --vault-id dev@dev-password site.yml
+</pre> <p>To prompt for the ‘dev’ vault id:</p> <pre data-language="bash">ansible-playbook --vault-id dev@prompt site.yml
+</pre> <p><em>Prior to Ansible 2.4</em></p> <p>To be prompted for a vault password, use the <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-id"><code>--ask-vault-pass</code></a> cli option:</p> <pre data-language="bash">ansible-playbook --ask-vault-pass site.yml
+</pre> <p>To specify a vault password in a text file ‘dev-password’, use the <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-password-file"><code>--vault-password-file</code></a> option:</p> <pre data-language="bash">ansible-playbook --vault-password-file dev-password site.yml
+</pre> <p>There is a config option (<a class="reference internal" href="../../reference_appendices/config/#default-vault-password-file"><span class="std std-ref">DEFAULT_VAULT_PASSWORD_FILE</span></a>) to specify a vault password file to use without requiring the <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-password-file"><code>--vault-password-file</code></a> cli option.</p>  <h3 id="multiple-vault-passwords">Multiple vault passwords</h3> <p>Since Ansible 2.4 and later support using multiple vault passwords, <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-id"><code>--vault-id</code></a> can be provided multiple times.</p> <p>If multiple vault passwords are provided, by default Ansible will attempt to decrypt vault content by trying each vault secret in the order they were provided on the command line.</p> <p>For example, to use a ‘dev’ password read from a file and to be prompted for the ‘prod’ password:</p> <pre data-language="bash">ansible-playbook --vault-id dev@dev-password --vault-id prod@prompt site.yml
+</pre> <p>In the above case, the ‘dev’ password will be tried first, then the ‘prod’ password for cases where Ansible doesn’t know which vault id is used to encrypt something.</p> <p>If the vault content was encrypted using a <a class="reference internal" href="../../cli/ansible-vault/#cmdoption-ansible-vault-vault-id"><code>--vault-id</code></a> option, then the label of the vault id is stored with the vault content. When Ansible knows the right vault-id, it will try the matching vault id’s secret first before trying the rest of the vault-ids.</p> <p>There is a config option (<a class="reference internal" href="../../reference_appendices/config/#default-vault-id-match"><span class="std std-ref">DEFAULT_VAULT_ID_MATCH</span></a> ) to force the vault content’s vault id label to match with one of the provided vault ids. But the default is to try the matching id first, then try the other vault ids in order.</p> <p>There is also a config option (<a class="reference internal" href="../../reference_appendices/config/#default-vault-identity-list"><span class="std std-ref">DEFAULT_VAULT_IDENTITY_LIST</span></a>) to specify a default list of vault ids to use. For example, instead of requiring the cli option on every use, the (<a class="reference internal" href="../../reference_appendices/config/#default-vault-identity-list"><span class="std std-ref">DEFAULT_VAULT_IDENTITY_LIST</span></a>) config option can be used:</p> <pre data-language="bash">ansible-playbook --vault-id dev@dev-password --vault-id prod@prompt site.yml
+</pre> <p>The <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-id"><code>--vault-id</code></a> can be used in lieu of the <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-password-file"><code>--vault-password-file</code></a> or <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-ask-vault-pass"><code>--ask-vault-pass</code></a> options, or it can be used in combination with them.</p> <p>When using <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault"><span class="std std-ref">ansible-vault</span></a> commands that encrypt content (<a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-encrypt"><span class="std std-ref">ansible-vault encrypt</span></a>, <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-encrypt-string"><span class="std std-ref">ansible-vault encrypt_string</span></a>, etc) only one vault-id can be used.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Prior to Ansible 2.4, only one vault password could be used in each Ansible run. The <a class="reference internal" href="../../cli/ansible-playbook/#cmdoption-ansible-playbook-vault-id"><code>--vault-id</code></a> option is not support prior to Ansible 2.4.</p> </div>    <h2 id="speeding-up-vault">Speeding Up Vault Operations</h2> <p id="speeding-up-vault-operations">By default, Ansible uses PyCrypto to encrypt and decrypt vault files. If you have many encrypted files, decrypting them at startup may cause a perceptible delay. To speed this up, install the cryptography package:</p> <pre data-language="bash">pip install cryptography
+</pre>   <h2 id="id4">Vault Format</h2> <p id="vault-format">A vault encrypted file is a UTF-8 encoded txt file.</p> <p>The file format includes a newline terminated header.</p> <p>For example:</p> <pre data-language="YAML">$ANSIBLE_VAULT;1.1;AES256
+</pre> <p>The header contains the vault format id, the vault format version, and a cipher id, separated by semi-colons ‘;’</p> <p>The first field <code>$ANSIBLE_VAULT</code> is the format id. Currently <code>$ANSIBLE_VAULT</code> is the only valid file format id. This is used to identify files that are vault encrypted (via vault.is_encrypted_file()).</p> <p>The second field (<code>1.1</code>) is the vault format version. All supported versions of ansible will currently default to ‘1.1’.</p> <p>The ‘1.0’ format is supported for reading only (and will be converted automatically to the ‘1.1’ format on write). The format version is currently used as an exact string compare only (version numbers are not currently ‘compared’).</p> <p>The third field (<code>AES256</code>) identifies the cipher algorithm used to encrypt the data. Currently, the only supported cipher is ‘AES256’. [vault format 1.0 used ‘AES’, but current code always uses ‘AES256’]</p> <p>Note: In the future, the header could change. Anything after the vault id and version can be considered to depend on the vault format version. This includes the cipher id, and any additional fields that could be after that.</p> <p>The rest of the content of the file is the ‘vaulttext’. The vaulttext is a text armored version of the encrypted ciphertext. Each line will be 80 characters wide, except for the last line which may be shorter.</p>   <h2 id="vault-payload-format-1-1">Vault Payload Format 1.1</h2> <p>The vaulttext is a concatenation of the ciphertext and a SHA256 digest with the result ‘hexlifyied’.</p> <p>‘hexlify’ refers to the <code>hexlify()</code> method of the Python Standard Library’s <a class="reference external" href="https://docs.python.org/3/library/binascii.html" target="_blank">binascii</a> module.</p> <p>hexlify()’ed result of:</p> <ul class="simple"> <li>hexlify()’ed string of the salt, followed by a newline (<code>0x0a</code>)</li> <li>hexlify()’ed string of the crypted HMAC, followed by a newline. The HMAC is:<ul> <li>a <a class="reference external" href="https://www.ietf.org/rfc/rfc2104.txt" target="_blank">RFC2104</a> style HMAC<ul> <li>inputs are:<ul> <li>The AES256 encrypted ciphertext</li> <li>A PBKDF2 key. This key, the cipher key, and the cipher IV are generated from:<ul> <li>the salt, in bytes</li> <li>10000 iterations</li> <li>SHA256() algorithm</li> <li>the first 32 bytes are the cipher key</li> <li>the second 32 bytes are the HMAC key</li> <li>remaining 16 bytes are the cipher IV</li> </ul> </li> </ul> </li> </ul> </li> </ul> </li> <li>hexlify()’ed string of the ciphertext. The ciphertext is:</li> </ul>  <ul class="simple"> <li>AES256 encrypted data. The data is encrypted using:<ul> <li>AES-CTR stream cipher</li> <li>cipher key</li> <li>IV</li> <li>a 128 bit counter block seeded from an integer IV</li> <li>the plaintext<ul> <li>the original plaintext</li> <li>padding up to the AES256 blocksize. (The data used for padding is based on <a class="reference external" href="https://tools.ietf.org/html/rfc5652#section-6.3" target="_blank">RFC5652</a>)</li> </ul> </li> </ul> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/user_guide/vault.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/user_guide/vault.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

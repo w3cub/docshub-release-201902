@@ -1,0 +1,123 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Using Vault in Playbooks - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content="The “Vault” is a feature of Ansible that allows you to keep sensitive data such as passwords or keys in encrypted files, rather than as plaintext in &hellip;">
+  <meta name="keywords" content="using, vault, playbooks, -, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/playbooks_vault/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="playbooks-vault">Using Vault in playbooks</h1>   <ul id="using-vault-in-playbooks"> <li><a class="reference internal" href="#running-a-playbook-with-vault" id="id4">Running a Playbook With Vault</a></li> <li><a class="reference internal" href="#single-encrypted-variable" id="id5">Single Encrypted Variable</a></li> <li><a class="reference internal" href="#using-encrypt-string" id="id6">Using encrypt_string</a></li> </ul>
+  <p>The “Vault” is a feature of Ansible that allows you to keep sensitive data such as passwords or keys in encrypted files, rather than as plaintext in playbooks or roles. These vault files can then be distributed or placed in source control.</p> <p>To enable this feature, a command line tool, <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault"><span class="std std-ref">ansible-vault</span></a> is used to edit files, and a command line flag <a class="reference internal" href="../../cli/ansible-vault/#cmdoption-ansible-vault-ask-vault-pass"><code>--ask-vault-pass</code></a> or <a class="reference internal" href="../../cli/ansible-vault/#cmdoption-ansible-vault-vault-password-file"><code>--vault-password-file</code></a> is used. You can also modify your <code>ansible.cfg</code> file to specify the location of a password file or configure Ansible to always prompt for the password. These options require no command line flag usage.</p> <p>For best practices advice, refer to <a class="reference internal" href="../playbooks_best_practices/#best-practices-for-variables-and-vaults"><span class="std std-ref">Variables and Vaults</span></a>.</p>  <h2 id="id1">Running a Playbook With Vault</h2> <p id="running-a-playbook-with-vault">To run a playbook that contains vault-encrypted data files, you must pass one of two flags. To specify the vault-password interactively:</p> <pre data-language="YAML">ansible-playbook site.yml --ask-vault-pass
+</pre> <p>This prompt will then be used to decrypt (in memory only) any vault encrypted files that are accessed. Currently this requires that all files be encrypted with the same password.</p> <p>Alternatively, passwords can be specified with a file or a script (the script version will require Ansible 1.7 or later). When using this flag, ensure permissions on the file are such that no one else can access your key and do not add your key to source control:</p> <pre data-language="YAML">ansible-playbook site.yml --vault-password-file ~/.vault_pass.txt
+
+ansible-playbook site.yml --vault-password-file ~/.vault_pass.py
+</pre> <p>The password should be a string stored as a single line in the file.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">You can also set <a class="reference internal" href="../../reference_appendices/config/#envvar-ANSIBLE_VAULT_PASSWORD_FILE" id="index-0"><code>ANSIBLE_VAULT_PASSWORD_FILE</code></a> environment variable, e.g. <code>ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass.txt</code> and Ansible will automatically search for the password in that file.</p> </div> <p>If you are using a script instead of a flat file, ensure that it is marked as executable, and that the password is printed to standard output. If your script needs to prompt for data, prompts can be sent to standard error.</p> <p>This is something you may wish to do if using Ansible from a continuous integration system like Jenkins.</p> <p>The <a class="reference internal" href="../../cli/ansible-pull/#cmdoption-ansible-pull-vault-password-file"><code>--vault-password-file</code></a> option can also be used with the <a class="reference internal" href="../../cli/ansible-pull/#ansible-pull"><span class="std std-ref">ansible-pull</span></a> command if you wish, though this would require distributing the keys to your nodes, so understand the implications – vault is more intended for push mode.</p>   <h2 id="id2">Single Encrypted Variable</h2> <p id="single-encrypted-variable">As of version 2.3, Ansible can now use a vaulted variable that lives in an otherwise ‘clear text’ YAML file:</p> <pre data-language="YAML">notsecret: myvalue
+mysecret: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66386439653236336462626566653063336164663966303231363934653561363964363833313662
+          6431626536303530376336343832656537303632313433360a626438346336353331386135323734
+          62656361653630373231613662633962316233633936396165386439616533353965373339616234
+          3430613539666330390a313736323265656432366236633330313963326365653937323833366536
+          34623731376664623134383463316265643436343438623266623965636363326136
+other_plain_text: othervalue
+</pre> <p>To create a vaulted variable, use the <a class="reference internal" href="../../cli/ansible-vault/#ansible-vault-encrypt-string"><span class="std std-ref">ansible-vault encrypt_string</span></a> command. See <a class="reference internal" href="#encrypt-string"><span class="std std-ref">Using encrypt_string</span></a> for details.</p> <p>This vaulted variable will be decrypted with the supplied vault secret and used as a normal variable. The <code>ansible-vault</code> command line supports stdin and stdout for encrypting data on the fly, which can be used from your favorite editor to create these vaulted variables; you just have to be sure to add the <code>!vault</code> tag so both Ansible and YAML are aware of the need to decrypt. The <code>|</code> is also required, as vault encryption results in a multi-line string.</p>   <h2 id="encrypt-string">Using encrypt_string</h2> <p id="using-encrypt-string">This command will output a string in the above format ready to be included in a YAML file. The string to encrypt can be provided via stdin, command line arguments, or via an interactive prompt.</p> <p>See <a class="reference internal" href="../vault/#encrypt-string-for-use-in-yaml"><span class="std std-ref">Use encrypt_string to create encrypted variables to embed in yaml</span></a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/user_guide/playbooks_vault.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/user_guide/playbooks_vault.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

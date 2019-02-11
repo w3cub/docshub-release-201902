@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Gcp_healthcheck - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.4. ">
+  <meta name="keywords" content="gcp, healthcheck, -, create, update, or, destroy, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/gcp_healthcheck_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="gcp-healthcheck-module">gcp_healthcheck - Create, Update or Destroy a Healthcheck.</h1> <div class="versionadded" id="gcp-healthcheck-create-update-or-destroy-a-healthcheck"> <p><span class="versionmodified">New in version 2.4.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Create, Update or Destroy a Healthcheck. Currently only HTTP and HTTPS Healthchecks are supported. Healthchecks are used to monitor individual instances, managed instance groups and/or backend services. Healtchecks are reusable.</li> <li>Visit <a class="reference external" href="https://cloud.google.com/compute/docs/load-balancing/health-checks" target="_blank">https://cloud.google.com/compute/docs/load-balancing/health-checks</a> for an overview of Healthchecks on GCP.</li> <li>See <a class="reference external" href="https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks" target="_blank">https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks</a> for API details on HTTP Healthchecks.</li> <li>See <a class="reference external" href="https://cloud.google.com/compute/docs/reference/latest/httpsHealthChecks" target="_blank">https://cloud.google.com/compute/docs/reference/latest/httpsHealthChecks</a> for more details on the HTTPS Healtcheck API.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>google-api-python-client &gt;= 1.6.2</li> <li>google-auth &gt;= 0.9.0</li> <li>google-auth-httplib2 &gt;= 0.0.2</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>check_interval</b> </td> <td> <b>Default:</b><br><div style="color: blue">5</div> </td> <td> <div>How often (in seconds) to send a health check.</div> </td> </tr> <tr> <td colspan="1"> <b>credentials_file</b> </td> <td> </td> <td> <div>Path to the JSON file associated with the service account email</div> </td> </tr> <tr> <td colspan="1"> <b>healthcheck_name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Name of the Healthcheck.</div> </td> </tr> <tr> <td colspan="1"> <b>healthcheck_type</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li>HTTP</li> <li>HTTPS</li> </ul> </td> <td> <div>Type of Healthcheck.</div> </td> </tr> <tr> <td colspan="1"> <b>healthy_threshold</b> </td> <td> <b>Default:</b><br><div style="color: blue">2</div> </td> <td> <div>A so-far unhealthy instance will be marked healthy after this many consecutive successes.</div> </td> </tr> <tr> <td colspan="1"> <b>host_header</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <b>Default:</b><br> </td> <td> <div>The value of the host header in the health check request. If left empty, the public IP on behalf of which this health check is performed will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>port</b> </td> <td> </td> <td> <div>The TCP port number for the health check request. The default value is 443 for HTTPS and 80 for HTTP.</div> </td> </tr> <tr> <td colspan="1"> <b>project_id</b> </td> <td> </td> <td> <div>Your GCP project ID</div> </td> </tr> <tr> <td colspan="1"> <b>request_path</b> </td> <td> <b>Default:</b><br><div style="color: blue">/</div> </td> <td> <div>The request path of the HTTPS health check request.</div> </td> </tr> <tr> <td colspan="1"> <b>service_account_email</b> </td> <td> </td> <td> <div>service account email</div> </td> </tr> <tr> <td colspan="1"> <b>service_account_permissions</b> <br><div style="font-size: small; color: darkgreen">(added in 2.0)</div> </td> <td> <ul>
+<b>Choices:</b> <li>bigquery</li> <li>cloud-platform</li> <li>compute-ro</li> <li>compute-rw</li> <li>useraccounts-ro</li> <li>useraccounts-rw</li> <li>datastore</li> <li>logging-write</li> <li>monitoring</li> <li>sql-admin</li> <li>storage-full</li> <li>storage-ro</li> <li>storage-rw</li> <li>taskqueue</li> <li>userinfo-email</li> </ul> </td> <td> <div>service account permissions (see <a href="https://cloud.google.com/sdk/gcloud/reference/compute/instances/create" target="_blank">https://cloud.google.com/sdk/gcloud/reference/compute/instances/create</a>, --scopes section for detailed information)</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li>present</li> <li>absent</li> </ul> </td> <td> <div>State of the Healthcheck.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">5</div> </td> <td> <div>How long (in seconds) to wait for a response before claiming failure. It is invalid for timeout to have a greater value than check_interval.</div> </td> </tr> <tr> <td colspan="1"> <b>unhealthy_threshold</b> </td> <td> <b>Default:</b><br><div style="color: blue">2</div> </td> <td> <div>A so-far healthy instance will be marked unhealthy after this many consecutive failures.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>Only supports HTTP and HTTPS Healthchecks currently.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Create Minimum HealthCheck
+  gcp_healthcheck:
+    service_account_email: "{{ service_account_email }}"
+    credentials_file: "{{ credentials_file }}"
+    project_id: "{{ project_id }}"
+    healthcheck_name: my-healthcheck
+    healthcheck_type: HTTP
+    state: present
+- name: Create HTTP HealthCheck
+  gcp_healthcheck:
+    service_account_email: "{{ service_account_email }}"
+    credentials_file: "{{ credentials_file }}"
+    project_id: "{{ project_id }}"
+    healthcheck_name: my-healthcheck
+    healthcheck_type: HTTP
+    host: my-host
+    request_path: /hc
+    check_interval: 10
+    timeout: 30
+    unhealthy_threshhold: 2
+    healthy_threshhold: 1
+    state: present
+- name: Create HTTPS HealthCheck
+  gcp_healthcheck:
+    service_account_email: "{{ service_account_email }}"
+    credentials_file: "{{ credentials_file }}"
+    project_id: "{{ project_id }}"
+    healthcheck_name: "{{ https_healthcheck }}"
+    healthcheck_type: HTTPS
+    host_header: my-host
+    request_path: /hc
+    check_interval: 5
+    timeout: 5
+    unhealthy_threshold: 2
+    healthy_threshold: 1
+    state: present
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>healthcheck</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>Always. Refer to GCP documentation for detailed field descriptions.</td> <td> <div>GCP Healthcheck dictionary</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{'port': 443, 'requestPath': '/foo', 'name': 'my-hc'}</div> </td> </tr> <tr> <td colspan="1"> <b>healthcheck_name</b> <br><div style="font-size: small; color: red">str</div> </td> <td>Always</td> <td> <div>Name of the Healthcheck</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">my-url-map</div> </td> </tr> <tr> <td colspan="1"> <b>healthcheck_type</b> <br><div style="font-size: small; color: red">str</div> </td> <td>Always</td> <td> <div>Type of the Healthcheck</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">HTTP</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> <br><div style="font-size: small; color: red">str</div> </td> <td>Always.</td> <td> <div>state of the Healthcheck</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">present</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Tom Melendez (@supertom) &lt;<a class="reference external" href="https://docs.ansible.com/cdn-cgi/l/email-protection#25514a48030616121e030610171e0306111d1e5650554057514a48030611131e464a48" target="_blank">tom<span>@</span>supertom<span>.</span>com</a>&gt;</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/google/gcp_healthcheck.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/gcp_healthcheck_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/gcp_healthcheck_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,188 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dnf - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 1.9. ">
+  <meta name="keywords" content="dnf, -, manages, packages, with, package, manager, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/dnf_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="dnf-module">dnf - Manages packages with the dnf package manager</h1> <div class="versionadded" id="dnf-manages-packages-with-the-dnf-package-manager"> <p><span class="versionmodified">New in version 1.9.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#status" id="id6">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id7">Maintenance</a><ul> <li><a class="reference internal" href="#support" id="id8">Support</a></li> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Installs, upgrade, removes, and lists packages and groups with the <em>dnf</em> package manager.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>python-dnf</li> <li>for the autoremove option you need dnf &gt;= 2.0.1”</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>allow_downgrade</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Specify if the named package and version is allowed to downgrade a maybe already installed higher version of that package. Note that setting allow_downgrade=True can make this module behave in a non-idempotent way. The task could end up with a set of packages that does not match the complete list of specified packages to install (because dependencies between the downgraded package and others can cause changes to the packages which were in the earlier transaction).</div> </td> </tr> <tr> <td colspan="1"> <b>autoremove</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If <code>yes</code>, removes all "leaf" packages from the system that were originally installed as dependencies of user-installed packages but which are no longer required by any such package. Should be used alone or when state is <em>absent</em>
+</div> </td> </tr> <tr> <td colspan="1"> <b>bugfix</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If set to <code>yes</code>, and <code>state=latest</code> then only installs updates that have been marked bugfix related.</div> </td> </tr> <tr> <td colspan="1"> <b>conf_file</b> </td> <td> </td> <td> <div>The remote dnf configuration file to use for the transaction.</div> </td> </tr> <tr> <td colspan="1"> <b>disable_excludes</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Disable the excludes defined in DNF config files.</div> <div>If set to <code>all</code>, disables all excludes.</div> <div>If set to <code>main</code>, disable excludes defined in [main] in yum.conf.</div> <div>If set to <code>repoid</code>, disable excludes defined for given repo id.</div> </td> </tr> <tr> <td colspan="1"> <b>disable_gpg_check</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Whether to disable the GPG checking of signatures of packages being installed. Has an effect only if state is <em>present</em> or <em>latest</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>disable_plugin</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>
+<em>Plugin</em> name to disable for the install/update operation. The disabled plugins will not persist beyond the transaction.</div> </td> </tr> <tr> <td colspan="1"> <b>disablerepo</b> </td> <td> </td> <td> <div>
+<em>Repoid</em> of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ",".</div> </td> </tr> <tr> <td colspan="1"> <b>download_only</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Only download the packages, do not install them.</div> </td> </tr> <tr> <td colspan="1"> <b>enable_plugin</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>
+<em>Plugin</em> name to enable for the install/update operation. The enabled plugin will not persist beyond the transaction.</div> </td> </tr> <tr> <td colspan="1"> <b>enablerepo</b> </td> <td> </td> <td> <div>
+<em>Repoid</em> of repositories to enable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ",".</div> </td> </tr> <tr> <td colspan="1"> <b>exclude</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Package name(s) to exclude when state=present, or latest. This can be a list or a comma separated string.</div> </td> </tr> <tr> <td colspan="1"> <b>install_repoquery</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>This is effectively a no-op in DNF as it is not needed with DNF, but is an accepted parameter for feature parity/compatibility with the <em>yum</em> module.</div> </td> </tr> <tr> <td colspan="1"> <b>installroot</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <b>Default:</b><br><div style="color: blue">/</div> </td> <td> <div>Specifies an alternative installroot, relative to which all packages will be installed.</div> </td> </tr> <tr> <td colspan="1"> <b>list</b> </td> <td> </td> <td> <div>Various (non-idempotent) commands for usage with <code>/usr/bin/ansible</code> and <em>not</em> playbooks. See examples.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>A package name or package specifier with version, like <code>name-1.0</code>. When using state=latest, this can be '*' which means run: dnf -y update. You can also pass a url or a local path to a rpm file. To operate on several packages this can accept a comma separated string of packages or a list of packages.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: pkg</div> </td> </tr> <tr> <td colspan="1"> <b>releasever</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>Specifies an alternative release from which all packages will be installed.</div> </td> </tr> <tr> <td colspan="1"> <b>security</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If set to <code>yes</code>, and <code>state=latest</code> then only installs updates that have been marked security related.</div> </td> </tr> <tr> <td colspan="1"> <b>skip_broken</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Skip packages with broken dependencies(devsolve) and are causing problems.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li>absent</li> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>installed</li> <li>removed</li> <li>latest</li> </ul> </td> <td> <div>Whether to install (<code>present</code>, <code>latest</code>), or remove (<code>absent</code>) a package.</div> </td> </tr> <tr> <td colspan="1"> <b>update_cache</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Force yum to check if cache is out of date and redownload if needed. Has an effect only if state is <em>present</em> or <em>latest</em>.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: expire-cache</div> </td> </tr> <tr> <td colspan="1"> <b>update_only</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>When using latest, only update installed packages. Do not install packages.</div> <div>Has an effect only if state is <em>latest</em>
+</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>This only applies if using a https url as the source of the rpm. e.g. for localinstall. If set to <code>no</code>, the SSL certificates will not be validated.</div> <div>This should only set to <code>no</code> used on personally controlled sites using self-signed certificates as it avoids verifying the source site.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>When used with a <code>loop:</code> each package will be processed individually, it is much more efficient to pass the list directly to the <code>name</code> option.</li> <li>Group removal doesn’t work if the group was installed with Ansible because upstream dnf’s API doesn’t properly mark groups as installed, therefore upon removal the module is unable to detect that the group is installed (<a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=1620324" target="_blank">https://bugzilla.redhat.com/show_bug.cgi?id=1620324</a>)</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: install the latest version of Apache
+  dnf:
+    name: httpd
+    state: latest
+
+- name: remove the Apache package
+  dnf:
+    name: httpd
+    state: absent
+
+- name: install the latest version of Apache from the testing repo
+  dnf:
+    name: httpd
+    enablerepo: testing
+    state: present
+
+- name: upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
+
+- name: install the nginx rpm from a remote repo
+  dnf:
+    name: 'http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm'
+    state: present
+
+- name: install nginx rpm from a local file
+  dnf:
+    name: /usr/local/src/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    state: present
+
+- name: install the 'Development tools' package group
+  dnf:
+    name: '@Development tools'
+    state: present
+
+- name: Autoremove unneeded packages installed as dependencies
+  dnf:
+    autoremove: yes
+
+- name: Uninstall httpd but keep its dependencies
+  dnf:
+    name: httpd
+    state: absent
+    autoremove: no
+</pre>   <h2 id="status">Status</h2> <p>This module is flagged as <strong>stableinterface</strong> which means that the maintainers for this module guarantee that no backward incompatible interface changes will be made.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>core</strong> which means that it is maintained by the Ansible Core Team. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Core Team, see <a class="reference internal" href="../core_maintained/#core-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="support">Support</h3> <p>For more information about Red Hat’s support of this module, please refer to this <a class="reference external" href="https://access.redhat.com/articles/rhel-top-support-policies/" target="_blank">Knowledge Base article</a></p>   <h3 id="author">Author</h3> <ul class="simple"> <li>Igor Gnatenko (@ignatenkobrain) &lt;<a class="reference external" href="https://docs.ansible.com/cdn-cgi/l/email-protection#5b327d786f6d603c353a2f3e3530347d786f6d6039293a32357d78686c607d786e69607d786f63603c363a32377d786f6d60383436" target="_blank">i<span>.</span>gnatenko<span>.</span>brain<span>@</span>gmail<span>.</span>com</a>&gt;</li> <li>Cristian van Ee (@DJMuggs) &lt;cristian at cvee.org&gt;</li> <li>Berend De Schouwer (@berenddeschouwer)</li> <li>Adam Miller (@maxamillion) &lt;<a class="reference external" href="https://docs.ansible.com/cdn-cgi/l/email-protection#0e6f6a636762626b7c282d3d3935282d3b3c35282d3a36357c6b6a666f7a282d3a38356d6163" target="_blank">admiller<span>@</span>redhat<span>.</span>com</a>&gt;</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/packaging/os/dnf.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/dnf_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/dnf_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

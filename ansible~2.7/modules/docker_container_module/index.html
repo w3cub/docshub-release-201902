@@ -1,0 +1,321 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Docker_container - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.1. ">
+  <meta name="keywords" content="docker, container, -, manage, containers, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/docker_container_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="docker-container-module">docker_container - manage docker containers</h1> <div class="versionadded" id="docker-container-manage-docker-containers"> <p><span class="versionmodified">New in version 2.1.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Manage the life cycle of docker containers.</li> <li>Supports check mode. Run with –check and –diff to view config difference and list of actions to be taken.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>docker-py &gt;= 1.7.0</li> <li>Please note that the <a class="reference external" href="https://pypi.org/project/docker-py/" target="_blank">docker-py</a> Python module has been superseded by <a class="reference external" href="https://pypi.org/project/docker/" target="_blank">docker</a> (see <a class="reference external" href="https://github.com/docker/docker-py/issues/1310" target="_blank">here</a> for details). For Python 2.6, <code>docker-py</code> must be used. Otherwise, it is recommended to install the <code>docker</code> Python module. Note that both modules should <em>not</em> be installed at the same time. Also note that when both modules are installed and one of them is uninstalled, the other might no longer function and a reinstall of it is required.</li> <li>Docker API &gt;= 1.20</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>api_version</b> </td> <td> <b>Default:</b><br><div style="color: blue">auto</div> </td> <td> <div>The version of the Docker API running on the Docker Host. Defaults to the latest version of the API supported by docker-py.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_API_VERSION</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_api_version</div> </td> </tr> <tr> <td colspan="1"> <b>auto_remove</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>enable auto-removal of the container on daemon side when the container's process exits</div> </td> </tr> <tr> <td colspan="1"> <b>blkio_weight</b> </td> <td> </td> <td> <div>Block IO (relative weight), between 10 and 1000.</div> </td> </tr> <tr> <td colspan="1"> <b>cacert_path</b> </td> <td> </td> <td> <div>Use a CA certificate when performing server verification by providing the path to a CA certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>ca.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_ca_cert</div> </td> </tr> <tr> <td colspan="1"> <b>cap_drop</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>List of capabilities to drop from the container.</div> </td> </tr> <tr> <td colspan="1"> <b>capabilities</b> </td> <td> </td> <td> <div>List of capabilities to add to the container.</div> </td> </tr> <tr> <td colspan="1"> <b>cert_path</b> </td> <td> </td> <td> <div>Path to the client's TLS certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>cert.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_cert</div> </td> </tr> <tr> <td colspan="1"> <b>cleanup</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with <em>detach=false</em> to remove the container after successful execution.</div> </td> </tr> <tr> <td colspan="1"> <b>command</b> </td> <td> </td> <td> <div>Command to execute when the container starts. A command may be either a string or a list. Prior to version 2.4, strings were split on commas.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_period</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Limit CPU CFS (Completely Fair Scheduler) period</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_quota</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Limit CPU CFS (Completely Fair Scheduler) quota</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_shares</b> </td> <td> </td> <td> <div>CPU shares (relative weight).</div> </td> </tr> <tr> <td colspan="1"> <b>cpuset_cpus</b> </td> <td> </td> <td> <div>CPUs in which to allow execution <code>1,3</code> or <code>1-3</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>cpuset_mems</b> </td> <td> </td> <td> <div>Memory nodes (MEMs) in which to allow execution <code>0-3</code> or <code>0,1</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>debug</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Debug mode</div> </td> </tr> <tr> <td colspan="1"> <b>detach</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>Enable detached mode to leave the container running in background. If disabled, the task will reflect the status of the container run (failed if the command failed).</div> </td> </tr> <tr> <td colspan="1"> <b>devices</b> </td> <td> </td> <td> <div>List of host device bindings to add to the container. Each binding is a mapping expressed in the format: &lt;path_on_host&gt;:&lt;path_in_container&gt;:&lt;cgroup_permissions&gt;</div> </td> </tr> <tr> <td colspan="1"> <b>dns_opts</b> </td> <td> </td> <td> <div>list of DNS options</div> </td> </tr> <tr> <td colspan="1"> <b>dns_search_domains</b> </td> <td> </td> <td> <div>List of custom DNS search domains.</div> </td> </tr> <tr> <td colspan="1"> <b>dns_servers</b> </td> <td> </td> <td> <div>List of custom DNS servers.</div> </td> </tr> <tr> <td colspan="1"> <b>docker_host</b> </td> <td> <b>Default:</b><br><div style="color: blue">unix://var/run/docker.sock</div> </td> <td> <div>The URL or Unix socket path used to connect to the Docker API. To connect to a remote host, provide the TCP connection string. For example, 'tcp://192.0.2.23:2376'. If TLS is used to encrypt the connection, the module will automatically replace 'tcp' in the connection URL with 'https'.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_HOST</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_url</div> </td> </tr> <tr> <td colspan="1"> <b>domainname</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Container domainname.</div> </td> </tr> <tr> <td colspan="1"> <b>entrypoint</b> </td> <td> </td> <td> <div>Command that overwrites the default ENTRYPOINT of the image.</div> </td> </tr> <tr> <td colspan="1"> <b>env</b> </td> <td> </td> <td> <div>Dictionary of key,value pairs.</div> </td> </tr> <tr> <td colspan="1"> <b>env_file</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>Path to a file, present on the target, containing environment variables <em>FOO=BAR</em>.</div> <div>If variable also present in <code>env</code>, then <code>env</code> value will override.</div> </td> </tr> <tr> <td colspan="1"> <b>etc_hosts</b> </td> <td> </td> <td> <div>Dict of host-to-IP mappings, where each host name is a key in the dictionary. Each host name will be added to the container's /etc/hosts file.</div> </td> </tr> <tr> <td colspan="1"> <b>exposed_ports</b> </td> <td> </td> <td> <div>List of additional container ports which informs Docker that the container listens on the specified network ports at runtime. If the port is already exposed using EXPOSE in a Dockerfile, it does not need to be exposed again.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: exposed, expose</div> </td> </tr> <tr> <td colspan="1"> <b>force_kill</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use the kill command when stopping a running container.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: forcekill</div> </td> </tr> <tr> <td colspan="1"> <b>groups</b> </td> <td> </td> <td> <div>List of additional group names and/or IDs that the container process will run as.</div> </td> </tr> <tr> <td colspan="1"> <b>hostname</b> </td> <td> </td> <td> <div>Container hostname.</div> </td> </tr> <tr> <td colspan="1"> <b>ignore_image</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>When <code>state</code> is <em>present</em> or <em>started</em> the module compares the configuration of an existing container to requested configuration. The evaluation includes the image version. If the image version in the registry does not match the container, the container will be recreated. Stop this behavior by setting <code>ignore_image</code> to <em>True</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>image</b> </td> <td> </td> <td> <div>Repository path and tag used to create the container. If an image is not found or pull is true, the image will be pulled from the registry. If no tag is included, 'latest' will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>init</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Run an init inside the container that forwards signals and reaps processes. This option requires Docker API 1.25+.</div> </td> </tr> <tr> <td colspan="1"> <b>interactive</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Keep stdin open after a container is launched, even if not attached.</div> </td> </tr> <tr> <td colspan="1"> <b>ipc_mode</b> </td> <td> </td> <td> <div>Set the IPC mode for the container. Can be one of 'container:&lt;name|id&gt;' to reuse another container's IPC namespace or 'host' to use the host's IPC namespace within the container.</div> </td> </tr> <tr> <td colspan="1"> <b>keep_volumes</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>Retain volumes associated with a removed container.</div> </td> </tr> <tr> <td colspan="1"> <b>kernel_memory</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Kernel memory limit (format: <code>&lt;number&gt;[&lt;unit&gt;]</code>). Number is a positive integer. Unit can be <code>B</code> (byte), <code>K</code> (kibibyte, 1024B), <code>M</code> (mebibyte), <code>G</code> (gibibyte), <code>T</code> (tebibyte), or <code>P</code> (pebibyte). Minimum is <code>4M</code>.</div> <div>Omitting the unit defaults to bytes.</div> </td> </tr> <tr> <td colspan="1"> <b>key_path</b> </td> <td> </td> <td> <div>Path to the client's TLS key file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>key.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_key</div> </td> </tr> <tr> <td colspan="1"> <b>kill_signal</b> </td> <td> </td> <td> <div>Override default signal used to kill a running container.</div> </td> </tr> <tr> <td colspan="1"> <b>labels</b> </td> <td> </td> <td> <div>Dictionary of key value pairs.</div> </td> </tr> <tr> <td colspan="1"> <b>links</b> </td> <td> </td> <td> <div>List of name aliases for linked containers in the format <code>container_name:alias</code>.</div> <div>Setting this will force container to be restarted.</div> </td> </tr> <tr> <td colspan="1"> <b>log_driver</b> </td> <td> </td> <td> <div>Specify the logging driver. Docker uses <em>json-file</em> by default.</div> <div>See <a href="https://docs.docker.com/config/containers/logging/configure/" target="_blank">here</a> for possible choices.</div> </td> </tr> <tr> <td colspan="1"> <b>log_options</b> </td> <td> </td> <td> <div>Dictionary of options specific to the chosen log_driver. See https://docs.docker.com/engine/admin/logging/overview/ for details.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: log_opt</div> </td> </tr> <tr> <td colspan="1"> <b>mac_address</b> </td> <td> </td> <td> <div>Container MAC address (e.g. 92:d0:c6:0a:29:33)</div> </td> </tr> <tr> <td colspan="1"> <b>memory</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Memory limit (format: <code>&lt;number&gt;[&lt;unit&gt;]</code>). Number is a positive integer. Unit can be <code>B</code> (byte), <code>K</code> (kibibyte, 1024B), <code>M</code> (mebibyte), <code>G</code> (gibibyte), <code>T</code> (tebibyte), or <code>P</code> (pebibyte).</div> <div>Omitting the unit defaults to bytes.</div> </td> </tr> <tr> <td colspan="1"> <b>memory_reservation</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Memory soft limit (format: <code>&lt;number&gt;[&lt;unit&gt;]</code>). Number is a positive integer. Unit can be <code>B</code> (byte), <code>K</code> (kibibyte, 1024B), <code>M</code> (mebibyte), <code>G</code> (gibibyte), <code>T</code> (tebibyte), or <code>P</code> (pebibyte).</div> <div>Omitting the unit defaults to bytes.</div> </td> </tr> <tr> <td colspan="1"> <b>memory_swap</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Total memory limit (memory + swap, format: <code>&lt;number&gt;[&lt;unit&gt;]</code>). Number is a positive integer. Unit can be <code>B</code> (byte), <code>K</code> (kibibyte, 1024B), <code>M</code> (mebibyte), <code>G</code> (gibibyte), <code>T</code> (tebibyte), or <code>P</code> (pebibyte).</div> <div>Omitting the unit defaults to bytes.</div> </td> </tr> <tr> <td colspan="1"> <b>memory_swappiness</b> </td> <td> </td> <td> <div>Tune a container's memory swappiness behavior. Accepts an integer between 0 and 100.</div> <div>If not set, the value will be remain the same if container exists and will be inherited from the host machine if it is (re-)created.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Assign a name to a new container or match an existing container.</div> <div>When identifying an existing container name may be a name or a long or short container ID.</div> </td> </tr> <tr> <td colspan="1"> <b>network_mode</b> </td> <td> </td> <td> <div>Connect the container to a network. Choices are "bridge", "host", "none" or "container:&lt;name|id&gt;"</div> </td> </tr> <tr> <td colspan="1"> <b>networks</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>List of networks the container belongs to.</div> <div>Each network is a dict with keys <code>name</code>, <code>ipv4_address</code>, <code>ipv6_address</code>, <code>links</code>, <code>aliases</code>.</div> <div>For each network <code>name</code> is required, all other keys are optional.</div> <div>If included, <code>links</code> or <code>aliases</code> are lists.</div> <div>For examples of the data structure and usage see EXAMPLES below.</div> <div>To remove a container from one or more networks, use the <code>purge_networks</code> option.</div> <div>Note that as opposed to <code>docker run ...</code>, <span class="module">docker_container</span> does not remove the default network if <code>networks</code> is specified. You need to explicity use <code>purge_networks</code> to enforce the removal of the default network (and all other networks not explicitly mentioned in <code>networks</code>).</div> </td> </tr> <tr> <td colspan="1"> <b>oom_killer</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Whether or not to disable OOM Killer for the container.</div> </td> </tr> <tr> <td colspan="1"> <b>oom_score_adj</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>An integer value containing the score given to the container in order to tune OOM killer preferences.</div> </td> </tr> <tr> <td colspan="1"> <b>output_logs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If set to true, output of the container command will be printed (only effective when log_driver is set to json-file or journald.</div> </td> </tr> <tr> <td colspan="1"> <b>paused</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with the started state to pause running processes inside the container.</div> </td> </tr> <tr> <td colspan="1"> <b>pid_mode</b> </td> <td> </td> <td> <div>Set the PID namespace mode for the container. Currently only supports 'host'.</div> </td> </tr> <tr> <td colspan="1"> <b>privileged</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Give extended privileges to the container.</div> </td> </tr> <tr> <td colspan="1"> <b>published_ports</b> </td> <td> </td> <td> <div>List of ports to publish from the container to the host.</div> <div>Use docker CLI syntax: <code>8000</code>, <code>9000:8000</code>, or <code>0.0.0.0:9000:8000</code>, where 8000 is a container port, 9000 is a host port, and 0.0.0.0 is a host interface.</div> <div>Container ports must be exposed either in the Dockerfile or via the <code>expose</code> option.</div> <div>A value of <code>all</code> will publish all exposed container ports to random host ports, ignoring any other mappings.</div> <div>If <code>networks</code> parameter is provided, will inspect each network to see if there exists a bridge network with optional parameter com.docker.network.bridge.host_binding_ipv4. If such a network is found, then published ports where no host IP address is specified will be bound to the host IP pointed to by com.docker.network.bridge.host_binding_ipv4. Note that the first bridge network with a com.docker.network.bridge.host_binding_ipv4 value encountered in the list of <code>networks</code> is the one that will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ports</div> </td> </tr> <tr> <td colspan="1"> <b>pull</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If true, always pull the latest version of an image. Otherwise, will only pull an image when missing.</div> </td> </tr> <tr> <td colspan="1"> <b>purge_networks</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Remove the container from ALL networks not included in <code>networks</code> parameter.</div> <div>Any default networks such as <em>bridge</em>, if not found in <code>networks</code>, will be removed as well.</div> </td> </tr> <tr> <td colspan="1"> <b>read_only</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Mount the container's root file system as read-only.</div> </td> </tr> <tr> <td colspan="1"> <b>recreate</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with present and started states to force the re-creation of an existing container.</div> </td> </tr> <tr> <td colspan="1"> <b>restart</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with started state to force a matching container to be stopped and restarted.</div> </td> </tr> <tr> <td colspan="1"> <b>restart_policy</b> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>on-failure</li> <li>always</li> <li>unless-stopped</li> </ul> </td> <td> <div>Container restart policy. Place quotes around <em>no</em> option.</div> </td> </tr> <tr> <td colspan="1"> <b>restart_retries</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Use with restart policy to control maximum number of restart attempts.</div> </td> </tr> <tr> <td colspan="1"> <b>security_opts</b> </td> <td> </td> <td> <div>List of security options in the form of <code>"label:user:User"</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>shm_size</b> </td> <td> </td> <td> <div>Size of <code>/dev/shm</code> (format: <code>&lt;number&gt;[&lt;unit&gt;]</code>). Number is positive integer. Unit can be <code>B</code> (byte), <code>K</code> (kibibyte, 1024B), <code>M</code> (mebibyte), <code>G</code> (gibibyte), <code>T</code> (tebibyte), or <code>P</code> (pebibyte).</div> <div>Omitting the unit defaults to bytes. If you omit the size entirely, the system uses <code>64M</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>ssl_version</b> </td> <td> </td> <td> <div>Provide a valid SSL version number. Default value determined by ssl.py module.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_SSL_VERSION</code> will be used instead.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li>absent</li> <li>present</li> <li>stopped</li> <li><div style="color: blue">
+<b>started</b> ←</div></li> </ul> </td> <td> <div>
+<em>absent</em> - A container matching the specified name will be stopped and removed. Use force_kill to kill the container rather than stopping it. Use keep_volumes to retain volumes associated with the removed container.</div> <div>
+<em>present</em> - Asserts the existence of a container matching the name and any provided configuration parameters. If no container matches the name, a container will be created. If a container matches the name but the provided configuration does not match, the container will be updated, if it can be. If it cannot be updated, it will be removed and re-created with the requested config. Image version will be taken into account when comparing configuration. To ignore image version use the ignore_image option. Use the recreate option to force the re-creation of the matching container. Use force_kill to kill the container rather than stopping it. Use keep_volumes to retain volumes associated with a removed container.</div> <div>
+<em>started</em> - Asserts there is a running container matching the name and any provided configuration. If no container matches the name, a container will be created and started. If a container matching the name is found but the configuration does not match, the container will be updated, if it can be. If it cannot be updated, it will be removed and a new container will be created with the requested configuration and started. Image version will be taken into account when comparing configuration. To ignore image version use the ignore_image option. Use recreate to always re-create a matching container, even if it is running. Use restart to force a matching container to be stopped and restarted. Use force_kill to kill a container rather than stopping it. Use keep_volumes to retain volumes associated with a removed container.</div> <div>
+<em>stopped</em> - Asserts that the container is first <em>present</em>, and then if the container is running moves it to a stopped state. Use force_kill to kill a container rather than stopping it.</div> </td> </tr> <tr> <td colspan="1"> <b>stop_signal</b> </td> <td> </td> <td> <div>Override default signal used to stop the container.</div> </td> </tr> <tr> <td colspan="1"> <b>stop_timeout</b> </td> <td> </td> <td> <div>Number of seconds to wait for the container to stop before sending SIGKILL.</div> </td> </tr> <tr> <td colspan="1"> <b>sysctls</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>Dictionary of key,value pairs.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">60</div> </td> <td> <div>The maximum amount of time in seconds to wait on a response from the API.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TIMEOUT</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS without verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_hostname</b> </td> <td> <b>Default:</b><br><div style="color: blue">localhost</div> </td> <td> <div>When verifying the authenticity of the Docker Host server, provide the expected name of the server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_HOSTNAME</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_verify</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS and verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_VERIFY</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tmpfs</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>Mount a tmpfs directory</div> </td> </tr> <tr> <td colspan="1"> <b>trust_image_content</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If <code>yes</code>, skip image verification.</div> </td> </tr> <tr> <td colspan="1"> <b>tty</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Allocate a pseudo-TTY.</div> </td> </tr> <tr> <td colspan="1"> <b>ulimits</b> </td> <td> </td> <td> <div>List of ulimit options. A ulimit is specified as <code>nofile:262144:262144</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>user</b> </td> <td> </td> <td> <div>Sets the username or UID used and optionally the groupname or GID for the specified command.</div> <div>Can be [ user | user:group | uid | uid:gid | user:gid | uid:group ]</div> </td> </tr> <tr> <td colspan="1"> <b>userns_mode</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>User namespace to use</div> </td> </tr> <tr> <td colspan="1"> <b>uts</b> </td> <td> </td> <td> <div>Set the UTS namespace mode for the container.</div> </td> </tr> <tr> <td colspan="1"> <b>volume_driver</b> </td> <td> </td> <td> <div>The container volume driver.</div> </td> </tr> <tr> <td colspan="1"> <b>volumes</b> </td> <td> </td> <td> <div>List of volumes to mount within the container.</div> <div>Use docker CLI-style syntax: <code>/host:/container[:mode]</code>
+</div> <div>You can specify a read mode for the mount with either <code>ro</code> or <code>rw</code>.</div> <div>SELinux hosts can additionally use <code>z</code> or <code>Z</code> to use a shared or private label for the volume.</div> </td> </tr> <tr> <td colspan="1"> <b>volumes_from</b> </td> <td> </td> <td> <div>List of container names or Ids to get volumes from.</div> </td> </tr> <tr> <td colspan="1"> <b>working_dir</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>Path to the working directory.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>Connect to the Docker daemon by providing parameters with each task or by defining environment variables. You can define DOCKER_HOST, DOCKER_TLS_HOSTNAME, DOCKER_API_VERSION, DOCKER_CERT_PATH, DOCKER_SSL_VERSION, DOCKER_TLS, DOCKER_TLS_VERIFY and DOCKER_TIMEOUT. If you are using docker machine, run the script shipped with the product that sets up the environment. It will set these variables for you. See <a class="reference external" href="https://docker-py.readthedocs.io/en/stable/machine/" target="_blank">https://docker-py.readthedocs.io/en/stable/machine/</a> for more details.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Create a data container
+  docker_container:
+    name: mydata
+    image: busybox
+    volumes:
+      - /data
+
+- name: Re-create a redis container
+  docker_container:
+    name: myredis
+    image: redis
+    command: redis-server --appendonly yes
+    state: present
+    recreate: yes
+    exposed_ports:
+      - 6379
+    volumes_from:
+      - mydata
+
+- name: Restart a container
+  docker_container:
+    name: myapplication
+    image: someuser/appimage
+    state: started
+    restart: yes
+    links:
+     - "myredis:aliasedredis"
+    devices:
+     - "/dev/sda:/dev/xvda:rwm"
+    ports:
+     - "8080:9000"
+     - "127.0.0.1:8081:9001/udp"
+    env:
+        SECRET_KEY: ssssh
+
+- name: Container present
+  docker_container:
+    name: mycontainer
+    state: present
+    image: ubuntu:14.04
+    command: sleep infinity
+
+- name: Stop a container
+  docker_container:
+    name: mycontainer
+    state: stopped
+
+- name: Start 4 load-balanced containers
+  docker_container:
+    name: "container{{ item }}"
+    recreate: yes
+    image: someuser/anotherappimage
+    command: sleep 1d
+  with_sequence: count=4
+
+- name: remove container
+  docker_container:
+    name: ohno
+    state: absent
+
+- name: Syslogging output
+  docker_container:
+    name: myservice
+    image: busybox
+    log_driver: syslog
+    log_options:
+      syslog-address: tcp://my-syslog-server:514
+      syslog-facility: daemon
+      # NOTE: in Docker 1.13+ the "syslog-tag" option was renamed to "tag" for
+      # older docker installs, use "syslog-tag" instead
+      tag: myservice
+
+- name: Create db container and connect to network
+  docker_container:
+    name: db_test
+    image: "postgres:latest"
+    networks:
+      - name: "{{ docker_network_name }}"
+
+- name: Start container, connect to network and link
+  docker_container:
+    name: sleeper
+    image: ubuntu:14.04
+    networks:
+      - name: TestingNet
+        ipv4_address: "172.1.1.100"
+        aliases:
+          - sleepyzz
+        links:
+          - db_test:db
+      - name: TestingNet2
+
+- name: Start a container with a command
+  docker_container:
+    name: sleepy
+    image: ubuntu:14.04
+    command: ["sleep", "infinity"]
+
+- name: Add container to networks
+  docker_container:
+    name: sleepy
+    networks:
+      - name: TestingNet
+        ipv4_address: 172.1.1.18
+        links:
+          - sleeper
+      - name: TestingNet2
+        ipv4_address: 172.1.10.20
+
+- name: Update network with aliases
+  docker_container:
+    name: sleepy
+    networks:
+      - name: TestingNet
+        aliases:
+          - sleepyz
+          - zzzz
+
+- name: Remove container from one network
+  docker_container:
+    name: sleepy
+    networks:
+      - name: TestingNet2
+    purge_networks: yes
+
+- name: Remove container from all networks
+  docker_container:
+    name: sleepy
+    purge_networks: yes
+
+- name: Start a container and use an env file
+  docker_container:
+    name: agent
+    image: jenkinsci/ssh-slave
+    env_file: /var/tmp/jenkins/agent.env
+
+- name: Create a container with limited capabilities
+  docker_container:
+    name: sleepy
+    image: ubuntu:16.04
+    command: sleep infinity
+    capabilities:
+      - sys_time
+    cap_drop:
+      - all
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>docker_container</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>always</td> <td> <div>Before 2.3 this was 'ansible_docker_container' but was renamed due to conflicts with the connection plugin.</div> <div>Facts representing the current state of the container. Matches the docker inspection output.</div> <div>Note that facts are not part of registered vars but accessible directly.</div> <div>Empty if <code>state</code> is <em>absent</em>
+</div> <div>If detached is <em>False</em>, will include Output attribute containing any output from container run.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{ "AppArmorProfile": "", "Args": [], "Config": { "AttachStderr": false, "AttachStdin": false, "AttachStdout": false, "Cmd": [ "/usr/bin/supervisord" ], "Domainname": "", "Entrypoint": null, "Env": [ "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" ], "ExposedPorts": { "443/tcp": {}, "80/tcp": {} }, "Hostname": "8e47bf643eb9", "Image": "lnmp_nginx:v1", "Labels": {}, "OnBuild": null, "OpenStdin": false, "StdinOnce": false, "Tty": false, "User": "", "Volumes": { "/tmp/lnmp/nginx-sites/logs/": {} }, ... }</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Cove Schneider (@cove)</li> <li>Joshua Conner (@joshuaconner)</li> <li>Pavel Antonov (@softzilla)</li> <li>Thomas Steinbach (@ThomasSteinbach)</li> <li>Philippe Jandot (@zfil)</li> <li>Daan Oosterveld (@dusdanig)</li> <li>Chris Houseknecht (@chouseknecht)</li> <li>Kassian Sun (@kassiansun)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/docker/docker_container.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/docker_container_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/docker_container_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

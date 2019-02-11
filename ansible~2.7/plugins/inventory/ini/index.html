@@ -1,0 +1,152 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ini - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.4. ">
+  <meta name="keywords" content="ini, -, uses, ansible, file, inventory, source, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/plugins/inventory/ini/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ini-inventory">ini - Uses an Ansible INI file as inventory source.</h1> <div class="versionadded" id="ini-uses-an-ansible-ini-file-as-inventory-source"> <p><span class="versionmodified">New in version 2.4.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#notes" id="id2">Notes</a></li> <li><a class="reference internal" href="#examples" id="id3">Examples</a></li> <li>
+<a class="reference internal" href="#status" id="id4">Status</a><ul> <li><a class="reference internal" href="#author" id="id5">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>INI file based inventory, sections are groups or group related with special <code>:modifiers</code>.</li> <li>Entries in sections <code>[group_1]</code> are hosts, members of the group.</li> <li>Hosts can have variables defined inline as key/value pairs separated by <code>=</code>.</li> <li>The <code>children</code> modifier indicates that the section contains groups.</li> <li>The <code>vars</code> modifier indicates that the section contains variables assigned to members of the group.</li> <li>Anything found outside a section is considered an ‘ungrouped’ host.</li> <li>Values passed in using the <code>key=value</code> syntax are interpreted as Python literal structure (strings, numbers, tuples, lists, dicts, booleans, None), alternatively as string. For example <code>var=FALSE</code> would create a string equal to ‘FALSE’. Do not rely on types set during definition, always make sure you specify type with a filter when needed when consuming the variable.</li> </ul>   <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>It takes the place of the previously hardcoded INI inventory.</li> <li>To function it requires being whitelisted in configuration.</li> <li>Variable values are processed by Python’s ast.literal_eval function (<a class="reference external" href="https://docs.python.org/2/library/ast.html#ast.literal_eval" target="_blank">https://docs.python.org/2/library/ast.html#ast.literal_eval</a>) which could cause the value to change in some cases. See the Examples for proper quoting to prevent changes. Another option would be to use the yaml format for inventory source which processes the values correctly.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">example1: |
+    # example cfg file
+    [web]
+    host1
+    host2 ansible_port=222
+
+    [web:vars]
+    http_port=8080 # all members of 'web' will inherit these
+    myvar=23
+
+    [web:children] # child groups will automatically add their hosts to partent group
+    apache
+    nginx
+
+    [apache]
+    tomcat1
+    tomcat2 myvar=34 # host specific vars override group vars
+    tomcat3 mysecret="'03#pa33w0rd'" # proper quoting to prevent value changes
+
+    [nginx]
+    jenkins1
+
+    [nginx:vars]
+    has_java = True # vars in child groups override same in parent
+
+    [all:vars]
+    has_java = False # 'all' is 'top' parent
+
+example2: |
+    # other example config
+    host1 # this is 'ungrouped'
+
+    # both hosts have same IP but diff ports, also 'ungrouped'
+    host2 ansible_host=127.0.0.1 ansible_port=44
+    host3 ansible_host=127.0.0.1 ansible_port=45
+
+    [g1]
+    host4
+
+    [g2]
+    host4 # same host as above, but member of 2 groups, will inherit vars from both
+          # inventory hostnames are unique
+</pre>   <h2 id="status">Status</h2>  <h3 id="author">Author</h3> <ul class="simple"> <li>UNKNOWN</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/plugins/inventory/ini.py" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/plugins/inventory/ini.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/plugins/inventory/ini.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

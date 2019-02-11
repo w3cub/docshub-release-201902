@@ -1,0 +1,172 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Win_dsc - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.4. ">
+  <meta name="keywords" content="win, dsc, -, invokes, powershell, configuration, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/win_dsc_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="win-dsc-module">win_dsc - Invokes a PowerShell DSC configuration</h1> <div class="versionadded" id="win-dsc-invokes-a-powershell-dsc-configuration"> <p><span class="versionmodified">New in version 2.4.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id3">Notes</a></li> <li><a class="reference internal" href="#examples" id="id4">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id5">Return Values</a></li> <li><a class="reference internal" href="#status" id="id6">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id7">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id8">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Configures a resource using PowerShell DSC.</li> <li>Requires PowerShell version 5.0 or newer.</li> <li>Most of the options for this module are dynamic and will vary depending on the DSC Resource specified in <em>resource_name</em>.</li> <li>See <a class="reference internal" href="../../user_guide/windows_dsc/"><span class="doc">Desired State Configuration</span></a> for more information on how to use this module.</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>free_form</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The <span class="module">win_dsc</span> module takes in multiple free form options based on the DSC resource being invoked by <em>resource_name</em>.</div> <div>There is no option actually named <code>free_form</code> so see the examples.</div> <div>This module will try and convert the option to the correct type required by the DSC resource and throw a warning if it fails.</div> <div>If the type of the DSC resource option is a <code>CimInstance</code> or <code>CimInstance[]</code>, this means the value should be a dictionary or list of dictionaries based on the values required by that option.</div> <div>If the type of the DSC resource option is a <code>PSCredential</code> then there needs to be 2 options set in the Ansible task definition suffixed with <code>_username</code> and <code>_password</code>.</div> <div>If the type of the DSC resource option is an array, then a list should be provided but a comma separated string also work. Use a list where possible as no escaping is required and it works with more complex types list <code>CimInstance[]</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>module_version</b> </td> <td> <b>Default:</b><br><div style="color: blue">latest</div> </td> <td> <div>Can be used to configure the exact version of the DSC resource to be invoked.</div> <div>Useful if the target node has multiple versions installed of the module containing the DSC resource.</div> <div>If not specified, the module will follow standard PowerShell convention and use the highest version available.</div> </td> </tr> <tr> <td colspan="1"> <b>resource_name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The name of the DSC Resource to use.</div> <div>Must be accessible to PowerShell using any of the default paths.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>By default there are a few builtin resources that come with PowerShell 5.0, see <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/dsc/builtinresource" target="_blank">https://docs.microsoft.com/en-us/powershell/dsc/builtinresource</a> for more information on these resources.</li> <li>Custom DSC resources can be installed with <a class="reference internal" href="../win_psmodule_module/#win-psmodule-module"><span class="std std-ref">win_psmodule</span></a> using the <em>name</em> option.</li> <li>The DSC engine run’s each task as the SYSTEM account, any resources that need to be accessed with a different account need to have <code>PsDscRunAsCredential</code> set.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Extract zip file
+  win_dsc:
+    resource_name: Archive
+    Ensure: Present
+    Path: C:\Temp\zipfile.zip
+    Destination: C:\Temp\Temp2
+
+- name: Install a Windows feature with the WindowsFeature resource
+  win_dsc:
+    resource_name: WindowsFeature
+    Name: telnet-client
+
+- name: Edit HKCU reg key under specific user
+  win_regedit:
+    resource_name: Registry
+    Ensure: Present
+    Key: HKEY_CURRENT_USER\ExampleKey
+    ValueName: TestValue
+    ValueData: TestData
+    PsDscRunAsCredential_username: '{{ansible_user}}'
+    PsDscRunAsCredentual_password: '{{ansible_password}}'
+  no_log: true
+
+- name: Create file with multiple attributes
+  win_dsc:
+    resource_name: File
+    DestinationPath: C:\ansible\dsc
+    Attributes: # can also be a comma separated string, e.g. 'Hidden, System'
+    - Hidden
+    - System
+    Ensure: Present
+    Type: Directory
+
+# more complex example using custom DSC resource and dict values
+- name: Setup the xWebAdministration module
+  win_psmodule:
+    name: xWebAdministration
+    state: present
+
+- name: Create IIS Website with Binding and Authentication options
+  win_dsc:
+    resource_name: xWebsite
+    Ensure: Present
+    Name: DSC Website
+    State: Started
+    PhysicalPath: C:\inetpub\wwwroot
+    BindingInfo: # Example of a CimInstance[] DSC parameter (list of dicts)
+    - Protocol: https
+      Port: 1234
+      CertificateStoreName: MY
+      CertificateThumbprint: C676A89018C4D5902353545343634F35E6B3A659
+      HostName: DSCTest
+      IPAddress: '*'
+      SSLFlags: '1'
+    - Protocol: http
+      Port: 4321
+      IPAddress: '*'
+    AuthenticationInfo: # Example of a CimInstance DSC parameter (dict)
+      Anonymous: no
+      Basic: true
+      Digest: false
+      Windows: yes
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>message</b> <br><div style="font-size: small; color: red">string</div> </td> <td>error</td> <td> <div>any error message from invoking the DSC resource</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Multiple DSC modules found with resource name xyz</div> </td> </tr> <tr> <td colspan="1"> <b>module_version</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>The version of the dsc resource/module used.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">1.0.1</div> </td> </tr> <tr> <td colspan="1"> <b>reboot_required</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td>always</td> <td> <div>Flag returned from the DSC engine indicating whether or not the machine requires a reboot for the invoked changes to take effect.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Trond Hindenes (@trondhindenes)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/windows/win_dsc.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/win_dsc_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/win_dsc_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

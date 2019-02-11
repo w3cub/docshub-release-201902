@@ -1,0 +1,157 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ec2_ami_find - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.0. ">
+  <meta name="keywords" content="ec, ami, find, -, searches, for, amis, obtain, id, and, other, information, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/ec2_ami_find_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ec2-ami-find-module">ec2_ami_find - Searches for AMIs to obtain the AMI ID and other information</h1> <div class="versionadded" id="ec2-ami-find-searches-for-amis-to-obtain-the-ami-id-and-other-information"> <p><span class="versionmodified">New in version 2.0.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#deprecated" id="id1">DEPRECATED</a></li> <li>
+<a class="reference internal" href="#synopsis" id="id2">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id3">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id4">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id5">Notes</a></li> <li><a class="reference internal" href="#examples" id="id6">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id7">Return Values</a></li> <li>
+<a class="reference internal" href="#status" id="id8">Status</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="deprecated">DEPRECATED</h2> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr><th class="field-name" colspan="2">Removed in Ansible:</th></tr> <tr>
+<td> </td>
+<td class="field-body">version: 2.9</td> </tr> <tr>
+<th class="field-name">Why:</th>
+<td class="field-body">Various AWS modules have been combined and replaced with <a class="reference internal" href="../ec2_ami_facts_module/#ec2-ami-facts-module"><span class="std std-ref">ec2_ami_facts</span></a>.</td> </tr> <tr>
+<th class="field-name">Alternative:</th>
+<td class="field-body">Use <a class="reference internal" href="../ec2_ami_facts_module/#ec2-ami-facts-module"><span class="std std-ref">ec2_ami_facts</span></a> instead.</td> </tr>  </table>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Returns list of matching AMIs with AMI ID, along with other useful information</li> <li>Can search AMIs with different owners</li> <li>Can search by matching tag(s), by AMI name and/or other criteria</li> <li>Results can be sorted and sliced</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>boto</li> <li>python &gt;= 2.6</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>ami_id</b> </td> <td> </td> <td> <div>An AMI ID to match.</div> </td> </tr> <tr> <td colspan="1"> <b>ami_tags</b> </td> <td> </td> <td> <div>A hash/dictionary of tags to match for the AMI.</div> </td> </tr> <tr> <td colspan="1"> <b>architecture</b> </td> <td> </td> <td> <div>An architecture type to match (e.g. x86_64).</div> </td> </tr> <tr> <td colspan="1"> <b>aws_access_key</b> </td> <td> </td> <td> <div>AWS access key. If not set then the value of the AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY or EC2_ACCESS_KEY environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ec2_access_key, access_key</div> </td> </tr> <tr> <td colspan="1"> <b>aws_secret_key</b> </td> <td> </td> <td> <div>AWS secret key. If not set then the value of the AWS_SECRET_ACCESS_KEY, AWS_SECRET_KEY, or EC2_SECRET_KEY environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ec2_secret_key, secret_key</div> </td> </tr> <tr> <td colspan="1"> <b>ec2_url</b> </td> <td> </td> <td> <div>Url to use to connect to EC2 or your Eucalyptus cloud (by default the module will use EC2 endpoints). Ignored for modules where region is required. Must be specified for all other modules if region is not used. If not set then the value of the EC2_URL environment variable, if any, is used.</div> </td> </tr> <tr> <td colspan="1"> <b>hypervisor</b> </td> <td> </td> <td> <div>A hypervisor type type to match (e.g. xen).</div> </td> </tr> <tr> <td colspan="1"> <b>is_public</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Whether or not the image(s) are public.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> </td> <td> </td> <td> <div>An AMI name to match.</div> </td> </tr> <tr> <td colspan="1"> <b>no_result_action</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>success</b> ←</div></li> <li>fail</li> </ul> </td> <td> <div>What to do when no results are found.</div> <div>'success' reports success and returns an empty array</div> <div>'fail' causes the module to report failure</div> </td> </tr> <tr> <td colspan="1"> <b>owner</b> </td> <td> </td> <td> <div>Search AMIs owned by the specified owner</div> <div>Can specify an AWS account ID, or one of the special IDs 'self', 'amazon' or 'aws-marketplace'</div> <div>If not specified, all EC2 AMIs in the specified region will be searched.</div> <div>You can include wildcards in many of the search options. An asterisk (*) matches zero or more characters, and a question mark (?) matches exactly one character. You can escape special characters using a backslash (\) before the character. For example, a value of \*amazon\?\\ searches for the literal string *amazon?\.</div> </td> </tr> <tr> <td colspan="1"> <b>platform</b> </td> <td> </td> <td> <div>Platform type to match.</div> </td> </tr> <tr> <td colspan="1"> <b>product_code</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Marketplace product code to match.</div> </td> </tr> <tr> <td colspan="1"> <b>profile</b> <br><div style="font-size: small; color: darkgreen">(added in 1.6)</div> </td> <td> </td> <td> <div>Uses a boto profile. Only works with boto &gt;= 2.24.0.</div> </td> </tr> <tr> <td colspan="1"> <b>region</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The AWS region to use.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: aws_region, ec2_region</div> </td> </tr> <tr> <td colspan="1"> <b>root_device_type</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Root device type to match (e.g. ebs, instance-store).</div> </td> </tr> <tr> <td colspan="1"> <b>security_token</b> <br><div style="font-size: small; color: darkgreen">(added in 1.6)</div> </td> <td> </td> <td> <div>AWS STS security token. If not set then the value of the AWS_SECURITY_TOKEN or EC2_SECURITY_TOKEN environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: access_token</div> </td> </tr> <tr> <td colspan="1"> <b>sort</b> </td> <td> <ul>
+<b>Choices:</b> <li>name</li> <li>description</li> <li>tag</li> <li>architecture</li> <li>block_device_mapping</li> <li>creationDate</li> <li>hypervisor</li> <li>is_public</li> <li>location</li> <li>owner_id</li> <li>platform</li> <li>root_device_name</li> <li>root_device_type</li> <li>state</li> <li>virtualization_type</li> </ul> </td> <td> <div>Optional attribute which with to sort the results.</div> <div>If specifying 'tag', the 'tag_name' parameter is required.</div> <div>Starting at version 2.1, additional sort choices of architecture, block_device_mapping, creationDate, hypervisor, is_public, location, owner_id, platform, root_device_name, root_device_type, state, and virtualization_type are supported.</div> </td> </tr> <tr> <td colspan="1"> <b>sort_end</b> </td> <td> </td> <td> <div>Which result to end with (when sorting).</div> <div>Corresponds to Python slice notation.</div> </td> </tr> <tr> <td colspan="1"> <b>sort_order</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>ascending</b> ←</div></li> <li>descending</li> </ul> </td> <td> <div>Order in which to sort results.</div> <div>Only used when the 'sort' parameter is specified.</div> </td> </tr> <tr> <td colspan="1"> <b>sort_start</b> </td> <td> </td> <td> <div>Which result to start with (when sorting).</div> <div>Corresponds to Python slice notation.</div> </td> </tr> <tr> <td colspan="1"> <b>sort_tag</b> </td> <td> </td> <td> <div>Tag name with which to sort results.</div> <div>Required when specifying 'sort=tag'.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <b>Default:</b><br><div style="color: blue">available</div> </td> <td> <div>AMI state to match.</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 1.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>When set to "no", SSL certificates will not be validated for boto versions &gt;= 2.6.0.</div> </td> </tr> <tr> <td colspan="1"> <b>virtualization_type</b> </td> <td> </td> <td> <div>Virtualization type to match (e.g. hvm).</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>This module is not backwards compatible with the previous version of the ec2_search_ami module which worked only for Ubuntu AMIs listed on cloud-images.ubuntu.com.</li> <li>See the example below for a suggestion of how to search by distro/release.</li> <li>If parameters are not set within the module, the following environment variables can be used in decreasing order of precedence <code>AWS_URL</code> or <code>EC2_URL</code>, <code>AWS_ACCESS_KEY_ID</code> or <code>AWS_ACCESS_KEY</code> or <code>EC2_ACCESS_KEY</code>, <code>AWS_SECRET_ACCESS_KEY</code> or <code>AWS_SECRET_KEY</code> or <code>EC2_SECRET_KEY</code>, <code>AWS_SECURITY_TOKEN</code> or <code>EC2_SECURITY_TOKEN</code>, <code>AWS_REGION</code> or <code>EC2_REGION</code>
+</li> <li>Ansible uses the boto configuration file (typically ~/.boto) if no credentials are provided. See <a class="reference external" href="https://boto.readthedocs.io/en/latest/boto_config_tut.html" target="_blank">https://boto.readthedocs.io/en/latest/boto_config_tut.html</a>
+</li> <li>
+<code>AWS_REGION</code> or <code>EC2_REGION</code> can be typically be used to specify the AWS region, when required, but this can also be configured in the boto config file</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Note: These examples do not set authentication details, see the AWS Guide for details.
+
+# Search for the AMI tagged "project:website"
+- ec2_ami_find:
+    owner: self
+    ami_tags:
+      project: website
+    no_result_action: fail
+  register: ami_find
+
+# Search for the latest Ubuntu 14.04 AMI
+- ec2_ami_find:
+    name: "ubuntu/images/ebs/ubuntu-trusty-14.04-amd64-server-*"
+    owner: 099720109477
+    sort: name
+    sort_order: descending
+    sort_end: 1
+  register: ami_find
+
+# Launch an EC2 instance
+- ec2:
+    image: "{{ ami_find.results[0].ami_id }}"
+    instance_type: m3.medium
+    key_name: mykey
+    wait: yes
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>ami_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>id of found amazon image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ami-e9095e8c</div> </td> </tr> <tr> <td colspan="1"> <b>architecture</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>architecture of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">x86_64</div> </td> </tr> <tr> <td colspan="1"> <b>block_device_mapping</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>when AMI found</td> <td> <div>block device mapping associated with image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{ '/dev/xvda': { 'delete_on_termination': true, 'encrypted': false, 'size': 8, 'snapshot_id': 'snap-ca0330b8', 'volume_type': 'gp2' }</div> </td> </tr> <tr> <td colspan="1"> <b>creationDate</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>creation date of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2015-10-15T22:43:44.000Z</div> </td> </tr> <tr> <td colspan="1"> <b>description</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>description of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">test-server01</div> </td> </tr> <tr> <td colspan="1"> <b>hypervisor</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>type of hypervisor</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">xen</div> </td> </tr> <tr> <td colspan="1"> <b>is_public</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>when AMI found</td> <td> <div>whether image is public</div> <br> </td> </tr> <tr> <td colspan="1"> <b>location</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>location of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">435210894375/test-server01-20151015-234343</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>ami name of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">test-server01-20151015-234343</div> </td> </tr> <tr> <td colspan="1"> <b>owner_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>owner of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">435210894375</div> </td> </tr> <tr> <td colspan="1"> <b>platform</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>platform of image</div> <br> </td> </tr> <tr> <td colspan="1"> <b>root_device_name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>root device name of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">/dev/xvda</div> </td> </tr> <tr> <td colspan="1"> <b>root_device_type</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>root device type of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ebs</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>state of image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">available</div> </td> </tr> <tr> <td colspan="1"> <b>tags</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>when AMI found</td> <td> <div>tags assigned to image</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{ 'Environment': 'devel', 'Name': 'test-server01', 'Role': 'web' }</div> </td> </tr> <tr> <td colspan="1"> <b>virtualization_type</b> <br><div style="font-size: small; color: red">string</div> </td> <td>when AMI found</td> <td> <div>image virtualization type</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">hvm</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>deprecated</strong> and will be removed in version 2.9. For more information see <a class="reference internal" href="#deprecated">DEPRECATED</a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Tom Bamford (@tombamford)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/amazon/_ec2_ami_find.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/ec2_ami_find_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/ec2_ami_find_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

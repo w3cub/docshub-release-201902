@@ -1,0 +1,166 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Docker_swarm - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.7. ">
+  <meta name="keywords" content="docker, swarm, -, manage, cluster, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/docker_swarm_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="docker-swarm-module">docker_swarm - Manage Swarm cluster</h1> <div class="versionadded" id="docker-swarm-manage-swarm-cluster"> <p><span class="versionmodified">New in version 2.7.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Create a new Swarm cluster.</li> <li>Add/Remove nodes or managers to an existing cluster.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.7</li> <li>docker-py &gt;= 2.6.0</li> <li>Please note that the <a class="reference external" href="https://pypi.org/project/docker-py/" target="_blank">docker-py</a> Python module has been superseded by <a class="reference external" href="https://pypi.org/project/docker/" target="_blank">docker</a> (see <a class="reference external" href="https://github.com/docker/docker-py/issues/1310" target="_blank">here</a> for details). Version 2.1.0 or newer is only available with the <code>docker</code> module.</li> <li>Docker API &gt;= 1.35</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>advertise_addr</b> </td> <td> </td> <td> <div>Externally reachable address advertised to other nodes.</div> <div>This can either be an address/port combination in the form <code>192.168.1.1:4567</code>, or an interface followed by a port number, like <code>eth0:4567</code>.</div> <div>If the port number is omitted, the port number from the listen address is used.</div> <div>If <code>advertise_addr</code> is not specified, it will be automatically detected when possible.</div> </td> </tr> <tr> <td colspan="1"> <b>api_version</b> </td> <td> <b>Default:</b><br><div style="color: blue">auto</div> </td> <td> <div>The version of the Docker API running on the Docker Host. Defaults to the latest version of the API supported by docker-py.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_API_VERSION</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_api_version</div> </td> </tr> <tr> <td colspan="1"> <b>autolock_managers</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If set, generate a key and use it to lock data stored on the managers.</div> <div>Docker default value is <code>no</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>ca_force_rotate</b> </td> <td> </td> <td> <div>An integer whose purpose is to force swarm to generate a new signing CA certificate and key, if none have been specified.</div> <div>Docker default value is <code>0</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>cacert_path</b> </td> <td> </td> <td> <div>Use a CA certificate when performing server verification by providing the path to a CA certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>ca.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_ca_cert</div> </td> </tr> <tr> <td colspan="1"> <b>cert_path</b> </td> <td> </td> <td> <div>Path to the client's TLS certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>cert.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_cert</div> </td> </tr> <tr> <td colspan="1"> <b>debug</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Debug mode</div> </td> </tr> <tr> <td colspan="1"> <b>dispatcher_heartbeat_period</b> </td> <td> </td> <td> <div>The delay for an agent to send a heartbeat to the dispatcher.</div> <div>Docker default value is <code>5s</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>docker_host</b> </td> <td> <b>Default:</b><br><div style="color: blue">unix://var/run/docker.sock</div> </td> <td> <div>The URL or Unix socket path used to connect to the Docker API. To connect to a remote host, provide the TCP connection string. For example, 'tcp://192.0.2.23:2376'. If TLS is used to encrypt the connection, the module will automatically replace 'tcp' in the connection URL with 'https'.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_HOST</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_url</div> </td> </tr> <tr> <td colspan="1"> <b>election_tick</b> </td> <td> </td> <td> <div>Amount of ticks (in seconds) needed without a leader to trigger a new election.</div> <div>Docker default value is <code>10s</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>force</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with state <code>present</code> to force creating a new Swarm, even if already part of one.</div> <div>Use with state <code>absent</code> to Leave the swarm even if this node is a manager.</div> </td> </tr> <tr> <td colspan="1"> <b>heartbeat_tick</b> </td> <td> </td> <td> <div>Amount of ticks (in seconds) between each heartbeat.</div> <div>Docker default value is <code>1s</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>join_token</b> </td> <td> </td> <td> <div>Swarm token used to join a swarm cluster.</div> <div>Used with <em>state=join</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>keep_old_snapshots</b> </td> <td> </td> <td> <div>Number of snapshots to keep beyond the current snapshot.</div> <div>Docker default value is <code>0</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>key_path</b> </td> <td> </td> <td> <div>Path to the client's TLS key file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>key.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_key</div> </td> </tr> <tr> <td colspan="1"> <b>labels</b> </td> <td> </td> <td> <div>User-defined key/value metadata.</div> </td> </tr> <tr> <td colspan="1"> <b>listen_addr</b> </td> <td> <b>Default:</b><br><div style="color: blue">0.0.0.0:2377</div> </td> <td> <div>Listen address used for inter-manager communication.</div> <div>This can either be an address/port combination in the form <code>192.168.1.1:4567</code>, or an interface followed by a port number, like <code>eth0:4567</code>.</div> <div>If the port number is omitted, the default swarm listening port is used.</div> </td> </tr> <tr> <td colspan="1"> <b>log_entries_for_slow_followers</b> </td> <td> </td> <td> <div>Number of log entries to keep around to sync up slow followers after a snapshot is created.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> </td> <td> </td> <td> <div>The name of the swarm.</div> </td> </tr> <tr> <td colspan="1"> <b>node_cert_expiry</b> </td> <td> </td> <td> <div>Automatic expiry for nodes certificates.</div> <div>Docker default value is <code>3months</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>node_id</b> </td> <td> </td> <td> <div>Swarm id of the node to remove.</div> <div>Used with <em>state=remove</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>remote_addrs</b> </td> <td> </td> <td> <div>Remote address of a manager to connect to.</div> <div>Used with <em>state=join</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>rotate_manager_token</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Rotate the manager join token.</div> </td> </tr> <tr> <td colspan="1"> <b>rotate_worker_token</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Rotate the worker join token.</div> </td> </tr> <tr> <td colspan="1"> <b>signing_ca_cert</b> </td> <td> </td> <td> <div>The desired signing CA certificate for all swarm node TLS leaf certificates, in PEM format.</div> </td> </tr> <tr> <td colspan="1"> <b>signing_ca_key</b> </td> <td> </td> <td> <div>The desired signing CA key for all swarm node TLS leaf certificates, in PEM format.</div> </td> </tr> <tr> <td colspan="1"> <b>snapshot_interval</b> </td> <td> </td> <td> <div>Number of logs entries between snapshot.</div> <div>Docker default value is <code>10000</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>ssl_version</b> </td> <td> </td> <td> <div>Provide a valid SSL version number. Default value determined by ssl.py module.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_SSL_VERSION</code> will be used instead.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>join</li> <li>absent</li> <li>remove</li> <li>inspect</li> </ul> </td> <td> <div>Set to <code>present</code>, to create/update a new cluster.</div> <div>Set to <code>join</code>, to join an existing cluster.</div> <div>Set to <code>absent</code>, to leave an existing cluster.</div> <div>Set to <code>remove</code>, to remove an absent node from the cluster.</div> <div>Set to <code>inspect</code> to display swarm informations.</div> </td> </tr> <tr> <td colspan="1"> <b>task_history_retention_limit</b> </td> <td> </td> <td> <div>Maximum number of tasks history stored.</div> <div>Docker default value is <code>5</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">60</div> </td> <td> <div>The maximum amount of time in seconds to wait on a response from the API.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TIMEOUT</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS without verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_hostname</b> </td> <td> <b>Default:</b><br><div style="color: blue">localhost</div> </td> <td> <div>When verifying the authenticity of the Docker Host server, provide the expected name of the server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_HOSTNAME</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_verify</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS and verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_VERIFY</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>Connect to the Docker daemon by providing parameters with each task or by defining environment variables. You can define DOCKER_HOST, DOCKER_TLS_HOSTNAME, DOCKER_API_VERSION, DOCKER_CERT_PATH, DOCKER_SSL_VERSION, DOCKER_TLS, DOCKER_TLS_VERIFY and DOCKER_TIMEOUT. If you are using docker machine, run the script shipped with the product that sets up the environment. It will set these variables for you. See <a class="reference external" href="https://docker-py.readthedocs.io/en/stable/machine/" target="_blank">https://docker-py.readthedocs.io/en/stable/machine/</a> for more details.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Init a new swarm with default parameters
+  docker_swarm:
+    state: present
+    advertise_addr: 192.168.1.1
+
+- name: Update swarm configuration
+  docker_swarm:
+    state: present
+    election_tick: 5
+
+- name: Add nodes
+  docker_swarm:
+    state: join
+    advertise_addr: 192.168.1.2
+    join_token: SWMTKN-1--xxxxx
+    remote_addrs: [ '192.168.1.1:2377' ]
+
+- name: Leave swarm for a node
+  docker_swarm:
+    state: absent
+
+- name: Remove a swarm manager
+  docker_swarm:
+    state: absent
+    force: true
+
+- name: Remove node from swarm
+  docker_swarm:
+    state: remove
+    node_id: mynode
+
+- name: Inspect swarm
+  docker_swarm:
+    state: inspect
+  register: swarm_info
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="3">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="3"> <b>actions</b> <br><div style="font-size: small; color: red">list</div> </td> <td>when action failed.</td> <td> <div>Provides the actions done on the swarm.</div> <br> </td> </tr> <tr> <td colspan="3"> <b>swarm_facts</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Informations about swarm.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>JoinTokens</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Tokens to connect to the Swarm.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>Manager</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Token to create a new <em>manager</em> node</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>Worker</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Token to create a new <em>worker</em> node</div> <br> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Thierry Bouvet (@tbouvet)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/docker/docker_swarm.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/docker_swarm_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/docker_swarm_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

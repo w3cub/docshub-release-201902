@@ -1,0 +1,146 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Acme_account_facts - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.7. ">
+  <meta name="keywords" content="acme, account, facts, -, retrieves, information, on, accounts, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/acme_account_facts_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="acme-account-facts-module">acme_account_facts - Retrieves information on ACME accounts</h1> <div class="versionadded" id="acme-account-facts-retrieves-information-on-acme-accounts"> <p><span class="versionmodified">New in version 2.7.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id2">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id3">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id4">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id5">Notes</a></li> <li><a class="reference internal" href="#examples" id="id6">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id7">Return Values</a></li> <li><a class="reference internal" href="#status" id="id8">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id9">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id10">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Allows to retrieve information on accounts a CA supporting the <a class="reference external" href="https://tools.ietf.org/html/draft-ietf-acme-acme-14" target="_blank">ACME protocol</a>, such as <a class="reference external" href="https://letsencrypt.org/" target="_blank">Let’s Encrypt</a>.</li> <li>This module only works with the ACME v2 protocol.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>either openssl, ...</li> <li>... or <a class="reference external" href="https://cryptography.io/" target="_blank">cryptography</a> &gt;= 1.5</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>account_key_content</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Content of the ACME account RSA or Elliptic Curve key.</div> <div>Mutually exclusive with <code>account_key_src</code>.</div> <div>Required if <code>account_key_src</code> is not used.</div> <div>
+<em>Warning</em>: the content will be written into a temporary file, which will be deleted by Ansible when the module completes. Since this is an important private key — it can be used to change the account key, or to revoke your certificates without knowing their private keys —, this might not be acceptable.</div> <div>In case <code>cryptography</code> is used, the content is not written into a temporary file. It can still happen that it is written to disk by Ansible in the process of moving the module with its argument to the node where it is executed.</div> </td> </tr> <tr> <td colspan="1"> <b>account_key_src</b> </td> <td> </td> <td> <div>Path to a file containing the ACME account RSA or Elliptic Curve key.</div> <div>RSA keys can be created with <code>openssl rsa ...</code>. Elliptic curve keys can be created with <code>openssl ecparam -genkey ...</code>. Any other tool creating private keys in PEM format can be used as well.</div> <div>Mutually exclusive with <code>account_key_content</code>.</div> <div>Required if <code>account_key_content</code> is not used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: account_key</div> </td> </tr> <tr> <td colspan="1"> <b>account_uri</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>If specified, assumes that the account URI is as given. If the account key does not match this account, or an account with this URI does not exist, the module fails.</div> </td> </tr> <tr> <td colspan="1"> <b>acme_directory</b> </td> <td> <b>Default:</b><br><div style="color: blue">https://acme-staging.api.letsencrypt.org/directory</div> </td> <td> <div>The ACME directory to use. This is the entry point URL to access CA server API.</div> <div>For safety reasons the default is set to the Let's Encrypt staging server (for the ACME v1 protocol). This will create technically correct, but untrusted certificates.</div> <div>For Let's Encrypt, all staging endpoints can be found here: <a href="https://letsencrypt.org/docs/staging-environment/" target="_blank">https://letsencrypt.org/docs/staging-environment/</a>
+</div> <div>For Let's Encrypt, the production directory URL for ACME v1 is <a href="https://acme-v01.api.letsencrypt.org/directory" target="_blank">https://acme-v01.api.letsencrypt.org/directory</a>, and the production directory URL for ACME v2 is <a href="https://acme-v02.api.letsencrypt.org/directory" target="_blank">https://acme-v02.api.letsencrypt.org/directory</a>.</div> <div>
+<em>Warning</em>: So far, the module has only been tested against Let's Encrypt (staging and production) and against the <a href="https://github.com/letsencrypt/Pebble" target="_blank">Pebble testing server</a>.</div> </td> </tr> <tr> <td colspan="1"> <b>acme_version</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>1</b> ←</div></li> <li>2</li> </ul> </td> <td> <div>The ACME version of the endpoint.</div> <div>Must be 1 for the classic Let's Encrypt ACME endpoint, or 2 for the new standardized ACME v2 endpoint.</div> </td> </tr> <tr> <td colspan="1"> <b>select_crypto_backend</b> <br><div style="font-size: small; color: red">str</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>auto</b> ←</div></li> <li>cryptography</li> <li>openssl</li> </ul> </td> <td> <div>Determines which crypto backend to use. The default choice is <code>auto</code>, which tries to use <code>cryptography</code> if available, and falls back to <code>openssl</code>.</div> <div>If set to <code>openssl</code>, will try to use the <code>openssl</code> binary.</div> <div>If set to <code>cryptography</code>, will try to use the <a href="https://cryptography.io/" target="_blank">cryptography</a> library.</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>Whether calls to the ACME directory will validate TLS certificates.</div> <div>
+<em>Warning</em>: Should <em>only ever</em> be set to <code>no</code> for testing purposes, for example when testing against a local Pebble server.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>The <a class="reference internal" href="../acme_account_module/#acme-account-module"><span class="std std-ref">acme_account</span></a> module allows to modify, create and delete ACME accounts.</li> <li>If a new enough version of the <code>cryptography</code> library is available (see Requirements for details), it will be used instead of the <code>openssl</code> binary. This can be explicitly disabled or enabled with the <code>select_crypto_backend</code> option. Note that using the <code>openssl</code> binary will be slower and less secure, as private key contents always have to be stored on disk (see <code>account_key_content</code>).</li> <li>Although the defaults are chosen so that the module can be used with the <a class="reference external" href="https://letsencrypt.org/" target="_blank">Let’s Encrypt</a> CA, the module can in principle be used with any CA providing an ACME endpoint.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Check whether an account with the given account key exists
+  acme_account_facts:
+    account_key_src: /etc/pki/cert/private/account.key
+    register: account_data
+- name: Verify that account exists
+  assert:
+    that:
+      - account_data.exists
+- name: Print account URI
+  debug: var=account_data.account_uri
+- name: Print account contacts
+  debug: var=account_data.account.contact
+
+- name: Check whether the account exists and is accessible with the given account key
+  acme_account_facts:
+    account_key_content: "{{ acme_account_key }}"
+    account_uri: "{{ acme_account_uri }}"
+    register: account_data
+- name: Verify that account exists
+  assert:
+    that:
+      - account_data.exists
+- name: Print account contacts
+  debug: var=account_data.account.contact
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="2">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="2"> <b>account</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>if account exists</td> <td> <div>The account information, as retrieved from the ACME server.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>status</b> <br><div style="font-size: small; color: red">str</div> </td> <td>always</td> <td> <div>the account's status</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">valid</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>contact</b> <br><div style="font-size: small; color: red">list</div> </td> <td>always</td> <td> <div>the challenge resource that must be created for validation</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['mailto:me@example.com', 'tel:00123456789']</div> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>orders</b> <br><div style="font-size: small; color: red">str</div> </td> <td>always</td> <td> <div>a URL where a list of orders can be retrieved for this account</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">https://example.ca/account/1/orders</div> </td> </tr> <tr> <td colspan="2"> <b>account_uri</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>ACME account URI, or None if account does not exist.</div> <br> </td> </tr> <tr> <td colspan="2"> <b>exists</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>always</td> <td> <div>Whether the account exists.</div> <br> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Felix Fontein (@felixfontein)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/crypto/acme/acme_account_facts.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/acme_account_facts_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/acme_account_facts_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

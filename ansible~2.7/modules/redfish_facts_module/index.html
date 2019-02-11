@@ -1,0 +1,169 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Redfish_facts - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.7. ">
+  <meta name="keywords" content="redfish, facts, -, manages, out-of-band, controllers, using, apis, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/redfish_facts_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="redfish-facts-module">redfish_facts - Manages Out-Of-Band controllers using Redfish APIs</h1> <div class="versionadded" id="redfish-facts-manages-out-of-band-controllers-using-redfish-apis"> <p><span class="versionmodified">New in version 2.7.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li><a class="reference internal" href="#examples" id="id3">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id4">Return Values</a></li> <li><a class="reference internal" href="#status" id="id5">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id6">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id7">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Builds Redfish URIs locally and sends them to remote OOB controllers to get information back.</li> <li>Information retrieved is placed in a location specified by the user.</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>baseuri</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Base URI of OOB controller</div> </td> </tr> <tr> <td colspan="1"> <b>category</b> </td> <td> <b>Default:</b><br><div style="color: blue">[u'Systems']</div> </td> <td> <div>List of categories to execute on OOB controller</div> </td> </tr> <tr> <td colspan="1"> <b>command</b> </td> <td> </td> <td> <div>List of commands to execute on OOB controller</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Password for authentication with OOB controller</div> </td> </tr> <tr> <td colspan="1"> <b>user</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>User for authentication with OOB controller</div> </td> </tr> </table> <br>  <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Get CPU inventory
+  redfish_facts:
+    category: Systems
+    command: GetCpuInventory
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get fan inventory
+  redfish_facts:
+    category: Chassis
+    command: GetFanInventory
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get default inventory information
+  redfish_facts:
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get several inventories
+  redfish_facts:
+    category: Systems
+    command: GetNicInventory,GetPsuInventory,GetBiosAttributes
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get default system inventory and user information
+  redfish_facts:
+    category: Systems,Accounts
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get default system, user and firmware information
+  redfish_facts:
+    category: ["Systems", "Accounts", "Update"]
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get all information available in the Manager category
+  redfish_facts:
+    category: Manager
+    command: all
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Get all information available in all categories
+  redfish_facts:
+    category: all
+    command: all
+    baseuri: "{{ baseuri }}"
+    user: "{{ user }}"
+    password: "{{ password }}"
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>result</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>always</td> <td> <div>different results depending on task</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">List of CPUs on system</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Jose Delarosa (github: jose-delarosa)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/remote_management/redfish/redfish_facts.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/redfish_facts_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/redfish_facts_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

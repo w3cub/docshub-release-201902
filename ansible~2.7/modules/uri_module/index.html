@@ -1,0 +1,201 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Uri - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" Note ">
+  <meta name="keywords" content="uri, -, interacts, with, webservices, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/uri_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="uri-module">uri - Interacts with webservices</h1>  <ul class="simple" id="uri-interacts-with-webservices"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id3">Notes</a></li> <li><a class="reference internal" href="#examples" id="id4">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id5">Return Values</a></li> <li><a class="reference internal" href="#status" id="id6">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id7">Maintenance</a><ul> <li><a class="reference internal" href="#support" id="id8">Support</a></li> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Interacts with HTTP and HTTPS web services and supports Digest, Basic and WSSE HTTP authentication mechanisms.</li> <li>For Windows targets, use the <a class="reference internal" href="../win_uri_module/#win-uri-module"><span class="std std-ref">win_uri</span></a> module instead.</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>body</b> </td> <td> </td> <td> <div>The body of the http request/response to the web service. If <code>body_format</code> is set to 'json' it will take an already formatted JSON string or convert a data structure into JSON. If <code>body_format</code> is set to 'form-urlencoded' it will convert a dictionary or list of tuples into an 'application/x-www-form-urlencoded' string. (Added in v2.7)</div> </td> </tr> <tr> <td colspan="1"> <b>body_format</b> <br><div style="font-size: small; color: darkgreen">(added in 2.0)</div> </td> <td> <ul>
+<b>Choices:</b> <li>form-urlencoded</li> <li>json</li> <li><div style="color: blue">
+<b>raw</b> ←</div></li> </ul> </td> <td> <div>The serialization format of the body. When set to <code>json</code> or <code>form-urlencoded</code>, encodes the body argument, if needed, and automatically sets the Content-Type header accordingly. As of <code>2.3</code> it is possible to override the `Content-Type` header, when set to <code>json</code> or <code>form-urlencoded</code> via the <em>headers</em> option.</div> </td> </tr> <tr> <td colspan="1"> <b>client_cert</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>PEM formatted certificate chain file to be used for SSL client authentication. This file can also include the key as well, and if the key is included, <em>client_key</em> is not required</div> </td> </tr> <tr> <td colspan="1"> <b>client_key</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>PEM formatted file that contains your private key to be used for SSL client authentication. If <em>client_cert</em> contains both the certificate and key, this option is not required.</div> </td> </tr> <tr> <td colspan="1"> <b>creates</b> </td> <td> </td> <td> <div>A filename, when it already exists, this step will not be run.</div> </td> </tr> <tr> <td colspan="1"> <b>dest</b> </td> <td> </td> <td> <div>A path of where to download the file to (if desired). If <em>dest</em> is a directory, the basename of the file on the remote server will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>follow_redirects</b> </td> <td> <ul>
+<b>Choices:</b> <li>all</li> <li>none</li> <li><div style="color: blue">
+<b>safe</b> ←</div></li> </ul> </td> <td> <div>Whether or not the URI module should follow redirects. <code>all</code> will follow all redirects. <code>safe</code> will follow only "safe" redirects, where "safe" means that the client is only doing a GET or HEAD on the URI to which it is being redirected. <code>none</code> will not follow any redirects. Note that <code>yes</code> and <code>no</code> choices are accepted for backwards compatibility, where <code>yes</code> is the equivalent of <code>all</code> and <code>no</code> is the equivalent of <code>safe</code>. <code>yes</code> and <code>no</code> are deprecated and will be removed in some future version of Ansible.</div> </td> </tr> <tr> <td colspan="1"> <b>force_basic_auth</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>The library used by the uri module only sends authentication information when a webservice responds to an initial request with a 401 status. Since some basic auth services do not properly send a 401, logins will fail. This option forces the sending of the Basic authentication header upon initial request.</div> </td> </tr> <tr> <td colspan="1"> <b>HEADER_</b> </td> <td> </td> <td> <div>Any parameter starting with "HEADER_" is a sent with your request as a header. For example, HEADER_Content-Type="application/json" would send the header "Content-Type" along with your request with a value of "application/json". This option is deprecated as of <code>2.1</code> and will be removed in Ansible-2.9. Use <em>headers</em> instead.</div> </td> </tr> <tr> <td colspan="1"> <b>headers</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>Add custom HTTP headers to a request in the format of a YAML hash. As of <code>2.3</code> supplying <code>Content-Type</code> here will override the header generated by supplying <code>json</code> or <code>form-urlencoded</code> for <em>body_format</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>method</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>GET</b> ←</div></li> <li>POST</li> <li>PUT</li> <li>HEAD</li> <li>DELETE</li> <li>OPTIONS</li> <li>PATCH</li> <li>TRACE</li> <li>CONNECT</li> <li>REFRESH</li> </ul> </td> <td> <div>The HTTP method of the request or response. It MUST be uppercase.</div> </td> </tr> <tr> <td colspan="1"> <b>others</b> </td> <td> </td> <td> <div>All arguments accepted by the <span class="module">file</span> module also work here</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> </td> <td> </td> <td> <div>A password for the module to use for Digest, Basic or WSSE authentication.</div> </td> </tr> <tr> <td colspan="1"> <b>remote_src</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If <code>no</code>, the module will search for src on originating/master machine, if <code>yes</code> the module will use the <code>src</code> path on the remote/target machine.</div> </td> </tr> <tr> <td colspan="1"> <b>removes</b> </td> <td> </td> <td> <div>A filename, when it does not exist, this step will not be run.</div> </td> </tr> <tr> <td colspan="1"> <b>return_content</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Whether or not to return the body of the response as a "content" key in the dictionary result. If the reported Content-type is "application/json", then the JSON is additionally loaded into a key called <code>json</code> in the dictionary results.</div> </td> </tr> <tr> <td colspan="1"> <b>src</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Path to file to be submitted to the remote server. Cannot be used with <em>body</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>status_code</b> </td> <td> <b>Default:</b><br><div style="color: blue">200</div> </td> <td> <div>A list of valid, numeric, HTTP status codes that signifies success of the request.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">30</div> </td> <td> <div>The socket level timeout in seconds</div> </td> </tr> <tr> <td colspan="1"> <b>url</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>HTTP or HTTPS URL in the form (http|https)://host.domain[:port]/path</div> </td> </tr> <tr> <td colspan="1"> <b>user</b> </td> <td> </td> <td> <div>A username for the module to use for Digest, Basic or WSSE authentication.</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 1.9.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>If <code>no</code>, SSL certificates will not be validated. This should only set to <code>no</code> used on personally controlled sites using self-signed certificates. Prior to 1.9.2 the code defaulted to <code>no</code>.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>The dependency on httplib2 was removed in Ansible 2.1.</li> <li>The module returns all the HTTP headers in lower-case.</li> <li>For Windows targets, use the <a class="reference internal" href="../win_uri_module/#win-uri-module"><span class="std std-ref">win_uri</span></a> module instead.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Check that you can connect (GET) to a page and it returns a status 200
+  uri:
+    url: http://www.example.com
+
+# Check that a page returns a status 200 and fail if the word AWESOME is not
+# in the page contents.
+- uri:
+    url: http://www.example.com
+    return_content: yes
+  register: this
+  failed_when: "'AWESOME' not in this.content"
+
+- name: Create a JIRA issue
+  uri:
+    url: https://your.jira.example.com/rest/api/2/issue/
+    method: POST
+    user: your_username
+    password: your_pass
+    body: "{{ lookup('file','issue.json') }}"
+    force_basic_auth: yes
+    status_code: 201
+    body_format: json
+
+# Login to a form based webpage, then use the returned cookie to
+# access the app in later tasks
+
+- uri:
+    url: https://your.form.based.auth.example.com/index.php
+    method: POST
+    body_format: form-urlencoded
+    body:
+      name: your_username
+      password: your_password
+      enter: Sign in
+    status_code: 302
+  register: login
+
+# Same, but now using a list of tuples
+- uri:
+    url: https://your.form.based.auth.example.com/index.php
+    method: POST
+    body_format: form-urlencoded
+    body:
+    - [ name, your_username ]
+    - [ password, your_password ]
+    - [ enter, Sign in ]
+    status_code: 302
+  register: login
+
+- uri:
+    url: https://your.form.based.auth.example.com/dashboard.php
+    method: GET
+    return_content: yes
+    headers:
+      Cookie: "{{ login.set_cookie }}"
+
+- name: Queue build of a project in Jenkins
+  uri:
+    url: http://{{ jenkins.host }}/job/{{ jenkins.job }}/build?token={{ jenkins.token }}
+    method: GET
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    force_basic_auth: yes
+    status_code: 201
+
+- name: POST from contents of local file
+  uri:
+    url: "https://httpbin.org/post"
+    method: POST
+    src: file.json
+
+- name: POST from contents of remote file
+  uri:
+    url: "https://httpbin.org/post"
+    method: POST
+    src: /path/to/my/file.json
+    remote_src: true
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>msg</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>The HTTP message from the request</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">OK (unknown bytes)</div> </td> </tr> <tr> <td colspan="1"> <b>redirected</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>always</td> <td> <div>Whether the request was redirected</div> <br> </td> </tr> <tr> <td colspan="1"> <b>status</b> <br><div style="font-size: small; color: red">int</div> </td> <td>always</td> <td> <div>The HTTP status code from the request</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">200</div> </td> </tr> <tr> <td colspan="1"> <b>url</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>The actual URL used for the request</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">https://www.ansible.com/</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>stableinterface</strong> which means that the maintainers for this module guarantee that no backward incompatible interface changes will be made.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>core</strong> which means that it is maintained by the Ansible Core Team. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Core Team, see <a class="reference internal" href="../core_maintained/#core-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="support">Support</h3> <p>For more information about Red Hat’s support of this module, please refer to this <a class="reference external" href="https://access.redhat.com/articles/rhel-top-support-policies/" target="_blank">Knowledge Base article</a></p>   <h3 id="author">Author</h3> <ul class="simple"> <li>Romeo Theriault (@romeotheriault)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/net_tools/basics/uri.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/uri_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/uri_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

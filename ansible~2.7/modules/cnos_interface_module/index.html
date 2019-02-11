@@ -1,0 +1,444 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cnos_interface - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.3. ">
+  <meta name="keywords" content="cnos, interface, -, manage, configuration, on, devices, running, lenovo, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/cnos_interface_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="cnos-interface-module">cnos_interface - Manage interface configuration on devices running Lenovo CNOS</h1> <div class="versionadded" id="cnos-interface-manage-interface-configuration-on-devices-running-lenovo-cnos"> <p><span class="versionmodified">New in version 2.3.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id3">Notes</a></li> <li><a class="reference internal" href="#examples" id="id4">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id5">Return Values</a></li> <li><a class="reference internal" href="#status" id="id6">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id7">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id8">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>This module allows you to work with interface related configurations. The operators used are overloaded to ensure control over switch interface configurations. Apart from the regular device connection related attributes, there are seven interface arguments that will perform further configurations. They are interfaceArg1, interfaceArg2, interfaceArg3, interfaceArg4, interfaceArg5, interfaceArg6, and interfaceArg7. For more details on how to use these arguments, see [Overloaded Variables]. Interface configurations are taken care at six contexts in a regular CLI. They are 1. Interface Name - Configurations 2. Ethernet Interface - Configurations 3. Loopback Interface Configurations 4. Management Interface Configurations 5. Port Aggregation - Configurations 6. VLAN Configurations This module uses SSH to manage network device configuration. The results of the operation will be placed in a directory named ‘results’ that must be created by the user in their local directory to where the playbook is run. For more information about this module from Lenovo and customizing it usage for your use cases, please visit <a class="reference external" href="http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_interface.html" target="_blank">http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_interface.html</a>
+</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>deviceType</b> <br><div style="font-size: small; color: red">required</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>g8272_cnos</li> <li>g8296_cnos</li> <li>g8332_cnos</li> <li>NE1072T</li> <li>NE1032</li> <li>NE1032T</li> <li>NE10032</li> <li>NE2572</li> </ul> </td> <td> <div>This specifies the type of device where the method is executed. The choices NE1072T,NE1032,NE1032T,NE10032, NE2572 are added since version 2.4</div> </td> </tr> <tr> <td colspan="1"> <b>enablePassword</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Configures the password used to enter Global Configuration command mode on the switch. If the switch does not request this password, the parameter is ignored.While generally the value should come from the inventory file, you can also specify it as a variable. This parameter is optional. If it is not specified, no default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>host</b> <br><div style="font-size: small; color: red">required</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>This is the variable used to search the hosts file at /etc/ansible/hosts and identify the IP address of the device on which the template is going to be applied. Usually the Ansible keyword {{ inventory_hostname }} is specified in the playbook as an abstraction of the group of network elements that need to be configured.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg1</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li>channel-group</li> <li>bfd</li> <li>switchport</li> <li>description</li> <li>duplex</li> <li>flowcontrol</li> <li>ip</li> <li>ipv6</li> <li>lacp</li> <li>lldp</li> <li>load-interval</li> <li>mac</li> <li>mac-address</li> <li>mac-learn</li> <li>microburst-detection</li> <li>mtu</li> <li>service</li> <li>service-policy</li> <li>shutdown</li> <li>snmp</li> <li>spanning-tree</li> <li>speed</li> <li>storm-control</li> <li>vlan</li> <li>vrrp</li> <li>port-channel</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface first argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg2</b> </td> <td> <ul>
+<b>Choices:</b> <li>channel-group number</li> <li>access or mode or trunk</li> <li>description</li> <li>auto or full or half</li> <li>receive or send</li> <li>port-priority</li> <li>suspend-individual</li> <li>timeout</li> <li>receive or transmit or trap-notification</li> <li>tlv-select</li> <li>Load interval delay in seconds</li> <li>counter</li> <li>Name for the MAC Access List</li> <li>mac-address in HHHH.HHHH.HHHH format</li> <li>THRESHOLD Value in unit of buffer cell</li> <li>&lt;64-9216&gt; MTU in bytes-&lt;64-9216&gt; for L2 packet</li> <li>&lt;576-9216&gt; for L3 IPv4 packet</li> <li>&lt;1280-9216&gt; for L3 IPv6 packet</li> <li>enter the instance id</li> <li>input or output</li> <li>copp-system-policy</li> <li>type</li> <li>1000 or 10000 or 40000 or auto</li> <li>broadcast or multicast or unicast</li> <li>disable or enable or egress-only</li> <li>Virtual router identifier</li> <li>destination-ip or destination-mac or destination-port or source-dest-ip or source-dest-mac or source-dest-port or source-interface or source-ip or source-mac or source-port</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface second argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg3</b> </td> <td> <ul>
+<b>Choices:</b> <li>active or on or passive</li> <li>on or off</li> <li>LACP port priority</li> <li>long or short</li> <li>link-aggregation or mac-phy-status or management-address or max-frame-size or port-description or port-protocol-vlan or port-vlan or power-mdi or protocol-identity or system-capabilities or system-description or system-name or vid-management or vlan-name</li> <li>counter for load interval</li> <li>policy input name</li> <li>all or Copp class name to attach</li> <li>qos</li> <li>queueing</li> <li>Enter the allowed traffic level</li> <li>ipv6</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface third argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg4</b> </td> <td> <ul>
+<b>Choices:</b> <li>key-chain</li> <li>key-id</li> <li>keyed-md5 or keyed-sha1 or meticulous-keyed-md5 or meticulous-keyed-sha1 or simple</li> <li>Interval value in milliseconds</li> <li>Destination IP (Both IPV4 and IPV6)</li> <li>in or out</li> <li>MAC address</li> <li>Time-out value in seconds</li> <li>class-id</li> <li>request</li> <li>Specify the IPv4 address</li> <li>OSPF area ID as a decimal value</li> <li>OSPF area ID in IP address format</li> <li>anycast or secondary</li> <li>ethernet</li> <li>vlan</li> <li>MAC (hardware) address in HHHH.HHHH.HHHH format</li> <li>Load interval delay in seconds</li> <li>Specify policy input name</li> <li>input or output</li> <li>cost</li> <li>port-priority</li> <li>BFD minimum receive interval</li> <li>source-interface</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface fourth argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg5</b> </td> <td> <ul>
+<b>Choices:</b> <li>name of key-chain</li> <li>key-Id Value</li> <li>key-chain</li> <li>key-id</li> <li>BFD minimum receive interval</li> <li>Value of Hello Multiplier</li> <li>admin-down or multihop or non-persistent</li> <li>Vendor class-identifier name</li> <li>bootfile-name or host-name or log-server or ntp-server or tftp-server-name</li> <li>Slot/chassis number</li> <li>Vlan interface</li> <li>Specify policy input name</li> <li>Port path cost or auto</li> <li>Port priority increments of 32</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface fifth argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg6</b> </td> <td> <ul>
+<b>Choices:</b> <li>Authentication key string</li> <li>name of key-chain</li> <li>key-Id Value</li> <li>Value of Hello Multiplier</li> <li>admin-down or non-persistent</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface sixth argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceArg7</b> </td> <td> <ul>
+<b>Choices:</b> <li>Authentication key string</li> <li>admin-down</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This is an overloaded interface seventh argument. Usage of this argument can be found is the User Guide referenced above.</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceOption</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li>None</li> <li>ethernet</li> <li>loopback</li> <li>mgmt</li> <li>port-channel</li> <li>vlan</li> </ul> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This specifies the attribute you specify subsequent to interface command</div> </td> </tr> <tr> <td colspan="1"> <b>interfaceRange</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>This specifies the interface range in which the port channel is envisaged</div> </td> </tr> <tr> <td colspan="1"> <b>outputfile</b> <br><div style="font-size: small; color: red">required</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>This specifies the file path where the output of each command execution is saved. Each command that is specified in the merged template file and each response from the device are saved here. Usually the location is the results folder, but you can choose another location based on your write permission.</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> <br><div style="font-size: small; color: red">required</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Configures the password used to authenticate the connection to the remote device. The value of the password parameter is used to authenticate the SSH session. While generally the value should come from the inventory file, you can also specify it as a variable. This parameter is optional. If it is not specified, no default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>username</b> <br><div style="font-size: small; color: red">required</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Configures the username used to authenticate the connection to the remote device. The value of the username parameter is used to authenticate the SSH session. While generally the value should come from the inventory file, you can also specify it as a variable. This parameter is optional. If it is not specified, no default value will be used.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>For more information on using Ansible to manage Lenovo Network devices see <a class="reference external" href="https://www.ansible.com/ansible-lenovo" target="_blank">https://www.ansible.com/ansible-lenovo</a>.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">Tasks : The following are examples of using the module cnos_interface. These are written in the main.yml file of the tasks directory.
+---
+- name: Test Interface Ethernet - channel-group
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 1
+      interfaceArg1: "channel-group"
+      interfaceArg2: 33
+      interfaceArg3: "on"
+
+- name: Test Interface Ethernet - switchport
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "switchport"
+      interfaceArg2: "access"
+      interfaceArg3: 33
+
+- name: Test Interface Ethernet - switchport mode
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "switchport"
+      interfaceArg2: "mode"
+      interfaceArg3: "access"
+
+- name: Test Interface Ethernet  - Description
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "description"
+      interfaceArg2: "Hentammoo "
+
+- name: Test Interface Ethernet - Duplex
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 1
+      interfaceArg1: "duplex"
+      interfaceArg2: "auto"
+
+- name: Test Interface Ethernet - flowcontrol
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "flowcontrol"
+      interfaceArg2: "send"
+      interfaceArg3: "off"
+
+- name: Test Interface Ethernet - lacp
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "lacp"
+      interfaceArg2: "port-priority"
+      interfaceArg3: 33
+
+- name: Test Interface Ethernet  - lldp
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "lldp"
+      interfaceArg2: "tlv-select"
+      interfaceArg3: "max-frame-size"
+
+- name: Test Interface Ethernet - load-interval
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "load-interval"
+      interfaceArg2: "counter"
+      interfaceArg3: 2
+      interfaceArg4: 33
+
+- name: Test Interface Ethernet - mac
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "mac"
+      interfaceArg2: "copp-system-acl-vlag-hc"
+
+- name: Test Interface Ethernet - microburst-detection
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "microburst-detection"
+      interfaceArg2: 25
+
+- name: Test Interface Ethernet  - mtu
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "mtu"
+      interfaceArg2: 66
+
+- name: Test Interface Ethernet - service-policy
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "service-policy"
+      interfaceArg2: "input"
+      interfaceArg3: "Anil"
+
+- name: Test Interface Ethernet - speed
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 1
+      interfaceArg1: "speed"
+      interfaceArg2: "auto"
+
+- name: Test Interface Ethernet - storm
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "storm-control"
+      interfaceArg2: "broadcast"
+      interfaceArg3: 12.5
+
+- name: Test Interface Ethernet - vlan
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "vlan"
+      interfaceArg2: "disable"
+
+- name: Test Interface Ethernet - vrrp
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "vrrp"
+      interfaceArg2: 33
+
+- name: Test Interface Ethernet - spanning tree1
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "spanning-tree"
+      interfaceArg2: "bpduguard"
+      interfaceArg3: "enable"
+
+- name: Test Interface Ethernet - spanning tree 2
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "spanning-tree"
+      interfaceArg2: "mst"
+      interfaceArg3: "33-35"
+      interfaceArg4: "cost"
+      interfaceArg5: 33
+
+- name: Test Interface Ethernet - ip1
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "ip"
+      interfaceArg2: "access-group"
+      interfaceArg3: "anil"
+      interfaceArg4: "in"
+
+- name: Test Interface Ethernet - ip2
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "ip"
+      interfaceArg2: "port"
+      interfaceArg3: "anil"
+
+- name: Test Interface Ethernet - bfd
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "bfd"
+      interfaceArg2: "interval"
+      interfaceArg3: 55
+      interfaceArg4: 55
+      interfaceArg5: 33
+
+- name: Test Interface Ethernet - bfd
+  cnos_interface:
+      host: "{{ inventory_hostname }}"
+      username: "{{ hostvars[inventory_hostname]['ansible_ssh_user'] }}"
+      password: "{{ hostvars[inventory_hostname]['ansible_ssh_pass'] }}"
+      deviceType: "{{ hostvars[inventory_hostname]['deviceType'] }}"
+      enablePassword: "{{ hostvars[inventory_hostname]['enablePassword'] }}"
+      outputfile: "./results/test_interface_{{ inventory_hostname }}_output.txt"
+      interfaceOption: 'ethernet'
+      interfaceRange: 33
+      interfaceArg1: "bfd"
+      interfaceArg2: "ipv4"
+      interfaceArg3: "authentication"
+      interfaceArg4: "meticulous-keyed-md5"
+      interfaceArg5: "key-chain"
+      interfaceArg6: "mychain"
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>msg</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>Success or failure message</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Interface configurations accomplished.</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Anil Kumar Muraleedharan (@amuraleedhar)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/network/cnos/cnos_interface.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/cnos_interface_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/cnos_interface_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

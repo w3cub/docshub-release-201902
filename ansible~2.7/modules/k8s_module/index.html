@@ -1,0 +1,180 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>K8s - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.6. ">
+  <meta name="keywords" content="k, s, -, manage, kubernetes, objects, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/k8s_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="k8s-module">k8s - Manage Kubernetes (K8s) objects</h1> <div class="versionadded" id="k8s-manage-kubernetes-k8s-objects"> <p><span class="versionmodified">New in version 2.6.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Use the OpenShift Python client to perform CRUD operations on K8s objects.</li> <li>Pass the object definition from a source file or inline. See examples for reading files and using Jinja templates.</li> <li>Access to the full range of K8s APIs.</li> <li>Use the <a class="reference internal" href="../k8s_facts_module/#k8s-facts-module"><span class="std std-ref">k8s_facts</span></a> module to obtain a list of items about an object of type <code>kind</code>
+</li> <li>Authenticate using either a config file, certificates, password or token.</li> <li>Supports check mode.</li> </ul> <p>Aliases: openshift_raw,k8s_raw</p>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.7</li> <li>openshift &gt;= 0.6</li> <li>PyYAML &gt;= 3.11</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>api_key</b> </td> <td> </td> <td> <div>Token used to authenticate with the API. Can also be specified via K8S_AUTH_API_KEY environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>api_version</b> </td> <td> <b>Default:</b><br><div style="color: blue">v1</div> </td> <td> <div>Use to specify the API version. Use to create, delete, or discover an object without providing a full resource definition. Use in conjunction with <em>kind</em>, <em>name</em>, and <em>namespace</em> to identify a specific object. If <em>resource definition</em> is provided, the <em>apiVersion</em> from the <em>resource_definition</em> will override this option.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: api, version</div> </td> </tr> <tr> <td colspan="1"> <b>cert_file</b> </td> <td> </td> <td> <div>Path to a certificate used to authenticate with the API. Can also be specified via K8S_AUTH_CERT_FILE environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>context</b> </td> <td> </td> <td> <div>The name of a context found in the config file. Can also be specified via K8S_AUTH_CONTEXT environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>force</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If set to <code>True</code>, and <em>state</em> is <code>present</code>, an existing object will be replaced.</div> </td> </tr> <tr> <td colspan="1"> <b>host</b> </td> <td> </td> <td> <div>Provide a URL for accessing the API. Can also be specified via K8S_AUTH_HOST environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>key_file</b> </td> <td> </td> <td> <div>Path to a key file used to authenticate with the API. Can also be specified via K8S_AUTH_HOST environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>kind</b> </td> <td> </td> <td> <div>Use to specify an object model. Use to create, delete, or discover an object without providing a full resource definition. Use in conjunction with <em>api_version</em>, <em>name</em>, and <em>namespace</em> to identify a specific object. If <em>resource definition</em> is provided, the <em>kind</em> from the <em>resource_definition</em> will override this option.</div> </td> </tr> <tr> <td colspan="1"> <b>kubeconfig</b> </td> <td> </td> <td> <div>Path to an existing Kubernetes config file. If not provided, and no other connection options are provided, the openshift client will attempt to load the default configuration file from <em>~/.kube/config.json</em>. Can also be specified via K8S_AUTH_KUBECONFIG environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>merge_type</b> <br><div style="font-size: small; color: red">list</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>json</li> <li>merge</li> <li>strategic-merge</li> </ul> </td> <td> <div>Whether to override the default patch merge approach with a specific type. By the default, the strategic merge will typically be used.</div> <div>For example, Custom Resource Definitions typically aren't updatable by the usual strategic merge. You may want to use <code>merge</code> if you see "strategic merge patch format is not supported"</div> <div>See <a href="https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/#use-a-json-merge-patch-to-update-a-deployment" target="_blank">https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/#use-a-json-merge-patch-to-update-a-deployment</a>
+</div> <div>Requires openshift &gt;= 0.6.2</div> <div>If more than one merge_type is given, the merge_types will be tried in order</div> <div>If openshift &gt;= 0.6.2, this defaults to <code>['strategic-merge', 'merge']</code>, which is ideal for using the same parameters on resource kinds that combine Custom Resources and built-in resources. For openshift &lt; 0.6.2, the default is simply <code>strategic-merge</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> </td> <td> </td> <td> <div>Use to specify an object name. Use to create, delete, or discover an object without providing a full resource definition. Use in conjunction with <em>api_version</em>, <em>kind</em> and <em>namespace</em> to identify a specific object. If <em>resource definition</em> is provided, the <em>metadata.name</em> value from the <em>resource_definition</em> will override this option.</div> </td> </tr> <tr> <td colspan="1"> <b>namespace</b> </td> <td> </td> <td> <div>Use to specify an object namespace. Useful when creating, deleting, or discovering an object without providing a full resource definition. Use in conjunction with <em>api_version</em>, <em>kind</em>, and <em>name</em> to identify a specfic object. If <em>resource definition</em> is provided, the <em>metadata.namespace</em> value from the <em>resource_definition</em> will override this option.</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> </td> <td> </td> <td> <div>Provide a password for authenticating with the API. Can also be specified via K8S_AUTH_PASSWORD environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>resource_definition</b> </td> <td> </td> <td> <div>Provide a valid YAML definition (either as a string, list, or dict) for an object when creating or updating. NOTE: <em>kind</em>, <em>api_version</em>, <em>name</em>, and <em>namespace</em> will be overwritten by corresponding values found in the provided <em>resource_definition</em>.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: definition, inline</div> </td> </tr> <tr> <td colspan="1"> <b>src</b> </td> <td> </td> <td> <div>Provide a path to a file containing a valid YAML definition of an object or objects to be created or updated. Mutually exclusive with <em>resource_definition</em>. NOTE: <em>kind</em>, <em>api_version</em>, <em>name</em>, and <em>namespace</em> will be overwritten by corresponding values found in the configuration read in from the <em>src</em> file.</div> <div>Reads from the local file system. To read from the Ansible controller's file system, use the file lookup plugin or template lookup plugin, combined with the from_yaml filter, and pass the result to <em>resource_definition</em>. See Examples below.</div> </td> </tr> <tr> <td colspan="1"> <b>ssl_ca_cert</b> </td> <td> </td> <td> <div>Path to a CA certificate used to authenticate with the API. Can also be specified via K8S_AUTH_SSL_CA_CERT environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>absent</li> </ul> </td> <td> <div>Determines if an object should be created, patched, or deleted. When set to <code>present</code>, an object will be created, if it does not already exist. If set to <code>absent</code>, an existing object will be deleted. If set to <code>present</code>, an existing object will be patched, if its attributes differ from those specified using <em>resource_definition</em> or <em>src</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>username</b> </td> <td> </td> <td> <div>Provide a username for authenticating with the API. Can also be specified via K8S_AUTH_USERNAME environment variable.</div> </td> </tr> <tr> <td colspan="1"> <b>verify_ssl</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Whether or not to verify the API server's SSL certificates. Can also be specified via K8S_AUTH_VERIFY_SSL environment variable.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>The OpenShift Python client wraps the K8s Python client, providing full access to all of the APIS and models available on both platforms. For API version details and additional information visit <a class="reference external" href="https://github.com/openshift/openshift-restclient-python" target="_blank">https://github.com/openshift/openshift-restclient-python</a>
+</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Create a k8s namespace
+  k8s:
+    name: testing
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create a Service object from an inline definition
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: web
+        namespace: testing
+        labels:
+          app: galaxy
+          service: web
+      spec:
+        selector:
+          app: galaxy
+          service: web
+        ports:
+        - protocol: TCP
+          targetPort: 8000
+          name: port-8000-tcp
+          port: 8000
+
+- name: Create a Service object by reading the definition from a file
+  k8s:
+    state: present
+    src: /testing/service.yml
+
+- name: Remove an existing Service object
+  k8s:
+    state: absent
+    api_version: v1
+    kind: Service
+    namespace: testing
+    name: web
+
+# Passing the object definition from a file
+
+- name: Create a Deployment by reading the definition from a local file
+  k8s:
+    state: present
+    src: /testing/deployment.yml
+
+- name: Read definition file from the Ansible controller file system
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '/testing/deployment.yml') }}"
+
+- name: Read definition file from the Ansible controller file system after Jinja templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', '/testing/deployment.yml') }}"
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="2">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="2"> <b>result</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>The created, patched, or otherwise present object. Will be empty in the case of a deletion.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>status</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Current status details for the object.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>kind</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Represents the REST resource this object represents.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>items</b> <br><div style="font-size: small; color: red">list</div> </td> <td>when resource_definition or src contains list of objects</td> <td> <div>Returned only when multiple yaml documents are passed to src or resource_definition</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>spec</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Specific attributes of the object. Will vary based on the <em>api_version</em> and <em>kind</em>.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>api_version</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>The versioned schema of this representation of an object.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>metadata</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Standard object metadata. Includes name, namespace, annotations, labels, etc.</div> <br> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Chris Houseknecht (@chouseknecht)</li> <li>Fabian von Feilitzsch (@fabianvf)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/clustering/k8s/k8s.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/k8s_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/k8s_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

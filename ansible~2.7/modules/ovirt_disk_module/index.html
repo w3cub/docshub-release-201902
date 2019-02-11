@@ -1,0 +1,215 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ovirt_disk - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.2. ">
+  <meta name="keywords" content="ovirt, disk, -, module, manage, virtual, machine, and, floating, disks, rhv, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/ovirt_disk_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ovirt-disk-module">ovirt_disk - Module to manage Virtual Machine and floating disks in oVirt/RHV</h1> <div class="versionadded" id="ovirt-disk-module-to-manage-virtual-machine-and-floating-disks-in-ovirt-rhv"> <p><span class="versionmodified">New in version 2.2.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Module to manage Virtual Machine and floating disks in oVirt/RHV.</li> </ul> <p>Aliases: ovirt_disks</p>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.7</li> <li>ovirt-engine-sdk-python &gt;= 4.2.4</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>auth</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Dictionary with values needed to create HTTP/HTTPS connection to oVirt:</div> <div>
+<code>username</code>[<em>required</em>] - The name of the user, something like <em>admin@internal</em>. Default value is set by <em>OVIRT_USERNAME</em> environment variable.</div> <div>
+<code>password</code>[<em>required</em>] - The password of the user. Default value is set by <em>OVIRT_PASSWORD</em> environment variable.</div> <div>
+<code>url</code> - A string containing the API URL of the server, usually something like `<em>https://server.example.com/ovirt-engine/api</em>`. Default value is set by <em>OVIRT_URL</em> environment variable. Either <code>url</code> or <code>hostname</code> is required.</div> <div>
+<code>hostname</code> - A string containing the hostname of the server, usually something like `<em>server.example.com</em>`. Default value is set by <em>OVIRT_HOSTNAME</em> environment variable. Either <code>url</code> or <code>hostname</code> is required.</div> <div>
+<code>token</code> - Token to be used instead of login with username/password. Default value is set by <em>OVIRT_TOKEN</em> environment variable.</div> <div>
+<code>insecure</code> - A boolean flag that indicates if the server TLS certificate and host name should be checked.</div> <div>
+<code>ca_file</code> - A PEM file containing the trusted CA certificates. The certificate presented by the server will be verified using these CA certificates. If `<code>ca_file</code>` parameter is not set, system wide CA certificate store is used. Default value is set by <em>OVIRT_CAFILE</em> environment variable.</div> <div>
+<code>kerberos</code> - A boolean flag indicating if Kerberos authentication should be used instead of the default basic authentication.</div> <div>
+<code>headers</code> - Dictionary of HTTP headers to be added to each API call.</div> </td> </tr> <tr> <td colspan="1"> <b>bootable</b> </td> <td> </td> <td> <div>
+<em>True</em> if the disk should be bootable. By default when disk is created it isn't bootable.</div> </td> </tr> <tr> <td colspan="1"> <b>description</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Description of the disk image to manage.</div> </td> </tr> <tr> <td colspan="1"> <b>download_image_path</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Path on a file system where disk should be downloaded.</div> <div>Note that you must have an valid oVirt/RHV engine CA in your system trust store or you must provide it in <code>ca_file</code> parameter.</div> <div>Note that the disk is not downloaded when the file already exists, but you can forcibly download the disk when using <code>force</code> I (true).</div> </td> </tr> <tr> <td colspan="1"> <b>fetch_nested</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>True</em> the module will fetch additional data from the API.</div> <div>It will fetch IDs of the VMs disks, snapshots, etc. User can configure to fetch other attributes of the nested entities by specifying <code>nested_attributes</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>force</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Please take a look at <code>image_path</code> documentation to see the correct usage of this parameter.</div> </td> </tr> <tr> <td colspan="1"> <b>format</b> </td> <td> <ul>
+<b>Choices:</b> <li>raw</li> <li>cow</li> </ul> </td> <td> <div>Specify format of the disk.</div> <div>Note that this option isn't idempotent as it's not currently possible to change format of the disk via API.</div> </td> </tr> <tr> <td colspan="1"> <b>id</b> </td> <td> </td> <td> <div>ID of the disk to manage. Either <code>id</code> or <code>name</code> is required.</div> </td> </tr> <tr> <td colspan="1"> <b>image_provider</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>When <code>state</code> is <em>exported</em> disk is exported to given Glance image provider.</div> <div><code>**IMPORTANT**</code></div> <div>There is no reliable way to achieve idempotency, so every time you specify this parameter the disk is exported, so please handle your playbook accordingly to not export the disk all the time. This option is valid only for template disks.</div> </td> </tr> <tr> <td colspan="1"> <b>interface</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>virtio</b> ←</div></li> <li>ide</li> <li>virtio_scsi</li> </ul> </td> <td> <div>Driver of the storage interface.</div> <div>It's required parameter when creating the new disk.</div> </td> </tr> <tr> <td colspan="1"> <b>logical_unit</b> </td> <td> </td> <td> <div>Dictionary which describes LUN to be directly attached to VM:</div> <div>
+<code>address</code> - Address of the storage server. Used by iSCSI.</div> <div>
+<code>port</code> - Port of the storage server. Used by iSCSI.</div> <div>
+<code>target</code> - iSCSI target.</div> <div>
+<code>lun_id</code> - LUN id.</div> <div>
+<code>username</code> - CHAP Username to be used to access storage server. Used by iSCSI.</div> <div>
+<code>password</code> - CHAP Password of the user to be used to access storage server. Used by iSCSI.</div> <div>
+<code>storage_type</code> - Storage type either <em>fcp</em> or <em>iscsi</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> </td> <td> </td> <td> <div>Name of the disk to manage. Either <code>id</code> or <code>name</code>/<code>alias</code> is required.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: alias</div> </td> </tr> <tr> <td colspan="1"> <b>nested_attributes</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Specifies list of the attributes which should be fetched from the API.</div> <div>This parameter apply only when <code>fetch_nested</code> is <em>true</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>openstack_volume_type</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>Name of the openstack volume type. This is valid when working with cinder.</div> </td> </tr> <tr> <td colspan="1"> <b>poll_interval</b> </td> <td> <b>Default:</b><br><div style="color: blue">3</div> </td> <td> <div>Number of the seconds the module waits until another poll request on entity status is sent.</div> </td> </tr> <tr> <td colspan="1"> <b>profile</b> </td> <td> </td> <td> <div>Disk profile name to be attached to disk. By default profile is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>quota_id</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Disk quota ID to be used for disk. By default quota is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>shareable</b> </td> <td> </td> <td> <div>
+<em>True</em> if the disk should be shareable. By default when disk is created it isn't shareable.</div> </td> </tr> <tr> <td colspan="1"> <b>size</b> </td> <td> </td> <td> <div>Size of the disk. Size should be specified using IEC standard units. For example 10GiB, 1024MiB, etc.</div> <div>Size can be only increased, not decreased.</div> </td> </tr> <tr> <td colspan="1"> <b>sparse</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>
+<em>True</em> if the disk should be sparse (also known as <em>thin provision</em>). If the parameter is omitted, cow disks will be created as sparse and raw disks as <em>preallocated</em>
+</div> <div>Note that this option isn't idempotent as it's not currently possible to change sparseness of the disk via API.</div> </td> </tr> <tr> <td colspan="1"> <b>sparsify</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>
+<em>True</em> if the disk should be sparsified.</div> <div>Sparsification frees space in the disk image that is not used by its filesystem. As a result, the image will occupy less space on the storage.</div> <div>Note that this parameter isn't idempotent, as it's not possible to check if the disk should be or should not be sparsified.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>absent</li> <li>attached</li> <li>detached</li> </ul> </td> <td> <div>Should the Virtual Machine disk be present/absent/attached/detached.</div> </td> </tr> <tr> <td colspan="1"> <b>storage_domain</b> </td> <td> </td> <td> <div>Storage domain name where disk should be created. By default storage is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>storage_domains</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Storage domain names where disk should be copied.</div> <div><code>**IMPORTANT**</code></div> <div>There is no reliable way to achieve idempotency, so every time you specify this parameter the disks are copied, so please handle your playbook accordingly to not copy the disks all the time. This is valid only for VM and floating disks, template disks works as expected.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">180</div> </td> <td> <div>The amount of time in seconds the module should wait for the instance to get into desired state.</div> </td> </tr> <tr> <td colspan="1"> <b>upload_image_path</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Path to disk image, which should be uploaded.</div> <div>Note that currently we support only compatibility version 0.10 of the qcow disk.</div> <div>Note that you must have an valid oVirt/RHV engine CA in your system trust store or you must provide it in <code>ca_file</code> parameter.</div> <div>Note that there is no reliable way to achieve idempotency, so if you want to upload the disk even if the disk with <code>id</code> or <code>name</code> exists, then please use <code>force</code> <em>true</em>. If you will use <code>force</code> <em>false</em>, which is default, then the disk image won't be uploaded.</div> </td> </tr> <tr> <td colspan="1"> <b>vm_id</b> </td> <td> </td> <td> <div>ID of the Virtual Machine to manage. Either <code>vm_id</code> or <code>vm_name</code> is required if <code>state</code> is <em>attached</em> or <em>detached</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>vm_name</b> </td> <td> </td> <td> <div>Name of the Virtual Machine to manage. Either <code>vm_id</code> or <code>vm_name</code> is required if <code>state</code> is <em>attached</em> or <em>detached</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>wait</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>
+<em>True</em> if the module should wait for the entity to get into desired state.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>In order to use this module you have to install oVirt Python SDK. To ensure it’s installed with correct version you can create the following task: <em>pip: name=ovirt-engine-sdk-python version=4.2.4</em>
+</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Examples don't contain auth parameter for simplicity,
+# look at ovirt_auth module to see how to reuse authentication:
+
+# Create and attach new disk to VM
+- ovirt_disk:
+    name: myvm_disk
+    vm_name: rhel7
+    size: 10GiB
+    format: cow
+    interface: virtio
+    storage_domain: data
+
+# Attach logical unit to VM rhel7
+- ovirt_disk:
+    vm_name: rhel7
+    logical_unit:
+      target: iqn.2016-08-09.brq.str-01:omachace
+      id: 1IET_000d0001
+      address: 10.34.63.204
+    interface: virtio
+
+# Detach disk from VM
+- ovirt_disk:
+    state: detached
+    name: myvm_disk
+    vm_name: rhel7
+    size: 10GiB
+    format: cow
+    interface: virtio
+
+# Change Disk Name
+- ovirt_disk:
+    id: 00000000-0000-0000-0000-000000000000
+    storage_domain: data
+    name: "new disk name"
+    vm_name: rhel7
+
+# Upload local image to disk and attach it to vm:
+# Since Ansible 2.3
+- ovirt_disk:
+    name: mydisk
+    vm_name: myvm
+    interface: virtio
+    size: 10GiB
+    format: cow
+    image_path: /path/to/mydisk.qcow2
+    storage_domain: data
+
+# Download disk to local file system:
+# Since Ansible 2.3
+- ovirt_disk:
+    id: 7de90f31-222c-436c-a1ca-7e655bd5b60c
+    download_image_path: /home/user/mydisk.qcow2
+
+# Export disk as image to Glance domain
+# Since Ansible 2.4
+- ovirt_disks:
+    id: 7de90f31-222c-436c-a1ca-7e655bd5b60c
+    image_provider: myglance
+    state: exported
+
+# Defining a specific quota while creating a disk image:
+# Since Ansible 2.5
+- ovirt_quotas_facts:
+    data_center: Default
+    name: myquota
+- ovirt_disk:
+    name: mydisk
+    size: 10GiB
+    storage_domain: data
+    description: somedescriptionhere
+    quota_id: "{{ ovirt_quotas[0]['id'] }}"
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>disk</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>On success if disk is found and <code>vm_id</code> or <code>vm_name</code> wasn't passed.</td> <td> <div>Dictionary of all the disk attributes. Disk attributes can be found on your oVirt/RHV instance at following url: http://ovirt.github.io/ovirt-engine-api-model/master/#types/disk.</div> <br> </td> </tr> <tr> <td colspan="1"> <b>disk_attachment</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>On success if disk is found and <code>vm_id</code> or <code>vm_name</code> was passed and VM was found.</td> <td> <div>Dictionary of all the disk attachment attributes. Disk attachment attributes can be found on your oVirt/RHV instance at following url: http://ovirt.github.io/ovirt-engine-api-model/master/#types/disk_attachment.</div> <br> </td> </tr> <tr> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">str</div> </td> <td>On success if disk is found.</td> <td> <div>ID of the managed disk</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">7de90f31-222c-436c-a1ca-7e655bd5b60c</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Ondra Machacek (@machacekondra)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/ovirt/ovirt_disk.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/ovirt_disk_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/ovirt_disk_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

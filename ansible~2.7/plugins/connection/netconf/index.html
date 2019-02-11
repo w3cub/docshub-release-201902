@@ -1,0 +1,113 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Netconf - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.3. ">
+  <meta name="keywords" content="netconf, -, provides, persistent, connection, using, protocol, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/plugins/connection/netconf/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="netconf-connection">netconf - Provides a persistent connection using the netconf protocol</h1> <div class="versionadded" id="netconf-provides-a-persistent-connection-using-the-netconf-protocol"> <p><span class="versionmodified">New in version 2.3.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li>
+<a class="reference internal" href="#status" id="id4">Status</a><ul> <li><a class="reference internal" href="#author" id="id5">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>This connection plugin provides a connection to remote devices over the SSH NETCONF subsystem. This connection plugin is typically used by network devices for sending and receiving RPC calls over NETCONF.</li> <li>Note this connection plugin requires ncclient to be installed on the local Ansible controller.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the local master node that executes this connection.</p> <ul class="simple"> <li>ncclient</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th>Configuration</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>host</b> </td> <td> <b>Default:</b><br><div style="color: blue">inventory_hostname</div> </td> <td> <div>var: ansible_host</div> </td> <td> <div>Specifies the remote device FQDN or IP address to establish the SSH connection to.</div> </td> </tr> <tr> <td colspan="1"> <b>host_key_auto_add</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div> ini entries: <p>[paramiko_connection]<br>host_key_auto_add = no</p> </div> <div>env:ANSIBLE_HOST_KEY_AUTO_ADD</div> </td> <td> <div>By default, Ansible will prompt the user before adding SSH keys to the known hosts file. Enabling this option, unknown host keys will automatically be added to the known hosts file.</div> <div>Be sure to fully understand the security implications of enabling this option on production systems as it could create a security vulnerability.</div> </td> </tr> <tr> <td colspan="1"> <b>host_key_checking</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td> <b>Default:</b><br><div style="color: blue">yes</div> </td> <td> <div> ini entries: <p>[defaults]<br>host_key_checking = yes</p> <p>[paramiko_connection]<br>host_key_checking = yes</p> </div> <div>env:ANSIBLE_HOST_KEY_CHECKING</div> <div>env:ANSIBLE_SSH_HOST_KEY_CHECKING</div> <div>env:ANSIBLE_NETCONF_HOST_KEY_CHECKING</div> <div>var: ansible_host_key_checking</div> <div>var: ansible_ssh_host_key_checking</div> <div>var: ansible_netconf_host_key_checking</div> </td> <td> <div>Set this to "False" if you want to avoid host key checking by the underlying tools Ansible uses to connect to the host</div> </td> </tr> <tr> <td colspan="1"> <b>look_for_keys</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td> <b>Default:</b><br><div style="color: blue">yes</div> </td> <td> <div> ini entries: <p>[paramiko_connection]<br>look_for_keys = yes</p> </div> <div>env:ANSIBLE_PARAMIKO_LOOK_FOR_KEYS</div> </td> <td> <div>enables looking for ssh keys in the usual locations for ssh keys (e.g. :file:`~/.ssh/id_*`)</div> </td> </tr> <tr> <td colspan="1"> <b>netconf_ssh_config</b> </td> <td> </td> <td> <div> ini entries: <p>[netconf_connection]<br>ssh_config = VALUE</p> </div> <div>env:ANSIBLE_NETCONF_SSH_CONFIG</div> <div>var: ansible_netconf_ssh_config</div> </td> <td> <div>This variable is used to enable bastion/jump host with netconf connection. If set to True the bastion/jump host ssh settings should be present in ~/.ssh/config file, alternatively it can be set to custom ssh configuration file path to read the bastion/jump host settings.</div> </td> </tr> <tr> <td colspan="1"> <b>network_os</b> </td> <td> </td> <td> <div>var: ansible_network_os</div> </td> <td> <div>Configures the device platform network operating system. This value is used to load a device specific netconf plugin. If this option is not configured, then the default netconf plugin will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> </td> <td> </td> <td> <div>var: ansible_password</div> <div>var: ansible_ssh_pass</div> </td> <td> <div>Configures the user password used to authenticate to the remote device when first establishing the SSH connection.</div> </td> </tr> <tr> <td colspan="1"> <b>persistent_command_timeout</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">10</div> </td> <td> <div> ini entries: <p>[persistent_connection]<br>command_timeout = 10</p> </div> <div>env:ANSIBLE_PERSISTENT_COMMAND_TIMEOUT</div> <div>var: ansible_command_timeout</div> </td> <td> <div>Configures, in seconds, the amount of time to wait for a command to return from the remote device. If this timer is exceeded before the command returns, the connection plugin will raise an exception and close</div> </td> </tr> <tr> <td colspan="1"> <b>persistent_connect_timeout</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">30</div> </td> <td> <div> ini entries: <p>[persistent_connection]<br>connect_timeout = 30</p> </div> <div>env:ANSIBLE_PERSISTENT_CONNECT_TIMEOUT</div> </td> <td> <div>Configures, in seconds, the amount of time to wait when trying to initially establish a persistent connection. If this value expires before the connection to the remote device is completed, the connection will fail</div> </td> </tr> <tr> <td colspan="1"> <b>port</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">830</div> </td> <td> <div> ini entries: <p>[defaults]<br>remote_port = 830</p> </div> <div>env:ANSIBLE_REMOTE_PORT</div> <div>var: ansible_port</div> </td> <td> <div>Specifies the port on the remote device to listening for connections when establishing the SSH connection.</div> </td> </tr> <tr> <td colspan="1"> <b>private_key_file</b> </td> <td> </td> <td> <div> ini entries: <p>[defaults]<br>private_key_file = VALUE</p> </div> <div>env:ANSIBLE_PRIVATE_KEY_FILE</div> <div>var: ansible_private_key_file</div> </td> <td> <div>The private SSH key or certificate file used to to authenticate to the remote device when first establishing the SSH connection.</div> </td> </tr> <tr> <td colspan="1"> <b>remote_user</b> </td> <td> </td> <td> <div> ini entries: <p>[defaults]<br>remote_user = VALUE</p> </div> <div>env:ANSIBLE_REMOTE_USER</div> <div>var: ansible_user</div> </td> <td> <div>The username used to authenticate to the remote device when the SSH connection is first established. If the remote_user is not specified, the connection will use the username of the logged in user.</div> <div>Can be configured form the CLI via the <code>--user</code> or <code>-u</code> options</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">120</div> </td> <td> </td> <td> <div>Sets the connection time for the communicating with the remote device. This timeout is used as the default timeout value when awaiting a response after issuing a call to a RPC. If the RPC does not return in timeout seconds, an error is generated.</div> </td> </tr> </table> <br>  <h2 id="status">Status</h2>  <h3 id="author">Author</h3> <ul class="simple"> <li>Ansible Networking Team</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/plugins/connection/netconf.py" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/plugins/connection/netconf.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/plugins/connection/netconf.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

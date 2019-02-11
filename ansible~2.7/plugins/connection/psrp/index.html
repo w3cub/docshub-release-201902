@@ -1,0 +1,124 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Psrp - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.7. ">
+  <meta name="keywords" content="psrp, -, run, tasks, over, microsoft, powershell, remoting, protocol, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/plugins/connection/psrp/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="psrp-connection">psrp - Run tasks over Microsoft PowerShell Remoting Protocol</h1> <div class="versionadded" id="psrp-run-tasks-over-microsoft-powershell-remoting-protocol"> <p><span class="versionmodified">New in version 2.7.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li>
+<a class="reference internal" href="#status" id="id4">Status</a><ul> <li><a class="reference internal" href="#author" id="id5">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Run commands or put/fetch on a target via PSRP (WinRM plugin)</li> <li>This is similar to the <em>winrm</em> connection plugin which uses the same underlying transport but instead runs in a PowerShell interpreter.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the local master node that executes this connection.</p> <ul class="simple"> <li>pypsrp (Python library)</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th>Configuration</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>auth</b> </td> <td> <ul>
+<b>Choices:</b> <li>basic</li> <li>certificate</li> <li><div style="color: blue">
+<b>negotiate</b> ←</div></li> <li>kerberos</li> <li>ntlm</li> <li>credssp</li> </ul> </td> <td> <div>var: ansible_psrp_auth</div> </td> <td> <div>The authentication protocol to use when authenticating the remote user.</div> <div>The default, <code>negotiate</code>, will attempt to use <code>Kerberos</code> if it is available and fall back to <code>NTLM</code> if it isn't.</div> </td> </tr> <tr> <td colspan="1"> <b>cert_trust_path</b> </td> <td> </td> <td> <div>var: ansible_psrp_cert_trust_path</div> </td> <td> <div>The path to a PEM certificate chain to use when validating the server's certificate.</div> <div>This value is ignored if <em>cert_validation</em> is set to <code>ignore</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>cert_validation</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>validate</b> ←</div></li> <li>ignore</li> </ul> </td> <td> <div>var: ansible_psrp_cert_validation</div> </td> <td> <div>Whether to validate the remote server's certificate or not.</div> <div>Set to <code>ignore</code> to not validate any certificates.</div> <div>
+<em>cert_trust_path</em> can be set to the path of a PEM certificate chain to use in the validation.</div> </td> </tr> <tr> <td colspan="1"> <b>configuration_name</b> </td> <td> <b>Default:</b><br><div style="color: blue">Microsoft.PowerShell</div> </td> <td> <div>var: ansible_psrp_configuration_name</div> </td> <td> <div>The name of the PowerShell configuration endpoint to connect to.</div> </td> </tr> <tr> <td colspan="1"> <b>connection_timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">30</div> </td> <td> <div>var: ansible_psrp_connection_timeout</div> </td> <td> <div>The connection timeout for making the request to the remote host.</div> <div>This is measured in seconds.</div> </td> </tr> <tr> <td colspan="1"> <b>ignore_proxy</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>var: ansible_psrp_ignore_proxy</div> </td> <td> <div>Will disable any environment proxy settings and connect directly to the remote host.</div> <div>This option is ignored if <code>proxy</code> is set.</div> </td> </tr> <tr> <td colspan="1"> <b>max_envelope_size</b> </td> <td> <b>Default:</b><br><div style="color: blue">153600</div> </td> <td> <div>var: ansible_psrp_max_envelope_size</div> </td> <td> <div>Sets the maximum size of each WSMan message sent to the remote host.</div> <div>This is measured in bytes.</div> <div>Defaults to <code>150KiB</code> for compatibility with older hosts.</div> </td> </tr> <tr> <td colspan="1"> <b>message_encryption</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>auto</b> ←</div></li> <li>always</li> <li>never</li> </ul> </td> <td> <div>var: ansible_psrp_message_encryption</div> </td> <td> <div>Controls the message encryption settings, this is different from TLS encryption when <em>ansible_psrp_protocol</em> is <code>https</code>.</div> <div>Only the auth protocols <code>negotiate</code>, <code>kerberos</code>, <code>ntlm</code>, and <code>credssp</code> can do message encryption. The other authentication protocols only support encryption when <code>protocol</code> is set to <code>https</code>.</div> <div>
+<code>auto</code> means means message encryption is only used when not using TLS/HTTPS.</div> <div>
+<code>always</code> is the same as <code>auto</code> but message encryption is always used even when running over TLS/HTTPS.</div> <div>
+<code>never</code> disables any encryption checks that are in place when running over HTTP and disables any authentication encryption processes.</div> </td> </tr> <tr> <td colspan="1"> <b>operation_timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">20</div> </td> <td> <div>var: ansible_psrp_operation_timeout</div> </td> <td> <div>Sets the WSMan timeout for each operation.</div> <div>This is measured in seconds.</div> <div>This should not exceed the value for <code>connection_timeout</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>path</b> </td> <td> <b>Default:</b><br><div style="color: blue">wsman</div> </td> <td> <div>var: ansible_psrp_path</div> </td> <td> <div>The URI path to connect to.</div> </td> </tr> <tr> <td colspan="1"> <b>port</b> </td> <td> </td> <td> <div>var: ansible_port</div> <div>var: ansible_psrp_port</div> </td> <td> <div>The port for PSRP to connect on the remote target.</div> <div>Default is <code>5986</code> if <em>protocol</em> is not defined or is <code>https</code>, otherwise the port is <code>5985</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>protocol</b> </td> <td> <ul>
+<b>Choices:</b> <li>http</li> <li>https</li> </ul> </td> <td> <div>var: ansible_psrp_protocol</div> </td> <td> <div>Set the protocol to use for the connection.</div> <div>Default is <code>https</code> if <em>port</em> is not defined or <em>port</em> is not <code>5985</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>proxy</b> </td> <td> </td> <td> <div>var: ansible_psrp_proxy</div> </td> <td> <div>Set the proxy URL to use when connecting to the remote host.</div> </td> </tr> <tr> <td colspan="1"> <b>remote_addr</b> </td> <td> <b>Default:</b><br><div style="color: blue">inventory_hostname</div> </td> <td> <div>var: ansible_host</div> <div>var: ansible_psrp_host</div> </td> <td> <div>The hostname or IP address of the remote host.</div> </td> </tr> <tr> <td colspan="1"> <b>remote_user</b> </td> <td> </td> <td> <div>var: ansible_user</div> <div>var: ansible_psrp_user</div> </td> <td> <div>The user to log in as.</div> </td> </tr> </table> <br>  <h2 id="status">Status</h2>  <h3 id="author">Author</h3> <ul class="simple"> <li>Ansible Core Team</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/plugins/connection/psrp.py" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/plugins/connection/psrp.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/plugins/connection/psrp.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

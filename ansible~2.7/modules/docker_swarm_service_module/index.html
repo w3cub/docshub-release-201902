@@ -1,0 +1,238 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Docker_swarm_service - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.7. ">
+  <meta name="keywords" content="docker, swarm, service, -, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/docker_swarm_service_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="docker-swarm-service-module">docker_swarm_service - docker swarm service</h1> <div class="versionadded" id="docker-swarm-service-docker-swarm-service"> <p><span class="versionmodified">New in version 2.7.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Manage docker services. Allows live altering of already defined services</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>docker-py &gt;= 2.0</li> <li>Please note that the <a class="reference external" href="https://pypi.org/project/docker-py/" target="_blank">docker-py</a> Python module has been superseded by <a class="reference external" href="https://pypi.org/project/docker/" target="_blank">docker</a> (see <a class="reference external" href="https://github.com/docker/docker-py/issues/1310" target="_blank">here</a> for details). Version 2.1.0 or newer is only available with the <code>docker</code> module.</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>api_version</b> </td> <td> <b>Default:</b><br><div style="color: blue">auto</div> </td> <td> <div>The version of the Docker API running on the Docker Host. Defaults to the latest version of the API supported by docker-py.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_API_VERSION</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_api_version</div> </td> </tr> <tr> <td colspan="1"> <b>args</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List comprised of the command and the arguments to be run inside</div> <div>the container</div> </td> </tr> <tr> <td colspan="1"> <b>cacert_path</b> </td> <td> </td> <td> <div>Use a CA certificate when performing server verification by providing the path to a CA certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>ca.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_ca_cert</div> </td> </tr> <tr> <td colspan="1"> <b>cert_path</b> </td> <td> </td> <td> <div>Path to the client's TLS certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>cert.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_cert</div> </td> </tr> <tr> <td colspan="1"> <b>configs</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of dictionaries describing the service configs.</div> <div>Every item must be a dictionary exposing the keys config_id, config_name, filename, uid (defaults to 0), gid (defaults to 0), mode (defaults to 0o444)</div> <div>Maps docker service --config option.</div> </td> </tr> <tr> <td colspan="1"> <b>constraints</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of the service constraints.</div> <div>Maps docker service --constraint option.</div> </td> </tr> <tr> <td colspan="1"> <b>container_labels</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of the service containers labels.</div> <div>Maps docker service --container-label option.</div> </td> </tr> <tr> <td colspan="1"> <b>debug</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Debug mode</div> </td> </tr> <tr> <td colspan="1"> <b>dns</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of custom DNS servers.</div> <div>Maps docker service --dns option.</div> <div>Requires api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>dns_options</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of custom DNS options.</div> <div>Maps docker service --dns-option option.</div> <div>Requires api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>dns_search</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of custom DNS search domains.</div> <div>Maps docker service --dns-search option.</div> <div>Requires api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>docker_host</b> </td> <td> <b>Default:</b><br><div style="color: blue">unix://var/run/docker.sock</div> </td> <td> <div>The URL or Unix socket path used to connect to the Docker API. To connect to a remote host, provide the TCP connection string. For example, 'tcp://192.0.2.23:2376'. If TLS is used to encrypt the connection, the module will automatically replace 'tcp' in the connection URL with 'https'.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_HOST</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_url</div> </td> </tr> <tr> <td colspan="1"> <b>endpoint_mode</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>vip</b> ←</div></li> <li>dnsrr</li> </ul> </td> <td> <div>Service endpoint mode.</div> <div>Maps docker service --endpoint-mode option.</div> </td> </tr> <tr> <td colspan="1"> <b>env</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of the service environment variables.</div> <div>Maps docker service --env option.</div> </td> </tr> <tr> <td colspan="1"> <b>force_update</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Force update even if no changes require it.</div> <div>Maps to docker service update --force option.</div> <div>Requires api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>hostname</b> </td> <td> <b>Default:</b><br> </td> <td> <div>Container hostname</div> <div>Maps docker service --hostname option.</div> <div>Requires api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>image</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Service image path and tag. Maps docker service IMAGE parameter.</div> </td> </tr> <tr> <td colspan="1"> <b>key_path</b> </td> <td> </td> <td> <div>Path to the client's TLS key file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>key.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_key</div> </td> </tr> <tr> <td colspan="1"> <b>labels</b> </td> <td> </td> <td> <div>List of the service labels.</div> <div>Maps docker service --label option.</div> </td> </tr> <tr> <td colspan="1"> <b>limit_cpu</b> </td> <td> <b>Default:</b><br><div style="color: blue">0.0</div> </td> <td> <div>Service CPU limit. 0 equals no limit.</div> <div>Maps docker service --limit-cpu option.</div> </td> </tr> <tr> <td colspan="1"> <b>limit_memory</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Service memory limit in MB. 0 equals no limit.</div> <div>Maps docker service --limit-memory option.</div> </td> </tr> <tr> <td colspan="1"> <b>log_driver</b> </td> <td> <b>Default:</b><br><div style="color: blue">json-file</div> </td> <td> <div>Configure the logging driver for a service</div> </td> </tr> <tr> <td colspan="1"> <b>log_driver_options</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>Options for service logging driver</div> </td> </tr> <tr> <td colspan="1"> <b>mode</b> </td> <td> <b>Default:</b><br><div style="color: blue">replicated</div> </td> <td> <div>Service replication mode.</div> <div>Maps docker service --mode option.</div> </td> </tr> <tr> <td colspan="1"> <b>mounts</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of dictionaries describing the service mounts.</div> <div>Every item must be a dictionary exposing the keys source, target, type (defaults to 'bind'), readonly (defaults to false)</div> <div>Maps docker service --mount option.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Service name</div> </td> </tr> <tr> <td colspan="1"> <b>networks</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of the service networks names.</div> <div>Maps docker service --network option.</div> </td> </tr> <tr> <td colspan="1"> <b>publish</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of dictionaries describing the service published ports.</div> <div>Every item must be a dictionary exposing the keys published_port, target_port, protocol (defaults to 'tcp'), mode &lt;ingress|host&gt;, default to ingress.</div> <div>Only used with api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>replicas</b> </td> <td> <b>Default:</b><br><div style="color: blue">-1</div> </td> <td> <div>Number of containers instantiated in the service. Valid only if ``mode=='replicated'``.</div> <div>If set to -1, and service is not present, service replicas will be set to 1.</div> <div>If set to -1, and service is present, service replicas will be unchanged.</div> <div>Maps docker service --replicas option.</div> </td> </tr> <tr> <td colspan="1"> <b>reserve_cpu</b> </td> <td> <b>Default:</b><br><div style="color: blue">0.0</div> </td> <td> <div>Service CPU reservation. 0 equals no reservation.</div> <div>Maps docker service --reserve-cpu option.</div> </td> </tr> <tr> <td colspan="1"> <b>reserve_memory</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Service memory reservation in MB. 0 equals no reservation.</div> <div>Maps docker service --reserve-memory option.</div> </td> </tr> <tr> <td colspan="1"> <b>restart_policy</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>none</b> ←</div></li> <li>on-failure</li> <li>any</li> </ul> </td> <td> <div>Restart condition of the service.</div> <div>Maps docker service --restart-condition option.</div> </td> </tr> <tr> <td colspan="1"> <b>restart_policy_attempts</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Maximum number of service restarts.</div> <div>Maps docker service --restart-max-attempts option.</div> </td> </tr> <tr> <td colspan="1"> <b>restart_policy_delay</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Delay between restarts.</div> <div>Maps docker service --restart-delay option.</div> </td> </tr> <tr> <td colspan="1"> <b>restart_policy_window</b> </td> <td> <b>Default:</b><br><div style="color: blue">0</div> </td> <td> <div>Restart policy evaluation window.</div> <div>Maps docker service --restart-window option.</div> </td> </tr> <tr> <td colspan="1"> <b>secrets</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>List of dictionaries describing the service secrets.</div> <div>Every item must be a dictionary exposing the keys secret_id, secret_name, filename, uid (defaults to 0), gid (defaults to 0), mode (defaults to 0o444)</div> <div>Maps docker service --secret option.</div> </td> </tr> <tr> <td colspan="1"> <b>ssl_version</b> </td> <td> </td> <td> <div>Provide a valid SSL version number. Default value determined by ssl.py module.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_SSL_VERSION</code> will be used instead.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>absent</li> </ul> </td> <td> <div>Service state.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">60</div> </td> <td> <div>The maximum amount of time in seconds to wait on a response from the API.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TIMEOUT</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS without verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_hostname</b> </td> <td> <b>Default:</b><br><div style="color: blue">localhost</div> </td> <td> <div>When verifying the authenticity of the Docker Host server, provide the expected name of the server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_HOSTNAME</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_verify</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS and verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_VERIFY</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tty</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Allocate a pseudo-TTY</div> <div>Maps docker service --tty option.</div> <div>Requires api_version &gt;= 1.25</div> </td> </tr> <tr> <td colspan="1"> <b>update_delay</b> </td> <td> <b>Default:</b><br><div style="color: blue">10</div> </td> <td> <div>Rolling update delay</div> <div>Maps docker service --update-delay option</div> </td> </tr> <tr> <td colspan="1"> <b>update_failure_action</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>continue</b> ←</div></li> <li>pause</li> </ul> </td> <td> <div>Action to take in case of container failure</div> <div>Maps to docker service --update-failure-action option</div> </td> </tr> <tr> <td colspan="1"> <b>update_max_failure_ratio</b> </td> <td> <b>Default:</b><br><div style="color: blue">0.0</div> </td> <td> <div>Fraction of tasks that may fail during an update before the failure action is invoked</div> <div>Maps to docker service --update-max-failure-ratio</div> </td> </tr> <tr> <td colspan="1"> <b>update_monitor</b> </td> <td> <b>Default:</b><br><div style="color: blue">5000000000</div> </td> <td> <div>Time to monitor updated tasks for failures, in nanoseconds.</div> <div>Maps to docker service --update-monitor option</div> </td> </tr> <tr> <td colspan="1"> <b>update_order</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>stop-first</b> ←</div></li> <li>start-first</li> </ul> </td> <td> <div>Specifies the order of operations when rolling out an updated task.</div> <div>Maps to docker service --update-order</div> </td> </tr> <tr> <td colspan="1"> <b>update_parallelism</b> </td> <td> <b>Default:</b><br><div style="color: blue">1</div> </td> <td> <div>Rolling update parallelism</div> <div>Maps docker service --update-parallelism option</div> </td> </tr> <tr> <td colspan="1"> <b>user</b> </td> <td> <b>Default:</b><br><div style="color: blue">root</div> </td> <td> <div>username or UID</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>Connect to the Docker daemon by providing parameters with each task or by defining environment variables. You can define DOCKER_HOST, DOCKER_TLS_HOSTNAME, DOCKER_API_VERSION, DOCKER_CERT_PATH, DOCKER_SSL_VERSION, DOCKER_TLS, DOCKER_TLS_VERIFY and DOCKER_TIMEOUT. If you are using docker machine, run the script shipped with the product that sets up the environment. It will set these variables for you. See <a class="reference external" href="https://docker-py.readthedocs.io/en/stable/machine/" target="_blank">https://docker-py.readthedocs.io/en/stable/machine/</a> for more details.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">-   name: define myservice
+    docker_swarm_service:
+        name: myservice
+        image: "alpine"
+        args:
+        - "sleep"
+        - "3600"
+        mounts:
+        -   source: /tmp/
+            target: /remote_tmp/
+            type: bind
+        env:
+        -   "ENVVAR1=envvar1"
+        log_driver: fluentd
+        log_driver_options:
+          fluentd-address: "127.0.0.1:24224"
+          fluentd-async-connect: true
+          tag: "{{.Name}}/{{.ID}}"
+        restart_policy: any
+        restart_policy_attempts: 5
+        restart_policy_window: 30
+    register: dss_out1
+-   name: change myservice.env
+    docker_swarm_service:
+        name: myservice
+        image: "alpine"
+        args:
+        -   "sleep"
+        -   "7200"
+        mounts:
+        -   source: /tmp/
+            target: /remote_tmp/
+            type: bind
+        env:
+        -   "ENVVAR1=envvar1"
+        restart_policy: any
+        restart_policy_attempts: 5
+        restart_policy_window: 30
+    register: dss_out2
+-   name: test for changed myservice facts
+    fail:
+        msg: unchanged service
+    when: "{{ dss_out1 == dss_out2 }}"
+-   name: change myservice.image
+    docker_swarm_service:
+        name: myservice
+        image: "alpine:edge"
+        args:
+        -   "sleep"
+        -   "7200"
+        mounts:
+        -   source: /tmp/
+            target: /remote_tmp/
+            type: bind
+        env:
+        -   "ENVVAR1=envvar1"
+        restart_policy: any
+        restart_policy_attempts: 5
+        restart_policy_window: 30
+    register: dss_out3
+-   name: test for changed myservice facts
+    fail:
+        msg: unchanged service
+    when: "{{ dss_out2 == dss_out3 }}"
+-   name: remove mount
+    docker_swarm_service:
+        name: myservice
+        image: "alpine:edge"
+        args:
+        -   "sleep"
+        -   "7200"
+        env:
+        -   "ENVVAR1=envvar1"
+        restart_policy: any
+        restart_policy_attempts: 5
+        restart_policy_window: 30
+    register: dss_out4
+-   name: test for changed myservice facts
+    fail:
+        msg: unchanged service
+    when: "{{ dss_out3 == dss_out4 }}"
+-   name: keep service as it is
+    docker_swarm_service:
+        name: myservice
+        image: "alpine:edge"
+        args:
+        -   "sleep"
+        -   "7200"
+        env:
+        -   "ENVVAR1=envvar1"
+        restart_policy: any
+        restart_policy_attempts: 5
+        restart_policy_window: 30
+    register: dss_out5
+-   name: test for changed service facts
+    fail:
+        msg: changed service
+    when: "{{ dss_out5 != dss_out5 }}"
+-   name: remove myservice
+    docker_swarm_service:
+        name: myservice
+        state: absent
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>ansible_swarm_service</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>always</td> <td> <div>Dictionary of variables representing the current state of the service. Matches the module parameters format.</div> <div>Note that facts are not part of registered vars but accessible directly.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{ "args": [ "sleep", "3600" ], "constraints": [], "container_labels": {}, "endpoint_mode": "vip", "env": [ "ENVVAR1=envvar1" ], "force_update": False, "image": "alpine", "labels": {}, "limit_cpu": 0.0, "limit_memory": 0, "log_driver": "json-file", "log_driver_options": {}, "mode": "replicated", "mounts": [ { "source": "/tmp/", "target": "/remote_tmp/", "type": "bind" } ], "secrets": [], "configs": [], "networks": [], "publish": [], "replicas": 1, "reserve_cpu": 0.0, "reserve_memory": 0, "restart_policy": "any", "restart_policy_attempts": 5, "restart_policy_delay": 0, "restart_policy_window": 30, "update_delay": 10, "update_parallelism": 1, "update_failure_action": "continue", "update_monitor": 5000000000 "update_max_failure_ratio": 0, "update_order": "stop-first" }</div> </td> </tr> <tr> <td colspan="1"> <b>changes</b> <br><div style="font-size: small; color: red">list</div> </td> <td>always</td> <td> <div>List of changed service attributes if a service has been altered, [] otherwhise</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['container_labels', 'replicas']</div> </td> </tr> <tr> <td colspan="1"> <b>rebuilt</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>always</td> <td> <div>True if the service has been recreated (removed and created)</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">True</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Dario Zanzico (@dariko), Jason Witkowski (@jwitko)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/docker/docker_swarm_service.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/docker_swarm_service_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/docker_swarm_service_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

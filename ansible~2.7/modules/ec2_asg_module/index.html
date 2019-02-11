@@ -1,0 +1,193 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ec2_asg - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 1.6. ">
+  <meta name="keywords" content="ec, asg, -, create, or, delete, aws, autoscaling, groups, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/ec2_asg_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ec2-asg-module">ec2_asg - Create or delete AWS Autoscaling Groups</h1> <div class="versionadded" id="ec2-asg-create-or-delete-aws-autoscaling-groups"> <p><span class="versionmodified">New in version 1.6.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Can create or delete AWS Autoscaling Groups</li> <li>Works with the ec2_lc module to manage Launch Configurations</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>boto</li> <li>boto3</li> <li>botocore</li> <li>python &gt;= 2.6</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>availability_zones</b> </td> <td> </td> <td> <div>List of availability zone names in which to create the group. Defaults to all the availability zones in the region if vpc_zone_identifier is not set.</div> </td> </tr> <tr> <td colspan="1"> <b>aws_access_key</b> </td> <td> </td> <td> <div>AWS access key. If not set then the value of the AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY or EC2_ACCESS_KEY environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ec2_access_key, access_key</div> </td> </tr> <tr> <td colspan="1"> <b>aws_secret_key</b> </td> <td> </td> <td> <div>AWS secret key. If not set then the value of the AWS_SECRET_ACCESS_KEY, AWS_SECRET_KEY, or EC2_SECRET_KEY environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: ec2_secret_key, secret_key</div> </td> </tr> <tr> <td colspan="1"> <b>default_cooldown</b> <br><div style="font-size: small; color: darkgreen">(added in 2.0)</div> </td> <td> <b>Default:</b><br><div style="color: blue">300 seconds</div> </td> <td> <div>The number of seconds after a scaling activity completes before another can begin.</div> </td> </tr> <tr> <td colspan="1"> <b>desired_capacity</b> </td> <td> </td> <td> <div>Desired number of instances in group, if unspecified then the current group value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>ec2_url</b> </td> <td> </td> <td> <div>Url to use to connect to EC2 or your Eucalyptus cloud (by default the module will use EC2 endpoints). Ignored for modules where region is required. Must be specified for all other modules if region is not used. If not set then the value of the EC2_URL environment variable, if any, is used.</div> </td> </tr> <tr> <td colspan="1"> <b>health_check_period</b> <br><div style="font-size: small; color: darkgreen">(added in 1.7)</div> </td> <td> <b>Default:</b><br><div style="color: blue">500 seconds</div> </td> <td> <div>Length of time in seconds after a new EC2 instance comes into service that Auto Scaling starts checking its health.</div> </td> </tr> <tr> <td colspan="1"> <b>health_check_type</b> <br><div style="font-size: small; color: darkgreen">(added in 1.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>EC2</b> ←</div></li> <li>ELB</li> </ul> </td> <td> <div>The service you want the health status from, Amazon EC2 or Elastic Load Balancer.</div> </td> </tr> <tr> <td colspan="1"> <b>launch_config_name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Name of the Launch configuration to use for the group. See the ec2_lc module for managing these. If unspecified then the current group value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>lc_check</b> <br><div style="font-size: small; color: darkgreen">(added in 1.8)</div> </td> <td> <b>Default:</b><br><div style="color: blue">yes</div> </td> <td> <div>Check to make sure instances that are being replaced with replace_instances do not already have the current launch_config.</div> </td> </tr> <tr> <td colspan="1"> <b>load_balancers</b> </td> <td> </td> <td> <div>List of ELB names to use for the group. Use for classic load balancers.</div> </td> </tr> <tr> <td colspan="1"> <b>max_size</b> </td> <td> </td> <td> <div>Maximum number of instances in group, if unspecified then the current group value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>metrics_collection</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Enable ASG metrics collection</div> </td> </tr> <tr> <td colspan="1"> <b>metrics_granularity</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> <b>Default:</b><br><div style="color: blue">1minute</div> </td> <td> <div>When metrics_collection is enabled this will determine granularity of metrics collected by CloudWatch</div> </td> </tr> <tr> <td colspan="1"> <b>metrics_list</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> <b>Default:</b><br><div style="color: blue">[u'GroupMinSize', u'GroupMaxSize', u'GroupDesiredCapacity', u'GroupInServiceInstances', u'GroupPendingInstances', u'GroupStandbyInstances', u'GroupTerminatingInstances', u'GroupTotalInstances']</div> </td> <td> <div>List of autoscaling metrics to collect when enabling metrics_collection</div> </td> </tr> <tr> <td colspan="1"> <b>min_size</b> </td> <td> </td> <td> <div>Minimum number of instances in group, if unspecified then the current group value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Unique name for group to be created or deleted</div> </td> </tr> <tr> <td colspan="1"> <b>notification_topic</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>A SNS topic ARN to send auto scaling notifications to.</div> </td> </tr> <tr> <td colspan="1"> <b>notification_types</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <b>Default:</b><br><div style="color: blue">[u'autoscaling:EC2_INSTANCE_LAUNCH', u'autoscaling:EC2_INSTANCE_LAUNCH_ERROR', u'autoscaling:EC2_INSTANCE_TERMINATE', u'autoscaling:EC2_INSTANCE_TERMINATE_ERROR']</div> </td> <td> <div>A list of auto scaling events to trigger notifications on.</div> </td> </tr> <tr> <td colspan="1"> <b>placement_group</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Physical location of your cluster placement group created in Amazon EC2.</div> </td> </tr> <tr> <td colspan="1"> <b>profile</b> <br><div style="font-size: small; color: darkgreen">(added in 1.6)</div> </td> <td> </td> <td> <div>Uses a boto profile. Only works with boto &gt;= 2.24.0.</div> </td> </tr> <tr> <td colspan="1"> <b>region</b> </td> <td> </td> <td> <div>The AWS region to use. If not specified then the value of the AWS_REGION or EC2_REGION environment variable, if any, is used. See <a href="http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region" target="_blank">http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region</a>
+</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: aws_region, ec2_region</div> </td> </tr> <tr> <td colspan="1"> <b>replace_all_instances</b> <br><div style="font-size: small; color: darkgreen">(added in 1.8)</div> </td> <td> <b>Default:</b><br><div style="color: blue">no</div> </td> <td> <div>In a rolling fashion, replace all instances with an old launch configuration with one from the current launch configuration.</div> </td> </tr> <tr> <td colspan="1"> <b>replace_batch_size</b> <br><div style="font-size: small; color: darkgreen">(added in 1.8)</div> </td> <td> <b>Default:</b><br><div style="color: blue">1</div> </td> <td> <div>Number of instances you'd like to replace at a time. Used with replace_all_instances.</div> </td> </tr> <tr> <td colspan="1"> <b>replace_instances</b> <br><div style="font-size: small; color: darkgreen">(added in 1.8)</div> </td> <td> </td> <td> <div>List of instance_ids belonging to the named ASG that you would like to terminate and be replaced with instances matching the current launch configuration.</div> </td> </tr> <tr> <td colspan="1"> <b>security_token</b> <br><div style="font-size: small; color: darkgreen">(added in 1.6)</div> </td> <td> </td> <td> <div>AWS STS security token. If not set then the value of the AWS_SECURITY_TOKEN or EC2_SECURITY_TOKEN environment variable is used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: access_token</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>absent</li> </ul> </td> <td> <div>register or deregister the instance</div> </td> </tr> <tr> <td colspan="1"> <b>suspend_processes</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>Launch</li> <li>Terminate</li> <li>HealthCheck</li> <li>ReplaceUnhealthy</li> <li>AZRebalance</li> <li>AlarmNotification</li> <li>ScheduledActions</li> <li>AddToLoadBalancer</li> </ul> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>A list of scaling processes to suspend.</div> </td> </tr> <tr> <td colspan="1"> <b>tags</b> <br><div style="font-size: small; color: darkgreen">(added in 1.7)</div> </td> <td> </td> <td> <div>A list of tags to add to the Auto Scale Group. Optional key is 'propagate_at_launch', which defaults to true.</div> </td> </tr> <tr> <td colspan="1"> <b>target_group_arns</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>List of target group ARNs to use for the group. Use for application load balancers.</div> </td> </tr> <tr> <td colspan="1"> <b>termination_policies</b> <br><div style="font-size: small; color: darkgreen">(added in 2.0)</div> </td> <td> <ul>
+<b>Choices:</b> <li>OldestInstance</li> <li>NewestInstance</li> <li>OldestLaunchConfiguration</li> <li>ClosestToNextInstanceHour</li> <li><div style="color: blue">
+<b>Default</b> ←</div></li> </ul> </td> <td> <div>An ordered list of criteria used for selecting instances to be removed from the Auto Scaling group when reducing capacity.</div> <div>For 'Default', when used to create a new autoscaling group, the "Default"i value is used. When used to change an existent autoscaling group, the current termination policies are maintained.</div> </td> </tr> <tr> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 1.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>When set to "no", SSL certificates will not be validated for boto versions &gt;= 2.6.0.</div> </td> </tr> <tr> <td colspan="1"> <b>vpc_zone_identifier</b> </td> <td> </td> <td> <div>List of VPC subnets to use</div> </td> </tr> <tr> <td colspan="1"> <b>wait_for_instances</b> <br><div style="font-size: small; color: darkgreen">(added in 1.9)</div> </td> <td> <b>Default:</b><br><div style="color: blue">yes</div> </td> <td> <div>Wait for the ASG instances to be in a ready state before exiting. If instances are behind an ELB, it will wait until the ELB determines all instances have a lifecycle_state of "InService" and a health_status of "Healthy".</div> </td> </tr> <tr> <td colspan="1"> <b>wait_timeout</b> <br><div style="font-size: small; color: darkgreen">(added in 1.8)</div> </td> <td> <b>Default:</b><br><div style="color: blue">300</div> </td> <td> <div>How long to wait for instances to become viable when replaced. If you experience the error "Waited too long for ELB instances to be healthy", try increasing this value.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>If parameters are not set within the module, the following environment variables can be used in decreasing order of precedence <code>AWS_URL</code> or <code>EC2_URL</code>, <code>AWS_ACCESS_KEY_ID</code> or <code>AWS_ACCESS_KEY</code> or <code>EC2_ACCESS_KEY</code>, <code>AWS_SECRET_ACCESS_KEY</code> or <code>AWS_SECRET_KEY</code> or <code>EC2_SECRET_KEY</code>, <code>AWS_SECURITY_TOKEN</code> or <code>EC2_SECURITY_TOKEN</code>, <code>AWS_REGION</code> or <code>EC2_REGION</code>
+</li> <li>Ansible uses the boto configuration file (typically ~/.boto) if no credentials are provided. See <a class="reference external" href="https://boto.readthedocs.io/en/latest/boto_config_tut.html" target="_blank">https://boto.readthedocs.io/en/latest/boto_config_tut.html</a>
+</li> <li>
+<code>AWS_REGION</code> or <code>EC2_REGION</code> can be typically be used to specify the AWS region, when required, but this can also be configured in the boto config file</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Basic configuration
+
+- ec2_asg:
+    name: special
+    load_balancers: [ 'lb1', 'lb2' ]
+    availability_zones: [ 'eu-west-1a', 'eu-west-1b' ]
+    launch_config_name: 'lc-1'
+    min_size: 1
+    max_size: 10
+    desired_capacity: 5
+    vpc_zone_identifier: [ 'subnet-abcd1234', 'subnet-1a2b3c4d' ]
+    tags:
+      - environment: production
+        propagate_at_launch: no
+
+# Rolling ASG Updates
+
+# Below is an example of how to assign a new launch config to an ASG and terminate old instances.
+#
+# All instances in "myasg" that do not have the launch configuration named "my_new_lc" will be terminated in
+# a rolling fashion with instances using the current launch configuration, "my_new_lc".
+#
+# This could also be considered a rolling deploy of a pre-baked AMI.
+#
+# If this is a newly created group, the instances will not be replaced since all instances
+# will have the current launch configuration.
+
+- name: create launch config
+  ec2_lc:
+    name: my_new_lc
+    image_id: ami-lkajsf
+    key_name: mykey
+    region: us-east-1
+    security_groups: sg-23423
+    instance_type: m1.small
+    assign_public_ip: yes
+
+- ec2_asg:
+    name: myasg
+    launch_config_name: my_new_lc
+    health_check_period: 60
+    health_check_type: ELB
+    replace_all_instances: yes
+    min_size: 5
+    max_size: 5
+    desired_capacity: 5
+    region: us-east-1
+
+# To only replace a couple of instances instead of all of them, supply a list
+# to "replace_instances":
+
+- ec2_asg:
+    name: myasg
+    launch_config_name: my_new_lc
+    health_check_period: 60
+    health_check_type: ELB
+    replace_instances:
+    - i-b345231
+    - i-24c2931
+    min_size: 5
+    max_size: 5
+    desired_capacity: 5
+    region: us-east-1
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>auto_scaling_group_arn</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>The unique ARN of the autoscaling group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">arn:aws:autoscaling:us-east-1:123456789012:autoScalingGroup:6a09ad6d-eeee-1234-b987-ee123ced01ad:autoScalingGroupName/myasg</div> </td> </tr> <tr> <td colspan="1"> <b>auto_scaling_group_name</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>The unique name of the auto scaling group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">myasg</div> </td> </tr> <tr> <td colspan="1"> <b>availability_zones</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>The availability zones for the auto scaling group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['us-east-1d']</div> </td> </tr> <tr> <td colspan="1"> <b>created_time</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Timestamp of create time of the auto scaling group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2017-11-08T14:41:48.272000+00:00</div> </td> </tr> <tr> <td colspan="1"> <b>default_cooldown</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>The default cooldown time in seconds.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">300</div> </td> </tr> <tr> <td colspan="1"> <b>desired_capacity</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>The number of EC2 instances that should be running in this group.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">3</div> </td> </tr> <tr> <td colspan="1"> <b>healthcheck_period</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Length of time in seconds after a new EC2 instance comes into service that Auto Scaling starts checking its health.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">30</div> </td> </tr> <tr> <td colspan="1"> <b>healthcheck_type</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>The service you want the health status from, one of "EC2" or "ELB".</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ELB</div> </td> </tr> <tr> <td colspan="1"> <b>healthy_instances</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Number of instances in a healthy state</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">5</div> </td> </tr> <tr> <td colspan="1"> <b>in_service_instances</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Number of instances in service</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">3</div> </td> </tr> <tr> <td colspan="1"> <b>instance_facts</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>success</td> <td> <div>Dictionary of EC2 instances and their status as it relates to the ASG.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{'i-0123456789012': {'lifecycle_state': 'InService', 'health_status': 'Healthy', 'launch_config_name': 'public-webapp-production-1'}}</div> </td> </tr> <tr> <td colspan="1"> <b>instances</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>list of instance IDs in the ASG</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['i-0123456789012']</div> </td> </tr> <tr> <td colspan="1"> <b>launch_config_name</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Name of launch configuration associated with the ASG. Same as launch_configuration_name, provided for compatibility with ec2_asg module.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">public-webapp-production-1</div> </td> </tr> <tr> <td colspan="1"> <b>load_balancers</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>List of load balancers names attached to the ASG.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['elb-webapp-prod']</div> </td> </tr> <tr> <td colspan="1"> <b>max_size</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Maximum size of group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">3</div> </td> </tr> <tr> <td colspan="1"> <b>metrics_collection</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>List of enabled AutosSalingGroup metrics</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">[{'Metric': 'GroupInServiceInstances', 'Granularity': '1Minute'}]</div> </td> </tr> <tr> <td colspan="1"> <b>min_size</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Minimum size of group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">1</div> </td> </tr> <tr> <td colspan="1"> <b>pending_instances</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Number of instances in pending state</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">1</div> </td> </tr> <tr> <td colspan="1"> <b>tags</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>List of tags for the ASG, and whether or not each tag propagates to instances at launch.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">[{'propagate_at_launch': 'true', 'key': 'Name', 'value': 'public-webapp-production-1', 'resource_type': 'auto-scaling-group', 'resource_id': 'public-webapp-production-1'}, {'propagate_at_launch': 'true', 'key': 'env', 'value': 'production', 'resource_type': 'auto-scaling-group', 'resource_id': 'public-webapp-production-1'}]</div> </td> </tr> <tr> <td colspan="1"> <b>target_group_arns</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>List of ARNs of the target groups that the ASG populates</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['arn:aws:elasticloadbalancing:ap-southeast-2:123456789012:targetgroup/target-group-host-hello/1a2b3c4d5e6f1a2b', 'arn:aws:elasticloadbalancing:ap-southeast-2:123456789012:targetgroup/target-group-path-world/abcd1234abcd1234']</div> </td> </tr> <tr> <td colspan="1"> <b>target_group_names</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>List of names of the target groups that the ASG populates</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['target-group-host-hello', 'target-group-path-world']</div> </td> </tr> <tr> <td colspan="1"> <b>termination_policies</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>A list of termination policies for the group.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['Default']</div> </td> </tr> <tr> <td colspan="1"> <b>unhealthy_instances</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Number of instances in an unhealthy state</div> <br> </td> </tr> <tr> <td colspan="1"> <b>viable_instances</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Number of instances in a viable state</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">1</div> </td> </tr> <tr> <td colspan="1"> <b>vpc_zone_identifier</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>VPC zone ID / subnet id for the auto scaling group</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">subnet-a31ef45f</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>stableinterface</strong> which means that the maintainers for this module guarantee that no backward incompatible interface changes will be made.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>certified</strong> which means that it is maintained by an Ansible Partner. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by an Ansible Partner, see <span class="xref std std-ref">here</span>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Gareth Rushgrove (@garethr)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/amazon/ec2_asg.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/ec2_asg_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/ec2_asg_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

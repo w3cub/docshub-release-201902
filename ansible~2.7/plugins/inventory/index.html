@@ -1,0 +1,152 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Inventory Plugins - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content="Inventory plugins allow users to point at data sources to compile the inventory of hosts that Ansible uses to target tasks, either via the -i &#47; &hellip;">
+  <meta name="keywords" content="inventory, plugins, -, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/plugins/inventory/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<ul> <li><a class="reference internal" href="#enabling-inventory-plugins" id="id3">Enabling Inventory Plugins</a></li> <li><a class="reference internal" href="#using-inventory-plugins" id="id4">Using Inventory Plugins</a></li> <li><a class="reference internal" href="#plugin-list" id="id5">Plugin List</a></li> </ul>
+   <h1 id="id1">Inventory Plugins</h1> <p id="inventory-plugins">Inventory plugins allow users to point at data sources to compile the inventory of hosts that Ansible uses to target tasks, either via the <code>-i /path/to/file</code> and/or <code>-i 'host1, host2'</code> command line parameters or from other configuration sources.</p>  <h2 id="enabling-inventory">Enabling Inventory Plugins</h2> <p id="enabling-inventory-plugins">Most inventory plugins shipped with Ansible are disabled by default and need to be whitelisted in your <a class="reference internal" href="../../reference_appendices/config/#ansible-configuration-settings"><span class="std std-ref">ansible.cfg</span></a> file in order to function. This is how the default whitelist looks in the config file that ships with Ansible:</p> <pre data-language="ini">[inventory]
+enable_plugins = host_list, script, yaml, ini, auto
+</pre> <p>This list also establishes the order in which each plugin tries to parse an inventory source. Any plugins left out of the list will not be considered, so you can ‘optimize’ your inventory loading by minimizing it to what you actually use. For example:</p> <pre data-language="ini">[inventory]
+enable_plugins = advanced_host_list, constructed, yaml
+</pre>   <h2 id="using-inventory">Using Inventory Plugins</h2> <p id="using-inventory-plugins">The only requirement for using an inventory plugin after it is enabled is to provide an inventory source to parse. Ansible will try to use the list of enabled inventory plugins, in order, against each inventory source provided. Once an inventory plugin succeeds at parsing a source, any remaining inventory plugins will be skipped for that source.</p> <p>To start using an inventory plugin with a YAML configuration source, create a file with the accepted filename schema for the plugin in question, then add <code>plugin: plugin_name</code>. Each plugin documents any naming restrictions. For example, the aws_ec2 inventory plugin:</p> <pre data-language="yaml"># demo.aws_ec2.yml
+plugin: aws_ec2
+</pre> <p>Or for the openstack plugin:</p> <pre data-language="yaml"># clouds.yml
+plugin: openstack
+</pre> <p>The <code>auto</code> inventory plugin is enabled by default and works by using the <code>plugin</code> field to indicate the plugin that should attempt to parse it. You can configure the whitelist/precedence of inventory plugins used to parse source using the <code>ansible.cfg</code> [‘inventory’] <code>enable_plugins</code> list. After enabling the plugin and providing any required options you can view the populated inventory with <code>ansible-inventory -i demo.aws_ec2.yml --graph</code>:</p> <pre data-language="YAML">@all:
+  |--@aws_ec2:
+  |  |--ec2-12-345-678-901.compute-1.amazonaws.com
+  |  |--ec2-98-765-432-10.compute-1.amazonaws.com
+  |--@ungrouped:
+</pre> <p>You can set the default inventory path (via <code>inventory</code> in the <code>ansible.cfg</code> [defaults] section or the <a class="reference internal" href="../../reference_appendices/config/#envvar-ANSIBLE_HOSTS" id="index-0"><code>ANSIBLE_HOSTS</code></a> environment variable) to your inventory source(s). Now running <code>ansible-inventory --graph</code> should yield the same output as when you passed your YAML configuration source(s) directly. You can add custom inventory plugins to your plugin path to use in the same way.</p> <p>Your inventory source might be a directory of inventory configuration files. The constructed inventory plugin only operates on those hosts already in inventory, so you may want the constructed inventory configuration parsed at a particular point (such as last). Ansible parses the directory recursively, alphabetically. You cannot configure the parsing approach, so name your files to make it work predictably. Inventory plugins that extend constructed features directly can work around that restriction by adding constructed options in addition to the inventory plugin options. Otherwise, you can use <code>-i</code> with multiple sources to impose a specific order, e.g. <code>-i demo.aws_ec2.yml -i clouds.yml -i constructed.yml</code>.</p> <p>You can create dynamic groups using host variables with the constructed <code>keyed_groups</code> option. The option <code>groups</code> can also be used to create groups and <code>compose</code> creates and modifies host variables. Here is an aws_ec2 example utilizing constructed features:</p> <pre data-language="yaml"># demo.aws_ec2.yml
+plugin: aws_ec2
+regions:
+  - us-east-1
+  - us-east-2
+keyed_groups:
+  # add hosts to tag_Name_value groups for each aws_ec2 host's tags.Name variable
+  - key: tags.Name
+    prefix: tag_Name_
+    separator: ""
+groups:
+  # add hosts to the group development if any of the dictionary's keys or values is the word 'devel'
+  development: "'devel' in (tags|list)"
+compose:
+  # set the ansible_host variable to connect with the private IP address without changing the hostname
+  ansible_host: private_ip_address
+</pre> <p>Now the output of <code>ansible-inventory -i demo.aws_ec2.yml --graph</code>:</p> <pre data-language="YAML">@all:
+  |--@aws_ec2:
+  |  |--ec2-12-345-678-901.compute-1.amazonaws.com
+  |  |--ec2-98-765-432-10.compute-1.amazonaws.com
+  |  |--...
+  |--@development:
+  |  |--ec2-12-345-678-901.compute-1.amazonaws.com
+  |  |--ec2-98-765-432-10.compute-1.amazonaws.com
+  |--@tag_Name_ECS_Instance:
+  |  |--ec2-98-765-432-10.compute-1.amazonaws.com
+  |--@tag_Name_Test_Server:
+  |  |--ec2-12-345-678-901.compute-1.amazonaws.com
+  |--@ungrouped
+</pre> <p>If a host does not have the variables in the configuration above (i.e. <code>tags.Name</code>, <code>tags</code>, <code>private_ip_address</code>), the host will not be added to groups other than those that the inventory plugin creates and the <code>ansible_host</code> host variable will not be modified.</p>   <h2 id="inventory-plugin-list">Plugin List</h2> <p id="plugin-list">You can use <code>ansible-doc -t inventory -l</code> to see the list of available plugins. Use <code>ansible-doc -t inventory &lt;plugin name&gt;</code> to see plugin-specific documentation and examples.</p>  <ul> <li class="toctree-l1"><a class="reference internal" href="../inventory/advanced_host_list/">advanced_host_list - Parses a ‘host list’ with ranges</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/auto/">auto - Loads and executes an inventory plugin specified in a YAML config</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/aws_ec2/">aws_ec2 - ec2 inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/aws_rds/">aws_rds - rds instance source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/azure_rm/">azure_rm - Azure Resource Manager inventory plugin</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/constructed/">constructed - Uses Jinja2 to construct vars and groups based on existing inventory.</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/foreman/">foreman - foreman inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/gcp_compute/">gcp_compute - Google Cloud Compute Engine inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/generator/">generator - Uses Jinja2 to construct hosts and groups from patterns</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/host_list/">host_list - Parses a ‘host list’ string</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/ini/">ini - Uses an Ansible INI file as inventory source.</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/k8s/">k8s - Kubernetes (K8s) inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/nmap/">nmap - Uses nmap to find hosts to target</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/openshift/">openshift - OpenShift inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/openstack/">openstack - OpenStack inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/scaleway/">scaleway - Scaleway inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/script/">script - Executes an inventory script that returns JSON</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/tower/">tower - Ansible dynamic inventory plugin for Ansible Tower.</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/virtualbox/">virtualbox - virtualbox inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/vmware_vm_inventory/">vmware_vm_inventory - VMware Guest inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/vultr/">vultr - Vultr inventory source</a></li> <li class="toctree-l1"><a class="reference internal" href="../inventory/yaml/">yaml - Uses a specific YAML file as an inventory source.</a></li> </ul>  <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt><a class="reference internal" href="../../user_guide/playbooks_intro/#about-playbooks"><span class="std std-ref">About Playbooks</span></a></dt> <dd>An introduction to playbooks</dd> <dt><a class="reference internal" href="../callback/"><span class="doc">Callback Plugins</span></a></dt> <dd>Ansible callback plugins</dd> <dt><a class="reference internal" href="../connection/"><span class="doc">Connection Plugins</span></a></dt> <dd>Ansible connection plugins</dd> <dt><a class="reference internal" href="../../user_guide/playbooks_filters/#playbooks-filters"><span class="std std-ref">Filters</span></a></dt> <dd>Jinja2 filter plugins</dd> <dt><a class="reference internal" href="../../user_guide/playbooks_tests/#playbooks-tests"><span class="std std-ref">Tests</span></a></dt> <dd>Jinja2 test plugins</dd> <dt><a class="reference internal" href="../../user_guide/playbooks_lookups/#playbooks-lookups"><span class="std std-ref">Lookups</span></a></dt> <dd>Jinja2 lookup plugins</dd> <dt><a class="reference internal" href="../vars/"><span class="doc">Vars Plugins</span></a></dt> <dd>Ansible vars plugins</dd> <dt><a class="reference external" href="https://groups.google.com/group/ansible-devel" target="_blank">User Mailing List</a></dt> <dd>Have a question? Stop by the google group!</dd> <dt><a class="reference external" href="http://irc.freenode.net" target="_blank">irc.freenode.net</a></dt> <dd>#ansible IRC chat channel</dd> </dl> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/plugins/inventory.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/plugins/inventory.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,209 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Iptables - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.0. ">
+  <meta name="keywords" content="iptables, -, modify, systems, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/iptables_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="iptables-module">iptables - Modify the systems iptables</h1> <div class="versionadded" id="iptables-modify-the-systems-iptables"> <p><span class="versionmodified">New in version 2.0.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id3">Notes</a></li> <li><a class="reference internal" href="#examples" id="id4">Examples</a></li> <li><a class="reference internal" href="#status" id="id5">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id6">Maintenance</a><ul> <li><a class="reference internal" href="#support" id="id7">Support</a></li> <li><a class="reference internal" href="#author" id="id8">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel.</li> <li>This module does not handle the saving and/or loading of rules, but rather only manipulates the current rules that are present in memory. This is the same as the behaviour of the <code>iptables</code> and <code>ip6tables</code> command which this module uses internally.</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="2">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="2"> <b>action</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>append</b> ←</div></li> <li>insert</li> </ul> </td> <td> <div>Whether the rule should be appended at the bottom or inserted at the top.</div> <div>If the rule already exists the chain won't be modified.</div> </td> </tr> <tr> <td colspan="2"> <b>chain</b> </td> <td> </td> <td> <div>Chain to operate on.</div> <div>This option can either be the name of a user defined chain or any of the builtin chains: 'INPUT', 'FORWARD', 'OUTPUT', 'PREROUTING', 'POSTROUTING', 'SECMARK', 'CONNSECMARK'.</div> </td> </tr> <tr> <td colspan="2"> <b>comment</b> </td> <td> </td> <td> <div>This specifies a comment that will be added to the rule.</div> </td> </tr> <tr> <td colspan="2"> <b>ctstate</b> </td> <td> <ul>
+<b>Choices:</b> <li>DNAT</li> <li>ESTABLISHED</li> <li>INVALID</li> <li>NEW</li> <li>RELATED</li> <li>SNAT</li> <li>UNTRACKED</li> </ul> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>
+<code>ctstate</code> is a list of the connection states to match in the conntrack module. Possible states are: 'INVALID', 'NEW', 'ESTABLISHED', 'RELATED', 'UNTRACKED', 'SNAT', 'DNAT'</div> </td> </tr> <tr> <td colspan="2"> <b>destination</b> </td> <td> </td> <td> <div>Destination specification.</div> <div>Address can be either a network name, a hostname, a network IP address (with /mask), or a plain IP address.</div> <div>Hostnames will be resolved once only, before the rule is submitted to the kernel. Please note that specifying any name to be resolved with a remote query such as DNS is a really bad idea.</div> <div>The mask can be either a network mask or a plain number, specifying the number of 1's at the left side of the network mask. Thus, a mask of 24 is equivalent to 255.255.255.0. A "!" argument before the address specification inverts the sense of the address.</div> </td> </tr> <tr> <td colspan="2"> <b>destination_port</b> </td> <td> </td> <td> <div>Destination port or port range specification. This can either be a service name or a port number. An inclusive range can also be specified, using the format first:last. If the first port is omitted, '0' is assumed; if the last is omitted, '65535' is assumed. If the first port is greater than the second one they will be swapped. This is only valid if the rule also specifies one of the following protocols: tcp, udp, dccp or sctp.</div> </td> </tr> <tr> <td colspan="2"> <b>flush</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>Flushes the specified table and chain of all rules.</div> <div>If no chain is specified then the entire table is purged.</div> <div>Ignores all other parameters.</div> </td> </tr> <tr> <td colspan="2"> <b>fragment</b> </td> <td> </td> <td> <div>This means that the rule only refers to second and further fragments of fragmented packets. Since there is no way to tell the source or destination ports of such a packet (or ICMP type), such a packet will not match any rules which specify them. When the "!" argument precedes fragment argument, the rule will only match head fragments, or unfragmented packets.</div> </td> </tr> <tr> <td colspan="2"> <b>goto</b> </td> <td> </td> <td> <div>This specifies that the processing should continue in a user specified chain. Unlike the jump argument return will not continue processing in this chain but instead in the chain that called us via jump.</div> </td> </tr> <tr> <td colspan="2"> <b>icmp_type</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>This allows specification of the ICMP type, which can be a numeric ICMP type, type/code pair, or one of the ICMP type names shown by the command 'iptables -p icmp -h'</div> </td> </tr> <tr> <td colspan="2"> <b>in_interface</b> </td> <td> </td> <td> <div>Name of an interface via which a packet was received (only for packets entering the INPUT, FORWARD and PREROUTING chains). When the "!" argument is used before the interface name, the sense is inverted. If the interface name ends in a "+", then any interface which begins with this name will match. If this option is omitted, any interface name will match.</div> </td> </tr> <tr> <td colspan="2"> <b>ip_version</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>ipv4</b> ←</div></li> <li>ipv6</li> </ul> </td> <td> <div>Which version of the IP protocol this rule should apply to.</div> </td> </tr> <tr> <td colspan="2"> <b>jump</b> </td> <td> </td> <td> <div>This specifies the target of the rule; i.e., what to do if the packet matches it. The target can be a user-defined chain (other than the one this rule is in), one of the special builtin targets which decide the fate of the packet immediately, or an extension (see EXTENSIONS below). If this option is omitted in a rule (and the goto parameter is not used), then matching the rule will have no effect on the packet's fate, but the counters on the rule will be incremented.</div> </td> </tr> <tr> <td colspan="2"> <b>limit</b> </td> <td> </td> <td> <div>Specifies the maximum average number of matches to allow per second.</div> <div>The number can specify units explicitly, using `/second', `/minute', `/hour' or `/day', or parts of them (so `5/second' is the same as `5/s').</div> </td> </tr> <tr> <td colspan="2"> <b>limit_burst</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>Specifies the maximum burst before the above limit kicks in.</div> </td> </tr> <tr> <td colspan="2"> <b>log_prefix</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Specifies a log text for the rule. Only make sense with a LOG jump.</div> </td> </tr> <tr> <td colspan="2"> <b>match</b> </td> <td> <b>Default:</b><br><div style="color: blue">[]</div> </td> <td> <div>Specifies a match to use, that is, an extension module that tests for a specific property. The set of matches make up the condition under which a target is invoked. Matches are evaluated first to last if specified as an array and work in short-circuit fashion, i.e. if one extension yields false, evaluation will stop.</div> </td> </tr> <tr> <td colspan="2"> <b>out_interface</b> </td> <td> </td> <td> <div>Name of an interface via which a packet is going to be sent (for packets entering the FORWARD, OUTPUT and POSTROUTING chains). When the "!" argument is used before the interface name, the sense is inverted. If the interface name ends in a "+", then any interface which begins with this name will match. If this option is omitted, any interface name will match.</div> </td> </tr> <tr> <td colspan="2"> <b>policy</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li>ACCEPT</li> <li>DROP</li> <li>QUEUE</li> <li>RETURN</li> </ul> </td> <td> <div>Set the policy for the chain to the given target.</div> <div>Only built-in chains can have policies.</div> <div>This parameter requires the <code>chain</code> parameter.</div> <div>Ignores all other parameters.</div> </td> </tr> <tr> <td colspan="2"> <b>protocol</b> </td> <td> </td> <td> <div>The protocol of the rule or of the packet to check.</div> <div>The specified protocol can be one of tcp, udp, udplite, icmp, esp, ah, sctp or the special keyword "all", or it can be a numeric value, representing one of these protocols or a different one. A protocol name from /etc/protocols is also allowed. A "!" argument before the protocol inverts the test. The number zero is equivalent to all. "all" will match with all protocols and is taken as default when this option is omitted.</div> </td> </tr> <tr> <td colspan="2"> <b>reject_with</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>Specifies the error packet type to return while rejecting. It implies "jump: REJECT"</div> </td> </tr> <tr> <td colspan="2"> <b>rule_num</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Insert the rule as the given rule number. This works only with action = 'insert'.</div> </td> </tr> <tr> <td colspan="2"> <b>set_counters</b> </td> <td> </td> <td> <div>This enables the administrator to initialize the packet and byte counters of a rule (during INSERT, APPEND, REPLACE operations).</div> </td> </tr> <tr> <td colspan="2"> <b>set_dscp_mark</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>This allows specifying a DSCP mark to be added to packets. It takes either an integer or hex value.</div> <div>Mutually exclusive with <code>set_dscp_mark_class</code>.</div> </td> </tr> <tr> <td colspan="2"> <b>set_dscp_mark_class</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>This allows specifying a predefined DiffServ class which will be translated to the corresponding DSCP mark.</div> <div>Mutually exclusive with <code>set_dscp_mark</code>.</div> </td> </tr> <tr> <td colspan="2"> <b>source</b> </td> <td> </td> <td> <div>Source specification.</div> <div>Address can be either a network name, a hostname, a network IP address (with /mask), or a plain IP address.</div> <div>Hostnames will be resolved once only, before the rule is submitted to the kernel. Please note that specifying any name to be resolved with a remote query such as DNS is a really bad idea.</div> <div>The mask can be either a network mask or a plain number, specifying the number of 1's at the left side of the network mask. Thus, a mask of 24 is equivalent to 255.255.255.0. A "!" argument before the address specification inverts the sense of the address.</div> </td> </tr> <tr> <td colspan="2"> <b>source_port</b> </td> <td> </td> <td> <div>Source port or port range specification. This can either be a service name or a port number. An inclusive range can also be specified, using the format first:last. If the first port is omitted, '0' is assumed; if the last is omitted, '65535' is assumed. If the first port is greater than the second one they will be swapped.</div> </td> </tr> <tr> <td colspan="2"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li>absent</li> <li><div style="color: blue">
+<b>present</b> ←</div></li> </ul> </td> <td> <div>Whether the rule should be absent or present.</div> </td> </tr> <tr> <td colspan="2"> <b>syn</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>ignore</b> ←</div></li> <li>match</li> <li>negate</li> </ul> </td> <td> <div>This allows matching packets that have the SYN bit set and the ACK and RST bits unset.</div> <div>When negated, this matches all packets with the RST or the ACK bits set.</div> </td> </tr> <tr> <td colspan="2"> <b>table</b> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>filter</b> ←</div></li> <li>nat</li> <li>mangle</li> <li>raw</li> <li>security</li> </ul> </td> <td> <div>This option specifies the packet matching table which the command should operate on. If the kernel is configured with automatic module loading, an attempt will be made to load the appropriate module for that table if it is not already there.</div> </td> </tr> <tr> <td colspan="2"> <b>tcp_flags</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> <b>Default:</b><br><div style="color: blue">{}</div> </td> <td> <div>TCP flags specification.</div> <div>
+<code>tcp_flags</code> expects a dict with the two keys <code>flags</code> and <code>flags_set</code>.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>flags</b> </td> <td> </td> <td> <div>List of flags you want to examine.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>flags_set</b> </td> <td> </td> <td> <div>Flags to be set.</div> </td> </tr> <tr> <td colspan="2"> <b>to_destination</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>This specifies a destination address to use with DNAT.</div> <div>Without this, the destination address is never altered.</div> </td> </tr> <tr> <td colspan="2"> <b>to_ports</b> </td> <td> </td> <td> <div>This specifies a destination port or range of ports to use: without this, the destination port is never altered. This is only valid if the rule also specifies one of the following protocols: tcp, udp, dccp or sctp.</div> </td> </tr> <tr> <td colspan="2"> <b>to_source</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>This specifies a source address to use with SNAT.</div> <div>Without this, the source address is never altered.</div> </td> </tr> <tr> <td colspan="2"> <b>uid_owner</b> <br><div style="font-size: small; color: darkgreen">(added in 2.1)</div> </td> <td> </td> <td> <div>Specifies the UID or username to use in match by owner rule. From Ansible 2.6 when the <code>!</code> argument is prepended then the it inverts the rule to apply instead to all users except that one specified.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>This module just deals with individual rules. If you need advanced chaining of rules the recommended way is to template the iptables restore file.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Block specific IP
+- iptables:
+    chain: INPUT
+    source: 8.8.8.8
+    jump: DROP
+  become: yes
+
+# Forward port 80 to 8600
+- iptables:
+    table: nat
+    chain: PREROUTING
+    in_interface: eth0
+    protocol: tcp
+    match: tcp
+    destination_port: 80
+    jump: REDIRECT
+    to_ports: 8600
+    comment: Redirect web traffic to port 8600
+  become: yes
+
+# Allow related and established connections
+- iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
+
+# Allow new incoming SYN packets on TCP port 22 (SSH).
+- iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 22
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+    comment: Accept new SSH connections.
+
+# Tag all outbound tcp packets with DSCP mark 8
+- iptables:
+    chain: OUTPUT
+    jump: DSCP
+    table: mangle
+    set_dscp_mark: 8
+    protocol: tcp
+
+# Tag all outbound tcp packets with DSCP DiffServ class CS1
+- iptables:
+    chain: OUTPUT
+    jump: DSCP
+    table: mangle
+    set_dscp_mark_class: CS1
+    protocol: tcp
+
+# Insert a rule on line 5
+- iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 8080
+    jump: ACCEPT
+    rule_num: 5
+
+# Set the policy for the INPUT chain to DROP
+- iptables:
+    chain: INPUT
+    policy: DROP
+
+# Reject tcp with tcp-reset
+- iptables:
+    chain: INPUT
+    protocol: tcp
+    reject_with: tcp-reset
+    ip_version: ipv4
+
+# Set tcp flags
+- iptables:
+    chain: OUTPUT
+    jump: DROP
+    protocol: tcp
+    tcp_flags:
+      flags: ALL
+      flags_set:
+        - ACK
+        - RST
+        - SYN
+        - FIN
+</pre>   <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>core</strong> which means that it is maintained by the Ansible Core Team. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Core Team, see <a class="reference internal" href="../core_maintained/#core-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="support">Support</h3> <p>For more information about Red Hat’s support of this module, please refer to this <a class="reference external" href="https://access.redhat.com/articles/rhel-top-support-policies/" target="_blank">Knowledge Base article</a></p>   <h3 id="author">Author</h3> <ul class="simple"> <li>Linus Unnebäck (@LinusU) &lt;<a class="reference external" href="https://docs.ansible.com/cdn-cgi/l/email-protection#2f4346415a5c090c1c1814090c1a1d14090c1b1714494043444b4e5b405d41090c1b19145c4a" target="_blank">linus<span>@</span>folkdatorn<span>.</span>se</a>&gt;</li> <li>Sébastien DA ROCHA (@sebastiendarocha)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/system/iptables.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/iptables_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/iptables_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

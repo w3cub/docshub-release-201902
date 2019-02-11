@@ -1,0 +1,284 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Docker_service - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.1. ">
+  <meta name="keywords" content="docker, service, -, manage, services, and, containers, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/docker_service_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="docker-service-module">docker_service - Manage docker services and containers.</h1> <div class="versionadded" id="docker-service-manage-docker-services-and-containers"> <p><span class="versionmodified">New in version 2.1.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Consumes docker compose to start, shutdown and scale services.</li> <li>Works with compose versions 1 and 2.</li> <li>Compose can be read from a docker-compose.yml (or .yaml) file or inline using the <code>definition</code> option.</li> <li>See the examples for more details.</li> <li>Supports check mode.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.6</li> <li>docker-py &gt;= 1.8.0</li> <li>Please note that the <a class="reference external" href="https://pypi.org/project/docker-py/" target="_blank">docker-py</a> Python module has been superseded by <a class="reference external" href="https://pypi.org/project/docker/" target="_blank">docker</a> (see <a class="reference external" href="https://github.com/docker/docker-py/issues/1310" target="_blank">here</a> for details). For Python 2.6, <code>docker-py</code> must be used. Otherwise, it is recommended to install the <code>docker</code> Python module. Note that both modules should <em>not</em> be installed at the same time. Also note that when both modules are installed and one of them is uninstalled, the other might no longer function and a reinstall of it is required.</li> <li>docker-compose &gt;= 1.7.0</li> <li>Docker API &gt;= 1.20</li> <li>PyYAML &gt;= 3.11</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>api_version</b> </td> <td> <b>Default:</b><br><div style="color: blue">auto</div> </td> <td> <div>The version of the Docker API running on the Docker Host. Defaults to the latest version of the API supported by docker-py.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_API_VERSION</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_api_version</div> </td> </tr> <tr> <td colspan="1"> <b>build</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with state <em>present</em> to always build images prior to starting the application.</div> <div>Same as running docker-compose build with the pull option.</div> <div>Images will only be rebuilt if Docker detects a change in the Dockerfile or build directory contents.</div> <div>Use the <code>nocache</code> option to ignore the image cache when performing the build.</div> <div>If an existing image is replaced, services using the image will be recreated unless <code>recreate</code> is <em>never</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>cacert_path</b> </td> <td> </td> <td> <div>Use a CA certificate when performing server verification by providing the path to a CA certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>ca.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_ca_cert</div> </td> </tr> <tr> <td colspan="1"> <b>cert_path</b> </td> <td> </td> <td> <div>Path to the client's TLS certificate file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>cert.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_cert</div> </td> </tr> <tr> <td colspan="1"> <b>debug</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Debug mode</div> </td> </tr> <tr> <td colspan="1"> <b>definition</b> </td> <td> </td> <td> <div>Provide docker-compose yaml describing one or more services, networks and volumes.</div> <div>Mutually exclusive with <code>project_src</code> and <code>files</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>dependencies</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>When <code>state</code> is <em>present</em> specify whether or not to include linked services.</div> </td> </tr> <tr> <td colspan="1"> <b>docker_host</b> </td> <td> <b>Default:</b><br><div style="color: blue">unix://var/run/docker.sock</div> </td> <td> <div>The URL or Unix socket path used to connect to the Docker API. To connect to a remote host, provide the TCP connection string. For example, 'tcp://192.0.2.23:2376'. If TLS is used to encrypt the connection, the module will automatically replace 'tcp' in the connection URL with 'https'.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_HOST</code> will be used instead. If the environment variable is not set, the default value will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: docker_url</div> </td> </tr> <tr> <td colspan="1"> <b>files</b> </td> <td> </td> <td> <div>List of file names relative to <code>project_src</code>. Overrides docker-compose.yml or docker-compose.yaml.</div> <div>Files are loaded and merged in the order given.</div> </td> </tr> <tr> <td colspan="1"> <b>hostname_check</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Whether or not to check the Docker daemon's hostname against the name provided in the client certificate.</div> </td> </tr> <tr> <td colspan="1"> <b>key_path</b> </td> <td> </td> <td> <div>Path to the client's TLS key file.</div> <div>If the value is not specified in the task and the environment variable <code>DOCKER_CERT_PATH</code> is set, the file <code>key.pem</code> from the directory specified in the environment variable <code>DOCKER_CERT_PATH</code> will be used.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: tls_client_key</div> </td> </tr> <tr> <td colspan="1"> <b>nocache</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with the build option to ignore the cache during the image build process.</div> </td> </tr> <tr> <td colspan="1"> <b>project_name</b> </td> <td> </td> <td> <div>Provide a project name. If not provided, the project name is taken from the basename of <code>project_src</code>.</div> <div>Required when <code>definition</code> is provided.</div> </td> </tr> <tr> <td colspan="1"> <b>project_src</b> </td> <td> </td> <td> <div>Path to a directory containing a docker-compose.yml or docker-compose.yaml file.</div> <div>Mutually exclusive with <code>definition</code>.</div> <div>Required when no <code>definition</code> is provided.</div> </td> </tr> <tr> <td colspan="1"> <b>pull</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with state <em>present</em> to always pull images prior to starting the application.</div> <div>Same as running docker-compose pull.</div> <div>When a new image is pulled, services using the image will be recreated unless <code>recreate</code> is <em>never</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>recreate</b> </td> <td> <ul>
+<b>Choices:</b> <li>always</li> <li>never</li> <li><div style="color: blue">
+<b>smart</b> ←</div></li> </ul> </td> <td> <div>By default containers will be recreated when their configuration differs from the service definition.</div> <div>Setting to <em>never</em> ignores configuration differences and leaves existing containers unchanged.</div> <div>Setting to <em>always</em> forces recreation of all existing containers.</div> </td> </tr> <tr> <td colspan="1"> <b>remove_images</b> </td> <td> <ul>
+<b>Choices:</b> <li>all</li> <li>local</li> </ul> </td> <td> <div>Use with state <em>absent</em> to remove the all images or only local images.</div> </td> </tr> <tr> <td colspan="1"> <b>remove_orphans</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Remove containers for services not defined in the compose file.</div> </td> </tr> <tr> <td colspan="1"> <b>remove_volumes</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with state <em>absent</em> to remove data volumes.</div> </td> </tr> <tr> <td colspan="1"> <b>restarted</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with state <em>present</em> to restart all containers.</div> </td> </tr> <tr> <td colspan="1"> <b>scale</b> </td> <td> </td> <td> <div>When <code>state</code> is <em>present</em> scale services. Provide a dictionary of key/value pairs where the key is the name of the service and the value is an integer count for the number of containers.</div> </td> </tr> <tr> <td colspan="1"> <b>services</b> </td> <td> </td> <td> <div>When <code>state</code> is <em>present</em> run <em>docker-compose up</em> on a subset of services.</div> </td> </tr> <tr> <td colspan="1"> <b>ssl_version</b> </td> <td> </td> <td> <div>Provide a valid SSL version number. Default value determined by ssl.py module.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_SSL_VERSION</code> will be used instead.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li>absent</li> <li><div style="color: blue">
+<b>present</b> ←</div></li> </ul> </td> <td> <div>Desired state of the project.</div> <div>Specifying <em>present</em> is the same as running <em>docker-compose up</em>.</div> <div>Specifying <em>absent</em> is the same as running <em>docker-compose down</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>stopped</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Use with state <em>present</em> to leave the containers in an exited or non-running state.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">10</div> </td> <td> <div>timeout in seconds for container shutdown when attached or when containers are already running.</div> </td> </tr> <tr> <td colspan="1"> <b>tls</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS without verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_hostname</b> </td> <td> <b>Default:</b><br><div style="color: blue">localhost</div> </td> <td> <div>When verifying the authenticity of the Docker Host server, provide the expected name of the server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_HOSTNAME</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> <tr> <td colspan="1"> <b>tls_verify</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Secure the connection to the API by using TLS and verifying the authenticity of the Docker host server.</div> <div>If the value is not specified in the task, the value of environment variable <code>DOCKER_TLS_VERIFY</code> will be used instead. If the environment variable is not set, the default value will be used.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>Connect to the Docker daemon by providing parameters with each task or by defining environment variables. You can define DOCKER_HOST, DOCKER_TLS_HOSTNAME, DOCKER_API_VERSION, DOCKER_CERT_PATH, DOCKER_SSL_VERSION, DOCKER_TLS, DOCKER_TLS_VERIFY and DOCKER_TIMEOUT. If you are using docker machine, run the script shipped with the product that sets up the environment. It will set these variables for you. See <a class="reference external" href="https://docker-py.readthedocs.io/en/stable/machine/" target="_blank">https://docker-py.readthedocs.io/en/stable/machine/</a> for more details.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Examples use the django example at U(https://docs.docker.com/compose/django/). Follow it to create the flask
+# directory
+
+- name: Run using a project directory
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - docker_service:
+        project_src: flask
+        state: absent
+
+    - docker_service:
+        project_src: flask
+      register: output
+
+    - debug:
+        var: output
+
+    - docker_service:
+        project_src: flask
+        build: no
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that: "not output.changed "
+
+    - docker_service:
+        project_src: flask
+        build: no
+        stopped: true
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that:
+          - "not web.flask_web_1.state.running"
+          - "not db.flask_db_1.state.running"
+
+    - docker_service:
+        project_src: flask
+        build: no
+        restarted: true
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that:
+          - "web.flask_web_1.state.running"
+          - "db.flask_db_1.state.running"
+
+- name: Scale the web service to 2
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - docker_service:
+        project_src: flask
+        scale:
+          web: 2
+      register: output
+
+    - debug:
+        var: output
+
+- name: Run with inline v2 compose
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - docker_service:
+        project_src: flask
+        state: absent
+
+    - docker_service:
+        project_name: flask
+        definition:
+          version: '2'
+          services:
+            db:
+              image: postgres
+            web:
+              build: "{{ playbook_dir }}/flask"
+              command: "python manage.py runserver 0.0.0.0:8000"
+              volumes:
+                - "{{ playbook_dir }}/flask:/code"
+              ports:
+                - "8000:8000"
+              depends_on:
+                - db
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that:
+          - "web.flask_web_1.state.running"
+          - "db.flask_db_1.state.running"
+
+- name: Run with inline v1 compose
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - docker_service:
+        project_src: flask
+        state: absent
+
+    - docker_service:
+        project_name: flask
+        definition:
+            db:
+              image: postgres
+            web:
+              build: "{{ playbook_dir }}/flask"
+              command: "python manage.py runserver 0.0.0.0:8000"
+              volumes:
+                - "{{ playbook_dir }}/flask:/code"
+              ports:
+                - "8000:8000"
+              links:
+                - db
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that:
+          - "web.flask_web_1.state.running"
+          - "db.flask_db_1.state.running"
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="4">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="4"> <b>actions</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>when in check mode or <em>debug</em> true</td> <td> <div>Provides the actions to be taken on each service as determined by compose.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="3"> <b>service_name</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>always</td> <td> <div>Name of the service.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>action</b> <br><div style="font-size: small; color: red">list</div> </td> <td>always</td> <td> <div>A descriptive name of the action to be performed on the service's containers.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>the container's long ID</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>short_id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>the container's short ID</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>the container's name</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>pulled_image</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>on image pull</td> <td> <div>Provides image details when a new image is pulled for the service.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>name of the image</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>image hash</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>built_image</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>on image build</td> <td> <div>Provides image details when a new image is built for the service.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>name</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>name of the image</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">string</div> </td> <td>always</td> <td> <div>image hash</div> <br> </td> </tr> <tr> <td colspan="4"> <b>service</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Name of the service.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td colspan="3"> <b>container_name</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Name of the container. Format is <em>project_service_#</em>.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>cmd</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>One or more commands to be executed in the container.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>image</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Name of the image from which the container was built.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>labels</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Meta data assigned to the container.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>networks</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Contains a dictionary for each network to which the container is a member.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>macAddress</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Mac Address assigned to the virtual NIC.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>globalIPv6PrefixLen</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>IPv6 subnet length.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>links</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>List of container names to which this container is linked.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>globalIPv6</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>IPv6 address assigned to the container.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>aliases</b> <br><div style="font-size: small; color: red">list</div> </td> <td>success</td> <td> <div>Aliases assigned to the container by the network.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>IPAddress</b> <br><div style="font-size: small; color: red">string</div> </td> <td>success</td> <td> <div>The IP address assigned to the container.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>IPPrefixLen</b> <br><div style="font-size: small; color: red">int</div> </td> <td>success</td> <td> <div>Number of bits used by the subnet.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="2"> <b>state</b> <br><div style="font-size: small; color: red">complex</div> </td> <td>success</td> <td> <div>Information regarding the current disposition of the container.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>status</b> <br><div style="font-size: small; color: red">str</div> </td> <td>success</td> <td> <div>Description of the running state.</div> <br> </td> </tr> <tr> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td class="elbow-placeholder"> </td> <td colspan="1"> <b>running</b> <br><div style="font-size: small; color: red">bool</div> </td> <td>success</td> <td> <div>Whether or not the container is up with a running process.</div> <br> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Chris Houseknecht (@chouseknecht)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/docker/docker_service.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/docker_service_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/docker_service_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

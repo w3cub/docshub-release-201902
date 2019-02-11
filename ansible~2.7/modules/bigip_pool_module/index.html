@@ -1,0 +1,249 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bigip_pool - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" The below requirements are needed on the host that executes this module. ">
+  <meta name="keywords" content="bigip, pool, -, manages, f, big-ip, ltm, pools, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/bigip_pool_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="bigip-pool-module">bigip_pool - Manages F5 BIG-IP LTM pools</h1>  <ul class="simple" id="bigip-pool-manages-f5-big-ip-ltm-pools"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>Manages F5 BIG-IP LTM pools via iControl REST API.</li> </ul>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>f5-sdk &gt;= 3.0.16</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="2">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="2"> <b>description</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Specifies descriptive text that identifies the pool.</div> </td> </tr> <tr> <td colspan="2"> <b>lb_method</b> <br><div style="font-size: small; color: darkgreen">(added in 1.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>dynamic-ratio-member</li> <li>dynamic-ratio-node</li> <li>fastest-app-response</li> <li>fastest-node</li> <li>least-connections-member</li> <li>least-connections-node</li> <li>least-sessions</li> <li>observed-member</li> <li>observed-node</li> <li>predictive-member</li> <li>predictive-node</li> <li>ratio-least-connections-member</li> <li>ratio-least-connections-node</li> <li>ratio-member</li> <li>ratio-node</li> <li>ratio-session</li> <li>round-robin</li> <li>weighted-least-connections-member</li> <li>weighted-least-connections-node</li> </ul> </td> <td> <div>Load balancing method. When creating a new pool, if this value is not specified, the default of <code>round-robin</code> will be used.</div> </td> </tr> <tr> <td colspan="2"> <b>metadata</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Arbitrary key/value pairs that you can attach to a pool. This is useful in situations where you might want to annotate a pool to me managed by Ansible.</div> <div>Key names will be stored as strings; this includes names that are numbers.</div> <div>Values for all of the keys will be stored as strings; this includes values that are numbers.</div> <div>Data will be persisted, not ephemeral.</div> </td> </tr> <tr> <td colspan="2"> <b>monitor_type</b> <br><div style="font-size: small; color: darkgreen">(added in 1.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>and_list</li> <li>m_of_n</li> <li>single</li> </ul> </td> <td> <div>Monitor rule type when <code>monitors</code> is specified.</div> <div>When creating a new pool, if this value is not specified, the default of 'and_list' will be used.</div> <div>When <code>single</code> ensures that all specified monitors are checked, but additionally includes checks to make sure you only specified a single monitor.</div> <div>When <code>and_list</code> ensures that <b>all</b> monitors are checked.</div> <div>When <code>m_of_n</code> ensures that <code>quorum</code> of <code>monitors</code> are checked. <code>m_of_n</code> <b>requires</b> that a <code>quorum</code> of 1 or greater be set either in the playbook, or already existing on the device.</div> <div>Both <code>single</code> and <code>and_list</code> are functionally identical since BIG-IP considers all monitors as "a list".</div> </td> </tr> <tr> <td colspan="2"> <b>monitors</b> <br><div style="font-size: small; color: darkgreen">(added in 1.3)</div> </td> <td> </td> <td> <div>Monitor template name list. If the partition is not provided as part of the monitor name, then the <code>partition</code> option will be used instead.</div> </td> </tr> <tr> <td colspan="2"> <b>name</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Pool name</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: pool</div> </td> </tr> <tr> <td colspan="2"> <b>partition</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <b>Default:</b><br><div style="color: blue">Common</div> </td> <td> <div>Device partition to manage resources on.</div> </td> </tr> <tr> <td colspan="2"> <b>password</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The password for the user account used to connect to the BIG-IP.</div> <div>You may omit this option by setting the environment variable <code>F5_PASSWORD</code>.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: pass, pwd</div> </td> </tr> <tr> <td colspan="2"> <b>priority_group_activation</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> </td> <td> <div>Specifies whether the system load balances traffic according to the priority number assigned to the pool member.</div> <div>When creating a new pool, if this parameter is not specified, the default of <code>0</code> will be used.</div> <div>To disable this setting, provide the value <code>0</code>.</div> <div>Once you enable this setting, you can specify pool member priority when you create a new pool or on a pool member's properties screen.</div> <div>The system treats same-priority pool members as a group.</div> <div>To enable priority group activation, provide a number from <code>0</code> to <code>65535</code> that represents the minimum number of members that must be available in one priority group before the system directs traffic to members in a lower priority group.</div> <div>When a sufficient number of members become available in the higher priority group, the system again directs traffic to the higher priority group.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: minimum_active_members</div> </td> </tr> <tr> <td colspan="2"> <b>provider</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <b>Default:</b><br><div style="color: blue">None</div> </td> <td> <div>A dict object containing connection details.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>ssh_keyfile</b> </td> <td> </td> <td> <div>Specifies the SSH keyfile to use to authenticate the connection to the remote device. This argument is only used for <em>cli</em> transports.</div> <div>You may omit this option by setting the environment variable <code>ANSIBLE_NET_SSH_KEYFILE</code>.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">10</div> </td> <td> <div>Specifies the timeout in seconds for communicating with the network device for either connecting or sending commands. If the timeout is exceeded before the operation is completed, the module will error.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>server</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The BIG-IP host.</div> <div>You may omit this option by setting the environment variable <code>F5_SERVER</code>.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>user</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The username to connect to the BIG-IP with. This user must have administrative privileges on the device.</div> <div>You may omit this option by setting the environment variable <code>F5_USER</code>.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>server_port</b> </td> <td> <b>Default:</b><br><div style="color: blue">443</div> </td> <td> <div>The BIG-IP server port.</div> <div>You may omit this option by setting the environment variable <code>F5_SERVER_PORT</code>.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>password</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The password for the user account used to connect to the BIG-IP.</div> <div>You may omit this option by setting the environment variable <code>F5_PASSWORD</code>.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: pass, pwd</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>If <code>no</code>, SSL certificates are not validated. Use this only on personally controlled sites using self-signed certificates.</div> <div>You may omit this option by setting the environment variable <code>F5_VALIDATE_CERTS</code>.</div> </td> </tr> <tr> <td class="elbow-placeholder"></td> <td colspan="1"> <b>transport</b> <br><div style="font-size: small; color: red">required</div> </td> <td> <ul>
+<b>Choices:</b> <li>rest</li> <li><div style="color: blue">
+<b>cli</b> ←</div></li> </ul> </td> <td> <div>Configures the transport connection to use when connecting to the remote device.</div> </td> </tr> <tr> <td colspan="2"> <b>quorum</b> <br><div style="font-size: small; color: darkgreen">(added in 1.3)</div> </td> <td> </td> <td> <div>Monitor quorum value when <code>monitor_type</code> is <code>m_of_n</code>.</div> <div>Quorum must be a value of 1 or greater when <code>monitor_type</code> is <code>m_of_n</code>.</div> </td> </tr> <tr> <td colspan="2"> <b>reselect_tries</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> </td> <td> <div>Sets the number of times the system tries to contact a pool member after a passive failure.</div> </td> </tr> <tr> <td colspan="2"> <b>server</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The BIG-IP host.</div> <div>You may omit this option by setting the environment variable <code>F5_SERVER</code>.</div> </td> </tr> <tr> <td colspan="2"> <b>server_port</b> <br><div style="font-size: small; color: darkgreen">(added in 2.2)</div> </td> <td> <b>Default:</b><br><div style="color: blue">443</div> </td> <td> <div>The BIG-IP server port.</div> <div>You may omit this option by setting the environment variable <code>F5_SERVER_PORT</code>.</div> </td> </tr> <tr> <td colspan="2"> <b>service_down_action</b> <br><div style="font-size: small; color: darkgreen">(added in 1.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>none</li> <li>reset</li> <li>drop</li> <li>reselect</li> </ul> </td> <td> <div>Sets the action to take when node goes down in pool.</div> </td> </tr> <tr> <td colspan="2"> <b>slow_ramp_time</b> <br><div style="font-size: small; color: darkgreen">(added in 1.3)</div> </td> <td> </td> <td> <div>Sets the ramp-up time (in seconds) to gradually ramp up the load on newly added or freshly detected up pool members.</div> </td> </tr> <tr> <td colspan="2"> <b>state</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>absent</li> <li><div style="color: blue">
+<b>present</b> ←</div></li> </ul> </td> <td> <div>When <code>present</code>, guarantees that the pool exists with the provided attributes.</div> <div>When <code>absent</code>, removes the pool from the system.</div> </td> </tr> <tr> <td colspan="2"> <b>user</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>The username to connect to the BIG-IP with. This user must have administrative privileges on the device.</div> <div>You may omit this option by setting the environment variable <code>F5_USER</code>.</div> </td> </tr> <tr> <td colspan="2"> <b>validate_certs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.0)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>If <code>no</code>, SSL certificates are not validated. Use this only on personally controlled sites using self-signed certificates.</div> <div>You may omit this option by setting the environment variable <code>F5_VALIDATE_CERTS</code>.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>To add members do a pool, use the <code>bigip_pool_member</code> module. Previously, the <code>bigip_pool</code> module allowed the management of users, but this has been removed in version 2.5 of Ansible.</li> <li>For more information on using Ansible to manage F5 Networks devices see <a class="reference external" href="https://www.ansible.com/integrations/networks/f5" target="_blank">https://www.ansible.com/integrations/networks/f5</a>.</li> <li>Requires the f5-sdk Python package on the host. This is as easy as <code>pip install f5-sdk</code>.</li> <li>Requires BIG-IP software version &gt;= 12.</li> <li>The F5 modules only manipulate the running configuration of the F5 product. To ensure that BIG-IP specific configuration persists to disk, be sure to include at least one task that uses the <a class="reference internal" href="../bigip_config_module/#bigip-config-module"><span class="std std-ref">bigip_config</span></a> module to save the running configuration. Refer to the module’s documentation for the correct usage of the module to save your running configuration.</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml">- name: Create pool
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    name: my-pool
+    partition: Common
+    lb_method: least-connections-member
+    slow_ramp_time: 120
+  delegate_to: localhost
+
+- name: Modify load balancer method
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    name: my-pool
+    partition: Common
+    lb_method: round-robin
+  delegate_to: localhost
+
+- name: Add pool member
+  bigip_pool_member:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    pool: my-pool
+    partition: Common
+    host: "{{ ansible_default_ipv4['address'] }}"
+    port: 80
+  delegate_to: localhost
+
+- name: Set a single monitor (with enforcement)
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    name: my-pool
+    partition: Common
+    monitor_type: single
+    monitors:
+      - http
+  delegate_to: localhost
+
+- name: Set a single monitor (without enforcement)
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    name: my-pool
+    partition: Common
+    monitors:
+      - http
+  delegate_to: localhost
+
+- name: Set multiple monitors (all must succeed)
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    name: my-pool
+    partition: Common
+    monitor_type: and_list
+    monitors:
+      - http
+      - tcp
+  delegate_to: localhost
+
+- name: Set multiple monitors (at least 1 must succeed)
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: present
+    name: my-pool
+    partition: Common
+    monitor_type: m_of_n
+    quorum: 1
+    monitors:
+      - http
+      - tcp
+  delegate_to: localhost
+
+- name: Remove pool member from pool
+  bigip_pool_member:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: absent
+    pool: my-pool
+    partition: Common
+    host: "{{ ansible_default_ipv4['address'] }}"
+    port: 80
+  delegate_to: localhost
+
+- name: Delete pool
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: absent
+    name: my-pool
+    partition: Common
+  delegate_to: localhost
+
+- name: Add metadata to pool
+  bigip_pool:
+    server: lb.mydomain.com
+    user: admin
+    password: secret
+    state: absent
+    name: my-pool
+    partition: Common
+    metadata:
+      ansible: 2.4
+      updated_at: 2017-12-20T17:50:46Z
+  delegate_to: localhost
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>description</b> <br><div style="font-size: small; color: red">string</div> </td> <td>changed</td> <td> <div>Description set on the pool.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">Pool of web servers</div> </td> </tr> <tr> <td colspan="1"> <b>lb_method</b> <br><div style="font-size: small; color: red">string</div> </td> <td>changed</td> <td> <div>The LB method set for the pool.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">round-robin</div> </td> </tr> <tr> <td colspan="1"> <b>metadata</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>changed</td> <td> <div>The new value of the pool.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{'key2': 'bar', 'key1': 'foo'}</div> </td> </tr> <tr> <td colspan="1"> <b>monitor_type</b> <br><div style="font-size: small; color: red">string</div> </td> <td>changed</td> <td> <div>The contact that was set on the datacenter.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">admin@root.local</div> </td> </tr> <tr> <td colspan="1"> <b>monitors</b> <br><div style="font-size: small; color: red">list</div> </td> <td>changed</td> <td> <div>Monitors set on the pool.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">['/Common/http', '/Common/gateway_icmp']</div> </td> </tr> <tr> <td colspan="1"> <b>priority_group_activation</b> <br><div style="font-size: small; color: red">int</div> </td> <td>changed</td> <td> <div>The new minimum number of members to activate the priorty group.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">10</div> </td> </tr> <tr> <td colspan="1"> <b>quorum</b> <br><div style="font-size: small; color: red">int</div> </td> <td>changed</td> <td> <div>The quorum that was set on the pool.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">2</div> </td> </tr> <tr> <td colspan="1"> <b>reselect_tries</b> <br><div style="font-size: small; color: red">int</div> </td> <td>changed</td> <td> <div>The new value that is set for the number of tries to contact member.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">10</div> </td> </tr> <tr> <td colspan="1"> <b>service_down_action</b> <br><div style="font-size: small; color: red">string</div> </td> <td>changed</td> <td> <div>Service down action that is set on the pool.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">reset</div> </td> </tr> <tr> <td colspan="1"> <b>slow_ramp_time</b> <br><div style="font-size: small; color: red">int</div> </td> <td>changed</td> <td> <div>The new value that is set for the slow ramp-up time.</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">500</div> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Tim Rupp (@caphrim007)</li> <li>Wojciech Wypior (@wojtek0806)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/network/f5/bigip_pool.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/bigip_pool_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/bigip_pool_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

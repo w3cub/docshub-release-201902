@@ -1,0 +1,567 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ovirt_vm - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" New in version 2.2. ">
+  <meta name="keywords" content="ovirt, vm, -, module, manage, virtual, machines, rhv, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/modules/ovirt_vm_module/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ovirt-vm-module">ovirt_vm - Module to manage Virtual Machines in oVirt/RHV</h1> <div class="versionadded" id="ovirt-vm-module-to-manage-virtual-machines-in-ovirt-rhv"> <p><span class="versionmodified">New in version 2.2.</span></p> </div>  <ul class="simple"> <li>
+<a class="reference internal" href="#synopsis" id="id1">Synopsis</a><ul> <li><a class="reference internal" href="#requirements" id="id2">Requirements</a></li> </ul> </li> <li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li> <li><a class="reference internal" href="#notes" id="id4">Notes</a></li> <li><a class="reference internal" href="#examples" id="id5">Examples</a></li> <li><a class="reference internal" href="#return-values" id="id6">Return Values</a></li> <li><a class="reference internal" href="#status" id="id7">Status</a></li> <li>
+<a class="reference internal" href="#maintenance" id="id8">Maintenance</a><ul> <li><a class="reference internal" href="#author" id="id9">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>This module manages whole lifecycle of the Virtual Machine(VM) in oVirt/RHV.</li> <li>Since VM can hold many states in oVirt/RHV, this see notes to see how the states of the VM are handled.</li> </ul> <p>Aliases: ovirt_vms</p>  <h3 id="requirements">Requirements</h3> <p>The below requirements are needed on the host that executes this module.</p> <ul class="simple"> <li>python &gt;= 2.7</li> <li>ovirt-engine-sdk-python &gt;= 4.2.4</li> </ul>    <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>affinity_group_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps affinty name between VM's OVF and the destination affinity this VM should be registered to, relevant when <code>state</code> is registered.</div> </td> </tr> <tr> <td colspan="1"> <b>affinity_label_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mappper which maps affinity label name between VM's OVF and the destination label this VM should be registered to, relevant when <code>state</code> is registered.</div> </td> </tr> <tr> <td colspan="1"> <b>allow_partial_import</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Boolean indication whether to allow partial registration of Virtual Machine when <code>state</code> is registered.</div> </td> </tr> <tr> <td colspan="1"> <b>auth</b> <br><div style="font-size: small; color: red">required</div> </td> <td> </td> <td> <div>Dictionary with values needed to create HTTP/HTTPS connection to oVirt:</div> <div>
+<code>username</code>[<em>required</em>] - The name of the user, something like <em>admin@internal</em>. Default value is set by <em>OVIRT_USERNAME</em> environment variable.</div> <div>
+<code>password</code>[<em>required</em>] - The password of the user. Default value is set by <em>OVIRT_PASSWORD</em> environment variable.</div> <div>
+<code>url</code> - A string containing the API URL of the server, usually something like `<em>https://server.example.com/ovirt-engine/api</em>`. Default value is set by <em>OVIRT_URL</em> environment variable. Either <code>url</code> or <code>hostname</code> is required.</div> <div>
+<code>hostname</code> - A string containing the hostname of the server, usually something like `<em>server.example.com</em>`. Default value is set by <em>OVIRT_HOSTNAME</em> environment variable. Either <code>url</code> or <code>hostname</code> is required.</div> <div>
+<code>token</code> - Token to be used instead of login with username/password. Default value is set by <em>OVIRT_TOKEN</em> environment variable.</div> <div>
+<code>insecure</code> - A boolean flag that indicates if the server TLS certificate and host name should be checked.</div> <div>
+<code>ca_file</code> - A PEM file containing the trusted CA certificates. The certificate presented by the server will be verified using these CA certificates. If `<code>ca_file</code>` parameter is not set, system wide CA certificate store is used. Default value is set by <em>OVIRT_CAFILE</em> environment variable.</div> <div>
+<code>kerberos</code> - A boolean flag indicating if Kerberos authentication should be used instead of the default basic authentication.</div> <div>
+<code>headers</code> - Dictionary of HTTP headers to be added to each API call.</div> </td> </tr> <tr> <td colspan="1"> <b>ballooning_enabled</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>true</em>, use memory ballooning.</div> <div>Memory balloon is a guest device, which may be used to re-distribute / reclaim the host memory based on VM needs in a dynamic way. In this way it's possible to create memory over commitment states.</div> </td> </tr> <tr> <td colspan="1"> <b>boot_devices</b> </td> <td> <ul>
+<b>Choices:</b> <li>cdrom</li> <li>hd</li> <li>network</li> </ul> </td> <td> <div>List of boot devices which should be used to boot. For example <code>[ cdrom, hd ]</code>.</div> <div>Default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>boot_menu</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>
+<em>True</em> enable menu to select boot device, <em>False</em> to disable it. By default is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>cd_iso</b> </td> <td> </td> <td> <div>ISO file from ISO storage domain which should be attached to Virtual Machine.</div> <div>If you pass empty string the CD will be ejected from VM.</div> <div>If used with <code>state</code> <em>running</em> or <em>present</em> and VM is running the CD will be attached to VM.</div> <div>If used with <code>state</code> <em>running</em> or <em>present</em> and VM is down the CD will be attached to VM persistently.</div> </td> </tr> <tr> <td colspan="1"> <b>clone</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If <em>yes</em> then the disks of the created virtual machine will be cloned and independent of the template.</div> <div>This parameter is used only when <code>state</code> is <em>running</em> or <em>present</em> and VM didn't exist before.</div> </td> </tr> <tr> <td colspan="1"> <b>clone_permissions</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>If <em>yes</em> then the permissions of the template (only the direct ones, not the inherited ones) will be copied to the created virtual machine.</div> <div>This parameter is used only when <code>state</code> is <em>running</em> or <em>present</em> and VM didn't exist before.</div> </td> </tr> <tr> <td colspan="1"> <b>cloud_init</b> </td> <td> </td> <td> <div>Dictionary with values for Unix-like Virtual Machine initialization using cloud init.</div> <div>
+<code>host_name</code> - Hostname to be set to Virtual Machine when deployed.</div> <div>
+<code>timezone</code> - Timezone to be set to Virtual Machine when deployed.</div> <div>
+<code>user_name</code> - Username to be used to set password to Virtual Machine when deployed.</div> <div>
+<code>root_password</code> - Password to be set for user specified by <code>user_name</code> parameter.</div> <div>
+<code>authorized_ssh_keys</code> - Use this SSH keys to login to Virtual Machine.</div> <div>
+<code>regenerate_ssh_keys</code> - If <em>True</em> SSH keys will be regenerated on Virtual Machine.</div> <div>
+<code>custom_script</code> - Cloud-init script which will be executed on Virtual Machine when deployed. This is appended to the end of the cloud-init script generated by any other options.</div> <div>
+<code>dns_servers</code> - DNS servers to be configured on Virtual Machine.</div> <div>
+<code>dns_search</code> - DNS search domains to be configured on Virtual Machine.</div> <div>
+<code>nic_boot_protocol</code> - Set boot protocol of the network interface of Virtual Machine. Can be one of <code>none</code>, <code>dhcp</code> or <code>static</code>.</div> <div>
+<code>nic_ip_address</code> - If boot protocol is static, set this IP address to network interface of Virtual Machine.</div> <div>
+<code>nic_netmask</code> - If boot protocol is static, set this netmask to network interface of Virtual Machine.</div> <div>
+<code>nic_gateway</code> - If boot protocol is static, set this gateway to network interface of Virtual Machine.</div> <div>
+<code>nic_name</code> - Set name to network interface of Virtual Machine.</div> <div>
+<code>nic_on_boot</code> - If <em>True</em> network interface will be set to start on boot.</div> </td> </tr> <tr> <td colspan="1"> <b>cloud_init_nics</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>List of dictionaries representing network interfaces to be setup by cloud init.</div> <div>This option is used, when user needs to setup more network interfaces via cloud init.</div> <div>If one network interface is enough, user should use <code>cloud_init</code> <em>nic_*</em> parameters. <code>cloud_init</code> <em>nic_*</em> parameters are merged with <code>cloud_init_nics</code> parameters.</div> <div>Dictionary can contain following values.</div> <div>
+<code>nic_boot_protocol</code> - Set boot protocol of the network interface of Virtual Machine. Can be one of <code>none</code>, <code>dhcp</code> or <code>static</code>.</div> <div>
+<code>nic_ip_address</code> - If boot protocol is static, set this IP address to network interface of Virtual Machine.</div> <div>
+<code>nic_netmask</code> - If boot protocol is static, set this netmask to network interface of Virtual Machine.</div> <div>
+<code>nic_gateway</code> - If boot protocol is static, set this gateway to network interface of Virtual Machine.</div> <div>
+<code>nic_name</code> - Set name to network interface of Virtual Machine.</div> <div>
+<code>nic_on_boot</code> - If <em>True</em> network interface will be set to start on boot.</div> </td> </tr> <tr> <td colspan="1"> <b>cloud_init_persist</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>true</em> the <code>cloud_init</code> or <code>sysprep</code> parameters will be saved for the virtual machine and won't be virtual machine won't be started as run-once.</div> <div style="font-size: small; color: darkgreen">
+<br>aliases: sysprep_persist</div> </td> </tr> <tr> <td colspan="1"> <b>cluster</b> </td> <td> </td> <td> <div>Name of the cluster, where Virtual Machine should be created.</div> <div>Required if creating VM.</div> </td> </tr> <tr> <td colspan="1"> <b>cluster_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps cluster name between VM's OVF and the destination cluster this VM should be registered to, relevant when <code>state</code> is registered. Cluster mapping is described by the following dictionary:</div> <div>
+<code>source_name</code>: The name of the source cluster.</div> <div>
+<code>dest_name</code>: The name of the destination cluster.</div> </td> </tr> <tr> <td colspan="1"> <b>comment</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Comment of the Virtual Machine.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_cores</b> </td> <td> </td> <td> <div>Number of virtual CPUs cores of the Virtual Machine.</div> <div>Default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_mode</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>CPU mode of the virtual machine. It can be some of the following: <em>host_passthrough</em>, <em>host_model</em> or <em>custom</em>.</div> <div>For <em>host_passthrough</em> CPU type you need to set <code>placement_policy</code> to <em>pinned</em>.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_pinning</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>CPU Pinning topology to map virtual machine CPU to host CPU.</div> <div>CPU Pinning topology is a list of dictionary which can have following values:</div> <div>
+<code>cpu</code> - Number of the host CPU.</div> <div>
+<code>vcpu</code> - Number of the virtual machine CPU.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_shares</b> </td> <td> </td> <td> <div>Set a CPU shares for this Virtual Machine.</div> <div>Default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_sockets</b> </td> <td> </td> <td> <div>Number of virtual CPUs sockets of the Virtual Machine.</div> <div>Default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>cpu_threads</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Number of virtual CPUs sockets of the Virtual Machine.</div> <div>Default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>custom_compatibility_version</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Enables a virtual machine to be customized to its own compatibility version. If '<code>custom_compatibility_version</code>' is set, it overrides the cluster's compatibility version for this particular virtual machine.</div> </td> </tr> <tr> <td colspan="1"> <b>custom_properties</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Properties sent to VDSM to configure various hooks.</div> <div>Custom properties is a list of dictionary which can have following values:</div> <div>
+<code>name</code> - Name of the custom property. For example: <em>hugepages</em>, <em>vhost</em>, <em>sap_agent</em>, etc.</div> <div>
+<code>regexp</code> - Regular expression to set for custom property.</div> <div>
+<code>value</code> - Value to set for custom property.</div> </td> </tr> <tr> <td colspan="1"> <b>delete_protected</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>yes</em> Virtual Machine will be set as delete protected.</div> <div>If <em>no</em> Virtual Machine won't be set as delete protected.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>description</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Description of the Virtual Machine.</div> </td> </tr> <tr> <td colspan="1"> <b>disk_format</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>cow</b> ←</div></li> <li>raw</li> </ul> </td> <td> <div>Specify format of the disk.</div> <div>If <code>cow</code> format is used, disk will by created as sparse, so space will be allocated for the volume as needed, also known as <em>thin provision</em>.</div> <div>If <code>raw</code> format is used, disk storage will be allocated right away, also known as <em>preallocated</em>.</div> <div>Note that this option isn't idempotent as it's not currently possible to change format of the disk via API.</div> <div>This parameter is considered only when <code>template</code> and <code>storage domain</code> is provided.</div> </td> </tr> <tr> <td colspan="1"> <b>disks</b> </td> <td> </td> <td> <div>List of disks, which should be attached to Virtual Machine. Disk is described by following dictionary.</div> <div>
+<code>name</code> - Name of the disk. Either <code>name</code> or <code>id</code> is required.</div> <div>
+<code>id</code> - ID of the disk. Either <code>name</code> or <code>id</code> is required.</div> <div>
+<code>interface</code> - Interface of the disk, either <em>virtio</em> or <em>IDE</em>, default is <em>virtio</em>.</div> <div>
+<code>bootable</code> - <em>True</em> if the disk should be bootable, default is non bootable.</div> <div>
+<code>activate</code> - <em>True</em> if the disk should be activated, default is activated.</div> <div>NOTE - This parameter is used only when <code>state</code> is <em>running</em> or <em>present</em> and is able to only attach disks. To manage disks of the VM in more depth please use <span class="module">ovirt_disks</span> module instead.</div> </td> </tr> <tr> <td colspan="1"> <b>domain_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps aaa domain name between VM's OVF and the destination aaa domain this VM should be registered to, relevant when <code>state</code> is registered. The aaa domain mapping is described by the following dictionary:</div> <div>
+<code>source_name</code>: The name of the source aaa domain.</div> <div>
+<code>dest_name</code>: The name of the destination aaa domain.</div> </td> </tr> <tr> <td colspan="1"> <b>fetch_nested</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>True</em> the module will fetch additional data from the API.</div> <div>It will fetch IDs of the VMs disks, snapshots, etc. User can configure to fetch other attributes of the nested entities by specifying <code>nested_attributes</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>force</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li><div style="color: blue">
+<b>no</b> ←</div></li> <li>yes</li> </ul> </td> <td> <div>Please check to <em>Synopsis</em> to more detailed description of force parameter, it can behave differently in different situations.</div> </td> </tr> <tr> <td colspan="1"> <b>graphical_console</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Assign graphical console to the virtual machine.</div> <div>Graphical console is a dictionary which can have following values:</div> <div>
+<code>headless_mode</code> - If <em>true</em> disable the graphics console for this virtual machine.</div> <div>
+<code>protocol</code> - Graphical protocol, a list of <em>spice</em>, <em>vnc</em>, or both.</div> </td> </tr> <tr> <td colspan="1"> <b>high_availability</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>yes</em> Virtual Machine will be set as highly available.</div> <div>If <em>no</em> Virtual Machine won't be set as highly available.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>high_availability_priority</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Indicates the priority of the virtual machine inside the run and migration queues. Virtual machines with higher priorities will be started and migrated before virtual machines with lower priorities. The value is an integer between 0 and 100. The higher the value, the higher the priority.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>host</b> </td> <td> </td> <td> <div>Specify host where Virtual Machine should be running. By default the host is chosen by engine scheduler.</div> <div>This parameter is used only when <code>state</code> is <em>running</em> or <em>present</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>host_devices</b> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> </td> <td> <div>Single Root I/O Virtualization - technology that allows single device to expose multiple endpoints that can be passed to VMs</div> <div>host_devices is an list which contain dictinary with name and state of device</div> </td> </tr> <tr> <td colspan="1"> <b>id</b> </td> <td> </td> <td> <div>ID of the Virtual Machine to manage.</div> </td> </tr> <tr> <td colspan="1"> <b>initrd_path</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Path to an initial ramdisk to be used with the kernel specified by <code>kernel_path</code> option.</div> <div>Ramdisk image must be stored on either the ISO domain or on the host's storage.</div> </td> </tr> <tr> <td colspan="1"> <b>instance_type</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Name of virtual machine's hardware configuration.</div> <div>By default no instance type is used.</div> </td> </tr> <tr> <td colspan="1"> <b>io_threads</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Number of IO threads used by virtual machine. <em>0</em> means IO threading disabled.</div> </td> </tr> <tr> <td colspan="1"> <b>kernel_params</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Kernel command line parameters (formatted as string) to be used with the kernel specified by <code>kernel_path</code> option.</div> </td> </tr> <tr> <td colspan="1"> <b>kernel_path</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Path to a kernel image used to boot the virtual machine.</div> <div>Kernel image must be stored on either the ISO domain or on the host's storage.</div> </td> </tr> <tr> <td colspan="1"> <b>kvm</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Dictionary of values to be used to connect to kvm and import a virtual machine to oVirt.</div> <div>Dictionary can contain following values.</div> <div>
+<code>name</code> - The name of the KVM virtual machine.</div> <div>
+<code>username</code> - The username to authenticate against the KVM.</div> <div>
+<code>password</code> - The password to authenticate against the KVM.</div> <div>
+<code>url</code> - The URL to be passed to the <em>virt-v2v</em> tool for conversion. For example <em>qemu:///system</em>. This is required parameter.</div> <div>
+<code>drivers_iso</code> - The name of the ISO containing drivers that can be used during the <em>virt-v2v</em> conversion process.</div> <div>
+<code>sparse</code> - Specifies the disk allocation policy of the resulting virtual machine. <em>true</em> for sparse, <em>false</em> for preallocated. Default value is <em>true</em>.</div> <div>
+<code>storage_domain</code> - Specifies the target storage domain for converted disks. This is required parameter.</div> </td> </tr> <tr> <td colspan="1"> <b>lease</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>Name of the storage domain this virtual machine lease reside on.</div> <div>NOTE - Supported since oVirt 4.1.</div> </td> </tr> <tr> <td colspan="1"> <b>lun_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps lun between VM's OVF and the destination lun this VM should contain, relevant when <code>state</code> is registered. lun_mappings is described by the following dictionary: - <code>logical_unit_id</code>: The logical unit number to identify a logical unit, - <code>logical_unit_port</code>: The port being used to connect with the LUN disk. - <code>logical_unit_portal</code>: The portal being used to connect with the LUN disk. - <code>logical_unit_address</code>: The address of the block storage host. - <code>logical_unit_target</code>: The iSCSI specification located on an iSCSI server - <code>logical_unit_username</code>: Username to be used to connect to the block storage host. - <code>logical_unit_password</code>: Password to be used to connect to the block storage host. - <code>storage_type</code>: The storage type which the LUN reside on (iscsi or fcp)</div> </td> </tr> <tr> <td colspan="1"> <b>memory</b> </td> <td> </td> <td> <div>Amount of memory of the Virtual Machine. Prefix uses IEC 60027-2 standard (for example 1GiB, 1024MiB).</div> <div>Default value is set by engine.</div> </td> </tr> <tr> <td colspan="1"> <b>memory_guaranteed</b> </td> <td> </td> <td> <div>Amount of minimal guaranteed memory of the Virtual Machine. Prefix uses IEC 60027-2 standard (for example 1GiB, 1024MiB).</div> <div>
+<code>memory_guaranteed</code> parameter can't be lower than <code>memory</code> parameter.</div> <div>Default value is set by engine.</div> </td> </tr> <tr> <td colspan="1"> <b>memory_max</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Upper bound of virtual machine memory up to which memory hot-plug can be performed. Prefix uses IEC 60027-2 standard (for example 1GiB, 1024MiB).</div> <div>Default value is set by engine.</div> </td> </tr> <tr> <td colspan="1"> <b>name</b> </td> <td> </td> <td> <div>Name of the Virtual Machine to manage.</div> <div>If VM don't exists <code>name</code> is required. Otherwise <code>id</code> or <code>name</code> can be used.</div> </td> </tr> <tr> <td colspan="1"> <b>nested_attributes</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Specifies list of the attributes which should be fetched from the API.</div> <div>This parameter apply only when <code>fetch_nested</code> is <em>true</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>nics</b> </td> <td> </td> <td> <div>List of NICs, which should be attached to Virtual Machine. NIC is described by following dictionary.</div> <div>
+<code>name</code> - Name of the NIC.</div> <div>
+<code>profile_name</code> - Profile name where NIC should be attached.</div> <div>
+<code>interface</code> - Type of the network interface. One of following <em>virtio</em>, <em>e1000</em>, <em>rtl8139</em>, default is <em>virtio</em>.</div> <div>
+<code>mac_address</code> - Custom MAC address of the network interface, by default it's obtained from MAC pool.</div> <div>NOTE - This parameter is used only when <code>state</code> is <em>running</em> or <em>present</em> and is able to only create NICs. To manage NICs of the VM in more depth please use <span class="module">ovirt_nics</span> module instead.</div> </td> </tr> <tr> <td colspan="1"> <b>numa_nodes</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> </td> <td> <div>List of vNUMA Nodes to set for this VM and pin them to assigned host's physical NUMA node.</div> <div>Each vNUMA node is described by following dictionary:</div> <div>
+<code>index</code> - The index of this NUMA node (mandatory).</div> <div>
+<code>memory</code> - Memory size of the NUMA node in MiB (mandatory).</div> <div>
+<code>cores</code> - list of VM CPU cores indexes to be included in this NUMA node (mandatory).</div> <div>
+<code>numa_node_pins</code> - list of physical NUMA node indexes to pin this virtual NUMA node to.</div> </td> </tr> <tr> <td colspan="1"> <b>numa_tune_mode</b> <br><div style="font-size: small; color: darkgreen">(added in 2.6)</div> </td> <td> <ul>
+<b>Choices:</b> <li>interleave</li> <li>preferred</li> <li>strict</li> </ul> </td> <td> <div>Set how the memory allocation for NUMA nodes of this VM is applied (relevant if NUMA nodes are set for this VM).</div> <div>It can be one of the following: <em>interleave</em>, <em>preferred</em> or <em>strict</em>.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>operating_system</b> </td> <td> </td> <td> <div>Operating system of the Virtual Machine.</div> <div>Default value is set by oVirt/RHV engine.</div> <div>Possible values: debian_7, freebsd, freebsdx64, other, other_linux, other_linux_ppc64, other_ppc64, rhel_3, rhel_4, rhel_4x64, rhel_5, rhel_5x64, rhel_6, rhel_6x64, rhel_6_ppc64, rhel_7x64, rhel_7_ppc64, sles_11, sles_11_ppc64, ubuntu_12_04, ubuntu_12_10, ubuntu_13_04, ubuntu_13_10, ubuntu_14_04, ubuntu_14_04_ppc64, windows_10, windows_10x64, windows_2003, windows_2003x64, windows_2008, windows_2008x64, windows_2008r2x64, windows_2008R2x64, windows_2012x64, windows_2012R2x64, windows_7, windows_7x64, windows_8, windows_8x64, windows_xp</div> </td> </tr> <tr> <td colspan="1"> <b>placement_policy</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>The configuration of the virtual machine's placement policy.</div> <div>Placement policy can be one of the following values:</div> <div>
+<code>migratable</code> - Allow manual and automatic migration.</div> <div>
+<code>pinned</code> - Do not allow migration.</div> <div>
+<code>user_migratable</code> - Allow manual migration only.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>poll_interval</b> </td> <td> <b>Default:</b><br><div style="color: blue">3</div> </td> <td> <div>Number of the seconds the module waits until another poll request on entity status is sent.</div> </td> </tr> <tr> <td colspan="1"> <b>quota_id</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Virtual Machine quota ID to be used for disk. By default quota is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>reassign_bad_macs</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Boolean indication whether to reassign bad macs when <code>state</code> is registered.</div> </td> </tr> <tr> <td colspan="1"> <b>rng_device</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Random number generator (RNG). You can choose of one the following devices <em>urandom</em>, <em>random</em> or <em>hwrng</em>.</div> <div>In order to select <em>hwrng</em>, you must have it enabled on cluster first.</div> <div>/dev/urandom is used for cluster version &gt;= 4.1, and /dev/random for cluster version &lt;= 4.0</div> </td> </tr> <tr> <td colspan="1"> <b>role_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps role name between VM's OVF and the destination role this VM should be registered to, relevant when <code>state</code> is registered. Role mapping is described by the following dictionary:</div> <div>
+<code>source_name</code>: The name of the source role.</div> <div>
+<code>dest_name</code>: The name of the destination role.</div> </td> </tr> <tr> <td colspan="1"> <b>serial_console</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>
+<em>True</em> enable VirtIO serial console, <em>False</em> to disable it. By default is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>serial_policy</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>vm</li> <li>host</li> <li>custom</li> </ul> </td> <td> <div>Specify a serial number policy for the Virtual Machine.</div> <div>Following options are supported.</div> <div>
+<code>vm</code> - Sets the Virtual Machine's UUID as its serial number.</div> <div>
+<code>host</code> - Sets the host's UUID as the Virtual Machine's serial number.</div> <div>
+<code>custom</code> - Allows you to specify a custom serial number in <code>serial_policy_value</code>.</div> </td> </tr> <tr> <td colspan="1"> <b>serial_policy_value</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Allows you to specify a custom serial number.</div> <div>This parameter is used only when <code>serial_policy</code> is <em>custom</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>smartcard_enabled</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>true</em>, use smart card authentication.</div> </td> </tr> <tr> <td colspan="1"> <b>soundcard_enabled</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>true</em>, the sound card is added to the virtual machine.</div> </td> </tr> <tr> <td colspan="1"> <b>sso</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>
+<em>True</em> enable Single Sign On by Guest Agent, <em>False</em> to disable it. By default is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>state</b> </td> <td> <ul>
+<b>Choices:</b> <li>absent</li> <li>next_run</li> <li><div style="color: blue">
+<b>present</b> ←</div></li> <li>registered</li> <li>running</li> <li>stopped</li> <li>suspended</li> </ul> </td> <td> <div>Should the Virtual Machine be running/stopped/present/absent/suspended/next_run/registered. When <code>state</code> is <em>registered</em> and the unregistered VM's name belongs to an already registered in engine VM in the same DC then we fail to register the unregistered template.</div> <div>
+<em>present</em> state will create/update VM and don't change its state if it already exists.</div> <div>
+<em>running</em> state will create/update VM and start it.</div> <div>
+<em>next_run</em> state updates the VM and if the VM has next run configuration it will be rebooted.</div> <div>Please check <em>notes</em> to more detailed description of states.</div> <div>
+<em>registered</em> is supported since 2.4.</div> </td> </tr> <tr> <td colspan="1"> <b>stateless</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>yes</em> Virtual Machine will be set as stateless.</div> <div>If <em>no</em> Virtual Machine will be unset as stateless.</div> <div>If no value is passed, default value is set by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>storage_domain</b> <br><div style="font-size: small; color: darkgreen">(added in 2.4)</div> </td> <td> </td> <td> <div>Name of the storage domain where all template disks should be created.</div> <div>This parameter is considered only when <code>template</code> is provided.</div> <div>IMPORTANT - This parameter is not idempotent, if the VM exists and you specfiy different storage domain, disk won't move.</div> </td> </tr> <tr> <td colspan="1"> <b>sysprep</b> </td> <td> </td> <td> <div>Dictionary with values for Windows Virtual Machine initialization using sysprep.</div> <div>
+<code>host_name</code> - Hostname to be set to Virtual Machine when deployed.</div> <div>
+<code>active_directory_ou</code> - Active Directory Organizational Unit, to be used for login of user.</div> <div>
+<code>org_name</code> - Organization name to be set to Windows Virtual Machine.</div> <div>
+<code>domain</code> - Domain to be set to Windows Virtual Machine.</div> <div>
+<code>timezone</code> - Timezone to be set to Windows Virtual Machine.</div> <div>
+<code>ui_language</code> - UI language of the Windows Virtual Machine.</div> <div>
+<code>system_locale</code> - System localization of the Windows Virtual Machine.</div> <div>
+<code>input_locale</code> - Input localization of the Windows Virtual Machine.</div> <div>
+<code>windows_license_key</code> - License key to be set to Windows Virtual Machine.</div> <div>
+<code>user_name</code> - Username to be used for set password to Windows Virtual Machine.</div> <div>
+<code>root_password</code> - Password to be set for username to Windows Virtual Machine.</div> </td> </tr> <tr> <td colspan="1"> <b>template</b> </td> <td> </td> <td> <div>Name of the template, which should be used to create Virtual Machine.</div> <div>Required if creating VM.</div> <div>If template is not specified and VM doesn't exist, VM will be created from <em>Blank</em> template.</div> </td> </tr> <tr> <td colspan="1"> <b>template_version</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Version number of the template to be used for VM.</div> <div>By default the latest available version of the template is used.</div> </td> </tr> <tr> <td colspan="1"> <b>ticket</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.7)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>If <em>true</em>, in addition return <em>remote_vv_file</em> inside <em>vm</em> dictionary, which contains compatible content for remote-viewer application. Works only <code>state</code> is <em>running</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> </td> <td> <b>Default:</b><br><div style="color: blue">180</div> </td> <td> <div>The amount of time in seconds the module should wait for the instance to get into desired state.</div> </td> </tr> <tr> <td colspan="1"> <b>timezone</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Sets time zone offset of the guest hardware clock.</div> <div>For example <code>Etc/GMT</code>
+</div> </td> </tr> <tr> <td colspan="1"> <b>type</b> </td> <td> <ul>
+<b>Choices:</b> <li>desktop</li> <li>server</li> <li>high_performance</li> </ul> </td> <td> <div>Type of the Virtual Machine.</div> <div>Default value is set by oVirt/RHV engine.</div> <div>
+<em>high_performance</em> is supported since Ansible 2.5 and oVirt/RHV 4.2.</div> </td> </tr> <tr> <td colspan="1"> <b>usb_support</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>
+<em>True</em> enable USB support, <em>False</em> to disable it. By default is chosen by oVirt/RHV engine.</div> </td> </tr> <tr> <td colspan="1"> <b>use_latest_template_version</b> <br><div style="font-size: small; color: red">bool</div> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li>yes</li> </ul> </td> <td> <div>Specify if latest template version should be used, when running a stateless VM.</div> <div>If this parameter is set to <em>yes</em> stateless VM is created.</div> </td> </tr> <tr> <td colspan="1"> <b>vmware</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Dictionary of values to be used to connect to VMware and import a virtual machine to oVirt.</div> <div>Dictionary can contain following values.</div> <div>
+<code>username</code> - The username to authenticate against the VMware.</div> <div>
+<code>password</code> - The password to authenticate against the VMware.</div> <div>
+<code>url</code> - The URL to be passed to the <em>virt-v2v</em> tool for conversion. For example <em>vpx://wmware_user@vcenter-host/DataCenter/Cluster/esxi-host?no_verify=1</em>
+</div> <div>
+<code>drivers_iso</code> - The name of the ISO containing drivers that can be used during the <em>virt-v2v</em> conversion process.</div> <div>
+<code>sparse</code> - Specifies the disk allocation policy of the resulting virtual machine. <em>true</em> for sparse, <em>false</em> for preallocated. Default value is <em>true</em>.</div> <div>
+<code>storage_domain</code> - Specifies the target storage domain for converted disks. This is required parameter.</div> </td> </tr> <tr> <td colspan="1"> <b>vnic_profile_mappings</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Mapper which maps an external virtual NIC profile to one that exists in the engine when <code>state</code> is registered. vnic_profile is described by the following dictionary:</div> <div>
+<code>source_network_name</code>: The network name of the source network.</div> <div>
+<code>source_profile_name</code>: The profile name related to the source network.</div> <div>
+<code>target_profile_id</code>: The id of the target profile id to be mapped to in the engine.</div> </td> </tr> <tr> <td colspan="1"> <b>wait</b> <br><div style="font-size: small; color: red">bool</div> </td> <td> <ul>
+<b>Choices:</b> <li>no</li> <li><div style="color: blue">
+<b>yes</b> ←</div></li> </ul> </td> <td> <div>
+<em>True</em> if the module should wait for the entity to get into desired state.</div> </td> </tr> <tr> <td colspan="1"> <b>watchdog</b> <br><div style="font-size: small; color: darkgreen">(added in 2.5)</div> </td> <td> </td> <td> <div>Assign watchdog device for the virtual machine.</div> <div>Watchdogs is a dictionary which can have following values:</div> <div>
+<code>model</code> - Model of the watchdog device. For example: <em>i6300esb</em>, <em>diag288</em> or <em>null</em>.</div> <div>
+<code>action</code> - Watchdog action to be performed when watchdog is triggered. For example: <em>none</em>, <em>reset</em>, <em>poweroff</em>, <em>pause</em> or <em>dump</em>.</div> </td> </tr> <tr> <td colspan="1"> <b>xen</b> <br><div style="font-size: small; color: darkgreen">(added in 2.3)</div> </td> <td> </td> <td> <div>Dictionary of values to be used to connect to XEN and import a virtual machine to oVirt.</div> <div>Dictionary can contain following values.</div> <div>
+<code>url</code> - The URL to be passed to the <em>virt-v2v</em> tool for conversion. For example <em>xen+ssh://root@zen.server</em>. This is required parameter.</div> <div>
+<code>drivers_iso</code> - The name of the ISO containing drivers that can be used during the <em>virt-v2v</em> conversion process.</div> <div>
+<code>sparse</code> - Specifies the disk allocation policy of the resulting virtual machine. <em>true</em> for sparse, <em>false</em> for preallocated. Default value is <em>true</em>.</div> <div>
+<code>storage_domain</code> - Specifies the target storage domain for converted disks. This is required parameter.</div> </td> </tr> </table> <br>  <h2 id="notes">Notes</h2> <div class="admonition note"> <p class="first admonition-title">Note</p> <ul class="last simple"> <li>If VM is in <em>UNASSIGNED</em> or <em>UNKNOWN</em> state before any operation, the module will fail. If VM is in <em>IMAGE_LOCKED</em> state before any operation, we try to wait for VM to be <em>DOWN</em>. If VM is in <em>SAVING_STATE</em> state before any operation, we try to wait for VM to be <em>SUSPENDED</em>. If VM is in <em>POWERING_DOWN</em> state before any operation, we try to wait for VM to be <em>UP</em> or <em>DOWN</em>. VM can get into <em>UP</em> state from <em>POWERING_DOWN</em> state, when there is no ACPI or guest agent running inside VM, or if the shutdown operation fails. When user specify <em>UP</em> <code>state</code>, we always wait to VM to be in <em>UP</em> state in case VM is <em>MIGRATING</em>, <em>REBOOTING</em>, <em>POWERING_UP</em>, <em>RESTORING_STATE</em>, <em>WAIT_FOR_LAUNCH</em>. In other states we run start operation on VM. When user specify <em>stopped</em> <code>state</code>, and If user pass <code>force</code> parameter set to <em>true</em> we forcibly stop the VM in any state. If user don’t pass <code>force</code> parameter, we always wait to VM to be in UP state in case VM is <em>MIGRATING</em>, <em>REBOOTING</em>, <em>POWERING_UP</em>, <em>RESTORING_STATE</em>, <em>WAIT_FOR_LAUNCH</em>. If VM is in <em>PAUSED</em> or <em>SUSPENDED</em> state, we start the VM. Then we gracefully shutdown the VM. When user specify <em>suspended</em> <code>state</code>, we always wait to VM to be in UP state in case VM is <em>MIGRATING</em>, <em>REBOOTING</em>, <em>POWERING_UP</em>, <em>RESTORING_STATE</em>, <em>WAIT_FOR_LAUNCH</em>. If VM is in <em>PAUSED</em> or <em>DOWN</em> state, we start the VM. Then we suspend the VM. When user specify <em>absent</em> <code>state</code>, we forcibly stop the VM in any state and remove it.</li> <li>In order to use this module you have to install oVirt Python SDK. To ensure it’s installed with correct version you can create the following task: <em>pip: name=ovirt-engine-sdk-python version=4.2.4</em>
+</li> </ul> </div>   <h2 id="examples">Examples</h2> <pre data-language="yaml"># Examples don't contain auth parameter for simplicity,
+# look at ovirt_auth module to see how to reuse authentication:
+
+- name: Creates a new Virtual Machine from template named 'rhel7_template'
+  ovirt_vm:
+    state: present
+    name: myvm
+    template: rhel7_template
+    cluster: mycluster
+
+- name: Register VM
+  ovirt_vm:
+    state: registered
+    storage_domain: mystorage
+    cluster: mycluster
+    name: myvm
+
+- name: Register VM using id
+  ovirt_vm:
+    state: registered
+    storage_domain: mystorage
+    cluster: mycluster
+    id: 1111-1111-1111-1111
+
+- name: Register VM, allowing partial import
+  ovirt_vm:
+    state: registered
+    storage_domain: mystorage
+    allow_partial_import: "True"
+    cluster: mycluster
+    id: 1111-1111-1111-1111
+
+- name: Register VM with vnic profile mappings and reassign bad macs
+  ovirt_vm:
+    state: registered
+    storage_domain: mystorage
+    cluster: mycluster
+    id: 1111-1111-1111-1111
+    vnic_profile_mappings:
+    - source_network_name: mynetwork
+      source_profile_name: mynetwork
+      target_profile_id: 3333-3333-3333-3333
+    - source_network_name: mynetwork2
+      source_profile_name: mynetwork2
+      target_profile_id: 4444-4444-4444-4444
+    reassign_bad_macs: "True"
+
+- name: Register VM with mappings
+  ovirt_vm:
+    state: registered
+    storage_domain: mystorage
+    cluster: mycluster
+    id: 1111-1111-1111-1111
+    role_mappings:
+      - source_name: Role_A
+        dest_name: Role_B
+    domain_mappings:
+      - source_name: Domain_A
+        dest_name: Domain_B
+    lun_mappings:
+      - source_storage_type: iscsi
+        source_logical_unit_id: 1IET_000d0001
+        source_logical_unit_port: 3260
+        source_logical_unit_portal: 1
+        source_logical_unit_address: 10.34.63.203
+        source_logical_unit_target: iqn.2016-08-09.brq.str-01:omachace
+        dest_storage_type: iscsi
+        dest_logical_unit_id: 1IET_000d0002
+        dest_logical_unit_port: 3260
+        dest_logical_unit_portal: 1
+        dest_logical_unit_address: 10.34.63.204
+        dest_logical_unit_target: iqn.2016-08-09.brq.str-02:omachace
+    affinity_group_mappings:
+      - source_name: Affinity_A
+        dest_name: Affinity_B
+    affinity_label_mappings:
+      - source_name: Label_A
+        dest_name: Label_B
+    cluster_mappings:
+      - source_name: cluster_A
+        dest_name: cluster_B
+
+- name: Creates a stateless VM which will always use latest template version
+  ovirt_vm:
+    name: myvm
+    template: rhel7
+    cluster: mycluster
+    use_latest_template_version: true
+
+# Creates a new server rhel7 Virtual Machine from Blank template
+# on brq01 cluster with 2GiB memory and 2 vcpu cores/sockets
+# and attach bootable disk with name rhel7_disk and attach virtio NIC
+- ovirt_vm:
+    state: present
+    cluster: brq01
+    name: myvm
+    memory: 2GiB
+    cpu_cores: 2
+    cpu_sockets: 2
+    cpu_shares: 1024
+    type: server
+    operating_system: rhel_7x64
+    disks:
+      - name: rhel7_disk
+        bootable: True
+    nics:
+      - name: nic1
+
+- name: Run VM with cloud init
+  ovirt_vm:
+    name: rhel7
+    template: rhel7
+    cluster: Default
+    memory: 1GiB
+    high_availability: true
+    high_availability_priority: 50  # Available from Ansible 2.5
+    cloud_init:
+      nic_boot_protocol: static
+      nic_ip_address: 10.34.60.86
+      nic_netmask: 255.255.252.0
+      nic_gateway: 10.34.63.254
+      nic_name: eth1
+      nic_on_boot: true
+      host_name: example.com
+      custom_script: |
+        write_files:
+         - content: |
+             Hello, world!
+           path: /tmp/greeting.txt
+           permissions: '0644'
+      user_name: root
+      root_password: super_password
+
+- name: Run VM with cloud init, with multiple network interfaces
+  ovirt_vm:
+    name: rhel7_4
+    template: rhel7
+    cluster: mycluster
+    cloud_init_nics:
+    - nic_name: eth0
+      nic_boot_protocol: dhcp
+      nic_on_boot: true
+    - nic_name: eth1
+      nic_boot_protocol: static
+      nic_ip_address: 10.34.60.86
+      nic_netmask: 255.255.252.0
+      nic_gateway: 10.34.63.254
+      nic_on_boot: true
+
+- name: Run VM with sysprep
+  ovirt_vm:
+    name: windows2012R2_AD
+    template: windows2012R2
+    cluster: Default
+    memory: 3GiB
+    high_availability: true
+    sysprep:
+      host_name: windowsad.example.com
+      user_name: Administrator
+      root_password: SuperPassword123
+
+- name: Migrate/Run VM to/on host named 'host1'
+  ovirt_vm:
+    state: running
+    name: myvm
+    host: host1
+
+- name: Change VMs CD
+  ovirt_vm:
+    name: myvm
+    cd_iso: drivers.iso
+
+- name: Eject VMs CD
+  ovirt_vm:
+    name: myvm
+    cd_iso: ''
+
+- name: Boot VM from CD
+  ovirt_vm:
+    name: myvm
+    cd_iso: centos7_x64.iso
+    boot_devices:
+        - cdrom
+
+- name: Stop vm
+  ovirt_vm:
+    state: stopped
+    name: myvm
+
+- name: Upgrade memory to already created VM
+  ovirt_vm:
+    name: myvm
+    memory: 4GiB
+
+- name: Hot plug memory to already created and running VM (VM won't be restarted)
+  ovirt_vm:
+    name: myvm
+    memory: 4GiB
+
+# Create/update a VM to run with two vNUMA nodes and pin them to physical NUMA nodes as follows:
+# vnuma index 0-&gt; numa index 0, vnuma index 1-&gt; numa index 1
+- name: Create a VM to run with two vNUMA nodes
+  ovirt_vm:
+    name: myvm
+    cluster: mycluster
+    numa_tune_mode: "interleave"
+    numa_nodes:
+    - index: 0
+      cores: [0]
+      memory: 20
+      numa_node_pins: [0]
+    - index: 1
+      cores: [1]
+      memory: 30
+      numa_node_pins: [1]
+
+- name: Update an existing VM to run without previously created vNUMA nodes (i.e. remove all vNUMA nodes+NUMA pinning setting)
+  ovirt_vm:
+    name: myvm
+    cluster: mycluster
+    state: "present"
+    numa_tune_mode: "interleave"
+    numa_nodes:
+    - index: -1
+
+# When change on the VM needs restart of the VM, use next_run state,
+# The VM will be updated and rebooted if there are any changes.
+# If present state would be used, VM won't be restarted.
+- ovirt_vm:
+    state: next_run
+    name: myvm
+    boot_devices:
+      - network
+
+- name: Import virtual machine from VMware
+  ovirt_vm:
+    state: stopped
+    cluster: mycluster
+    name: vmware_win10
+    timeout: 1800
+    poll_interval: 30
+    vmware:
+      url: vpx://user@1.2.3.4/Folder1/Cluster1/2.3.4.5?no_verify=1
+      name: windows10
+      storage_domain: mynfs
+      username: user
+      password: password
+
+- name: Create vm from template and create all disks on specific storage domain
+  ovirt_vm:
+    name: vm_test
+    cluster: mycluster
+    template: mytemplate
+    storage_domain: mynfs
+    nics:
+    - name: nic1
+
+- name: Remove VM, if VM is running it will be stopped
+  ovirt_vm:
+    state: absent
+    name: myvm
+
+# Defining a specific quota for a VM:
+# Since Ansible 2.5
+- ovirt_quotas_facts:
+    data_center: Default
+    name: myquota
+- ovirt_vm:
+    name: myvm
+    sso: False
+    boot_menu: True
+    usb_support: True
+    serial_console: True
+    quota_id: "{{ ovirt_quotas[0]['id'] }}"
+
+- name: Create a VM that has the console configured for both Spice and VNC
+  ovirt_vm:
+    name: myvm
+    template: mytemplate
+    cluster: mycluster
+    graphical_console:
+      protocol:
+        - spice
+        - vnc
+
+# Execute remote viever to VM
+- block:
+  - name: Create a ticket for console for a running VM
+    ovirt_vms:
+      name: myvm
+      ticket: true
+      state: running
+    register: myvm
+
+  - name: Save ticket to file
+    copy:
+      content: "{{ myvm.vm.remote_vv_file }}"
+      dest: ~/vvfile.vv
+
+  - name: Run remote viewer with file
+    command: remote-viewer ~/vvfile.vv
+
+# Default value of host_device state is present
+- name: Attach host devices to virtual machine
+  ovirt_vm:
+    name: myvm
+    host: myhost
+    placement_policy: pinned
+    host_devices:
+      - name: pci_0000_00_06_0
+      - name: pci_0000_00_07_0
+        state: absent
+      - name: pci_0000_00_08_0
+        state: present
+</pre>   <h2 id="return-values">Return Values</h2> <p>Common return values are documented <a class="reference internal" href="../../reference_appendices/common_return_values/#common-return-values"><span class="std std-ref">here</span></a>, the following are the fields unique to this module:</p> <table class="documentation-table"> <tr> <th colspan="1">Key</th> <th>Returned</th> <th width="100%">Description</th> </tr> <tr> <td colspan="1"> <b>id</b> <br><div style="font-size: small; color: red">str</div> </td> <td>On success if VM is found.</td> <td> <div>ID of the VM which is managed</div> <br> <div style="font-size: smaller"><b>Sample:</b></div> <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">7de90f31-222c-436c-a1ca-7e655bd5b60c</div> </td> </tr> <tr> <td colspan="1"> <b>vm</b> <br><div style="font-size: small; color: red">dict</div> </td> <td>On success if VM is found.</td> <td> <div>Dictionary of all the VM attributes. VM attributes can be found on your oVirt/RHV instance at following url: http://ovirt.github.io/ovirt-engine-api-model/master/#types/vm. Additionally when user sent ticket=true, this module will return also remote_vv_file parameter in vm dictionary, which contains remote-viewer compatible file to open virtual machine console. Please note that this file contains sensible information.</div> <br> </td> </tr> </table> <br><br>  <h2 id="status">Status</h2> <p>This module is flagged as <strong>preview</strong> which means that it is not guaranteed to have a backwards compatible interface.</p>   <h2 id="maintenance">Maintenance</h2> <p>This module is flagged as <strong>community</strong> which means that it is maintained by the Ansible Community. See <a class="reference internal" href="../../user_guide/modules_support/#modules-support"><span class="std std-ref">Module Maintenance &amp; Support</span></a> for more info.</p> <p>For a list of other modules that are also maintained by the Ansible Community, see <a class="reference internal" href="../community_maintained/#community-supported"><span class="std std-ref">here</span></a>.</p>  <h3 id="author">Author</h3> <ul class="simple"> <li>Ondra Machacek (@machacekondra)</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/modules/cloud/ovirt/ovirt_vm.py?description=%3C!---%20Your%20description%20here%20--%3E%0A%0A%2Blabel:%20docsite_pr" target="_blank">edit this document</a> to improve it.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/modules/ovirt_vm_module.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/modules/ovirt_vm_module.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

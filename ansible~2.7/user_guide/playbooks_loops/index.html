@@ -1,0 +1,400 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Loops - Ansible 2.7 - W3cubDocs</title>
+  
+  <meta name="description" content="Often you’ll want to do many things in one task, such as create a lot of users, install a lot of packages, or repeat a polling step until a certain &hellip;">
+  <meta name="keywords" content="loops, -, ansible, ansible~2.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/playbooks_loops/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ansible~2.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="playbooks-loops">Loops</h1> <p id="loops">Often you’ll want to do many things in one task, such as create a lot of users, install a lot of packages, or repeat a polling step until a certain result is reached.</p> <p>This chapter is all about how to use loops in playbooks.</p>   <ul> <li><a class="reference internal" href="#standard-loops" id="id6">Standard Loops</a></li> <li><a class="reference internal" href="#complex-loops" id="id7">Complex loops</a></li> <li><a class="reference internal" href="#using-lookup-vs-query-with-loop" id="id8">Using lookup vs query with loop</a></li> <li><a class="reference internal" href="#do-until-loops" id="id9">Do-Until Loops</a></li> <li><a class="reference internal" href="#using-register-with-a-loop" id="id10">Using register with a loop</a></li> <li><a class="reference internal" href="#looping-over-the-inventory" id="id11">Looping over the inventory</a></li> <li><a class="reference internal" href="#loop-control" id="id12">Loop Control</a></li> <li>
+<a class="reference internal" href="#migrating-from-with-x-to-loop" id="id13">Migrating from with_X to loop</a><ul> <li><a class="reference internal" href="#with-list" id="id14">with_list</a></li> <li><a class="reference internal" href="#with-items" id="id15">with_items</a></li> <li><a class="reference internal" href="#with-indexed-items" id="id16">with_indexed_items</a></li> <li><a class="reference internal" href="#with-flattened" id="id17">with_flattened</a></li> <li><a class="reference internal" href="#with-together" id="id18">with_together</a></li> <li><a class="reference internal" href="#with-dict" id="id19">with_dict</a></li> <li><a class="reference internal" href="#with-sequence" id="id20">with_sequence</a></li> <li><a class="reference internal" href="#with-subelements" id="id21">with_subelements</a></li> <li><a class="reference internal" href="#with-nested-with-cartesian" id="id22">with_nested/with_cartesian</a></li> <li><a class="reference internal" href="#with-random-choice" id="id23">with_random_choice</a></li> </ul> </li> </ul>
+   <h2 id="id1">Standard Loops</h2> <p id="standard-loops">To save some typing, repeated tasks can be written in short-hand like so:</p> <pre data-language="YAML">- name: add several users
+  user:
+    name: "{{ item }}"
+    state: present
+    groups: "wheel"
+  loop:
+     - testuser1
+     - testuser2
+</pre> <p>If you have defined a YAML list in a variables file, or the ‘vars’ section, you can also do:</p> <pre data-language="YAML">loop: "{{ somelist }}"
+</pre> <p>The above would be the equivalent of:</p> <pre data-language="YAML">- name: add user testuser1
+  user:
+    name: "testuser1"
+    state: present
+    groups: "wheel"
+- name: add user testuser2
+  user:
+    name: "testuser2"
+    state: present
+    groups: "wheel"
+</pre> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Before 2.5 Ansible mainly used the <code>with_&lt;lookup&gt;</code> keywords to create loops, the <code>loop</code> keyword is basically analogous to <code>with_list</code>.</p> </div> <p>Some plugins like, the yum and apt modules can take lists directly to their options, this is more optimal than looping over the task. See each action’s documentation for details, for now here is an example:</p> <pre data-language="YAML">- name: optimal yum
+  yum:
+    name: "{{list_of_packages}}"
+    state: present
+
+- name: non optimal yum, not only slower but might cause issues with interdependencies
+  yum:
+    name: "{{item}}"
+    state: present
+  loop: "{{list_of_packages}}"
+</pre> <p>Note that the types of items you iterate over do not have to be simple lists of strings. If you have a list of hashes, you can reference subkeys using things like:</p> <pre data-language="YAML">- name: add several users
+  user:
+    name: "{{ item.name }}"
+    state: present
+    groups: "{{ item.groups }}"
+  loop:
+    - { name: 'testuser1', groups: 'wheel' }
+    - { name: 'testuser2', groups: 'root' }
+</pre> <p>Also be aware that when combining <a class="reference internal" href="../playbooks_conditionals/"><span class="doc">Conditionals</span></a> with a loop, the <code>when:</code> statement is processed separately for each item. See <a class="reference internal" href="../playbooks_conditionals/#the-when-statement"><span class="std std-ref">The When Statement</span></a> for an example.</p> <p>To loop over a dict, use the <code>dict2items</code> <a class="reference internal" href="../playbooks_filters/#dict-filter"><span class="std std-ref">Dict Filter</span></a>:</p> <pre data-language="YAML">- name: create a tag dictionary of non-empty tags
+  set_fact:
+    tags_dict: "{{ (tags_dict|default({}))|combine({item.key: item.value}) }}"
+  loop: "{{ tags|dict2items }}"
+  vars:
+    tags:
+      Environment: dev
+      Application: payment
+      Another: "{{ doesnotexist|default() }}"
+  when: item.value != ""
+</pre> <p>Here, we don’t want to set empty tags, so we create a dictionary containing only non-empty tags.</p>   <h2 id="id2">Complex loops</h2> <p id="complex-loops">Sometimes you need more than what a simple list provides, you can use Jinja2 expressions to create complex lists: For example, using the ‘nested’ lookup, you can combine lists:</p> <pre data-language="YAML">- name: give users access to multiple databases
+  mysql_user:
+    name: "{{ item[0] }}"
+    priv: "{{ item[1] }}.*:ALL"
+    append_privs: yes
+    password: "foo"
+  loop: "{{ ['alice', 'bob'] |product(['clientdb', 'employeedb', 'providerdb'])|list }}"
+</pre> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last"><code>with_</code> loops are actually a combination of things <code>with_</code> + <code>lookup()</code>, even <code>items</code> is a lookup. <code>loop</code> can be used in the same way as shown above.</p> </div>   <h2 id="using-lookup-vs-query-with-loop">Using lookup vs query with loop</h2> <p>In Ansible 2.5 a new jinja2 function was introduced named <a class="reference internal" href="../../plugins/lookup/#query"><span class="std std-ref">query</span></a>, that offers several benefits over <code>lookup</code> when using the new <code>loop</code> keyword.</p> <p>This is better described in the lookup documentation. However, <code>query</code> provides a simpler interface and a more predictable output from lookup plugins, ensuring better compatibility with <code>loop</code>.</p> <p>In certain situations the <code>lookup</code> function may not return a list which <code>loop</code> requires.</p> <p>The following invocations are equivalent, using <code>wantlist=True</code> with <code>lookup</code> to ensure a return type of a list:</p> <pre data-language="YAML">loop: "{{ query('inventory_hostnames', 'all') }}"
+
+loop: "{{ lookup('inventory_hostnames', 'all', wantlist=True) }}"
+</pre>   <h2 id="id3">Do-Until Loops</h2> <div class="versionadded" id="do-until-loops"> <p><span class="versionmodified">New in version 1.4.</span></p> </div> <p>Sometimes you would want to retry a task until a certain condition is met. Here’s an example:</p> <pre data-language="YAML">- shell: /usr/bin/foo
+  register: result
+  until: result.stdout.find("all systems go") != -1
+  retries: 5
+  delay: 10
+</pre> <p>The above example run the shell module recursively till the module’s result has “all systems go” in its stdout or the task has been retried for 5 times with a delay of 10 seconds. The default value for “retries” is 3 and “delay” is 5.</p> <p>The task returns the results returned by the last task run. The results of individual retries can be viewed by -vv option. The registered variable will also have a new key “attempts” which will have the number of the retries for the task.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">If the <code>until</code> parameter isn’t defined, the value for the <code>retries</code> parameter is forced to 1.</p> </div>   <h2 id="using-register-with-a-loop">Using register with a loop</h2> <p>After using <code>register</code> with a loop, the data structure placed in the variable will contain a <code>results</code> attribute that is a list of all responses from the module.</p> <p>Here is an example of using <code>register</code> with <code>loop</code>:</p> <pre data-language="YAML">- shell: "echo {{ item }}"
+  loop:
+    - "one"
+    - "two"
+  register: echo
+</pre> <p>This differs from the data structure returned when using <code>register</code> without a loop:</p> <pre data-language="YAML">{
+    "changed": true,
+    "msg": "All items completed",
+    "results": [
+        {
+            "changed": true,
+            "cmd": "echo \"one\" ",
+            "delta": "0:00:00.003110",
+            "end": "2013-12-19 12:00:05.187153",
+            "invocation": {
+                "module_args": "echo \"one\"",
+                "module_name": "shell"
+            },
+            "item": "one",
+            "rc": 0,
+            "start": "2013-12-19 12:00:05.184043",
+            "stderr": "",
+            "stdout": "one"
+        },
+        {
+            "changed": true,
+            "cmd": "echo \"two\" ",
+            "delta": "0:00:00.002920",
+            "end": "2013-12-19 12:00:05.245502",
+            "invocation": {
+                "module_args": "echo \"two\"",
+                "module_name": "shell"
+            },
+            "item": "two",
+            "rc": 0,
+            "start": "2013-12-19 12:00:05.242582",
+            "stderr": "",
+            "stdout": "two"
+        }
+    ]
+}
+</pre> <p>Subsequent loops over the registered variable to inspect the results may look like:</p> <pre data-language="YAML">- name: Fail if return code is not 0
+  fail:
+    msg: "The command ({{ item.cmd }}) did not have a 0 return code"
+  when: item.rc != 0
+  loop: "{{ echo.results }}"
+</pre> <p>During iteration, the result of the current item will be placed in the variable:</p> <pre data-language="YAML">- shell: echo "{{ item }}"
+  loop:
+    - one
+    - two
+  register: echo
+  changed_when: echo.stdout != "one"
+</pre>   <h2 id="looping-over-the-inventory">Looping over the inventory</h2> <p>If you wish to loop over the inventory, or just a subset of it, there are multiple ways. One can use a regular <code>loop</code> with the <code>ansible_play_batch</code> or <code>groups</code> variables, like this:</p> <pre data-language="YAML"># show all the hosts in the inventory
+- debug:
+    msg: "{{ item }}"
+  loop: "{{ groups['all'] }}"
+
+# show all the hosts in the current play
+- debug:
+    msg: "{{ item }}"
+  loop: "{{ ansible_play_batch }}"
+</pre> <p>There is also a specific lookup plugin <code>inventory_hostnames</code> that can be used like this:</p> <pre data-language="YAML"># show all the hosts in the inventory
+- debug:
+    msg: "{{ item }}"
+  loop: "{{ query('inventory_hostnames', 'all') }}"
+
+# show all the hosts matching the pattern, ie all but the group www
+- debug:
+    msg: "{{ item }}"
+  loop: "{{ query('inventory_hostnames', 'all!www') }}"
+</pre> <p>More information on the patterns can be found on <a class="reference internal" href="../intro_patterns/"><span class="doc">Working with Patterns</span></a></p>   <h2 id="id4">Loop Control</h2> <div class="versionadded" id="loop-control"> <p><span class="versionmodified">New in version 2.1.</span></p> </div> <p>In 2.0 you are again able to use loops and task includes (but not playbook includes). This adds the ability to loop over the set of tasks in one shot. Ansible by default sets the loop variable <code>item</code> for each loop, which causes these nested loops to overwrite the value of <code>item</code> from the “outer” loops. As of Ansible 2.1, the <code>loop_control</code> option can be used to specify the name of the variable to be used for the loop:</p> <pre data-language="YAML"># main.yml
+- include_tasks: inner.yml
+  loop:
+    - 1
+    - 2
+    - 3
+  loop_control:
+    loop_var: outer_item
+
+# inner.yml
+- debug:
+    msg: "outer item={{ outer_item }} inner item={{ item }}"
+  loop:
+    - a
+    - b
+    - c
+</pre> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">If Ansible detects that the current loop is using a variable which has already been defined, it will raise an error to fail the task.</p> </div> <div class="versionadded"> <p><span class="versionmodified">New in version 2.2.</span></p> </div> <p>When using complex data structures for looping the display might get a bit too “busy”, this is where the <code>label</code> directive comes to help:</p> <pre data-language="YAML">- name: create servers
+  digital_ocean:
+    name: "{{ item.name }}"
+    state: present
+  loop:
+    - name: server1
+      disks: 3gb
+      ram: 15Gb
+      network:
+        nic01: 100Gb
+        nic02: 10Gb
+        ...
+  loop_control:
+    label: "{{ item.name }}"
+</pre> <p>This will now display just the <code>label</code> field instead of the whole structure per <code>item</code>, it defaults to <code>{{ item }}</code> to display things as usual.</p> <div class="versionadded"> <p><span class="versionmodified">New in version 2.2.</span></p> </div> <p>Another option to loop control is <code>pause</code>, which allows you to control the time (in seconds) between execution of items in a task loop.:</p> <pre data-language="YAML"># main.yml
+- name: create servers, pause 3s before creating next
+  digital_ocean:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - server1
+    - server2
+  loop_control:
+    pause: 3
+</pre> <div class="versionadded"> <p><span class="versionmodified">New in version 2.5.</span></p> </div> <p>If you need to keep track of where you are in a loop, you can use the <code>index_var</code> option to loop control to specify a variable name to contain the current loop index.:</p> <pre data-language="YAML">- name: count our fruit
+  debug:
+    msg: "{{ item }} with index {{ my_idx }}"
+  loop:
+    - apple
+    - banana
+    - pear
+  loop_control:
+    index_var: my_idx
+</pre>   <h2 id="migrating-from-with-x-to-loop">Migrating from with_X to loop</h2> <p>With the release of Ansible 2.5, the recommended way to perform loops is the use the new <code>loop</code> keyword instead of <code>with_X</code> style loops.</p> <p>In many cases, <code>loop</code> syntax is better expressed using filters instead of more complex use of <code>query</code> or <code>lookup</code>.</p> <p>The following examples will show how to convert many common <code>with_</code> style loops to <code>loop</code> and filters.</p>  <h3 id="with-list">with_list</h3> <p><code>with_list</code> is directly replaced by <code>loop</code>.</p> <pre data-language="yaml">- name: with_list
+  debug:
+    msg: "{{ item }}"
+  with_list:
+    - one
+    - two
+
+- name: with_list -&gt; loop
+  debug:
+    msg: "{{ item }}"
+  loop:
+    - one
+    - two
+</pre>   <h3 id="with-items">with_items</h3> <p><code>with_items</code> is replaced by <code>loop</code> and the <code>flatten</code> filter.</p> <pre data-language="yaml">- name: with_items
+  debug:
+    msg: "{{ item }}"
+  with_items: "{{ items }}"
+
+- name: with_items -&gt; loop
+  debug:
+    msg: "{{ item }}"
+  loop: "{{ items|flatten(levels=1) }}"
+</pre>   <h3 id="with-indexed-items">with_indexed_items</h3> <p><code>with_indexed_items</code> is replaced by <code>loop</code>, the <code>flatten</code> filter and <code>loop_control.index_var</code>.</p> <pre data-language="yaml">- name: with_indexed_items
+  debug:
+    msg: "{{ item.0 }} - {{ item.1 }}"
+  with_indexed_items: "{{ items }}"
+
+- name: with_indexed_items -&gt; loop
+  debug:
+    msg: "{{ index }} - {{ item }}"
+  loop: "{{ items|flatten(levels=1) }}"
+  loop_control:
+    index_var: index
+</pre>   <h3 id="with-flattened">with_flattened</h3> <p><code>with_flattened</code> is replaced by <code>loop</code> and the <code>flatten</code> filter.</p> <pre data-language="yaml">- name: with_flattened
+  debug:
+    msg: "{{ item }}"
+  with_flattened: "{{ items }}"
+
+- name: with_flattened -&gt; loop
+  debug:
+    msg: "{{ item }}"
+  loop: "{{ items|flatten }}"
+</pre>   <h3 id="with-together">with_together</h3> <p><code>with_together</code> is replaced by <code>loop</code> and the <code>zip</code> filter.</p> <pre data-language="yaml">- name: with_together
+  debug:
+    msg: "{{ item.0 }} - {{ item.1 }}"
+  with_together:
+    - "{{ list_one }}"
+    - "{{ list_two }}"
+
+- name: with_together -&gt; loop
+  debug:
+    msg: "{{ item.0 }} - {{ item.1 }}"
+  loop: "{{ list_one|zip(list_two)|list }}"
+</pre>   <h3 id="with-dict">with_dict</h3> <p><code>with_dict</code> can be substituted by <code>loop</code> and either the <code>dictsort</code> or <code>dict2items</code> filters.</p> <pre data-language="yaml">- name: with_dict
+  debug:
+    msg: "{{ item.key }} - {{ item.value }}"
+  with_dict: "{{ dictionary }}"
+
+- name: with_dict -&gt; loop (option 1)
+  debug:
+    msg: "{{ item.key }} - {{ item.value }}"
+  loop: "{{ dictionary|dict2items }}"
+
+- name: with_dict -&gt; loop (option 2)
+  debug:
+    msg: "{{ item.0 }} - {{ item.1 }}"
+  loop: "{{ dictionary|dictsort }}"
+</pre>   <h3 id="with-sequence">with_sequence</h3> <p><code>with_sequence</code> is replaced by <code>loop</code> and the <code>range</code> function, and potentially the <code>format</code> filter.</p> <pre data-language="yaml">- name: with_sequence
+  debug:
+    msg: "{{ item }}"
+  with_sequence: start=0 end=4 stride=2 format=testuser%02x
+
+- name: with_sequence -&gt; loop
+  debug:
+    msg: "{{ 'testuser%02x' | format(item) }}"
+  # range is exclusive of the end point
+  loop: "{{ range(0, 4 + 1, 2)|list }}"
+</pre>   <h3 id="with-subelements">with_subelements</h3> <p><code>with_subelements</code> is replaced by <code>loop</code> and the <code>subelements</code> filter.</p> <pre data-language="yaml">- name: with_subelements
+  debug:
+    msg: "{{ item.0.name }} - {{ item.1 }}"
+  with_subelements:
+    - "{{ users }}"
+    - mysql.hosts
+
+- name: with_subelements -&gt; loop
+  debug:
+    msg: "{{ item.0.name }} - {{ item.1 }}"
+  loop: "{{ users|subelements('mysql.hosts') }}"
+</pre>   <h3 id="with-nested-with-cartesian">with_nested/with_cartesian</h3> <p><code>with_nested</code> and <code>with_cartesian</code> are replaced by loop and the <code>product</code> filter.</p> <pre data-language="yaml">- name: with_nested
+  debug:
+    msg: "{{ item.0 }} - {{ item.1 }}"
+  with_nested:
+    - "{{ list_one }}"
+    - "{{ list_two }}"
+
+- name: with_nested -&gt; loop
+  debug:
+    msg: "{{ item.0 }} - {{ item.1 }}"
+  loop: "{{ list_one|product(list_two)|list }}"
+</pre>   <h3 id="with-random-choice">with_random_choice</h3> <p><code>with_random_choice</code> is replaced by just use of the <code>random</code> filter, without need of <code>loop</code>.</p> <pre data-language="yaml">- name: with_random_choice
+  debug:
+    msg: "{{ item }}"
+  with_random_choice: "{{ my_list }}"
+
+- name: with_random_choice -&gt; loop (No loop is needed here)
+  debug:
+    msg: "{{ my_list|random }}"
+  tags: random
+</pre> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt><a class="reference internal" href="../playbooks/"><span class="doc">Working With Playbooks</span></a></dt> <dd>An introduction to playbooks</dd> <dt><a class="reference internal" href="../playbooks_reuse_roles/"><span class="doc">Roles</span></a></dt> <dd>Playbook organization by roles</dd> <dt><a class="reference internal" href="../playbooks_best_practices/"><span class="doc">Best Practices</span></a></dt> <dd>Best practices in playbooks</dd> <dt><a class="reference internal" href="../playbooks_conditionals/"><span class="doc">Conditionals</span></a></dt> <dd>Conditional statements in playbooks</dd> <dt><a class="reference internal" href="../playbooks_variables/"><span class="doc">Variables</span></a></dt> <dd>All about variables</dd> <dt><a class="reference external" href="https://groups.google.com/group/ansible-devel" target="_blank">User Mailing List</a></dt> <dd>Have a question? Stop by the google group!</dd> <dt><a class="reference external" href="http://irc.freenode.net" target="_blank">irc.freenode.net</a></dt> <dd>#ansible IRC chat channel</dd> </dl> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.7/user_guide/playbooks_loops.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.7/user_guide/playbooks_loops.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
