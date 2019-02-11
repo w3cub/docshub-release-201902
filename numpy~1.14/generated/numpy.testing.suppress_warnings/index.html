@@ -1,0 +1,138 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>numpy.testing.suppress_warnings() - NumPy 1.14 - W3cubDocs</title>
+  
+  <meta name="description" content=" Context manager and decorator doing much the same as warnings.catch_warnings. ">
+  <meta name="keywords" content="numpy, testing, suppress, warnings, -, numpy~1.14">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/numpy~1.14/generated/numpy.testing.suppress_warnings/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/numpy~1.14.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/numpy~1.14/" class="_nav-link" title="" style="margin-left:0;">NumPy 1.14</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="numpy-testing-suppress-warnings">numpy.testing.suppress_warnings</h1> <dl class="class"> <dt id="numpy.testing.suppress_warnings">
+<code>class numpy.testing.suppress_warnings(forwarding_rule='always')</code> <a class="reference external" href="http://github.com/numpy/numpy/blob/v1.14.2/numpy/testing/nose_tools/utils.py#L1956-L2229" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Context manager and decorator doing much the same as <code>warnings.catch_warnings</code>.</p> <p>However, it also provides a filter mechanism to work around <a class="reference external" href="http://bugs.python.org/issue4180" target="_blank">http://bugs.python.org/issue4180</a>.</p> <p>This bug causes Python before 3.4 to not reliably show warnings again after they have been ignored once (even within catch_warnings). It means that no “ignore” filter can be used easily, since following tests might need to see the warning. Additionally it allows easier specificity for testing warnings and can be nested.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>forwarding_rule</strong> : str, optional</p>  <p>One of “always”, “once”, “module”, or “location”. Analogous to the usual warnings module filter mode, it is useful to reduce noise mostly on the outmost level. Unsuppressed and unrecorded warnings will be forwarded based on this rule. Defaults to “always”. “location” is equivalent to the warnings “default”, match by exact location the warning warning originated from.</p>  </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>Filters added inside the context manager will be discarded again when leaving it. Upon entering all filters defined outside a context will be applied automatically.</p> <p>When a recording filter is added, matching warnings are stored in the <code>log</code> attribute as well as in the list returned by <code>record</code>.</p> <p>If filters are added and the <code>module</code> keyword is given, the warning registry of this module will additionally be cleared when applying it, entering the context, or exiting it. This could cause warnings to appear a second time after leaving the context if they were configured to be printed once (default) and were already printed before the context was entered.</p> <p>Nesting this context manager will work as expected when the forwarding rule is “always” (default). Unfiltered and unrecorded warnings will be passed out and be matched by the outer level. On the outmost level they will be printed (or caught by another warnings context). The forwarding rule argument can modify this behaviour.</p> <p>Like <code>catch_warnings</code> this context manager is not threadsafe.</p> <h4 class="rubric">Examples</h4> <pre data-language="python">&gt;&gt;&gt; with suppress_warnings() as sup:
+...     sup.filter(DeprecationWarning, "Some text")
+...     sup.filter(module=np.ma.core)
+...     log = sup.record(FutureWarning, "Does this occur?")
+...     command_giving_warnings()
+...     # The FutureWarning was given once, the filtered warnings were
+...     # ignored. All other warnings abide outside settings (may be
+...     # printed/error)
+...     assert_(len(log) == 1)
+...     assert_(len(sup.log) == 1)  # also stored in log attribute
+</pre> <p>Or as a decorator:</p> <pre data-language="python">&gt;&gt;&gt; sup = suppress_warnings()
+&gt;&gt;&gt; sup.filter(module=np.ma.core)  # module must match exact
+&gt;&gt;&gt; @sup
+&gt;&gt;&gt; def some_function():
+...     # do something which causes a warning in np.ma.core
+...     pass
+</pre> <h4 class="rubric">Methods</h4> <table class="longtable docutils">   <tr>
+<td>
+<a class="reference internal" href="../numpy.testing.suppress_warnings.__call__/#numpy.testing.suppress_warnings.__call__" title="numpy.testing.suppress_warnings.__call__"><code>__call__</code></a>(func)</td> <td>Function decorator to apply certain suppressions to a whole function.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../numpy.testing.suppress_warnings.filter/#numpy.testing.suppress_warnings.filter" title="numpy.testing.suppress_warnings.filter"><code>filter</code></a>([category, message, module])</td> <td>Add a new suppressing filter or apply it if the state is entered.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../numpy.testing.suppress_warnings.record/#numpy.testing.suppress_warnings.record" title="numpy.testing.suppress_warnings.record"><code>record</code></a>([category, message, module])</td> <td>Append a new recording filter or apply it if the state is entered.</td> </tr>  </table> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2017 NumPy Developers<br>Licensed under the NumPy License.<br>
+    <a href="https://docs.scipy.org/doc/numpy-1.14.2/reference/generated/numpy.testing.suppress_warnings.html" class="_attribution-link" target="_blank">https://docs.scipy.org/doc/numpy-1.14.2/reference/generated/numpy.testing.suppress_warnings.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

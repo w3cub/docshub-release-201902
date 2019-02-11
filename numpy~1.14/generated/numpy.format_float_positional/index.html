@@ -1,0 +1,128 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>numpy.format_float_positional() - NumPy 1.14 - W3cubDocs</title>
+  
+  <meta name="description" content=" Format a floating-point scalar as a decimal string in positional notation. ">
+  <meta name="keywords" content="numpy, format, float, positional, -, numpy~1.14">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/numpy~1.14/generated/numpy.format_float_positional/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/numpy~1.14.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/numpy~1.14/" class="_nav-link" title="" style="margin-left:0;">NumPy 1.14</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="numpy-format-float-positional">numpy.format_float_positional</h1> <dl class="function"> <dt id="numpy.format_float_positional">
+<code>numpy.format_float_positional(x, precision=None, unique=True, fractional=True, trim='k', sign=False, pad_left=None, pad_right=None)</code> <a class="reference external" href="http://github.com/numpy/numpy/blob/v1.14.2/numpy/core/arrayprint.py#L994-L1066" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Format a floating-point scalar as a decimal string in positional notation.</p> <p>Provides control over rounding, trimming and padding. Uses and assumes IEEE unbiased rounding. Uses the “Dragon4” algorithm.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>x</strong> : python float or numpy floating scalar</p>  <p>Value to format.</p>  <p><strong>precision</strong> : non-negative integer or None, optional</p>  <p>Maximum number of digits to print. May be None if <a class="reference internal" href="../numpy.unique/#numpy.unique" title="numpy.unique"><code>unique</code></a> is <code>True</code>, but must be an integer if unique is <code>False</code>.</p>  <p><strong>unique</strong> : boolean, optional</p>  <p>If <code>True</code>, use a digit-generation strategy which gives the shortest representation which uniquely identifies the floating-point number from other values of the same type, by judicious rounding. If <code>precision</code> was omitted, print out all necessary digits, otherwise digit generation is cut off after <code>precision</code> digits and the remaining value is rounded. If <code>False</code>, digits are generated as if printing an infinite-precision value and stopping after <code>precision</code> digits, rounding the remaining value.</p>  <p><strong>fractional</strong> : boolean, optional</p>  <p>If <code>True</code>, the cutoff of <code>precision</code> digits refers to the total number of digits after the decimal point, including leading zeros. If <code>False</code>, <code>precision</code> refers to the total number of significant digits, before or after the decimal point, ignoring leading zeros.</p>  <p><strong>trim</strong> : one of ‘k’, ‘.’, ‘0’, ‘-‘, optional</p>  <dl class="docutils"> <dt>Controls post-processing trimming of trailing digits, as follows:</dt> <dd>
+<p class="first">k : keep trailing zeros, keep decimal point (no trimming) . : trim all trailing zeros, leave decimal point 0 : trim all but the zero before the decimal point. Insert the</p>  <p>zero if it is missing.</p>  <ul class="last simple"> <li>: trim trailing zeros and any trailing decimal point</li> </ul> </dd> </dl>  <p><strong>sign</strong> : boolean, optional</p>  <p>Whether to show the sign for positive values.</p>  <p><strong>pad_left</strong> : non-negative integer, optional</p>  <p>Pad the left side of the string with whitespace until at least that many characters are to the left of the decimal point.</p>  <p><strong>pad_right</strong> : non-negative integer, optional</p>  <p>Pad the right side of the string with whitespace until at least that many characters are to the right of the decimal point.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>rep</strong> : string</p>  <p>The string representation of the floating point value</p>  </td> </tr>  </table> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <p class="last"><a class="reference internal" href="../numpy.format_float_scientific/#numpy.format_float_scientific" title="numpy.format_float_scientific"><code>format_float_scientific</code></a></p> </div> <h4 class="rubric">Examples</h4> <pre data-language="python">&gt;&gt;&gt; np.format_float_scientific(np.float32(np.pi))
+'3.1415927'
+&gt;&gt;&gt; np.format_float_positional(np.float16(np.pi))
+'3.14'
+&gt;&gt;&gt; np.format_float_positional(np.float16(0.3))
+'0.3'
+&gt;&gt;&gt; np.format_float_positional(np.float16(0.3), unique=False, precision=10)
+'0.3000488281'
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2017 NumPy Developers<br>Licensed under the NumPy License.<br>
+    <a href="https://docs.scipy.org/doc/numpy-1.14.2/reference/generated/numpy.format_float_positional.html" class="_attribution-link" target="_blank">https://docs.scipy.org/doc/numpy-1.14.2/reference/generated/numpy.format_float_positional.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

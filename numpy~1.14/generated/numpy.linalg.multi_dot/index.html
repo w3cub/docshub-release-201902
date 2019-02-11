@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>numpy.linalg.multi_dot() - NumPy 1.14 - W3cubDocs</title>
+  
+  <meta name="description" content=" Compute the dot product of two or more arrays in a single function call, while automatically selecting the fastest evaluation order. ">
+  <meta name="keywords" content="numpy, linalg, multi, dot, -, numpy~1.14">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/numpy~1.14/generated/numpy.linalg.multi_dot/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/numpy~1.14.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/numpy~1.14/" class="_nav-link" title="" style="margin-left:0;">NumPy 1.14</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="numpy-linalg-multi-dot">numpy.linalg.multi_dot</h1> <dl class="function"> <dt id="numpy.linalg.multi_dot">
+<code>numpy.linalg.multi_dot(arrays)</code> <a class="reference external" href="http://github.com/numpy/numpy/blob/v1.14.2/numpy/linalg/linalg.py#L2342-L2450" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Compute the dot product of two or more arrays in a single function call, while automatically selecting the fastest evaluation order.</p> <p><a class="reference internal" href="#numpy.linalg.multi_dot" title="numpy.linalg.multi_dot"><code>multi_dot</code></a> chains <a class="reference internal" href="../numpy.dot/#numpy.dot" title="numpy.dot"><code>numpy.dot</code></a> and uses optimal parenthesization of the matrices <a class="reference internal" href="#r8182" id="id1">[R8182]</a> <a class="reference internal" href="#r8282" id="id2">[R8282]</a>. Depending on the shapes of the matrices, this can speed up the multiplication a lot.</p> <p>If the first argument is 1-D it is treated as a row vector. If the last argument is 1-D it is treated as a column vector. The other arguments must be 2-D.</p> <p>Think of <a class="reference internal" href="#numpy.linalg.multi_dot" title="numpy.linalg.multi_dot"><code>multi_dot</code></a> as:</p> <pre data-language="python">def multi_dot(arrays): return functools.reduce(np.dot, arrays)
+</pre> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>arrays</strong> : sequence of array_like</p>  <p>If the first argument is 1-D it is treated as row vector. If the last argument is 1-D it is treated as column vector. The other arguments must be 2-D.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>output</strong> : ndarray</p>  <p>Returns the dot product of the supplied arrays.</p>  </td> </tr>  </table> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt>
+<code>dot</code> </dt> <dd>dot multiplication with two arguments.</dd> </dl> </div> <h4 class="rubric">Notes</h4> <p>The cost for a matrix multiplication can be calculated with the following function:</p> <pre data-language="python">def cost(A, B):
+    return A.shape[0] * A.shape[1] * B.shape[1]
+</pre> <p>Let’s assume we have three matrices <img class="math" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPCEtLSBUaGlzIGZpbGUgd2FzIGdlbmVyYXRlZCBieSBkdmlzdmdtIDIuMS4zIC0tPgo8c3ZnIGhlaWdodD0nMTAuNDk0cHQnIHZlcnNpb249JzEuMScgdmlld0JveD0nNTYuNDEzMyA1Ny41ODQxIDEwMi42MzkgMTAuNDk0JyB3aWR0aD0nMTAyLjYzOXB0JyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHhtbG5zOnhsaW5rPSdodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rJz4KPGRlZnM+CjxwYXRoIGQ9J00zLjk5MzAzIC0zLjE4MDA3QzMuNjQyMzQgLTMuMDkyNCAzLjYyNjQgLTIuNzgxNTcgMy42MjY0IC0yLjc0OTY5QzMuNjI2NCAtMi41NzQzNSAzLjc2MTg5IC0yLjQ1NDc5IDMuOTM3MjQgLTIuNDU0NzlTNC4zODM1NiAtMi41OTAyOSA0LjM4MzU2IC0yLjkzM0M0LjM4MzU2IC0zLjM4NzMgMy44ODE0NCAtMy41MTQ4MiAzLjU4NjU1IC0zLjUxNDgyQzMuMjExOTYgLTMuNTE0ODIgMi45MDkwOSAtMy4yNTE4MSAyLjcyNTc4IC0yLjk0MDk3QzIuNTUwNDQgLTMuMzYzMzkgMi4xMzU5OSAtMy41MTQ4MiAxLjgwOTIyIC0zLjUxNDgyQzAuOTQwNDczIC0zLjUxNDgyIDAuNDU0Mjk2IC0yLjUxODU2IDAuNDU0Mjk2IC0yLjI5NTM5QzAuNDU0Mjk2IC0yLjIyMzY2IDAuNTEwMDg3IC0yLjE5MTc4IDAuNTczODQ4IC0yLjE5MTc4QzAuNjY5NDg5IC0yLjE5MTc4IDAuNjg1NDMgLTIuMjMxNjMgMC43MDkzNCAtMi4zMjcyN0MwLjg5MjY1MyAtMi45MDkwOSAxLjM3MDg2IC0zLjI5MTY2IDEuNzg1MzEgLTMuMjkxNjZDMi4wOTYxNCAtMy4yOTE2NiAyLjI0NzU3IC0zLjA2ODQ5IDIuMjQ3NTcgLTIuNzgxNTdDMi4yNDc1NyAtMi42MjIxNyAyLjE1MTkzIC0yLjI1NTU0IDIuMDg4MTcgLTIuMDAwNUMyLjAzMjM4IC0xLjc2OTM2IDEuODU3MDQgLTEuMDYwMDIgMS44MTcxOSAtMC45MDg1OTNDMS43MDU2IC0wLjQ3ODIwNyAxLjQxODY4IC0wLjE0MzQ2MiAxLjA2MDAyIC0wLjE0MzQ2MkMxLjAyODE0IC0wLjE0MzQ2MiAwLjgyMDkyMiAtMC4xNDM0NjIgMC42NTM1NDkgLTAuMjU1MDQ0QzEuMDIwMTcgLTAuMzQyNzE1IDEuMDIwMTcgLTAuNjc3NDYgMS4wMjAxNyAtMC42ODU0M0MxLjAyMDE3IC0wLjg2ODc0MiAwLjg3NjcxMiAtMC45ODAzMjQgMC43MDEzNyAtMC45ODAzMjRDMC40ODYxNzcgLTAuOTgwMzI0IDAuMjU1MDQ0IC0wLjc5NzAxMSAwLjI1NTA0NCAtMC40OTQxNDdDMC4yNTUwNDQgLTAuMTI3NTIyIDAuNjQ1NTc5IDAuMDc5NzAxMSAxLjA1MjA1IDAuMDc5NzAxMUMxLjQ3NDQ3IDAuMDc5NzAxMSAxLjc2OTM2IC0wLjIzOTEwMyAxLjkxMjgzIC0wLjQ5NDE0N0MyLjA4ODE3IC0wLjEwMzYxMSAyLjQ1NDc5IDAuMDc5NzAxMSAyLjgzNzM2IDAuMDc5NzAxMUMzLjcwNjEgMC4wNzk3MDExIDQuMTg0MzEgLTAuOTE2NTYzIDQuMTg0MzEgLTEuMTM5NzNDNC4xODQzMSAtMS4yMTk0MyA0LjEyMDU1IC0xLjI0MzM0IDQuMDY0NzYgLTEuMjQzMzRDMy45NjkxMiAtMS4yNDMzNCAzLjk1MzE4IC0xLjE4NzU1IDMuOTI5MjcgLTEuMTA3ODVDMy43Njk4NiAtMC41NzM4NDggMy4zMTU1NyAtMC4xNDM0NjIgMi44NTMzIC0wLjE0MzQ2MkMyLjU5MDI5IC0wLjE0MzQ2MiAyLjM5OSAtMC4zMTg4MDQgMi4zOTkgLTAuNjUzNTQ5QzIuMzk5IC0wLjgxMjk1MSAyLjQ0NjgyIC0wLjk5NjI2NCAyLjU1ODQxIC0xLjQ0MjU5QzIuNjE0MiAtMS42ODE2OSAyLjc4OTU0IC0yLjM4MzA2IDIuODI5MzkgLTIuNTM0NUMyLjk0MDk3IC0yLjk0ODk0IDMuMjE5OTMgLTMuMjkxNjYgMy41Nzg1OCAtMy4yOTE2NkMzLjYxODQzIC0zLjI5MTY2IDMuODI1NjUgLTMuMjkxNjYgMy45OTMwMyAtMy4xODAwN1onIGlkPSdnMC0xMjAnLz4KPHBhdGggZD0nTTIuMzMxMjYgMC4wNDc4MjA3QzIuMzMxMjYgLTAuNjQ1NTc5IDIuMTA0MTEgLTEuMTU5NjUgMS42MTM5NSAtMS4xNTk2NUMxLjIzMTM4IC0xLjE1OTY1IDEuMDQwMSAtMC44NDg4MTcgMS4wNDAxIC0wLjU4NTgwM1MxLjIxOTQzIDAgMS42MjU5IDBDMS43ODEzMiAwIDEuOTEyODMgLTAuMDQ3ODIwNyAyLjAyMDQyIC0wLjE1NTQxN0MyLjA0NDMzIC0wLjE3OTMyOCAyLjA1NjI5IC0wLjE3OTMyOCAyLjA2ODI0IC0wLjE3OTMyOEMyLjA5MjE1IC0wLjE3OTMyOCAyLjA5MjE1IC0wLjAxMTk1NTIgMi4wOTIxNSAwLjA0NzgyMDdDMi4wOTIxNSAwLjQ0MjM0MSAyLjAyMDQyIDEuMjE5NDMgMS4zMjcwMiAxLjk5NjUxQzEuMTk1NTIgMi4xMzk5OCAxLjE5NTUyIDIuMTYzODkgMS4xOTU1MiAyLjE4NzhDMS4xOTU1MiAyLjI0NzU3IDEuMjU1MjkgMi4zMDczNSAxLjMxNTA3IDIuMzA3MzVDMS40MTA3MSAyLjMwNzM1IDIuMzMxMjYgMS40MjI2NyAyLjMzMTI2IDAuMDQ3ODIwN1onIGlkPSdnMS01OScvPgo8cGF0aCBkPSdNMi4wMzIzOCAtMS4zMjcwMkMxLjYxMzk1IC0wLjYyMTY2OSAxLjIwNzQ3IC0wLjM4MjU2NSAwLjYzMzYyNCAtMC4zNDY3QzAuNTAyMTE3IC0wLjMzNDc0NSAwLjQwNjQ3NiAtMC4zMzQ3NDUgMC40MDY0NzYgLTAuMTE5NTUyQzAuNDA2NDc2IC0wLjA0NzgyMDcgMC40NjYyNTIgMCAwLjU0OTkzOCAwQzAuNzY1MTMxIDAgMS4zMDMxMSAtMC4wMjM5MTAzIDEuNTE4MzEgLTAuMDIzOTEwM0MxLjg2NTAxIC0wLjAyMzkxMDMgMi4yNDc1NyAwIDIuNTgyMzIgMEMyLjY1NDA1IDAgMi43OTc1MSAwIDIuNzk3NTEgLTAuMjI3MTQ4QzIuNzk3NTEgLTAuMzM0NzQ1IDIuNzAxODcgLTAuMzQ2NyAyLjYzMDE0IC0wLjM0NjdDMi4zNTUxNyAtMC4zNzA2MSAyLjEyODAyIC0wLjQ2NjI1MiAyLjEyODAyIC0wLjc1MzE3NkMyLjEyODAyIC0wLjkyMDU0OCAyLjE5OTc1IC0xLjA1MjA1IDIuMzU1MTcgLTEuMzE1MDdMMy4yNjM3NiAtMi44MjE0Mkg2LjMxMjMzQzYuMzI0MjggLTIuNzEzODIgNi4zMjQyOCAtMi42MTgxOCA2LjMzNjI0IC0yLjUxMDU5QzYuMzcyMSAtMi4xOTk3NSA2LjUxNTU3IC0wLjk1NjQxMyA2LjUxNTU3IC0wLjcyOTI2NUM2LjUxNTU3IC0wLjM3MDYxIDUuOTA1ODUgLTAuMzQ2NyA1LjcxNDU3IC0wLjM0NjdDNS41ODMwNiAtMC4zNDY3IDUuNDUxNTYgLTAuMzQ2NyA1LjQ1MTU2IC0wLjEzMTUwN0M1LjQ1MTU2IDAgNS41NTkxNSAwIDUuNjMwODggMEM1LjgzNDEyIDAgNi4wNzMyMyAtMC4wMjM5MTAzIDYuMjc2NDYgLTAuMDIzOTEwM0g2Ljk1NzkxQzcuNjg3MTcgLTAuMDIzOTEwMyA4LjIxMzIgMCA4LjIyNTE2IDBDOC4zMDg4NCAwIDguNDQwMzUgMCA4LjQ0MDM1IC0wLjIyNzE0OEM4LjQ0MDM1IC0wLjM0NjcgOC4zMzI3NSAtMC4zNDY3IDguMTUzNDIgLTAuMzQ2N0M3LjQ5NTg5IC0wLjM0NjcgNy40ODM5NCAtMC40NTQyOTYgNy40NDgwNyAtMC44MTI5NTFMNi43MTg4IC04LjI3Mjk4QzYuNjk0ODkgLTguNTEyMDggNi42NDcwNyAtOC41MzU5OSA2LjUxNTU3IC04LjUzNTk5QzYuMzk2MDEgLTguNTM1OTkgNi4zMjQyOCAtOC41MTIwOCA2LjIxNjY5IC04LjMzMjc1TDIuMDMyMzggLTEuMzI3MDJaTTMuNDY3IC0zLjE2ODEyTDUuODY5OTkgLTcuMTg1MDZMNi4yNzY0NiAtMy4xNjgxMkgzLjQ2N1onIGlkPSdnMS02NScvPgo8cGF0aCBkPSdNNC4zNzU1OSAtNy4zNTI0M0M0LjQ4MzE5IC03Ljc5NDc3IDQuNTMxMDEgLTcuODE4NjggNC45OTcyNiAtNy44MTg2OEg2LjU1MTQzQzcuOTAyMzcgLTcuODE4NjggNy45MDIzNyAtNi42NzA5OCA3LjkwMjM3IC02LjU2MzM5QzcuOTAyMzcgLTUuNTk1MDIgNi45MzQgLTQuMzYzNjQgNS4zNTU5MiAtNC4zNjM2NEgzLjYzNDM3TDQuMzc1NTkgLTcuMzUyNDNaTTYuMzk2MDEgLTQuMjY4QzcuNjk5MTMgLTQuNTA3MSA4Ljg4MjY5IC01LjQxNTY5IDguODgyNjkgLTYuNTE1NTdDOC44ODI2OSAtNy40NDgwNyA4LjA1Nzc4IC04LjE2NTM4IDYuNzA2ODUgLTguMTY1MzhIMi44NjkyNEMyLjY0MjA5IC04LjE2NTM4IDIuNTM0NSAtOC4xNjUzOCAyLjUzNDUgLTcuOTM4MjNDMi41MzQ1IC03LjgxODY4IDIuNjQyMDkgLTcuODE4NjggMi44MjE0MiAtNy44MTg2OEMzLjU1MDY4IC03LjgxODY4IDMuNTUwNjggLTcuNzIzMDQgMy41NTA2OCAtNy41OTE1M0MzLjU1MDY4IC03LjU2NzYyIDMuNTUwNjggLTcuNDk1ODkgMy41MDI4NiAtNy4zMTY1NkwxLjg4ODkyIC0wLjg4NDY4MkMxLjc4MTMyIC0wLjQ2NjI1MiAxLjc1NzQxIC0wLjM0NjcgMC45MjA1NDggLTAuMzQ2N0MwLjY5MzQgLTAuMzQ2NyAwLjU3Mzg0OCAtMC4zNDY3IDAuNTczODQ4IC0wLjEzMTUwN0MwLjU3Mzg0OCAwIDAuNjQ1NTc5IDAgMC44ODQ2ODIgMEg0Ljk4NTMxQzYuODE0NDUgMCA4LjIyNTE2IC0xLjM4NjggOC4yMjUxNiAtMi41OTQyN0M4LjIyNTE2IC0zLjU3NDYgNy4zNjQzOCAtNC4xNzIzNSA2LjM5NjAxIC00LjI2OFpNNC42OTgzOCAtMC4zNDY3SDMuMDg0NDNDMi45MTcwNiAtMC4zNDY3IDIuODkzMTUgLTAuMzQ2NyAyLjgyMTQyIC0wLjM1ODY1NUMyLjY4OTkxIC0wLjM3MDYxIDIuNjc3OTYgLTAuMzk0NTIxIDIuNjc3OTYgLTAuNDkwMTYyQzIuNjc3OTYgLTAuNTczODQ4IDIuNzAxODcgLTAuNjQ1NTc5IDIuNzI1NzggLTAuNzUzMTc2TDMuNTYyNjQgLTQuMTI0NTNINS44MTAyMUM3LjIyMDkyIC00LjEyNDUzIDcuMjIwOTIgLTIuODA5NDYgNy4yMjA5MiAtMi43MTM4MkM3LjIyMDkyIC0xLjU2NjEzIDYuMTgwODIgLTAuMzQ2NyA0LjY5ODM4IC0wLjM0NjdaJyBpZD0nZzEtNjYnLz4KPHBhdGggZD0nTTguOTMwNTEgLTguMzA4ODRDOC45MzA1MSAtOC40MTY0NCA4Ljg0NjgyIC04LjQxNjQ0IDguODIyOTEgLTguNDE2NDRTOC43NTExOCAtOC40MTY0NCA4LjY1NTU0IC04LjI5Njg5TDcuODMwNjQgLTcuMjkyNjVDNy40MTIyIC04LjAwOTk2IDYuNzU0NjcgLTguNDE2NDQgNS44NTgwMyAtOC40MTY0NEMzLjI3NTcyIC04LjQxNjQ0IDAuNTk3NzU4IC01Ljc5ODI2IDAuNTk3NzU4IC0yLjk4ODc5QzAuNTk3NzU4IC0wLjk5MjI3OSAxLjk5NjUxIDAuMjUxMDU5IDMuNzQxOTcgMC4yNTEwNTlDNC42OTgzOCAwLjI1MTA1OSA1LjUzNTI0IC0wLjE1NTQxNyA2LjIyODY0IC0wLjc0MTIyQzcuMjY4NzQgLTEuNjEzOTUgNy41Nzk1OCAtMi43NzM2IDcuNTc5NTggLTIuODY5MjRDNy41Nzk1OCAtMi45NzY4NCA3LjQ4Mzk0IC0yLjk3Njg0IDcuNDQ4MDcgLTIuOTc2ODRDNy4zNDA0NyAtMi45NzY4NCA3LjMyODUyIC0yLjkwNTExIDcuMzA0NjEgLTIuODU3MjlDNi43NTQ2NyAtMC45OTIyNzkgNS4xNDA3MiAtMC4wOTU2NDEzIDMuOTQ1MjEgLTAuMDk1NjQxM0MyLjY3Nzk2IC0wLjA5NTY0MTMgMS41NzgwOCAtMC45MDg1OTMgMS41NzgwOCAtMi42MDYyM0MxLjU3ODA4IC0yLjk4ODc5IDEuNjk3NjMgLTUuMDY4OTkgMy4wNDg1NyAtNi42MzUxMkMzLjcwNjEgLTcuNDAwMjUgNC44Mjk4OSAtOC4wNjk3NCA1Ljk2NTYzIC04LjA2OTc0QzcuMjgwNyAtOC4wNjk3NCA3Ljg2NjUgLTYuOTgxODIgNy44NjY1IC01Ljc2MjM5QzcuODY2NSAtNS40NTE1NiA3LjgzMDY0IC01LjE4ODU0IDcuODMwNjQgLTUuMTQwNzJDNy44MzA2NCAtNS4wMzMxMyA3Ljk1MDE5IC01LjAzMzEzIDcuOTg2MDUgLTUuMDMzMTNDOC4xMTc1NiAtNS4wMzMxMyA4LjEyOTUxIC01LjA0NTA4IDguMTc3MzMgLTUuMjYwMjdMOC45MzA1MSAtOC4zMDg4NFonIGlkPSdnMS02NycvPgo8cGF0aCBkPSdNMy44OTczOCAtMi41NDI0N0MzLjg5NzM4IC0zLjM5NTI3IDMuODA5NzEgLTMuOTEzMzMgMy41NDY3IC00LjQyMzQxQzMuMTk2MDEgLTUuMTI0NzggMi41NTA0NCAtNS4zMDAxMiAyLjExMjA4IC01LjMwMDEyQzEuMTA3ODUgLTUuMzAwMTIgMC43NDEyMiAtNC41NTA5MyAwLjYyOTYzOSAtNC4zMjc3N0MwLjM0MjcxNSAtMy43NDU5NSAwLjMyNjc3NSAtMi45NTY5MSAwLjMyNjc3NSAtMi41NDI0N0MwLjMyNjc3NSAtMi4wMTY0NCAwLjM1MDY4NSAtMS4yMTE0NiAwLjczMzI1IC0wLjU3Mzg0OEMxLjA5OTg4IDAuMDE1OTQwMiAxLjY4OTY2IDAuMTY3MzcyIDIuMTEyMDggMC4xNjczNzJDMi40OTQ2NSAwLjE2NzM3MiAzLjE4MDA3IDAuMDQ3ODIwNyAzLjU3ODU4IC0wLjc0MTIyQzMuODczNDcgLTEuMzE1MDcgMy44OTczOCAtMi4wMjQ0MSAzLjg5NzM4IC0yLjU0MjQ3Wk0yLjExMjA4IC0wLjA1NTc5MDhDMS44NDExIC0wLjA1NTc5MDggMS4yOTExNiAtMC4xODMzMTMgMS4xMjM3OSAtMS4wMjAxN0MxLjAzNjExIC0xLjQ3NDQ3IDEuMDM2MTEgLTIuMjIzNjYgMS4wMzYxMSAtMi42MzgxMUMxLjAzNjExIC0zLjE4ODA0IDEuMDM2MTEgLTMuNzQ1OTUgMS4xMjM3OSAtNC4xODQzMUMxLjI5MTE2IC00Ljk5NzI2IDEuOTEyODMgLTUuMDc2OTYgMi4xMTIwOCAtNS4wNzY5NkMyLjM4MzA2IC01LjA3Njk2IDIuOTMzIC00Ljk0MTQ3IDMuMDkyNCAtNC4yMTYxOUMzLjE4ODA0IC0zLjc3NzgzIDMuMTg4MDQgLTMuMTgwMDcgMy4xODgwNCAtMi42MzgxMUMzLjE4ODA0IC0yLjE2Nzg3IDMuMTg4MDQgLTEuNDUwNTYgMy4wOTI0IC0xLjAwNDIzQzIuOTI1MDMgLTAuMTY3MzcyIDIuMzc1MDkgLTAuMDU1NzkwOCAyLjExMjA4IC0wLjA1NTc5MDhaJyBpZD0nZzItNDgnLz4KPHBhdGggZD0nTTIuNTAyNjIgLTUuMDc2OTZDMi41MDI2MiAtNS4yOTIxNSAyLjQ4NjY3IC01LjMwMDEyIDIuMjcxNDggLTUuMzAwMTJDMS45NDQ3MSAtNC45ODEzMiAxLjUyMjI5IC00Ljc5MDA0IDAuNzY1MTMxIC00Ljc5MDA0Vi00LjUyNzAyQzAuOTgwMzI0IC00LjUyNzAyIDEuNDEwNzEgLTQuNTI3MDIgMS44NzI5OCAtNC43NDIyMlYtMC42NTM1NDlDMS44NzI5OCAtMC4zNTg2NTUgMS44NDkwNyAtMC4yNjMwMTQgMS4wOTE5MSAtMC4yNjMwMTRIMC44MTI5NTFWMEMxLjEzOTczIC0wLjAyMzkxMDMgMS44MjUxNiAtMC4wMjM5MTAzIDIuMTgzODEgLTAuMDIzOTEwM1MzLjIzNTg3IC0wLjAyMzkxMDMgMy41NjI2NCAwVi0wLjI2MzAxNEgzLjI4MzY5QzIuNTI2NTMgLTAuMjYzMDE0IDIuNTAyNjIgLTAuMzU4NjU1IDIuNTAyNjIgLTAuNjUzNTQ5Vi01LjA3Njk2WicgaWQ9J2cyLTQ5Jy8+CjxwYXRoIGQ9J00xLjExNTgyIC00LjQ3OTJDMS4yMTk0MyAtNC40NDczMiAxLjUzODIzIC00LjM2NzYyIDEuODcyOTggLTQuMzY3NjJDMi44NjkyNCAtNC4zNjc2MiAzLjQ3NDk3IC01LjA2ODk5IDMuNDc0OTcgLTUuMTg4NTRDMy40NzQ5NyAtNS4yNzYyMSAzLjQxOTE4IC01LjMwMDEyIDMuMzc5MzMgLTUuMzAwMTJDMy4zNjMzOSAtNS4zMDAxMiAzLjM0NzQ1IC01LjMwMDEyIDMuMjc1NzIgLTUuMjYwMjdDMi45NjQ4OCAtNS4xNDA3MiAyLjU5ODI2IC01LjA0NTA4IDIuMTY3ODcgLTUuMDQ1MDhDMS42OTc2MyAtNS4wNDUwOCAxLjMwNzEgLTUuMTY0NjMgMS4wNjAwMiAtNS4yNjAyN0MwLjk4MDMyNCAtNS4zMDAxMiAwLjk2NDM4NCAtNS4zMDAxMiAwLjk1NjQxMyAtNS4zMDAxMkMwLjg1MjgwMiAtNS4zMDAxMiAwLjg1MjgwMiAtNS4yMTI0NSAwLjg1MjgwMiAtNS4wNjg5OVYtMi43MzM3NUMwLjg1MjgwMiAtMi41OTAyOSAwLjg1MjgwMiAtMi40OTQ2NSAwLjk4MDMyNCAtMi40OTQ2NUMxLjA0NDA4IC0yLjQ5NDY1IDEuMDY4IC0yLjUyNjUzIDEuMTA3ODUgLTIuNTkwMjlDMS4yMDM0OSAtMi43MDk4NCAxLjUwNjM1IC0zLjExNjMxIDIuMTgzODEgLTMuMTE2MzFDMi42MzAxNCAtMy4xMTYzMSAyLjg0NTMzIC0yLjc0OTY5IDIuOTE3MDYgLTIuNTk4MjZDMy4wNTI1NSAtMi4zMTEzMyAzLjA2ODQ5IC0xLjk0NDcxIDMuMDY4NDkgLTEuNjMzODdDMy4wNjg0OSAtMS4zMzg5OCAzLjA2MDUyIC0wLjkwODU5MyAyLjgzNzM2IC0wLjU1NzkwOEMyLjY4NTkzIC0wLjMxODgwNCAyLjM2NzEyIC0wLjA3MTczMSAxLjk0NDcxIC0wLjA3MTczMUMxLjQyNjY1IC0wLjA3MTczMSAwLjkxNjU2MyAtMC4zOTg1MDYgMC43MzMyNSAtMC45MTY1NjNDMC43NTcxNjEgLTAuOTA4NTkzIDAuODA0OTgxIC0wLjkwODU5MyAwLjgxMjk1MSAtMC45MDg1OTNDMS4wMzYxMSAtMC45MDg1OTMgMS4yMTE0NiAtMS4wNTIwNSAxLjIxMTQ2IC0xLjI5OTEzQzEuMjExNDYgLTEuNTk0MDIgMC45ODAzMjQgLTEuNjk3NjMgMC44MjA5MjIgLTEuNjk3NjNDMC42Nzc0NiAtMS42OTc2MyAwLjQyMjQxNiAtMS42MTc5MyAwLjQyMjQxNiAtMS4yNzUyMkMwLjQyMjQxNiAtMC41NTc5MDggMS4wNDQwOCAwLjE2NzM3MiAxLjk2MDY1IDAuMTY3MzcyQzIuOTU2OTEgMC4xNjczNzIgMy44MDE3NCAtMC42MDU3MjkgMy44MDE3NCAtMS41OTQwMkMzLjgwMTc0IC0yLjUxODU2IDMuMTMyMjUgLTMuMzM5NDggMi4xOTE3OCAtMy4zMzk0OEMxLjc5MzI4IC0zLjMzOTQ4IDEuNDE4NjggLTMuMjExOTYgMS4xMTU4MiAtMi45NDA5N1YtNC40NzkyWicgaWQ9J2cyLTUzJy8+CjwvZGVmcz4KPGcgaWQ9J3BhZ2UxJz4KPHVzZSB4PSc1Ni40MTMzJyB4bGluazpocmVmPScjZzEtNjUnIHk9JzY1Ljc1MzQnLz4KPHVzZSB4PSc2NS4xODg2JyB4bGluazpocmVmPScjZzItNDknIHk9JzY3LjU0NjcnLz4KPHVzZSB4PSc2OS40MjI4JyB4bGluazpocmVmPScjZzItNDgnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PSc3My42NTcnIHhsaW5rOmhyZWY9JyNnMC0xMjAnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PSc3OC40MjM5JyB4bGluazpocmVmPScjZzItNDknIHk9JzY3LjU0NjcnLz4KPHVzZSB4PSc4Mi42NTgxJyB4bGluazpocmVmPScjZzItNDgnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PSc4Ni44OTIyJyB4bGluazpocmVmPScjZzItNDgnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PSc5MS42MjQ2JyB4bGluazpocmVmPScjZzEtNTknIHk9JzY1Ljc1MzQnLz4KPHVzZSB4PSc5Ni44Njg3JyB4bGluazpocmVmPScjZzEtNjYnIHk9JzY1Ljc1MzQnLz4KPHVzZSB4PScxMDUuNzYyJyB4bGluazpocmVmPScjZzItNDknIHk9JzY3LjU0NjcnLz4KPHVzZSB4PScxMDkuOTk2JyB4bGluazpocmVmPScjZzItNDgnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PScxMTQuMjMnIHhsaW5rOmhyZWY9JyNnMi00OCcgeT0nNjcuNTQ2NycvPgo8dXNlIHg9JzExOC40NjQnIHhsaW5rOmhyZWY9JyNnMC0xMjAnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PScxMjMuMjMxJyB4bGluazpocmVmPScjZzItNTMnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PScxMjcuOTYzJyB4bGluazpocmVmPScjZzEtNTknIHk9JzY1Ljc1MzQnLz4KPHVzZSB4PScxMzMuMjA4JyB4bGluazpocmVmPScjZzEtNjcnIHk9JzY1Ljc1MzQnLz4KPHVzZSB4PScxNDEuNTgzJyB4bGluazpocmVmPScjZzItNTMnIHk9JzY3LjU0NjcnLz4KPHVzZSB4PScxNDUuODE3JyB4bGluazpocmVmPScjZzAtMTIwJyB5PSc2Ny41NDY3Jy8+Cjx1c2UgeD0nMTUwLjU4NCcgeGxpbms6aHJlZj0nI2cyLTUzJyB5PSc2Ny41NDY3Jy8+Cjx1c2UgeD0nMTU0LjgxOCcgeGxpbms6aHJlZj0nI2cyLTQ4JyB5PSc2Ny41NDY3Jy8+CjwvZz4KPC9zdmc+" alt="A_{10x100}, B_{100x5}, C_{5x50}">.</p> <p>The costs for the two different parenthesizations are as follows:</p> <pre data-language="python">cost((AB)C) = 10*100*5 + 10*5*50   = 5000 + 2500   = 7500
+cost(A(BC)) = 10*100*50 + 100*5*50 = 50000 + 25000 = 75000
+</pre> <h4 class="rubric">References</h4> <table class="docutils citation" frame="void" id="r8182" rules="none">   <tr>
+<td class="label">[R8182]</td>
+<td>
+<em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> Cormen, “Introduction to Algorithms”, Chapter 15.2, p. 370-378</td>
+</tr>  </table> <table class="docutils citation" frame="void" id="r8282" rules="none">   <tr>
+<td class="label">[R8282]</td>
+<td>
+<em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id4">2</a>)</em> <a class="reference external" href="http://en.wikipedia.org/wiki/Matrix_chain_multiplication" target="_blank">http://en.wikipedia.org/wiki/Matrix_chain_multiplication</a>
+</td>
+</tr>  </table> <h4 class="rubric">Examples</h4> <p><a class="reference internal" href="#numpy.linalg.multi_dot" title="numpy.linalg.multi_dot"><code>multi_dot</code></a> allows you to write:</p> <pre data-language="python">&gt;&gt;&gt; from numpy.linalg import multi_dot
+&gt;&gt;&gt; # Prepare some data
+&gt;&gt;&gt; A = np.random.random(10000, 100)
+&gt;&gt;&gt; B = np.random.random(100, 1000)
+&gt;&gt;&gt; C = np.random.random(1000, 5)
+&gt;&gt;&gt; D = np.random.random(5, 333)
+&gt;&gt;&gt; # the actual dot multiplication
+&gt;&gt;&gt; multi_dot([A, B, C, D])
+</pre> <p>instead of:</p> <pre data-language="python">&gt;&gt;&gt; np.dot(np.dot(np.dot(A, B), C), D)
+&gt;&gt;&gt; # or
+&gt;&gt;&gt; A.dot(B).dot(C).dot(D)
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2017 NumPy Developers<br>Licensed under the NumPy License.<br>
+    <a href="https://docs.scipy.org/doc/numpy-1.14.2/reference/generated/numpy.linalg.multi_dot.html" class="_attribution-link" target="_blank">https://docs.scipy.org/doc/numpy-1.14.2/reference/generated/numpy.linalg.multi_dot.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
