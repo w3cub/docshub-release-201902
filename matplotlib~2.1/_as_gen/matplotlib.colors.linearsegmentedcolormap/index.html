@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>colors.LinearSegmentedColormap - Matplotlib 2.1 - W3cubDocs</title>
+  
+  <meta name="description" content=" Colormap objects based on lookup tables using linear segments. ">
+  <meta name="keywords" content="matplotlib, colors, linearsegmentedcolormap, -, matplotlib~2.1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/matplotlib~2.1/_as_gen/matplotlib.colors.linearsegmentedcolormap/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/matplotlib~2.1.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/matplotlib~2.1/" class="_nav-link" title="" style="margin-left:0;">Matplotlib 2.1</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="matplotlib-colors-linearsegmentedcolormap">matplotlib.colors.LinearSegmentedColormap</h1> <dl class="class"> <dt id="matplotlib.colors.LinearSegmentedColormap">
+<code>class matplotlib.colors.LinearSegmentedColormap(name, segmentdata, N=256, gamma=1.0)</code> </dt> <dd>
+<p>Colormap objects based on lookup tables using linear segments.</p> <p>The lookup table is generated using linear interpolation for each primary color, with the 0-1 domain divided into any number of segments.</p> <p>Create color map from linear mapping segments</p> <p>segmentdata argument is a dictionary with a red, green and blue entries. Each entry should be a list of <em>x</em>, <em>y0</em>, <em>y1</em> tuples, forming rows in a table. Entries for alpha are optional.</p> <p>Example: suppose you want red to increase from 0 to 1 over the bottom half, green to do the same over the middle half, and blue over the top half. Then you would use:</p> <pre data-language="python">cdict = {'red':   [(0.0,  0.0, 0.0),
+                   (0.5,  1.0, 1.0),
+                   (1.0,  1.0, 1.0)],
+
+         'green': [(0.0,  0.0, 0.0),
+                   (0.25, 0.0, 0.0),
+                   (0.75, 1.0, 1.0),
+                   (1.0,  1.0, 1.0)],
+
+         'blue':  [(0.0,  0.0, 0.0),
+                   (0.5,  0.0, 0.0),
+                   (1.0,  1.0, 1.0)]}
+</pre> <p>Each row in the table for a given color is a sequence of <em>x</em>, <em>y0</em>, <em>y1</em> tuples. In each sequence, <em>x</em> must increase monotonically from 0 to 1. For any input value <em>z</em> falling between <em>x[i]</em> and <em>x[i+1]</em>, the output value of a given color will be linearly interpolated between <em>y1[i]</em> and <em>y0[i+1]</em>:</p> <pre data-language="python">row i:   x  y0  y1
+               /
+              /
+row i+1: x  y0  y1
+</pre> <p>Hence y0 in the first row and y1 in the last row are never used.</p> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <p><a class="reference internal" href="#matplotlib.colors.LinearSegmentedColormap.from_list" title="matplotlib.colors.LinearSegmentedColormap.from_list"><code>LinearSegmentedColormap.from_list()</code></a> Static method; factory function for generating a smoothly-varying LinearSegmentedColormap.</p> <p class="last"><a class="reference internal" href="../matplotlib.colors.makemappingarray/#matplotlib.colors.makeMappingArray" title="matplotlib.colors.makeMappingArray"><code>makeMappingArray()</code></a> For information about making a mapping array.</p> </div> <dl class="staticmethod"> <dt id="matplotlib.colors.LinearSegmentedColormap.from_list">
+<code>static from_list(name, colors, N=256, gamma=1.0)</code> </dt> <dd>
+<p>Make a linear segmented colormap with <em>name</em> from a sequence of <em>colors</em> which evenly transitions from colors[0] at val=0 to colors[-1] at val=1. <em>N</em> is the number of rgb quantization levels. Alternatively, a list of (value, color) tuples can be given to divide the range unevenly.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.colors.LinearSegmentedColormap.reversed">
+<code>reversed(name=None)</code> </dt> <dd>
+<p>Make a reversed instance of the Colormap.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>name</strong> : str, optional</p>  <p>The name for the reversed colormap. If it’s None the name will be the name of the parent colormap + “_r”.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first">LinearSegmentedColormap</p>  <p>The reversed colormap.</p>  </td> </tr>  </table> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.colors.LinearSegmentedColormap.set_gamma">
+<code>set_gamma(gamma)</code> </dt> <dd>
+<p>Set a new gamma value and regenerate color map.</p> </dd>
+</dl> </dd>
+</dl>  <h2 id="examples-using-matplotlib-colors-linearsegmentedcolormap">Examples using <code>matplotlib.colors.LinearSegmentedColormap</code>
+</h2> <div class="sphx-glr-thumbcontainer" tooltip="Creating a colormap from a list of colors can be done with the `from_list` method of `LinearSeg...">
+<div class="figure" id="id1"> <img alt="../../_images/sphx_glr_custom_cmap_thumb.png" src="data:image/png;base64,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"> <p class="caption"><span class="caption-text"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/images_contours_and_fields/custom_cmap.html#sphx-glr-gallery-images-contours-and-fields-custom-cmap-py" target="_blank"><span class="std std-ref">Creating a colormap from a list of colors</span></a></span></p> </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2017 Matplotlib Development Team. All rights reserved.<br>Licensed under the Matplotlib License Agreement.<br>
+    <a href="http://matplotlib.org/2.1.0/api/_as_gen/matplotlib.colors.LinearSegmentedColormap.html" class="_attribution-link" target="_blank">http://matplotlib.org/2.1.0/api/_as_gen/matplotlib.colors.LinearSegmentedColormap.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

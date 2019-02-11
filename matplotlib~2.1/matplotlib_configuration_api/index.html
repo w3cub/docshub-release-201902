@@ -1,0 +1,208 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Matplotlib - Matplotlib 2.1 - W3cubDocs</title>
+  
+  <meta name="description" content=" Set the matplotlib backend to one of the known backends. ">
+  <meta name="keywords" content="top, level, matplotlib, module, -, matplotlib~2.1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/matplotlib~2.1/matplotlib_configuration_api/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/matplotlib~2.1.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/matplotlib~2.1/" class="_nav-link" title="" style="margin-left:0;">Matplotlib 2.1</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="the-top-level-matplotlib-module">The top level matplotlib module</h1> <dl class="function"> <dt id="matplotlib.use">
+<code>matplotlib.use(arg, warn=True, force=False)</code> </dt> <dd>
+<p>Set the matplotlib backend to one of the known backends.</p> <p>The argument is case-insensitive. <em>warn</em> specifies whether a warning should be issued if a backend has already been set up. <em>force</em> is an <strong>experimental</strong> flag that tells matplotlib to attempt to initialize a new backend by reloading the backend module.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">This function must be called <em>before</em> importing pyplot for the first time; or, if you are not using pyplot, it must be called before importing matplotlib.backends. If warn is True, a warning is issued if you try and call this after pylab or pyplot have been loaded. In certain black magic use cases, e.g. <a class="reference internal" href="../_as_gen/matplotlib.pyplot.switch_backend/#matplotlib.pyplot.switch_backend" title="matplotlib.pyplot.switch_backend"><code>pyplot.switch_backend()</code></a>, we are doing the reloading necessary to make the backend switch work (in some cases, e.g., pure image backends) so one can set warn=False to suppress the warnings.</p> </div> <p>To find out which backend is currently set, see <a class="reference internal" href="#matplotlib.get_backend" title="matplotlib.get_backend"><code>matplotlib.get_backend()</code></a>.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.get_backend">
+<code>matplotlib.get_backend()</code> </dt> <dd>
+<p>Return the name of the current backend.</p> </dd>
+</dl> <dl class="data"> <dt id="matplotlib.rcParams">
+<code>matplotlib.rcParams</code> </dt> <dd>
+<p>An instance of <a class="reference internal" href="#matplotlib.RcParams" title="matplotlib.RcParams"><code>RcParams</code></a> for handling default matplotlib values.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rc_context">
+<code>matplotlib.rc_context(rc=None, fname=None)</code> </dt> <dd>
+<p>Return a context manager for managing rc settings.</p> <p>This allows one to do:</p> <pre data-language="python">with mpl.rc_context(fname='screen.rc'):
+    plt.plot(x, a)
+    with mpl.rc_context(fname='print.rc'):
+        plt.plot(x, b)
+    plt.plot(x, c)
+</pre> <p>The ‘a’ vs ‘x’ and ‘c’ vs ‘x’ plots would have settings from ‘screen.rc’, while the ‘b’ vs ‘x’ plot would have settings from ‘print.rc’.</p> <p>A dictionary can also be passed to the context manager:</p> <pre data-language="python">with mpl.rc_context(rc={'text.usetex': True}, fname='screen.rc'):
+    plt.plot(x, a)
+</pre> <p>The ‘rc’ dictionary takes precedence over the settings loaded from ‘fname’. Passing a dictionary only is also valid. For example a common usage is:</p> <pre data-language="python">with mpl.rc_context(rc={'interactive': False}):
+    fig, ax = plt.subplots()
+    ax.plot(range(3), range(3))
+    fig.savefig('A.png', format='png')
+    plt.close(fig)
+</pre> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rc">
+<code>matplotlib.rc(group, **kwargs)</code> </dt> <dd>
+<p>Set the current rc params. Group is the grouping for the rc, e.g., for <code>lines.linewidth</code> the group is <code>lines</code>, for <code>axes.facecolor</code>, the group is <code>axes</code>, and so on. Group may also be a list or tuple of group names, e.g., (<em>xtick</em>, <em>ytick</em>). <em>kwargs</em> is a dictionary attribute name/value pairs, e.g.,:</p> <pre data-language="python">rc('lines', linewidth=2, color='r')
+</pre> <p>sets the current rc params and is equivalent to:</p> <pre data-language="python">rcParams['lines.linewidth'] = 2
+rcParams['lines.color'] = 'r'
+</pre> <p>The following aliases are available to save typing for interactive users:</p> <table class="docutils">  <thead valign="bottom"> <tr>
+<th class="head">Alias</th> <th class="head">Property</th> </tr> </thead>  <tr>
+<td>‘lw’</td> <td>‘linewidth’</td> </tr> <tr>
+<td>‘ls’</td> <td>‘linestyle’</td> </tr> <tr>
+<td>‘c’</td> <td>‘color’</td> </tr> <tr>
+<td>‘fc’</td> <td>‘facecolor’</td> </tr> <tr>
+<td>‘ec’</td> <td>‘edgecolor’</td> </tr> <tr>
+<td>‘mew’</td> <td>‘markeredgewidth’</td> </tr> <tr>
+<td>‘aa’</td> <td>‘antialiased’</td> </tr>  </table> <p>Thus you could abbreviate the above rc command as:</p> <pre data-language="python">rc('lines', lw=2, c='r')
+</pre> <p>Note you can use python’s kwargs dictionary facility to store dictionaries of default parameters. e.g., you can customize the font rc as follows:</p> <pre data-language="python">font = {'family' : 'monospace',
+        'weight' : 'bold',
+        'size'   : 'larger'}
+
+rc('font', **font)  # pass in the font dict as kwargs
+</pre> <p>This enables you to easily switch between several configurations. Use <code>matplotlib.style.use('default')</code> or <a class="reference internal" href="#matplotlib.rcdefaults" title="matplotlib.rcdefaults"><code>rcdefaults()</code></a> to restore the default rc params after changes.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rc_file">
+<code>matplotlib.rc_file(fname)</code> </dt> <dd>
+<p>Update rc params from file.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rcdefaults">
+<code>matplotlib.rcdefaults()</code> </dt> <dd>
+<p>Restore the rc params from Matplotlib’s internal defaults.</p> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt>
+ <a class="reference internal" href="#matplotlib.rc_file_defaults" title="matplotlib.rc_file_defaults"><code>rc_file_defaults</code></a>
+</dt> <dd>Restore the rc params from the rc file originally loaded by Matplotlib.</dd> <dt>
+ <a class="reference internal" href="../style_api/#matplotlib.style.use" title="matplotlib.style.use"><code>matplotlib.style.use</code></a>
+</dt> <dd>Use a specific style file. Call <code>style.use('default')</code> to restore the default style.</dd> </dl> </div> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rc_file_defaults">
+<code>matplotlib.rc_file_defaults()</code> </dt> <dd>
+<p>Restore the rc params from the original rc file loaded by Matplotlib.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.RcParams">
+<code>class matplotlib.RcParams(*args, **kwargs)</code> </dt> <dd>
+<p>A dictionary object including validation</p> <p>validating functions are defined and associated with rc parameters in <a class="reference internal" href="../rcsetup_api/#module-matplotlib.rcsetup" title="matplotlib.rcsetup"><code>matplotlib.rcsetup</code></a></p> <dl class="method"> <dt id="matplotlib.RcParams.find_all">
+<code>find_all(pattern)</code> </dt> <dd>
+<p>Return the subset of this RcParams dictionary whose keys match, using <a class="reference external" href="https://docs.python.org/2/library/re.html#re.search" title="(in Python v2.7)" target="_blank"><code>re.search()</code></a>, the given <code>pattern</code>.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Changes to the returned dictionary are <em>not</em> propagated to the parent RcParams dictionary.</p> </div> </dd>
+</dl> <dl class="attribute"> <dt id="matplotlib.RcParams.msg_depr">
+<code>msg_depr = '%s is deprecated and replaced with %s; please use the latter.'</code> </dt> 
+</dl> <dl class="attribute"> <dt id="matplotlib.RcParams.msg_depr_ignore">
+<code>msg_depr_ignore = '%s is deprecated and ignored. Use %s'</code> </dt> 
+</dl> <dl class="attribute"> <dt id="matplotlib.RcParams.msg_depr_set">
+<code>msg_depr_set = '%s is deprecated. Please remove it from your matplotlibrc and/or style files.'</code> </dt> 
+</dl> <dl class="attribute"> <dt id="matplotlib.RcParams.msg_obsolete">
+<code>msg_obsolete = '%s is obsolete. Please remove it from your matplotlibrc and/or style files.'</code> </dt> 
+</dl> <dl class="attribute"> <dt id="matplotlib.RcParams.validate">
+<code>validate = {'backend': &lt;function validate_backend&gt;, 'backend_fallback': &lt;function validate_bool&gt;, 'backend.qt4': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'backend.qt5': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'webagg.port': &lt;function validate_int&gt;, 'webagg.open_in_browser': &lt;function validate_bool&gt;, 'webagg.port_retries': &lt;function validate_int&gt;, 'nbagg.transparent': &lt;function validate_bool&gt;, 'toolbar': &lt;function validate_toolbar&gt;, 'datapath': &lt;function validate_path_exists&gt;, 'interactive': &lt;function validate_bool&gt;, 'timezone': &lt;class 'str'&gt;, 'verbose.level': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'verbose.fileo': &lt;class 'str'&gt;, 'lines.linewidth': &lt;function validate_float&gt;, 'lines.linestyle': &lt;function _validate_linestyle&gt;, 'lines.color': &lt;function validate_color&gt;, 'lines.marker': &lt;class 'str'&gt;, 'lines.markeredgewidth': &lt;function validate_float&gt;, 'lines.markersize': &lt;function validate_float&gt;, 'lines.antialiased': &lt;function validate_bool&gt;, 'lines.dash_joinstyle': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'lines.solid_joinstyle': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'lines.dash_capstyle': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'lines.solid_capstyle': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'lines.dashed_pattern': &lt;matplotlib.rcsetup.validate_nseq_float object&gt;, 'lines.dashdot_pattern': &lt;matplotlib.rcsetup.validate_nseq_float object&gt;, 'lines.dotted_pattern': &lt;matplotlib.rcsetup.validate_nseq_float object&gt;, 'lines.scale_dashes': &lt;function validate_bool&gt;, 'markers.fillstyle': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'patch.linewidth': &lt;function validate_float&gt;, 'patch.edgecolor': &lt;function validate_color&gt;, 'patch.force_edgecolor': &lt;function validate_bool&gt;, 'patch.facecolor': &lt;function validate_color&gt;, 'patch.antialiased': &lt;function validate_bool&gt;, 'hatch.color': &lt;function validate_color&gt;, 'hatch.linewidth': &lt;function validate_float&gt;, 'hist.bins': &lt;function validate_hist_bins&gt;, 'boxplot.notch': &lt;function validate_bool&gt;, 'boxplot.vertical': &lt;function validate_bool&gt;, 'boxplot.whiskers': &lt;function validate_whiskers&gt;, 'boxplot.bootstrap': &lt;function validate_int_or_None&gt;, 'boxplot.patchartist': &lt;function validate_bool&gt;, 'boxplot.showmeans': &lt;function validate_bool&gt;, 'boxplot.showcaps': &lt;function validate_bool&gt;, 'boxplot.showbox': &lt;function validate_bool&gt;, 'boxplot.showfliers': &lt;function validate_bool&gt;, 'boxplot.meanline': &lt;function validate_bool&gt;, 'boxplot.flierprops.color': &lt;function validate_color&gt;, 'boxplot.flierprops.marker': &lt;class 'str'&gt;, 'boxplot.flierprops.markerfacecolor': &lt;function validate_color_or_auto&gt;, 'boxplot.flierprops.markeredgecolor': &lt;function validate_color&gt;, 'boxplot.flierprops.markersize': &lt;function validate_float&gt;, 'boxplot.flierprops.linestyle': &lt;function _validate_linestyle&gt;, 'boxplot.flierprops.linewidth': &lt;function validate_float&gt;, 'boxplot.boxprops.color': &lt;function validate_color&gt;, 'boxplot.boxprops.linewidth': &lt;function validate_float&gt;, 'boxplot.boxprops.linestyle': &lt;function _validate_linestyle&gt;, 'boxplot.whiskerprops.color': &lt;function validate_color&gt;, 'boxplot.whiskerprops.linewidth': &lt;function validate_float&gt;, 'boxplot.whiskerprops.linestyle': &lt;function _validate_linestyle&gt;, 'boxplot.capprops.color': &lt;function validate_color&gt;, 'boxplot.capprops.linewidth': &lt;function validate_float&gt;, 'boxplot.capprops.linestyle': &lt;function _validate_linestyle&gt;, 'boxplot.medianprops.color': &lt;function validate_color&gt;, 'boxplot.medianprops.linewidth': &lt;function validate_float&gt;, 'boxplot.medianprops.linestyle': &lt;function _validate_linestyle&gt;, 'boxplot.meanprops.color': &lt;function validate_color&gt;, 'boxplot.meanprops.marker': &lt;class 'str'&gt;, 'boxplot.meanprops.markerfacecolor': &lt;function validate_color&gt;, 'boxplot.meanprops.markeredgecolor': &lt;function validate_color&gt;, 'boxplot.meanprops.markersize': &lt;function validate_float&gt;, 'boxplot.meanprops.linestyle': &lt;function _validate_linestyle&gt;, 'boxplot.meanprops.linewidth': &lt;function validate_float&gt;, 'font.family': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'font.style': &lt;class 'str'&gt;, 'font.variant': &lt;class 'str'&gt;, 'font.stretch': &lt;class 'str'&gt;, 'font.weight': &lt;class 'str'&gt;, 'font.size': &lt;function validate_float&gt;, 'font.serif': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'font.sans-serif': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'font.cursive': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'font.fantasy': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'font.monospace': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'text.color': &lt;function validate_color&gt;, 'text.usetex': &lt;function validate_bool&gt;, 'text.latex.unicode': &lt;function validate_bool&gt;, 'text.latex.preamble': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'text.latex.preview': &lt;function validate_bool&gt;, 'text.hinting': &lt;function validate_hinting&gt;, 'text.hinting_factor': &lt;function validate_int&gt;, 'text.antialiased': &lt;function validate_bool&gt;, 'mathtext.cal': &lt;function validate_font_properties&gt;, 'mathtext.rm': &lt;function validate_font_properties&gt;, 'mathtext.tt': &lt;function validate_font_properties&gt;, 'mathtext.it': &lt;function validate_font_properties&gt;, 'mathtext.bf': &lt;function validate_font_properties&gt;, 'mathtext.sf': &lt;function validate_font_properties&gt;, 'mathtext.fontset': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'mathtext.default': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'mathtext.fallback_to_cm': &lt;function validate_bool&gt;, 'image.aspect': &lt;function validate_aspect&gt;, 'image.interpolation': &lt;class 'str'&gt;, 'image.cmap': &lt;class 'str'&gt;, 'image.lut': &lt;function validate_int&gt;, 'image.origin': &lt;class 'str'&gt;, 'image.resample': &lt;function validate_bool&gt;, 'image.composite_image': &lt;function validate_bool&gt;, 'contour.negative_linestyle': &lt;function _validate_linestyle&gt;, 'contour.corner_mask': &lt;function validate_corner_mask&gt;, 'errorbar.capsize': &lt;function validate_float&gt;, 'axes.axisbelow': &lt;function validate_axisbelow&gt;, 'axes.hold': &lt;function deprecate_axes_hold&gt;, 'axes.facecolor': &lt;function validate_color&gt;, 'axes.edgecolor': &lt;function validate_color&gt;, 'axes.linewidth': &lt;function validate_float&gt;, 'axes.spines.left': &lt;function validate_bool&gt;, 'axes.spines.right': &lt;function validate_bool&gt;, 'axes.spines.bottom': &lt;function validate_bool&gt;, 'axes.spines.top': &lt;function validate_bool&gt;, 'axes.titlesize': &lt;function validate_fontsize&gt;, 'axes.titleweight': &lt;class 'str'&gt;, 'axes.titlepad': &lt;function validate_float&gt;, 'axes.grid': &lt;function validate_bool&gt;, 'axes.grid.which': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'axes.grid.axis': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'axes.labelsize': &lt;function validate_fontsize&gt;, 'axes.labelpad': &lt;function validate_float&gt;, 'axes.labelweight': &lt;class 'str'&gt;, 'axes.labelcolor': &lt;function validate_color&gt;, 'axes.formatter.limits': &lt;matplotlib.rcsetup.validate_nseq_int object&gt;, 'axes.formatter.use_locale': &lt;function validate_bool&gt;, 'axes.formatter.use_mathtext': &lt;function validate_bool&gt;, 'axes.formatter.min_exponent': &lt;function validate_int&gt;, 'axes.formatter.useoffset': &lt;function validate_bool&gt;, 'axes.formatter.offset_threshold': &lt;function validate_int&gt;, 'axes.unicode_minus': &lt;function validate_bool&gt;, 'axes.prop_cycle': &lt;function validate_cycler&gt;, 'axes.autolimit_mode': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'axes.xmargin': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'axes.ymargin': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'polaraxes.grid': &lt;function validate_bool&gt;, 'axes3d.grid': &lt;function validate_bool&gt;, 'scatter.marker': &lt;class 'str'&gt;, 'date.autoformatter.year': &lt;class 'str'&gt;, 'date.autoformatter.month': &lt;class 'str'&gt;, 'date.autoformatter.day': &lt;class 'str'&gt;, 'date.autoformatter.hour': &lt;class 'str'&gt;, 'date.autoformatter.minute': &lt;class 'str'&gt;, 'date.autoformatter.second': &lt;class 'str'&gt;, 'date.autoformatter.microsecond': &lt;class 'str'&gt;, 'legend.fancybox': &lt;function validate_bool&gt;, 'legend.loc': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'legend.numpoints': &lt;function validate_int&gt;, 'legend.scatterpoints': &lt;function validate_int&gt;, 'legend.fontsize': &lt;function validate_fontsize&gt;, 'legend.markerscale': &lt;function validate_float&gt;, 'legend.shadow': &lt;function validate_bool&gt;, 'legend.frameon': &lt;function validate_bool&gt;, 'legend.framealpha': &lt;function validate_float_or_None&gt;, 'legend.borderpad': &lt;function validate_float&gt;, 'legend.labelspacing': &lt;function validate_float&gt;, 'legend.handlelength': &lt;function validate_float&gt;, 'legend.handleheight': &lt;function validate_float&gt;, 'legend.handletextpad': &lt;function validate_float&gt;, 'legend.borderaxespad': &lt;function validate_float&gt;, 'legend.columnspacing': &lt;function validate_float&gt;, 'legend.facecolor': &lt;function validate_color_or_inherit&gt;, 'legend.edgecolor': &lt;function validate_color_or_inherit&gt;, 'xtick.top': &lt;function validate_bool&gt;, 'xtick.bottom': &lt;function validate_bool&gt;, 'xtick.major.size': &lt;function validate_float&gt;, 'xtick.minor.size': &lt;function validate_float&gt;, 'xtick.major.width': &lt;function validate_float&gt;, 'xtick.minor.width': &lt;function validate_float&gt;, 'xtick.major.pad': &lt;function validate_float&gt;, 'xtick.minor.pad': &lt;function validate_float&gt;, 'xtick.color': &lt;function validate_color&gt;, 'xtick.minor.visible': &lt;function validate_bool&gt;, 'xtick.minor.top': &lt;function validate_bool&gt;, 'xtick.minor.bottom': &lt;function validate_bool&gt;, 'xtick.major.top': &lt;function validate_bool&gt;, 'xtick.major.bottom': &lt;function validate_bool&gt;, 'xtick.labelsize': &lt;function validate_fontsize&gt;, 'xtick.direction': &lt;class 'str'&gt;, 'xtick.alignment': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'ytick.left': &lt;function validate_bool&gt;, 'ytick.right': &lt;function validate_bool&gt;, 'ytick.major.size': &lt;function validate_float&gt;, 'ytick.minor.size': &lt;function validate_float&gt;, 'ytick.major.width': &lt;function validate_float&gt;, 'ytick.minor.width': &lt;function validate_float&gt;, 'ytick.major.pad': &lt;function validate_float&gt;, 'ytick.minor.pad': &lt;function validate_float&gt;, 'ytick.color': &lt;function validate_color&gt;, 'ytick.minor.visible': &lt;function validate_bool&gt;, 'ytick.minor.left': &lt;function validate_bool&gt;, 'ytick.minor.right': &lt;function validate_bool&gt;, 'ytick.major.left': &lt;function validate_bool&gt;, 'ytick.major.right': &lt;function validate_bool&gt;, 'ytick.labelsize': &lt;function validate_fontsize&gt;, 'ytick.direction': &lt;class 'str'&gt;, 'ytick.alignment': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'grid.color': &lt;function validate_color&gt;, 'grid.linestyle': &lt;function _validate_linestyle&gt;, 'grid.linewidth': &lt;function validate_float&gt;, 'grid.alpha': &lt;function validate_float&gt;, 'figure.titlesize': &lt;function validate_fontsize&gt;, 'figure.titleweight': &lt;class 'str'&gt;, 'figure.figsize': &lt;matplotlib.rcsetup.validate_nseq_float object&gt;, 'figure.dpi': &lt;function validate_float&gt;, 'figure.facecolor': &lt;function validate_color&gt;, 'figure.edgecolor': &lt;function validate_color&gt;, 'figure.frameon': &lt;function validate_bool&gt;, 'figure.autolayout': &lt;function validate_bool&gt;, 'figure.max_open_warning': &lt;function validate_int&gt;, 'figure.subplot.left': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'figure.subplot.right': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'figure.subplot.bottom': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'figure.subplot.top': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'figure.subplot.wspace': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'figure.subplot.hspace': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'savefig.dpi': &lt;function validate_dpi&gt;, 'savefig.facecolor': &lt;function validate_color&gt;, 'savefig.edgecolor': &lt;function validate_color&gt;, 'savefig.frameon': &lt;function validate_bool&gt;, 'savefig.orientation': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'savefig.jpeg_quality': &lt;function validate_int&gt;, 'savefig.format': &lt;function update_savefig_format&gt;, 'savefig.bbox': &lt;function validate_bbox&gt;, 'savefig.pad_inches': &lt;function validate_float&gt;, 'savefig.directory': &lt;class 'str'&gt;, 'savefig.transparent': &lt;function validate_bool&gt;, 'tk.window_focus': &lt;function validate_bool&gt;, 'ps.papersize': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'ps.useafm': &lt;function validate_bool&gt;, 'ps.usedistiller': &lt;function validate_ps_distiller&gt;, 'ps.distiller.res': &lt;function validate_int&gt;, 'ps.fonttype': &lt;function validate_fonttype&gt;, 'pdf.compression': &lt;function validate_int&gt;, 'pdf.inheritcolor': &lt;function validate_bool&gt;, 'pdf.use14corefonts': &lt;function validate_bool&gt;, 'pdf.fonttype': &lt;function validate_fonttype&gt;, 'pgf.debug': &lt;function validate_bool&gt;, 'pgf.texsystem': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'pgf.rcfonts': &lt;function validate_bool&gt;, 'pgf.preamble': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'svg.image_inline': &lt;function validate_bool&gt;, 'svg.fonttype': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'svg.hashsalt': &lt;function validate_string_or_None&gt;, 'docstring.hardcopy': &lt;function validate_bool&gt;, 'plugins.directory': &lt;class 'str'&gt;, 'path.simplify': &lt;function validate_bool&gt;, 'path.simplify_threshold': &lt;matplotlib.rcsetup.ValidateInterval object&gt;, 'path.snap': &lt;function validate_bool&gt;, 'path.sketch': &lt;function validate_sketch&gt;, 'path.effects': &lt;function validate_any&gt;, 'agg.path.chunksize': &lt;function validate_int&gt;, 'keymap.fullscreen': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.home': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.back': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.forward': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.pan': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.zoom': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.save': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.quit': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.quit_all': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.grid': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.grid_minor': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.yscale': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.xscale': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'keymap.all_axes': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'examples.directory': &lt;class 'str'&gt;, 'animation.html': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'animation.embed_limit': &lt;function validate_float&gt;, 'animation.writer': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'animation.codec': &lt;class 'str'&gt;, 'animation.bitrate': &lt;function validate_int&gt;, 'animation.frame_format': &lt;matplotlib.rcsetup.ValidateInStrings object&gt;, 'animation.html_args': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'animation.ffmpeg_path': &lt;function validate_animation_writer_path&gt;, 'animation.ffmpeg_args': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'animation.avconv_path': &lt;function validate_animation_writer_path&gt;, 'animation.avconv_args': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'animation.mencoder_path': &lt;function validate_animation_writer_path&gt;, 'animation.mencoder_args': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, 'animation.convert_path': &lt;function validate_animation_writer_path&gt;, 'animation.convert_args': &lt;function _listify_validator.&lt;locals&gt;.f&gt;, '_internal.classic_mode': &lt;function validate_bool&gt;}</code> </dt> 
+</dl> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rc_params">
+<code>matplotlib.rc_params(fail_on_error=False)</code> </dt> <dd>
+<p>Return a <a class="reference internal" href="#matplotlib.RcParams" title="matplotlib.RcParams"><code>matplotlib.RcParams</code></a> instance from the default matplotlib rc file.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.rc_params_from_file">
+<code>matplotlib.rc_params_from_file(fname, fail_on_error=False, use_default_template=True)</code> </dt> <dd>
+<p>Return <a class="reference internal" href="#matplotlib.RcParams" title="matplotlib.RcParams"><code>matplotlib.RcParams</code></a> from the contents of the given file.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>fname</strong> : str</p>  <p>Name of file parsed for matplotlib settings.</p>  <p><strong>fail_on_error</strong> : bool</p>  <p>If True, raise an error when the parser fails to convert a parameter.</p>  <p><strong>use_default_template</strong> : bool</p>  <p>If True, initialize with default parameters before updating with those in the given file. If False, the configuration class only contains the parameters specified in the file. (Useful for updating dicts.)</p>  </td> </tr>  </table> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.matplotlib_fname">
+<code>matplotlib.matplotlib_fname()</code> </dt> <dd>
+<p>Get the location of the config file.</p> <p>The file location is determined in the following order</p> <ul> <li>
+<code>$PWD/matplotlibrc</code> </li> <li>
+<code>$MATPLOTLIBRC</code> if it is a file </li> <li>
+<code>$MATPLOTLIBRC/matplotlibrc</code> </li> <li>
+<code>$MPLCONFIGDIR/matplotlibrc</code> </li> <li>
+<p class="first">On Linux,</p>  <ul class="simple"> <li>
+<code>$XDG_CONFIG_HOME/matplotlib/matplotlibrc</code> (if $XDG_CONFIG_HOME is defined)</li> <li>or <code>$HOME/.config/matplotlib/matplotlibrc</code> (if $XDG_CONFIG_HOME is not defined)</li> </ul>  </li> <li>
+<p class="first">On other platforms,</p>  <ul class="simple"> <li>
+<code>$HOME/.matplotlib/matplotlibrc</code> if <code>$HOME</code> is defined.</li> </ul>  </li> <li>Lastly, it looks in <code>$MATPLOTLIBDATA/matplotlibrc</code> for a system-defined copy. </li> </ul> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.interactive">
+<code>matplotlib.interactive(b)</code> </dt> <dd>
+<p>Set interactive mode to boolean b.</p> <p>If b is True, then draw after every plotting command, e.g., after xlabel</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.is_interactive">
+<code>matplotlib.is_interactive()</code> </dt> <dd>
+<p>Return true if plot mode is interactive</p> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2017 Matplotlib Development Team. All rights reserved.<br>Licensed under the Matplotlib License Agreement.<br>
+    <a href="http://matplotlib.org/2.1.0/api/matplotlib_configuration_api.html" class="_attribution-link" target="_blank">http://matplotlib.org/2.1.0/api/matplotlib_configuration_api.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

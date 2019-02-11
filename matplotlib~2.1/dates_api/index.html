@@ -1,0 +1,408 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dates - Matplotlib 2.1 - W3cubDocs</title>
+  
+  <meta name="description" content="Matplotlib provides sophisticated date plotting capabilities, standing on the shoulders of python datetime, the add-on modules pytz and dateutil. &hellip;">
+  <meta name="keywords" content="dates, -, matplotlib, matplotlib~2.1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/matplotlib~2.1/dates_api/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/matplotlib~2.1.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/matplotlib~2.1/" class="_nav-link" title="" style="margin-left:0;">Matplotlib 2.1</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="dates">dates</h1> <img src="data:image/png;base64,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" alt="Inheritance diagram of matplotlib.dates" usemap="#inheritance1bda3e63b5" class="inheritance"> <map id="inheritance1bda3e63b5" name="inheritance1bda3e63b5"> <area shape="rect" id="node1" href="#matplotlib.dates.AutoDateFormatter" target="_top" title="This class attempts to figure out the best format to use.  This is" alt="" coords="325,65,447,87"> <area shape="rect" id="node2" href="ticker_api.html#matplotlib.ticker.Formatter" target="_top" title="Create a string based on a tick value and location." alt="" coords="191,128,263,149"> <area shape="rect" id="node7" href="#matplotlib.dates.DateFormatter" target="_top" title="Tick location is seconds since the epoch.  Use a :func:`strftime`" alt="" coords="337,107,434,128"> <area shape="rect" id="node13" href="#matplotlib.dates.IndexDateFormatter" target="_top" title="Use with :class:`~matplotlib.ticker.IndexLocator` to cycle format" alt="" coords="322,148,449,169"> <area shape="rect" id="node3" href="#matplotlib.dates.AutoDateLocator" target="_top" title="On autoscale, this class picks the best" alt="" coords="498,127,607,148"> <area shape="rect" id="node4" href="#matplotlib.dates.DateLocator" target="_top" title="Determines the tick locations when plotting dates." alt="" coords="343,189,428,210"> <area shape="rect" id="node10" href="#matplotlib.dates.RRuleLocator" target="_top" title="RRuleLocator" alt="" coords="508,168,597,189"> <area shape="rect" id="node14" href="#matplotlib.dates.MicrosecondLocator" target="_top" title="Make ticks on occurances of each microsecond." alt="" coords="489,209,615,230"> <area shape="rect" id="node19" href="#matplotlib.dates.YearLocator" target="_top" title="Make ticks on a given day of each year that is a multiple of base." alt="" coords="512,250,593,271"> <area shape="rect" id="node5" href="units_api.html#matplotlib.units.ConversionInterface" target="_top" title="The minimal interface for a converter to take custom instances (or" alt="" coords="4,87,132,108"> <area shape="rect" id="node6" title="Converter for datetime.date and datetime.datetime data," alt="" coords="178,87,276,108"> <area shape="rect" id="node8" href="ticker_api.html#matplotlib.ticker.Locator" target="_top" title="Determine the tick locations;" alt="" coords="197,189,257,210"> <area shape="rect" id="node9" href="#matplotlib.dates.DayLocator" target="_top" title="Make ticks on occurances of each day of the month.  For example," alt="" coords="669,64,749,85"> <area shape="rect" id="node12" href="#matplotlib.dates.HourLocator" target="_top" title="Make ticks on occurances of each hour." alt="" coords="667,105,751,127"> <area shape="rect" id="node15" href="#matplotlib.dates.MinuteLocator" target="_top" title="Make ticks on occurances of each minute." alt="" coords="661,146,757,168"> <area shape="rect" id="node16" href="#matplotlib.dates.MonthLocator" target="_top" title="Make ticks on occurances of each month month, e.g., 1, 3, 12." alt="" coords="663,188,755,209"> <area shape="rect" id="node17" href="#matplotlib.dates.SecondLocator" target="_top" title="Make ticks on occurances of each second." alt="" coords="660,229,758,250"> <area shape="rect" id="node18" href="#matplotlib.dates.WeekdayLocator" target="_top" title="Make ticks on occurances of each weekday." alt="" coords="655,270,764,291"> <area shape="rect" id="node11" href="ticker_api.html#matplotlib.ticker.TickHelper" target="_top" title="TickHelper" alt="" coords="30,169,107,190"> <area shape="rect" id="node20" title="Use this class to parse date strings to matplotlib datenums when" alt="" coords="172,46,282,67"> <area shape="rect" id="node21" title="Use this class to parse date strings to matplotlib datenums when" alt="" coords="21,46,115,67"> </map>  <h2 id="matplotlib-dates">matplotlib.dates</h2> <p id="module-matplotlib.dates">Matplotlib provides sophisticated date plotting capabilities, standing on the shoulders of python <a class="reference external" href="https://docs.python.org/2/library/datetime.html#module-datetime" title="(in Python v2.7)" target="_blank"><code>datetime</code></a>, the add-on modules <code>pytz</code> and <code>dateutil</code>. <code>datetime</code> objects are converted to floating point numbers which represent time in days since 0001-01-01 UTC, plus 1. For example, 0001-01-01, 06:00 is 1.25, not 0.25. The helper functions <a class="reference internal" href="#matplotlib.dates.date2num" title="matplotlib.dates.date2num"><code>date2num()</code></a>, <a class="reference internal" href="#matplotlib.dates.num2date" title="matplotlib.dates.num2date"><code>num2date()</code></a> and <a class="reference internal" href="#matplotlib.dates.drange" title="matplotlib.dates.drange"><code>drange()</code></a> are used to facilitate easy conversion to and from <a class="reference external" href="https://docs.python.org/2/library/datetime.html#module-datetime" title="(in Python v2.7)" target="_blank"><code>datetime</code></a> and numeric ranges.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p>Like Python’s datetime, mpl uses the Gregorian calendar for all conversions between dates and floating point numbers. This practice is not universal, and calendar differences can cause confusing differences between what Python and mpl give as the number of days since 0001-01-01 and what other software and databases yield. For example, the US Naval Observatory uses a calendar that switches from Julian to Gregorian in October, 1582. Hence, using their calculator, the number of days between 0001-01-01 and 2006-04-01 is 732403, whereas using the Gregorian calendar via the datetime module we find:</p> <pre data-language="python">In [31]:date(2006,4,1).toordinal() - date(1,1,1).toordinal()
+Out[31]:732401
+</pre> </div> <p>A wide range of specific and general purpose date tick locators and formatters are provided in this module. See <a class="reference internal" href="../ticker_api/#module-matplotlib.ticker" title="matplotlib.ticker"><code>matplotlib.ticker</code></a> for general information on tick locators and formatters. These are described below.</p> <p>All the matplotlib date converters, tickers and formatters are timezone aware, and the default timezone is given by the timezone parameter in your <code>matplotlibrc</code> file. If you leave out a <code>tz</code> timezone instance, the default from your rc file will be assumed. If you want to use a custom time zone, pass a <code>pytz.timezone</code> instance with the tz keyword argument to <a class="reference internal" href="#matplotlib.dates.num2date" title="matplotlib.dates.num2date"><code>num2date()</code></a>, <code>plot_date()</code>, and any custom date tickers or locators you create. See <a class="reference external" href="http://pythonhosted.org/pytz/" target="_blank">pytz</a> for information on <code>pytz</code> and timezone handling.</p> <p>The <a class="reference external" href="https://dateutil.readthedocs.io/en/stable/" target="_blank">dateutil module</a> provides additional code to handle date ticking, making it easy to place ticks on any kinds of dates. See examples below.</p>  <h3 id="date-tickers">Date tickers</h3> <p>Most of the date tickers can locate single or multiple values. For example:</p> <pre data-language="python"># import constants for the days of the week
+from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
+
+# tick on mondays every week
+loc = WeekdayLocator(byweekday=MO, tz=tz)
+
+# tick on mondays and saturdays
+loc = WeekdayLocator(byweekday=(MO, SA))
+</pre> <p>In addition, most of the constructors take an interval argument:</p> <pre data-language="python"># tick on mondays every second week
+loc = WeekdayLocator(byweekday=MO, interval=2)
+</pre> <p>The rrule locator allows completely general date ticking:</p> <pre data-language="python"># tick every 5th easter
+rule = rrulewrapper(YEARLY, byeaster=1, interval=5)
+loc = RRuleLocator(rule)
+</pre> <p>Here are all the date tickers:</p>  <ul class="simple"> <li>
+<a class="reference internal" href="#matplotlib.dates.MinuteLocator" title="matplotlib.dates.MinuteLocator"><code>MinuteLocator</code></a>: locate minutes</li> <li>
+<a class="reference internal" href="#matplotlib.dates.HourLocator" title="matplotlib.dates.HourLocator"><code>HourLocator</code></a>: locate hours</li> <li>
+<a class="reference internal" href="#matplotlib.dates.DayLocator" title="matplotlib.dates.DayLocator"><code>DayLocator</code></a>: locate specified days of the month</li> <li>
+<a class="reference internal" href="#matplotlib.dates.WeekdayLocator" title="matplotlib.dates.WeekdayLocator"><code>WeekdayLocator</code></a>: Locate days of the week, e.g., MO, TU</li> <li>
+<a class="reference internal" href="#matplotlib.dates.MonthLocator" title="matplotlib.dates.MonthLocator"><code>MonthLocator</code></a>: locate months, e.g., 7 for july</li> <li>
+<a class="reference internal" href="#matplotlib.dates.YearLocator" title="matplotlib.dates.YearLocator"><code>YearLocator</code></a>: locate years that are multiples of base</li> <li>
+<a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>RRuleLocator</code></a>: locate using a <code>matplotlib.dates.rrulewrapper</code>. The <code>rrulewrapper</code> is a simple wrapper around a <code>dateutil.rrule</code> (<a class="reference external" href="https://dateutil.readthedocs.io/en/stable/" target="_blank">dateutil</a>) which allow almost arbitrary date tick specifications. See <a class="reference external" href="http://matplotlib.org/2.1.0/gallery/ticks_and_spines/date_demo_rrule.html" target="_blank">rrule example</a>.</li> <li>
+<a class="reference internal" href="#matplotlib.dates.AutoDateLocator" title="matplotlib.dates.AutoDateLocator"><code>AutoDateLocator</code></a>: On autoscale, this class picks the best <code>MultipleDateLocator</code> to set the view limits and the tick locations.</li> </ul>    <h3 id="date-formatters">Date formatters</h3> <p>Here all all the date formatters:</p>  <ul class="simple"> <li>
+<a class="reference internal" href="#matplotlib.dates.AutoDateFormatter" title="matplotlib.dates.AutoDateFormatter"><code>AutoDateFormatter</code></a>: attempts to figure out the best format to use. This is most useful when used with the <a class="reference internal" href="#matplotlib.dates.AutoDateLocator" title="matplotlib.dates.AutoDateLocator"><code>AutoDateLocator</code></a>.</li> <li>
+<a class="reference internal" href="#matplotlib.dates.DateFormatter" title="matplotlib.dates.DateFormatter"><code>DateFormatter</code></a>: use <code>strftime()</code> format strings</li> <li>
+<a class="reference internal" href="#matplotlib.dates.IndexDateFormatter" title="matplotlib.dates.IndexDateFormatter"><code>IndexDateFormatter</code></a>: date plots with implicit <em>x</em> indexing.</li> </ul>  <dl class="function"> <dt id="matplotlib.dates.date2num">
+<code>matplotlib.dates.date2num(d)</code> </dt> <dd>
+<p>Converts datetime objects to Matplotlib dates.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>d</strong> : <code>datetime</code> or sequence of <code>datetime</code></p> </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first">float or sequence of floats</p>  <p>Number of days (fraction part represents hours, minutes, seconds) since 0001-01-01 00:00:00 UTC, plus one.</p>  </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>The addition of one here is a historical artifact. Also, note that the Gregorian calendar is assumed; this is not universal practice. For details see the module docstring.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.num2date">
+<code>matplotlib.dates.num2date(x, tz=None)</code> </dt> <dd>
+<table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>x</strong> : float or sequence of floats</p>  <p>Number of days (fraction part represents hours, minutes, seconds) since 0001-01-01 00:00:00 UTC, plus one.</p>  <p><strong>tz</strong> : string, optional</p>  <p>Timezone of <em>x</em> (defaults to rcparams TZ value).</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><code>datetime</code> or sequence of <code>datetime</code></p>  <p>Dates are returned in timezone <em>tz</em></p>  <p>If <em>x</em> is a sequence, a sequence of <code>datetime</code> objects will</p> <p class="last">be returned.</p> </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>The addition of one here is a historical artifact. Also, note that the Gregorian calendar is assumed; this is not universal practice. For details, see the module docstring.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.num2timedelta">
+<code>matplotlib.dates.num2timedelta(x)</code> </dt> <dd>
+<p>Converts number of days to a <code>timdelta</code> object. If <em>x</em> is a sequence, a sequence of <code>timedelta</code> objects will be returned.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>x</strong> : float, sequence of floats</p>  <p>Number of days (fraction part represents hours, minutes, seconds)</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first last"><code>timedelta</code> or list[<code>timedelta</code>]</p> </td> </tr>  </table> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.drange">
+<code>matplotlib.dates.drange(dstart, dend, delta)</code> </dt> <dd>
+<p>Return a date range as float Gregorian ordinals. <em>dstart</em> and <em>dend</em> are <code>datetime</code> instances. <em>delta</em> is a <a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime.timedelta" title="(in Python v2.7)" target="_blank"><code>datetime.timedelta</code></a> instance.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.epoch2num">
+<code>matplotlib.dates.epoch2num(e)</code> </dt> <dd>
+<p>Convert an epoch or sequence of epochs to the new date format, that is days since 0001.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.num2epoch">
+<code>matplotlib.dates.num2epoch(d)</code> </dt> <dd>
+<p>Convert days since 0001 to epoch. <em>d</em> can be a number or sequence.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.mx2num">
+<code>matplotlib.dates.mx2num(mxdates)</code> </dt> <dd>
+<p>Convert mx <code>datetime</code> instance (or sequence of mx instances) to the new date format.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.DateFormatter">
+<code>class matplotlib.dates.DateFormatter(fmt, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="../ticker_api/#matplotlib.ticker.Formatter" title="matplotlib.ticker.Formatter"><code>matplotlib.ticker.Formatter</code></a></p> <p>Tick location is seconds since the epoch. Use a <a class="reference internal" href="#matplotlib.dates.DateFormatter.strftime" title="matplotlib.dates.DateFormatter.strftime"><code>strftime()</code></a> format string.</p> <p>Python only supports <a class="reference external" href="https://docs.python.org/2/library/datetime.html#module-datetime" title="(in Python v2.7)" target="_blank"><code>datetime</code></a> <a class="reference internal" href="#matplotlib.dates.DateFormatter.strftime" title="matplotlib.dates.DateFormatter.strftime"><code>strftime()</code></a> formatting for years greater than 1900. Thanks to Andrew Dalke, Dalke Scientific Software who contributed the <a class="reference internal" href="#matplotlib.dates.DateFormatter.strftime" title="matplotlib.dates.DateFormatter.strftime"><code>strftime()</code></a> code below to include dates earlier than this year.</p> <dl class="docutils"> <dt>
+<code>fmt is a strftime() format string; tz is the</code> </dt> <dd>
+<code>tzinfo</code> instance.</dd> </dl> <dl class="attribute"> <dt id="matplotlib.dates.DateFormatter.illegal_s">
+<code>illegal_s = re.compile('((^|[^%])(%%)*%s)')</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.DateFormatter.set_tzinfo">
+<code>set_tzinfo(tz)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.DateFormatter.strftime">
+<code>strftime(dt, fmt=None)</code> </dt> <dd>
+<p>Refer to documentation for datetime.strftime.</p> <p><em>fmt</em> is a <a class="reference internal" href="#matplotlib.dates.DateFormatter.strftime" title="matplotlib.dates.DateFormatter.strftime"><code>strftime()</code></a> format string.</p> <p>Warning: For years before 1900, depending upon the current locale it is possible that the year displayed with %x might be incorrect. For years before 100, %y and %Y will yield zero-padded strings.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.DateFormatter.strftime_pre_1900">
+<code>strftime_pre_1900(dt, fmt=None)</code> </dt> <dd>
+<p>Call time.strftime for years before 1900 by rolling forward a multiple of 28 years.</p> <p><em>fmt</em> is a <a class="reference internal" href="#matplotlib.dates.DateFormatter.strftime" title="matplotlib.dates.DateFormatter.strftime"><code>strftime()</code></a> format string.</p> <p>Dalke: I hope I did this math right. Every 28 years the calendar repeats, except through century leap years excepting the 400 year leap years. But only if you’re using the Gregorian calendar.</p> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.IndexDateFormatter">
+<code>class matplotlib.dates.IndexDateFormatter(t, fmt, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="../ticker_api/#matplotlib.ticker.Formatter" title="matplotlib.ticker.Formatter"><code>matplotlib.ticker.Formatter</code></a></p> <p>Use with <a class="reference internal" href="../ticker_api/#matplotlib.ticker.IndexLocator" title="matplotlib.ticker.IndexLocator"><code>IndexLocator</code></a> to cycle format strings by index.</p> <p><em>t</em> is a sequence of dates (floating point days). <em>fmt</em> is a <code>strftime()</code> format string.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.AutoDateFormatter">
+<code>class matplotlib.dates.AutoDateFormatter(locator, tz=None, defaultfmt='%Y-%m-%d')</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="../ticker_api/#matplotlib.ticker.Formatter" title="matplotlib.ticker.Formatter"><code>matplotlib.ticker.Formatter</code></a></p> <p>This class attempts to figure out the best format to use. This is most useful when used with the <a class="reference internal" href="#matplotlib.dates.AutoDateLocator" title="matplotlib.dates.AutoDateLocator"><code>AutoDateLocator</code></a>.</p> <p>The AutoDateFormatter has a scale dictionary that maps the scale of the tick (the distance in days between one major tick) and a format string. The default looks like this:</p> <pre data-language="python">self.scaled = {
+    DAYS_PER_YEAR: rcParams['date.autoformat.year'],
+    DAYS_PER_MONTH: rcParams['date.autoformat.month'],
+    1.0: rcParams['date.autoformat.day'],
+    1. / HOURS_PER_DAY: rcParams['date.autoformat.hour'],
+    1. / (MINUTES_PER_DAY): rcParams['date.autoformat.minute'],
+    1. / (SEC_PER_DAY): rcParams['date.autoformat.second'],
+    1. / (MUSECONDS_PER_DAY): rcParams['date.autoformat.microsecond'],
+    }
+</pre> <p>The algorithm picks the key in the dictionary that is &gt;= the current scale and uses that format string. You can customize this dictionary by doing:</p> <pre data-language="python">&gt;&gt;&gt; locator = AutoDateLocator()
+&gt;&gt;&gt; formatter = AutoDateFormatter(locator)
+&gt;&gt;&gt; formatter.scaled[1/(24.*60.)] = '%M:%S' # only show min and sec
+</pre> <p>A custom <a class="reference internal" href="../ticker_api/#matplotlib.ticker.FuncFormatter" title="matplotlib.ticker.FuncFormatter"><code>FuncFormatter</code></a> can also be used. The following example shows how to use a custom format function to strip trailing zeros from decimal seconds and adds the date to the first ticklabel:</p> <pre data-language="python">&gt;&gt;&gt; def my_format_function(x, pos=None):
+...     x = matplotlib.dates.num2date(x)
+...     if pos == 0:
+...         fmt = '%D %H:%M:%S.%f'
+...     else:
+...         fmt = '%H:%M:%S.%f'
+...     label = x.strftime(fmt)
+...     label = label.rstrip("0")
+...     label = label.rstrip(".")
+...     return label
+&gt;&gt;&gt; from matplotlib.ticker import FuncFormatter
+&gt;&gt;&gt; formatter.scaled[1/(24.*60.)] = FuncFormatter(my_format_function)
+</pre> <p>Autoformat the date labels. The default format is the one to use if none of the values in <code>self.scaled</code> are greater than the unit returned by <code>locator._get_unit()</code>.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.DateLocator">
+<code>class matplotlib.dates.DateLocator(tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="../ticker_api/#matplotlib.ticker.Locator" title="matplotlib.ticker.Locator"><code>matplotlib.ticker.Locator</code></a></p> <p>Determines the tick locations when plotting dates.</p> <p><em>tz</em> is a <code>tzinfo</code> instance.</p> <dl class="method"> <dt id="matplotlib.dates.DateLocator.datalim_to_dt">
+<code>datalim_to_dt()</code> </dt> <dd>
+<p>Convert axis data interval to datetime objects.</p> </dd>
+</dl> <dl class="attribute"> <dt id="matplotlib.dates.DateLocator.hms0d">
+<code>hms0d = {'byhour': 0, 'byminute': 0, 'bysecond': 0}</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.DateLocator.nonsingular">
+<code>nonsingular(vmin, vmax)</code> </dt> <dd>
+<p>Given the proposed upper and lower extent, adjust the range if it is too close to being singular (i.e. a range of ~0).</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.DateLocator.set_tzinfo">
+<code>set_tzinfo(tz)</code> </dt> <dd>
+<p>Set time zone info.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.DateLocator.viewlim_to_dt">
+<code>viewlim_to_dt()</code> </dt> <dd>
+<p>Converts the view interval to datetime objects.</p> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.RRuleLocator">
+<code>class matplotlib.dates.RRuleLocator(o, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.DateLocator" title="matplotlib.dates.DateLocator"><code>matplotlib.dates.DateLocator</code></a></p> <dl class="method"> <dt id="matplotlib.dates.RRuleLocator.autoscale">
+<code>autoscale()</code> </dt> <dd>
+<p>Set the view limits to include the data range.</p> </dd>
+</dl> <dl class="staticmethod"> <dt id="matplotlib.dates.RRuleLocator.get_unit_generic">
+<code>static get_unit_generic(freq)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.RRuleLocator.tick_values">
+<code>tick_values(vmin, vmax)</code> </dt> 
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.AutoDateLocator">
+<code>class matplotlib.dates.AutoDateLocator(tz=None, minticks=5, maxticks=None, interval_multiples=False)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.DateLocator" title="matplotlib.dates.DateLocator"><code>matplotlib.dates.DateLocator</code></a></p> <p>On autoscale, this class picks the best <a class="reference internal" href="#matplotlib.dates.DateLocator" title="matplotlib.dates.DateLocator"><code>DateLocator</code></a> to set the view limits and the tick locations.</p> <p><em>minticks</em> is the minimum number of ticks desired, which is used to select the type of ticking (yearly, monthly, etc.).</p> <p><em>maxticks</em> is the maximum number of ticks desired, which controls any interval between ticks (ticking every other, every 3, etc.). For really fine-grained control, this can be a dictionary mapping individual rrule frequency constants (YEARLY, MONTHLY, etc.) to their own maximum number of ticks. This can be used to keep the number of ticks appropriate to the format chosen in <a class="reference internal" href="#matplotlib.dates.AutoDateFormatter" title="matplotlib.dates.AutoDateFormatter"><code>AutoDateFormatter</code></a>. Any frequency not specified in this dictionary is given a default value.</p> <p><em>tz</em> is a <code>tzinfo</code> instance.</p> <p><em>interval_multiples</em> is a boolean that indicates whether ticks should be chosen to be multiple of the interval. This will lock ticks to ‘nicer’ locations. For example, this will force the ticks to be at hours 0,6,12,18 when hourly ticking is done at 6 hour intervals.</p> <p>The AutoDateLocator has an interval dictionary that maps the frequency of the tick (a constant from dateutil.rrule) and a multiple allowed for that ticking. The default looks like this:</p> <pre data-language="python">self.intervald = {
+  YEARLY  : [1, 2, 4, 5, 10, 20, 40, 50, 100, 200, 400, 500,
+            1000, 2000, 4000, 5000, 10000],
+  MONTHLY : [1, 2, 3, 4, 6],
+  DAILY   : [1, 2, 3, 7, 14],
+  HOURLY  : [1, 2, 3, 4, 6, 12],
+  MINUTELY: [1, 5, 10, 15, 30],
+  SECONDLY: [1, 5, 10, 15, 30],
+  MICROSECONDLY: [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000,
+                 5000, 10000, 20000, 50000, 100000, 200000, 500000,
+                 1000000],
+  }
+</pre> <p>The interval is used to specify multiples that are appropriate for the frequency of ticking. For instance, every 7 days is sensible for daily ticks, but for minutes/seconds, 15 or 30 make sense. You can customize this dictionary by doing:</p> <pre data-language="python">locator = AutoDateLocator()
+locator.intervald[HOURLY] = [3] # only show every 3 hours
+</pre> <dl class="method"> <dt id="matplotlib.dates.AutoDateLocator.autoscale">
+<code>autoscale()</code> </dt> <dd>
+<p>Try to choose the view limits intelligently.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.AutoDateLocator.get_locator">
+<code>get_locator(dmin, dmax)</code> </dt> <dd>
+<p>Pick the best locator based on a distance.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.AutoDateLocator.nonsingular">
+<code>nonsingular(vmin, vmax)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.AutoDateLocator.refresh">
+<code>refresh()</code> </dt> <dd>
+<p>Refresh internal information based on current limits.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.AutoDateLocator.set_axis">
+<code>set_axis(axis)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.AutoDateLocator.tick_values">
+<code>tick_values(vmin, vmax)</code> </dt> 
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.YearLocator">
+<code>class matplotlib.dates.YearLocator(base=1, month=1, day=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.DateLocator" title="matplotlib.dates.DateLocator"><code>matplotlib.dates.DateLocator</code></a></p> <p>Make ticks on a given day of each year that is a multiple of base.</p> <p>Examples:</p> <pre data-language="python"># Tick every year on Jan 1st
+locator = YearLocator()
+
+# Tick every 5 years on July 4th
+locator = YearLocator(5, month=7, day=4)
+</pre> <p>Mark years that are multiple of base on a given month and day (default jan 1).</p> <dl class="method"> <dt id="matplotlib.dates.YearLocator.autoscale">
+<code>autoscale()</code> </dt> <dd>
+<p>Set the view limits to include the data range.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.dates.YearLocator.tick_values">
+<code>tick_values(vmin, vmax)</code> </dt> 
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.MonthLocator">
+<code>class matplotlib.dates.MonthLocator(bymonth=None, bymonthday=1, interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>matplotlib.dates.RRuleLocator</code></a></p> <p>Make ticks on occurances of each month month, e.g., 1, 3, 12.</p> <p>Mark every month in <em>bymonth</em>; <em>bymonth</em> can be an int or sequence. Default is <code>range(1,13)</code>, i.e. every month.</p> <p><em>interval</em> is the interval between each iteration. For example, if <code>interval=2</code>, mark every second occurance.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.WeekdayLocator">
+<code>class matplotlib.dates.WeekdayLocator(byweekday=1, interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>matplotlib.dates.RRuleLocator</code></a></p> <p>Make ticks on occurances of each weekday.</p> <p>Mark every weekday in <em>byweekday</em>; <em>byweekday</em> can be a number or sequence.</p> <p>Elements of <em>byweekday</em> must be one of MO, TU, WE, TH, FR, SA, SU, the constants from <code>dateutil.rrule</code>, which have been imported into the <a class="reference internal" href="#module-matplotlib.dates" title="matplotlib.dates"><code>matplotlib.dates</code></a> namespace.</p> <p><em>interval</em> specifies the number of weeks to skip. For example, <code>interval=2</code> plots every second week.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.DayLocator">
+<code>class matplotlib.dates.DayLocator(bymonthday=None, interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>matplotlib.dates.RRuleLocator</code></a></p> <p>Make ticks on occurances of each day of the month. For example, 1, 15, 30.</p> <p>Mark every day in <em>bymonthday</em>; <em>bymonthday</em> can be an int or sequence.</p> <p>Default is to tick every day of the month: <code>bymonthday=range(1,32)</code></p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.HourLocator">
+<code>class matplotlib.dates.HourLocator(byhour=None, interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>matplotlib.dates.RRuleLocator</code></a></p> <p>Make ticks on occurances of each hour.</p> <p>Mark every hour in <em>byhour</em>; <em>byhour</em> can be an int or sequence. Default is to tick every hour: <code>byhour=range(24)</code></p> <p><em>interval</em> is the interval between each iteration. For example, if <code>interval=2</code>, mark every second occurrence.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.MinuteLocator">
+<code>class matplotlib.dates.MinuteLocator(byminute=None, interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>matplotlib.dates.RRuleLocator</code></a></p> <p>Make ticks on occurances of each minute.</p> <p>Mark every minute in <em>byminute</em>; <em>byminute</em> can be an int or sequence. Default is to tick every minute: <code>byminute=range(60)</code></p> <p><em>interval</em> is the interval between each iteration. For example, if <code>interval=2</code>, mark every second occurrence.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.SecondLocator">
+<code>class matplotlib.dates.SecondLocator(bysecond=None, interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.RRuleLocator" title="matplotlib.dates.RRuleLocator"><code>matplotlib.dates.RRuleLocator</code></a></p> <p>Make ticks on occurances of each second.</p> <p>Mark every second in <em>bysecond</em>; <em>bysecond</em> can be an int or sequence. Default is to tick every second: <code>bysecond = range(60)</code></p> <p><em>interval</em> is the interval between each iteration. For example, if <code>interval=2</code>, mark every second occurrence.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.MicrosecondLocator">
+<code>class matplotlib.dates.MicrosecondLocator(interval=1, tz=None)</code> </dt> <dd>
+<p>Bases: <a class="reference internal" href="#matplotlib.dates.DateLocator" title="matplotlib.dates.DateLocator"><code>matplotlib.dates.DateLocator</code></a></p> <p>Make ticks on occurances of each microsecond.</p> <p><em>interval</em> is the interval between each iteration. For example, if <code>interval=2</code>, mark every second microsecond.</p> <dl class="method"> <dt id="matplotlib.dates.MicrosecondLocator.set_axis">
+<code>set_axis(axis)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.MicrosecondLocator.set_data_interval">
+<code>set_data_interval(vmin, vmax)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.MicrosecondLocator.set_view_interval">
+<code>set_view_interval(vmin, vmax)</code> </dt> 
+</dl> <dl class="method"> <dt id="matplotlib.dates.MicrosecondLocator.tick_values">
+<code>tick_values(vmin, vmax)</code> </dt> 
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.rrule">
+<code>class matplotlib.dates.rrule(freq, dtstart=None, interval=1, wkst=None, count=None, until=None, bysetpos=None, bymonth=None, bymonthday=None, byyearday=None, byeaster=None, byweekno=None, byweekday=None, byhour=None, byminute=None, bysecond=None, cache=False)</code> </dt> <dd>
+<p>Bases: <code>dateutil.rrule.rrulebase</code></p> <p>That’s the base of the rrule operation. It accepts all the keywords defined in the RFC as its constructor parameters (except byday, which was renamed to byweekday) and more. The constructor prototype is:</p> <pre data-language="python">rrule(freq)
+</pre> <p>Where freq must be one of YEARLY, MONTHLY, WEEKLY, DAILY, HOURLY, MINUTELY, or SECONDLY.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p>Per RFC section 3.3.10, recurrence instances falling on invalid dates and times are ignored rather than coerced:</p>  Recurrence rules may generate recurrence instances with an invalid date (e.g., February 30) or nonexistent local time (e.g., 1:30 AM on a day where the local time is moved forward by an hour at 1:00 AM). Such recurrence instances MUST be ignored and MUST NOT be counted as part of the recurrence set. <p>This can lead to possibly surprising behavior when, for example, the start date occurs at the end of the month:</p> <pre data-language="python">&gt;&gt;&gt; from dateutil.rrule import rrule, MONTHLY
+&gt;&gt;&gt; from datetime import datetime
+&gt;&gt;&gt; start_date = datetime(2014, 12, 31)
+&gt;&gt;&gt; list(rrule(freq=MONTHLY, count=4, dtstart=start_date))
+... 
+[datetime.datetime(2014, 12, 31, 0, 0),
+ datetime.datetime(2015, 1, 31, 0, 0),
+ datetime.datetime(2015, 3, 31, 0, 0),
+ datetime.datetime(2015, 5, 31, 0, 0)]
+</pre> </div> <p>Additionally, it supports the following keyword arguments:</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<ul class="first last simple"> <li>
+<strong>cache</strong> – If given, it must be a boolean value specifying to enable or disable caching of results. If you will use the same rrule instance multiple times, enabling caching will improve the performance considerably.</li> <li>
+<strong>dtstart</strong> – The recurrence start. Besides being the base for the recurrence, missing parameters in the final recurrence instances will also be extracted from this date. If not given, datetime.now() will be used instead.</li> <li>
+<strong>interval</strong> – The interval between each freq iteration. For example, when using YEARLY, an interval of 2 means once every two years, but with HOURLY, it means once every two hours. The default interval is 1.</li> <li>
+<strong>wkst</strong> – The week start day. Must be one of the MO, TU, WE constants, or an integer, specifying the first day of the week. This will affect recurrences based on weekly periods. The default week start is got from calendar.firstweekday(), and may be modified by calendar.setfirstweekday().</li> <li>
+<strong>count</strong> – <p>How many occurrences will be generated.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">As of version 2.5.0, the use of the <code>until</code> keyword together with the <code>count</code> keyword is deprecated per RFC-2445 Sec. 4.3.10.</p> </div> </li> <li>
+<strong>until</strong> – <p>If given, this must be a datetime instance, that will specify the limit of the recurrence. The last recurrence in the rule is the greatest datetime that is less than or equal to the value specified in the <code>until</code> parameter.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">As of version 2.5.0, the use of the <code>until</code> keyword together with the <code>count</code> keyword is deprecated per RFC-2445 Sec. 4.3.10.</p> </div> </li> <li>
+<strong>bysetpos</strong> – If given, it must be either an integer, or a sequence of integers, positive or negative. Each given integer will specify an occurrence number, corresponding to the nth occurrence of the rule inside the frequency period. For example, a bysetpos of -1 if combined with a MONTHLY frequency, and a byweekday of (MO, TU, WE, TH, FR), will result in the last work day of every month.</li> <li>
+<strong>bymonth</strong> – If given, it must be either an integer, or a sequence of integers, meaning the months to apply the recurrence to.</li> <li>
+<strong>bymonthday</strong> – If given, it must be either an integer, or a sequence of integers, meaning the month days to apply the recurrence to.</li> <li>
+<strong>byyearday</strong> – If given, it must be either an integer, or a sequence of integers, meaning the year days to apply the recurrence to.</li> <li>
+<strong>byweekno</strong> – If given, it must be either an integer, or a sequence of integers, meaning the week numbers to apply the recurrence to. Week numbers have the meaning described in ISO8601, that is, the first week of the year is that containing at least four days of the new year.</li> <li>
+<strong>byweekday</strong> – If given, it must be either an integer (0 == MO), a sequence of integers, one of the weekday constants (MO, TU, etc), or a sequence of these constants. When given, these variables will define the weekdays where the recurrence will be applied. It’s also possible to use an argument n for the weekday instances, which will mean the nth occurrence of this weekday in the period. For example, with MONTHLY, or with YEARLY and BYMONTH, using FR(+1) in byweekday will specify the first friday of the month where the recurrence happens. Notice that in the RFC documentation, this is specified as BYDAY, but was renamed to avoid the ambiguity of that keyword.</li> <li>
+<strong>byhour</strong> – If given, it must be either an integer, or a sequence of integers, meaning the hours to apply the recurrence to.</li> <li>
+<strong>byminute</strong> – If given, it must be either an integer, or a sequence of integers, meaning the minutes to apply the recurrence to.</li> <li>
+<strong>bysecond</strong> – If given, it must be either an integer, or a sequence of integers, meaning the seconds to apply the recurrence to.</li> <li>
+<strong>byeaster</strong> – If given, it must be either an integer, or a sequence of integers, positive or negative. Each integer will define an offset from the Easter Sunday. Passing the offset 0 to byeaster will yield the Easter Sunday itself. This is an extension to the RFC specification.</li> </ul> </td> </tr>  </table> <dl class="method"> <dt id="matplotlib.dates.rrule.replace">
+<code>replace(**kwargs)</code> </dt> <dd>
+<p>Return new rrule with same attributes except for those attributes given new values by whichever keyword arguments are specified.</p> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.dates.relativedelta">
+<code>class matplotlib.dates.relativedelta(dt1=None, dt2=None, years=0, months=0, days=0, leapdays=0, weeks=0, hours=0, minutes=0, seconds=0, microseconds=0, year=None, month=None, day=None, weekday=None, yearday=None, nlyearday=None, hour=None, minute=None, second=None, microsecond=None)</code> </dt> <dd>
+<p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)" target="_blank"><code>object</code></a></p> <p>The relativedelta type is based on the specification of the excellent work done by M.-A. Lemburg in his <a class="reference external" href="http://www.egenix.com/files/python/mxDateTime.html" target="_blank">mx.DateTime</a> extension. However, notice that this type does <em>NOT</em> implement the same algorithm as his work. Do <em>NOT</em> expect it to behave like mx.DateTime’s counterpart.</p> <p>There are two different ways to build a relativedelta instance. The first one is passing it two date/datetime classes:</p> <pre data-language="python">relativedelta(datetime1, datetime2)
+</pre> <p>The second one is passing it any number of the following keyword arguments:</p> <pre data-language="python">relativedelta(arg1=x,arg2=y,arg3=z...)
+
+year, month, day, hour, minute, second, microsecond:
+    Absolute information (argument is singular); adding or subtracting a
+    relativedelta with absolute information does not perform an aritmetic
+    operation, but rather REPLACES the corresponding value in the
+    original datetime with the value(s) in relativedelta.
+
+years, months, weeks, days, hours, minutes, seconds, microseconds:
+    Relative information, may be negative (argument is plural); adding
+    or subtracting a relativedelta with relative information performs
+    the corresponding aritmetic operation on the original datetime value
+    with the information in the relativedelta.
+
+weekday:
+    One of the weekday instances (MO, TU, etc). These instances may
+    receive a parameter N, specifying the Nth weekday, which could
+    be positive or negative (like MO(+1) or MO(-2). Not specifying
+    it is the same as specifying +1. You can also use an integer,
+    where 0=MO.
+
+leapdays:
+    Will add given days to the date found, if year is a leap
+    year, and the date found is post 28 of february.
+
+yearday, nlyearday:
+    Set the yearday or the non-leap year day (jump leap days).
+    These are converted to day/month/leapdays information.
+</pre> <p>Here is the behavior of operations with relativedelta:</p> <ol class="arabic simple"> <li>Calculate the absolute year, using the ‘year’ argument, or the original datetime year, if the argument is not present.</li> <li>Add the relative ‘years’ argument to the absolute year.</li> <li>Do steps 1 and 2 for month/months.</li> <li>Calculate the absolute day, using the ‘day’ argument, or the original datetime day, if the argument is not present. Then, subtract from the day until it fits in the year and month found after their operations.</li> <li>Add the relative ‘days’ argument to the absolute day. Notice that the ‘weeks’ argument is multiplied by 7 and added to ‘days’.</li> <li>Do steps 1 and 2 for hour/hours, minute/minutes, second/seconds, microsecond/microseconds.</li> <li>If the ‘weekday’ argument is present, calculate the weekday, with the given (wday, nth) tuple. wday is the index of the weekday (0-6, 0=Mon), and nth is the number of weeks to add forward or backward, depending on its signal. Notice that if the calculated date is already Monday, for example, using (0, 1) or (0, -1) won’t change the day.</li> </ol> <dl class="method"> <dt id="matplotlib.dates.relativedelta.normalized">
+<code>normalized()</code> </dt> <dd>
+<p>Return a version of this object represented entirely using integer values for the relative attributes.</p> <pre data-language="python">&gt;&gt;&gt; relativedelta(days=1.5, hours=2).normalized()
+relativedelta(days=1, hours=14)
+</pre> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">Returns a <code>dateutil.relativedelta.relativedelta</code> object.</td> </tr>  </table> </dd>
+</dl> <dl class="attribute"> <dt id="matplotlib.dates.relativedelta.weeks">
+<code>weeks</code> </dt> 
+</dl> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.seconds">
+<code>matplotlib.dates.seconds(s)</code> </dt> <dd>
+<p>Return seconds as days.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.minutes">
+<code>matplotlib.dates.minutes(m)</code> </dt> <dd>
+<p>Return minutes as days.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.hours">
+<code>matplotlib.dates.hours(h)</code> </dt> <dd>
+<p>Return hours as days.</p> </dd>
+</dl> <dl class="function"> <dt id="matplotlib.dates.weeks">
+<code>matplotlib.dates.weeks(w)</code> </dt> <dd>
+<p>Return weeks as days.</p> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2017 Matplotlib Development Team. All rights reserved.<br>Licensed under the Matplotlib License Agreement.<br>
+    <a href="http://matplotlib.org/2.1.0/api/dates_api.html" class="_attribution-link" target="_blank">http://matplotlib.org/2.1.0/api/dates_api.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

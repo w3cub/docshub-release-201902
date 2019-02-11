@@ -1,0 +1,260 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Tri - Matplotlib 2.1 - W3cubDocs</title>
+  
+  <meta name="description" content=" Unstructured triangular grid functions. ">
+  <meta name="keywords" content="triangular, grids, tri, -, matplotlib, matplotlib~2.1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/matplotlib~2.1/tri_api/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/matplotlib~2.1.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/matplotlib~2.1/" class="_nav-link" title="" style="margin-left:0;">Matplotlib 2.1</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="triangular-grids">triangular grids</h1>  <h2 id="matplotlib-tri">matplotlib.tri</h2> <p id="module-matplotlib.tri">Unstructured triangular grid functions.</p> <dl class="class"> <dt id="matplotlib.tri.Triangulation">
+<code>class matplotlib.tri.Triangulation(x, y, triangles=None, mask=None)</code> </dt> <dd>
+<p>An unstructured triangular grid consisting of npoints points and ntri triangles. The triangles can either be specified by the user or automatically generated using a Delaunay triangulation.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>x, y</strong> : array_like of shape (npoints)</p>  <p>Coordinates of grid points.</p>  <p><strong>triangles</strong> : integer array_like of shape (ntri, 3), optional</p>  <p>For each triangle, the indices of the three points that make up the triangle, ordered in an anticlockwise manner. If not specified, the Delaunay triangulation is calculated.</p>  <p><strong>mask</strong> : boolean array_like of shape (ntri), optional</p>  <p>Which triangles are masked out.</p>  </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>For a Triangulation to be valid it must not have duplicate points, triangles formed from colinear points, or overlapping triangles.</p> <h4 class="rubric">Attributes</h4> <table class="docutils">   <tr>
+<td><strong>`edges`</strong></td> <td> </td> </tr> <tr>
+<td><strong>`neighbors`</strong></td> <td> </td> </tr> <tr>
+<td><strong>is_delaunay</strong></td> <td>(bool) Whether the Triangulation is a calculated Delaunay triangulation (where <code>triangles</code> was not specified) or not.</td> </tr>  </table> <dl class="method"> <dt id="matplotlib.tri.Triangulation.calculate_plane_coefficients">
+<code>calculate_plane_coefficients(z)</code> </dt> <dd>
+<p>Calculate plane equation coefficients for all unmasked triangles from the point (x,y) coordinates and specified z-array of shape (npoints). Returned array has shape (npoints,3) and allows z-value at (x,y) position in triangle tri to be calculated using z = array[tri,0]*x + array[tri,1]*y + array[tri,2].</p> </dd>
+</dl> <dl class="attribute"> <dt id="matplotlib.tri.Triangulation.edges">
+<code>edges</code> </dt> <dd>
+<p>Return integer array of shape (nedges,2) containing all edges of non-masked triangles.</p> <p>Each edge is the start point index and end point index. Each edge (start,end and end,start) appears only once.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.tri.Triangulation.get_cpp_triangulation">
+<code>get_cpp_triangulation()</code> </dt> 
+</dl> <dl class="staticmethod"> <dt id="matplotlib.tri.Triangulation.get_from_args_and_kwargs">
+<code>static get_from_args_and_kwargs(*args, **kwargs)</code> </dt> <dd>
+<p>Return a Triangulation object from the args and kwargs, and the remaining args and kwargs with the consumed values removed.</p> <p>There are two alternatives: either the first argument is a Triangulation object, in which case it is returned, or the args and kwargs are sufficient to create a new Triangulation to return. In the latter case, see Triangulation.__init__ for the possible args and kwargs.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.tri.Triangulation.get_masked_triangles">
+<code>get_masked_triangles()</code> </dt> <dd>
+<p>Return an array of triangles that are not masked.</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.tri.Triangulation.get_trifinder">
+<code>get_trifinder()</code> </dt> <dd>
+<p>Return the default <a class="reference internal" href="#matplotlib.tri.TriFinder" title="matplotlib.tri.TriFinder"><code>matplotlib.tri.TriFinder</code></a> of this triangulation, creating it if necessary. This allows the same TriFinder object to be easily shared.</p> </dd>
+</dl> <dl class="attribute"> <dt id="matplotlib.tri.Triangulation.neighbors">
+<code>neighbors</code> </dt> <dd>
+<p>Return integer array of shape (ntri,3) containing neighbor triangles.</p> <p>For each triangle, the indices of the three triangles that share the same edges, or -1 if there is no such neighboring triangle. neighbors[i,j] is the triangle that is the neighbor to the edge from point index triangles[i,j] to point index triangles[i,(j+1)%3].</p> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.tri.Triangulation.set_mask">
+<code>set_mask(mask)</code> </dt> <dd>
+<p>Set or clear the mask array. This is either None, or a boolean array of shape (ntri).</p> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.TriFinder">
+<code>class matplotlib.tri.TriFinder(triangulation)</code> </dt> <dd>
+<p>Abstract base class for classes used to find the triangles of a Triangulation in which (x,y) points lie.</p> <p>Rather than instantiate an object of a class derived from TriFinder, it is usually better to use the function <a class="reference internal" href="#matplotlib.tri.Triangulation.get_trifinder" title="matplotlib.tri.Triangulation.get_trifinder"><code>matplotlib.tri.Triangulation.get_trifinder()</code></a>.</p> <p>Derived classes implement __call__(x,y) where x,y are array_like point coordinates of the same shape.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.TrapezoidMapTriFinder">
+<code>class matplotlib.tri.TrapezoidMapTriFinder(triangulation)</code> </dt> <dd>
+<p>Bases: <code>matplotlib.tri.trifinder.TriFinder</code></p> <p><a class="reference internal" href="#matplotlib.tri.TriFinder" title="matplotlib.tri.TriFinder"><code>TriFinder</code></a> class implemented using the trapezoid map algorithm from the book “Computational Geometry, Algorithms and Applications”, second edition, by M. de Berg, M. van Kreveld, M. Overmars and O. Schwarzkopf.</p> <p>The triangulation must be valid, i.e. it must not have duplicate points, triangles formed from colinear points, or overlapping triangles. The algorithm has some tolerance to triangles formed from colinear points, but this should not be relied upon.</p> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.TriInterpolator">
+<code>class matplotlib.tri.TriInterpolator(triangulation, z, trifinder=None)</code> </dt> <dd>
+<p>Abstract base class for classes used to perform interpolation on triangular grids.</p> <p>Derived classes implement the following methods:</p>  <ul class="simple"> <li>
+<code>__call__(x, y)</code> , where x, y are array_like point coordinates of the same shape, and that returns a masked array of the same shape containing the interpolated z-values.</li> <li>
+<code>gradient(x, y)</code> , where x, y are array_like point coordinates of the same shape, and that returns a list of 2 masked arrays of the same shape containing the 2 derivatives of the interpolator (derivatives of interpolated z values with respect to x and y).</li> </ul>  <dl class="attribute"> <dt id="matplotlib.tri.TriInterpolator.docstring__call__">
+<code>docstring__call__ = '\n Returns a masked array containing interpolated values at the specified\n x,y points.\n\n Parameters\n ----------\n x, y : array-like\n x and y coordinates of the same shape and any number of\n dimensions.\n\n Returns\n -------\n z : np.ma.array\n Masked array of the same shape as *x* and *y* ; values\n corresponding to (*x*, *y*) points outside of the triangulation\n are masked out.\n\n '</code> </dt> 
+</dl> <dl class="attribute"> <dt id="matplotlib.tri.TriInterpolator.docstringgradient">
+<code>docstringgradient = '\n Returns a list of 2 masked arrays containing interpolated derivatives\n at the specified x,y points.\n\n Parameters\n ----------\n x, y : array-like\n x and y coordinates of the same shape and any number of\n dimensions.\n\n Returns\n -------\n dzdx, dzdy : np.ma.array\n 2 masked arrays of the same shape as *x* and *y* ; values\n corresponding to (x,y) points outside of the triangulation\n are masked out.\n The first returned array contains the values of\n :math:`\\frac{\\partial z}{\\partial x}` and the second those of\n :math:`\\frac{\\partial z}{\\partial y}`.\n\n '</code> </dt> 
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.LinearTriInterpolator">
+<code>class matplotlib.tri.LinearTriInterpolator(triangulation, z, trifinder=None)</code> </dt> <dd>
+<p>Bases: <code>matplotlib.tri.triinterpolate.TriInterpolator</code></p> <p>A LinearTriInterpolator performs linear interpolation on a triangular grid.</p> <p>Each triangle is represented by a plane so that an interpolated value at point (x,y) lies on the plane of the triangle containing (x,y). Interpolated values are therefore continuous across the triangulation, but their first derivatives are discontinuous at edges between triangles.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>triangulation</strong> : <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a> object</p>  <p>The triangulation to interpolate over.</p>  <p><strong>z</strong> : array_like of shape (npoints,)</p>  <p>Array of values, defined at grid points, to interpolate between.</p>  <p><strong>trifinder</strong> : <a class="reference internal" href="#matplotlib.tri.TriFinder" title="matplotlib.tri.TriFinder"><code>TriFinder</code></a> object, optional</p>  <p>If this is not specified, the Triangulation’s default TriFinder will be used by calling <a class="reference internal" href="#matplotlib.tri.Triangulation.get_trifinder" title="matplotlib.tri.Triangulation.get_trifinder"><code>matplotlib.tri.Triangulation.get_trifinder()</code></a>.</p>  </td> </tr>  </table> <h4 class="rubric">Methods</h4> <table class="docutils">   <tr>
+<td><strong>`__call__` (x, y)</strong></td> <td>( Returns interpolated values at x,y points)</td> </tr> <tr>
+<td><strong>`gradient` (x, y)</strong></td> <td>(Returns interpolated derivatives at x,y points)</td> </tr>  </table> <dl class="method"> <dt id="matplotlib.tri.LinearTriInterpolator.gradient">
+<code>gradient(x, y)</code> </dt> <dd>
+<p>Returns a list of 2 masked arrays containing interpolated derivatives at the specified x,y points.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>x, y</strong> : array-like</p>  <p>x and y coordinates of the same shape and any number of dimensions.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>dzdx, dzdy</strong> : np.ma.array</p>  <p>2 masked arrays of the same shape as <em>x</em> and <em>y</em> ; values corresponding to (x,y) points outside of the triangulation are masked out. The first returned array contains the values of <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAeCAMAAAD95QUdAAAAkFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzdem9AAAAL3RSTlMACA9gBWULI7kvlhBqFsimOZDEfyi0raNaV1A+ISwDHXvic/HnsKD51zaTg+hIm01cGicAAACYSURBVCjPtZBHDoMwAATXMcYYm94hQEjv/P93QQIpjs9kbjvSXgaY4NFO4gdplz5MfGGac60v4jpFXOE+8JbP5uTCGxvx8lg6i/AgIS4EsLrltHeAJJiEheVEc/Bjipvqt8lsbCfIQrTcu8YSazIarB6joW7FMqLFKMFyWXTfGLaFNzViYOix0WLUSjxBmBaDRuyhFME/+QDJ5Az43S/O6AAAAABJRU5ErkJggg==" style="position: relative; bottom: -10px"> and the second those of <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAhCAMAAADnC9tbAAAAjVBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHlAdGAAAALnRSTlMAxMgvDKUEIxC5rlkUKl9/oAmQKDmUGHOX+GfVe4NDheO0Ok7xR1Hnax42ij7f9png1AAAAKRJREFUKM+1j8kSgjAQRDskkATCvoMsiihu/P/nWQUHImd8t+6prqkHADw6CegI5hjYYdBdEdy0EKbSJA7Snrt8KewC2fymo6riJV+uArQMActaF7kEfHPJ68Kzwe8xntWD+0vBpHlOQLmqicJRzL/gSP0pcJEEm76v7BFds+kL8bFAWk3fiRCWTNPPJwyGpg9eeOS1+123WnB7DFK/Zo3XMfyLLw2oDLr5YY4RAAAAAElFTkSuQmCC" style="position: relative; bottom: -13px">.</p>  </td> </tr>  </table> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.CubicTriInterpolator">
+<code>class matplotlib.tri.CubicTriInterpolator(triangulation, z, kind='min_E', trifinder=None, dz=None)</code> </dt> <dd>
+<p>Bases: <code>matplotlib.tri.triinterpolate.TriInterpolator</code></p> <p>A CubicTriInterpolator performs cubic interpolation on triangular grids.</p> <p>In one-dimension - on a segment - a cubic interpolating function is defined by the values of the function and its derivative at both ends. This is almost the same in 2-d inside a triangle, except that the values of the function and its 2 derivatives have to be defined at each triangle node.</p> <p>The CubicTriInterpolator takes the value of the function at each node - provided by the user - and internally computes the value of the derivatives, resulting in a smooth interpolation. (As a special feature, the user can also impose the value of the derivatives at each node, but this is not supposed to be the common usage.)</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>triangulation</strong> : <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a> object</p>  <p>The triangulation to interpolate over.</p>  <p><strong>z</strong> : array_like of shape (npoints,)</p>  <p>Array of values, defined at grid points, to interpolate between.</p>  <p><strong>kind</strong> : {‘min_E’, ‘geom’, ‘user’}, optional</p>  <p>Choice of the smoothing algorithm, in order to compute the interpolant derivatives (defaults to ‘min_E’):</p>  <ul class="simple"> <li>if ‘min_E’: (default) The derivatives at each node is computed to minimize a bending energy.</li> <li>if ‘geom’: The derivatives at each node is computed as a weighted average of relevant triangle normals. To be used for speed optimization (large grids).</li> <li>if ‘user’: The user provides the argument <code>dz</code>, no computation is hence needed.</li> </ul>   <p><strong>trifinder</strong> : <a class="reference internal" href="#matplotlib.tri.TriFinder" title="matplotlib.tri.TriFinder"><code>TriFinder</code></a> object, optional</p>  <p>If not specified, the Triangulation’s default TriFinder will be used by calling <a class="reference internal" href="#matplotlib.tri.Triangulation.get_trifinder" title="matplotlib.tri.Triangulation.get_trifinder"><code>matplotlib.tri.Triangulation.get_trifinder()</code></a>.</p>  <p><strong>dz</strong> : tuple of array_likes (dzdx, dzdy), optional</p>  <p>Used only if <em>kind</em> =’user’. In this case <em>dz</em> must be provided as (dzdx, dzdy) where dzdx, dzdy are arrays of the same shape as <em>z</em> and are the interpolant first derivatives at the <em>triangulation</em> points.</p>  </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>This note is a bit technical and details the way a <a class="reference internal" href="#matplotlib.tri.CubicTriInterpolator" title="matplotlib.tri.CubicTriInterpolator"><code>CubicTriInterpolator</code></a> computes a cubic interpolation.</p> <p>The interpolation is based on a Clough-Tocher subdivision scheme of the <em>triangulation</em> mesh (to make it clearer, each triangle of the grid will be divided in 3 child-triangles, and on each child triangle the interpolated function is a cubic polynomial of the 2 coordinates). This technique originates from FEM (Finite Element Method) analysis; the element used is a reduced Hsieh-Clough-Tocher (HCT) element. Its shape functions are described in <a class="reference internal" href="#r45" id="id1">[R45]</a>. The assembled function is guaranteed to be C1-smooth, i.e. it is continuous and its first derivatives are also continuous (this is easy to show inside the triangles but is also true when crossing the edges).</p> <p>In the default case (<em>kind</em> =’min_E’), the interpolant minimizes a curvature energy on the functional space generated by the HCT element shape functions - with imposed values but arbitrary derivatives at each node. The minimized functional is the integral of the so-called total curvature (implementation based on an algorithm from <a class="reference internal" href="#r55" id="id2">[R55]</a> - PCG sparse solver):</p>  <img src="data:image/png;base64,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" class="center"> <p>If the case <em>kind</em> =’geom’ is chosen by the user, a simple geometric approximation is used (weighted average of the triangle normal vectors), which could improve speed on very large grids.</p> <h4 class="rubric">References</h4> <table class="docutils citation" frame="void" id="r45" rules="none">   <tr>
+<td class="label">[R45]</td>
+<td>
+<em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> Michel Bernadou, Kamal Hassan, “Basis functions for general Hsieh-Clough-Tocher triangles, complete or reduced.”, International Journal for Numerical Methods in Engineering, 17(5):784 - 789. 2.01.</td>
+</tr>  </table> <table class="docutils citation" frame="void" id="r55" rules="none">   <tr>
+<td class="label">[R55]</td>
+<td>
+<em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id4">2</a>)</em> C.T. Kelley, “Iterative Methods for Optimization”.</td>
+</tr>  </table> <h4 class="rubric">Methods</h4> <table class="docutils">   <tr>
+<td><strong>`__call__` (x, y)</strong></td> <td>( Returns interpolated values at x,y points)</td> </tr> <tr>
+<td><strong>`gradient` (x, y)</strong></td> <td>(Returns interpolated derivatives at x,y points)</td> </tr>  </table> <dl class="method"> <dt id="matplotlib.tri.CubicTriInterpolator.gradient">
+<code>gradient(x, y)</code> </dt> <dd>
+<p>Returns a list of 2 masked arrays containing interpolated derivatives at the specified x,y points.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>x, y</strong> : array-like</p>  <p>x and y coordinates of the same shape and any number of dimensions.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>dzdx, dzdy</strong> : np.ma.array</p>  <p>2 masked arrays of the same shape as <em>x</em> and <em>y</em> ; values corresponding to (x,y) points outside of the triangulation are masked out. The first returned array contains the values of <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAeCAMAAAD95QUdAAAAkFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzdem9AAAAL3RSTlMACA9gBWULI7kvlhBqFsimOZDEfyi0raNaV1A+ISwDHXvic/HnsKD51zaTg+hIm01cGicAAACYSURBVCjPtZBHDoMwAATXMcYYm94hQEjv/P93QQIpjs9kbjvSXgaY4NFO4gdplz5MfGGac60v4jpFXOE+8JbP5uTCGxvx8lg6i/AgIS4EsLrltHeAJJiEheVEc/Bjipvqt8lsbCfIQrTcu8YSazIarB6joW7FMqLFKMFyWXTfGLaFNzViYOix0WLUSjxBmBaDRuyhFME/+QDJ5Az43S/O6AAAAABJRU5ErkJggg==" style="position: relative; bottom: -10px"> and the second those of <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAhCAMAAADnC9tbAAAAjVBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHlAdGAAAALnRSTlMAxMgvDKUEIxC5rlkUKl9/oAmQKDmUGHOX+GfVe4NDheO0Ok7xR1Hnax42ij7f9png1AAAAKRJREFUKM+1j8kSgjAQRDskkATCvoMsiihu/P/nWQUHImd8t+6prqkHADw6CegI5hjYYdBdEdy0EKbSJA7Snrt8KewC2fymo6riJV+uArQMActaF7kEfHPJ68Kzwe8xntWD+0vBpHlOQLmqicJRzL/gSP0pcJEEm76v7BFds+kL8bFAWk3fiRCWTNPPJwyGpg9eeOS1+123WnB7DFK/Zo3XMfyLLw2oDLr5YY4RAAAAAElFTkSuQmCC" style="position: relative; bottom: -13px">.</p>  </td> </tr>  </table> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.TriRefiner">
+<code>class matplotlib.tri.TriRefiner(triangulation)</code> </dt> <dd>
+<p>Abstract base class for classes implementing mesh refinement.</p> <p>A TriRefiner encapsulates a Triangulation object and provides tools for mesh refinement and interpolation.</p> <p>Derived classes must implements:</p>  <ul> <li>
+<p class="first"><code>refine_triangulation(return_tri_index=False, **kwargs)</code> , where the optional keyword arguments <em>kwargs</em> are defined in each TriRefiner concrete implementation, and which returns :</p>  <ul class="simple"> <li>a refined triangulation</li> <li>optionally (depending on <em>return_tri_index</em>), for each point of the refined triangulation: the index of the initial triangulation triangle to which it belongs.</li> </ul>  </li> <li>
+<p class="first"><code>refine_field(z, triinterpolator=None, **kwargs)</code> , where:</p>  <ul class="simple"> <li>
+<em>z</em> array of field values (to refine) defined at the base triangulation nodes</li> <li>
+<em>triinterpolator</em> is a <a class="reference internal" href="#matplotlib.tri.TriInterpolator" title="matplotlib.tri.TriInterpolator"><code>TriInterpolator</code></a> (optional)</li> <li>the other optional keyword arguments <em>kwargs</em> are defined in each TriRefiner concrete implementation</li> </ul>  <p>and which returns (as a tuple) a refined triangular mesh and the interpolated values of the field at the refined triangulation nodes.</p> </li> </ul>  </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.UniformTriRefiner">
+<code>class matplotlib.tri.UniformTriRefiner(triangulation)</code> </dt> <dd>
+<p>Bases: <code>matplotlib.tri.trirefine.TriRefiner</code></p> <p>Uniform mesh refinement by recursive subdivisions.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>triangulation</strong> : <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a></p>  <p>The encapsulated triangulation (to be refined)</p>  </td> </tr>  </table> <dl class="method"> <dt id="matplotlib.tri.UniformTriRefiner.refine_field">
+<code>refine_field(z, triinterpolator=None, subdiv=3)</code> </dt> <dd>
+<p>Refines a field defined on the encapsulated triangulation.</p> <p>Returns <em>refi_tri</em> (refined triangulation), <em>refi_z</em> (interpolated values of the field at the node of the refined triangulation).</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>z</strong> : 1d-array-like of length <code>n_points</code></p>  <p>Values of the field to refine, defined at the nodes of the encapsulated triangulation. (<code>n_points</code> is the number of points in the initial triangulation)</p>  <p><strong>triinterpolator</strong> : <a class="reference internal" href="#matplotlib.tri.TriInterpolator" title="matplotlib.tri.TriInterpolator"><code>TriInterpolator</code></a>, optional</p>  <p>Interpolator used for field interpolation. If not specified, a <a class="reference internal" href="#matplotlib.tri.CubicTriInterpolator" title="matplotlib.tri.CubicTriInterpolator"><code>CubicTriInterpolator</code></a> will be used.</p>  <p><strong>subdiv</strong> : integer, optional</p>  <p>Recursion level for the subdivision. Defaults to 3. Each triangle will be divided into <code>4**subdiv</code> child triangles.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>refi_tri</strong> : <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a> object</p>  <p>The returned refined triangulation</p>  <p><strong>refi_z</strong> : 1d array of length: <em>refi_tri</em> node count.</p>  <p>The returned interpolated field (at <em>refi_tri</em> nodes)</p>  </td> </tr>  </table> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.tri.UniformTriRefiner.refine_triangulation">
+<code>refine_triangulation(return_tri_index=False, subdiv=3)</code> </dt> <dd>
+<p>Computes an uniformly refined triangulation <em>refi_triangulation</em> of the encapsulated <code>triangulation</code>.</p> <p>This function refines the encapsulated triangulation by splitting each father triangle into 4 child sub-triangles built on the edges midside nodes, recursively (level of recursion <em>subdiv</em>). In the end, each triangle is hence divided into <code>4**subdiv</code> child triangles. The default value for <em>subdiv</em> is 3 resulting in 64 refined subtriangles for each triangle of the initial triangulation.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>return_tri_index</strong> : boolean, optional</p>  <p>Boolean indicating whether an index table indicating the father triangle index of each point will be returned. Default value False.</p>  <p><strong>subdiv</strong> : integer, optional</p>  <p>Recursion level for the subdivision. Defaults value 3. Each triangle will be divided into <code>4**subdiv</code> child triangles.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>refi_triangulation</strong> : <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a></p>  <p>The returned refined triangulation</p>  <p><strong>found_index</strong> : array-like of integers</p>  <p>Index of the initial triangulation containing triangle, for each point of <em>refi_triangulation</em>. Returned only if <em>return_tri_index</em> is set to True.</p>  </td> </tr>  </table> </dd>
+</dl> </dd>
+</dl> <dl class="class"> <dt id="matplotlib.tri.TriAnalyzer">
+<code>class matplotlib.tri.TriAnalyzer(triangulation)</code> </dt> <dd>
+<p>Define basic tools for triangular mesh analysis and improvement.</p> <p>A TriAnalizer encapsulates a <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a> object and provides basic tools for mesh analysis and mesh improvement.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>triangulation</strong> : <a class="reference internal" href="#matplotlib.tri.Triangulation" title="matplotlib.tri.Triangulation"><code>Triangulation</code></a> object</p>  <p>The encapsulated triangulation to analyze.</p>  </td> </tr>  </table> <h4 class="rubric">Attributes</h4> <table class="docutils">   <tr>
+<td><strong>`scale_factors`</strong></td> <td> </td> </tr>  </table> <dl class="method"> <dt id="matplotlib.tri.TriAnalyzer.circle_ratios">
+<code>circle_ratios(rescale=True)</code> </dt> <dd>
+<p>Returns a measure of the triangulation triangles flatness.</p> <p>The ratio of the incircle radius over the circumcircle radius is a widely used indicator of a triangle flatness. It is always <code>&lt;= 0.5</code> and <code>== 0.5</code> only for equilateral triangles. Circle ratios below 0.01 denote very flat triangles.</p> <p>To avoid unduly low values due to a difference of scale between the 2 axis, the triangular mesh can first be rescaled to fit inside a unit square with <a class="reference internal" href="#matplotlib.tri.TriAnalyzer.scale_factors" title="matplotlib.tri.TriAnalyzer.scale_factors"><code>scale_factors</code></a> (Only if <em>rescale</em> is True, which is its default value).</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>rescale</strong> : boolean, optional</p>  <p>If True, a rescaling will be internally performed (based on <a class="reference internal" href="#matplotlib.tri.TriAnalyzer.scale_factors" title="matplotlib.tri.TriAnalyzer.scale_factors"><code>scale_factors</code></a>, so that the (unmasked) triangles fit exactly inside a unit square mesh. Default is True.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>circle_ratios</strong> : masked array</p>  <p>Ratio of the incircle radius over the circumcircle radius, for each ‘rescaled’ triangle of the encapsulated triangulation. Values corresponding to masked triangles are masked out.</p>  </td> </tr>  </table> </dd>
+</dl> <dl class="method"> <dt id="matplotlib.tri.TriAnalyzer.get_flat_tri_mask">
+<code>get_flat_tri_mask(min_circle_ratio=0.01, rescale=True)</code> </dt> <dd>
+<p>Eliminates excessively flat border triangles from the triangulation.</p> <p>Returns a mask <em>new_mask</em> which allows to clean the encapsulated triangulation from its border-located flat triangles (according to their <a class="reference internal" href="#matplotlib.tri.TriAnalyzer.circle_ratios" title="matplotlib.tri.TriAnalyzer.circle_ratios"><code>circle_ratios()</code></a>). This mask is meant to be subsequently applied to the triangulation using <a class="reference internal" href="#matplotlib.tri.Triangulation.set_mask" title="matplotlib.tri.Triangulation.set_mask"><code>matplotlib.tri.Triangulation.set_mask()</code></a> . <em>new_mask</em> is an extension of the initial triangulation mask in the sense that an initially masked triangle will remain masked.</p> <p>The <em>new_mask</em> array is computed recursively ; at each step flat triangles are removed only if they share a side with the current mesh border. Thus no new holes in the triangulated domain will be created.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>min_circle_ratio</strong> : float, optional</p>  <p>Border triangles with incircle/circumcircle radii ratio r/R will be removed if r/R &lt; <em>min_circle_ratio</em>. Default value: 0.01</p>  <p><strong>rescale</strong> : boolean, optional</p>  <p>If True, a rescaling will first be internally performed (based on <a class="reference internal" href="#matplotlib.tri.TriAnalyzer.scale_factors" title="matplotlib.tri.TriAnalyzer.scale_factors"><code>scale_factors</code></a> ), so that the (unmasked) triangles fit exactly inside a unit square mesh. This rescaling accounts for the difference of scale which might exist between the 2 axis. Default (and recommended) value is True.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>new_mask</strong> : array-like of booleans</p>  <p>Mask to apply to encapsulated triangulation. All the initially masked triangles remain masked in the <em>new_mask</em>.</p>  </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>The rationale behind this function is that a Delaunay triangulation - of an unstructured set of points - sometimes contains almost flat triangles at its border, leading to artifacts in plots (especially for high-resolution contouring). Masked with computed <em>new_mask</em>, the encapsulated triangulation would contain no more unmasked border triangles with a circle ratio below <em>min_circle_ratio</em>, thus improving the mesh quality for subsequent plots or interpolation.</p> </dd>
+</dl> <dl class="attribute"> <dt id="matplotlib.tri.TriAnalyzer.scale_factors">
+<code>scale_factors</code> </dt> <dd>
+<p>Factors to rescale the triangulation into a unit square.</p> <p>Returns <em>k</em>, tuple of 2 scale factors.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>k</strong> : tuple of 2 floats (kx, ky)</p>  <p>Tuple of floats that would rescale the triangulation : <code>[triangulation.x * kx, triangulation.y * ky]</code> fits exactly inside a unit square.</p>  </td> </tr>  </table> </dd>
+</dl> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2017 Matplotlib Development Team. All rights reserved.<br>Licensed under the Matplotlib License Agreement.<br>
+    <a href="http://matplotlib.org/2.1.0/api/tri_api.html" class="_attribution-link" target="_blank">http://matplotlib.org/2.1.0/api/tri_api.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

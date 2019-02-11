@@ -1,0 +1,190 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Animation Module - Matplotlib 2.1 - W3cubDocs</title>
+  
+  <meta name="description" content=" Table of Contents ">
+  <meta name="keywords" content="animation, module, -, matplotlib, matplotlib~2.1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/matplotlib~2.1/animation_api/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/matplotlib~2.1.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/matplotlib~2.1/" class="_nav-link" title="" style="margin-left:0;">Matplotlib 2.1</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="animation-module">animation module</h1>  <p class="topic-title first" id="module-matplotlib.animation">Table of Contents</p> <ul class="simple"> <li><a class="reference internal" href="#animation" id="id2">Animation</a></li> <li><a class="reference internal" href="#writer-classes" id="id3">Writer Classes</a></li> <li><a class="reference internal" href="#helper-classes" id="id4">Helper Classes</a></li> <li><a class="reference internal" href="#inheritance-diagrams" id="id5">Inheritance Diagrams</a></li> <li><a class="reference internal" href="#deprecated" id="id6">Deprecated</a></li> </ul>   <h2 id="animation">Animation</h2> <p>The easiest way to make a live animation in matplotlib is to use one of the <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation" title="matplotlib.animation.Animation"><code>Animation</code></a> classes.</p> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.funcanimation/#matplotlib.animation.FuncAnimation" title="matplotlib.animation.FuncAnimation"><code>FuncAnimation</code></a></td> <td>Makes an animation by repeatedly calling a function <code>func</code>.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.artistanimation/#matplotlib.animation.ArtistAnimation" title="matplotlib.animation.ArtistAnimation"><code>ArtistAnimation</code></a></td> <td>Animation using a fixed set of <code>Artist</code> objects.</td> </tr>  </table> <p>In both cases it is critical to keep a reference to the instance object. The animation is advanced by a timer (typically from the host GUI framework) which the <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation" title="matplotlib.animation.Animation"><code>Animation</code></a> object holds the only reference to. If you do not hold a reference to the <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation" title="matplotlib.animation.Animation"><code>Animation</code></a> object, it (and hence the timers), will be garbage collected which will stop the animation.</p> <p>To save an animation to disk use <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation.save" title="matplotlib.animation.Animation.save"><code>Animation.save</code></a> or <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation.to_html5_video" title="matplotlib.animation.Animation.to_html5_video"><code>Animation.to_html5_video</code></a></p> <p>See <a class="reference internal" href="#ani-writer-classes"><span class="std std-ref">Helper Classes</span></a> below for details about what movie formats are supported.</p>  <h3 id="funcanimation"><code>FuncAnimation</code></h3> <p>The inner workings of <a class="reference internal" href="../_as_gen/matplotlib.animation.funcanimation/#matplotlib.animation.FuncAnimation" title="matplotlib.animation.FuncAnimation"><code>FuncAnimation</code></a> is more-or-less:</p> <pre data-language="python">for d in frames:
+   artists = func(d, *fargs)
+   fig.canvas.draw_idle()
+   fig.canvas.start_event_loop(interval)
+</pre> <p>with details to handle ‘blitting’ (to dramatically improve the live performance), to be non-blocking, not repeatedly start/stop the GUI event loop, handle repeats, multiple animated axes, and easily save the animation to a movie file.</p> <p>‘Blitting’ is a <a class="reference external" href="https://en.wikipedia.org/wiki/Bit_blit" target="_blank">old technique</a> in computer graphics. The general gist is to take an existing bit map (in our case a mostly rasterized figure) and then ‘blit’ one more artist on top. Thus, by managing a saved ‘clean’ bitmap, we can only re-draw the few artists that are changing at each frame and possibly save significant amounts of time. When using blitting (by passing <code>blit=True</code>) the core loop of <a class="reference internal" href="../_as_gen/matplotlib.animation.funcanimation/#matplotlib.animation.FuncAnimation" title="matplotlib.animation.FuncAnimation"><code>FuncAnimation</code></a> gets a bit more complicated</p> <pre data-language="python">ax = fig.gca()
+
+def update_blit(artists):
+    fig.canvas.restore_region(bg_cache)
+    for a in artists:
+        a.axes.draw_artist(a)
+
+    ax.figure.canvas.blit(ax.bbox)
+
+artists = init_func()
+
+for a in artists:
+   a.set_animated(True)
+
+fig.canvas.draw()
+bg_cache = fig.canvas.copy_from_bbox(ax.bbox)
+
+for f in frames:
+    artists = func(f, *fargs)
+    update_blit(artists)
+    fig.canvas.start_event_loop(interval)
+</pre> <p>This is of course leaving out many details (such as updating the background when the figure is resized or fully re-drawn). However, this hopefully minimalist example gives a sense of how <code>init_func</code> and <code>func</code> are used inside of <a class="reference internal" href="../_as_gen/matplotlib.animation.funcanimation/#matplotlib.animation.FuncAnimation" title="matplotlib.animation.FuncAnimation"><code>FuncAnimation</code></a> and the theory of how ‘blitting’ works.</p> <p>The expected signature on <code>func</code> and <code>init_func</code> is very simple to keep <a class="reference internal" href="../_as_gen/matplotlib.animation.funcanimation/#matplotlib.animation.FuncAnimation" title="matplotlib.animation.FuncAnimation"><code>FuncAnimation</code></a> out of your book keeping and plotting logic, but this means that the callable objects you pass in must know what artists they should be working on. There are several approaches to handling this, of varying complexity and encapsulation. The simplest approach, which works quite well in the case of a script, is to define the artist at a global scope and let Python sort things out. For example</p> <pre data-language="python">import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+fig, ax = plt.subplots()
+xdata, ydata = [], []
+ln, = plt.plot([], [], 'ro', animated=True)
+
+def init():
+    ax.set_xlim(0, 2*np.pi)
+    ax.set_ylim(-1, 1)
+    return ln,
+
+def update(frame):
+    xdata.append(frame)
+    ydata.append(np.sin(frame))
+    ln.set_data(xdata, ydata)
+    return ln,
+
+ani = FuncAnimation(fig, update, frames=np.linspace(0, 2*np.pi, 128),
+                    init_func=init, blit=True)
+plt.show()
+</pre> <p>The second method is to us <a class="reference external" href="https://docs.python.org/2/library/functools.html#functools.partial" title="(in Python v2.7)" target="_blank"><code>functools.partial</code></a> to ‘bind’ artists to function. A third method is to use closures to build up the required artists and functions. A fourth method is to create a class.</p>  <h4 id="examples">Examples</h4>  <ul> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/animate_decay.html" target="_blank">Decay</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/bayes_update_sgskip.html" target="_blank">The Bayes update</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/double_pendulum_animated_sgskip.html" target="_blank">The double pendulum problem</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/dynamic_image.html" target="_blank">An animated image</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/histogram.html" target="_blank">Animated histogram</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/rain.html" target="_blank">Rain simulation</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/random_data.html" target="_blank">Random data</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/simple_3danim.html" target="_blank">3D animation</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/simple_anim.html" target="_blank">Simple Anim</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/strip_chart_demo.html" target="_blank">Oscilloscope</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/unchained.html" target="_blank">MATPLOTLIB <strong>UNCHAINED</strong></a></li> </ul>     <h3 id="artistanimation"><code>ArtistAnimation</code></h3>  <h4 id="id1">Examples</h4>  <ul> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/basic_example.html" target="_blank">Simple animation examples</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/basic_example_writer_sgskip.html" target="_blank">Saving an animation</a></li> <li class="toctree-l1"><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/dynamic_image2.html" target="_blank">An animated image using a list of images</a></li> </ul>      <h2 id="writer-classes">Writer Classes</h2> <p>The provided writers fall into two broad categories: pipe-based and file-based. The pipe-based writers stream the captured frames over a pipe to an external process. The pipe-based variants tend to be more performant, but may not work on all systems.</p> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.ffmpegwriter/#matplotlib.animation.FFMpegWriter" title="matplotlib.animation.FFMpegWriter"><code>FFMpegWriter</code></a></td> <td>Pipe-based ffmpeg writer.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.imagemagickfilewriter/#matplotlib.animation.ImageMagickFileWriter" title="matplotlib.animation.ImageMagickFileWriter"><code>ImageMagickFileWriter</code></a></td> <td>File-based animated gif writer.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.avconvwriter/#matplotlib.animation.AVConvWriter" title="matplotlib.animation.AVConvWriter"><code>AVConvWriter</code></a></td> <td>Pipe-based avconv writer.</td> </tr>  </table> <p>Alternatively the file-based writers save temporary files for each frame which are stitched into a single file at the end. Although slower, these writers can be easier to debug.</p> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.ffmpegfilewriter/#matplotlib.animation.FFMpegFileWriter" title="matplotlib.animation.FFMpegFileWriter"><code>FFMpegFileWriter</code></a></td> <td>File-based ffmpeg writer.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.imagemagickwriter/#matplotlib.animation.ImageMagickWriter" title="matplotlib.animation.ImageMagickWriter"><code>ImageMagickWriter</code></a></td> <td>Pipe-based animated gif.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.avconvfilewriter/#matplotlib.animation.AVConvFileWriter" title="matplotlib.animation.AVConvFileWriter"><code>AVConvFileWriter</code></a></td> <td>File-based avconv writer.</td> </tr>  </table> <p>Fundamentally, a <a class="reference internal" href="../_as_gen/matplotlib.animation.moviewriter/#matplotlib.animation.MovieWriter" title="matplotlib.animation.MovieWriter"><code>MovieWriter</code></a> provides a way to grab sequential frames from the same underlying <a class="reference internal" href="../_as_gen/matplotlib.figure.figure/#matplotlib.figure.Figure" title="matplotlib.figure.Figure"><code>Figure</code></a> object. The base class <a class="reference internal" href="../_as_gen/matplotlib.animation.moviewriter/#matplotlib.animation.MovieWriter" title="matplotlib.animation.MovieWriter"><code>MovieWriter</code></a> implements 3 methods and a context manager. The only difference between the pipe-based and file-based writers is in the arguments to their respective <code>setup</code> methods.</p> <p>The <code>setup()</code> method is used to prepare the writer (possibly opening a pipe), successive calls to <code>grab_frame()</code> capture a single frame at a time and <code>finish()</code> finalizes the movie and writes the output file to disk. For example</p> <pre data-language="python">moviewriter = MovieWriter(...)
+moviewriter.setup(fig=fig, 'my_movie.ext', dpi=100)
+for j in range(n):
+    update_figure(n)
+    moviewriter.grab_frame()
+moviewriter.finish()
+</pre> <p>If using the writer classes directly (not through <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation.save" title="matplotlib.animation.Animation.save"><code>Animation.save</code></a>), it is strongly encouraged to use the <code>saving</code> context manager</p> <pre data-language="python">with moviewriter.saving(fig, 'myfile.mp4', dpi=100):
+    for j in range(n):
+        update_figure(n)
+        moviewriter.grab_frame()
+</pre> <p>to ensures that setup and cleanup are performed as necessary.</p> <p><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/moviewriter_sgskip.html#sphx-glr-gallery-animation-moviewriter-sgskip-py" target="_blank"><span class="std std-ref">MovieWriter</span></a></p>   <h2 id="ani-writer-classes">Helper Classes</h2>  <h3 id="helper-classes">Animation Base Classes</h3> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation" title="matplotlib.animation.Animation"><code>Animation</code></a></td> <td>This class wraps the creation of an animation using matplotlib.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.timedanimation/#matplotlib.animation.TimedAnimation" title="matplotlib.animation.TimedAnimation"><code>TimedAnimation</code></a></td> <td>
+<a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation" title="matplotlib.animation.Animation"><code>Animation</code></a> subclass for time-based animation.</td> </tr>  </table>   <h3 id="custom-animation-classes">Custom Animation classes</h3> <p><a class="reference internal" href="http://matplotlib.org/2.1.0/gallery/animation/subplots.html#sphx-glr-gallery-animation-subplots-py" target="_blank"><span class="std std-ref">Animated subplots</span></a></p>   <h3 id="writer-registry">Writer Registry</h3> <p>A module-level registry is provided to map between the name of the writer and the class to allow a string to be passed to <a class="reference internal" href="../_as_gen/matplotlib.animation.animation/#matplotlib.animation.Animation.save" title="matplotlib.animation.Animation.save"><code>Animation.save</code></a> instead of a writer instance.</p> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.moviewriterregistry/#matplotlib.animation.MovieWriterRegistry" title="matplotlib.animation.MovieWriterRegistry"><code>MovieWriterRegistry</code></a></td> <td>Registry of available writer classes by human readable name.</td> </tr>  </table>   <h3 id="writer-base-classes">Writer Base Classes</h3> <p>To reduce code duplication base classes</p> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.abstractmoviewriter/#matplotlib.animation.AbstractMovieWriter" title="matplotlib.animation.AbstractMovieWriter"><code>AbstractMovieWriter</code></a></td> <td>Abstract base class for writing movies.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.moviewriter/#matplotlib.animation.MovieWriter" title="matplotlib.animation.MovieWriter"><code>MovieWriter</code></a></td> <td>Base class for writing movies.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.filemoviewriter/#matplotlib.animation.FileMovieWriter" title="matplotlib.animation.FileMovieWriter"><code>FileMovieWriter</code></a></td> <td>
+<a class="reference internal" href="../_as_gen/matplotlib.animation.moviewriter/#matplotlib.animation.MovieWriter" title="matplotlib.animation.MovieWriter"><code>MovieWriter</code></a> for writing to individual files and stitching at the end.</td> </tr>  </table> <p>and mixins are provided</p> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.avconvbase/#matplotlib.animation.AVConvBase" title="matplotlib.animation.AVConvBase"><code>AVConvBase</code></a></td> <td>Mixin class for avconv output.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.ffmpegbase/#matplotlib.animation.FFMpegBase" title="matplotlib.animation.FFMpegBase"><code>FFMpegBase</code></a></td> <td>Mixin class for FFMpeg output.</td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.imagemagickbase/#matplotlib.animation.ImageMagickBase" title="matplotlib.animation.ImageMagickBase"><code>ImageMagickBase</code></a></td> <td>Mixin class for ImageMagick output.</td> </tr>  </table> <p>See the source code for how to easily implement new <a class="reference internal" href="../_as_gen/matplotlib.animation.moviewriter/#matplotlib.animation.MovieWriter" title="matplotlib.animation.MovieWriter"><code>MovieWriter</code></a> classes.</p>    <h2 id="inheritance-diagrams">Inheritance Diagrams</h2> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwAAAABLCAMAAADwKBCOAAAAmVBMVEX///8XFxehoaHHx8d1dXXz8/PLy8u8vLysrKxpaWkfHx8AAADT09MQEBAqKiobGxsJCQkzMzOdnZ2Dg4NYWFhSUlLOzs5nZ2cnJyeXl5fw8PCTk5NBQUH5+flzc3OwsLD29vZ6enrn5+fg4OCKiorAwMBiYmLc3Ny4uLj8/PxISEh/f3/Q0NDKysoiIiJvb2/Z2dmnp6ePj48bIlDRAAAHCklEQVR42u2djXKiMBRGg2urFLHgH2qtKFar0orr+z/ckoQgaNQEdXcr35npdCDk1sQcE9TcEgIAAAAAAAAAoLz0PLMkVPBkg2P8ZVlaauLJBhAAAAgAAAQAQEeAl2fZodGAAOBxBXh9lglAz77wn5MCHPhyUFPCyH6XX8UfQ6a4QHAIAO4ggP4M8HpyfM6cfl1+FTvKFusHhwBAQQAjbDqLhuush4S4luP2SNeyrDfjo29772zEf47s/m9+VswAvJDCq8RnmnaHXX4i3j6QuJYSdttrws+kV4WG7U3YUbaYB89GvxgcAgAVAUbB1u73hqMPejQZbFbsRdVwP2dumw66VbM6XDq93BKIF3JYFWM0C5otViaPlwmUXEvZ/P60AvrHZukM82xsh4Mlf2EXxWnwfPQLwSEAUBFgTkg3JGTX4cebLRcgXnv4TTq0vuk6fDHOCcALBXEVGmUasTJ5vEyg5NqYufNE3F38x5b7JdbXSyBWNmlxGvww+rngEAAoCRCv5ztvhAy68U/fsaw5FyD+6dl0aLGR3u7kBOCFlKQKjdL2xA2yJF4mUHJtzCK+5sNN7ilE/MrIbU/YUbaYB89GvxQcAgBNAbb294S81HRmAFFFKkA2XvZFWozRiW1RvvICEPLUndKjXPGRAJeCQwCgK0DP3j59WDXittiyfOaGbHXd56treja9B2CF62laRSpANl4mUHLtevrboHeraz5qxVX+RzDsRvQoV3wkwPngEAAUWAKNbcNr1kj91Xoz2n17wd952Y4c+v4KPSsE4IWxAKKKfAmUiZcJlAqwrtIHUDdWTIDkqsn01e4G9MjKFh8vgc4GhwBAUYAT/KAPe88CAQAEAAACAKAhwKMAAUCOadiAAKC8rC17M9oNIAAoGZNZb1nZTV362ZI9qpdPgF79YagpN79RLxXvh4M+ePYruzDyPC+Kwl2l1ghMy+mbQz8sS5fsPxLwag9DR1mA8bJWIjpDQt6DxtwfxGM+irxF9FHx541htkd2zVasSVCaPtk+4mJIvSnjSZlWOebC9KL2oD5vBKuTK6HSrgEhwOO/wzPErQ4EgADgulHz/ycCuIMA/7jR4yoE+Lej5uw+aPE1PJWhk68p42/u9D8vwF9q9MTiVE43iQmg2DGnewYC3EmAAi+GaokA9Gv/PQFu2mhi1y7OANd3DARQHDUXEwEkO+zFjnv2YlgoEUAS6EQigPvv9M8IoJv9oHijZQ+bCXDQ2KBrv+wIabj2ulNV75jME3TQMRBAVYALiQDEDvvcaqBIIoA0kCQRwJ13+m/fDwXQzH5QuNHSh70XYF/NNYfbvr/qh8M63fuh2jGZfj3oGAigKsCFRABif2VuLBRJBJAGkiQCuPNO//VmvVzlBNDMflC40dKHvRcgrfZlrwh5W3wb8a91Vb1jMv160DEQQFWAC4kAxA773FgokgggDSRPBFB0p//i+TIjy3I23c5EudGH2Q8KN1r6sPcCpNV8dmc88l365FTVOybTrwcdAwH0BZAmAjg/A2gkAtjPANJEAEV3+ncGl6Ff+jLcUaDc6PMzwFXZD+QC9F5ZSTIDqHdMdgaAANcKIE0EIHbYix33fDlcIBFAGkieCOCeO/1HdtP8zC2BNLMfFG70cfYDuQArNwqC1ttqEw59q6reMZl+hQDXL4GkiQCSHfZixz17MgolAhCB5IkA7rnT328c3gRrZj8o3uij7AdyAUjQMYxFkLwLpN4xmScIAtzsc4AC73r/z01R+xzgRzVaAQgAASAAgAAQAFwzakolwCMBASAABAAQoKwCVLfvGOcQoLwCRNPIM02PbYusfQWn2h6wiSL49fhsc6Pm6WHw1AUInkrEWCyBho25yAbhLao7ujN+/5E4qRjd+M6/FVYenkV2LNSrD8NOWQC/Wipkr/k0TUS91R5TGUwz3FWWEf2SSL31jFUPKBurYPvLX9MvHTkbHwKAUtJ1Xt1xAzMAKCn+nL5ZpCzA/58kAQIAfc4LcH67dPJdQBVfDmoe0aTrsRMP5er0CRAA3EUAcrt8Ac3KyTrXZwmAAEBFAN18AWwGuFG+AC4A3QwdTcXpoGPQW/SjLAF6eQggAFAVQDNfAP9PqbfJF5AXgJ1euYvgM5JkCdDLQwABgKoAmvkC8v8rW1Qpli+A3gM0UwHY6R5f+h9nCdDLQwABgKoAmvkC2GC8Ub6A/AzATideHWcJ0MtDAAGAvgBK+QLyM8B1+QK4AM4sriEE4DOAJEuAXh4CCAD0BVDKF8DvAW6TL4AL4IaTpSMEIOweQJIlQDkuBABFl0Aq+QLYYLxRvgAuwHfT7qYzAM0Z2fclWQKU40IAoCPACX7+blEIACAAABAAAG0Bfj4QAEAAACAAABAAAAgAAGPumQ/PG55mAAAAAAAASskffTmnPl44BWkAAAAASUVORK5CYII=" alt="Inheritance diagram of matplotlib.animation.FuncAnimation, matplotlib.animation.ArtistAnimation" usemap="#inheritance95f52c58c5" class="inheritance"> <map id="inheritance95f52c58c5" name="inheritance95f52c58c5"> <area shape="rect" id="node1" href="_as_gen/matplotlib.animation.Animation.html#matplotlib.animation.Animation" target="_top" title="This class wraps the creation of an animation using matplotlib." alt="" coords="5,27,208,49"> <area shape="rect" id="node3" href="_as_gen/matplotlib.animation.TimedAnimation.html#matplotlib.animation.TimedAnimation" target="_top" title=":class:`Animation` subclass for time-based animation." alt="" coords="250,27,488,49"> <area shape="rect" id="node2" href="_as_gen/matplotlib.animation.ArtistAnimation.html#matplotlib.animation.ArtistAnimation" target="_top" title="Animation using a fixed set of `Artist` objects." alt="" coords="530,5,763,27"> <area shape="rect" id="node4" href="_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" target="_top" title="Makes an animation by repeatedly calling a function ``func``." alt="" coords="533,48,760,70"> </map> <img src="data:image/png;base64,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" alt="Inheritance diagram of matplotlib.animation.AVConvFileWriter, matplotlib.animation.AVConvWriter, matplotlib.animation.FFMpegFileWriter, matplotlib.animation.FFMpegWriter, matplotlib.animation.ImageMagickFileWriter, matplotlib.animation.ImageMagickWriter" usemap="#inheritance7d9f599b8e" class="inheritance"> <map id="inheritance7d9f599b8e" name="inheritance7d9f599b8e"> <area shape="rect" id="node1" href="_as_gen/matplotlib.animation.AVConvBase.html#matplotlib.animation.AVConvBase" target="_top" title="Mixin class for avconv output." alt="" coords="487,25,601,37"> <area shape="rect" id="node3" href="_as_gen/matplotlib.animation.AVConvFileWriter.html#matplotlib.animation.AVConvFileWriter" target="_top" title="File-based avconv writer." alt="" coords="638,37,766,49"> <area shape="rect" id="node5" href="_as_gen/matplotlib.animation.AVConvWriter.html#matplotlib.animation.AVConvWriter" target="_top" title="Pipe-based avconv writer." alt="" coords="643,14,760,26"> <area shape="rect" id="node2" href="_as_gen/matplotlib.animation.FFMpegBase.html#matplotlib.animation.FFMpegBase" target="_top" title="Mixin class for FFMpeg output." alt="" coords="326,25,439,37"> <area shape="rect" id="node4" href="_as_gen/matplotlib.animation.FFMpegFileWriter.html#matplotlib.animation.FFMpegFileWriter" target="_top" title="File-based ffmpeg writer." alt="" coords="480,48,607,60"> <area shape="rect" id="node6" href="_as_gen/matplotlib.animation.FFMpegWriter.html#matplotlib.animation.FFMpegWriter" target="_top" title="Pipe-based ffmpeg writer." alt="" coords="485,2,602,14"> <area shape="rect" id="node7" href="_as_gen/matplotlib.animation.AbstractMovieWriter.html#matplotlib.animation.AbstractMovieWriter" target="_top" title="Abstract base class for writing movies. Fundamentally, what a MovieWriter" alt="" coords="2,48,139,60"> <area shape="rect" id="node9" href="_as_gen/matplotlib.animation.MovieWriter.html#matplotlib.animation.MovieWriter" target="_top" title="Base class for writing movies." alt="" coords="171,48,283,60"> <area shape="rect" id="node8" href="_as_gen/matplotlib.animation.FileMovieWriter.html#matplotlib.animation.FileMovieWriter" target="_top" title="`MovieWriter` for writing to individual files and stitching at the end." alt="" coords="321,48,443,60"> <area shape="rect" id="node11" href="_as_gen/matplotlib.animation.ImageMagickFileWriter.html#matplotlib.animation.ImageMagickFileWriter" target="_top" title="File-based animated gif writer." alt="" coords="472,83,616,95"> <area shape="rect" id="node12" href="_as_gen/matplotlib.animation.ImageMagickWriter.html#matplotlib.animation.ImageMagickWriter" target="_top" title="Pipe-based animated gif." alt="" coords="315,71,449,83"> <area shape="rect" id="node10" href="_as_gen/matplotlib.animation.ImageMagickBase.html#matplotlib.animation.ImageMagickBase" target="_top" title="Mixin class for ImageMagick output." alt="" coords="162,83,293,95"> </map>   <h2 id="deprecated">Deprecated</h2> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.mencoderbase/#matplotlib.animation.MencoderBase" title="matplotlib.animation.MencoderBase"><code>MencoderBase</code></a></td> <td></td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.mencoderfilewriter/#matplotlib.animation.MencoderFileWriter" title="matplotlib.animation.MencoderFileWriter"><code>MencoderFileWriter</code></a></td> <td>
+<div class="deprecated"> <p><span class="versionmodified">Deprecated since version 2.0.</span></p> </div> </td> </tr> <tr>
+<td><a class="reference internal" href="../_as_gen/matplotlib.animation.mencoderwriter/#matplotlib.animation.MencoderWriter" title="matplotlib.animation.MencoderWriter"><code>MencoderWriter</code></a></td> <td>
+<div class="deprecated"> <p><span class="versionmodified">Deprecated since version 2.0.</span></p> </div> </td> </tr>  </table>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2017 Matplotlib Development Team. All rights reserved.<br>Licensed under the Matplotlib License Agreement.<br>
+    <a href="http://matplotlib.org/2.1.0/api/animation_api.html" class="_attribution-link" target="_blank">http://matplotlib.org/2.1.0/api/animation_api.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
