@@ -1,0 +1,212 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Using With MongoDB - Jest - W3cubDocs</title>
+  
+  <meta name="description" content=" With the Global Setup&#47;Teardown and Async Test Environment APIs, Jest can work smoothly with MongoDB. ">
+  <meta name="keywords" content="using, with, mongodb, -, jest">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/jest/mongodb/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/jest.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/jest/" class="_nav-link" title="" style="margin-left:0;">Jest</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="postHeaderTitle">Using with MongoDB</h1>
+<span><p>With the <a href="../configuration/#globalsetup-string">Global Setup/Teardown</a> and <a href="../configuration/#testenvironment-string">Async Test Environment</a> APIs, Jest can work smoothly with <a href="https://www.mongodb.com/" target="_blank">MongoDB</a>.</p> <h2 id="a-jest-mongodb-example">A jest-mongodb example</h2> <p>The basic idea is to:</p> <ol> <li>Spin up in-memory mongodb server</li> <li>Export a global variable with mongo URI</li> <li>Write tests for queries / aggregations using a real database ✨</li> <li>Shut down mongodb server using Global Teardown</li> </ol> <p>Here's an example of the GlobalSetup script</p> <pre data-language="js">// setup.js
+const path = require('path');
+
+const fs = require('fs');
+
+const MongodbMemoryServer = require('mongodb-memory-server');
+
+const globalConfigPath = path.join(__dirname, 'globalConfig.json');
+
+const mongoServer = new MongodbMemoryServer.MongoMemoryServer();
+
+module.exports = async function() {
+  const mongoConfig = {
+    mongoDBName: 'jest',
+    mongoUri: await mongoServer.getConnectionString(),
+  };
+
+  // Write global config to disk because all tests run in different contexts.
+  fs.writeFileSync(globalConfigPath, JSON.stringify(mongoConfig));
+
+  // Set reference to mongod in order to close the server during teardown.
+  global.__MONGOD__ = mongoServer;
+};
+</pre> <p>Then we need a custom Test Environment for Mongo</p> <pre data-language="js">// mongo-environment.js
+const NodeEnvironment = require('jest-environment-node');
+
+const path = require('path');
+
+const fs = require('fs');
+
+const globalConfigPath = path.join(__dirname, 'globalConfig.json');
+
+class MongoEnvironment extends NodeEnvironment {
+  constructor(config) {
+    super(config);
+  }
+
+  async setup() {
+    console.log('Setup MongoDB Test Environment');
+
+    const globalConfig = JSON.parse(fs.readFileSync(globalConfigPath, 'utf-8'));
+
+    this.global.__MONGO_URI__ = globalConfig.mongoUri;
+    this.global.__MONGO_DB_NAME__ = globalConfig.mongoDBName;
+
+    await super.setup();
+  }
+
+  async teardown() {
+    console.log('Teardown MongoDB Test Environment');
+
+    await super.teardown();
+  }
+
+  runScript(script) {
+    return super.runScript(script);
+  }
+}
+</pre> <p>Finally we can shut down mongodb server</p> <pre data-language="js">// teardown.js
+module.exports = async function() {
+  await global.__MONGOD__.stop();
+};
+</pre> <p>With all the things set up, we can now write our tests like this:</p> <pre data-language="js">// test.js
+const {MongoClient} = require('mongodb');
+
+let connection;
+let db;
+
+beforeAll(async () =&gt; {
+  connection = await MongoClient.connect(global.__MONGO_URI__);
+  db = await connection.db(global.__MONGO_DB_NAME__);
+});
+
+afterAll(async () =&gt; {
+  await connection.close();
+  await db.close();
+});
+
+it('should aggregate docs from collection', async () =&gt; {
+  const files = db.collection('files');
+
+  await files.insertMany([
+    {type: 'Document'},
+    {type: 'Video'},
+    {type: 'Image'},
+    {type: 'Document'},
+    {type: 'Image'},
+    {type: 'Document'},
+  ]);
+
+  const topFiles = await files
+    .aggregate([
+      {$group: {_id: '$type', count: {$sum: 1}}},
+      {$sort: {count: -1}},
+    ])
+    .toArray();
+
+  expect(topFiles).toEqual([
+    {_id: 'Document', count: 3},
+    {_id: 'Image', count: 2},
+    {_id: 'Video', count: 1},
+  ]);
+});
+</pre> <p>Here's the code of <a href="https://github.com/vladgolubev/jest-mongodb" target="_blank">full working example</a>.</p> </span><div class="_attribution">
+  <p class="_attribution-p">
+    © 2014–present Facebook Inc.<br>Licensed under the BSD License.<br>
+    <a href="https://jestjs.io/docs/en/mongodb" class="_attribution-link" target="_blank">https://jestjs.io/docs/en/mongodb</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
