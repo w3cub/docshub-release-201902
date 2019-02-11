@@ -1,0 +1,189 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Memory-mapped I&#47;O - Julia 1.0 - W3cubDocs</title>
+  
+  <meta name="description" content="Create an IO-like object for creating zeroed-out mmapped-memory that is not tied to a file for use in Mmap.mmap. Used by SharedArray for creating &hellip;">
+  <meta name="keywords" content="memory-mapped, i, o, -, julia, julia~1.0">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/julia~1.0/stdlib/mmap/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/julia~1.0.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/julia~1.0/" class="_nav-link" title="" style="margin-left:0;">Julia 1.0</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _julia">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="Memory-mapped-I/O-1">Memory-mapped I/O</h1>
+<h3 id="Mmap.Anonymous">
+<code>Mmap.Anonymous</code><span class="docstring-category">Type</span>
+</h3>
+<pre>Mmap.Anonymous(name::AbstractString="", readonly::Bool=false, create::Bool=true)</pre>
+<p>Create an <code>IO</code>-like object for creating zeroed-out mmapped-memory that is not tied to a file for use in <a href="#Mmap.mmap"><code>Mmap.mmap</code></a>. Used by <code>SharedArray</code> for creating shared memory arrays.</p>
+<p><strong>Examples</strong></p>
+<pre>julia&gt; anon = Mmap.Anonymous();
+
+julia&gt; isreadable(anon)
+true
+
+julia&gt; iswritable(anon)
+true
+
+julia&gt; isopen(anon)
+true</pre>
+<a class="source-link" target="_blank" href="https://github.com/JuliaLang/julia/blob/0d713926f85dfa3e4e0962215b909b8e47e94f48/stdlib/Mmap/src/Mmap.jl#L19-L38">source</a><h3 id="Mmap.mmap">
+<code>Mmap.mmap</code><span class="docstring-category">Function</span>
+</h3>
+<pre>Mmap.mmap(io::Union{IOStream,AbstractString,Mmap.AnonymousMmap}[, type::Type{Array{T,N}}, dims, offset]; grow::Bool=true, shared::Bool=true)
+       Mmap.mmap(type::Type{Array{T,N}}, dims)</pre>
+<p>Create an <code>Array</code> whose values are linked to a file, using memory-mapping. This provides a convenient way of working with data too large to fit in the computer's memory.</p>
+<p>The type is an <code>Array{T,N}</code> with a bits-type element of <code>T</code> and dimension <code>N</code> that determines how the bytes of the array are interpreted. Note that the file must be stored in binary format, and no format conversions are possible (this is a limitation of operating systems, not Julia).</p>
+<p><code>dims</code> is a tuple or single <a href="https://docs.julialang.org/en/v1.0.1/base/numbers/#Core.Integer" target="_blank"><code>Integer</code></a> specifying the size or length of the array.</p>
+<p>The file is passed via the stream argument, either as an open <code>IOStream</code> or filename string. When you initialize the stream, use <code>"r"</code> for a "read-only" array, and <code>"w+"</code> to create a new array used to write values to disk.</p>
+<p>If no <code>type</code> argument is specified, the default is <code>Vector{UInt8}</code>.</p>
+<p>Optionally, you can specify an offset (in bytes) if, for example, you want to skip over a header in the file. The default value for the offset is the current stream position for an <code>IOStream</code>.</p>
+<p>The <code>grow</code> keyword argument specifies whether the disk file should be grown to accommodate the requested size of array (if the total file size is &lt; requested array size). Write privileges are required to grow the file.</p>
+<p>The <code>shared</code> keyword argument specifies whether the resulting <code>Array</code> and changes made to it will be visible to other processes mapping the same file.</p>
+<p>For example, the following code</p>
+<pre># Create a file for mmapping
+# (you could alternatively use mmap to do this step, too)
+A = rand(1:20, 5, 30)
+s = open("/tmp/mmap.bin", "w+")
+# We'll write the dimensions of the array as the first two Ints in the file
+write(s, size(A,1))
+write(s, size(A,2))
+# Now write the data
+write(s, A)
+close(s)
+
+# Test by reading it back in
+s = open("/tmp/mmap.bin")   # default is read-only
+m = read(s, Int)
+n = read(s, Int)
+A2 = Mmap.mmap(s, Matrix{Int}, (m,n))</pre>
+<p>creates a <code>m</code>-by-<code>n</code> <code>Matrix{Int}</code>, linked to the file associated with stream <code>s</code>.</p>
+<p>A more portable file would need to encode the word size – 32 bit or 64 bit – and endianness information in the header. In practice, consider encoding binary data using standard formats like HDF5 (which can be used with memory-mapping).</p>
+<a class="source-link" target="_blank" href="https://github.com/JuliaLang/julia/blob/0d713926f85dfa3e4e0962215b909b8e47e94f48/stdlib/Mmap/src/Mmap.jl#L123-L180">source</a><pre>Mmap.mmap(io, BitArray, [dims, offset])</pre>
+<p>Create a <a href="https://docs.julialang.org/en/v1.0.1/base/arrays/#Base.BitArray" target="_blank"><code>BitArray</code></a> whose values are linked to a file, using memory-mapping; it has the same purpose, works in the same way, and has the same arguments, as <a href="#Mmap.mmap"><code>mmap</code></a>, but the byte representation is different.</p>
+<p><strong>Examples</strong></p>
+<pre>julia&gt; io = open("mmap.bin", "w+");
+
+julia&gt; B = Mmap.mmap(io, BitArray, (25,30000));
+
+julia&gt; B[3, 4000] = true;
+
+julia&gt; Mmap.sync!(B);
+
+julia&gt; close(io);
+
+julia&gt; io = open("mmap.bin", "r+");
+
+julia&gt; C = Mmap.mmap(io, BitArray, (25,30000));
+
+julia&gt; C[3, 4000]
+true
+
+julia&gt; C[2, 4000]
+false
+
+julia&gt; close(io)
+
+julia&gt; rm("mmap.bin")</pre>
+<p>This creates a 25-by-30000 <code>BitArray</code>, linked to the file associated with stream <code>io</code>.</p>
+<a class="source-link" target="_blank" href="https://github.com/JuliaLang/julia/blob/0d713926f85dfa3e4e0962215b909b8e47e94f48/stdlib/Mmap/src/Mmap.jl#L253-L287">source</a><h3 id="Mmap.sync!">
+<code>Mmap.sync!</code><span class="docstring-category">Function</span>
+</h3>
+<pre>Mmap.sync!(array)</pre>
+<p>Forces synchronization between the in-memory version of a memory-mapped <code>Array</code> or <a href="https://docs.julialang.org/en/v1.0.1/base/arrays/#Base.BitArray" target="_blank"><code>BitArray</code></a> and the on-disk version.</p>
+<a class="source-link" target="_blank" href="https://github.com/JuliaLang/julia/blob/0d713926f85dfa3e4e0962215b909b8e47e94f48/stdlib/Mmap/src/Mmap.jl#L327-L332">source</a><div class="_attribution">
+  <p class="_attribution-p">
+    © 2009–2018 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://docs.julialang.org/en/v1.0.1/stdlib/Mmap/" class="_attribution-link" target="_blank">https://docs.julialang.org/en/v1.0.1/stdlib/Mmap/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

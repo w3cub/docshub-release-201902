@@ -1,0 +1,310 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Getting Started - Julia 1.0 - W3cubDocs</title>
+  
+  <meta name="description" content="Julia installation is straightforward, whether using precompiled binaries or compiling from source. Download and install Julia by following the &hellip;">
+  <meta name="keywords" content="getting, started, -, julia, julia~1.0">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/julia~1.0/manual/getting-started/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/julia~1.0.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/julia~1.0/" class="_nav-link" title="" style="margin-left:0;">Julia 1.0</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _julia">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="man-getting-started-1">Getting Started</h1>
+<p>Julia installation is straightforward, whether using precompiled binaries or compiling from source. Download and install Julia by following the instructions at <a href="https://julialang.org/downloads/" target="_blank">https://julialang.org/downloads/</a>.</p>
+<p>The easiest way to learn and experiment with Julia is by starting an interactive session (also known as a read-eval-print loop or "REPL") by double-clicking the Julia executable or running <code>julia</code> from the command line:</p>
+<pre>$ julia
+
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.0.1 (2018-09-29)
+ _/ |\__'_|_|_|\__'_|  |  
+|__/                   |
+
+
+julia&gt; 1 + 2
+3
+
+julia&gt; ans
+3</pre>
+<p>To exit the interactive session, type <code>CTRL-D</code> (press the Control/<code>^</code> key together with the <code>d</code> key), or type <code>exit()</code>. When run in interactive mode, <code>julia</code> displays a banner and prompts the user for input. Once the user has entered a complete expression, such as <code>1 + 2</code>, and hits enter, the interactive session evaluates the expression and shows its value. If an expression is entered into an interactive session with a trailing semicolon, its value is not shown. The variable <code>ans</code> is bound to the value of the last evaluated expression whether it is shown or not. The <code>ans</code> variable is only bound in interactive sessions, not when Julia code is run in other ways.</p>
+<p>To evaluate expressions written in a source file <code>file.jl</code>, write <code>include("file.jl")</code>.</p>
+<p>To run code in a file non-interactively, you can give it as the first argument to the <code>julia</code> command:</p>
+<pre>$ julia script.jl arg1 arg2...</pre>
+<p>As the example implies, the following command-line arguments to <code>julia</code> are interpreted as command-line arguments to the program <code>script.jl</code>, passed in the global constant <code>ARGS</code>. The name of the script itself is passed in as the global <code>PROGRAM_FILE</code>. Note that <code>ARGS</code> is also set when a Julia expression is given using the <code>-e</code> option on the command line (see the <code>julia</code> help output below) but <code>PROGRAM_FILE</code> will be empty. For example, to just print the arguments given to a script, you could do this:</p>
+<pre>$ julia -e 'println(PROGRAM_FILE); for x in ARGS; println(x); end' foo bar
+
+foo
+bar</pre>
+<p>Or you could put that code into a script and run it:</p>
+<pre>$ echo 'println(PROGRAM_FILE); for x in ARGS; println(x); end' &gt; script.jl
+$ julia script.jl foo bar
+script.jl
+foo
+bar</pre>
+<p>The <code>--</code> delimiter can be used to separate command-line arguments intended for the script file from arguments intended for Julia:</p>
+<pre>$ julia --color=yes -O -- foo.jl arg1 arg2..</pre>
+<p>Julia can be started in parallel mode with either the <code>-p</code> or the <code>--machine-file</code> options. <code>-p n</code> will launch an additional <code>n</code> worker processes, while <code>--machine-file file</code> will launch a worker for each line in file <code>file</code>. The machines defined in <code>file</code> must be accessible via a password-less <code>ssh</code> login, with Julia installed at the same location as the current host. Each machine definition takes the form <code>[count*][user@]host[:port] [bind_addr[:port]]</code>. <code>user</code> defaults to current user, <code>port</code> to the standard ssh port. <code>count</code> is the number of workers to spawn on the node, and defaults to 1. The optional <code>bind-to bind_addr[:port]</code> specifies the IP address and port that other workers should use to connect to this worker.</p>
+<p>If you have code that you want executed whenever Julia is run, you can put it in <code>~/.julia/config/startup.jl</code>:</p>
+<pre>$ echo 'println("Greetings! 你好! 안녕하세요?")' &gt; ~/.julia/config/startup.jl
+$ julia
+Greetings! 你好! 안녕하세요?
+
+...</pre>
+<p>There are various ways to run Julia code and provide options, similar to those available for the <code>perl</code> and <code>ruby</code> programs:</p>
+<pre>julia [switches] -- [programfile] [args...]</pre>
+<table>
+<tr>
+<th>Switch</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>
+<code>-v</code>, <code>--version</code>
+</td>
+<td>Display version information</td>
+</tr>
+<tr>
+<td>
+<code>-h</code>, <code>--help</code>
+</td>
+<td>Print this message</td>
+</tr>
+<tr>
+<td>
+<code>-J</code>, <code>--sysimage &lt;file&gt;</code>
+</td>
+<td>Start up with the given system image file</td>
+</tr>
+<tr>
+<td>
+<code>-H</code>, <code>--home &lt;dir&gt;</code>
+</td>
+<td>Set location of <code>julia</code> executable</td>
+</tr>
+<tr>
+<td><code>--startup-file={yes|no}</code></td>
+<td>Load <code>~/.julia/config/startup.jl</code>
+</td>
+</tr>
+<tr>
+<td><code>--handle-signals={yes|no}</code></td>
+<td>Enable or disable Julia's default signal handlers</td>
+</tr>
+<tr>
+<td><code>--sysimage-native-code={yes|no}</code></td>
+<td>Use native code from system image if available</td>
+</tr>
+<tr>
+<td><code>--compiled-modules={yes|no}</code></td>
+<td>Enable or disable incremental precompilation of modules</td>
+</tr>
+<tr>
+<td>
+<code>-e</code>, <code>--eval &lt;expr&gt;</code>
+</td>
+<td>Evaluate <code>&lt;expr&gt;</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>-E</code>, <code>--print &lt;expr&gt;</code>
+</td>
+<td>Evaluate <code>&lt;expr&gt;</code> and display the result</td>
+</tr>
+<tr>
+<td>
+<code>-L</code>, <code>--load &lt;file&gt;</code>
+</td>
+<td>Load <code>&lt;file&gt;</code> immediately on all processors</td>
+</tr>
+<tr>
+<td>
+<code>-p</code>, <code>--procs {N|auto</code>}</td>
+<td>Integer value N launches N additional local worker processes; <code>auto</code> launches as many workers as the number of local CPU threads (logical cores)</td>
+</tr>
+<tr>
+<td><code>--machine-file &lt;file&gt;</code></td>
+<td>Run processes on hosts listed in <code>&lt;file&gt;</code>
+</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>Interactive mode; REPL runs and <code>isinteractive()</code> is true</td>
+</tr>
+<tr>
+<td>
+<code>-q</code>, <code>--quiet</code>
+</td>
+<td>Quiet startup: no banner, suppress REPL warnings</td>
+</tr>
+<tr>
+<td><code>--banner={yes|no|auto}</code></td>
+<td>Enable or disable startup banner</td>
+</tr>
+<tr>
+<td><code>--color={yes|no|auto}</code></td>
+<td>Enable or disable color text</td>
+</tr>
+<tr>
+<td><code>--history-file={yes|no}</code></td>
+<td>Load or save history</td>
+</tr>
+<tr>
+<td><code>--depwarn={yes|no|error}</code></td>
+<td>Enable or disable syntax and method deprecation warnings (<code>error</code> turns warnings into errors)</td>
+</tr>
+<tr>
+<td><code>--warn-overwrite={yes|no}</code></td>
+<td>Enable or disable method overwrite warnings</td>
+</tr>
+<tr>
+<td>
+<code>-C</code>, <code>--cpu-target &lt;target&gt;</code>
+</td>
+<td>Limit usage of CPU features up to <code>&lt;target&gt;</code>; set to <code>help</code> to see the available options</td>
+</tr>
+<tr>
+<td>
+<code>-O</code>, <code>--optimize={0,1,2,3}</code>
+</td>
+<td>Set the optimization level (default level is 2 if unspecified or 3 if used without a level)</td>
+</tr>
+<tr>
+<td>
+<code>-g</code>, <code>-g &lt;level&gt;</code>
+</td>
+<td>Enable / Set the level of debug info generation (default level is 1 if unspecified or 2 if used without a level)</td>
+</tr>
+<tr>
+<td><code>--inline={yes|no}</code></td>
+<td>Control whether inlining is permitted, including overriding <code>@inline</code> declarations</td>
+</tr>
+<tr>
+<td><code>--check-bounds={yes|no}</code></td>
+<td>Emit bounds checks always or never (ignoring declarations)</td>
+</tr>
+<tr>
+<td><code>--math-mode={ieee,fast}</code></td>
+<td>Disallow or enable unsafe floating point optimizations (overrides @fastmath declaration)</td>
+</tr>
+<tr>
+<td><code>--code-coverage={none|user|all}</code></td>
+<td>Count executions of source lines</td>
+</tr>
+<tr>
+<td><code>--code-coverage</code></td>
+<td>equivalent to <code>--code-coverage=user</code>
+</td>
+</tr>
+<tr>
+<td><code>--track-allocation={none|user|all}</code></td>
+<td>Count bytes allocated by each source line</td>
+</tr>
+<tr>
+<td><code>--track-allocation</code></td>
+<td>equivalent to <code>--track-allocation=user</code>
+</td>
+</tr>
+</table>
+<h2 id="Resources-1">Resources</h2>
+<p>A curated list of useful learning resources to help new users get started can be found on the <a href="https://julialang.org/learning/" target="_blank">learning</a> page of the main Julia web site.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2009–2018 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://docs.julialang.org/en/v1.0.1/manual/getting-started/" class="_attribution-link" target="_blank">https://docs.julialang.org/en/v1.0.1/manual/getting-started/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
