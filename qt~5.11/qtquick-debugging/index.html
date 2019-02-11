@@ -1,0 +1,155 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Debugging QML Applications - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content=" console.log, console.debug, console.info, console.warn and console.error can be used to print debugging information to the console. For example&#58; ">
+  <meta name="keywords" content="debugging, qml, applications, -, qt, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/qtquick-debugging/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Debugging QML Applications</h1>      <h2 id="console-api">Console API
+</h2>  <h3>Log
+</h3> <p><code>console.log</code>, console.debug, console.info, console.warn and console.error can be used to print debugging information to the console. For example:</p> <pre data-language="cpp">function f(a, b) {
+  console.log("a is ", a, "b is ", b);
+}</pre> <p>The output is generated using the <a href="../qloggingcategory/#qCDebug">qCDebug</a>, <a href="../qloggingcategory/#qCWarning">qCWarning</a>, <a href="../qloggingcategory/#qCCritical">qCCritical</a> methods in C++, with a category of "qml" or "js", depending on the type of file doing the logging. See also <a href="../debug/">Debugging Techniques</a>.</p>  <h3>Assert
+</h3> <p><code>console.assert</code> tests that an expression is true. If not, it will write an optional message to the console and print the stack trace.</p> <pre data-language="cpp">function f() {
+  var x = 12
+  console.assert(x == 12, "This will pass");
+  console.assert(x &gt; 12, "This will fail");
+}</pre>  <h3>Timer
+</h3> <p><code>console.time</code> and console.timeEnd log the time (in milliseconds) that was spent between the calls. Both take a string argument that identifies the measurement. For example:</p> <pre data-language="cpp">function f() {
+    console.time("wholeFunction");
+    console.time("firstPart");
+    // first part
+    console.timeEnd("firstPart");
+    // second part
+    console.timeEnd("wholeFunction");
+}</pre>  <h3>Trace
+</h3> <p><code>console.trace</code> prints the stack trace of the JavaScript execution at the point where it was called. The stack trace info contains the function name, file name, line number and column number. The stack trace is limited to last 10 stack frames.</p>  <h3>Count
+</h3> <p><code>console.count</code> prints the current number of times a particular piece of code has been executed, along with a message. That is,</p> <pre data-language="cpp">function f() {
+  console.count("f called");
+}</pre> <p>will print <code>f called: 1</code>, <code>f called: 2</code> ... whenever <code>f()</code> is executed.</p>  <h3>Profile
+</h3> <p><code>console.profile</code> turns on the QML and JavaScript profilers. Nested calls are not supported and a warning will be printed to the console.</p> <p><code>console.profileEnd</code> turns off the QML and JavaScript profilers. Calling this function without a previous call to console.profile will print a warning to the console. A profiling client should have been attached before this call to receive and store the profiling data. For example:</p> <pre data-language="cpp">function f() {
+    console.profile();
+    //Call some function that needs to be profiled.
+    //Ensure that a client is attached before ending
+    //the profiling session.
+    console.profileEnd();
+}</pre>  <h3>Exception
+</h3> <p><code>console.exception</code> prints an error message together with the stack trace of JavaScript execution at the point where it is called.</p>  <h2 id="debugging-module-imports">Debugging Module Imports
+</h2> <p>The <code>QML_IMPORT_TRACE</code> environment variable can be set to enable debug output from QML's import loading mechanisms.</p> <p>For example, for a simple QML file like this:</p> <pre>import QtQuick 2.3
+
+Rectangle { width: 100; height: 100 }</pre> <p>If you set <code>QML_IMPORT_TRACE=1</code> before running the <a href="../qtquick-qmlscene/">QML Scene</a> (or your QML C++ application), you will see output similar to this:</p> <pre data-language="cpp">QQmlImportDatabase::addImportPath "/qt-sdk/imports"
+QQmlImportDatabase::addImportPath "/qt-sdk/bin/QMLViewer.app/Contents/MacOS"
+QQmlImportDatabase::addToImport 0x106237370 "." -1.-1 File as ""
+QQmlImportDatabase::addToImport 0x106237370 "Qt" 4.7 Library as ""
+QQmlImportDatabase::resolveType "Rectangle" = "QDeclarativeRectangle"</pre>  <h2 id="qml-debugging-infrastructure">QML Debugging Infrastructure
+</h2> <p>The <a href="../qtqml-index/">Qt QML</a> module provides services for debugging, inspecting, and profiling applications via a TCP port.</p>  <h3>Enabling the Infrastructure
+</h3> <p>You have to explicitly enable the debugging infrastructure when compiling your application. If you use qmake, you can add the configuration parameters to the project .pro file:</p> <ul> <li>Qt Quick 1: <code>CONFIG+=declarative_debug</code>
+</li> <li>Qt Quick 2: <code>CONFIG+=qml_debug</code>
+</li> </ul> <p>If you use some other build system, you can pass the following defines to the compiler:</p> <ul> <li>Qt Quick 1: <code>QT_DECLARATIVE_DEBUG</code>
+</li> <li>Qt Quick 2: <code>QT_QML_DEBUG</code>
+</li> </ul> <p><b>Note: </b>Enabling the debugging infrastructure might compromise the integrity of the application and system, and therefore, you should only enable it in a controlled environment. When the infrastructure is enabled, the application displays the following warning:</p>
+<p><code>QML debugging is enabled. Only use this in a safe environment.</code></p>  <h3>Starting Applications
+</h3> <p>Start the application with the following arguments:</p> <p><code>-qmljsdebugger=port:&lt;port_from&gt;[,port_to][,host:&lt;ip address&gt;][,block]</code></p> <p>Where <code>port_from</code> (mandatory) specifies either the debugging port or the start port of a range of ports when <code>port_to</code> is specified, <code>ip address</code> (optional) specifies the IP address of the host where the application is running, and <code>block</code> (optional) prevents the application from running until the debug client connects to the server. This enables debugging from the start.</p> <p>After the application has successfully started, it displays the following message:</p> <p><code>QML Debugger: Waiting for connection on port &lt;port_number&gt;</code></p>  <h3>Connecting to Applications
+</h3> <p>When the application is running, an IDE or a tool that implements the binary protocol can connect to the open port.</p> <p>Qt provides a <code>qmlprofiler</code> command line tool to capture profiling data in a file. To run the tool, enter the following command:</p> <p><code>qmlprofiler -p &lt;port&gt; -attach &lt;ip address&gt;</code></p>  <h2 id="debugging-with-qt-creator">Debugging with Qt Creator
+</h2> <p>Qt Creator uses the debugging infrastructure to debug, inspect and profile Qt Quick applications on the desktop as well as on remote devices. Qt Creator provides integrated clients for debugging JS, inspecting the object tree, and profiling the activities of a QML engine. For more information, see <a href="http://doc.qt.io/qtcreator/creator-debugging-qml.html" target="_blank">Qt Creator: Debugging Qt Quick Projects</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/qtquick-debugging.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/qtquick-debugging.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Canvas3DTextureProvider (QML Type) - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content=" Provides means to get QQuickItem as Canvas3DTexture. More... ">
+  <meta name="keywords" content="canvas, dtextureprovider, qml, type, -, qt, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/qml-qtcanvas3d-canvas3dtextureprovider/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Canvas3DTextureProvider QML Type</h1>   <p>Provides means to get <a href="../qquickitem/">QQuickItem</a> as <a href="../qml-qtcanvas3d-canvas3dtexture/">Canvas3DTexture</a>. <a href="#details">More...</a></p>  <table class="alignedsummary"> <tr>
+<td class="memItemLeft rightAlign topAlign"> Import Statement:</td>
+<td class="memItemRight bottomAlign"> import QtCanvas3D 1.1</td>
+</tr>
+<tr>
+<td class="memItemLeft rightAlign topAlign"> Since:</td>
+<td class="memItemRight bottomAlign"> QtCanvas3D 1.1</td>
+</tr>
+</table>
+<ul> <li><a href="https://doc.qt.io/qt-5/qml-qtcanvas3d-canvas3dtextureprovider-members.html" target="_blank">List of all members, including inherited members</a></li> </ul>  <h2 id="signals">Signals
+</h2> <ul> <li class="fn">void <b><b><a href="../qml-qtcanvas3d-canvas3dtextureprovider/#textureReady-signal">textureReady</a></b></b>(Item *<i>source</i>)</li> </ul>  <h2 id="methods">Methods
+</h2> <ul> <li class="fn">QJSValue <b><b><a href="../qml-qtcanvas3d-canvas3dtextureprovider/#createTextureFromSource-method">createTextureFromSource</a></b></b>(Item *<i>source</i>)</li> </ul>   <h2 id="details">Detailed Description
+</h2> <p>An uncreatable QML type that provides an extension API that can be used to get <a href="../qquickitem/">QQuickItem</a> as <a href="../qml-qtcanvas3d-canvas3dtexture/">Canvas3DTexture</a>. Only QQuickItems that implement <a href="../qquickitem/#textureProvider">QQuickItem::textureProvider()</a> method can be used as a texture source, which in most cases means the <code>layer.enabled</code> property of the item must be set to <code>true</code>.</p> <p>Typical usage would be something like this:</p> <pre data-language="cpp">// In QML code, declare a layered item you wish to show as texture
+Rectangle {
+    id: textureSource
+    layer.enabled: true
+    // ...
+}
+.
+.
+// In JavaScript code, declare the variables for the extension and the texture
+var textureProvider;
+var myTexture;
+.
+.
+// Get the extension after the context has been created in onInitializeGL().
+textureProvider = gl.getExtension("QTCANVAS3D_texture_provider");
+.
+.
+// Get the Canvas3DTexture object representing our source item
+if (textureProvider)
+    myTexture = textureProvider.createTextureFromSource(textureSource);
+.
+.
+// If you just need to access the texture in onPaingGL(), the above is usually enough.
+// However, in cases where you utilize synchronous OpenGL commands or dynamically enable
+// the source item layer after canvas initialization, it is not guaranteed that the texture
+// is valid immediately after calling createTextureFromSource().
+// To ensure you don't use the texture before it is ready, connect the textureReady() signal
+// to a handler function that will use the texture.
+textureProvider.textureReady.connect(function(sourceItem) {
+    if (sourceItem === textureSource) {
+        gl.bindTexture(gl.TEXTURE_2D, myTexture);
+        // ...
+    }
+});</pre> <p><b>See also </b><a href="../qml-qtcanvas3d-context3d/">Context3D</a>.</p>  <h2>Signal Documentation</h2>  <h3 class="qmlproto" id="textureReady-signal"></h3>
+<p> <span class="type">void</span> <span class="name">textureReady</span>(<span class="type"><a href="../qml-qtquick-item/">Item</a></span> *<i>source</i>)</p>
+<p>Indicates that the texture created with <a href="../qml-qtcanvas3d-canvas3dtextureprovider/#createTextureFromSource-method">createTextureFromSource()</a> method for the <i>source</i> item is ready to be used.</p>   <h2>Method Documentation</h2>  <h3 class="qmlproto" id="createTextureFromSource-method"></h3>
+<p> <span class="type">QJSValue</span> <span class="name">createTextureFromSource</span>(<span class="type"><a href="../qml-qtquick-item/">Item</a></span> *<i>source</i>)</p>
+<p>Creates and returns a <a href="../qml-qtcanvas3d-canvas3dtexture/">Canvas3DTexture</a> object for the supplied <i>source</i> item.</p> <p>The <i>source</i> item must be of a type that implements a texture provider, which in most cases means the <code>layer.enabled</code> property of the item must be set to <code>true</code>. <a href="../qml-qtquick-shadereffectsource/">ShaderEffectSource</a> items can also be used as texture sources. The texture provider of the <i>source</i> item owns the OpenGL texture. If the <i>source</i> item is deleted or the <code>layer.enabled</code> property is set to <code>false</code> while the texture is still in use in <a href="../qml-qtcanvas3d-canvas3d/">Canvas3D</a>, the rendered texture contents become undefined.</p> <p>Trying to bind the returned <a href="../qml-qtcanvas3d-canvas3dtexture/">Canvas3DTexture</a> object is not guaranteed to work until a <a href="../qml-qtcanvas3d-canvas3dtextureprovider/#textureReady-signal">textureReady()</a> signal corresponding to the <i>source</i> item has been emitted. However, if you don't have any synchronous OpenGL calls between the first use of the texture and the end of your paingGL() handler, and if you can guarantee that the source item has been fully rendered at least once after its layer was enabled, you can immediately use the returned texture without waiting for the <a href="../qml-qtcanvas3d-canvas3dtextureprovider/#textureReady-signal">textureReady()</a> signal.</p> <p>Disabling the <i>source</i> item's layer will destroy the underlying texture provider, so it is necessary to call this method again for the <i>source</i> item if you re-enable its layer.</p> <p>If this function is called twice for same <i>source</i>, it doesn't create a new <a href="../qml-qtcanvas3d-canvas3dtexture/">Canvas3DTexture</a> instance, but instead returns a reference to a previously created one, as long as the previous instance is still alive.</p> <p>The generated texture is owned and managed by Qt Quick's scene graph, so attempting to modify its parameters is not guaranteed to work.</p> <p><b>Note: </b>Qt Quick uses texture coordinates where the origin is at top left corner, which is different from OpenGL default coordinate system, where the origin is at bottom left corner. You need to account for this when specifying the UV mapping for the texture. Alternatively, you can specify a suitable <a href="../qml-qtquick-shadereffectsource/#textureMirroring-prop">textureMirroring</a> value for your layer or <a href="../qml-qtquick-shadereffectsource/">ShaderEffectSource</a> item.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/qml-qtcanvas3d-canvas3dtextureprovider.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/qml-qtcanvas3d-canvas3dtextureprovider.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

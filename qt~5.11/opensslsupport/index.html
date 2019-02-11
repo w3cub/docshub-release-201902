@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Adding OpenSSL Support for Android - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content="The Qt installation package comes with OpenSSL support but the OpenSSL libraries are not part of the package due to legal restrictions in some &hellip;">
+  <meta name="keywords" content="adding, openssl, support, for, android, -, qt, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/opensslsupport/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Adding OpenSSL Support for Android</h1>     <p>The Qt installation package comes with OpenSSL support but the OpenSSL libraries are not part of the package due to legal restrictions in some countries. If your application depends on OpenSSL, consider packaging the SSL libraries with your Application Package (APK) as the target device may or may not have them. You can use the <a href="../qsslsocket/#supportsSsl">QSslSocket::supportsSsl</a>() static function to check for SSL support on the target.</p> <p>The following instructions guide you to build and add the OpenSSL libraries to the APK:</p> <ol class="1" type="1">
+<li>Download the <a href="https://wiki.openssl.org/images/7/70/Setenv-android.sh" target="_blank">setup script</a> to configure the build environment.<p><b>Note: </b>Ensure that you save the script with Unix line-endings if your build host is Unix or Linux.</p>
+</li> <li>Make the following changes in the setup script:<ul> <li>Set appropriate values to the <code>_ANDROID_EABI</code> and <code>_ANDROID_ARCH</code> variables. For example, to build for 64-bit ARM architecture using toolchain version v4.9, set <code>aarch64-linux-android-4.9</code> and <code>arch-arm64</code> values to <code>_ANDROID_EABI</code> and <code>_ANDROID_ARCH</code> respectively.</li> <li>Add the <code>windows-x86</code> or <code>windows-x86_64</code> to the <code>hosts</code> list on line <code>107</code>, if your build host is Windows.</li> <li>Add the following after line <code>128</code> to build for 64-bit ARM architecture:<pre data-language="cpp">  arch-arm64)
+ANDROID_TOOLS="aarch64-linux-android-gcc aarch64-linux-android-ranlib aarch64-linux-android-ld"
+    ;;</pre> </li> <li>Add the following after line <code>213</code> if <code>_ANDROID_ARCH</code> is set to <code>arch-arm64</code>:<pre data-language="cpp">if [ "$_ANDROID_ARCH" == "arch-arm64" ]; then
+        export MACHINE=armv8
+        export RELEASE=2.6.37
+        export SYSTEM=android64
+        export ARCH=arm
+        export CROSS_COMPILE="aarch64-linux-android-"
+fi</pre> </li> <li>Comment out the <code>FIPS</code> section if it is not used or define the <code>FIPS_SIG</code> environment variable with the FIPS signature location.</li> </ul> </li> <li>Define <code>ANDROID_NDK_ROOT</code> environment variable with the NDK location.</li> <li>Provide executable rights for the setup script and run it:<pre data-language="cpp">chmod a+x Setenv-android.sh
+. ./Setenv-android.sh</pre> <p>The script prints the following configuration details to the prompt when it completes:</p> <pre data-language="cpp">ANDROID_NDK_ROOT: /home/user1/android-ndk-r10d
+ANDROID_ARCH: arch-arm64
+ANDROID_EABI: aarch64-linux-android-4.9
+ANDROID_API: android-21
+ANDROID_SYSROOT: /home/user1/android-ndk-r10d/platforms/android-21/arch-arm64
+ANDROID_TOOLCHAIN: /home/user1/android-ndk-r10d/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64/bin
+FIPS_SIG:
+CROSS_COMPILE: aarch64-linux-androideabi-
+ANDROID_DEV: /home/user1/android-ndk-r10d/platforms/android-21/arch-arm64/usr</pre> </li> <li>Download the latest OpenSSL sources from <a href="http://www.openssl.org/source" target="_blank">http://www.openssl.org/source</a>.</li> <li>Extract the sources to a folder and navigate to that folder using the CLI.<p><b>Note: </b>If your development platform is Windows, you need <code>msys</code> with <code>perl</code> v5.14 or later to build OpenSSL.</p>
+</li> <li>Configure the OpenSSL sources to build for Android using the following command:<pre data-language="cpp">./Configure shared android</pre> <p><b>Note: </b>You must consider enabling/disabling the SSL features based on the legal restrictions in the region where your application is available. See the <a href="http://wiki.openssl.org/index.php/Compilation_and_Installation#Configure_Options" target="_blank">SSL configure options</a> for details about the configurable features.</p>
+</li> <li>Run <code>make CALC_VERSIONS="SHLIB_COMPAT=; SHLIB_SOVER=" build_libs</code> to build the <code>libcrypto</code> and <code>libssl</code> shared libraries that are not versioned.<p><b>Note: </b>Android does not load versioned libraries.</p>
+</li> <li>Open your Qt project using Qt Creator and update the "Build Android APK" settings to add <i>libcrypto</i> and <i>libssl</i> as additional libraries for your project.</li> <li>Run your application to see it running on the device.</li> </ol> <p>Qt Creator builds your application and creates an application package (APK) with the OpenSSL libraries bundled in it. Once the APK is ready, it uses <code>adb</code> to deploy the APK on the target you chose and launch the application.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/opensslsupport.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/opensslsupport.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

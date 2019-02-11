@@ -1,0 +1,117 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Scene Graph Adaptations - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content="Originally Qt Quick always relied on OpenGL (OpenGL ES 2.0 or OpenGL 2.0) for parsing the scene graph and rendering the results to a render target. &hellip;">
+  <meta name="keywords" content="scene, graph, adaptations, -, qt, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/qtquick-visualcanvas-adaptations/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Scene Graph Adaptations</h1>      <h2 id="scene-graph-adaptations-in-qt-quick">Scene Graph Adaptations in Qt Quick
+</h2> <p>Originally Qt Quick always relied on OpenGL (OpenGL ES 2.0 or OpenGL 2.0) for parsing the scene graph and rendering the results to a render target. From Qt 5.8 onwards Qt Quick also supports rendering in software and with Direct3D 12.</p>  <h2 id="switching-between-the-adaptation-used-by-the-application">Switching Between the Adaptation Used by the Application
+</h2> <p>The default rendering backend is still OpenGL, or - in Qt builds with disabled OpenGL support - the software renderer. This can be overridden either by using an environment variable or a C++ API. The former consists of setting the <code>QT_QUICK_BACKEND</code> or the legacy <code>QMLSCENE_DEVICE</code> environment variable before launching applications. The latter is done by calling <a href="../qquickwindow/#setSceneGraphBackend">QQuickWindow::setSceneGraphBackend</a>() early in the application's main() function.</p> <p>The supported backends are the following</p> <ul> <li>OpenGL - Requested by the string <code>""</code> or the enum value <a href="../qsgrendererinterface/#GraphicsApi-enum">QSGRendererInterface::OpenGL</a>.</li> <li>Software - Requested by the string <code>"software"</code> or the enum value <a href="../qsgrendererinterface/#GraphicsApi-enum">QSGRendererInterface::Software</a>.</li> <li>Direct3D 12 - Requested by the string <code>"d3d12"</code> or the enum value <a href="../qsgrendererinterface/#GraphicsApi-enum">QSGRendererInterface::Direct3D12</a>.</li> <li>
+<a href="../qtquick-visualcanvas-adaptations/#openvg">OpenVG</a> - Requested by the string <code>"openvg"</code> or the enum value <a href="../qsgrendererinterface/#GraphicsApi-enum">QSGRendererInterface::OpenVG</a>.</li> </ul> <p>When in doubt which backend is in use, enable basic scenegraph information logging via the <code>QSG_INFO</code> environment variable or the <code>qt.scenegraph.general</code> logging category. This will result in printing some information during application startup onto the debug output.</p> <p><b>Note: </b>Adaptations other than OpenGL will typically come with a set of limitations since they are unlikely to provide a feature set 100% compatible with OpenGL. However, they may provide their own specific advantages in certain areas. Refer to the sections below for more information on the various adaptations.</p>
+ <h2 id="opengl-es-2-0-and-opengl-2-0-adaptation">OpenGL ES 2.0 and OpenGL 2.0 Adaptation
+</h2> <p>The default adaptation capable of providing the full Qt Quick 2 feature set is the OpenGL adaptation. All of the details of the OpenGL adaptation can are available here: <a href="../qtquick-visualcanvas-scenegraph-renderer/">OpenGL Adaptation</a></p>  <h2 id="software-adaptation">Software Adaptation
+</h2> <p>The Software adaptation is an alternative renderer for <a href="../qtquick-index/">Qt Quick</a> 2 that uses the raster paint engine to render the contents of the scene graph. The details for this adaptation are available here: <a href="../qtquick-visualcanvas-adaptations-software/">Software Adaptation</a></p>  <h2 id="direct3d-12-experimental">Direct3D 12 (experimental)
+</h2> <p>The Direct3D 12 adaptation is an alternative renderer for <a href="../qtquick-index/">Qt Quick</a> 2 when running on Windows 10, both for Win32 and UWP applications. The details for this adaptation are available here: <a href="../qtquick-visualcanvas-adaptations-d3d12/">Direct3D 12 Adaptation</a></p>  <h2 id="openvg">OpenVG
+</h2> <p>The <a href="../qtquick-visualcanvas-adaptations/#openvg">OpenVG</a> adaptation is an alternative renderer for <a href="../qtquick-index/">Qt Quick</a> 2 that will renderer the contents of the scene graph using <a href="../qtquick-visualcanvas-adaptations/#openvg">OpenVG</a> commands to provide hardware-acclerated 2D vector and raster graphics. The details for this adaptation are available here: <a href="../qtquick-visualcanvas-adaptations-openvg/">OpenVG Adaptation</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/qtquick-visualcanvas-adaptations.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/qtquick-visualcanvas-adaptations.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

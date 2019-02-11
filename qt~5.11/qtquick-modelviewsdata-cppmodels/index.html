@@ -1,0 +1,285 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Using C++ Models With Qt Quick Views - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content="Models can be defined in C++ and then made available to QML. This is useful for exposing existing C++ data models or otherwise complex datasets to &hellip;">
+  <meta name="keywords" content="using, c++, models, with, qt, quick, views, -, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/qtquick-modelviewsdata-cppmodels/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Using C++ Models with Qt Quick Views</h1>      <h2 id="data-provided-in-a-custom-c-model">Data Provided In A Custom C++ Model
+</h2> <p>Models can be defined in C++ and then made available to QML. This is useful for exposing existing C++ data models or otherwise complex datasets to QML.</p> <p>A C++ model class can be defined as a <a href="../qstringlist/">QStringList</a>, a <a href="../qvariant/#QVariantList-typedef">QVariantList</a>, a <a href="../qobject/#QObjectList-typedef">QObjectList</a> or a <a href="../qabstractitemmodel/">QAbstractItemModel</a>. The first three are useful for exposing simpler datasets, while <a href="../qabstractitemmodel/">QAbstractItemModel</a> provides a more flexible solution for more complex models.</p> <p>For a video tutorial that takes you through the whole process of exposing a C++ model to QML, see the <a href="https://youtu.be/9BcAYDlpuT8" target="_blank">Using C++ Models in QML Tutorial</a>.</p>  <h3>QStringList-based Model
+</h3> <p>A model may be a simple <a href="../qstringlist/">QStringList</a>, which provides the contents of the list via the <i>modelData</i> role.</p> <p>Here is a <a href="../qml-qtquick-listview/">ListView</a> with a delegate that references its model item's value using the <code>modelData</code> role:</p> <pre>ListView {
+    width: 100; height: 100
+
+    model: myModel
+    delegate: Rectangle {
+        height: 25
+        width: 100
+        Text { text: modelData }
+    }
+}</pre> <p>A Qt application can load this QML document and set the value of <code>myModel</code> to a <a href="../qstringlist/">QStringList</a>:</p> <pre data-language="cpp">    QStringList dataList;
+    dataList.append("Item 1");
+    dataList.append("Item 2");
+    dataList.append("Item 3");
+    dataList.append("Item 4");
+
+    QQuickView view;
+    QQmlContext *ctxt = view.rootContext();
+    ctxt-&gt;setContextProperty("myModel", QVariant::fromValue(dataList));</pre> <p>The complete source code for this example is available in <a href="https://doc.qt.io/qt-5/qtquick-models-stringlistmodel-example.html" target="_blank">examples/quick/models/stringlistmodel</a> within the Qt install directory.</p> <p><b>Note: </b>There is no way for the view to know that the contents of a <a href="../qstringlist/">QStringList</a> have changed. If the <a href="../qstringlist/">QStringList</a> changes, it will be necessary to reset the model by calling <a href="../qqmlcontext/#setContextProperty">QQmlContext::setContextProperty</a>() again.</p>
+ <h3>QVariantList-based Model
+</h3> <p>A model may be a single <a href="../qvariant/#QVariantList-typedef">QVariantList</a>, which provides the contents of the list via the <i>modelData</i> role.</p> <p>The API works just like with <a href="../qstringlist/">QStringList</a>, as shown in the previous section.</p> <p><b>Note: </b>There is no way for the view to know that the contents of a <a href="../qvariant/#QVariantList-typedef">QVariantList</a> have changed. If the <a href="../qvariant/#QVariantList-typedef">QVariantList</a> changes, it will be necessary to reset the model.</p>
+ <h3>QObjectList-based Model
+</h3> <p>A list of <a href="../qobject/">QObject</a>* values can also be used as a model. A <a href="../qlist/">QList</a>&lt;<a href="../qobject/">QObject</a>*&gt; provides the properties of the objects in the list as roles.</p> <p>The following application creates a <code>DataObject</code> class with <a href="../qobject/#Q_PROPERTY">Q_PROPERTY</a> values that will be accessible as named roles when a <a href="../qlist/">QList</a>&lt;DataObject*&gt; is exposed to QML:</p> <pre data-language="cpp">class DataObject : public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString color READ color WRITE setColor NOTIFY colorChanged)
+    ...
+};
+
+int main(int argc, char ** argv)
+{
+    QGuiApplication app(argc, argv);
+
+    QList&lt;QObject*&gt; dataList;
+    dataList.append(new DataObject("Item 1", "red"));
+    dataList.append(new DataObject("Item 2", "green"));
+    dataList.append(new DataObject("Item 3", "blue"));
+    dataList.append(new DataObject("Item 4", "yellow"));
+
+    QQuickView view;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    QQmlContext *ctxt = view.rootContext();
+    ctxt-&gt;setContextProperty("myModel", QVariant::fromValue(dataList));
+    ...</pre> <p>The <a href="../qobject/">QObject</a>* is available as the <code>modelData</code> property. As a convenience, the properties of the object are also made available directly in the delegate's context. Here, <code>view.qml</code> references the <code>DataModel</code> properties in the <a href="../qml-qtquick-listview/">ListView</a> delegate:</p> <pre>ListView {
+    width: 100; height: 100
+
+    model: myModel
+    delegate: Rectangle {
+        height: 25
+        width: 100
+        color: model.modelData.color
+        Text { text: name }
+    }
+}</pre> <p>Note the use of <code>color</code> property with qualifier. The properties of the object are not replicated in the <code>model</code> object, as they are easily available via the <code>modelData</code> object.</p> <p>The complete source code for this example is available in <a href="https://doc.qt.io/qt-5/qtquick-models-objectlistmodel-example.html" target="_blank">examples/quick/models/objectlistmodel</a> within the Qt install directory.</p> <p>Note: There is no way for the view to know that the contents of a <a href="../qlist/">QList</a> has changed. If the <a href="../qlist/">QList</a> changes, it is necessary to reset the model by calling <a href="../qqmlcontext/#setContextProperty">QQmlContext::setContextProperty</a>() again.</p>  <h3>QAbstractItemModel Subclass
+</h3> <p>A model can be defined by subclassing <a href="../qabstractitemmodel/">QAbstractItemModel</a>. This is the best approach if you have a more complex model that cannot be supported by the other approaches. A <a href="../qabstractitemmodel/">QAbstractItemModel</a> can also automatically notify a QML view when the model data changes.</p> <p>The roles of a <a href="../qabstractitemmodel/">QAbstractItemModel</a> subclass can be exposed to QML by reimplementing <a href="../qabstractitemmodel/#roleNames">QAbstractItemModel::roleNames</a>().</p> <p>Here is an application with a <a href="../qabstractlistmodel/">QAbstractListModel</a> subclass named <code>AnimalModel</code>, which exposes the <i>type</i> and <i>sizes</i> roles. It reimplements <a href="../qabstractitemmodel/#roleNames">QAbstractItemModel::roleNames</a>() to expose the role names, so that they can be accessed via QML:</p> <pre data-language="cpp">class Animal
+{
+public:
+    Animal(const QString &amp;type, const QString &amp;size);
+    ...
+};
+
+class AnimalModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    enum AnimalRoles {
+        TypeRole = Qt::UserRole + 1,
+        SizeRole
+    };
+
+    AnimalModel(QObject *parent = 0);
+    ...
+};
+
+QHash&lt;int, QByteArray&gt; AnimalModel::roleNames() const {
+    QHash&lt;int, QByteArray&gt; roles;
+    roles[TypeRole] = "type";
+    roles[SizeRole] = "size";
+    return roles;
+}
+
+int main(int argc, char ** argv)
+{
+    QGuiApplication app(argc, argv);
+
+    AnimalModel model;
+    model.addAnimal(Animal("Wolf", "Medium"));
+    model.addAnimal(Animal("Polar bear", "Large"));
+    model.addAnimal(Animal("Quoll", "Small"));
+
+    QQuickView view;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    QQmlContext *ctxt = view.rootContext();
+    ctxt-&gt;setContextProperty("myModel", &amp;model);
+    ...</pre> <p>This model is displayed by a <a href="../qml-qtquick-listview/">ListView</a> delegate that accesses the <i>type</i> and <i>size</i> roles:</p> <pre>ListView {
+    width: 200; height: 250
+
+    model: myModel
+    delegate: Text { text: "Animal: " + type + ", " + size }
+}</pre> <p>QML views are automatically updated when the model changes. Remember the model must follow the standard rules for model changes and notify the view when the model has changed by using <a href="../qabstractitemmodel/#dataChanged">QAbstractItemModel::dataChanged</a>(), <a href="../qabstractitemmodel/#beginInsertRows">QAbstractItemModel::beginInsertRows</a>(), and so on. See the <a href="../model-view-programming/#model-subclassing-reference">Model subclassing reference</a> for more information.</p> <p>The complete source code for this example is available in <a href="https://doc.qt.io/qt-5/qtquick-models-abstractitemmodel-example.html" target="_blank">examples/quick/models/abstractitemmodel</a> within the Qt install directory.</p> <p><a href="../qabstractitemmodel/">QAbstractItemModel</a> presents a hierarchy of tables, but the views currently provided by QML can only display list data. In order to display the child lists of a hierarchical model, use the <a href="../qml-qtqml-models-delegatemodel/">DelegateModel</a> QML type, which provides the following properties and functions to be used with list models of <a href="../qabstractitemmodel/">QAbstractItemModel</a> type:</p> <ul> <li>
+<i>hasModelChildren</i> role property to determine whether a node has child nodes.</li> <li>
+<a href="../qml-qtqml-models-delegatemodel/#rootIndex-prop">DelegateModel::rootIndex</a> allows the root node to be specified</li> <li>
+<a href="../qml-qtqml-models-delegatemodel/#modelIndex-method">DelegateModel::modelIndex</a>() returns a <a href="../qmodelindex/">QModelIndex</a> which can be assigned to <a href="../qml-qtqml-models-delegatemodel/#rootIndex-prop">DelegateModel::rootIndex</a>
+</li> <li>
+<a href="../qml-qtqml-models-delegatemodel/#parentModelIndex-method">DelegateModel::parentModelIndex</a>() returns a <a href="../qmodelindex/">QModelIndex</a> which can be assigned to <a href="../qml-qtqml-models-delegatemodel/#rootIndex-prop">DelegateModel::rootIndex</a>
+</li> </ul>  <h3>SQL Models
+</h3> <p>Qt provides C++ classes that support SQL data models. These classes work transparently on the underlying SQL data, reducing the need to run SQL queries for basic SQL operations such as create, insert, or update. For more details about these classes, see <a href="../sql-model/">Using the SQL Model Classes</a>.</p> <p>Although the C++ classes provide complete feature sets to operate on SQL data, they do not provide data access to QML. So you must implement a C++ custom data model as a subclass of one of these classes, and expose it to QML either as a type or context property.</p>  <h4>Read-only Data Model
+</h4> <p>The custom model must reimplement the following methods to enable read-only access to the data from QML:</p> <ul> <li>
+<a href="../qabstractitemmodel/#roleNames">roleNames</a>() to expose the role names to the QML frontend. For example, the following version returns the selected table's field names as role names:<pre data-language="cpp"> QHash&lt;int, QByteArray&gt; SqlQueryModel::roleNames() const
+ {
+    QHash&lt;int, QByteArray&gt; roles;
+    // record() returns an empty QSqlRecord
+    for (int i = 0; i &lt; this-&gt;record().count(); i ++) {
+        roles.insert(Qt::UserRole + i + 1, record().fieldName(i).toUtf8());
+    }
+    return roles;
+}</pre> </li> <li>
+<a href="../qsqlquerymodel/#data">data</a>() to expose SQL data to the QML frontend. For example, the following implementation returns data for the given model index:<pre data-language="cpp">QVariant SqlQueryModel::data(const QModelIndex &amp;index, int role) const
+{
+    QVariant value;
+
+    if (index.isValid()) {
+        if (role &lt; Qt::UserRole) {
+            value = QSqlQueryModel::data(index, role);
+        } else {
+            int columnIdx = role - Qt::UserRole - 1;
+            QModelIndex modelIndex = this-&gt;index(index.row(), columnIdx);
+            value = QSqlQueryModel::data(modelIndex, Qt::DisplayRole);
+        }
+    }
+    return value;
+}</pre> </li> </ul> <p>The <a href="https://doc.qt.io/qt-5/qtquickcontrols2-chattutorial-example.html#qsqlquerymodel" target="_blank">QSqlQueryModel</a> class is good enough to implement a custom read-only model that represents data in an SQL database. The <a href="https://doc.qt.io/qt-5/qtquickcontrols2-chattutorial-example.html" target="_blank">chat tutorial</a> example demonstrates this very well by implementing a custom model to fetch the contact details from an <a href="https://doc.qt.io/qt-5/qtsql-attribution-sqlite.html#sqlite" target="_blank">SQLite</a> database.</p>  <h4>Editable Data Model
+</h4> <p>Besides the <code>roleNames()</code> and <code>data()</code>, the editable models must reimplement the <a href="../qsqltablemodel/#setData">setData</a> method to save changes to existing SQL data. The following version of the method checks if the given model index is valid and the <code>role</code> is equal to <a href="../qt/#ItemDataRole-enum">Qt::EditRole</a>, before calling the parent class version:</p> <pre data-language="cpp">bool SqlEditableModel::setData(const QModelIndex &amp;item, const QVariant &amp;value, int role)
+{
+    if (item.isValid() &amp;&amp; role == Qt::EditRole) {
+        QSqlTableModel::setData(item, value,role);
+        emit dataChanged(item, item);
+        return true;
+    }
+    return false;
+
+}</pre> <p><b>Note: </b>It is important to emit the <a href="../qabstractitemmodel/#dataChanged">dataChanged</a>() signal after saving the changes.</p>
+<p>Unlike the C++ item views such as <a href="../qlistview/">QListView</a> or <a href="../qtableview/">QTableView</a>, the <code>setData()</code> method must be explicitly invoked from QML whenever appropriate. For example, on the <a href="../qml-qtquick-controls-textfield/#editingFinished-signal">editingFinished</a>() or <a href="../qml-qtquick-controls-textfield/#accepted-signal">accepted</a>() signal of <a href="../qml-qtquick-controls-textfield/">TextField</a>. Depending on the <a href="../qsqltablemodel/#EditStrategy-enum">EditStrategy</a> used by the model, the changes are either queued for submission later or submitted immediately.</p> <p>You can also insert new data into the model by calling <a href="../qsqltablemodel/#insertRecord">QSqlTableModel::insertRecord</a>(). In the following example snippet, a <a href="../qsqlrecord/">QSqlRecord</a> is populated with book details and appended to the model:</p> <pre data-language="cpp">...
+QSqlRecord newRecord = record();
+newRecord.setValue("author", "John Grisham");
+newRecord.setValue("booktitle", "The Litigators");
+insertRecord(rowCount(), newRecord);
+...</pre>  <h3>Exposing C++ Data Models to QML
+</h3> <p>The above examples use <a href="../qqmlcontext/#setContextProperty">QQmlContext::setContextProperty</a>() to set model values directly in QML components. An alternative to this is to register the C++ model class as a QML type (either <a href="https://doc.qt.io/qt-5/qtqml-cppintegration-overview.html#defining-qml-types-from-c" target="_blank">directly</a> from a C++ entry-point, or within the initialization function of a <a href="https://doc.qt.io/qt-5/qtqml-modules-cppplugins.html" target="_blank">QML C++ plugin</a>, as shown below). This would allow the model classes to be created directly as types within QML:</p> <table class="generic"> <tr class="odd" valign="top">
+<td>C++</td>
+<td>
+<pre data-language="cpp">class MyModelPlugin : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.QmlExtension.MyModel" FILE "mymodel.json")
+public:
+    void registerTypes(const char *uri)
+    {
+        qmlRegisterType&lt;MyModel&gt;(uri, 1, 0,
+                "MyModel");
+    }
+}</pre> </td>
+</tr> <tr class="even" valign="top">
+<td>QML</td>
+<td>
+<pre>MyModel {
+    id: myModel
+    ListElement { someProperty: "some value" }
+}</pre> <pre>ListView {
+    width: 200; height: 250
+    model: myModel
+    delegate: Text { text: someProperty }
+}</pre> </td>
+</tr> </table> <p>See <a href="https://doc.qt.io/qt-5/qtqml-tutorials-extending-qml-example.html" target="_blank">Writing QML Extensions with C++</a> for details on writing QML C++ plugins.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/qtquick-modelviewsdata-cppmodels.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

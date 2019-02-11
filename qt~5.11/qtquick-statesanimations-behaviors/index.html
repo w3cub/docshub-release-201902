@@ -1,0 +1,242 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Using Qt Quick Behaviors With States - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content="In some cases you may choose to use a Behavior to animate a property change caused by a state change. While this works well for some situations, in &hellip;">
+  <meta name="keywords" content="using, qt, quick, behaviors, with, states, -, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/qtquick-statesanimations-behaviors/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Using Qt Quick Behaviors with States</h1>      <h2 id="using-behaviors-with-states">Using Behaviors with States
+</h2> <p>In some cases you may choose to use a Behavior to animate a property change caused by a state change. While this works well for some situations, in other situations it may lead to unexpected behavior.</p> <p>Here's an example that shows the problem:</p> <pre>import QtQuick 2.0
+
+Rectangle {
+    width: 400
+    height: 400
+
+    Rectangle {
+        id: coloredRect
+        width: 100
+        height: 100
+        anchors.centerIn: parent
+
+        color: "red"
+        Behavior on color {
+            ColorAnimation {}
+        }
+
+        MouseArea {
+            id: mouser
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
+        states: State {
+            name: "GreenState"
+            when: mouser.containsMouse
+
+            PropertyChanges {
+                target: coloredRect
+                color: "green"
+            }
+        }
+    }
+}</pre> <p>Testing the example by quickly and repeatedly moving the mouse in to and out of the colored rectangle shows that the colored rectangle will settle into a green color over time, never returning to full red. This is not what we wanted! The problem occurs because we have used a Behavior to animate the change in color, and our state change is trigged by the mouse entering or exiting the <a href="../qml-qtquick-mousearea/">MouseArea</a>, which is easily interrupted.</p> <p>To state the problem more formally, using States and Behaviors together can cause unexpected behavior when:</p> <ul> <li>a Behavior is used to animate a property change, specifically when moving from an explicitly defined state back to the implicit base state; and</li> <li>this Behavior can be interrupted to (re-)enter an explicitly defined state.</li> </ul> <p>The problem occurs because of the way the base state is defined for QML: as the "snapshot" state of the application just prior to entering an explicitly defined state. In this case, if we are in the process of animating from green back to red, and interrupt the animation to return to "GreenState", the base state will include the color in its intermediate, mid-animation form.</p> <p>While future versions of QML should be able to handle this situation more gracefully, there are currently several ways to rework your application to avoid this problem.</p> <p>1. Use a transition to animate the change, rather than a Behavior.</p> <pre>import QtQuick 2.0
+
+Rectangle {
+    width: 400
+    height: 400
+
+    Rectangle {
+        id: coloredRect
+        width: 100
+        height: 100
+        anchors.centerIn: parent
+
+        color: "red"
+
+        MouseArea {
+            id: mouser
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
+        states: State {
+            name: "GreenState"
+            when: mouser.containsMouse
+
+            PropertyChanges {
+                target: coloredRect
+                color: "green"
+            }
+        }
+
+        transitions: Transition {
+            ColorAnimation {}
+        }
+    }
+}</pre> <p>2. Use a conditional binding to change the property value, rather than a state</p> <pre>import QtQuick 2.0
+
+Rectangle {
+    width: 400
+    height: 400
+
+    Rectangle {
+        id: coloredRect
+        width: 100
+        height: 100
+        anchors.centerIn: parent
+
+        color: mouser.containsMouse ? "green" : "red"
+        Behavior on color {
+            ColorAnimation {}
+        }
+
+        MouseArea {
+            id: mouser
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+    }
+}</pre> <p>3. Use only explicitly defined states, rather than an implicit base state</p> <pre>import QtQuick 2.0
+
+Rectangle {
+    width: 400
+    height: 400
+
+    Rectangle {
+        id: coloredRect
+        width: 100
+        height: 100
+        anchors.centerIn: parent
+
+        Behavior on color {
+            ColorAnimation {}
+        }
+
+        MouseArea {
+            id: mouser
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
+        states: [
+        State {
+            name: "GreenState"
+            when: mouser.containsMouse
+
+            PropertyChanges {
+                target: coloredRect
+                color: "green"
+            }
+        },
+        State {
+            name: "RedState"
+            when: !mouser.containsMouse
+
+            PropertyChanges {
+                target: coloredRect
+                color: "red"
+            }
+        }]
+    }
+}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/qtquick-statesanimations-behaviors.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/qtquick-statesanimations-behaviors.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

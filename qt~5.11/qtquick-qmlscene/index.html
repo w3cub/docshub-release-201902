@@ -1,0 +1,126 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Prototyping With Qmlscene - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content="Qt 5 includes qmlscene, a utility that loads and displays QML documents even before the application is complete. This utility also provides the &hellip;">
+  <meta name="keywords" content="prototyping, with, qmlscene, -, qt, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/qtquick-qmlscene/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Prototyping with qmlscene</h1>     <p>Qt 5 includes <code>qmlscene</code>, a utility that loads and displays QML documents even before the application is complete. This utility also provides the following additional features that are useful while developing QML applications:</p> <ul> <li>View the QML document in a maximized window.</li> <li>View the QML document in full-screen mode.</li> <li>Make the window transparent.</li> <li>Disable multi-sampling (anti-aliasing).</li> <li>Do not detect the version of the .qml file.</li> <li>Run all animations in slow motion.</li> <li>Resize the window to the size of the root item.</li> <li>Add the list of import paths.</li> <li>Add a named bundle.</li> <li>Use a translation file to set the language.</li> </ul> <p>The <code>qmlscene</code> utility is meant to be used for testing your QML applications, and not as a launcher in a production environment. To launch a QML application in a production environment, develop a custom C++ application or bundle the QML file in a module. See <a href="https://doc.qt.io/qt-5/qtquick-deployment.html" target="_blank">Deploying QML applications</a> for more information.</p> <p>To load a .qml file, run the tool and select the file to be opened, or provide the file path on the command prompt:</p> <pre data-language="cpp">qmlscene myqmlfile.qml</pre> <p>To see the configuration options, run <code>qmlscene</code> with the <code>-help</code> argument.</p>  <h2 id="adding-module-import-paths">Adding Module Import Paths
+</h2> <p>Additional module import paths can be provided using the <code>-I</code> flag. For example, the <a href="https://doc.qt.io/qt-5/qtqml-qmlextensionplugins-example.html" target="_blank">QML plugin example</a> creates a C++ plugin identified with the namespace, <code>TimeExample</code>. To load the plugin, you must run <code>qmlscene</code> with the <code>-I</code> flag from the example's base directory:</p> <pre data-language="cpp">qmlscene -I imports plugins.qml</pre> <p>This adds the current directory to the import path so that <code>qmlscene</code> will find the plugin in the <code>imports</code> directory.</p> <p><b>Note: </b>By default, the current directory is included in the import search path, but modules in a namespace such as <code>TimeExample</code> are not found unless the path is explicitly added.</p>
+ <h2 id="loading-test-data">Loading Test Data
+</h2> <p>Often, QML applications are prototyped with test data that is later replaced by real data sources from C++ plugins. The <code>qmlscene</code> utility assists in this aspect by loading test data into the application context. It looks for a directory named <code>dummydata</code> in the same directory as the target QML file, and loads the .qml files in that directory as QML objects and bind them to the root context as properties named after the files.</p> <p>For example, the following QML document refers to a <code>lottoNumbers</code> property which does not exist within the document:</p> <pre>import QtQuick 2.3
+
+ListView {
+    width: 200; height: 300
+    model: lottoNumbers
+    delegate: Text { text: number }
+}</pre> <p>If, within the document's directory, there is a <code>dummydata</code> directory which contains a <code>lottoNumbers.qml</code> file like this:</p> <pre>import QtQuick 2.3
+
+ListModel {
+    ListElement { number: 23 }
+    ListElement { number: 44 }
+    ListElement { number: 78 }
+}</pre> <p>Then this model would be automatically loaded into the <a href="../qml-qtquick-listview/">ListView</a> in the previous document.</p> <p>Child properties are included when loaded from <code>dummydata</code>. The following document refers to a <code>clock.time</code> property:</p> <pre>import QtQuick 2.3
+Text { text: clock.time }</pre> <p>The text value could be filled by a <code>dummydata/clock.qml</code> file with a <code>time</code> property in the root context:</p> <pre>import QtQuick 2.3
+QtObject { property int time: 54321 }</pre> <p>To replace this with real data, bind the real data object to the root context in C++ using <a href="../qqmlcontext/#setContextProperty">QQmlContext::setContextProperty</a>(). This is detailed in <a href="https://doc.qt.io/qt-5/qtqml-cppintegration-topic.html" target="_blank">Integrating QML and C++</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/qtquick-qmlscene.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/qtquick-qmlscene.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

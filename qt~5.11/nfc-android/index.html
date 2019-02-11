@@ -1,0 +1,115 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Qt NFC on Android - Qt 5.11 - W3cubDocs</title>
+  
+  <meta name="description" content="Android, the registration of NDEF message handlers is done via the Android manifest file. This means the application has to provide an &hellip;">
+  <meta name="keywords" content="qt, nfc, on, android, -, qt~5.11">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.11/nfc-android/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/qt~5.11.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _qt">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title">Qt NFC on Android</h1>      <h2 id="automatically-launching-ndef-message-handlers-on-android">Automatically launching NDEF message handlers on Android
+</h2> <p>Android, the registration of NDEF message handlers is done via the <a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">Android manifest file</a>. This means the application has to provide an AndroidManifest.xml file with proper <a href="http://developer.android.com/guide/topics/connectivity/nfc/nfc.html#manifest" target="_blank">NFC intent-filter.</a></p> <pre data-language="cpp">&lt;intent-filter&gt;
+    &lt;action android:name="android.nfc.action.NDEF_DISCOVERED"/&gt;
+    &lt;category android:name="android.intent.category.DEFAULT"/&gt;
+    &lt;data android:mimeType="text/plain"/&gt;
+&lt;/intent-filter&gt;</pre> <p>When the application is started it has to register an message handler with <a href="../qnearfieldmanager/#registerNdefMessageHandler">registerNdefMessageHandler()</a> The first NDEF message arriving in the handler is the message that started the application. See the <a href="https://doc.qt.io/qt-5/qtnfc-corkboard-example.html" target="_blank">CorkBoard</a> application for an example.</p>  <h3>Note:
+</h3> <p>Supported tag types in Android are <a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_NDEF_DISCOVERED" target="_blank">NDEF_DISCOVERED</a> and <a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_TECH_DISCOVERED" target="_blank">ACTION_TAG_DISCOVERED</a> with <a href="http://developer.android.com/reference/android/nfc/tech/TagTechnology.html" target="_blank">TagTechnology</a> NdefFormatable or Ndef. If the application register other types in the <a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html" target="_blank">Android manifest file</a> the application will be started, but the tag will never get delivered to the handler. The handler should be registered as early as possible. If the application has not registered a handler, the application will be started every time a new tag is in range and the Android device end up running multiple instances of the application.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5/nfc-android.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5/nfc-android.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
