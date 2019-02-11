@@ -1,0 +1,594 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Feature Test Recommendations - C++ - W3cubDocs</title>
+  
+  <meta name="description" content="To track progress of partial implementation of C++ standards and experimental features, the feature test recommendations provide a set of &hellip;">
+  <meta name="keywords" content="feature, test, recommendations, -, c++, cpp">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cpp/feature_test/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/cpp.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cpp/" class="_nav-link" title="" style="margin-left:0;">C++</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _c">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="firstHeading" class="firstHeading">Feature Test Recommendations <span class="t-mark-rev t-since-cxx20">(C++20)</span>
+</h1>            <p>To track progress of partial implementation of C++ standards and experimental features, the feature test recommendations provide a set of <a href="../preprocessor/replace/" title="cpp/preprocessor/replace">preprocessor macros</a> which, if defined by the implementation, give a simple and portable way to detect the presence of said features.</p>
+<h3 id="Function_Macros"> Function Macros</h3> <p>Feature test function macros can be expanded in the expression of <a href="../preprocessor/conditional/" title="cpp/preprocessor/conditional">#if</a> and <a href="../preprocessor/conditional/" title="cpp/preprocessor/conditional">#elif</a>. They will be treated as defined macros by <a href="../preprocessor/conditional/" title="cpp/preprocessor/conditional">#ifdef</a>, <a href="../preprocessor/conditional/" title="cpp/preprocessor/conditional">#ifndef</a> and <a href="../preprocessor/conditional/" title="cpp/preprocessor/conditional">defined</a> but cannot be used anywhere else.</p>
+<h4 id="Finding_Headers"> Finding Headers</h4> <table class="t-sdsc-begin">  <tr class="t-sdsc"> <td> <code>__has_include( </code><span class="t-spar">header-name</span><code> )</code> </td> <td> (1) </td> <td class="t-sdsc-nopad"> </td>
+</tr> 
+</table> <p>Perform a check on the header file name in the same way a <a href="../preprocessor/include/" title="cpp/preprocessor/include">#include</a> directive would interpret it.</p>
+<p>If the header is found, it expands to <code>1</code>, <code>0</code> otherwise.</p>
+<p>Note: <a href="../preprocessor/include/" title="cpp/preprocessor/include"><code>__has_include</code></a> is part of C++17.</p>
+<h4 id="Attributes"> Attributes</h4> <table class="t-sdsc-begin">  <tr class="t-sdsc"> <td class="t-sdsc-nopad"> <code>__has_cpp_attribute( </code><span class="t-spar">attribute-token</span><code> )</code> </td> <td class="t-sdsc-nopad"> </td> <td class="t-sdsc-nopad"> </td>
+</tr> 
+</table> <p>Checks for the presence of an <a href="../language/attributes/" title="cpp/language/attributes">attribute</a>.</p>
+<p>For standard attributes, it will expand to the year and month in which the attribute was added to the working draft, the presence of vendor-specific attributes is determined by a non-zero value.</p>
+<h3 id="Language_and_Library_Features"> Language and Library Features</h3> <p>The following macros expand to a numeric value corresponding to the year and month when the feature has been included in the working draft.</p>
+<p>When a feature changes significantly, the macro will be updated accordingly.</p>
+<table class="wikitable sortable"> <tr> <th> Macro name </th> <th> Feature </th> <th> Value </th> <th> Header </th> <th> Standard/TS </th>
+</tr> <tr> <td><code>__cpp_aggregate_bases</code></td> <td>Extension to <a href="../language/aggregate_initialization/" title="cpp/language/aggregate initialization">aggregate initialization</a>
+</td> <td>201603</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_aggregate_nsdmi</code></td> <td><a href="../language/aggregate_initialization/" title="cpp/language/aggregate initialization">Member initializers and aggregates</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_alias_templates</code></td> <td><a href="../language/type_alias/" title="cpp/language/type alias">Template aliases</a></td> <td>200704</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_aligned_new</code></td> <td><a href="../memory/new/align_val_t/" title="cpp/memory/new/align val t">Dynamic memory allocation for over-aligned data</a></td> <td>201606</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_attributes</code></td> <td><a href="../language/attributes/" title="cpp/language/attributes">Attributes</a></td> <td>200809</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_binary_literals</code></td> <td><a href="../language/integer_literal/" title="cpp/language/integer literal">Binary literals in the C++ core language</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_capture_star_this</code></td> <td><a href="../language/lambda/#Lambda_capture" title="cpp/language/lambda">Lambda capture of *this by value as [=,*this] </a></td> <td>201603</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_concepts</code></td> <td><a href="http://en.cppreference.com/w/cpp/experimental/constraints" title="cpp/experimental/constraints" target="_blank">Constraints and concepts</a></td> <td>201507</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-concepts-ts t-mark-ts">(concepts TS)</span> </td>
+</tr> <tr> <td rowspan="3"> <code>__cpp_constexpr</code>
+</td> <td><a href="../language/constexpr/" title="cpp/language/constexpr"><code>constexpr</code></a></td> <td>200704</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td>Relaxing constraints on constexpr functions / constexpr member functions and implicit const</td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><a href="../language/lambda/" title="cpp/language/lambda">Constexpr lambda</a></td> <td>201603</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_decltype</code></td> <td><a href="../language/decltype/" title="cpp/language/decltype"><code>decltype</code></a></td> <td>200707</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_decltype_auto</code></td> <td><a href="../language/auto/" title="cpp/language/auto">Return type deduction for normal functions</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_deduction_guides</code></td> <td><a href="../language/deduction_guide/" title="cpp/language/class template argument deduction">Template argument deduction for class templates</a></td> <td>201703</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_delegating_constructors</code></td> <td><a href="../language/constructor/#Delegating_constructor" title="cpp/language/initializer list">Delegating constructors</a></td> <td>200604</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_enumerator_attributes</code></td> <td>Attributes for <a href="../language/enum/" title="cpp/language/enum">enumerators</a>
+</td> <td>201411</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_exceptions</code></td> <td><a href="../language/exceptions/" title="cpp/language/exceptions">Exception handling</a></td> <td>199711</td> <td><i>predefined</i></td> <td>
+<span class="t-mark">(c++98)</span> </td>
+</tr> <tr> <td><code>__cpp_explicit_bool</code></td> <td><a href="../language/explicit/" title="cpp/language/explicit"><code>explicit(bool)</code></a></td> <td>201806</td> <td><i>predefined</i></td> <td>
+<span class="t-mark">(c++20)</span> </td>
+</tr> <tr> <td><code>__cpp_fold_expressions</code></td> <td><a href="../language/fold/" title="cpp/language/fold">Fold expressions</a></td> <td>201603</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_generic_lambdas</code></td> <td><a href="../language/lambda/" title="cpp/language/lambda">Generic (polymorphic) lambda expressions</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_guaranteed_copy_elision</code></td> <td>Guaranteed copy elision through simplified <a href="../language/value_category/" title="cpp/language/value category">value categories</a>
+</td> <td>201606</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_hex_float</code></td> <td><a href="../language/floating_literal/" title="cpp/language/floating literal">Hexadecimal floating literals</a></td> <td>201603</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_if_constexpr</code></td> <td><a href="../language/if/" title="cpp/language/if">constexpr if</a></td> <td>201606</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td rowspan="2"> <code>__cpp_inheriting_constructors</code>
+</td> <td><a href="../language/using_declaration/#Inheriting_constructors" title="cpp/language/using declaration">Inheriting constructors</a></td> <td>200802</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td>Rewording inheriting constructors</td> <td>201511</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_init_captures</code></td> <td><a href="../language/lambda/" title="cpp/language/lambda">Generalized lambda-capture</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_initializer_lists</code></td> <td><a href="../language/list_initialization/" title="cpp/language/list initialization">Initializer lists</a></td> <td>200806</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_inline_variables</code></td> <td><a href="../language/inline/" title="cpp/language/inline">Inline variables</a></td> <td>201606</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lambdas</code></td> <td><a href="../language/lambda/" title="cpp/language/lambda">Lambda expressions</a></td> <td>200907</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_addressof_constexpr</code></td> <td>constexpr <code><a href="../memory/addressof/" title="cpp/memory/addressof">std::addressof</a></code>
+</td> <td>201603</td> <td><a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_allocator_</code><code>traits_is_always_equal</code>
+</td> <td><a href="../memory/allocator_traits/" title="cpp/memory/allocator traits"><code>std::allocator_traits::is_always_equal</code></a></td> <td>201411</td> <td>
+<a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a> <a href="../header/scoped_allocator/" title="cpp/header/scoped allocator"><code>&lt;scoped_allocator&gt;</code></a> <a href="../header/string/" title="cpp/header/string"><code>&lt;string&gt;</code></a> <a href="../header/deque/" title="cpp/header/deque"><code>&lt;deque&gt;</code></a> <a href="../header/forward_list/" title="cpp/header/forward list"><code>&lt;forward_list&gt;</code></a> <a href="../header/list/" title="cpp/header/list"><code>&lt;list&gt;</code></a> <a href="../header/vector/" title="cpp/header/vector"><code>&lt;vector&gt;</code></a> <a href="../header/map/" title="cpp/header/map"><code>&lt;map&gt;</code></a> <a href="../header/set/" title="cpp/header/set"><code>&lt;set&gt;</code></a> <a href="../header/unordered_map/" title="cpp/header/unordered map"><code>&lt;unordered_map&gt;</code></a> <a href="../header/unordered_set/" title="cpp/header/unordered set"><code>&lt;unordered_set&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_any</code></td> <td><code><a href="../utility/any/" title="cpp/utility/any">std::any</a></code></td> <td>201606</td> <td><a href="../header/any/" title="cpp/header/any"><code>&lt;any&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_apply</code></td> <td><code><a href="../utility/apply/" title="cpp/utility/apply">std::apply</a></code></td> <td>201603</td> <td><a href="../header/tuple/" title="cpp/header/tuple"><code>&lt;tuple&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_array_constexpr</code></td> <td>Adding constexpr modifiers to <code><a href="../iterator/reverse_iterator/" title="cpp/iterator/reverse iterator">std::reverse_iterator</a></code>, <code><a href="../iterator/move_iterator/" title="cpp/iterator/move iterator">std::move_iterator</a></code>, <code><a href="../container/array/" title="cpp/container/array">std::array</a></code> and <a href="../iterator/#Container_access" title="cpp/iterator">range access</a>
+</td> <td>201603</td> <td>
+<a href="../header/iterator/" title="cpp/header/iterator"><code>&lt;iterator&gt;</code></a> <a href="../header/array/" title="cpp/header/array"><code>&lt;array&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_as_const</code></td> <td><code><a href="../utility/as_const/" title="cpp/utility/as const">std::as_const</a></code></td> <td>201510</td> <td><a href="../header/utility/" title="cpp/header/utility"><code>&lt;utility&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_atomic_</code><code>is_always_lock_free</code>
+</td> <td><a href="../atomic/atomic/is_always_lock_free/" title="cpp/atomic/atomic/is always lock free"><code>constexpr atomic&lt;T&gt;::is_always_lock_free</code></a></td> <td>201603</td> <td><a href="../header/atomic/" title="cpp/header/atomic"><code>&lt;atomic&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_atomic_ref</code></td> <td><a href="../atomic/atomic_ref/" title="cpp/atomic/atomic ref"><code>std::atomic_ref</code></a></td> <td>201806</td> <td><a href="../header/atomic/" title="cpp/header/atomic"><code>&lt;atomic&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx20">(C++20)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_bit_­cast</code></td> <td><a href="../numeric/bit_cast/" title="cpp/numeric/bit cast"><code>std::bit_cast</code></a></td> <td>201806</td> <td><a href="../header/bit/" title="cpp/header/bit"><code>&lt;bit&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx20">(C++20)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_bool_constant</code></td> <td><code><a href="../types/integral_constant/" title="cpp/types/integral constant">std::bool_constant</a></code></td> <td>201505</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_boyer_moore_searcher</code></td> <td><code><a href="../utility/functional/boyer_moore_searcher/" title="cpp/utility/functional/boyer moore searcher">Searchers</a></code></td> <td>201603</td> <td><a href="../header/functional/" title="cpp/header/functional"><code>&lt;functional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_byte</code></td> <td>A <a href="../types/byte/" title="cpp/types/byte">byte type</a> definition</td> <td>201603</td> <td><a href="../header/cstddef/" title="cpp/header/cstddef"><code>&lt;cstddef&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td rowspan="2"> <code>__cpp_lib_chrono</code>
+</td> <td>rounding functions for <code><a href="../chrono/duration/" title="cpp/chrono/duration">std::chrono::duration</a></code> and <code><a href="../chrono/time_point/" title="cpp/chrono/time point">std::chrono::time_point</a></code>
+</td> <td>201510</td> <td><a href="../header/chrono/" title="cpp/header/chrono"><code>&lt;chrono&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>making all the member functions of <code><a href="../chrono/duration/" title="cpp/chrono/duration">std::chrono::duration</a></code> and <code><a href="../chrono/time_point/" title="cpp/chrono/time point">std::chrono::time_point</a></code> constexpr</td> <td>201611</td> <td><a href="../header/chrono/" title="cpp/header/chrono"><code>&lt;chrono&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_chrono_udls</code></td> <td><a href="../chrono/duration/#Literals" title="cpp/chrono/duration">User-defined literals for time types</a></td> <td>201304</td> <td><a href="../header/chrono/" title="cpp/header/chrono"><code>&lt;chrono&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_clamp</code></td> <td>An algorithm to "clamp" a value between a pair of boundary values (<code><a href="../algorithm/clamp/" title="cpp/algorithm/clamp">std::clamp</a></code>)</td> <td>201603</td> <td><a href="../header/algorithm/" title="cpp/header/algorithm"><code>&lt;algorithm&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_complex_udls</code></td> <td><a href="#" title='cpp/numeric/complex/operator""i'>User-defined Literals for std::complex</a></td> <td>201309</td> <td><a href="../header/complex/" title="cpp/header/complex"><code>&lt;complex&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_­lib_­concepts</code></td> <td><a href="../concepts/" title="cpp/concepts">Standard library concepts</a></td> <td>201806</td> <td><a href="../header/concepts/" title="cpp/header/concepts"><code>&lt;concepts&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx20">(C++20)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_­lib_­constexpr_</code><code>­swap_­algorithms</code>
+</td> <td>Constexpr for <code><a href="../algorithm/swap/" title="cpp/algorithm/swap">swap</a></code> and swap related functions</td> <td>201806</td> <td><a href="../header/algorithm/" title="cpp/header/algorithm"><code>&lt;algorithm&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx20">(C++20)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_enable_</code><code>shared_from_this</code>
+</td> <td><a href="../memory/enable_shared_from_this/" title="cpp/memory/enable shared from this">Re-enabling shared_from_this</a></td> <td>201603</td> <td><a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_exchange_function</code></td> <td><a href="../utility/exchange/" title="cpp/utility/exchange">exchange() utility function</a></td> <td>201304</td> <td><a href="../header/utility/" title="cpp/header/utility"><code>&lt;utility&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_execution</code></td> <td><a href="../algorithm/#Execution_policies" title="cpp/algorithm">Execution policies</a></td> <td>201603</td> <td><a href="../header/execution/" title="cpp/header/execution"><code>&lt;execution&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_experimental_any</code></td> <td>class <a href="http://en.cppreference.com/w/cpp/experimental/any" title="cpp/experimental/any" target="_blank">any</a>
+</td> <td>201411</td> <td><a href="http://en.cppreference.com/w/cpp/header/experimental/any" title="cpp/header/experimental/any" target="_blank"><code>&lt;experimental/any&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_experimental_apply</code></td> <td>
+<a href="http://en.cppreference.com/w/cpp/experimental/apply" title="cpp/experimental/apply" target="_blank"><code>apply()</code></a> call a function with arguments from a tuple</td> <td>201402</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/tuple&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/tuple (page does not exist)" target="_blank"><code>&lt;experimental/tuple&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>boyer_moore_searching</code>
+</td> <td>Extending <code><a href="../algorithm/search/" title="cpp/algorithm/search">std::search</a></code> to use Additional Searching Algorithms</td> <td>201411</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/functional&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/functional (page does not exist)" target="_blank"><code>&lt;experimental/functional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>filesystem</code>
+</td> <td><a href="http://en.cppreference.com/w/cpp/experimental/fs" title="cpp/experimental/fs" target="_blank">File System TS</a></td> <td>201406</td> <td><a href="http://en.cppreference.com/w/cpp/header/experimental/filesystem" title="cpp/header/experimental/filesystem" target="_blank"><code>&lt;experimental/filesystem&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-fs-ts t-mark-ts">(filesystem TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>function_erased_allocator</code>
+</td> <td>Type-erased allocator for <code><a href="../utility/functional/function/" title="cpp/utility/functional/function">std::function</a></code>
+</td> <td>201406</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/functional&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/functional (page does not exist)" target="_blank"><code>&lt;experimental/functional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>invocation_type</code>
+</td> <td><a href="http://en.cppreference.com/w/cpp/experimental/invocation_type" title="cpp/experimental/invocation type" target="_blank">Invocation type traits</a></td> <td>201406</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/type_traits&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/type traits (page does not exist)" target="_blank"><code>&lt;experimental/type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>memory_resources</code>
+</td> <td><a href="http://en.cppreference.com/w/cpp/experimental/memory" title="cpp/experimental/memory" class="mw-redirect" target="_blank">Polymorphic Memory Resources</a></td> <td>201402</td> <td><a href="http://en.cppreference.com/w/cpp/header/experimental/memory_resource" title="cpp/header/experimental/memory resource" target="_blank"><code>&lt;experimental/memory_resource&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>optional</code>
+</td> <td>
+<a href="http://en.cppreference.com/w/cpp/experimental/optional" title="cpp/experimental/optional" target="_blank">optional</a> objects</td> <td>201411</td> <td><a href="http://en.cppreference.com/w/cpp/header/experimental/optional" title="cpp/header/experimental/optional" target="_blank"><code>&lt;experimental/optional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>packaged_task_erased_allocator</code>
+</td> <td>Type-erased allocator for <code><a href="../thread/packaged_task/" title="cpp/thread/packaged task">std::packaged_task</a></code>
+</td> <td>201406</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/future&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/future (page does not exist)" target="_blank"><code>&lt;experimental/future&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>parallel_algorithm</code>
+</td> <td><a href="http://en.cppreference.com/w/cpp/experimental/parallelism" title="cpp/experimental/parallelism" target="_blank">Extensions for parallelism</a></td> <td>201505</td> <td>
+<a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/algorithm&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/algorithm (page does not exist)" target="_blank"><code>&lt;experimental/algorithm&gt;</code></a> <a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/exception_list&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/exception list (page does not exist)" target="_blank"><code>&lt;experimental/exception_list&gt;</code></a> <a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/execution_policy&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/execution policy (page does not exist)" target="_blank"><code>&lt;experimental/execution_policy&gt;</code></a> <a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/numeric&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/numeric (page does not exist)" target="_blank"><code>&lt;experimental/numeric&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-parallelism-ts t-mark-ts">(parallelism TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>promise_erased_allocator</code>
+</td> <td>Type-erased allocator for <code><a href="../thread/promise/" title="cpp/thread/promise">std::promise</a></code>
+</td> <td>201406</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/future&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/future (page does not exist)" target="_blank"><code>&lt;experimental/future&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_experimental_sample</code></td> <td><a href="http://en.cppreference.com/w/cpp/experimental/sample" title="cpp/experimental/sample" target="_blank"><code>sample</code></a></td> <td>201402</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/algorithm&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/algorithm (page does not exist)" target="_blank"><code>&lt;experimental/algorithm&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>shared_ptr_arrays</code>
+</td> <td>Extending shared_ptr to Support Arrays</td> <td>201406</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/memory&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/memory (page does not exist)" target="_blank"><code>&lt;experimental/memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>string_view</code>
+</td> <td>
+<a href="http://en.cppreference.com/w/cpp/experimental/basic_string_view" title="cpp/experimental/basic string view" target="_blank">string_view</a>: a non-owning reference to a string</td> <td>201411</td> <td><a href="http://en.cppreference.com/w/cpp/header/experimental/string_view" title="cpp/header/experimental/string view" target="_blank"><code>&lt;experimental/string_view&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_experimental_</code><code>type_trait_variable_templates</code>
+</td> <td>Variable templates For type traits</td> <td>201402</td> <td><a href="https://en.cppreference.com/mwiki/index.php?title=cpp/header/experimental/type_traits&amp;action=edit&amp;redlink=1" class="new" title="cpp/header/experimental/type traits (page does not exist)" target="_blank"><code>&lt;experimental/type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-libfund-ts t-mark-ts">(library fundamentals TS)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_filesystem</code></td> <td><a href="../filesystem/" title="cpp/filesystem">Filesystem library</a></td> <td>201703</td> <td><a href="../header/filesystem/" title="cpp/header/filesystem"><code>&lt;filesystem&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_gcd_lcm</code></td> <td>
+<code><a href="../numeric/gcd/" title="cpp/numeric/gcd">std::gcd</a></code>, <code><a href="../numeric/lcm/" title="cpp/numeric/lcm">std::lcm</a></code>
+</td> <td>201606</td> <td><a href="../header/numeric/" title="cpp/header/numeric"><code>&lt;numeric&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_generic_</code><code>associative_lookup</code>
+</td> <td>Adding heterogeneous comparison lookup to associative containers</td> <td>201304</td> <td>
+<a href="../header/map/" title="cpp/header/map"><code>&lt;map&gt;</code></a> <a href="../header/set/" title="cpp/header/set"><code>&lt;set&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_hardware_</code><code>interference_size</code>
+</td> <td><a href="../thread/hardware_destructive_interference_size/" title="cpp/thread/hardware destructive interference size">constexpr std::hardware_{constructive, destructive}_interference_size</a></td> <td>201703</td> <td><a href="../header/new/" title="cpp/header/new"><code>&lt;new&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_has_unique_</code><code>object_representations</code>
+</td> <td><code><a href="../types/has_unique_object_representations/" title="cpp/types/has unique object representations">std::has_unique_object_representations</a></code></td> <td>201606</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_hypot</code></td> <td>3-argument overload of <code><a href="../numeric/math/hypot/" title="cpp/numeric/math/hypot">std::hypot</a></code>
+</td> <td>201603</td> <td><a href="../header/cmath/" title="cpp/header/cmath"><code>&lt;cmath&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_incomplete_</code><code>container_elements</code>
+</td> <td>Minimal incomplete type support for standard containers</td> <td>201505</td> <td>
+<a href="../header/forward_list/" title="cpp/header/forward list"><code>&lt;forward_list&gt;</code></a> <a href="../header/list/" title="cpp/header/list"><code>&lt;list&gt;</code></a> <a href="../header/vector/" title="cpp/header/vector"><code>&lt;vector&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_integer_sequence</code></td> <td><a href="../utility/integer_sequence/" title="cpp/utility/integer sequence">Compile-time integer sequences</a></td> <td>201304</td> <td><a href="../header/utility/" title="cpp/header/utility"><code>&lt;utility&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_integral_</code><code>constant_callable</code>
+</td> <td><code><a href="../types/integral_constant/" title="cpp/types/integral constant">std::integral_constant::operator()</a></code></td> <td>201304</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_invoke</code></td> <td>
+<code><a href="../utility/functional/invoke/" title="cpp/utility/functional/invoke">std::invoke</a></code> function template</td> <td>201411</td> <td><a href="../header/functional/" title="cpp/header/functional"><code>&lt;functional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_is_aggregate</code></td> <td>
+<code>std::is_aggregate</code> type trait</td> <td>201703</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_is_final</code></td> <td><a href="../types/is_final/" title="cpp/types/is final"><code>std::is_final</code></a></td> <td>201402</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_is_invocable</code></td> <td>
+<code>std::is_invocable</code>, <code>std::invoke_result</code>
+</td> <td>201703</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_is_null_pointer</code></td> <td><a href="../types/is_null_pointer/" title="cpp/types/is null pointer"><code>std::is_null_pointer</code></a></td> <td>201309</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_is_swappable</code></td> <td><a href="../types/is_swappable/" title="cpp/types/is swappable">[nothrow-]swappable traits</a></td> <td>201603</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_launder</code></td> <td>Core Issue 1776: Replacement of class objects containing reference members (<code><a href="../utility/launder/" title="cpp/utility/launder">std::launder</a></code>)</td> <td>201606</td> <td><a href="../header/new/" title="cpp/header/new"><code>&lt;new&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_­lib_­list_­</code><code>remove_­return_­type</code>
+</td> <td>Change the return type of the <code><a href="../container/list/remove/" title="cpp/container/list/remove">remove()</a></code>, <code><a href="../container/list/remove/" title="cpp/container/list/remove">remove_if()</a></code> and <code><a href="../container/list/unique/" title="cpp/container/list/unique">unique()</a></code> members of <code><a href="../container/forward_list/" title="cpp/container/forward list">std::forward_list</a></code> and <code><a href="../container/list/" title="cpp/container/list">std::list</a></code>
+</td> <td>201806</td> <td>
+<a href="../header/forward_list/" title="cpp/header/forward list"><code>&lt;forward_list&gt;</code></a> <a href="../header/list/" title="cpp/header/list"><code>&lt;list&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx20">(C++20)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_logical_traits</code></td> <td><a href="../types/#Operations_on_traits" title="cpp/types">Logical operator type traits</a></td> <td>201510</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_make_from_tuple</code></td> <td>
+<a href="../utility/make_from_tuple/" title="cpp/utility/make from tuple">make_from_tuple</a>: apply for construction</td> <td>201606</td> <td><a href="../header/tuple/" title="cpp/header/tuple"><code>&lt;tuple&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_make_</code><code>reverse_iterator</code>
+</td> <td><a href="../iterator/make_reverse_iterator/" title="cpp/iterator/make reverse iterator"><code>std::make_reverse_iterator</code></a></td> <td>201402</td> <td><a href="../header/iterator/" title="cpp/header/iterator"><code>&lt;iterator&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_make_unique</code></td> <td><code><a href="../memory/unique_ptr/make_unique/" title="cpp/memory/unique ptr/make unique">std::make_unique</a></code></td> <td>201304</td> <td><a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_map_try_emplace</code></td> <td>
+<code><a href="../container/map/try_emplace/" title="cpp/container/map/try emplace">std::map::try_emplace</a></code>, <code><a href="../container/map/insert_or_assign/" title="cpp/container/map/insert or assign">std::map::insert_or_assign</a></code>
+</td> <td>201411</td> <td><a href="../header/map/" title="cpp/header/map"><code>&lt;map&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_math_</code><code>special_functions</code>
+</td> <td><a href="../numeric/special_math/" title="cpp/numeric/special math">Mathematical special functions for C++17</a></td> <td>201603</td> <td><a href="../header/cmath/" title="cpp/header/cmath"><code>&lt;cmath&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_memory_resource</code></td> <td><code><a href="../memory/memory_resource/" title="cpp/memory/memory resource">std::pmr::memory_resource</a></code></td> <td>201603</td> <td><a href="../header/memory_resource/" title="cpp/header/memory resource"><code>&lt;memory_resource&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_node_extract</code></td> <td>Splicing maps and sets (<code><a href="../container/map/extract/" title="cpp/container/map/extract">std::map::extract</a></code>, <code><a href="../container/map/merge/" title="cpp/container/map/merge">std::map::merge</a></code>, <a href="../container/map/insert/" title="cpp/container/map/insert"><code>std::map::insert(node_type)</code></a>, etc)</td> <td>201606</td> <td>
+<a href="../header/map/" title="cpp/header/map"><code>&lt;map&gt;</code></a> <a href="../header/set/" title="cpp/header/set"><code>&lt;set&gt;</code></a> <a href="../header/unordered_map/" title="cpp/header/unordered map"><code>&lt;unordered_map&gt;</code></a> <a href="../header/unordered_set/" title="cpp/header/unordered set"><code>&lt;unordered_set&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_nonmember_</code><code>container_access</code>
+</td> <td>Non-member <code>size()</code> and more (<a href="../iterator/#Container_access" title="cpp/iterator">uniform container access</a>)</td> <td>201411</td> <td>
+<a href="../header/iterator/" title="cpp/header/iterator"><code>&lt;iterator&gt;</code></a> <a href="../header/array/" title="cpp/header/array"><code>&lt;array&gt;</code></a> <a href="../header/deque/" title="cpp/header/deque"><code>&lt;deque&gt;</code></a> <a href="../header/forward_list/" title="cpp/header/forward list"><code>&lt;forward_list&gt;</code></a> <a href="../header/list/" title="cpp/header/list"><code>&lt;list&gt;</code></a> <a href="../header/map/" title="cpp/header/map"><code>&lt;map&gt;</code></a> <a href="../header/regex/" title="cpp/header/regex"><code>&lt;regex&gt;</code></a> <a href="../header/set/" title="cpp/header/set"><code>&lt;set&gt;</code></a> <a href="../header/string/" title="cpp/header/string"><code>&lt;string&gt;</code></a> <a href="../header/unordered_map/" title="cpp/header/unordered map"><code>&lt;unordered_map&gt;</code></a> <a href="../header/unordered_set/" title="cpp/header/unordered set"><code>&lt;unordered_set&gt;</code></a> <a href="../header/vector/" title="cpp/header/vector"><code>&lt;vector&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_not_fn</code></td> <td><code><a href="../utility/functional/not_fn/" title="cpp/utility/functional/not fn">std::not_fn</a></code></td> <td>201603</td> <td><a href="../header/functional/" title="cpp/header/functional"><code>&lt;functional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_null_iterators</code></td> <td>Null <a href="../named_req/forwarditerator/" title="cpp/named req/ForwardIterator">ForwardIterators</a>
+</td> <td>201304</td> <td><a href="../header/iterator/" title="cpp/header/iterator"><code>&lt;iterator&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_optional</code></td> <td><code><a href="../utility/optional/" title="cpp/utility/optional">std::optional</a></code></td> <td>201606</td> <td><a href="../header/optional/" title="cpp/header/optional"><code>&lt;optional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_parallel_algorithm</code></td> <td>Adopt the Parallelism TS for C++17</td> <td>201603</td> <td>
+<a href="../header/algorithm/" title="cpp/header/algorithm"><code>&lt;algorithm&gt;</code></a> <a href="../header/numeric/" title="cpp/header/numeric"><code>&lt;numeric&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_quoted_string_io</code></td> <td><code><a href="../io/manip/quoted/" title="cpp/io/manip/quoted">std::quoted</a></code></td> <td>201304</td> <td><a href="../header/iomanip/" title="cpp/header/iomanip"><code>&lt;iomanip&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_</code><code>raw_memory_algorithms</code>
+</td> <td><a href="../memory/#Uninitialized_storage" title="cpp/memory">Extending memory management tools</a></td> <td>201606</td> <td><a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_result_of_sfinae</code></td> <td>
+<code><a href="../types/result_of/" title="cpp/types/result of">std::result_of</a></code> and SFINAE</td> <td>201210</td> <td>
+<a href="../header/functional/" title="cpp/header/functional"><code>&lt;functional&gt;</code></a> <a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_robust_</code><code>nonmodifying_seq_ops</code>
+</td> <td>Making non-modifying sequence operations more robust (two-range overloads for <code><a href="../algorithm/mismatch/" title="cpp/algorithm/mismatch">std::mismatch</a></code>, <code><a href="../algorithm/equal/" title="cpp/algorithm/equal">std::equal</a></code> and <code><a href="../algorithm/is_permutation/" title="cpp/algorithm/is permutation">std::is_permutation</a></code>)</td> <td>201304</td> <td><a href="../header/algorithm/" title="cpp/header/algorithm"><code>&lt;algorithm&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_sample</code></td> <td><code><a href="../algorithm/sample/" title="cpp/algorithm/sample">std::sample</a></code></td> <td>201603</td> <td><a href="../header/algorithm/" title="cpp/header/algorithm"><code>&lt;algorithm&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_scoped_lock</code></td> <td>Variadic <code><a href="../thread/lock_guard/" title="cpp/thread/lock guard">std::lock_guard</a></code> (<code>std::scoped_lock</code>)</td> <td>201703</td> <td><a href="../header/mutex/" title="cpp/header/mutex"><code>&lt;mutex&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_shared_mutex</code></td> <td>
+<code><a href="../thread/shared_mutex/" title="cpp/thread/shared mutex">std::shared_mutex</a></code> (untimed)</td> <td>201505</td> <td><a href="../header/shared_mutex/" title="cpp/header/shared mutex"><code>&lt;shared_mutex&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_shared_ptr_arrays</code></td> <td><code><a href="../memory/shared_ptr/" title="cpp/memory/shared ptr">std::shared_ptr&lt;T[]&gt;</a></code></td> <td>201611</td> <td><a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_shared_ptr_weak_type</code></td> <td><a href="../memory/shared_ptr/" title="cpp/memory/shared ptr"><code>shared_ptr::weak_type</code></a></td> <td>201606</td> <td><a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_shared_timed_mutex</code></td> <td>Rename <code>shared_mutex</code> to <code><a href="../thread/shared_timed_mutex/" title="cpp/thread/shared timed mutex">shared_timed_mutex</a></code>
+</td> <td>201402</td> <td><a href="../header/shared_mutex/" title="cpp/header/shared mutex"><code>&lt;shared_mutex&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_string_udls</code></td> <td><a href="#" title='cpp/string/basic string/operator""s'>User-defined literals for string types</a></td> <td>201304</td> <td><a href="../header/string/" title="cpp/header/string"><code>&lt;string&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_string_view</code></td> <td><code><a href="../string/basic_string_view/" title="cpp/string/basic string view">std::string_view</a></code></td> <td>201606</td> <td>
+<a href="../header/string/" title="cpp/header/string"><code>&lt;string&gt;</code></a> <a href="../header/string_view/" title="cpp/header/string view"><code>&lt;string_view&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_to_chars</code></td> <td>Elementary string conversions (<code>std::to_chars</code>, <code>std::from_chars</code>)</td> <td>201611</td> <td><a href="../header/utility/" title="cpp/header/utility"><code>&lt;utility&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_transformation_</code><code>trait_aliases</code>
+</td> <td>TransformationTraits Redux</td> <td>201304</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td rowspan="2"> <code>__cpp_lib_</code><code>transparent_operators</code>
+</td> <td>Making Operator Functors greater&lt;&gt;</td> <td>201210</td> <td><a href="../header/functional/" title="cpp/header/functional"><code>&lt;functional&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td>Making <code><a href="../memory/owner_less/" title="cpp/memory/owner less">std::owner_less</a></code> more flexible (<a href="../memory/owner_less_void/" title="cpp/memory/owner less void"><code>std::owner_less&lt;void&gt;</code></a>)</td> <td>201510</td> <td>
+<a href="../header/memory/" title="cpp/header/memory"><code>&lt;memory&gt;</code></a> <a href="../header/functional/" title="cpp/header/functional"><code>&lt;functional&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_tuple_element_t</code></td> <td><code>std::tuple_element_t</code></td> <td>201402</td> <td><a href="../header/tuple/" title="cpp/header/tuple"><code>&lt;tuple&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_tuples_by_type</code></td> <td><a href="../utility/tuple/get/" title="cpp/utility/tuple/get">Addressing tuples by type</a></td> <td>201304</td> <td>
+<a href="../header/utility/" title="cpp/header/utility"><code>&lt;utility&gt;</code></a> <a href="../header/tuple/" title="cpp/header/tuple"><code>&lt;tuple&gt;</code></a>
+</td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_type_trait_</code><code>variable_templates</code>
+</td> <td>Type traits variable templates (<code><a href="../types/is_void/" title="cpp/types/is void">std::is_void_v</a></code>, etc)</td> <td>201510</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_uncaught_exceptions</code></td> <td><code>std::uncaught_exceptions</code></td> <td>201411</td> <td><a href="../header/exception/" title="cpp/header/exception"><code>&lt;exception&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_lib_unordered_</code><code>map_try_emplace</code>
+</td> <td>
+<code><a href="../container/unordered_map/try_emplace/" title="cpp/container/unordered map/try emplace">std::unordered_map::try_emplace</a></code>, <code><a href="../container/unordered_map/insert_or_assign/" title="cpp/container/unordered map/insert or assign">std::unordered_map::insert_or_assign</a></code>
+</td> <td>201411</td> <td><a href="../header/unordered_map/" title="cpp/header/unordered map"><code>&lt;unordered_map&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_variant</code></td> <td>
+<code><a href="../utility/variant/" title="cpp/utility/variant">std::variant</a></code>: a type-safe union for C++17</td> <td>201606</td> <td><a href="../header/variant/" title="cpp/header/variant"><code>&lt;variant&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_lib_void_t</code></td> <td><code><a href="../types/void_t/" title="cpp/types/void t">std::void_t</a></code></td> <td>201411</td> <td><a href="../header/type_traits/" title="cpp/header/type traits"><code>&lt;type_traits&gt;</code></a></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_namespace_attributes</code></td> <td>Attributes for <a href="../language/namespace/" title="cpp/language/namespace">namespaces</a>
+</td> <td>201411</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_noexcept_function_type</code></td> <td>Make <a href="../language/noexcept_spec/" title="cpp/language/noexcept spec">exception specifications</a> be part of the type system</td> <td>201510</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_nontype_template_args</code></td> <td>Allow constant evaluation for all <a href="../language/template_parameters/#Template_non-type_arguments" title="cpp/language/template parameters">non-type template arguments</a>
+</td> <td>201411</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_nontype_template_</code><code>parameter_auto</code>
+</td> <td>Declaring <a href="../language/template_parameters/#Non-type_template_parameter" title="cpp/language/template parameters">non-type template parameters</a> with auto</td> <td>201606</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td>
+<code>__cpp_nontype_template_</code><code>parameter_class</code>
+</td> <td>Class types in <a href="../language/template_parameters/#Non-type_template_parameter" title="cpp/language/template parameters">non-type template parameters</a> </td> <td>201806</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx20">(C++20)</span> </td>
+</tr> <tr> <td><code>__cpp_nsdmi</code></td> <td><a href="../language/data_members/#Member_initialization" title="cpp/language/data members">Non-static data member initializers</a></td> <td>200809</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td rowspan="2"> <code>__cpp_range_based_for</code>
+</td> <td><a href="../language/range-for/" title="cpp/language/range-for">Range-based for loop</a></td> <td>200907</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td>Generalized range-based for loop</td> <td>201603</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_raw_strings</code></td> <td><a href="../language/string_literal/" title="cpp/language/string literal">Raw string literals</a></td> <td>200710</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_ref_qualifiers</code></td> <td><a href="../language/member_functions/" title="cpp/language/member functions">ref-qualifiers</a></td> <td>200710</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_return_type_deduction</code></td> <td><a href="../language/auto/" title="cpp/language/auto">Return type deduction for normal functions</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_rtti</code></td> <td>Run-time type identification (<a href="../language/dynamic_cast/" title="cpp/language/dynamic cast"><code>dynamic_cast</code></a>, <a href="../language/typeid/" title="cpp/language/typeid"><code>typeid</code></a>)</td> <td>199711</td> <td><i>predefined</i></td> <td>
+<span class="t-mark">(c++98)</span> </td>
+</tr> <tr> <td><code>__cpp_rvalue_references</code></td> <td><a href="../language/reference/" title="cpp/language/reference">Rvalue reference</a></td> <td>200610</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_sized_deallocation</code></td> <td><a href="../memory/new/operator_delete/" title="cpp/memory/new/operator delete">Sized deallocation</a></td> <td>201309</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td rowspan="2"> <code>__cpp_static_assert</code>
+</td> <td><a href="../language/static_assert/" title="cpp/language/static assert"><code>static_assert</code></a></td> <td>200410</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><a href="../language/static_assert/" title="cpp/language/static assert">Extended <code>static_assert</code></a></td> <td>201411</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_structured_bindings</code></td> <td><a href="../language/structured_binding/" title="cpp/language/structured binding">structured bindings</a></td> <td>201606</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_template_template_args</code></td> <td>Matching of <a href="../language/template_parameters/#Template_template_arguments" title="cpp/language/template parameters">template template-arguments</a>
+</td> <td>201611</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr> <tr> <td><code>__cpp_threadsafe_static_init</code></td> <td><a href="../language/storage_duration/#Static_local_variables" title="cpp/language/storage duration">Dynamic initialization and destruction with concurrency</a></td> <td>200806</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_transactional_memory</code></td> <td><a href="../language/transactional_memory/" title="cpp/language/transactional memory">Transactional Memory</a></td> <td>201505</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-tm-ts t-mark-ts">(TM TS)</span> </td>
+</tr> <tr> <td><code>__cpp_unicode_characters</code></td> <td>
+<a href="../language/types/" title="cpp/language/types">New character types</a> (<code>char16_t</code> and <code>char32_t</code>)</td> <td>200704</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_unicode_literals</code></td> <td><a href="../language/string_literal/" title="cpp/language/string literal">Unicode string literals</a></td> <td>200710</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_user_defined_literals</code></td> <td><a href="../language/user_literal/" title="cpp/language/user literal">User-defined literals</a></td> <td>200809</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_variable_templates</code></td> <td><a href="../language/variable_template/" title="cpp/language/variable template">Variable templates</a></td> <td>201304</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx14">(C++14)</span> </td>
+</tr> <tr> <td><code>__cpp_variadic_templates</code></td> <td><a href="../language/parameter_pack/" title="cpp/language/parameter pack">Variadic templates</a></td> <td>200704</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx11">(C++11)</span> </td>
+</tr> <tr> <td><code>__cpp_variadic_using</code></td> <td>Pack expansions in <a href="../language/using_declaration/" title="cpp/language/using declaration">using-declarations</a>
+</td> <td>201611</td> <td><i>predefined</i></td> <td>
+<span class="t-mark-rev t-since-cxx17">(C++17)</span> </td>
+</tr>
+</table> <h3 id="Example"> Example</h3> <div class="t-example"> <div class="cpp source-cpp"><pre data-language="cpp">#ifdef __has_include                           // Check if __has_include is present
+#  if __has_include(&lt;optional&gt;)                // Check for a standard library
+#    include &lt;optional&gt;
+#  elif __has_include(&lt;experimental/optional&gt;) // Check for an experimental version
+#    include &lt;experimental/optional&gt;
+#  elif __has_include(&lt;boost/optional.hpp&gt;)    // Try with an external library
+#    include &lt;boost/optional.hpp&gt;
+#  else                                        // Not found at all
+#     error "Missing &lt;optional&gt;"
+#  endif
+#endif
+ 
+#ifdef __has_cpp_attribute                      // Check if __has_cpp_attribute is present
+#  if __has_cpp_attribute(deprecated)           // Check for an attribute
+#    define DEPRECATED(msg) [[deprecated(msg)]]
+#  endif
+#endif
+#ifndef DEPRECATED
+#    define DEPRECATED(msg)
+#endif
+ 
+DEPRECATED("foo() has been deprecated") void foo();
+ 
+#if __cpp_constexpr &gt;= 201304                   // Check for a specific version of a feature
+#  define CONSTEXPR constexpr
+#else
+#  define CONSTEXPR inline
+#endif
+ 
+CONSTEXPR int bar(unsigned i)
+{
+#if __cpp_binary_literals                    // Check for the presence of a feature
+    unsigned mask1 = 0b11000000;
+    unsigned mask2 = 0b00000111;
+#else
+    unsigned mask1 = 0xC0;
+    unsigned mask2 = 0x07;
+#endif
+    if ( i &amp; mask1 )
+        return 1;
+    if ( i &amp; mask2 )
+        return 2;
+    return 0;
+}
+ 
+int main()
+{
+}</pre></div> </div> <h3 id="See_Also"> See Also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td> <a rel="nofollow" class="external text" href="http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations" target="_blank">Standing Document 6</a> </td> <td> The official document on Feature Test Recommendations </td>
+</tr> </table>           <div class="_attribution">
+  <p class="_attribution-p">
+    © cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="http://en.cppreference.com/w/cpp/feature_test" class="_attribution-link" target="_blank">http://en.cppreference.com/w/cpp/feature_test</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
