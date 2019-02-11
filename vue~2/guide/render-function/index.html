@@ -1,0 +1,497 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>22. Render Functions &#38; JSX - Vue.js 2 - W3cubDocs</title>
+  
+  <meta name="description" content="Vue recommends using templates to build your HTML in the vast majority of cases. There are situations however, where you really need the full &hellip;">
+  <meta name="keywords" content="render, functions, &#38;, jsx, -, vue, js, vue~2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/vue~2/guide/render-function/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/vue~2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/vue~2/" class="_nav-link" title="" style="margin-left:0;">Vue.js 2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _vue">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Render Functions &amp; JSX</h1> <h2 id="Basics">
+Basics</h2>
+<p>Vue recommends using templates to build your HTML in the vast majority of cases. There are situations however, where you really need the full programmatic power of JavaScript. That’s where you can use the <strong>render function</strong>, a closer-to-the-compiler alternative to templates.</p> <p>Let’s dive into a simple example where a <code>render</code> function would be practical. Say you want to generate anchored headings:</p> <pre class="highlight html" data-language="html">&lt;h1&gt;
+  &lt;a name="hello-world" href="#hello-world"&gt;
+    Hello world!
+  &lt;/a&gt;
+&lt;/h1&gt;</pre> <p>For the HTML above, you decide you want this component interface:</p> <pre class="highlight html" data-language="html">&lt;anchored-heading :level="1"&gt;Hello world!&lt;/anchored-heading&gt;</pre> <p>When you get started with a component that only generates a heading based on the <code>level</code> prop, you quickly arrive at this:</p> <pre class="highlight html" data-language="html">&lt;script type="text/x-template" id="anchored-heading-template"&gt;
+  &lt;h1 v-if="level === 1"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h1&gt;
+  &lt;h2 v-else-if="level === 2"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h2&gt;
+  &lt;h3 v-else-if="level === 3"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h3&gt;
+  &lt;h4 v-else-if="level === 4"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h4&gt;
+  &lt;h5 v-else-if="level === 5"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h5&gt;
+  &lt;h6 v-else-if="level === 6"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h6&gt;
+&lt;/script&gt;</pre> <pre class="highlight js" data-language="js">Vue.component('anchored-heading', {
+  template: '#anchored-heading-template',
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})</pre> <p>That template doesn’t feel great. It’s not only verbose, but we’re duplicating <code>&lt;slot&gt;&lt;/slot&gt;</code> for every heading level and will have to do the same when we add the anchor element.</p> <p>While templates work great for most components, it’s clear that this isn’t one of them. So let’s try rewriting it with a <code>render</code> function:</p> <pre class="highlight js" data-language="js">Vue.component('anchored-heading', {
+  render: function (createElement) {
+    return createElement(
+      'h' + this.level,   // tag name
+      this.$slots.default // array of children
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})</pre> <p>Much simpler! Sort of. The code is shorter, but also requires greater familiarity with Vue instance properties. In this case, you have to know that when you pass children without a <code>slot</code> attribute into a component, like the <code>Hello world!</code> inside of <code>anchored-heading</code>, those children are stored on the component instance at <code>$slots.default</code>. If you haven’t already, <strong>it’s recommended to read through the <a href="../../api/#Instance-Properties">instance properties API</a> before diving into render functions.</strong></p> <h2 id="Nodes-Trees-and-the-Virtual-DOM">
+Nodes, Trees, and the Virtual DOM</h2>
+<p>Before we dive into render functions, it’s important to know a little about how browsers work. Take this HTML for example:</p> <pre class="highlight html" data-language="html">&lt;div&gt;
+  &lt;h1&gt;My title&lt;/h1&gt;
+  Some text content
+  &lt;!-- TODO: Add tagline  --&gt;
+&lt;/div&gt;</pre> <p>When a browser reads this code, it builds a <a href="https://javascript.info/dom-nodes" target="_blank" rel="noopener">tree of “DOM nodes”</a> to help it keep track of everything, just as you might build a family tree to keep track of your extended family.</p> <p>The tree of DOM nodes for the HTML above looks like this:</p> <p><img src="data:image/png;base64,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" alt="DOM Tree Visualization"></p> <p>Every element is a node. Every piece of text is a node. Even comments are nodes! A node is just a piece of the page. And as in a family tree, each node can have children (i.e. each piece can contain other pieces).</p> <p>Updating all these nodes efficiently can be difficult, but thankfully, you never have to do it manually. Instead, you tell Vue what HTML you want on the page, in a template:</p> <pre class="highlight html" data-language="html">&lt;h1&gt;{{ blogTitle }}&lt;/h1&gt;</pre> <p>Or a render function:</p> <pre class="highlight js" data-language="js">render: function (createElement) {
+  return createElement('h1', this.blogTitle)
+}</pre> <p>And in both cases, Vue automatically keeps the page updated, even when <code>blogTitle</code> changes.</p> <h3 id="The-Virtual-DOM">
+The Virtual DOM</h3>
+<p>Vue accomplishes this by building a <strong>virtual DOM</strong> to keep track of the changes it needs to make to the real DOM. Taking a closer look at this line:</p> <pre class="highlight js" data-language="js">return createElement('h1', this.blogTitle)</pre> <p>What is <code>createElement</code> actually returning? It’s not <em>exactly</em> a real DOM element. It could perhaps more accurately be named <code>createNodeDescription</code>, as it contains information describing to Vue what kind of node it should render on the page, including descriptions of any child nodes. We call this node description a “virtual node”, usually abbreviated to <strong>VNode</strong>. “Virtual DOM” is what we call the entire tree of VNodes, built by a tree of Vue components.</p> <h2 id="createElement-Arguments">
+<code>createElement</code> Arguments</h2>
+<p>The next thing you’ll have to become familiar with is how to use template features in the <code>createElement</code> function. Here are the arguments that <code>createElement</code> accepts:</p> <pre class="highlight js" data-language="js">// @returns {VNode}
+createElement(
+  // {String | Object | Function}
+  // An HTML tag name, component options, or async
+  // function resolving to one of these. Required.
+  'div',
+
+  // {Object}
+  // A data object corresponding to the attributes
+  // you would use in a template. Optional.
+  {
+    // (see details in the next section below)
+  },
+
+  // {String | Array}
+  // Children VNodes, built using `createElement()`,
+  // or using strings to get 'text VNodes'. Optional.
+  [
+    'Some text comes first.',
+    createElement('h1', 'A headline'),
+    createElement(MyComponent, {
+      props: {
+        someProp: 'foobar'
+      }
+    })
+  ]
+)</pre> <h3 id="The-Data-Object-In-Depth">
+The Data Object In-Depth</h3>
+<p>One thing to note: similar to how <code>v-bind:class</code> and <code>v-bind:style</code> have special treatment in templates, they have their own top-level fields in VNode data objects. This object also allows you to bind normal HTML attributes as well as DOM properties such as <code>innerHTML</code> (this would replace the <code>v-html</code> directive):</p> <pre class="highlight js" data-language="js">{
+  // Same API as `v-bind:class`
+  class: {
+    foo: true,
+    bar: false
+  },
+  // Same API as `v-bind:style`
+  style: {
+    color: 'red',
+    fontSize: '14px'
+  },
+  // Normal HTML attributes
+  attrs: {
+    id: 'foo'
+  },
+  // Component props
+  props: {
+    myProp: 'bar'
+  },
+  // DOM properties
+  domProps: {
+    innerHTML: 'baz'
+  },
+  // Event handlers are nested under `on`, though
+  // modifiers such as in `v-on:keyup.enter` are not
+  // supported. You'll have to manually check the
+  // keyCode in the handler instead.
+  on: {
+    click: this.clickHandler
+  },
+  // For components only. Allows you to listen to
+  // native events, rather than events emitted from
+  // the component using `vm.$emit`.
+  nativeOn: {
+    click: this.nativeClickHandler
+  },
+  // Custom directives. Note that the `binding`'s
+  // `oldValue` cannot be set, as Vue keeps track
+  // of it for you.
+  directives: [
+    {
+      name: 'my-custom-directive',
+      value: '2',
+      expression: '1 + 1',
+      arg: 'foo',
+      modifiers: {
+        bar: true
+      }
+    }
+  ],
+  // Scoped slots in the form of
+  // { name: props =&gt; VNode | Array&lt;VNode&gt; }
+  scopedSlots: {
+    default: props =&gt; createElement('span', props.text)
+  },
+  // The name of the slot, if this component is the
+  // child of another component
+  slot: 'name-of-slot',
+  // Other special top-level properties
+  key: 'myKey',
+  ref: 'myRef'
+}</pre> <h3 id="Complete-Example">
+Complete Example</h3>
+<p>With this knowledge, we can now finish the component we started:</p> <pre class="highlight js" data-language="js">var getChildrenTextContent = function (children) {
+  return children.map(function (node) {
+    return node.children
+      ? getChildrenTextContent(node.children)
+      : node.text
+  }).join('')
+}
+
+Vue.component('anchored-heading', {
+  render: function (createElement) {
+    // create kebabCase id
+    var headingId = getChildrenTextContent(this.$slots.default)
+      .toLowerCase()
+      .replace(/\W+/g, '-')
+      .replace(/(^\-|\-$)/g, '')
+
+    return createElement(
+      'h' + this.level,
+      [
+        createElement('a', {
+          attrs: {
+            name: headingId,
+            href: '#' + headingId
+          }
+        }, this.$slots.default)
+      ]
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})</pre> <h3 id="Constraints">
+Constraints</h3>
+<h4 id="VNodes-Must-Be-Unique">
+VNodes Must Be Unique</h4>
+<p>All VNodes in the component tree must be unique. That means the following render function is invalid:</p> <pre class="highlight js" data-language="js">render: function (createElement) {
+  var myParagraphVNode = createElement('p', 'hi')
+  return createElement('div', [
+    // Yikes - duplicate VNodes!
+    myParagraphVNode, myParagraphVNode
+  ])
+}</pre> <p>If you really want to duplicate the same element/component many times, you can do so with a factory function. For example, the following render function is a perfectly valid way of rendering 20 identical paragraphs:</p> <pre class="highlight js" data-language="js">render: function (createElement) {
+  return createElement('div',
+    Array.apply(null, { length: 20 }).map(function () {
+      return createElement('p', 'hi')
+    })
+  )
+}</pre> <h2 id="Replacing-Template-Features-with-Plain-JavaScript">
+Replacing Template Features with Plain JavaScript</h2>
+<h3 id="v-if-and-v-for">
+<code>v-if</code> and <code>v-for</code>
+</h3>
+<p>Wherever something can be easily accomplished in plain JavaScript, Vue render functions do not provide a proprietary alternative. For example, in a template using <code>v-if</code> and <code>v-for</code>:</p> <pre class="highlight html" data-language="html">&lt;ul v-if="items.length"&gt;
+  &lt;li v-for="item in items"&gt;{{ item.name }}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p v-else&gt;No items found.&lt;/p&gt;</pre> <p>This could be rewritten with JavaScript’s <code>if</code>/<code>else</code> and <code>map</code> in a render function:</p> <pre class="highlight js" data-language="js">props: ['items'],
+render: function (createElement) {
+  if (this.items.length) {
+    return createElement('ul', this.items.map(function (item) {
+      return createElement('li', item.name)
+    }))
+  } else {
+    return createElement('p', 'No items found.')
+  }
+}</pre> <h3 id="v-model">
+<code>v-model</code>
+</h3>
+<p>There is no direct <code>v-model</code> counterpart in render functions - you will have to implement the logic yourself:</p> <pre class="highlight js" data-language="js">props: ['value'],
+render: function (createElement) {
+  var self = this
+  return createElement('input', {
+    domProps: {
+      value: self.value
+    },
+    on: {
+      input: function (event) {
+        self.$emit('input', event.target.value)
+      }
+    }
+  })
+}</pre> <p>This is the cost of going lower-level, but it also gives you much more control over the interaction details compared to <code>v-model</code>.</p> <h3 id="Event-amp-Key-Modifiers">
+Event &amp; Key Modifiers</h3>
+<p>For the <code>.passive</code>, <code>.capture</code> and <code>.once</code> event modifiers, Vue offers prefixes that can be used with <code>on</code>:</p> <table> <thead> <tr> <th>Modifier(s)</th> <th>Prefix</th> </tr> </thead> <tbody> <tr> <td><code>.passive</code></td> <td><code>&amp;</code></td> </tr> <tr> <td><code>.capture</code></td> <td><code>!</code></td> </tr> <tr> <td><code>.once</code></td> <td><code>~</code></td> </tr> <tr> <td>
+<code>.capture.once</code> or<br><code>.once.capture</code>
+</td> <td><code>~!</code></td> </tr> </tbody> </table> <p>For example:</p> <pre class="highlight javascript" data-language="javascript">on: {
+  '!click': this.doThisInCapturingMode,
+  '~keyup': this.doThisOnce,
+  '~!mouseover': this.doThisOnceInCapturingMode
+}</pre> <p>For all other event and key modifiers, no proprietary prefix is necessary, because you can use event methods in the handler:</p> <table> <thead> <tr> <th>Modifier(s)</th> <th>Equivalent in Handler</th> </tr> </thead> <tbody> <tr> <td><code>.stop</code></td> <td><code>event.stopPropagation()</code></td> </tr> <tr> <td><code>.prevent</code></td> <td><code>event.preventDefault()</code></td> </tr> <tr> <td><code>.self</code></td> <td><code>if (event.target !== event.currentTarget) return</code></td> </tr> <tr> <td>Keys:<br><code>.enter</code>, <code>.13</code>
+</td> <td>
+<code>if (event.keyCode !== 13) return</code> (change <code>13</code> to <a href="http://keycode.info/" target="_blank" rel="noopener">another key code</a> for other key modifiers)</td> </tr> <tr> <td>Modifiers Keys:<br><code>.ctrl</code>, <code>.alt</code>, <code>.shift</code>, <code>.meta</code>
+</td> <td>
+<code>if (!event.ctrlKey) return</code> (change <code>ctrlKey</code> to <code>altKey</code>, <code>shiftKey</code>, or <code>metaKey</code>, respectively)</td> </tr> </tbody> </table> <p>Here’s an example with all of these modifiers used together:</p> <pre class="highlight javascript" data-language="javascript">on: {
+  keyup: function (event) {
+    // Abort if the element emitting the event is not
+    // the element the event is bound to
+    if (event.target !== event.currentTarget) return
+    // Abort if the key that went up is not the enter
+    // key (13) and the shift key was not held down
+    // at the same time
+    if (!event.shiftKey || event.keyCode !== 13) return
+    // Stop event propagation
+    event.stopPropagation()
+    // Prevent the default keyup handler for this element
+    event.preventDefault()
+    // ...
+  }
+}</pre> <h3 id="Slots">
+Slots</h3>
+<p>You can access static slot contents as Arrays of VNodes from <a href="../../api/#vm-slots"><code>this.$slots</code></a>:</p> <pre class="highlight js" data-language="js">render: function (createElement) {
+  // `&lt;div&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;`
+  return createElement('div', this.$slots.default)
+}</pre> <p>And access scoped slots as functions that return VNodes from <a href="../../api/#vm-scopedSlots"><code>this.$scopedSlots</code></a>:</p> <pre class="highlight js" data-language="js">props: ['message'],
+render: function (createElement) {
+  // `&lt;div&gt;&lt;slot :text="message"&gt;&lt;/slot&gt;&lt;/div&gt;`
+  return createElement('div', [
+    this.$scopedSlots.default({
+      text: this.message
+    })
+  ])
+}</pre> <p>To pass scoped slots to a child component using render functions, use the <code>scopedSlots</code> field in VNode data:</p> <pre class="highlight js" data-language="js">render: function (createElement) {
+  return createElement('div', [
+    createElement('child', {
+      // pass `scopedSlots` in the data object
+      // in the form of { name: props =&gt; VNode | Array&lt;VNode&gt; }
+      scopedSlots: {
+        default: function (props) {
+          return createElement('span', props.text)
+        }
+      }
+    })
+  ])
+}</pre> <h2 id="JSX">
+JSX</h2>
+<p>If you’re writing a lot of <code>render</code> functions, it might feel painful to write something like this:</p> <pre class="highlight js" data-language="js">createElement(
+  'anchored-heading', {
+    props: {
+      level: 1
+    }
+  }, [
+    createElement('span', 'Hello'),
+    ' world!'
+  ]
+)</pre> <p>Especially when the template version is so simple in comparison:</p> <pre class="highlight html" data-language="html">&lt;anchored-heading :level="1"&gt;
+  &lt;span&gt;Hello&lt;/span&gt; world!
+&lt;/anchored-heading&gt;</pre> <p>That’s why there’s a <a href="https://github.com/vuejs/babel-plugin-transform-vue-jsx" target="_blank" rel="noopener">Babel plugin</a> to use JSX with Vue, getting us back to a syntax that’s closer to templates:</p> <pre class="highlight js" data-language="js">import AnchoredHeading from './AnchoredHeading.vue'
+
+new Vue({
+  el: '#demo',
+  render: function (h) {
+    return (
+      &lt;AnchoredHeading level={1}&gt;
+        &lt;span&gt;Hello&lt;/span&gt; world!
+      &lt;/AnchoredHeading&gt;
+    )
+  }
+})</pre> <p class="tip">Aliasing <code>createElement</code> to <code>h</code> is a common convention you’ll see in the Vue ecosystem and is actually required for JSX. If <code>h</code> is not available in the scope, your app will throw an error.</p> <p>For more on how JSX maps to JavaScript, see the <a href="https://github.com/vuejs/babel-plugin-transform-vue-jsx#usage" target="_blank" rel="noopener">usage docs</a>.</p> <h2 id="Functional-Components">
+Functional Components</h2>
+<p>The anchored heading component we created earlier is relatively simple. It doesn’t manage any state, watch any state passed to it, and it has no lifecycle methods. Really, it’s only a function with some props.</p> <p>In cases like this, we can mark components as <code>functional</code>, which means that they’re stateless (no <a href="../../api/#Options-Data">reactive data</a>) and instanceless (no <code>this</code> context). A <strong>functional component</strong> looks like this:</p> <pre class="highlight js" data-language="js">Vue.component('my-component', {
+  functional: true,
+  // Props are optional
+  props: {
+    // ...
+  },
+  // To compensate for the lack of an instance,
+  // we are now provided a 2nd context argument.
+  render: function (createElement, context) {
+    // ...
+  }
+})</pre> <blockquote> <p>Note: in versions before 2.3.0, the <code>props</code> option is required if you wish to accept props in a functional component. In 2.3.0+ you can omit the <code>props</code> option and all attributes found on the component node will be implicitly extracted as props.</p> </blockquote> <p>In 2.5.0+, if you are using <a href="../single-file-components/">single-file components</a>, template-based functional components can be declared with:</p> <pre class="highlight html" data-language="html">&lt;template functional&gt;
+&lt;/template&gt;</pre> <p>Everything the component needs is passed through <code>context</code>, which is an object containing:</p> <ul> <li>
+<code>props</code>: An object of the provided props</li> <li>
+<code>children</code>: An array of the VNode children</li> <li>
+<code>slots</code>: A function returning a slots object</li> <li>
+<code>data</code>: The entire <a href="#The-Data-Object-In-Depth">data object</a>, passed to the component as the 2nd argument of <code>createElement</code>
+</li> <li>
+<code>parent</code>: A reference to the parent component</li> <li>
+<code>listeners</code>: (2.3.0+) An object containing parent-registered event listeners. This is an alias to <code>data.on</code>
+</li> <li>
+<code>injections</code>: (2.3.0+) if using the <a href="../../api/#provide-inject"><code>inject</code></a> option, this will contain resolved injections.</li> </ul> <p>After adding <code>functional: true</code>, updating the render function of our anchored heading component would require adding the <code>context</code> argument, updating <code>this.$slots.default</code> to <code>context.children</code>, then updating <code>this.level</code> to <code>context.props.level</code>.</p> <p>Since functional components are just functions, they’re much cheaper to render. However, the lack of a persistent instance means they won’t show up in the <a href="https://github.com/vuejs/vue-devtools" target="_blank" rel="noopener">Vue devtools</a> component tree.</p> <p>They’re also very useful as wrapper components. For example, when you need to:</p> <ul> <li>Programmatically choose one of several other components to delegate to</li> <li>Manipulate children, props, or data before passing them on to a child component</li> </ul> <p>Here’s an example of a <code>smart-list</code> component that delegates to more specific components, depending on the props passed to it:</p> <pre class="highlight js" data-language="js">var EmptyList = { /* ... */ }
+var TableList = { /* ... */ }
+var OrderedList = { /* ... */ }
+var UnorderedList = { /* ... */ }
+
+Vue.component('smart-list', {
+  functional: true,
+  props: {
+    items: {
+      type: Array,
+      required: true
+    },
+    isOrdered: Boolean
+  },
+  render: function (createElement, context) {
+    function appropriateListComponent () {
+      var items = context.props.items
+
+      if (items.length === 0)           return EmptyList
+      if (typeof items[0] === 'object') return TableList
+      if (context.props.isOrdered)      return OrderedList
+
+      return UnorderedList
+    }
+
+    return createElement(
+      appropriateListComponent(),
+      context.data,
+      context.children
+    )
+  }
+})</pre> <h3 id="Passing-Attributes-and-Events-to-Child-Elements-Components">
+Passing Attributes and Events to Child Elements/Components</h3>
+<p>On normal components, attributes not defined as props are automatically added to the root element of the component, replacing or <a href="../class-and-style/">intelligently merging with</a> any existing attributes of the same name.</p> <p>Functional components, however, require you to explicitly define this behavior:</p> <pre class="highlight js" data-language="js">Vue.component('my-functional-button', {
+  functional: true,
+  render: function (createElement, context) {
+    // Transparently pass any attributes, event listeners, children, etc.
+    return createElement('button', context.data, context.children)
+  }
+})</pre> <p>By passing <code>context.data</code> as the second argument to <code>createElement</code>, we are passing down any attributes or event listeners used on <code>my-functional-button</code>. It’s so transparent, in fact, that events don’t even require the <code>.native</code> modifier.</p> <p>If you are using template-based functional components, you will also have to manually add attributes and listeners. Since we have access to the individual context contents, we can use <code>data.attrs</code> to pass along any HTML attributes and <code>listeners</code> <em>(the alias for <code>data.on</code>)</em> to pass along any event listeners.</p> <pre class="highlight html" data-language="html">&lt;template functional&gt;
+  &lt;button
+    class="btn btn-primary"
+    v-bind="data.attrs"
+    v-on="listeners"
+  &gt;
+    &lt;slot/&gt;
+  &lt;/button&gt;
+&lt;/template&gt;</pre> <h3 id="slots-vs-children">
+<code>slots()</code> vs <code>children</code>
+</h3>
+<p>You may wonder why we need both <code>slots()</code> and <code>children</code>. Wouldn’t <code>slots().default</code> be the same as <code>children</code>? In some cases, yes - but what if you have a functional component with the following children?</p> <pre class="highlight html" data-language="html">&lt;my-functional-component&gt;
+  &lt;p slot="foo"&gt;
+    first
+  &lt;/p&gt;
+  &lt;p&gt;second&lt;/p&gt;
+&lt;/my-functional-component&gt;</pre> <p>For this component, <code>children</code> will give you both paragraphs, <code>slots().default</code> will give you only the second, and <code>slots().foo</code> will give you only the first. Having both <code>children</code> and <code>slots()</code> therefore allows you to choose whether this component knows about a slot system or perhaps delegates that responsibility to another component by passing along <code>children</code>.</p> <h2 id="Template-Compilation">
+Template Compilation</h2>
+<p>You may be interested to know that Vue’s templates actually compile to render functions. This is an implementation detail you usually don’t need to know about, but if you’d like to see how specific template features are compiled, you may find it interesting. Below is a little demo using <code>Vue.compile</code> to live-compile a template string:</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 Evan You, Vue.js contributors<br>Licensed under the MIT License.<br>
+    <a href="https://vuejs.org/v2/guide/render-function.html" class="_attribution-link" target="_blank">https://vuejs.org/v2/guide/render-function.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

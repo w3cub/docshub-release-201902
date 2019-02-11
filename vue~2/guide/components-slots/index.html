@@ -1,0 +1,222 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>15. Slots - Vue.js 2 - W3cubDocs</title>
+  
+  <meta name="description" content=" This page assumes you’ve already read the Components Basics. Read that first if you are new to components. ">
+  <meta name="keywords" content="slots, -, vue, js, vue~2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/vue~2/guide/components-slots/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/vue~2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/vue~2/" class="_nav-link" title="" style="margin-left:0;">Vue.js 2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _vue">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Slots</h1> <blockquote> <p>This page assumes you’ve already read the <a href="../components/">Components Basics</a>. Read that first if you are new to components.</p> </blockquote> <h2 id="Slot-Content">
+Slot Content</h2>
+<p>Vue implements a content distribution API that’s modeled after the current <a href="https://github.com/w3c/webcomponents/blob/gh-pages/proposals/Slots-Proposal.md" target="_blank" rel="noopener">Web Components spec draft</a>, using the <code>&lt;slot&gt;</code> element to serve as distribution outlets for content.</p> <p>This allows you to compose components like this:</p> <pre class="highlight html" data-language="html">&lt;navigation-link url="/profile"&gt;
+  Your Profile
+&lt;/navigation-link&gt;</pre> <p>Then in the template for <code>&lt;navigation-link&gt;</code>, you might have:</p> <pre class="highlight html" data-language="html">&lt;a
+  v-bind:href="url"
+  class="nav-link"
+&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/a&gt;</pre> <p>When the component renders, the <code>&lt;slot&gt;</code> element will be replaced by “Your Profile”. Slots can contain any template code, including HTML:</p> <pre class="highlight html" data-language="html">&lt;navigation-link url="/profile"&gt;
+  &lt;!-- Add a Font Awesome icon --&gt;
+  &lt;span class="fa fa-user"&gt;&lt;/span&gt;
+  Your Profile
+&lt;/navigation-link&gt;</pre> <p>Or even other components:</p> <pre class="highlight html" data-language="html">&lt;navigation-link url="/profile"&gt;
+  &lt;!-- Use a component to add an icon --&gt;
+  &lt;font-awesome-icon name="user"&gt;&lt;/font-awesome-icon&gt;
+  Your Profile
+&lt;/navigation-link&gt;</pre> <p>If <code>&lt;navigation-link&gt;</code> did <strong>not</strong> contain a <code>&lt;slot&gt;</code> element, any content passed to it would simply be discarded.</p> <h2 id="Named-Slots">
+Named Slots</h2>
+<p>There are times when it’s useful to have multiple slots. For example, in a hypothetical <code>base-layout</code> component with the following template:</p> <pre class="highlight html" data-language="html">&lt;div class="container"&gt;
+  &lt;header&gt;
+    &lt;!-- We want header content here --&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;!-- We want main content here --&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;!-- We want footer content here --&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;</pre> <p>For these cases, the <code>&lt;slot&gt;</code> element has a special attribute, <code>name</code>, which can be used to define additional slots:</p> <pre class="highlight html" data-language="html">&lt;div class="container"&gt;
+  &lt;header&gt;
+    &lt;slot name="header"&gt;&lt;/slot&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;slot name="footer"&gt;&lt;/slot&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;</pre> <p>To provide content to named slots, we can use the <code>slot</code> attribute on a <code>&lt;template&gt;</code> element in the parent:</p> <pre class="highlight html" data-language="html">&lt;base-layout&gt;
+  &lt;template slot="header"&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+  &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template slot="footer"&gt;
+    &lt;p&gt;Here's some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/base-layout&gt;</pre> <p>Or, the <code>slot</code> attribute can also be used directly on a normal element:</p> <pre class="highlight html" data-language="html">&lt;base-layout&gt;
+  &lt;h1 slot="header"&gt;Here might be a page title&lt;/h1&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;p slot="footer"&gt;Here's some contact info&lt;/p&gt;
+&lt;/base-layout&gt;</pre> <p>There can still be one unnamed slot, which is the <strong>default slot</strong> that serves as a catch-all outlet for any unmatched content. In both examples above, the rendered HTML would be:</p> <pre class="highlight html" data-language="html">&lt;div class="container"&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+    &lt;p&gt;And another one.&lt;/p&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Here's some contact info&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;</pre> <h2 id="Default-Slot-Content">
+Default Slot Content</h2>
+<p>There are cases when it’s useful to provide a slot with default content. For example, a <code>&lt;submit-button&gt;</code> component might want the content of the button to be “Submit” by default, but also allow users to override with “Save”, “Upload”, or anything else.</p> <p>To achieve this, specify the default content in between the <code>&lt;slot&gt;</code> tags.</p> <pre class="highlight html" data-language="html">&lt;button type="submit"&gt;
+  &lt;slot&gt;Submit&lt;/slot&gt;
+&lt;/button&gt;</pre> <p>If the slot is provided content by the parent, it will replace the default content.</p> <h2 id="Compilation-Scope">
+Compilation Scope</h2>
+<p>When you want to use data inside a slot, such as in:</p> <pre class="highlight html" data-language="html">&lt;navigation-link url="/profile"&gt;
+  Logged in as {{ user.name }}
+&lt;/navigation-link&gt;</pre> <p>That slot has access to the same instance properties (i.e. the same “scope”) as the rest of the template. The slot does <strong>not</strong> have access to <code>&lt;navigation-link&gt;</code>‘s scope. For example, trying to access <code>url</code> would not work. As a rule, remember that:</p> <blockquote> <p>Everything in the parent template is compiled in parent scope; everything in the child template is compiled in the child scope.</p> </blockquote> <h2 id="Scoped-Slots">
+Scoped Slots</h2>
+<blockquote> <p>New in 2.1.0+</p> </blockquote> <p>Sometimes you’ll want to provide a component with a reusable slot that can access data from the child component. For example, a simple <code>&lt;todo-list&gt;</code> component may contain the following in its template:</p> <pre class="highlight html" data-language="html">&lt;ul&gt;
+  &lt;li
+    v-for="todo in todos"
+    v-bind:key="todo.id"
+  &gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;</pre> <p>But in some parts of our app, we want the individual todo items to render something different than just the <code>todo.text</code>. This is where scoped slots come in.</p> <p>To make the feature possible, all we have to do is wrap the todo item content in a <code>&lt;slot&gt;</code> element, then pass the slot any data relevant to its context: in this case, the <code>todo</code> object:</p> <pre class="highlight html" data-language="html">&lt;ul&gt;
+  &lt;li
+    v-for="todo in todos"
+    v-bind:key="todo.id"
+  &gt;
+    &lt;!-- We have a slot for each todo, passing it the --&gt;
+    &lt;!-- `todo` object as a slot prop.                --&gt;
+    &lt;slot v-bind:todo="todo"&gt;
+      &lt;!-- Fallback content --&gt;
+      {{ todo.text }}
+    &lt;/slot&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</pre> <p>Now when we use the <code>&lt;todo-list&gt;</code> component, we can optionally define an alternative <code>&lt;template&gt;</code> for todo items, but with access to data from the child via the <code>slot-scope</code> attribute:</p> <pre class="highlight html" data-language="html">&lt;todo-list v-bind:todos="todos"&gt;
+  &lt;!-- Define `slotProps` as the name of our slot scope --&gt;
+  &lt;template slot-scope="slotProps"&gt;
+    &lt;!-- Define a custom template for todo items, using --&gt;
+    &lt;!-- `slotProps` to customize each todo.            --&gt;
+    &lt;span v-if="slotProps.todo.isComplete"&gt;✓&lt;/span&gt;
+    {{ slotProps.todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;</pre> <blockquote> <p>In 2.5.0+, <code>slot-scope</code> is no longer limited to the <code>&lt;template&gt;</code> element, but can instead be used on any element or component in the slot.</p> </blockquote> <h3 id="Destructuring-slot-scope">
+Destructuring <code>slot-scope</code>
+</h3>
+<p>The value of <code>slot-scope</code> can actually accept any valid JavaScript expression that can appear in the argument position of a function definition. This means in supported environments (<a href="../single-file-components/">single-file components</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Browser_compatibility" target="_blank" rel="noopener">modern browsers</a>) you can also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring" target="_blank" rel="noopener">ES2015 destructuring</a> in the expression, like so:</p> <pre class="highlight html" data-language="html">&lt;todo-list v-bind:todos="todos"&gt;
+  &lt;template slot-scope="{ todo }"&gt;
+    &lt;span v-if="todo.isComplete"&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;</pre> <p>This is a great way to make scoped slots a little cleaner.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 Evan You, Vue.js contributors<br>Licensed under the MIT License.<br>
+    <a href="https://vuejs.org/v2/guide/components-slots.html" class="_attribution-link" target="_blank">https://vuejs.org/v2/guide/components-slots.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
