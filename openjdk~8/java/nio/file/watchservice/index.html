@@ -1,0 +1,142 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>WatchService - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A watch service that watches registered objects for changes and events. For example a file manager may use a watch service to monitor a directory &hellip;">
+  <meta name="keywords" content="interface, watchservice, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/nio/file/watchservice/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _openjdk">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Interface WatchService</h1>     <dl> <dt>All Superinterfaces:</dt> <dd>
+<a href="../../../lang/autocloseable/">AutoCloseable</a>, <a href="../../../io/closeable/">Closeable</a>
+</dd> </dl>   <pre data-language="java">public interface WatchService
+extends Closeable</pre> <div>
+<p>A watch service that <em>watches</em> registered objects for changes and events. For example a file manager may use a watch service to monitor a directory for changes so that it can update its display of the list of files when files are created or deleted. </p>
+<p> A <a href="../watchable/"><code>Watchable</code></a> object is registered with a watch service by invoking its <a href="../watchable/#register-java.nio.file.WatchService-java.nio.file.WatchEvent.Kind:A-java.nio.file.WatchEvent.Modifier...-"><code>register</code></a> method, returning a <a href="../watchkey/"><code>WatchKey</code></a> to represent the registration. When an event for an object is detected the key is <em>signalled</em>, and if not currently signalled, it is queued to the watch service so that it can be retrieved by consumers that invoke the <a href="../watchservice/#poll--"><code>poll</code></a> or <a href="../watchservice/#take--"><code>take</code></a> methods to retrieve keys and process events. Once the events have been processed the consumer invokes the key's <a href="../watchkey/#reset--"><code>reset</code></a> method to reset the key which allows the key to be signalled and re-queued with further events. </p>
+<p> Registration with a watch service is cancelled by invoking the key's <a href="../watchkey/#cancel--"><code>cancel</code></a> method. A key that is queued at the time that it is cancelled remains in the queue until it is retrieved. Depending on the object, a key may be cancelled automatically. For example, suppose a directory is watched and the watch service detects that it has been deleted or its file system is no longer accessible. When a key is cancelled in this manner it is signalled and queued, if not currently signalled. To ensure that the consumer is notified the return value from the <code>reset</code> method indicates if the key is valid. </p>
+<p> A watch service is safe for use by multiple concurrent consumers. To ensure that only one consumer processes the events for a particular object at any time then care should be taken to ensure that the key's <code>reset</code> method is only invoked after its events have been processed. The <a href="../watchservice/#close--"><code>close</code></a> method may be invoked at any time to close the service causing any threads waiting to retrieve keys, to throw <code>ClosedWatchServiceException</code>. </p>
+<p> File systems may report events faster than they can be retrieved or processed and an implementation may impose an unspecified limit on the number of events that it may accumulate. Where an implementation <em>knowingly</em> discards events then it arranges for the key's <a href="../watchkey/#pollEvents--"><code>pollEvents</code></a> method to return an element with an event type of <a href="../standardwatcheventkinds/#OVERFLOW"><code>OVERFLOW</code></a>. This event can be used by the consumer as a trigger to re-examine the state of the object. </p>
+<p> When an event is reported to indicate that a file in a watched directory has been modified then there is no guarantee that the program (or programs) that have modified the file have completed. Care should be taken to coordinate access with other programs that may be updating the file. The <a href="../../channels/filechannel/"><code>FileChannel</code></a> class defines methods to lock regions of a file against access by other programs. </p>
+<h2>Platform dependencies</h2> <p> The implementation that observes events from the file system is intended to map directly on to the native file event notification facility where available, or to use a primitive mechanism, such as polling, when a native facility is not available. Consequently, many of the details on how events are detected, their timeliness, and whether their ordering is preserved are highly implementation specific. For example, when a file in a watched directory is modified then it may result in a single <a href="../standardwatcheventkinds/#ENTRY_MODIFY"><code>ENTRY_MODIFY</code></a> event in some implementations but several events in other implementations. Short-lived files (meaning files that are deleted very quickly after they are created) may not be detected by primitive implementations that periodically poll the file system to detect changes. </p>
+<p> If a watched file is not located on a local storage device then it is implementation specific if changes to the file can be detected. In particular, it is not required that changes to files carried out on remote systems be detected.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.7</dd> <dt>See Also:</dt> <dd><a href="../filesystem/#newWatchService--"><code>FileSystem.newWatchService()</code></a></dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="close--">close</h3> <pre data-language="java">void close()
+    throws IOException</pre> <div>
+<p>Closes this watch service. </p>
+<p> If a thread is currently blocked in the <a href="../watchservice/#take--"><code>take</code></a> or <a href="../watchservice/#poll-long-java.util.concurrent.TimeUnit-"><code>poll</code></a> methods waiting for a key to be queued then it immediately receives a <a href="../closedwatchserviceexception/"><code>ClosedWatchServiceException</code></a>. Any valid keys associated with this watch service are <a href="../watchkey/#isValid--"><code>invalidated</code></a>. </p>
+<p> After a watch service is closed, any further attempt to invoke operations upon it will throw <a href="../closedwatchserviceexception/"><code>ClosedWatchServiceException</code></a>. If this watch service is already closed then invoking this method has no effect.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../lang/autocloseable/#close--">close</a></code> in interface <code><a href="../../../lang/autocloseable/">AutoCloseable</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../../io/closeable/#close--">close</a></code> in interface <code><a href="../../../io/closeable/">Closeable</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - if an I/O error occurs</dd> </dl>    <h3 id="poll--">poll</h3> <pre data-language="java">WatchKey poll()</pre> <p>Retrieves and removes the next watch key, or <code>null</code> if none are present.</p> <dl> <dt>Returns:</dt> <dd>the next watch key, or <code>null</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../closedwatchserviceexception/">ClosedWatchServiceException</a></code> - if this watch service is closed</dd> </dl>    <h3 id="poll-long-java.util.concurrent.TimeUnit-">poll</h3> <pre data-language="java">WatchKey poll(long timeout,
+              TimeUnit unit)
+       throws InterruptedException</pre> <p>Retrieves and removes the next watch key, waiting if necessary up to the specified wait time if none are yet present.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>timeout</code> - how to wait before giving up, in units of unit</dd> <dd>
+<code>unit</code> - a <code>TimeUnit</code> determining how to interpret the timeout parameter</dd> <dt>Returns:</dt> <dd>the next watch key, or <code>null</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../closedwatchserviceexception/">ClosedWatchServiceException</a></code> - if this watch service is closed, or it is closed while waiting for the next key</dd> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> </dl>    <h3 id="take--">take</h3> <pre data-language="java">WatchKey take()
+       throws InterruptedException</pre> <p>Retrieves and removes next watch key, waiting if none are yet present.</p> <dl> <dt>Returns:</dt> <dd>the next watch key</dd> <dt>Throws:</dt> <dd>
+<code><a href="../closedwatchserviceexception/">ClosedWatchServiceException</a></code> - if this watch service is closed, or it is closed while waiting for the next key</dd> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
