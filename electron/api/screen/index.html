@@ -1,0 +1,152 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Screen - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Retrieve information about screen size, displays, cursor position, etc. ">
+  <meta name="keywords" content="screen, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/screen/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="screen">screen</h1> <blockquote> <p>Retrieve information about screen size, displays, cursor position, etc.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a>, <a href="../../glossary/#renderer-process">Renderer</a></p> <p>You cannot require or use this module until the <code>ready</code> event of the <code>app</code> module is emitted.</p> <p><code>screen</code> is an <a href="https://nodejs.org/api/events.html#events_class_eventemitter" target="_blank">EventEmitter</a>.</p> <p><strong>Note:</strong> In the renderer / DevTools, <code>window.screen</code> is a reserved DOM property, so writing <code>let {screen} = require('electron')</code> will not work.</p> <p>An example of creating a window that fills the whole screen:</p> <pre data-language="javascript">const electron = require('electron')
+  const {app, BrowserWindow} = electron
+  
+  let win
+  
+  app.on('ready', () =&gt; {
+    const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
+    win = new BrowserWindow({width, height})
+    win.loadURL('https://github.com')
+  })</pre> <p>Another example of creating a window in the external display:</p> <pre data-language="javascript">const electron = require('electron')
+  const {app, BrowserWindow} = require('electron')
+  
+  let win
+  
+  app.on('ready', () =&gt; {
+    let displays = electron.screen.getAllDisplays()
+    let externalDisplay = displays.find((display) =&gt; {
+      return display.bounds.x !== 0 || display.bounds.y !== 0
+    })
+  
+    if (externalDisplay) {
+      win = new BrowserWindow({
+        x: externalDisplay.bounds.x + 50,
+        y: externalDisplay.bounds.y + 50
+      })
+      win.loadURL('https://github.com')
+    }
+  })</pre>   <h2 id="events">Events</h2> <p>The <code>screen</code> module emits the following events:</p>   <h3 id="event-display-added">Event: 'display-added'</h3> <p>Returns:</p> <ul> <li>
+<code>event</code> Event</li> <li>
+<code>newDisplay</code> <a href="../structures/display/">Display</a>
+</li> </ul> <p>Emitted when <code>newDisplay</code> has been added.</p>   <h3 id="event-display-removed">Event: 'display-removed'</h3> <p>Returns:</p> <ul> <li>
+<code>event</code> Event</li> <li>
+<code>oldDisplay</code> <a href="../structures/display/">Display</a>
+</li> </ul> <p>Emitted when <code>oldDisplay</code> has been removed.</p>   <h3 id="event-display-metrics-changed">Event: 'display-metrics-changed'</h3> <p>Returns:</p> <ul> <li>
+<code>event</code> Event</li> <li>
+<code>display</code> <a href="../structures/display/">Display</a>
+</li> <li>
+<code>changedMetrics</code> String[]</li> </ul> <p>Emitted when one or more metrics change in a <code>display</code>. The <code>changedMetrics</code> is an array of strings that describe the changes. Possible changes are <code>bounds</code>, <code>workArea</code>, <code>scaleFactor</code> and <code>rotation</code>.</p>   <h2 id="methods">Methods</h2> <p>The <code>screen</code> module has the following methods:</p>   <h3 id="screengetcursorscreenpoint"><code>screen.getCursorScreenPoint()</code></h3> <p>Returns <a href="../structures/point/"><code>Point</code></a></p> <p>The current absolute position of the mouse pointer.</p>   <h3 id="screengetmenubarheight-macos">
+<code>screen.getMenuBarHeight()</code> <em>macOS</em>
+</h3> <p>Returns <code>Integer</code> - The height of the menu bar in pixels.</p>   <h3 id="screengetprimarydisplay"><code>screen.getPrimaryDisplay()</code></h3> <p>Returns <a href="../structures/display/"><code>Display</code></a> - The primary display.</p>   <h3 id="screengetalldisplays"><code>screen.getAllDisplays()</code></h3> <p>Returns <a href="../structures/display/"><code>Display[]</code></a> - An array of displays that are currently available.</p>   <h3 id="screengetdisplaynearestpointpoint"><code>screen.getDisplayNearestPoint(point)</code></h3> <ul> <li>
+<code>point</code> <a href="../structures/point/">Point</a>
+</li> </ul> <p>Returns <a href="../structures/display/"><code>Display</code></a> - The display nearest the specified point.</p>   <h3 id="screengetdisplaymatchingrect"><code>screen.getDisplayMatching(rect)</code></h3> <ul> <li>
+<code>rect</code> <a href="../structures/rectangle/">Rectangle</a>
+</li> </ul> <p>Returns <a href="../structures/display/"><code>Display</code></a> - The display that most closely intersects the provided bounds.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/screen" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/screen</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
