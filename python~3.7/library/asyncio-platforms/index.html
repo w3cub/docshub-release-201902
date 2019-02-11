@@ -1,0 +1,127 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Platform Support - Python 3.7 - W3cubDocs</title>
+  
+  <meta name="description" content="The asyncio module is designed to be portable, but some platforms have subtle differences and limitations due to the platforms’ underlying &hellip;">
+  <meta name="keywords" content="platform, support, -, python, python~3.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/python~3.7/library/asyncio-platforms/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/python~3.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/python~3.7/" class="_nav-link" title="" style="margin-left:0;">Python 3.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _python">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="asyncio-platform-support">Platform Support</h1> <p id="platform-support">The <a class="reference internal" href="../asyncio/#module-asyncio" title="asyncio: Asynchronous I/O."><code>asyncio</code></a> module is designed to be portable, but some platforms have subtle differences and limitations due to the platforms’ underlying architecture and capabilities.</p>  <h2 id="all-platforms">All Platforms</h2> <ul class="simple"> <li>
+<a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_reader" title="asyncio.loop.add_reader"><code>loop.add_reader()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_writer" title="asyncio.loop.add_writer"><code>loop.add_writer()</code></a> cannot be used to monitor file I/O.</li> </ul>   <h2 id="windows">Windows</h2> <p>All event loops on Windows do not support the following methods:</p> <ul class="simple"> <li>
+<a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.create_unix_connection" title="asyncio.loop.create_unix_connection"><code>loop.create_unix_connection()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.create_unix_server" title="asyncio.loop.create_unix_server"><code>loop.create_unix_server()</code></a> are not supported. The <a class="reference internal" href="../socket/#socket.AF_UNIX" title="socket.AF_UNIX"><code>socket.AF_UNIX</code></a> socket family is specific to Unix.</li> <li>
+<a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_signal_handler" title="asyncio.loop.add_signal_handler"><code>loop.add_signal_handler()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.remove_signal_handler" title="asyncio.loop.remove_signal_handler"><code>loop.remove_signal_handler()</code></a> are not supported.</li> </ul> <p><a class="reference internal" href="../asyncio-eventloop/#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><code>SelectorEventLoop</code></a> has the following limitations:</p> <ul class="simple"> <li>
+<a class="reference internal" href="../selectors/#selectors.SelectSelector" title="selectors.SelectSelector"><code>SelectSelector</code></a> is used to wait on socket events: it supports sockets and is limited to 512 sockets.</li> <li>
+<a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_reader" title="asyncio.loop.add_reader"><code>loop.add_reader()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_writer" title="asyncio.loop.add_writer"><code>loop.add_writer()</code></a> only accept socket handles (e.g. pipe file descriptors are not supported).</li> <li>Pipes are not supported, so the <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.connect_read_pipe" title="asyncio.loop.connect_read_pipe"><code>loop.connect_read_pipe()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.connect_write_pipe" title="asyncio.loop.connect_write_pipe"><code>loop.connect_write_pipe()</code></a> methods are not implemented.</li> <li>
+<a class="reference internal" href="../asyncio-subprocess/#asyncio-subprocess"><span class="std std-ref">Subprocesses</span></a> are not supported, i.e. <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.subprocess_exec" title="asyncio.loop.subprocess_exec"><code>loop.subprocess_exec()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.subprocess_shell" title="asyncio.loop.subprocess_shell"><code>loop.subprocess_shell()</code></a> methods are not implemented.</li> </ul> <p><a class="reference internal" href="../asyncio-eventloop/#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code>ProactorEventLoop</code></a> has the following limitations:</p> <ul class="simple"> <li>The <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.create_datagram_endpoint" title="asyncio.loop.create_datagram_endpoint"><code>loop.create_datagram_endpoint()</code></a> method is not supported.</li> <li>The <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_reader" title="asyncio.loop.add_reader"><code>loop.add_reader()</code></a> and <a class="reference internal" href="../asyncio-eventloop/#asyncio.loop.add_writer" title="asyncio.loop.add_writer"><code>loop.add_writer()</code></a> methods are not supported.</li> </ul> <p>The resolution of the monotonic clock on Windows is usually around 15.6 msec. The best resolution is 0.5 msec. The resolution depends on the hardware (availability of <a class="reference external" href="https://en.wikipedia.org/wiki/High_Precision_Event_Timer" target="_blank">HPET</a>) and on the Windows configuration.</p>  <h3 id="asyncio-windows-subprocess">Subprocess Support on Windows</h3> <p id="subprocess-support-on-windows"><a class="reference internal" href="../asyncio-eventloop/#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><code>SelectorEventLoop</code></a> on Windows does not support subproceses. On Windows, <a class="reference internal" href="../asyncio-eventloop/#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code>ProactorEventLoop</code></a> should be used instead:</p> <pre data-language="python">import asyncio
+
+asyncio.set_event_loop_policy(
+    asyncio.WindowsProactorEventLoopPolicy())
+
+asyncio.run(your_code())
+</pre> <p>The <a class="reference internal" href="../asyncio-policy/#asyncio.AbstractEventLoopPolicy.set_child_watcher" title="asyncio.AbstractEventLoopPolicy.set_child_watcher"><code>policy.set_child_watcher()</code></a> function is also not supported, as <a class="reference internal" href="../asyncio-eventloop/#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code>ProactorEventLoop</code></a> has a different mechanism to watch child processes.</p>    <h2 id="macos">macOS</h2> <p>Modern macOS versions are fully supported.</p> <h4 class="rubric">macOS &lt;= 10.8</h4> <p>On macOS 10.6, 10.7 and 10.8, the default event loop uses <a class="reference internal" href="../selectors/#selectors.KqueueSelector" title="selectors.KqueueSelector"><code>selectors.KqueueSelector</code></a>, which does not support character devices on these versions. The <a class="reference internal" href="../asyncio-eventloop/#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><code>SelectorEventLoop</code></a> can be manually configured to use <a class="reference internal" href="../selectors/#selectors.SelectSelector" title="selectors.SelectSelector"><code>SelectSelector</code></a> or <a class="reference internal" href="../selectors/#selectors.PollSelector" title="selectors.PollSelector"><code>PollSelector</code></a> to support character devices on these older versions of macOS. Example:</p> <pre data-language="python">import asyncio
+import selectors
+
+selector = selectors.SelectSelector()
+loop = asyncio.SelectorEventLoop(selector)
+asyncio.set_event_loop(loop)
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2001–2018 Python Software Foundation<br>Licensed under the PSF License.<br>
+    <a href="https://docs.python.org/3.7/library/asyncio-platforms.html" class="_attribution-link" target="_blank">https://docs.python.org/3.7/library/asyncio-platforms.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
