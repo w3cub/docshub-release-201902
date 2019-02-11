@@ -1,0 +1,217 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Camelcase - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="When it comes to naming variables, style guides generally fall into one of two camps&#58; camelcase (variableName) and underscores (variable_name). &hellip;">
+  <meta name="keywords" content="require, camelcase, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/camelcase/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="require-camelcase-camelcase">Require CamelCase (camelcase)</h1> <p>When it comes to naming variables, style guides generally fall into one of two camps: camelcase (<code>variableName</code>) and underscores (<code>variable_name</code>). This rule focuses on using the camelcase approach. If your style guide calls for camelCasing your variable names, then this rule is for you!</p> <h2 id="rule-details">Rule Details</h2> <p>This rule looks for any underscores (<code>_</code>) located within the source code. It ignores leading and trailing underscores and only checks those in the middle of a variable name. If ESLint decides that the variable is a constant (all uppercase), then no warning will be thrown. Otherwise, a warning will be thrown. This rule only flags definitions and assignments but not function calls. In case of ES6 <code>import</code> statements, this rule only targets the name of the variable that will be imported into the local module scope.</p> <h2 id="options">Options</h2> <p>This rule has an object option:</p> <ul> <li>
+<code>"properties": "always"</code> (default) enforces camelcase style for property names</li> <li>
+<code>"properties": "never"</code> does not check property names</li> <li>
+<code>"ignoreDestructuring": false</code> (default) enforces camelcase style for destructured identifiers</li> <li>
+<code>"ignoreDestructuring": true</code> does not check destructured identifiers</li> <li>
+<code>allow</code> (<code>string[]</code>) list of properties to accept. Accept regex.</li> </ul> <h3 id="properties-always">properties: “always”</h3> <p>Examples of <strong>incorrect</strong> code for this rule with the default <code>{ "properties": "always" }</code> option:</p> <pre data-language="js">/*eslint camelcase: "error"*/
+
+import { no_camelcased } from "external-module"
+
+var my_favorite_color = "#112C85";
+
+function do_something() {
+    // ...
+}
+
+obj.do_something = function() {
+    // ...
+};
+
+function foo({ no_camelcased }) {
+    // ...
+};
+
+function foo({ isCamelcased: no_camelcased }) {
+    // ...
+}
+
+function foo({ no_camelcased = 'default value' }) {
+    // ...
+};
+
+var obj = {
+    my_pref: 1
+};
+
+var { category_id = 1 } = query;
+
+var { foo: no_camelcased } = bar;
+
+var { foo: bar_baz = 1 } = quz;</pre> <p>Examples of <strong>correct</strong> code for this rule with the default <code>{ "properties": "always" }</code> option:</p> <pre data-language="js">/*eslint camelcase: "error"*/
+
+import { no_camelcased as camelCased } from "external-module";
+
+var myFavoriteColor   = "#112C85";
+var _myFavoriteColor  = "#112C85";
+var myFavoriteColor_  = "#112C85";
+var MY_FAVORITE_COLOR = "#112C85";
+var foo = bar.baz_boom;
+var foo = { qux: bar.baz_boom };
+
+obj.do_something();
+do_something();
+new do_something();
+
+var { category_id: category } = query;
+
+function foo({ isCamelCased }) {
+    // ...
+};
+
+function foo({ isCamelCased: isAlsoCamelCased }) {
+    // ...
+}
+
+function foo({ isCamelCased = 'default value' }) {
+    // ...
+};
+
+var { categoryId = 1 } = query;
+
+var { foo: isCamelCased } = bar;
+
+var { foo: isCamelCased = 1 } = quz;</pre> <h3 id="properties-never">properties: “never”</h3> <p>Examples of <strong>correct</strong> code for this rule with the <code>{ "properties": "never" }</code> option:</p> <pre data-language="js">/*eslint camelcase: ["error", {properties: "never"}]*/
+
+var obj = {
+    my_pref: 1
+};</pre> <h3 id="ignoredestructuring-false">ignoreDestructuring: false</h3> <p>Examples of <strong>incorrect</strong> code for this rule with the default <code>{ "ignoreDestructuring": false }</code> option:</p> <pre data-language="js">/*eslint camelcase: "error"*/
+
+var { category_id } = query;
+
+var { category_id = 1 } = query;
+
+var { category_id: category_id } = query;
+
+var { category_id: category_alias } = query;
+
+var { category_id: categoryId, ...other_props } = query;</pre> <h3 id="ignoredestructuring-true">ignoreDestructuring: true</h3> <p>Examples of <strong>incorrect</strong> code for this rule with the <code>{ "ignoreDestructuring": true }</code> option:</p> <pre data-language="js">/*eslint camelcase: ["error", {ignoreDestructuring: true}]*/
+
+var { category_id: category_alias } = query;
+
+var { category_id, ...other_props } = query;</pre> <p>Examples of <strong>correct</strong> code for this rule with the <code>{ "ignoreDestructuring": true }</code> option:</p> <pre data-language="js">/*eslint camelcase: ["error", {ignoreDestructuring: true}]*/
+
+var { category_id } = query;
+
+var { category_id = 1 } = query;
+
+var { category_id: category_id } = query;</pre> <h2 id="allow">allow</h2> <p>Examples of <strong>correct</strong> code for this rule with the <code>allow</code> option:</p> <pre data-language="js">/*eslint camelcase: ["error", {allow: ["UNSAFE_componentWillMount"]}]*/
+
+function UNSAFE_componentWillMount() {
+    // ...
+}</pre> <pre data-language="js">/*eslint camelcase: ["error", {allow: ["^UNSAFE_"]}]*/
+
+function UNSAFE_componentWillMount() {
+    // ...
+}
+
+function UNSAFE_componentWillMount() {
+    // ...
+}</pre> <h2 id="when-not-to-use-it">When Not To Use It</h2> <p>If you have established coding standards using a different naming convention (separating words with underscores), turn this rule off.</p> <h2 id="version">Version</h2> <p>This rule was introduced in ESLint 0.0.2.</p> <h2 id="resources">Resources</h2> <ul> <li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/camelcase.js" target="_blank">Rule source</a></li> <li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/camelcase.md" target="_blank">Documentation source</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/camelcase" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/camelcase</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

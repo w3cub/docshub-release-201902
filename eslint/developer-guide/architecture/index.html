@@ -1,0 +1,116 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Architecture - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content=" At a high level, there are a few key parts to ESLint&#58; ">
+  <meta name="keywords" content="architecture, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/developer-guide/architecture/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="architecture">Architecture</h1> <p>At a high level, there are a few key parts to ESLint:</p> <ul> <li>
+<code>bin/eslint.js</code> - this is the file that actually gets executed with the command line utility. It’s a dumb wrapper that does nothing more than bootstrap ESLint, passing the command line arguments to <code>cli</code>. This is intentionally small so as not to require heavy testing.</li> <li>
+<code>lib/cli.js</code> - this is the heart of the ESLint CLI. It takes an array of arguments and then uses <code>eslint</code> to execute the commands. By keeping this as a separate utility, it allows others to effectively call ESLint from within another Node.js program as if it were done on the command line. The main call is <code>cli.execute()</code>. This is also the part that does all the file reading, directory traversing, input, and output.</li> <li>
+<code>lib/linter.js</code> - this is the core Linter class that does code verifying based on configuration options. This file does no file I/O and does not interact with the <code>console</code> at all. For other Node.js programs that have JavaScript text to verify, they would be able to use this interface directly.</li> <li>
+<code>lib/api.js</code> - this exposes an object that contains Linter, CLIEngine, RuleTester, and SourceCode.</li> <li>
+<code>lib/testers/rule-tester.js</code> - this is a wrapper around Mocha, so that rules can be unit tested. This class lets us write consistently formatted tests for each rule that is implemented and be confident that each of the rules work. The RuleTester interface was modeled after Mocha and works with Mocha’s global testing methods. RuleTester can also be modified to work with other testing frameworks.</li> <li>
+<code>lib/util/source-code.js</code> - this contains a SourceCode class that is used to represent the parsed source code. It takes in source code and the Program node of the AST representing the code.</li> </ul> <h2 id="the-cli-object">The <code>cli</code> object</h2> <p>The <code>cli</code> object is the API for the command line interface. Literally, the <code>bin/eslint.js</code> file simply passes arguments to the <code>cli</code> object and then sets <code>process.exitCode</code> to the returned exit code.</p> <p>The main method is <code>cli.execute()</code>, which accepts an array of strings that represent the command line options (as if <code>process.argv</code> were passed without the first two arguments). If you want to run ESLint from inside of another program and have it act like the CLI, then <code>cli</code> is the object to use.</p> <p>This object’s responsibilities include:</p> <ul> <li>Interpreting command line arguments</li> <li>Reading from the file system</li> <li>Outputting to the console</li> <li>Outputting to the filesystem</li> <li>Use a formatter</li> <li>Returning the correct exit code</li> </ul> <p>This object may not:</p> <ul> <li>Call <code>process.exit()</code> directly</li> <li>Perform any asynchronous operations</li> </ul> <h2 id="the-cliengine-object">The <code>CLIEngine</code> object</h2> <p>The <code>CLIEngine</code> type represents the core functionality of the CLI except that it reads nothing from the command line and doesn’t output anything by default. Instead, it accepts many (but not all) of the arguments that are passed into the CLI. It reads both configuration and source files as well as managing the environment that is passed into the <code>eslint</code> object.</p> <p>The main method of the <code>CLIEngine</code> is <code>executeOnFiles()</code>, which accepts an array of file and directory names to run the linter on.</p> <p>This object’s responsibilities include:</p> <ul> <li>Managing the execution environment for <code>eslint</code>
+</li> <li>Reading from the file system</li> <li>Loading rule definitions</li> <li>Reading configuration information from config files (including <code>.eslintrc</code> and <code>package.json</code>)</li> </ul> <p>This object may not:</p> <ul> <li>Call <code>process.exit()</code> directly</li> <li>Perform any asynchronous operations</li> <li>Output to the console</li> <li>Use formatters</li> </ul> <h2 id="the-eslint-object">The <code>eslint</code> object</h2> <p>The main method of the <code>eslint</code> object is <code>verify()</code> and accepts two arguments: the source text to verify and a configuration object (the baked configuration of the given configuration file plus command line options). The method first parses the given text with <code>espree</code> (or whatever the configured parser is) and retrieves the AST. The AST is produced with both line/column and range locations which are useful for reporting location of issues and retrieving the source text related to an AST node, respectively.</p> <p>Once the AST is available, <code>estraverse</code> is used to traverse the AST from top to bottom. At each node, the <code>eslint</code> object emits an event that has the same name as the node type (i.e., “Identifier”, “WithStatement”, etc.). On the way back up the subtree, an event is emitted with the AST type name and suffixed with “:exit”, such as “Identifier:exit” - this allows rules to take action both on the way down and on the way up in the traversal. Each event is emitted with the appropriate AST node available.</p> <p>This object’s responsibilities include:</p> <ul> <li>Inspecting JavaScript code strings</li> <li>Creating an AST for the code</li> <li>Executing rules on the AST</li> <li>Reporting back the results of the execution</li> </ul> <p>This object may not:</p> <ul> <li>Call <code>process.exit()</code> directly</li> <li>Perform any asynchronous operations</li> <li>Use Node.js-specific features</li> <li>Access the file system</li> <li>Call <code>console.log()</code> or any other similar method</li> </ul> <h2 id="rules">Rules</h2> <p>Individual rules are the most specialized part of the ESLint architecture. Rules can do very little, they are simply a set of instructions executed against an AST that is provided. They do get some context information passed in, but the primary responsibility of a rule is to inspect the AST and report warnings.</p> <p>These objects’ responsibilities are:</p> <ul> <li>Inspect the AST for specific patterns</li> <li>Reporting warnings when certain patterns are found</li> </ul> <p>These objects may not:</p> <ul> <li>Call <code>process.exit()</code> directly</li> <li>Perform any asynchronous operations</li> <li>Use Node.js-specific features</li> <li>Access the file system</li> <li>Call <code>console.log()</code> or any other similar method</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/developer-guide/architecture" class="_attribution-link" target="_blank">https://eslint.org/docs/developer-guide/architecture</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

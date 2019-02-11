@@ -1,0 +1,140 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Prefer-arrow-callback - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content=" The --fix option on the command line can automatically fix some of the problems reported by this rule. ">
+  <meta name="keywords" content="require, using, arrow, functions, for, callbacks, prefer-arrow-callback, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/prefer-arrow-callback/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="require-using-arrow-functions-for-callbacks-prefer-arrow-callback">Require using arrow functions for callbacks (prefer-arrow-callback)</h1> <p>The <code>--fix</code> option on the <a href="../../user-guide/command-line-interface/#fixing-problems">command line</a> can automatically fix some of the problems reported by this rule.</p> <p>Arrow functions can be an attractive alternative to function expressions for callbacks or function arguments.</p> <p>For example, arrow functions are automatically bound to their surrounding scope/context. This provides an alternative to the pre-ES6 standard of explicitly binding function expressions to achieve similar behavior.</p> <p>Additionally, arrow functions are:</p> <ul> <li> <p>less verbose, and easier to reason about.</p> </li> <li> <p>bound lexically regardless of where or when they are invoked.</p> </li> </ul> <h2 id="rule-details">Rule Details</h2> <p>This rule locates function expressions used as callbacks or function arguments. An error will be produced for any that could be replaced by an arrow function without changing the result.</p> <p>The following examples <strong>will</strong> be flagged:</p> <pre data-language="js">/* eslint prefer-arrow-callback: "error" */
+
+foo(function(a) { return a; }); // ERROR
+// prefer: foo(a =&gt; a)
+
+foo(function() { return this.a; }.bind(this)); // ERROR
+// prefer: foo(() =&gt; this.a)</pre> <p>Instances where an arrow function would not produce identical results will be ignored.</p> <p>The following examples <strong>will not</strong> be flagged:</p> <pre data-language="js">/* eslint prefer-arrow-callback: "error" */
+/* eslint-env es6 */
+
+// arrow function callback
+foo(a =&gt; a); // OK
+
+// generator as callback
+foo(function*() { yield; }); // OK
+
+// function expression not used as callback or function argument
+var foo = function foo(a) { return a; }; // OK
+
+// unbound function expression callback
+foo(function() { return this.a; }); // OK
+
+// recursive named function callback
+foo(function bar(n) { return n &amp;&amp; n + bar(n - 1); }); // OK</pre> <h2 id="options">Options</h2> <p>Access further control over this rule’s behavior via an options object.</p> <p>Default: <code>{ allowNamedFunctions: false, allowUnboundThis: true }</code></p> <h3 id="allownamedfunctions">allowNamedFunctions</h3> <p>By default <code>{ "allowNamedFunctions": false }</code>, this <code>boolean</code> option prohibits using named functions as callbacks or function arguments.</p> <p>Changing this value to <code>true</code> will reverse this option’s behavior by allowing use of named functions without restriction.</p> <p><code>{ "allowNamedFunctions": true }</code> <strong>will not</strong> flag the following example:</p> <pre data-language="js">/* eslint prefer-arrow-callback: [ "error", { "allowNamedFunctions": true } ] */
+
+foo(function bar() {});</pre> <h3 id="allowunboundthis">allowUnboundThis</h3> <p>By default <code>{ "allowUnboundThis": true }</code>, this <code>boolean</code> option allows function expressions containing <code>this</code> to be used as callbacks, as long as the function in question has not been explicitly bound.</p> <p>When set to <code>false</code> this option prohibits the use of function expressions as callbacks or function arguments entirely, without exception.</p> <p><code>{ "allowUnboundThis": false }</code> <strong>will</strong> flag the following examples:</p> <pre data-language="js">/* eslint prefer-arrow-callback: [ "error", { "allowUnboundThis": false } ] */
+/* eslint-env es6 */
+
+foo(function() { this.a; });
+
+foo(function() { (() =&gt; this); });
+
+someArray.map(function(itm) { return this.doSomething(itm); }, someObject);</pre> <h2 id="when-not-to-use-it">When Not To Use It</h2> <ul> <li> <p>In environments that have not yet adopted ES6 language features (ES3/5).</p> </li> <li> <p>In ES6+ environments that allow the use of function expressions when describing callbacks or function arguments.</p> </li> </ul> <h2 id="further-reading">Further Reading</h2> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank">More on ES6 arrow functions</a></li> </ul> <h2 id="version">Version</h2> <p>This rule was introduced in ESLint 1.2.0.</p> <h2 id="resources">Resources</h2> <ul> <li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/prefer-arrow-callback.js" target="_blank">Rule source</a></li> <li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/prefer-arrow-callback.md" target="_blank">Documentation source</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/prefer-arrow-callback" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/prefer-arrow-callback</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

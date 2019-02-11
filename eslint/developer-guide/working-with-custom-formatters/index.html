@@ -1,0 +1,305 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Working With Custom Formatters - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="Writing an ESLint custom formatter is simple. All that is needed is a module that exports a function that will receive the results from the &hellip;">
+  <meta name="keywords" content="working, with, custom, formatters, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/developer-guide/working-with-custom-formatters/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="working-with-custom-formatters">Working with Custom Formatters</h1> <p>Writing an ESLint custom formatter is simple. All that is needed is a module that exports a function that will receive the results from the execution of ESLint.</p> <p>The simplest formatter will be something like:</p> <pre data-language="javascript">//my-awesome-formatter.js
+module.exports = function(results) {
+    return JSON.stringify(results, null, 2);
+};</pre> <p>And to run <code>eslint</code> with this custom formatter:</p> <pre data-language="bash">eslint -f './my-awesome-formatter.js' src/</pre> <p>The output of the previous command will be something like this</p> <pre data-language="javascript">[
+    {
+        filePath: "path/to/file.js",
+        messages: [
+            {
+                ruleId: "curly",
+                severity: 2,
+                message: "Expected { after 'if' condition.",
+                line: 2,
+                column: 1,
+                nodeType: "IfStatement"
+            },
+            {
+                ruleId: "no-process-exit",
+                severity: 2,
+                message: "Don't use process.exit(); throw an error instead.",
+                line: 3,
+                column: 1,
+                nodeType: "CallExpression"
+            }
+        ],
+        errorCount: 2,
+        warningCount: 0,
+        fixableErrorCount: 0,
+        fixableWarningCount: 0,
+        source:
+            "var err = doStuff();\nif (err) console.log('failed tests: ' + err);\nprocess.exit(1);\n"
+    },
+    {
+        filePath: "Gruntfile.js",
+        messages: [],
+        errorCount: 0,
+        warningCount: 0,
+        fixableErrorCount: 0,
+        fixableWarningCount: 0
+    }
+];</pre> <p>As you can see the argument passed to the custom formatter function is just a list of results objects.</p> <h2 id="description-of-the-results">Description of the results</h2> <h3 id="the-result-object">the result object</h3> <p>You will receive a result object from each file <code>eslint</code> validates, each one of them containing the list of messages for <code>errors</code> and/or <code>warnings</code>.</p> <p>The following are the fields of the result object:</p> <ul> <li>
+<strong>filePath</strong>: The path to the file relative to the current working directory (the path from which ESLint was executed).</li> <li>
+<strong>messages</strong>: An array of message objects. See below for more info about messages.</li> <li>
+<strong>errorCount</strong>: The number of errors for the given file.</li> <li>
+<strong>warningCount</strong>: The number of warnings for the given file.</li> <li>
+<strong>source</strong>: The source code for the given file. This property is omitted if this file has no errors/warnings or if the <code>output</code> property is present.</li> <li>
+<strong>output</strong>: The source code for the given file with as many fixes applied as possible. This property is omitted if no fix is available.</li> </ul> <h3 id="the-message-object">The message object</h3> <ul> <li>
+<strong>ruleId</strong>: the id of the rule that produced the error or warning.</li> <li>
+<strong>severity</strong>: the severity of the failure, <code>1</code> for warnings and <code>2</code> for errors.</li> <li>
+<strong>message</strong>: the human readable description of the error.</li> <li>
+<strong>line</strong>: the line where the issue is located.</li> <li>
+<strong>column</strong>: the column where the issue is located.</li> <li>
+<strong>nodeType</strong>: the type of the node in the <a href="https://github.com/estree/estree/blob/master/spec.md#node-objects" target="_blank">AST</a>
+</li> </ul> <h2 id="examples">Examples</h2> <h3 id="summary-formatter">Summary formatter</h3> <p>A formatter that only cares about the total count of errors and warnings will look like this:</p> <pre data-language="javascript">module.exports = function(results) {
+    // accumulate the errors and warnings
+    var summary = results.reduce(
+        function(seq, current) {
+            seq.errors += current.errorCount;
+            seq.warnings += current.warningCount;
+            return seq;
+        },
+        { errors: 0, warnings: 0 }
+    );
+
+    if (summary.errors &gt; 0 || summary.warnings &gt; 0) {
+        return (
+            "Errors: " +
+            summary.errors +
+            ", Warnings: " +
+            summary.warnings +
+            "\n"
+        );
+    }
+
+    return "";
+};</pre> <p>Running <code>eslint</code> with the previous custom formatter,</p> <pre data-language="bash">eslint -f './my-awesome-formatter.js' src/</pre> <p>Will produce the following output:</p> <pre data-language="bash">Errors: 2, Warnings: 4</pre> <h3 id="detailed-formatter">Detailed formatter</h3> <p>A more complex report will look something like this:</p> <pre data-language="javascript">module.exports = function(results) {
+    var results = results || [];
+
+    var summary = results.reduce(
+        function(seq, current) {
+            current.messages.forEach(function(msg) {
+                var logMessage = {
+                    filePath: current.filePath,
+                    ruleId: msg.ruleId,
+                    message: msg.message,
+                    line: msg.line,
+                    column: msg.column
+                };
+
+                if (msg.severity === 1) {
+                    logMessage.type = "warning";
+                    seq.warnings.push(logMessage);
+                }
+                if (msg.severity === 2) {
+                    logMessage.type = "error";
+                    seq.errors.push(logMessage);
+                }
+            });
+            return seq;
+        },
+        {
+            errors: [],
+            warnings: []
+        }
+    );
+
+    if (summary.errors.length &gt; 0 || summary.warnings.length &gt; 0) {
+        var lines = summary.errors
+            .concat(summary.warnings)
+            .map(function(msg) {
+                return (
+                    "\n" +
+                    msg.type +
+                    " " +
+                    msg.ruleId +
+                    "\n  " +
+                    msg.filePath +
+                    ":" +
+                    msg.line +
+                    ":" +
+                    msg.column
+                );
+            })
+            .join("\n");
+
+        return lines + "\n";
+    }
+};</pre> <p>So running <code>eslint</code> with this custom formatter:</p> <pre data-language="bash">eslint -f './my-awesome-formatter.js' src/</pre> <p>The output will be</p> <pre data-language="bash">error space-infix-ops
+  src/configs/bundler.js:6:8
+error semi
+  src/configs/bundler.js:6:10
+warning no-unused-vars
+  src/configs/bundler.js:5:6
+warning no-unused-vars
+  src/configs/bundler.js:6:6
+warning no-shadow
+  src/configs/bundler.js:65:32
+warning no-unused-vars
+  src/configs/clean.js:3:6</pre> <h2 id="passing-arguments-to-formatters">Passing arguments to formatters:</h2> <h3 id="using-environment-variables">Using environment variables:</h3> <p>Let’s say we want to show only the messages that are actual errors and discard the warnings.</p> <pre data-language="javascript">module.exports = function(results) {
+    var skipWarnings = process.env.AF_SKIP_WARNINGS === "true"; //af stands for awesome-formatter
+
+    var results = results || [];
+    var summary = results.reduce(
+        function(seq, current) {
+            current.messages.forEach(function(msg) {
+                var logMessage = {
+                    filePath: current.filePath,
+                    ruleId: msg.ruleId,
+                    message: msg.message,
+                    line: msg.line,
+                    column: msg.column
+                };
+
+                if (msg.severity === 1) {
+                    logMessage.type = "warning";
+                    seq.warnings.push(logMessage);
+                }
+                if (msg.severity === 2) {
+                    logMessage.type = "error";
+                    seq.errors.push(logMessage);
+                }
+            });
+            return seq;
+        },
+        {
+            errors: [],
+            warnings: []
+        }
+    );
+
+    if (summary.errors.length &gt; 0 || summary.warnings.length &gt; 0) {
+        var warnings = !skipWarnings ? summary.warnings : []; // skip the warnings in that case
+
+        var lines = summary.errors
+            .concat(warnings)
+            .map(function(msg) {
+                return (
+                    "\n" +
+                    msg.type +
+                    " " +
+                    msg.ruleId +
+                    "\n  " +
+                    msg.filePath +
+                    ":" +
+                    msg.line +
+                    ":" +
+                    msg.column
+                );
+            })
+            .join("\n");
+
+        return lines + "\n";
+    }
+};</pre> <p>So running <code>eslint</code> with this custom formatter:</p> <pre data-language="bash">AF_SKIP_WARNINGS=true eslint -f './my-awesome-formatter.js' src/</pre> <p>The output will not print the warnings</p> <pre data-language="bash">error space-infix-ops
+  src/configs/bundler.js:6:8
+
+error semi
+  src/configs/bundler.js:6:10</pre> <h3 id="outputting-to-a-standard-format-for-other-programs-to-consume">Outputting to a standard format for other programs to consume</h3> <p>You can use ESLint’s built-in JSON formatter first, and pipe the output to another program that accepts JSON linter results.</p> <pre data-language="bash">eslint -f json src/ | your-program-that-reads-JSON</pre> <p>You can read more about the built-in JSON formatter <a href="../../user-guide/formatters/">here</a>.</p> <h2 id="final-words">Final words</h2> <p>More complex formatters could be written by grouping differently the errors and warnings and/or grouping the data by the ruleIds.</p> <p>When printing the files a recommended format will be something like this:</p> <pre data-language="bash">file:line:column</pre> <p>Since that allows modern fancy terminals (like <a href="https://www.iterm2.com/" target="_blank">iTerm2</a> or <a href="http://guake-project.org/" target="_blank">Guake</a>) to make them link to files that open in your favorite text editor.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/developer-guide/working-with-custom-formatters" class="_attribution-link" target="_blank">https://eslint.org/docs/developer-guide/working-with-custom-formatters</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,602 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Node.js API - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="While ESLint is designed to be run on the command line, it’s possible to use ESLint programmatically through the Node.js API. The purpose of the &hellip;">
+  <meta name="keywords" content="node, js, api, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/developer-guide/nodejs-api/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="nodejs-api">Node.js API</h1> <p>While ESLint is designed to be run on the command line, it’s possible to use ESLint programmatically through the Node.js API. The purpose of the Node.js API is to allow plugin and tool authors to use the ESLint functionality directly, without going through the command line interface.</p> <p><strong>Note:</strong> Use undocumented parts of the API at your own risk. Only those parts that are specifically mentioned in this document are approved for use and will remain stable and reliable. Anything left undocumented is unstable and may change or be removed at any point.</p> <h2 id="table-of-contents">Table of Contents</h2> <ul> <li>
+<a href="#sourcecode">SourceCode</a> <ul> <li><a href="#sourcecodesplitlines">splitLines()</a></li> </ul> </li> <li>
+<a href="#linter">Linter</a> <ul> <li><a href="#linterverify">verify()</a></li> <li><a href="#linterverifyandfix">verifyAndFix()</a></li> <li><a href="#linterdefinerule">defineRule()</a></li> <li><a href="#linterdefinerules">defineRules()</a></li> <li><a href="#lintergetrules">getRules()</a></li> <li><a href="#linterdefineparser">defineParser()</a></li> <li><a href="#linterversion">version</a></li> </ul> </li> <li><a href="#linter-1">linter (deprecated)</a></li> <li>
+<a href="#cliengine">CLIEngine</a> <ul> <li><a href="#cliengineexecuteonfiles">executeOnFiles()</a></li> <li><a href="#cliengineresolvefileglobpatterns">resolveFileGlobPatterns()</a></li> <li><a href="#clienginegetconfigforfile">getConfigForFile()</a></li> <li><a href="#cliengineexecuteontext">executeOnText()</a></li> <li><a href="#cliengineaddplugin">addPlugin()</a></li> <li><a href="#cliengineispathignored">isPathIgnored()</a></li> <li><a href="#clienginegetformatter">getFormatter()</a></li> <li><a href="#clienginegeterrorresults">getErrorResults()</a></li> <li><a href="#cliengineoutputfixes">outputFixes()</a></li> <li><a href="#clienginegetrules">getRules()</a></li> <li><a href="#cliengineversion">version</a></li> </ul> </li> <li>
+<a href="#ruletester">RuleTester</a> <ul> <li><a href="#customizing-ruletester">Customizing RuleTester</a></li> </ul> </li> <li><a href="#deprecated-apis">Deprecated APIs</a></li> </ul> <h2 id="sourcecode">SourceCode</h2> <p>The <code>SourceCode</code> type represents the parsed source code that ESLint executes on. It’s used internally in ESLint and is also available so that already-parsed code can be used. You can create a new instance of <code>SourceCode</code> by passing in the text string representing the code and an abstract syntax tree (AST) in <a href="https://github.com/estree/estree" target="_blank">ESTree</a> format (including location information, range information, comments, and tokens):</p> <pre data-language="js">var SourceCode = require("eslint").SourceCode;
+
+var code = new SourceCode("var foo = bar;", ast);</pre> <p>The <code>SourceCode</code> constructor throws an error if the AST is missing any of the required information.</p> <p>The <code>SourceCode</code> constructor strips Unicode BOM. Please note the AST also should be parsed from stripped text.</p> <pre data-language="js">var SourceCode = require("eslint").SourceCode;
+
+var code = new SourceCode("\uFEFFvar foo = bar;", ast);
+
+assert(code.hasBOM === true);
+assert(code.text === "var foo = bar;");</pre> <h3 id="sourcecodesplitlines">SourceCode#splitLines()</h3> <p>This is a static function on <code>SourceCode</code> that is used to split the source code text into an array of lines.</p> <pre data-language="js">var SourceCode = require("eslint").SourceCode;
+
+var code = "var a = 1;\nvar b = 2;"
+
+// split code into an array
+var codeLines = SourceCode.splitLines(code);
+
+/*
+    Value of codeLines will be
+    [
+        "var a = 1;",
+        "var b = 2;"
+    ]
+ */</pre> <h2 id="linter">Linter</h2> <p>The <code>Linter</code> object does the actual evaluation of the JavaScript code. It doesn’t do any filesystem operations, it simply parses and reports on the code. In particular, the <code>Linter</code> object does not process configuration objects or files. You can retrieve instances of <code>Linter</code> like this:</p> <pre data-language="js">var Linter = require("eslint").Linter;
+var linter = new Linter();</pre> <h3 id="linterverify">Linter#verify</h3> <p>The most important method on <code>Linter</code> is <code>verify()</code>, which initiates linting of the given text. This method accepts three arguments:</p> <ul> <li>
+<code>code</code> - the source code to lint (a string or instance of <code>SourceCode</code>).</li> <li>
+<code>config</code> - a configuration object that has been processed and normalized by CLIEngine using eslintrc files and/or other configuration arguments. <ul> <li>
+<strong>Note</strong>: If you want to lint text and have your configuration be read and processed, use CLIEngine’s <a href="#cliengineexecuteonfiles"><code>executeOnFiles</code></a> or <a href="#cliengineexecuteontext"><code>executeOnText</code></a> instead.</li> </ul> </li> <li>
+<code>options</code> - (optional) Additional options for this run. <ul> <li>
+<code>filename</code> - (optional) the filename to associate with the source code.</li> <li>
+<code>preprocess</code> - (optional) A function that accepts a string containing source text, and returns an array of strings containing blocks of code to lint. Also see: <a href="../working-with-plugins/#processors-in-plugins">Processors in Plugins</a>
+</li> <li>
+<code>postprocess</code> - (optional) A function that accepts an array of problem lists (one list of problems for each block of code from <code>preprocess</code>), and returns a one-dimensional array of problems containing problems for the original, unprocessed text. Also see: <a href="../working-with-plugins/#processors-in-plugins">Processors in Plugins</a>
+</li> <li>
+<code>allowInlineConfig</code> - (optional) set to <code>false</code> to disable inline comments from changing ESLint rules.</li> <li>
+<code>reportUnusedDisableDirectives</code> - (optional) when set to <code>true</code>, adds reported errors for unused <code>eslint-disable</code> directives when no problems would be reported in the disabled area anyway.</li> </ul> </li> </ul> <p>If the third argument is a string, it is interpreted as the <code>filename</code>.</p> <p>You can call <code>verify()</code> like this:</p> <pre data-language="js">var Linter = require("eslint").Linter;
+var linter = new Linter();
+
+var messages = linter.verify("var foo;", {
+    rules: {
+        semi: 2
+    }
+}, { filename: "foo.js" });
+
+// or using SourceCode
+
+var Linter = require("eslint").Linter,
+    linter = new Linter(),
+    SourceCode = require("eslint").SourceCode;
+
+var code = new SourceCode("var foo = bar;", ast);
+
+var messages = linter.verify(code, {
+    rules: {
+        semi: 2
+    }
+}, { filename: "foo.js" });</pre> <p>The <code>verify()</code> method returns an array of objects containing information about the linting warnings and errors. Here’s an example:</p> <pre data-language="js">{
+    fatal: false,
+    ruleId: "semi",
+    severity: 2,
+    line: 1,
+    column: 23,
+    message: "Expected a semicolon.",
+    fix: {
+        range: [1, 15],
+        text: ";"
+    }
+}</pre> <p>The information available for each linting message is:</p> <ul> <li>
+<code>column</code> - the column on which the error occurred.</li> <li>
+<code>fatal</code> - usually omitted, but will be set to true if there’s a parsing error (not related to a rule).</li> <li>
+<code>line</code> - the line on which the error occurred.</li> <li>
+<code>message</code> - the message that should be output.</li> <li>
+<code>nodeType</code> - the node or token type that was reported with the problem.</li> <li>
+<code>ruleId</code> - the ID of the rule that triggered the messages (or null if <code>fatal</code> is true).</li> <li>
+<code>severity</code> - either 1 or 2, depending on your configuration.</li> <li>
+<code>endColumn</code> - the end column of the range on which the error occurred (this property is omitted if it’s not range).</li> <li>
+<code>endLine</code> - the end line of the range on which the error occurred (this property is omitted if it’s not range).</li> <li>
+<code>fix</code> - an object describing the fix for the problem (this property is omitted if no fix is available).</li> </ul> <p>Linting message objects have a deprecated <code>source</code> property. This property <strong>will be removed</strong> from linting messages in an upcoming breaking release. If you depend on this property, you should now use the <code>SourceCode</code> instance provided by the linter.</p> <p>You can also get an instance of the <code>SourceCode</code> object used inside of <code>linter</code> by using the <code>getSourceCode()</code> method:</p> <pre data-language="js">var Linter = require("eslint").Linter;
+var linter = new Linter();
+
+var messages = linter.verify("var foo = bar;", {
+    rules: {
+        semi: 2
+    }
+}, { filename: "foo.js" });
+
+var code = linter.getSourceCode();
+
+console.log(code.text);     // "var foo = bar;"</pre> <p>In this way, you can retrieve the text and AST used for the last run of <code>linter.verify()</code>.</p> <h3 id="linterverifyandfix">Linter#verifyAndFix()</h3> <p>This method is similar to verify except that it also runs autofixing logic, similar to the <code>--fix</code> flag on the command line. The result object will contain the autofixed code, along with any remaining linting messages for the code that were not autofixed.</p> <pre data-language="js">var Linter = require("eslint").Linter;
+var linter = new Linter();
+
+var messages = linter.verifyAndFix("var foo", {
+    rules: {
+        semi: 2
+    }
+});</pre> <p>Output object from this method:</p> <pre data-language="js">{
+    fixed: true,
+    output: "var foo;",
+    messages: []
+}</pre> <p>The information available is:</p> <ul> <li>
+<code>fixed</code> - True, if the code was fixed.</li> <li>
+<code>output</code> - Fixed code text (might be the same as input if no fixes were applied).</li> <li>
+<code>messages</code> - Collection of all messages for the given code (It has the same information as explained above under <code>verify</code> block).</li> </ul> <h3 id="linterdefinerule">Linter#defineRule</h3> <p>Each <code>Linter</code> instance holds a map of rule names to loaded rule objects. By default, all ESLint core rules are loaded. If you want to use <code>Linter</code> with custom rules, you should use the <code>defineRule</code> method to register your rules by ID.</p> <pre data-language="js">const Linter = require("eslint").Linter;
+const linter = new Linter();
+
+linter.defineRule("my-custom-rule", {
+    // (an ESLint rule)
+
+    create(context) {
+        // ...
+    }
+});
+
+const results = linter.verify("// some source text", { rules: { "my-custom-rule": "error" } });</pre> <h3 id="linterdefinerules">Linter#defineRules</h3> <p>This is a convenience method similar to <code>Linter#defineRule</code>, except that it allows you to define many rules at once using an object.</p> <pre data-language="js">const Linter = require("eslint").Linter;
+const linter = new Linter();
+
+linter.defineRules({
+    "my-custom-rule": { /* an ESLint rule */ create() {} },
+    "another-custom-rule": { /* an ESLint rule */ create() {} }
+});
+
+const results = linter.verify("// some source text", {
+    rules: {
+        "my-custom-rule": "error",
+        "another-custom-rule": "warn"
+    }
+});</pre> <h3 id="lintergetrules">Linter#getRules</h3> <p>This method returns a map of all loaded rules.</p> <pre data-language="js">const Linter = require("eslint").Linter;
+const linter = new Linter();
+
+linter.getRules();
+
+/*
+Map {
+  'accessor-pairs' =&gt; { meta: { docs: [Object], schema: [Array] }, create: [Function: create] },
+  'array-bracket-newline' =&gt; { meta: { docs: [Object], schema: [Array] }, create: [Function: create] },
+  ...
+}
+*/</pre> <h3 id="linterdefineparser">Linter#defineParser</h3> <p>Each instance of <code>Linter</code> holds a map of custom parsers. If you want to define a parser programmatically you can add this function with the name of the parser as first argument and the <a href="../working-with-plugins/#working-with-custom-parsers">parser object</a> as second argument.</p> <p>If during linting the parser is not found, it will fallback to <code>require(parserId)</code>.</p> <pre data-language="js">const Linter = require("eslint").Linter;
+const linter = new Linter();
+
+linter.defineParser("my-custom-parser", {
+    parse(code, options) {
+        // ...
+    }
+});
+
+const results = linter.verify("// some source text", { parser: "my-custom-parser" });</pre> <h3 id="linterversionlinterversion">Linter#version/Linter.version</h3> <p>Each instance of <code>Linter</code> has a <code>version</code> property containing the semantic version number of ESLint that the <code>Linter</code> instance is from.</p> <pre data-language="js">const Linter = require("eslint").Linter;
+const linter = new Linter();
+
+linter.version; // =&gt; '4.5.0'</pre> <p>There is also a <code>Linter.version</code> property that you can read without instantiating <code>Linter</code>:</p> <pre data-language="js">const Linter = require("eslint").Linter;
+
+Linter.version; // =&gt; '4.5.0'</pre> <h2 id="linter-1">linter</h2> <p>The <code>eslint.linter</code> object (deprecated) is an instance of the <code>Linter</code> class as defined <a href="#linter">above</a>. <code>eslint.linter</code> exists for backwards compatibility, but we do not recommend using it because any mutations to it are shared among every module that uses <code>eslint</code>. Instead, please create your own instance of <code>eslint.Linter</code>.</p> <pre data-language="js">var linter = require("eslint").linter;
+
+var messages = linter.verify("var foo;", {
+    rules: {
+        semi: 2
+    }
+}, { filename: "foo.js" });</pre> <p>Note: This API is deprecated as of 4.0.0.</p> <h2 id="cliengine">CLIEngine</h2> <p>The primary Node.js API is <code>CLIEngine</code>, which is the underlying utility that runs the ESLint command line interface. This object will read the filesystem for configuration and file information but will not output any results. Instead, it allows you direct access to the important information so you can deal with the output yourself.</p> <p>You can get a reference to the <code>CLIEngine</code> by doing the following:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;</pre> <p>The <code>CLIEngine</code> is a constructor, and you can create a new instance by passing in the options you want to use. The available options are:</p> <ul> <li>
+<code>allowInlineConfig</code> - Set to <code>false</code> to disable the use of configuration comments (such as <code>/*eslint-disable*/</code>). Corresponds to <code>--no-inline-config</code>.</li> <li>
+<code>baseConfig</code> - Can optionally be set to a config object. This will used as a default config, and will be merged with any configuration defined in <code>.eslintrc.*</code> files, with the <code>.eslintrc.*</code> files having precedence.</li> <li>
+<code>cache</code> - Operate only on changed files (default: <code>false</code>). Corresponds to <code>--cache</code>.</li> <li>
+<code>cacheFile</code> - Name of the file where the cache will be stored (default: <code>.eslintcache</code>). Corresponds to <code>--cache-file</code>. Deprecated: use <code>cacheLocation</code> instead.</li> <li>
+<code>cacheLocation</code> - Name of the file or directory where the cache will be stored (default: <code>.eslintcache</code>). Corresponds to <code>--cache-location</code>.</li> <li>
+<code>configFile</code> - The configuration file to use (default: null). If <code>useEslintrc</code> is true or not specified, this configuration will be merged with any configuration defined in <code>.eslintrc.*</code> files, with options in this configuration having precedence. Corresponds to <code>-c</code>.</li> <li>
+<code>cwd</code> - Path to a directory that should be considered as the current working directory.</li> <li>
+<code>envs</code> - An array of environments to load (default: empty array). Corresponds to <code>--env</code>.</li> <li>
+<code>extensions</code> - An array of filename extensions that should be checked for code. The default is an array containing just <code>".js"</code>. Corresponds to <code>--ext</code>. It is only used in conjunction with directories, not with filenames or glob patterns.</li> <li>
+<code>fix</code> - This can be a boolean or a function which will be provided each linting message and should return a boolean. True indicates that fixes should be included with the output report, and that errors and warnings should not be listed if they can be fixed. However, the files on disk will not be changed. To persist changes to disk, call <a href="#cliengineoutputfixes"><code>outputFixes()</code></a>.</li> <li>
+<code>globals</code> - An array of global variables to declare (default: empty array). Corresponds to <code>--global</code>.</li> <li>
+<code>ignore</code> - False disables use of <code>.eslintignore</code>, <code>ignorePath</code> and <code>ignorePattern</code> (default: true). Corresponds to <code>--no-ignore</code>.</li> <li>
+<code>ignorePath</code> - The ignore file to use instead of <code>.eslintignore</code> (default: null). Corresponds to <code>--ignore-path</code>.</li> <li>
+<code>ignorePattern</code> - Glob patterns for paths to ignore. String or array of strings.</li> <li>
+<code>parser</code> - Specify the parser to be used (default: <code>espree</code>). Corresponds to <code>--parser</code>.</li> <li>
+<code>parserOptions</code> - An object containing parser options (default: empty object). Corresponds to <code>--parser-options</code>.</li> <li>
+<code>plugins</code> - An array of plugins to load (default: empty array). Corresponds to <code>--plugin</code>.</li> <li>
+<code>reportUnusedDisableDirectives</code> - When set to <code>true</code>, adds reported errors for unused <code>eslint-disable</code> directives when no problems would be reported in the disabled area anyway (default: false). Corresponds to <code>--report-unused-disable-directives</code>.</li> <li>
+<code>rulePaths</code> - An array of directories to load custom rules from (default: empty array). Corresponds to <code>--rulesdir</code>.</li> <li>
+<code>rules</code> - An object of rules to use (default: null). Corresponds to <code>--rule</code>.</li> <li>
+<code>useEslintrc</code> - Set to false to disable use of <code>.eslintrc</code> files (default: true). Corresponds to <code>--no-eslintrc</code>.</li> <li>
+<code>globInputPaths</code> - Set to false to skip glob resolution of input file paths to lint (default: true). If false, each input file paths is assumed to be a non-glob path to an existing file.</li> </ul> <p>For example:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});</pre> <p>In this code, a new <code>CLIEngine</code> instance is created that sets two environments, <code>"browser"</code> and <code>"mocha"</code>, disables loading of <code>.eslintrc</code> and <code>package.json</code> files, and enables the <code>semi</code> rule as an error. You can then call methods on <code>cli</code> and these options will be used to perform the correct action.</p> <h3 id="cliengineexecuteonfiles">CLIEngine#executeOnFiles()</h3> <p>If you want to lint one or more files, use the <code>executeOnFiles()</code> method. This method accepts a single argument, which is an array of files and/or directories to traverse for files. You can pass the same values as you would using the ESLint command line interface, such as <code>"."</code> to search all JavaScript files in the current directory. Here’s an example:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+// lint myfile.js and all files in lib/
+var report = cli.executeOnFiles(["myfile.js", "lib/"]);</pre> <p>The return value is an object containing the results of the linting operation. Here’s an example of a report object:</p> <pre data-language="js">{
+    results: [
+        {
+            filePath: "/Users/eslint/project/myfile.js",
+            messages: [{
+                ruleId: "semi",
+                severity: 2,
+                message: "Missing semicolon.",
+                line: 1,
+                column: 13,
+                nodeType: "ExpressionStatement",
+                fix: { range: [12, 12], text: ";" }
+            }],
+            errorCount: 1,
+            warningCount: 0,
+            fixableErrorCount: 1,
+            fixableWarningCount: 0,
+            source: "\"use strict\"\n"
+        }
+    ],
+    errorCount: 1,
+    warningCount: 0,
+    fixableErrorCount: 1,
+    fixableWarningCount: 0
+}</pre> <p>You can also pass <code>fix: true</code> when instantiating the <code>CLIEngine</code> in order to have it figure out what fixes can be applied.</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    fix: true, // difference from last example
+    useEslintrc: false,
+    rules: {
+        semi: 2,
+        quotes: [2, "double"]
+    }
+});
+
+// lint myfile.js and all files in lib/
+var report = cli.executeOnFiles(["myfile.js", "lib/"]);</pre> <pre data-language="js">{
+    results: [
+        {
+            filePath: "/Users/eslint/project/myfile.js",
+            messages: [
+                {
+                    ruleId: "semi",
+                    severity: 2,
+                    message: "Missing semicolon.",
+                    line: 1,
+                    column: 13,
+                    nodeType: "ExpressionStatement",
+                    fix: { range: [12, 12], text: ";" }
+                },
+                {
+                    ruleId: "func-name-matching",
+                    severity: 2,
+                    message: "Function name `bar` should match variable name `foo`",
+                    line: 2,
+                    column: 5,
+                    nodeType: "VariableDeclarator"
+                }
+            ],
+            errorCount: 2,
+            warningCount: 0,
+            fixableErrorCount: 1,
+            fixableWarningCount: 0,
+            output: "\"use strict\";\nvar foo = function bar() {};\nfoo();\n"
+        }
+    ],
+    errorCount: 2,
+    warningCount: 0,
+    fixableErrorCount: 1,
+    fixableWarningCount: 0,
+}</pre> <p>If the operation ends with a parsing error, you will get a single message for this file, with <code>fatal: true</code> added as an extra property.</p> <pre data-language="js">{
+    results: [
+        {
+            filePath: "./myfile.js",
+            messages: [
+                {
+                    ruleId: null,
+                    fatal: true,
+                    severity: 2,
+                    message: "Parsing error: Unexpected token foo",
+                    line: 1,
+                    column: 10
+                }
+            ],
+            errorCount: 1,
+            warningCount: 0,
+            fixableErrorCount: 0,
+            fixableWarningCount: 0,
+            source: "function foo() {}"
+        }
+    ],
+    errorCount: 1,
+    warningCount: 0,
+    fixableErrorCount: 0,
+    fixableWarningCount: 0,
+}</pre> <p>The top-level report object has a <code>results</code> array containing all linting results for files that had warnings or errors (any files that did not produce a warning or error are omitted). Each file result includes:</p> <ul> <li>
+<code>filePath</code> - Path to the given file.</li> <li>
+<code>messages</code> - Array containing the result of calling <code>linter.verify()</code> on the given file.</li> <li>
+<code>errorCount</code> and <code>warningCount</code> - The exact number of errors and warnings respectively on the given file.</li> <li>
+<code>source</code> - The source code for the given file. This property is omitted if this file has no errors/warnings or if the <code>output</code> property is present.</li> <li>
+<code>output</code> - The source code for the given file with as many fixes applied as possible, so you can use that to rewrite the files if necessary. This property is omitted if no fix is available.</li> </ul> <p>The top-level report object also has <code>errorCount</code> and <code>warningCount</code> which give the exact number of errors and warnings respectively on all the files.</p> <p>Once you get a report object, it’s up to you to determine how to output the results. Fixes will not be automatically applied to the files, even if you set <code>fix: true</code> when constructing the <code>CLIEngine</code> instance. To apply fixes to the files, call <a href="#cliengineoutputfixes"><code>outputFixes</code></a>.</p> <h3 id="cliengineresolvefileglobpatterns">CLIEngine#resolveFileGlobPatterns()</h3> <p>You can pass filesystem-style or glob patterns to ESLint and have it function properly. In order to achieve this, ESLint must resolve non-glob patterns into glob patterns before determining which files to execute on. The <code>resolveFileGlobPatterns()</code> methods uses the current settings from <code>CLIEngine</code> to resolve non-glob patterns into glob patterns. Pass an array of patterns that might be passed to the ESLint CLI and it will return an array of glob patterns that mean the same thing. Here’s an example:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+});
+
+// pass an array of patterns
+var globPatterns = cli.resolveFileGlobPatterns(["."]);
+console.log(globPatterns[i]);       // ["**/*.js"]</pre> <h3 id="clienginegetconfigforfile">CLIEngine#getConfigForFile()</h3> <p>If you want to retrieve a configuration object for a given file, use the <code>getConfigForFile()</code> method. This method accepts one argument, a file path, and returns an object represented the calculated configuration of the file. Here’s an example:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+var config = cli.getConfigForFile("myfile.js");</pre> <p>Once you have the configuration information, you can pass it into the <code>linter</code> object:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine,
+    linter = require("eslint").linter;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+var config = cli.getConfigForFile("myfile.js");
+
+var messages = linter.verify('var foo;', config);</pre> <h3 id="cliengineexecuteontext">CLIEngine#executeOnText()</h3> <p>If you already have some text to lint, then you can use the <code>executeOnText()</code> method to lint that text. The linter will assume that the text is a file in the current working directory, and so will still obey any <code>.eslintrc</code> and <code>.eslintignore</code> files that may be present. Here’s an example:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+// lint the supplied text and optionally set
+// a filename that is displayed in the report
+var report = cli.executeOnText("var foo = 'bar';", "foo.js");</pre> <p>The <code>report</code> returned from <code>executeOnText()</code> is in the same format as from <code>executeOnFiles()</code>, but there is only ever one result in <code>report.results</code>.</p> <p>If a filename in the optional second parameter matches a file that is configured to be ignored, then this function returns no errors or warnings. To return a warning instead, call the method with true as the optional third parameter.</p> <h3 id="cliengineaddplugin">CLIEngine#addPlugin()</h3> <p>Loads a plugin from configuration object with specified name. Name can include plugin prefix (“eslint-plugin-“)</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+var cli = new CLIEngine({
+    ignore: true
+});
+cli.addPlugin("eslint-plugin-processor", {
+    processors: {
+        ".txt": {
+            preprocess: function(text) {
+                return [text];
+            },
+            postprocess: function(messages) {
+                return messages[0];
+            }
+        }
+    }
+});</pre> <h3 id="cliengineispathignored">CLIEngine#isPathIgnored()</h3> <p>Checks if a given path is ignored by ESLint.</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    ignore: true,
+    ignorePath: ".customIgnoreFile"
+});
+
+var isIgnored = cli.isPathIgnored("foo/bar.js");</pre> <h3 id="clienginegetformatter">CLIEngine#getFormatter()</h3> <p>Retrieves a formatter, which you can then use to format a report object. The argument is either the name of a built-in formatter:</p> <ul> <li>“<a href="../../user-guide/formatters/#checkstyle">checkstyle</a>”</li> <li>“<a href="../../user-guide/formatters/#codeframe">codeframe</a>”</li> <li>“<a href="../../user-guide/formatters/#compact">compact</a>”</li> <li>“<a href="../../user-guide/formatters/#html">html</a>”</li> <li>“<a href="../../user-guide/formatters/#jslint-xml">jslint-xml</a>”</li> <li>“<a href="../../user-guide/formatters/#json">json</a>”</li> <li>“<a href="../../user-guide/formatters/#junit">junit</a>”</li> <li>“<a href="../../user-guide/formatters/#stylish">stylish</a>” (the default)</li> <li>“<a href="../../user-guide/formatters/#table">table</a>”</li> <li>“<a href="../../user-guide/formatters/#tap">tap</a>”</li> <li>“<a href="../../user-guide/formatters/#unix">unix</a>”</li> </ul> <p>or the full path to a JavaScript file containing a custom formatter. You can also omit the argument to retrieve the default formatter.</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+// lint myfile.js and all files in lib/
+var report = cli.executeOnFiles(["myfile.js", "lib/"]);
+
+// get the default formatter
+var formatter = cli.getFormatter();
+
+// Also could do...
+// var formatter = cli.getFormatter("compact");
+// var formatter = cli.getFormatter("./my/formatter.js");
+
+// output to console
+console.log(formatter(report.results));</pre> <p><strong>Note:</strong> Also available as a static function on <code>CLIEngine</code>.</p> <pre data-language="js">// get the default formatter by calling the static function
+var formatter = CLIEngine.getFormatter();</pre> <p><strong>Important:</strong> You must pass in the <code>results</code> property of the report. Passing in <code>report</code> directly will result in an error.</p> <h3 id="clienginegeterrorresults">CLIEngine#getErrorResults()</h3> <p>This is a static function on <code>CLIEngine</code>. It can be used to filter out all the non error messages from the report object.</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+// lint myfile.js and all files in lib/
+var report = cli.executeOnFiles(["myfile.js", "lib/"]);
+
+// only get the error messages
+var errorReport = CLIEngine.getErrorResults(report.results)</pre> <p><strong>Important:</strong> You must pass in the <code>results</code> property of the report. Passing in <code>report</code> directly will result in an error.</p> <h3 id="cliengineoutputfixes">CLIEngine#outputFixes()</h3> <p>This is a static function on <code>CLIEngine</code> that is used to output fixes from <code>report</code> to disk. It does by looking for files that have an <code>output</code> property in their results. Here’s an example:</p> <pre data-language="js">var CLIEngine = require("eslint").CLIEngine;
+
+var cli = new CLIEngine({
+    envs: ["browser", "mocha"],
+    fix: true,
+    useEslintrc: false,
+    rules: {
+        semi: 2
+    }
+});
+
+// lint myfile.js and all files in lib/
+var report = cli.executeOnFiles(["myfile.js", "lib/"]);
+
+// output fixes to disk
+CLIEngine.outputFixes(report);</pre> <h3 id="clienginegetrules">CLIEngine#getRules()</h3> <p>This method returns a map of all loaded rules. Under the hood, it calls <a href="#lintergetrules">Linter#getRules</a>.</p> <pre data-language="js">const CLIEngine = require("eslint").CLIEngine;
+const cli = new CLIEngine();
+
+cli.getRules();
+
+/*
+Map {
+  'accessor-pairs' =&gt; { meta: { docs: [Object], schema: [Array] }, create: [Function: create] },
+  'array-bracket-newline' =&gt; { meta: { docs: [Object], schema: [Array] }, create: [Function: create] },
+  ...
+}
+*/</pre> <h3 id="cliengineversion">CLIEngine.version</h3> <p><code>CLIEngine</code> has a static <code>version</code> property containing the semantic version number of ESLint that it comes from.</p> <pre data-language="js">require("eslint").CLIEngine.version; // '4.5.0'</pre> <h2 id="ruletester">RuleTester</h2> <p><code>eslint.RuleTester</code> is a utility to write tests for ESLint rules. It is used internally for the bundled rules that come with ESLint, and it can also be used by plugins.</p> <p>Example usage:</p> <pre data-language="js">"use strict";
+
+const rule = require("../../../lib/rules/my-rule"),
+    RuleTester = require("eslint").RuleTester;
+
+const ruleTester = new RuleTester();
+
+ruleTester.run("my-rule", rule, {
+    valid: [
+        {
+            code: "var foo = true",
+            options: [{ allowFoo: true }]
+        }
+    ],
+
+    invalid: [
+        {
+            code: "var invalidVariable = true",
+            errors: [{ message: "Unexpected invalid variable." }]
+        },
+        {
+            code: "var invalidVariable = true",
+            errors: [{ message: /^Unexpected.+variable/ }]
+        }
+    ]
+});</pre> <p>The <code>RuleTester</code> constructor accepts an optional object argument, which can be used to specify defaults for your test cases. For example, if all of your test cases use ES2015, you can set it as a default:</p> <pre data-language="js">const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2015 } });</pre> <p>The <code>RuleTester#run()</code> method is used to run the tests. It should be passed the following arguments:</p> <ul> <li>The name of the rule (string)</li> <li>The rule object itself (see <a href="../working-with-rules/">“working with rules”</a>)</li> <li>An object containing <code>valid</code> and <code>invalid</code> properties, each of which is an array containing test cases.</li> </ul> <p>A test case is an object with the following properties:</p> <ul> <li>
+<code>code</code> (string, required): The source code that the rule should be run on</li> <li>
+<code>options</code> (array, optional): The options passed to the rule. The rule severity should not be included in this list.</li> <li>
+<code>filename</code> (string, optional): The filename for the given case (useful for rules that make assertions about filenames).</li> </ul> <p>In addition to the properties above, invalid test cases can also have the following properties:</p> <ul> <li>
+<code>errors</code> (number or array, required): Asserts some properties of the errors that the rule is expected to produce when run on this code. If this is a number, asserts the number of errors produced. Otherwise, this should be a list of objects, each containing information about a single reported error. The following properties can be used for an error (all are optional): <ul> <li>
+<code>message</code> (string/regexp): The message for the error</li> <li>
+<code>type</code> (string): The type of the reported AST node</li> <li>
+<code>line</code> (number): The 1-based line number of the reported location</li> <li>
+<code>column</code> (number): The 1-based column number of the reported location</li> <li>
+<code>endLine</code> (number): The 1-based line number of the end of the reported location</li> <li>
+<code>endColumn</code> (number): The 1-based column number of the end of the reported location</li> </ul> <p>If a string is provided as an error instead of an object, the string is used to assert the <code>message</code> of the error.</p> </li> <li>
+<code>output</code> (string, optional): Asserts the output that will be produced when using this rule for a single pass of autofixing (e.g. with the <code>--fix</code> command line flag). If this is <code>null</code>, asserts that none of the reported problems suggest autofixes.</li> </ul> <p>Any additional properties of a test case will be passed directly to the linter as config options. For example, a test case can have a <code>parserOptions</code> property to configure parser behavior:</p> <pre data-language="js">{
+    code: "let foo;",
+    parserOptions: { ecmaVersion: 2015 }
+}</pre> <p>If a valid test case only uses the <code>code</code> property, it can optionally be provided as a string containing the code, rather than an object with a <code>code</code> key.</p> <h3 id="customizing-ruletester">Customizing RuleTester</h3> <p><code>RuleTester</code> depends on two functions to run tests: <code>describe</code> and <code>it</code>. These functions can come from various places:</p> <ol> <li>If <code>RuleTester.describe</code> and <code>RuleTester.it</code> have been set to function values, <code>RuleTester</code> will use <code>RuleTester.describe</code> and <code>RuleTester.it</code> to run tests. You can use this to customize the behavior of <code>RuleTester</code> to match a test framework that you’re using.</li> <li>Otherwise, if <code>describe</code> and <code>it</code> are present as globals, <code>RuleTester</code> will use <code>global.describe</code> and <code>global.it</code> to run tests. This allows <code>RuleTester</code> to work when using frameworks like <a href="https://mochajs.org/" target="_blank">Mocha</a> without any additional configuration.</li> <li>Otherwise, <code>RuleTester#run</code> will simply execute all of the tests in sequence, and will throw an error if one of them fails. This means you can simply execute a test file that calls <code>RuleTester.run</code> using <code>node</code>, without needing a testing framework.</li> </ol> <p><code>RuleTester#run</code> calls the <code>describe</code> function with two arguments: a string describing the rule, and a callback function. The callback calls the <code>it</code> function with a string describing the test case, and a test function. The test function will return successfully if the test passes, and throw an error if the test fails. (Note that this is the standard behavior for test suites when using frameworks like <a href="https://mochajs.org/" target="_blank">Mocha</a>; this information is only relevant if you plan to customize <code>RuleTester.it</code> and <code>RuleTester.describe</code>.)</p> <p>Example of customizing <code>RuleTester</code>:</p> <pre data-language="js">"use strict";
+
+const RuleTester = require("eslint").RuleTester,
+    test = require("my-test-runner"),
+    myRule = require("../../../lib/rules/my-rule");
+
+RuleTester.describe = function(text, method) {
+    RuleTester.it.title = text;
+    return method.call(this);
+};
+
+RuleTester.it = function(text, method) {
+    test(RuleTester.it.title + ": " + text, method);
+};
+
+// then use RuleTester as documented
+
+const ruleTester = new RuleTester();
+
+ruleTester.run("my-rule", myRule, {
+    valid: [
+        // valid test cases
+    ],
+    invalid: [
+        // invalid test cases
+    ]
+})</pre> <h2 id="deprecated-apis">Deprecated APIs</h2> <ul> <li>
+<code>cli</code> - the <code>cli</code> object has been deprecated in favor of <code>CLIEngine</code>. As of v1.0.0, <code>cli</code> is no longer exported and should not be used by external tools.</li> <li>
+<code>linter</code> - the <code>linter</code> object has been deprecated in favor of <code>Linter</code> as of v4.0.0.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/developer-guide/nodejs-api" class="_attribution-link" target="_blank">https://eslint.org/docs/developer-guide/nodejs-api</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
