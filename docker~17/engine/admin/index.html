@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Configuring and Running Docker (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="After successfully installing Docker and starting Docker, the dockerd daemon runs with its default configuration. This topic shows how to customize &hellip;">
+  <meta name="keywords" content="configure, and, troubleshoot, docker, daemon, configuring, running, engine, -, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/admin/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Configure and troubleshoot the Docker daemon</h1>  <p>After successfully installing Docker and starting Docker, the <code class="highlighter-rouge">dockerd</code> daemon runs with its default configuration. This topic shows how to customize the configuration, start the daemon manually, and troubleshoot and debug the daemon if you run into issues.</p> <h2 id="start-the-daemon-using-operating-system-utilities">Start the daemon using operating system utilities</h2> <p>The command to start Docker depends on your operating system. Check the correct page under <a href="../installation/">Install Docker</a>. To configure Docker to start automatically at system boot, see <a href="../installation/linux/linux-postinstall/#configure-docker-to-start-on-boot">Configure Docker to start on boot</a>.</p> <h2 id="start-the-daemon-manually">Start the daemon manually</h2> <p>Typically, you start Docker using operating system utilities. For debugging purposes, you can start Docker manually using the <code class="highlighter-rouge">dockerd</code> command. You may need to use <code class="highlighter-rouge">sudo</code>, depending on your operating system configuration. When you start Docker this way, it runs in the foreground and sends its logs directly to your terminal.</p> <pre class="highlight" data-language="bash">$ dockerd
+
+INFO[0000] +job init_networkdriver()
+INFO[0000] +job serveapi(unix:///var/run/docker.sock)
+INFO[0000] Listening for HTTP on unix (/var/run/docker.sock)
+...
+...
+</pre>  <p>To stop Docker when you have started it manually, issue a <code class="highlighter-rouge">Ctrl+C</code> in your terminal.</p> <h2 id="configure-the-docker-daemon">Configure the Docker daemon</h2> <p>The daemon includes many configuration options, which you can pass as flags when starting Docker manually, or set in the <code class="highlighter-rouge">daemon.json</code> configuration file. The second method is recommended because those configuration changes persist when you restart Docker.</p> <p>See <a href="../reference/commandline/dockerd/">dockerd</a> for a full list of configuration options.</p> <p>Here is an example of starting the Docker daemon manually with some configuration options:</p> <pre class="highlight" data-language="bash">$ dockerd -D --tls=true --tlscert=/var/docker/server.pem --tlskey=/var/docker/serverkey.pem -H tcp://192.168.59.3:2376
+</pre>  <p>This command enables debugging (<code class="highlighter-rouge">-D</code>), enables TLS (<code class="highlighter-rouge">-tls</code>), specifies the server certificate and key (<code class="highlighter-rouge">--tlscert</code> and <code class="highlighter-rouge">--tlskey</code>), and specifies the network interface where the daemon listens for connections (<code class="highlighter-rouge">-H</code>).</p> <p>A better approach is to put these options into the <code class="highlighter-rouge">daemon.json</code> file and restart Docker. This method works for every Docker platform. The following <code class="highlighter-rouge">daemon.json</code> example sets all the same options as the above command:</p> <pre class="highlight" data-language="json">{
+  "debug": true,
+  "tls": true,
+  "tlscert": "/var/docker/server.pem",
+  "tlskey": "/var/docker/serverkey.pem",
+  "hosts": ["tcp://192.168.59.3:2376"]
+}
+</pre>  <p>Many specific configuration options are discussed throughout the Docker documentation. Some places to go next include:</p> <ul> <li><a href="start-containers-automatically/">Automatically start containers</a></li> <li><a href="resource_constraints/">Limit a container’s resources</a></li> <li><a href="../userguide/storagedriver/">Configure storage drivers</a></li> <li><a href="../security/">Container security</a></li> </ul> <h2 id="troubleshoot-the-daemon">Troubleshoot the daemon</h2> <p>You can enable debugging on the daemon to learn about the runtime activity of the daemon and to aid in troubleshooting. If the daemon is completely non-responsive, you can also <a href="#force-a-full-stack-trace-to-be-logged">force a full stack trace</a> of all threads to be added to the daemon log by sending the <code class="highlighter-rouge">SIGUSR</code> signal to the Docker daemon.</p> <h3 id="out-of-memory-exceptions-oome">Out Of Memory Exceptions (OOME)</h3> <p>If your containers attempt to use more memory than the system has available, you may experience an Out Of Memory Exception (OOME) and a container, or the Docker daemon, might be killed by the kernel OOM killer. To prevent this from happening, ensure that your application runs on hosts with adequate memory and see <a href="resource_constraints/#understand-the-risks-of-running-out-of-memory">Understand the risks of running out of memory</a>.</p> <h3 id="read-the-logs">Read the logs</h3> <p>The daemon logs may help you diagnose problems. The logs may be saved in one of a few locations, depending on the operating system configuration and the logging subsystem used:</p> <table> <thead> <tr> <th style="text-align: left">Operating system</th> <th style="text-align: left">Location</th> </tr> </thead> <tbody> <tr> <td style="text-align: left">RHEL, Oracle Linux</td> <td style="text-align: left"><code class="highlighter-rouge">/var/log/messages</code></td> </tr> <tr> <td style="text-align: left">Debian</td> <td style="text-align: left"><code class="highlighter-rouge">/var/log/daemon.log</code></td> </tr> <tr> <td style="text-align: left">Ubuntu 16.04+, CentOS</td> <td style="text-align: left">Use the command <code class="highlighter-rouge">journalctl -u docker.service</code>
+</td> </tr> <tr> <td style="text-align: left">Ubuntu 14.10-</td> <td style="text-align: left"><code class="highlighter-rouge">/var/log/upstart/docker.log</code></td> </tr> <tr> <td style="text-align: left">macOS</td> <td style="text-align: left"><code class="highlighter-rouge">~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/console-ring</code></td> </tr> <tr> <td style="text-align: left">Windows</td> <td style="text-align: left"><code class="highlighter-rouge">AppData\Local</code></td> </tr> </tbody> </table> <h3 id="enable-debugging">Enable debugging</h3> <p>There are two ways to enable debugging. The recommended approach is to set the <code class="highlighter-rouge">debug</code> key to <code class="highlighter-rouge">true</code> in the <code class="highlighter-rouge">daemon.json</code> file. This method works for every Docker platform.</p> <ol> <li> <p>Edit the <code class="highlighter-rouge">daemon.json</code> file, which is usually located in <code class="highlighter-rouge">/etc/docker/</code>. You may need to create this file, if it does not yet exist. On macOS or Windows, do not edit the file directly. Instead, go to <strong>Preferences</strong> / <strong>Daemon</strong> / <strong>Advanced</strong>.</p> </li> <li> <p>If the file is empty, add the following:</p> <pre class="highlight" data-language="json">{
+  "debug": true
+}
+</pre>  <p>If the file already contains JSON, just add the key <code class="highlighter-rouge">"debug": true</code>, being careful to add a comma to the end of the line if it is not the last line before the closing bracket. Also verify that if the <code class="highlighter-rouge">log-level</code> key is set, it is set to either <code class="highlighter-rouge">info</code> or <code class="highlighter-rouge">debug</code>. <code class="highlighter-rouge">info</code> is the default, and possible values are <code class="highlighter-rouge">debug</code>, <code class="highlighter-rouge">info</code>, <code class="highlighter-rouge">warn</code>, <code class="highlighter-rouge">error</code>, <code class="highlighter-rouge">fatal</code>.</p> </li> <li> <p>Send a <code class="highlighter-rouge">HUP</code> signal to the daemon to cause it to reload its configuration. On Linux hosts, use the following command.</p> <pre class="highlight" data-language="bash">$ sudo kill -SIGHUP $(pidof dockerd)
+</pre>  <p>On Windows hosts, restart Docker.</p> </li> </ol> <p>Instead of following this procedure, you can also stop the Docker daemon and restart it manually with the <code class="highlighter-rouge">-D</code> flag. However, this may result in Docker restarting with a different environment than the one the hosts’ startup scripts will create, and this may make debugging more difficult.</p> <h3 id="force-a-stack-trace-to-be-logged">Force a stack trace to be logged</h3> <p>If the daemon is unresponsive, you can force a full stack trace to be logged by sending a <code class="highlighter-rouge">SIGUSR1</code> signal to the daemon.</p> <ul> <li> <p><strong>Linux</strong>:</p> <pre class="highlight" data-language="bash">$ sudo kill -SIGUSR1 $(pidof dockerd)
+</pre>  </li> <li> <p><strong>Windows Server</strong>:</p> <p>Download <a href="https://github.com/jhowardmsft/docker-signal" target="_blank">docker-signal</a>.</p> <p>Run the executable with the flag <code class="highlighter-rouge">--pid=&lt;PID of daemon&gt;</code>.</p> </li> </ul> <p>This will force a stack trace to be logged but will not stop the daemon. Daemon logs will show the stack trace or the path to a file containing the stack trace if it was logged to a file.</p> <p>The daemon will continue operating after handling the <code class="highlighter-rouge">SIGUSR1</code> signal and dumping the stack traces to the log. The stack traces can be used to determine the state of all goroutines and threads within the daemon.</p> <h2 id="check-whether-docker-is-running">Check whether Docker is running</h2> <p>The operating-system independent way to check whether Docker is running is to ask Docker, using the <code class="highlighter-rouge">docker info</code> command.</p> <p>You can also use operating system utilities, such as <code class="highlighter-rouge">sudo systemctl is-active docker</code> or <code class="highlighter-rouge">sudo status docker</code> or <code class="highlighter-rouge">sudo service docker status</code>, or checking the service status using Windows utilities.</p> <p>Finally, you can check in the process list for the <code class="highlighter-rouge">dockerd</code> process, using commands like <code class="highlighter-rouge">ps</code> or <code class="highlighter-rouge">top</code>.</p>  
+<p><a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=daemon" target="_blank">daemon</a>, <a href="https://docs.docker.com/glossary/?term=configuration" target="_blank">configuration</a>, <a href="https://docs.docker.com/glossary/?term=troubleshooting" target="_blank">troubleshooting</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/admin/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/admin/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

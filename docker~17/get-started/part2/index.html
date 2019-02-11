@@ -1,0 +1,217 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Part 2&#58; Containers - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content=" Give your environment a quick test run to make sure you’re all set up&#58; ">
+  <meta name="keywords" content="get, started, part, containers, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/get-started/part2/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Get Started, Part 2: Containers</h1>  <ul class="pagination"> <li><a href="../">1: Orientation</a></li> <li class="active"><a href="/">2: Containers</a></li> <li><a href="../part3/">3: Services</a></li> <li><a href="../part4/">4: Swarms</a></li> <li><a href="../part5/">5: Stacks</a></li> <li><a href="../part6/">6: Deploy your app</a></li> </ul> <h2 id="prerequisites">Prerequisites</h2> <ul> <li>
+<a href="../../engine/installation/">Install Docker version 1.13 or higher</a>.</li> <li>Read the orientation in <a href="../">Part 1</a>.</li> <li> <p>Give your environment a quick test run to make sure you’re all set up:</p> <pre class="highlight" data-language="shell">docker run hello-world
+</pre>  </li> </ul> <h2 id="introduction">Introduction</h2> <p>It’s time to begin building an app the Docker way. We’ll start at the bottom of the hierarchy of such an app, which is a container, which we cover on this page. Above this level is a service, which defines how containers behave in production, covered in <a href="../part3/">Part 3</a>. Finally, at the top level is the stack, defining the interactions of all the services, covered in <a href="../part5/">Part 5</a>.</p> <ul> <li>Stack</li> <li>Services</li> <li>
+<strong>Container</strong> (you are here)</li> </ul> <h2 id="your-new-development-environment">Your new development environment</h2> <p>In the past, if you were to start writing a Python app, your first order of business was to install a Python runtime onto your machine. But, that creates a situation where the environment on your machine has to be just so in order for your app to run as expected; ditto for the server that runs your app.</p> <p>With Docker, you can just grab a portable Python runtime as an image, no installation necessary. Then, your build can include the base Python image right alongside your app code, ensuring that your app, its dependencies, and the runtime, all travel together.</p> <p>These portable images are defined by something called a <code class="highlighter-rouge">Dockerfile</code>.</p> <h2 id="define-a-container-with-a-dockerfile">Define a container with a <code class="highlighter-rouge">Dockerfile</code>
+</h2> <p><code class="highlighter-rouge">Dockerfile</code> will define what goes on in the environment inside your container. Access to resources like networking interfaces and disk drives is virtualized inside this environment, which is isolated from the rest of your system, so you have to map ports to the outside world, and be specific about what files you want to “copy in” to that environment. However, after doing that, you can expect that the build of your app defined in this <code class="highlighter-rouge">Dockerfile</code> will behave exactly the same wherever it runs.</p> <h3 id="dockerfile"><code class="highlighter-rouge">Dockerfile</code></h3> <p>Create an empty directory. Change directories (<code class="highlighter-rouge">cd</code>) into the new directory, create a file called <code class="highlighter-rouge">Dockerfile</code>, copy-and-paste the following content into that file, and save it. Take note of the comments that explain each statement in your new Dockerfile.</p> <pre class="highlight" data-language="conf"># Use an official Python runtime as a parent image
+FROM python:2.7-slim
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+ADD . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+</pre>  <p>This <code class="highlighter-rouge">Dockerfile</code> refers to a couple of files we haven’t created yet, namely <code class="highlighter-rouge">app.py</code> and <code class="highlighter-rouge">requirements.txt</code>. Let’s create those next.</p> <h2 id="the-app-itself">The app itself</h2> <p>Create two more files, <code class="highlighter-rouge">requirements.txt</code> and <code class="highlighter-rouge">app.py</code>, and put them in the same folder with the <code class="highlighter-rouge">Dockerfile</code>. This completes our app, which as you can see is quite simple. When the above <code class="highlighter-rouge">Dockerfile</code> is built into an image, <code class="highlighter-rouge">app.py</code> and <code class="highlighter-rouge">requirements.txt</code> will be present because of that <code class="highlighter-rouge">Dockerfile</code>’s <code class="highlighter-rouge">ADD</code> command, and the output from <code class="highlighter-rouge">app.py</code> will be accessible over HTTP thanks to the <code class="highlighter-rouge">EXPOSE</code> command.</p> <h3 id="requirementstxt"><code class="highlighter-rouge">requirements.txt</code></h3> <pre class="highlight" data-language="">Flask
+Redis
+</pre>  <h3 id="apppy"><code class="highlighter-rouge">app.py</code></h3> <pre class="highlight" data-language="python">from flask import Flask
+from redis import Redis, RedisError
+import os
+import socket
+
+# Connect to Redis
+redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    try:
+        visits = redis.incr("counter")
+    except RedisError:
+        visits = "&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"
+
+    html = "&lt;h3&gt;Hello {name}!&lt;/h3&gt;" \
+           "&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;" \
+           "&lt;b&gt;Visits:&lt;/b&gt; {visits}"
+    return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=80)
+</pre>  <p>Now we see that <code class="highlighter-rouge">pip install -r requirements.txt</code> installs the Flask and Redis libraries for Python, and the app prints the environment variable <code class="highlighter-rouge">NAME</code>, as well as the output of a call to <code class="highlighter-rouge">socket.gethostname()</code>. Finally, because Redis isn’t running (as we’ve only installed the Python library, and not Redis itself), we should expect that the attempt to use it here will fail and produce the error message.</p> <blockquote> <p><strong>Note</strong>: Accessing the name of the host when inside a container retrieves the container ID, which is like the process ID for a running executable.</p> </blockquote> <p>That’s it! You don’t need Python or anything in <code class="highlighter-rouge">requirements.txt</code> on your system, nor will building or running this image install them on your system. It doesn’t seem like you’ve really set up an environment with Python and Flask, but you have.</p> <h2 id="build-the-app">Build the app</h2> <p>We are ready to build the app. Make sure you are still at the top level of your new directory. Here’s what <code class="highlighter-rouge">ls</code> should show:</p> <pre class="highlight" data-language="shell">$ ls
+Dockerfile		app.py			requirements.txt
+</pre>  <p>Now run the build command. This creates a Docker image, which we’re going to tag using <code class="highlighter-rouge">-t</code> so it has a friendly name.</p> <pre class="highlight" data-language="shell">docker build -t friendlyhello .
+</pre>  <p>Where is your built image? It’s in your machine’s local Docker image registry:</p> <pre class="highlight" data-language="shell">$ docker images
+
+REPOSITORY            TAG                 IMAGE ID
+friendlyhello         latest              326387cea398
+</pre>  <h2 id="run-the-app">Run the app</h2> <p>Run the app, mapping your machine’s port 4000 to the container’s published port 80 using <code class="highlighter-rouge">-p</code>:</p> <pre class="highlight" data-language="shell">docker run -p 4000:80 friendlyhello
+</pre>  <p>You should see a notice that Python is serving your app at <code class="highlighter-rouge">http://0.0.0.0:80</code>. But that message is coming from inside the container, which doesn’t know you mapped port 80 of that container to 4000, making the correct URL <code class="highlighter-rouge">http://localhost:4000</code>.</p> <p>Go to that URL in a web browser to see the display content served up on a web page, including “Hello World” text, the container ID, and the Redis error message.</p> <p><img src="data:image/png;base64,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" alt="Hello World in browser"></p> <p>You can also use the <code class="highlighter-rouge">curl</code> command in a shell to view the same content.</p> <pre class="highlight" data-language="shell">$ curl http://localhost:4000
+
+&lt;h3&gt;Hello World!&lt;/h3&gt;&lt;b&gt;Hostname:&lt;/b&gt; 8fc990912a14&lt;br/&gt;&lt;b&gt;Visits:&lt;/b&gt; &lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;
+</pre>  <blockquote> <p><strong>Note</strong>: This port remapping of <code class="highlighter-rouge">4000:80</code> is to demonstrate the difference between what you <code class="highlighter-rouge">EXPOSE</code> within the <code class="highlighter-rouge">Dockerfile</code>, and what you <code class="highlighter-rouge">publish</code> using <code class="highlighter-rouge">docker run -p</code>. In later steps, we’ll just map port 80 on the host to port 80 in the container and use <code class="highlighter-rouge">http://localhost</code>.</p> </blockquote> <p>Hit <code class="highlighter-rouge">CTRL+C</code> in your terminal to quit.</p> <p>Now let’s run the app in the background, in detached mode:</p> <pre class="highlight" data-language="shell">docker run -d -p 4000:80 friendlyhello
+</pre>  <p>You get the long container ID for your app and then are kicked back to your terminal. Your container is running in the background. You can also see the abbreviated container ID with <code class="highlighter-rouge">docker container ls</code> (and both work interchangeably when running commands):</p> <pre class="highlight" data-language="shell">$ docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED
+1fa4ab2cf395        friendlyhello       "python app.py"     28 seconds ago
+</pre>  <p>You’ll see that <code class="highlighter-rouge">CONTAINER ID</code> matches what’s on <code class="highlighter-rouge">http://localhost:4000</code>.</p> <p>Now use <code class="highlighter-rouge">docker stop</code> to end the process, using the <code class="highlighter-rouge">CONTAINER ID</code>, like so:</p> <pre class="highlight" data-language="shell">docker stop 1fa4ab2cf395
+</pre>  <h2 id="share-your-image">Share your image</h2> <p>To demonstrate the portability of what we just created, let’s upload our built image and run it somewhere else. After all, you’ll need to learn how to push to registries when you want to deploy containers to production.</p> <p>A registry is a collection of repositories, and a repository is a collection of images—sort of like a GitHub repository, except the code is already built. An account on a registry can create many repositories. The <code class="highlighter-rouge">docker</code> CLI uses Docker’s public registry by default.</p> <blockquote> <p><strong>Note</strong>: We’ll be using Docker’s public registry here just because it’s free and pre-configured, but there are many public ones to choose from, and you can even set up your own private registry using <a href="https://docs.docker.com/datacenter/dtr/2.2/guides/" target="_blank">Docker Trusted Registry</a>.</p> </blockquote> <h3 id="log-in-with-your-docker-id">Log in with your Docker ID</h3> <p>If you don’t have a Docker account, sign up for one at <a href="https://cloud.docker.com/" target="_blank" class="_">cloud.docker.com</a>. Make note of your username.</p> <p>Log in to the Docker public registry on your local machine.</p> <pre class="highlight" data-language="shell">docker login
+</pre>  <h3 id="tag-the-image">Tag the image</h3> <p>The notation for associating a local image with a repository on a registry is <code class="highlighter-rouge">username/repository:tag</code>. The tag is optional, but recommended, since it is the mechanism that registries use to give Docker images a version. Give the repository and tag meaningful names for the context, such as <code class="highlighter-rouge">get-started:part1</code>. This will put the image in the <code class="highlighter-rouge">get-started</code> repository and tag it as <code class="highlighter-rouge">part1</code>.</p> <p>Now, put it all together to tag the image. Run <code class="highlighter-rouge">docker tag image</code> with your username, repository, and tag names so that the image will upload to your desired destination. The syntax of the command is:</p> <pre class="highlight" data-language="shell">docker tag image username/repository:tag
+</pre>  <p>For example:</p> <pre class="highlight" data-language="shell">docker tag friendlyhello john/get-started:part1
+</pre>  <p>Run <a href="../../engine/reference/commandline/images/">docker images</a> to see your newly tagged image. (You can also use <code class="highlighter-rouge">docker image ls</code>.)</p> <pre class="highlight" data-language="shell">$ docker images
+REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+friendlyhello            latest              d9e555c53008        3 minutes ago       195MB
+john/get-started         part1               d9e555c53008        3 minutes ago       195MB
+python                   2.7-slim            1c7128a655f6        5 days ago          183MB
+...
+</pre>  <h3 id="publish-the-image">Publish the image</h3> <p>Upload your tagged image to the repository:</p> <pre class="highlight" data-language="shell">docker push username/repository:tag
+</pre>  <p>Once complete, the results of this upload are publicly available. If you log in to <a href="https://hub.docker.com/" target="_blank">Docker Hub</a>, you will see the new image there, with its pull command.</p> <h3 id="pull-and-run-the-image-from-the-remote-repository">Pull and run the image from the remote repository</h3> <p>From now on, you can use <code class="highlighter-rouge">docker run</code> and run your app on any machine with this command:</p> <pre class="highlight" data-language="shell">docker run -p 4000:80 username/repository:tag
+</pre>  <p>If the image isn’t available locally on the machine, Docker will pull it from the repository.</p> <pre class="highlight" data-language="shell">docker image rm &lt;image id&gt;
+</pre>  <pre class="highlight" data-language="shell">$ docker run -p 4000:80 john/get-started:part1
+Unable to find image 'john/get-started:part1' locally
+part1: Pulling from orangesnap/get-started
+10a267c67f42: Already exists
+f68a39a6a5e4: Already exists
+9beaffc0cf19: Already exists
+3c1fe835fb6b: Already exists
+4c9f1fa8fcb8: Already exists
+ee7d8f576a14: Already exists
+fbccdcced46e: Already exists
+Digest: sha256:0601c866aab2adcc6498200efd0f754037e909e5fd42069adeff72d1e2439068
+Status: Downloaded newer image for john/get-started:part1
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+</pre>  <blockquote> <p><strong>Note</strong>: If you don’t specify the <code class="highlighter-rouge">:tag</code> portion of these commands, the tag of <code class="highlighter-rouge">:latest</code> will be assumed, both when you build and when you run images. Docker will use the last version of the image that ran without a tag specified (not necessarily the most recent image).</p> </blockquote> <p>No matter where <code class="highlighter-rouge">docker run</code> executes, it pulls your image, along with Python and all the dependencies from <code class="highlighter-rouge">requirements.txt</code>, and runs your code. It all travels together in a neat little package, and the host machine doesn’t have to install anything but Docker to run it.</p> <h2 id="conclusion-of-part-two">Conclusion of part two</h2> <p>That’s all for this page. In the next section, we will learn how to scale our application by running this container in a <strong>service</strong>.</p> <p><a href="../part3/" class="button outline-btn">Continue to Part 3 »</a></p> <h2 id="recap-and-cheat-sheet-optional">Recap and cheat sheet (optional)</h2> <p>Here’s <a href="https://asciinema.org/a/blkah0l4ds33tbe06y4vkme6g" target="_blank">a terminal recording of what was covered on this page</a>:</p>  <p>Here is a list of the basic Docker commands from this page, and some related ones if you’d like to explore a bit before moving on.</p> <pre class="highlight" data-language="shell">docker build -t friendlyname .  # Create image using this directory's Dockerfile
+docker run -p 4000:80 friendlyname  # Run "friendlyname" mapping port 4000 to 80
+docker run -d -p 4000:80 friendlyname         # Same thing, but in detached mode
+docker container ls                                # List all running containers
+docker container ls -a             # List all containers, even those not running
+docker container stop &lt;hash&gt;           # Gracefully stop the specified container
+docker container kill &lt;hash&gt;         # Force shutdown of the specified container
+docker container rm &lt;hash&gt;        # Remove specified container from this machine
+docker container rm $(docker container ls -a -q)         # Remove all containers
+docker image ls -a                             # List all images on this machine
+docker image rm &lt;image id&gt;            # Remove specified image from this machine
+docker image rm $(docker image ls -a -q)   # Remove all images from this machine
+docker login             # Log in this CLI session using your Docker credentials
+docker tag &lt;image&gt; username/repository:tag  # Tag &lt;image&gt; for upload to registry
+docker push username/repository:tag            # Upload tagged image to registry
+docker run username/repository:tag                   # Run image from a registry
+</pre>   
+<p><a href="https://docs.docker.com/glossary/?term=containers" target="_blank">containers</a>, <a href="https://docs.docker.com/glossary/?term=python" target="_blank">python</a>, <a href="https://docs.docker.com/glossary/?term=code" target="_blank">code</a>, <a href="https://docs.docker.com/glossary/?term=coding" target="_blank">coding</a>, <a href="https://docs.docker.com/glossary/?term=build" target="_blank">build</a>, <a href="https://docs.docker.com/glossary/?term=push" target="_blank">push</a>, <a href="https://docs.docker.com/glossary/?term=run" target="_blank">run</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/get-started/part2/" class="_attribution-link" target="_blank">https://docs.docker.com/get-started/part2/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,202 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bind Mounts (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="Bind mounts have been around since the early days of Docker. Bind mounts have limited functionality compared to volumes. When you use a bind mount, &hellip;">
+  <meta name="keywords" content="use, bind, mounts, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/admin/volumes/bind-mounts/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Use bind mounts</h1>  <p>Bind mounts have been around since the early days of Docker. Bind mounts have limited functionality compared to <a href="../volumes/">volumes</a>. When you use a bind mount, a file or directory on the <em>host machine</em> is mounted into a container. The file or directory is referenced by its full or relative path on the host machine. By contrast, when you use a volume, a new directory is created within Docker’s storage directory on the host machine, and Docker manages that directory’s contents.</p> <p>The file or directory does not need to exist on the Docker host already. It is created on demand if it does not yet exist. Bind mounts are very performant, but they rely on the host machine’s filesystem having a specific directory structure available. If you are developing new Docker applications, consider using <a href="../volumes/">named volumes</a> instead. You can’t use Docker CLI commands to directly manage bind mounts.</p> <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfYAAAEACAMAAAB2/qSKAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAFZaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA1LjQuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CkzCJ1kAAAGVUExUReDk55Khq4KTn5J3S4KluBJ8tCVDVv////+rQARKcMTe7DCMveHv9gAAAEydxxd/th6DuKfO44m+2gCXp2ut0Ojy9yaHu/z9/mKOpvH3+nKx0/j7/VlZWrjX6RwdHV6mzZzJ4PX5+1JUVXy31maqz8PHyqeqrDmSwY2PkZDC3AYGBjk6O9nq8+31+YO72Nbb3+Tc0lOgyUCWw+Lp7Wdoacfg7QpPdKzR5cCmWsnO0s3j8CFggnBydNLm8aC7yezPqR6Zm7zAxEGcjBEREp2jaGGMpdDV2C0uLrLU50R5lHd6e/KoRL3b6lmjyihlh2FiY6mvtKPM4rG0tZCvwIOgc+imR97t9Nvh5N+pTUVHR7KkX4CDhEaZxFCDnNCkUhhYe1yegjdvjYeKivqrRA2Yora7v4ucpzBLWp2foWN5h5WYmiUlJp2qs3KZrm5wbn6gs3GgeW2Lja7F0fDIk1ZnbrKGRz5YZqF+SafAzcbW3zObkr7R2rqrlMzIwyialxl9sDqGqcaQRoVyTSNHXZyWeG9nTyF5pXivkJMAABvCSURBVHja7J3rT+JKFMDZjcME+oKGUgErVFAEASMIBlQSY3Rh45sEs1FD2MTdu97rmvXTmv1wP9x//M6DagUfgEUKzPlAH7R1mF/PmXPOnFYHZDKB4mBdMPHYlT+/a1NMxk9q5dtl/WnsgVrVxWR8pVCtpTux1xrW/6Uq0zN7yPX0xQHi0ai1YQ9coNvBcuxTbBC1j6TLTZfrImDGHjgYAHSG3W7yu+C6MGFXqwOhzrDbTU4LrtoD9tpgqDPs9tN3VyNtYE83BuQ8Muy2kypVd4z9ekDKzrDbUd2rBvYDF9P2SZFAoaBT7KeDUnaG3YZy4Fqm2MsDSwzdsF62nVy4bin22gvgLloJ28JOPyPBNOtl28m0q0yxT70ALtcyBetw55kj1tdfuGlYL9tOrokr/2bsty+cXmW9bDuZIh5Xj9gL643Hal4IvHD6NevlccDeKCPn/xQP94VaAEL9T+NCwZfaYZ78GGMvnCrTzeof9QL56Op1szlddq3vwHK12mDYxwy7o0zkFmO/gU2s6HdKwfXnzjD1L53OsI8q9kCOCsZ+d0r27eDErjpdYNgnw8jnbsl6E60XbmFuqsGwTwT23/fY0Wc5oN8w7BOAffmulYS5IMtGGVl7hn3ssU+pJFQv6y3PvQBvXA2GfdyxN9J3667CtFpDbt0BycagEF65KzDs452uaeZgLgDLiPMtTOfS6hSZbknnphj28cLePDBq6xt0sUOn4grNnZ0dOglzYKx0So318mhif5uUWS9PIvY/rJcnEXvO4ibnjj7YUT5u6Qy7yTGwtsHqD6dN5ftHhn1gHt2l0/njox3lm9OZY9gNaaStbfAH5w+HPeWX84hhH1T49sH50abYPzo/MOxGIZ3KsE8e9oMAZNgnDntVgQz7pGEv3KiQYZ8w7I1rZRANZtgtxt6cprJz0WwetKQ63Z9Mle+gChn2EcBu6QSpOqgGM+x2xg4ZdoadYWfYGXaGnWFn2Bl2hp1hZ9gZdob9pb7/OWOSnwz7hGCfeWbjdGHxav4Vbidflhn2scJ+MitsJ4UnuH/eeli/2i4y7OOEfXf770vH8gJeLRpoi7v4iyTZeTq/+3BWka6fzrd0f7fIsI8E9q2Nw7NdM/YzYYGuHM0Kwiek9LOHfwvCnGMXbaKv5pJCcs7hWETmYGluSRCWEPCv20Jyw+HY+LKR/MKwv7sEeHclIgd9MREJx3H/rr+K/WjmEMmuCfuXJF0ub3/aupz9hLAnF+dXhaPTK+EKKfXCCboxjih2YWP+TFh0nAifTxfRHbGR/PTXZbfYDzhRXPH5MsduhWHvTxR3JBrOchJol9exHx6urh7+/GrCvjRLl39hrT8TthwY/Raiu0DNQHHhCm0Q7NvIvAsbjsPkwsLC9qpjQyh2P7avP7RSiu9HKwrD3rWESt5MOOsBz8nr2Gcw99VVE/a55ClZYrAE9Syy6fMG9uKn5NIXAzu6HxwI+1xyFgnG7ugLOxUuFtlk2F+VzeNgtkO/PVwcmc6gLHu9bnfq5r9Xsa9ibd84M2H/Klw9aPtX4fIx9tVk0XFpYF+i2A+T1KHrCfs3Pu92e71y7Nxvan5MCzHszxr1taj4SMW5/cyau86HenfpFpC2fz7cMmFfnk1+3Tr5jJbG2N7Cfil8nt89TBaX59qwnwgzu7sL871hN7l0+mYlk70nH14b6PNx6YpXC4wedl2Lxs3qLQYjJf0NnvzR6szG5aNobh7558Isid+FT1sP2JELJyxuzQrJs9nH2LEnL2xf9o2d3sremKH2UlgbWPdpWF0io4VdzcvivV2XsrGEpgwiS+fYbYXmxTYXDW/fh+iPZL5oRbqmlDB+Hpfo/aGBureLg+JA9MrpEcIe0mKGYZdWMpWUOrDk7DBz8roWpMZMCpZ67KAY6MLEA5AaobFdX7tn7o91Pfi9gn3VPBWzap+pmFSQ6ryY7ylp4QE8z0PIK1B3a3V8Ha2EvZ0Qn0Z79oiKpwDIo02o5zV3wObY9bWwYdrjmbza/YkjO/GqZOhNHu4+pPPSMyAEWTJ++5RzPFigC7jB/hrqPwmN6AlykA8mJLq0MfaSTzJMe4S3NDlr5/n2QII6eOF6t75aFABZlhF24NmX95FV5DIZPxAxdkkK4j0a9KKDorLmBp6EN3OesC32dKLltvuDld7jmpEuswgdc3SM79IB4wEd2wGIoc9zICF3twJACGEnrnsM3wLoIKQ6CXBu57HdHaOKns2U+jp/xKtrVI1E835vj9j30KcPrMAWZYQdD+MakAzsaI8vZVPsoUjLpY2V+r3E6BdVuVeIb5fqCXudYPeZsENjnWKHGaRO4p4NsRtjmz/zhjmKcail03A/SHKoB+z8q9hhPYicO9lu2JUo9Uuzx29KUY9FCWU6TEKY1FuwK4+NPNGrIJBCtsJep3GrFM6/8UJjUjm7hnXAc/w6duU57Nhn38ejPcWutzI3aRthVyh0T5R/86XGpWBa2cc9Ens5lFFRtCZHn8QuSTEcwO0Z2OVsxnu8ArL2MfK6TKDHI1ZMQI5PnTxJxnAv+7ZeiaZrOrH7I610TQt7hPRxNmUX7GqEOHJdO5kTgx3yIh721l72AjQNJ2d5nMdM4xQsVPEGdunSexqx6Cr9NpCvaF1HcAPHrpEEBWfZtONYPRUTwQov99ELLU++bxkwdp7EqN3EKhOJHaZwHiOmjhd2lU4ThHkLr2lf7L+c//SRqcaGXgyME/bNc+LJuS296D92feds8btzuR9/F3OP95q/2hRFm2IP4Wwh8CRUay+bczpt+YLpX9+dP/ozieF+uL9RBoZ9k2TfY9b/nG/WvQH+v/X1deuu9qPPMkk19v7cB4WdhJHZ/CCaXLTsHz7cAPCvZReb7/8XRd+d+2CwB7Dh8kRUaG/hUWRpi4bI7819INhLOFbP1iFk2Ls1jpi7Vf9wIeUdCnZS1RUNQYa9e8GVcaJF1nEFDAG76sMGXoMjICXQUyXSYLk/Vf+o8zpUNDfyFUP5+8xrqVUgG+J5eoyC13WYdrvJDl4CPK+8M3Yd5+Wy/ChQx0kP0TaNyQA6mWoWL0gEsRJV3HheYwUb0D08gEoZ9T5l48UWyw2iZL4rqNLZm9esmNXYFRy3+VrWSuQq93dD9OmazigXZdiplcT6UmnH7vEEZQ59irKPVE2WJLAiBz0g2o7dI8Vk5EivQc2Hy20j74p902+eW+DAvXNRaRUMtIuv28rusccO00iPPZtt2AEaLeuA1E7GwD4et2Ok4RLfhp1U0u7jb7tJ3FqLPe95NJNowp4OB6Edsa/YydVA5jmut2k7XvgJ0wi6R1UJkFx3HO1pw66TQFAcAnZM3WNKwZuwPydDxe4Fw/zrT7YHBB/v4Gg/usmGeF83F0ZW/jF2Dg4LO6buN8/0I+yRc07EAxadOxCDeiLLieRmUPHaXpBhN0mwbXj30kHI1tg7qKPmisDvwX5Gqy1AojvoEx14Ncuwm926LDKX/AvYYaeRzwwXe6qDOmqupwRDQeAJGdiBH+0I4zbmCfzIUDteBiBjr5BS8T/K2nRiD4MwdUrq+EnXEgqRuHbsefy01Hthr/s7qKPm4pFKl8DePXYcxuXxepRmSs6HiT3aGSkPPZUgmV9M0YkdKZeIA7gg2c1lMnFPO3Ydx3jR98Guo3jd017BxwFSCJ69t0iAtJ8U/a+AKB3NhogdRbhem2HHWRtP+nnsdL5DCmKLkMfRcrzUjp3Ofr4P9jBqS8c0a8uTF1Ekb2CvG9hFGt7Lw8S+QsJie0nIbxr3dJpkVciLm1obcLNivL0glF9DZl4hyVnyXaB1vLb3PsnZBHhKcThqr+ImbecN7PtU26PDxH4OQN5u2OExeIdWWYN9T2oLOA3sOKWkYO+zA3vmf/bOxieNLQvgY5sLhAFmZPgIWPkQWuXThdagZs2jSKpP9FUasJS6hAhWa7tdm327m5iNr30vb//uPfcOKAh1BpmPOzonQWBmjNf5zT33nHPPPZeCsZ29Wj1GkzUPw+Wi3wjYHWDE5/zjbisXiXpziPWPYt9AyB0NuHW15HlxlThlsjtxuTGdsMMYyWbG9qY4SZPftY5iJ5lEiI/riR3JSTuendW6dKwL4Y5CPfZZIDt2KVcsZp2Pu4LYwE97MF6PBz8dGfLZWgjDKYenqht1eVkWovehpWwg1T0MBbBnwPbUcfZ0qtu7SCN27Fiq3N0VwA6KnI0aEbu8eVcdsIMRrHJ3nx47tkB2jUgdD07xwZvtIPad30G85I3CvOMau9dBHmxyCvzkOXuBjFyF3d7zfrC9rWTGaFbt7j499jxt8xmy5UZIPi4+BHbEBaxpUk8qHO1j7wWexM88CY/lMnv9pMFo+OpqZSTgUzmQNDV20JSc15jYYXSqDv0nPO7mQaDv9aG8O8uSMWAUO+Jy7iBCPl/WzSIf8WTykWqeTJIoJODm7FGN3WVQe05sun3Y3yxYrXM8HIyhPOhYL4+73BjsLvGZWSf1XtO4tESA1IdVTs9vqNyZpsVu4M4+EqRz4/46j526RTFeEsehxzHYI+Tixf6RGMo5QPL4qVGwbQmKse8ZdmS3+m9Gaxx4VI/jKSJeNFLJhNYY7Pb+OfGIp18OX0HrO6vuyo0psXuhsx8YFHt65M66UDXKYQ3AiwaVbOx5NxEFtwPCIRs7tdgjyueeRjm3Nth3R9o+i3IFQvNQ1LA3lbxjPPasGuYXq6rNNCV217AxrIQUkEbYIyOzhnM8FycDdIIkLnu5K5PORS7Njse+gjjSzxVd9ZeVFULUB3uGQ9wt6zTjOX8kz7oK1vUwuygW007HF1kXWQGdEBNo47hyWcw1N+ti826419ssYl0uLeI/Y1KqgogjTlyURYvZmO/agUsgzuOOI34sdtAKfDDhDiuKCWt5B6XYq7eHN1mUQz4OtBXH+cRVhvPwnPjEWVqP2KuJ+nTBhTwcD2M9ipA2uU5k6dCwrPQVgNd1VSOSgI2S0EwkPh67P0bWnYUVbR6r5vTrdNjDtzeNRZzdGsjDvZzDT0jaGuXxx3Uf7mbD2LlZkqLjvcq2Ul/yxPMeFoejH2pz2HsbtYqxWuuBfSVqDZDgLDnQy1/qnY2u2O0ZZZvnVjNiMx129vZNicTM2Qj2i7B1bIdx2+cnR9ib2PF/KK700Qo7/DUakyyu5ACJK6Howx4F981/K/aIdWhFT8/mTeMbPozd3b9EM+xpemoajBefioP7VNjXJaxN0e0ZwN5b8UaW9Axjr2qOvaD0YKy0qJnXOxX2qsSdG8GeED3lDbw+cxj7rObYY9QtiZH2NOjALtWwEex2xAdEtxiP7UGx49/AntMI+95IEQHKZFZFdTQVdqlVJSPY/Yso7Jjb5vGY70b8ijXtGsEeRPlMVIPZHfYOe2RqKhsqBmy0xW5Ni5sEkfR58tG3dxP7CnfHYtuTSQDhfVZoljk0ZT1htbDnJNKpYh68vGPFI65/IduUBRJ7rqBoqThiuVw2Y8fXJMiFvUvscVdc/cUqdiR3gw3dhJe784vG2F06pBcqJRH6Z4xVXLTzYLEH1V96Mq2oeHsfLPY8/W0Pq+e4T4U9jpTMI9JUopSHZuVYzHphN4CiNLBFRy12N9JqtkxxSYxdmW1il2kNBw2KPWeA8YlW7PMG0JQ/9okPTOx3w55Rc0pYVUkjspzFxK5GmgW9EqF91rXnwG1TiT1sVA/OYwQfhNZwjSHs4R+pqXUjNJLK4CzONGWNSN0rkQ1Gh3Ayqojqgh3ne60bEHuBqv0DdDCYp8QepD0z6YdDe4L6RlKbZkE8dyNqeUMoqSqtSVWkCIABtfy6Ebx2elMoRS0fNxz2hCEa7aI1YdpKwl3Gq2bhMkS4gf/BZlo0YMe3MGEw6niunf5Hld7FUD1fyBcwFnZjzCBF6F36COJnDTfpbgyvM0zvQmcss6CMjDW6szTuHjDSnXg1p7kUqDmbN1hgfgOeU78RnEwVIyIKYIehkjPS9GvWEO5bVtU8fiXqyecQOvQbBztL4cZAWrdSCexpTnTivIYoTIh1/Bz1rVxBYuEPirHjDFpcoit8w6RnXn6e0Us+P31+Vx3/fF/Tlj566R/vbahpMCmC3X+IdxKYH96X9vlHi65yMhO9i/b0a97sk8+jrcC7wa3Qjt16AN7GHt6O8Hrb+cC/LSd//v5YL/n9xGL5eBcdfwy/90hL+Wj5MNqKqsozmwpt/1foV9tl+y78vuWkYtNTvlssy3fQ8TOWj4ym8sgyM9qKRZVz/ZTa7DPW597fj3jG8rtNX/nT8vkOFvKM5ZH+2HeRWO2Feuxzvj73YP/2PdYZ++Nx3UjSjqcCe07tvRmUwh5BVxKhGbukhUwDdrx3hMMI2L38NXbOTi92nA1kpx57WPU4okLYw2hAfA5qsc9KpiXqij0TxpaRg0NowwjY59GQ4GLsdGI/lEwK0RV7mMwIx5Tfm0Ed7DF2mHuYUuw4BSxDL/ZtspNigFd/0kApk847H3MNjO9uOrEHpXOQdcSON8tFPq9bg+QfpbCLFmg1mO9x36YRO/Yyd+nFLhpIh7wGuygoih1L1J4Ig8rn/04h9oKMkKd+2LevbSO/4bD3Vf63P6SxN2sdW7nW0Ay7nCxf3bBnrgJeGlROUwe7lANXKoI0bZfCqq0Er1uls1pRCLusHTR1w37tA2uQmqgP9qLQbrdXba2mTRp7U+oC2dg9chaV6YV9e8ARcvnvK3bydl6qi9jLF8VSCwhfFC/OKyU42oEfrVLxst1oXQoXcK7RLl7CkNAqNdvFi9Xy5eX5xNi9nJz1ejphH1DxSIN8bl2xl4QGwV4TSufdbr0udM9LJVtbKNtWhRJcdN4udmpdjL1ShFNCDY53Ly6EbrfdFZqTYo/JWtSuE/bwcOBj955ih7G9cYW9KFRsZaHcErpYn2Pk54C+K5Q7tt4oUBbObZ1uEc5ddjoYeQ2egcmwy4yC6IN9+0aYM3F/x/Z6H3tdIFKDfi5cQie+FOrFLn4QhGK5h/1cvASwt/FvN+DkpNjd8qoESGD/q3MLvz1zOpXEPqji+XD1/pp0g0q+A70cBBy51bYAvGtCG9O1NQD2ah/7Ob5kCuwBmVEQKeybzqfw9iSpKPYrFb+YtatuzlEztl+ASu80K5XVDnxs2erdLlHsFaLrS0K5UWkKF3VbozUFdujsrF8B7J9COwyzvPkOY3/zbmsBHoKd9ztbqVP48noZTr3Y2tp5yzCvT5e2llJwLbPwQgr7tnbdnCbsrSLW4I2GIHRhXLeBsi/CT/ytWMe6Hi5pi8PAnbHL7eyS2ENfQgxztnkE2I+TC2fvNl8xC8nU0VYytPPaCZRTmzs7yQV4/xR6vb+w+ZY5dh5JYP/g066b64q9We69VeBVt9kqzVq5BR2+VmtiK05kulqulSskloff4FuzYquXV8Vfa8D1k2CPyezs0thfOo+Zd0+WADuGuuY8A+zLzKlziWFCC8wbDHkHBoLU5hqoA+cp8yX5SgL7zxp2c12xj4biBj7XW7g7KxucPeDkTmZKYme2XrxK7mPsqWQoFALcCyFs4z0j2Jecb8QvqRS+/NMCPjh55uwDwT4UuRWkFfik2OOyC9FJY98JHYUYgv3TU5DlIeyn+P3Uud/D/j65jw+Y2KWlWVu1KYx9HcleZCKNfc25+YVg30kegwk3jP1V8gnW/ss97K+SWyHGxK7TxOuh/BJv0tiZFAzdGPtyKplKJZ8OYWeOkp9CSRjnRezMgvOLiV0n7NUJEpAlsB+fgaEGr6dAlnn7bOcIOvw+fF9bAgvubB8Ovnx/hD37Z6JuPyJuvoldB+wB3wTldZQKzr4Vf26lGBO7Ptg94LzNaY2dyLsQHv5N7Hpgt6NJMlEVxX72fo0xseuCPcpOVLKXijVwJvapsQcR8mVM7A8M+y6arMCsif0+YMcz2WGrif2BYd8DKz5jYn9g2BMTZ52b2JXF3voPqSX0L3GWrVdZSJlv33+E3c5NXBbCxK4o9u8nYjmuX3/C8l+Lot8647H/wzd5zrmJXVHsjy2/knpcn8n/utarzqXMtw8/3UR+1IK/+Ac/UDnLxK5Pb/+yr96t+8uNpI2v6Ctg/x9C3LrVxK7r2P5PRivsla8I/Va3/YzusiWMid2g2Ct/w3motffoTrvYmNgNg33tTX0gFe8bST/+DV7frCb2e4z90cDfan27Wl/yy4wRsH/9f3t39NI2EIAB/Jwu2T3kUXSsBDxICQkjA0OwWBwls6UVjLQDV0sVldqytoqiriJj06l/9y5Jra2bsFVNYvJ9T01I+nC/3OVy6V3/ulgm2P+LffNmoF4cqxp1Al5z1mgKSozZN6+UANgXftxNJtsfi31eEAJeYLo5F+vn9lfPz74xpD5mbRf3gl5Pfk1MNnsj+0j2q9Hpwr/G6ytlgv2fi7yYGPa0JEly6v4kIVV6HPvOqPp4XbpkJCz2tZwqt42nZN89fH0/e/CNGDvv3ylajRhM0/QMISVbshXOvs50Y93RtGqe1EzHnWZASFWT2g1S1lWbkZYstdcIYXxX+e7rOscn3tDc/czCN3rspMBISi43Cjrfriktt7Y7doZfAkq+kCJZjaW920BLMQpVfki7pfArZX3fNkhaMXR9ZJTOH5q7+VmvHx5+vvq0sbD55VJAIx9Fdr1KbJOQr1I+1fYb+ZKd41dDQVWrMsna/gwDkm+puntl8Opdk1S1xD8YafeIYfZN7rzyD38jgIT4Bs5jX7cd4i4EwDeY7rPLGreVZcaY6c028yq7Vs16DQI/hbcAPLm0pmd1+eE3cGCP5iidZ+hWW96Yk5JmmLbhsWeYnCdVfTDJ0Lu1F4i7yzuFH+HNJ+S7GNhfIHuVtXmPjqiaY2oOyfHqyzL83m7I/C6uMdUsDdgde8e0++xGu1ArMWLatX0Z7C+OPcdb8Zo3WJtOMXdpl4bDTGON8Q+Md9pTzCmTVn+lH8NkpXKJn+L27/L7jKnerpz5wBs4sEeW/RnfwIEd7PANmz2YN3Bgj/JzO9jBDnawgx3sYI8B+/Ge/xx+O5Xl6bYmTr+BPZrsF4Jw+sHN9/5viZ5w6+MuRumi+tx+MelXyZX+NNWn3HoD9qiyR+KvfRGwgx3sYAc72MEOdrCDPersl2FMJU06e0O4Dld9tynk4Rs0+3xTOAm5jT+dg2/Q7GJHENhkeLkWhBx4g2ef6TSFMNNsQDcEdt7ONybCS24euOGwI2BHwI6AHQE7AnbkudKllVv2A5RGYrJMez77EsVKL8lJkZ777Gd0FaWRlMxZdNpnF7coQXkkJOd0W+yzL6NPl5jM+h05l92gW+9RIIkIsazpW3axTpdRIknITJF2xQE7segSyiQBmaKL03fsYo9aRyiU2KdCrTNxiF08oNbUDMol1nnbpdZto04GFwJdPcIv0GKMvrQ41KQPntjPVyndqnenkDimW7co3TbEP9jFd5VtisQ3xd7QXXxkfI70KqgYsUzlaPQHhhiWTeawDYoA7EhC8htm2w7ZWTce/QAAAABJRU5ErkJggg==" alt="bind mounts on the Docker host"></p> <h2 id="choosing-the--v-or-mount-flag">Choosing the -v or –mount flag</h2> <p>Originally, the <code class="highlighter-rouge">-v</code> or <code class="highlighter-rouge">--volume</code> flag was used for standalone containers and the <code class="highlighter-rouge">--mount</code> flag was used for swarm services. However, starting with Docker 17.06, you can also use <code class="highlighter-rouge">--mount</code> with standalone containers. In general, <code class="highlighter-rouge">--mount</code> is more explicit and verbose. The biggest difference is that the <code class="highlighter-rouge">-v</code> syntax combines all the options together in one field, while the <code class="highlighter-rouge">--mount</code> syntax separates them. Here is a comparison of the syntax for each flag.</p> <blockquote> <p><strong>Tip</strong>: New users should use the <code class="highlighter-rouge">--mount</code> syntax. Experienced users may be more familiar with the <code class="highlighter-rouge">-v</code> or <code class="highlighter-rouge">--volume</code> syntax, but are encouraged to use <code class="highlighter-rouge">--mount</code>, because research has shown it to be easier to use.</p> </blockquote> <ul> <li>
+<strong><code class="highlighter-rouge">-v</code> or <code class="highlighter-rouge">--volume</code></strong>: Consists of three fields, separated by colon characters (<code class="highlighter-rouge">:</code>). The fields must be in the correct order, and the meaning of each field is not immediately obvious. <ul> <li>In the case of bind mounts, the first field is the path to the file or directory on the <strong>host machine</strong>.</li> <li>The second field is the path where the file or directory will be mounted in the container.</li> <li>The third field is optional, and is a comma-separated list of options, such as <code class="highlighter-rouge">ro</code>, <code class="highlighter-rouge">consistent</code>, <code class="highlighter-rouge">delegated</code>, <code class="highlighter-rouge">cached</code>, <code class="highlighter-rouge">z</code>, and <code class="highlighter-rouge">Z</code>. These options are discussed below.</li> </ul> </li> <li>
+<strong><code class="highlighter-rouge">--mount</code></strong>: Consists of multiple key-value pairs, separated by commas and each consisting of a <code class="highlighter-rouge">&lt;key&gt;=&lt;value&gt;</code> tuple. The <code class="highlighter-rouge">--mount</code> syntax is more verbose than <code class="highlighter-rouge">-v</code> or <code class="highlighter-rouge">--volume</code>, but the order of the keys is not significant, and the value of the flag is easier to understand. <ul> <li>The <code class="highlighter-rouge">type</code> of the mount, which can be <code class="highlighter-rouge">bind</code>, <code class="highlighter-rouge">volume</code>, or <code class="highlighter-rouge">tmpfs</code>. This topic discusses bind mounts, so the type will always be <code class="highlighter-rouge">bind</code>.</li> <li>The <code class="highlighter-rouge">source</code> of the mount. For bind mounts, this is the path to the file or directory on the Docker daemon host. May be specified as <code class="highlighter-rouge">source</code> or <code class="highlighter-rouge">src</code>.</li> <li>The <code class="highlighter-rouge">destination</code> takes as its value the path where the file or directory will be mounted in the container. May be specified as <code class="highlighter-rouge">destination</code>, <code class="highlighter-rouge">dst</code>, or <code class="highlighter-rouge">target</code>.</li> <li>The <code class="highlighter-rouge">readonly</code> option, if present, causes the bind mount to be <a href="#use-a-read-only-bind-mount">mounted into the container as read-only</a>.</li> <li>The <code class="highlighter-rouge">bind-propagation</code> option, if present, changes the <a href="#configure-bind-propagation">bind propagation</a>. May be one of <code class="highlighter-rouge">rprivate</code>, <code class="highlighter-rouge">private</code>, <code class="highlighter-rouge">rshared</code>, <code class="highlighter-rouge">shared</code>, <code class="highlighter-rouge">rslave</code>, <code class="highlighter-rouge">slave</code>.</li> <li>The <a href="#configure-mount-consistency-for-macos"><code class="highlighter-rouge">consistency</code></a> option, if present, may be one of <code class="highlighter-rouge">consistent</code>, <code class="highlighter-rouge">delegated</code>, or <code class="highlighter-rouge">cached</code>. This setting only applies to Docker for Mac, and is ignored on all other platforms.</li> <li>The <code class="highlighter-rouge">--mount</code> flag does not support <code class="highlighter-rouge">z</code> or <code class="highlighter-rouge">Z</code> options for modifying selinux labels.</li> </ul> </li> </ul> <p>The examples below show both the <code class="highlighter-rouge">--mount</code> and <code class="highlighter-rouge">-v</code> syntax where possible, and <code class="highlighter-rouge">--mount</code> is presented first.</p> <h3 id="differences-between--v-and---mount-behavior">Differences between <code class="highlighter-rouge">-v</code> and <code class="highlighter-rouge">--mount</code> behavior</h3> <p>Because the <code class="highlighter-rouge">-v</code> and <code class="highlighter-rouge">--volume</code> flags have been a part of Docker for a long time, their behavior cannot be changed. This means that <strong>there is one behavior that is different between <code class="highlighter-rouge">-v</code> and <code class="highlighter-rouge">--mount</code>.</strong></p> <p>If you use <code class="highlighter-rouge">-v</code> or <code class="highlighter-rouge">--volume</code> to bind-mount a file or directory that does not yet exist on the Docker host, <code class="highlighter-rouge">-v</code> will create the endpoint for you. <strong>It is always created as a directory.</strong></p> <p>If you use <code class="highlighter-rouge">--mount</code> to bind-mount a file or directory that does not yet exist on the Docker host, Docker does <strong>not</strong> automatically create it for you, but generates an error.</p> <h2 id="start-a-container-with-a-bind-mount">Start a container with a bind mount</h2> <p>Consider a case where you have a directory <code class="highlighter-rouge">source</code> and that when you build the source code, the artifacts are saved into another directory <code class="highlighter-rouge">source/target/</code>. You want the artifacts to be available to the container at <code class="highlighter-rouge">/app/</code>, and you want the container to get access to a new build each time you build the source on your development host. Use the following command to bind-mount the <code class="highlighter-rouge">target/</code> directory into your container at <code class="highlighter-rouge">/app/</code>. Run the command from within the <code class="highlighter-rouge">source</code> directory. The <code class="highlighter-rouge">$(pwd)</code> sub-command expands to the current working directory on Linux or macOS hosts.</p> <p>The <code class="highlighter-rouge">--mount</code> and <code class="highlighter-rouge">-v</code> examples below produce the same result. You can’t run them both unless you remove the <code class="highlighter-rouge">devtest</code> container after running the first one.</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-group="mount" data-target="#mount-run"><code>--mount</code></a></li> <li><a data-toggle="tab" data-group="volume" data-target="#v-run"><code>-v</code></a></li> </ul> <div class="tab-content"> <div id="mount-run" class="tab-pane fade in active"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app \
+  nginx:latest
+</pre>  </div>  <div id="v-run" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app \
+  nginx:latest
+</pre>  </div>  </div>  <p>Use <code class="highlighter-rouge">docker inspect devtest</code> to verify that the bind mount was created correctly. Look for the <code class="highlighter-rouge">Mounts</code> section:</p> <pre class="highlight" data-language="json">"Mounts": [
+    {
+        "Type": "bind",
+        "Source": "/tmp/source/target",
+        "Destination": "/app",
+        "Mode": "",
+        "RW": true,
+        "Propagation": "rprivate"
+    }
+],
+</pre>  <p>This shows that the mount is a <code class="highlighter-rouge">bind</code> mount, it shows the correct source and destination, it shows that the mount is read-write, and that the propagation is set to <code class="highlighter-rouge">rprivate</code>.</p> <p>Stop the container:</p> <pre class="highlight" data-language="bash">$ docker container stop devtest
+
+$ docker container rm devtest
+</pre>  <h3 id="mounting-into-a-non-empty-directory-on-the-container">Mounting into a non-empty directory on the container</h3> <p>If you bind-mount into a non-empty directory on the container, the directory’s existing contents will be obscured by the bind mount. This can be beneficial, such as when you want to test a new version of your application without building a new image. However, it can also be surprising and this behavior differs from that of <a href="../volumes/">docker volumes</a>.</p> <p>This example is contrived to be extreme, but will replace the contents of the container’s <code class="highlighter-rouge">/usr/</code> directory with the <code class="highlighter-rouge">/tmp/</code> directory on the host machine. In most cases, this would result in a non-functioning container.</p> <p>The <code class="highlighter-rouge">--mount</code> and <code class="highlighter-rouge">-v</code> examples have the same end result.</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-group="mount" data-target="#mount-empty-run"><code>--mount</code></a></li> <li><a data-toggle="tab" data-group="volume" data-target="#v-empty-run"><code>-v</code></a></li> </ul> <div class="tab-content"> <div id="mount-empty-run" class="tab-pane fade in active"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name broken-container \
+  --mount type=bind,source=/tmp,target=/usr \
+  nginx:latest
+
+docker: Error response from daemon: oci runtime error: container_linux.go:262:
+starting container process caused "exec: \"nginx\": executable file not found in $PATH".
+</pre>  </div>  <div id="v-empty-run" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name broken-container \
+  -v /tmp:/usr \
+  nginx:latest
+
+docker: Error response from daemon: oci runtime error: container_linux.go:262:
+starting container process caused "exec: \"nginx\": executable file not found in $PATH".
+</pre>  </div>  </div>  <p>The container is created but does not start. Remove it:</p> <pre class="highlight" data-language="bash">$ docker container rm broken-container
+</pre>  <h2 id="use-a-read-only-bind-mount">Use a read-only bind mount</h2> <p>For some development applications, it is useful for the container to be able to write into the bind mount, in order for changes to be propagated back to the Docker host. At other times, the container should only be able to read the data and not modify it.</p> <p>This example modifies the one above but mounts the directory as a read-only bind mount, by adding <code class="highlighter-rouge">ro</code> to the (empty by default) list of options, after the mount point within the container. Where multiple options are present, separate them by commas.</p> <p>The <code class="highlighter-rouge">--mount</code> and <code class="highlighter-rouge">-v</code> examples have the same result.</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-group="mount" data-target="#mount-readonly"><code>--mount</code></a></li> <li><a data-toggle="tab" data-group="volume" data-target="#v-readonly"><code>-v</code></a></li> </ul> <div class="tab-content"> <div id="mount-readonly" class="tab-pane fade in active"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app,readonly \
+  nginx:latest
+</pre>  </div>  <div id="v-readonly" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app:ro \
+  nginx:latest
+</pre>  </div>  </div>  <p>Use <code class="highlighter-rouge">docker inspect devtest</code> to verify that the bind mount was created correctly. Look for the <code class="highlighter-rouge">Mounts</code> section:</p> <pre class="highlight" data-language="json">"Mounts": [
+    {
+        "Type": "bind",
+        "Source": "/tmp/source/target",
+        "Destination": "/app",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+    }
+],
+</pre>  <p>Stop the container:</p> <pre class="highlight" data-language="bash">$ docker container stop devtest
+
+$ docker container rm devtest
+</pre>  <h2 id="configure-bind-propagation">Configure bind propagation</h2> <p>Bind propagation defaults to <code class="highlighter-rouge">rprivate</code> for both bind mounts and volumes. It is only configurable for bind mounts, and only on Linux host machines. Bind propagation is an advanced topic and many users never need to configure it.</p> <p>Bind propagation refers to whether or not mounts created within a given bind-mount or named volume can be propagated to replicas of that mount. Consider a mount point <code class="highlighter-rouge">/mnt</code>, which is also mounted on <code class="highlighter-rouge">/tmp</code>. The propagation settings control whether a mount on <code class="highlighter-rouge">/tmp/a</code> would also be available on <code class="highlighter-rouge">/mnt/a</code>. Each propagation setting has a recursive counterpoint. In the case of recursion, consider that <code class="highlighter-rouge">/tmp/a</code> is also mounted as <code class="highlighter-rouge">/foo</code>. The propagation settings control whether <code class="highlighter-rouge">/mnt/a</code> and/or <code class="highlighter-rouge">/tmp/a</code> would exist.</p> <table> <thead> <tr> <th style="text-align: left">Propagation setting</th> <th style="text-align: left">Description</th> </tr> </thead> <tbody> <tr> <td style="text-align: left"><code class="highlighter-rouge">shared</code></td> <td style="text-align: left">Sub-mounts of the original mount are exposed to replica mounts, and sub-mounts of replica mounts are also propagated to the original mount.</td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">slave</code></td> <td style="text-align: left">similar to a shared mount, but only in one direction. If the original mount exposes a sub-mount, the replica mount can see it. However, if the replica mount exposes a sub-mount, the original mount cannot see it.</td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">private</code></td> <td style="text-align: left">The mount is private. Sub-mounts within it are not exposed to replica mounts, and sub-mounts of replica mounts are not exposed to the original mount.</td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">rshared</code></td> <td style="text-align: left">The same as shared, but the propagation also extends to and from mount points nested within any of the original or replica mount points.</td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">rslave</code></td> <td style="text-align: left">The same as slave, but the propagation also extends to and from mount points nested within any of the original or replica mount points.</td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">rprivate</code></td> <td style="text-align: left">The default. The same as private, meaning that no mount points anywhere within the original or replica mount points propagate in either direction.</td> </tr> </tbody> </table> <p>Before you can set bind propagation on a mount point, the host filesystem needs to already support bind propagation.</p> <p>For more information about bind propagation, see the <a href="https://www.kernel.org/doc/Documentation/filesystems/sharedsubtree.txt" target="_blank" class="_">Linux kernel documentation for shared subtree</a>.</p> <p>The following example mounts the <code class="highlighter-rouge">target/</code> directory into the container twice, and the second mount sets both the <code class="highlighter-rouge">ro</code> option and the <code class="highlighter-rouge">rslave</code> bind propagation option.</p> <p>The <code class="highlighter-rouge">--mount</code> and <code class="highlighter-rouge">-v</code> examples have the same result.</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-group="mount" data-target="#mount-propagation"><code>--mount</code></a></li> <li><a data-toggle="tab" data-group="volume" data-target="#v-propagation"><code>-v</code></a></li> </ul> <div class="tab-content"> <div id="mount-propagation" class="tab-pane fade in active"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app \
+  --mount type=bind,source="$(pwd)"/target,target=/app2,readonly,bind-propagation=rslave \
+  nginx:latest
+</pre>  </div>  <div id="v-propagation" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app \
+  -v "$(pwd)"/target:/app2:ro,rslave \
+  nginx:latest
+</pre>  </div>  </div>  <p>Now if you create <code class="highlighter-rouge">/app/foo/</code>, <code class="highlighter-rouge">/app2/foo/</code> will also exist.</p> <h2 id="configure-the-selinux-label">Configure the selinux label</h2> <p>If you use <code class="highlighter-rouge">selinux</code> you can add the <code class="highlighter-rouge">z</code> or <code class="highlighter-rouge">Z</code> options to modify the selinux label of the <strong>host file or directory</strong> being mounted into the container. This affects the file or directory on the host machine itself and can have consequences outside of the scope of Docker.</p> <ul> <li>The <code class="highlighter-rouge">z</code> option indicates that the bind mount content is shared among multiple containers.</li> <li>The <code class="highlighter-rouge">Z</code> option indicates that the bind mount content is private and unshared.</li> </ul> <p>Use <strong>extreme</strong> caution with these options. Bind-mounting a system directory such as <code class="highlighter-rouge">/home</code> or <code class="highlighter-rouge">/usr</code> with the <code class="highlighter-rouge">Z</code> option will render your host machine inoperable and you may need to relabel the host machine files by hand.</p> <p>This example sets the <code class="highlighter-rouge">z</code> option to specify that multiple containers can share the bind mount’s contents:</p> <p>It is not possible to modify the selinux label using the <code class="highlighter-rouge">--mount</code> flag.</p> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app:z \
+  nginx:latest
+</pre>  <h2 id="configure-mount-consistency-for-macos">Configure mount consistency for macOS</h2> <p>Docker for Mac uses <code class="highlighter-rouge">osxfs</code> to propagate directories and files shared from macOS to the Linux VM. This propagation makes these directories and files available to Docker containers running on Docker for Mac.</p> <p>By default, these shares are fully-consistent, meaning that every time a write happens on the macOS host or through a mount in a container, the changes are flushed to disk so that all participants in the share have a fully-consistent view. Full consistency can severely impact performance in some cases. Docker 17.05 and higher introduce options to tune the consistency setting on a per-mount, per-container basis. The following options are available:</p> <ul> <li> <p><code class="highlighter-rouge">consistent</code> or <code class="highlighter-rouge">default</code>: The default setting with full consistency, as described above.</p> </li> <li> <p><code class="highlighter-rouge">delegated</code>: The container runtime’s view of the mount is authoritative. There may be delays before updates made in a container are visible on the host.</p> </li> <li> <p><code class="highlighter-rouge">cached</code>: The macOS host’s view of the mount is authoritative. There may be delays before updates made on the host are visible within a container.</p> </li> </ul> <p>These options are completely ignored on all host operating systems except macOS.</p> <p>The <code class="highlighter-rouge">--mount</code> and <code class="highlighter-rouge">-v</code> examples have the same result.</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-group="mount" data-target="#mount-consistency"><code>--mount</code></a></li> <li><a data-toggle="tab" data-group="volume" data-target="#v-consistency"><code>-v</code></a></li> </ul> <div class="tab-content"> <div id="mount-consistency" class="tab-pane fade in active"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,destination=/app,consistency=cached \
+  nginx:latest
+</pre>  </div>  <div id="v-consistency" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app:cached \
+  nginx:latest
+</pre>  </div>  </div>  <h2 id="next-steps">Next steps</h2> <ul> <li>Learn about <a href="../volumes/">volumes</a>.</li> <li>Learn about <a href="../tmpfs/">tmpfs mounts</a>.</li> <li>Learn about <a href="../../../userguide/storagedriver/">storage drivers</a>.</li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=storage" target="_blank">storage</a>, <a href="https://docs.docker.com/glossary/?term=persistence" target="_blank">persistence</a>, <a href="https://docs.docker.com/glossary/?term=data%20persistence" target="_blank">data persistence</a>, <a href="https://docs.docker.com/glossary/?term=mounts" target="_blank">mounts</a>, <a href="https://docs.docker.com/glossary/?term=bind%20mounts" target="_blank">bind mounts</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/admin/volumes/bind-mounts/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/admin/volumes/bind-mounts/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

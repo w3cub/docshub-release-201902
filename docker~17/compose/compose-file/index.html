@@ -1,0 +1,920 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Version 3 (Compose) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content=" These topics describe version 3 of the Compose file format. This is the newest version. ">
+  <meta name="keywords" content="compose, file, version, reference, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/compose/compose-file/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Compose file version 3 reference</h1>  <h2 id="reference-and-guidelines">Reference and guidelines</h2> <p>These topics describe version 3 of the Compose file format. This is the newest version.</p> <h2 id="compose-and-docker-compatibility-matrix">Compose and Docker compatibility matrix</h2> <p>There are several versions of the Compose file format – 1, 2, 2.x, and 3.x. The table below is a quick look. For full details on what each version includes and how to upgrade, see <strong><a href="compose-versioning/">About versions and upgrading</a></strong>.</p> <p>This table shows which Compose file versions support specific Docker releases.</p> <table> <thead> <tr> <th><strong>Compose file format</strong></th> <th><strong>Docker Engine release</strong></th> </tr> </thead> <tbody> <tr> <td>3.3</td> <td>17.06.0+</td> </tr> <tr> <td>3.2</td> <td>17.04.0+</td> </tr> <tr> <td>3.1</td> <td>1.13.1+</td> </tr> <tr> <td>3.0</td> <td>1.13.0+</td> </tr> <tr> <td>2.3</td> <td>17.06.0+</td> </tr> <tr> <td>2.2</td> <td>1.13.0+</td> </tr> <tr> <td>2.1</td> <td>1.12.0+</td> </tr> <tr> <td>2.0</td> <td>1.10.0+</td> </tr> <tr> <td>1.0</td> <td>1.9.1.+</td> </tr> </tbody> </table> <p>In addition to Compose file format versions shown in the table, the Compose itself is on a release schedule, as shown in <a href="https://github.com/docker/compose/releases/" target="_blank">Compose releases</a>, but file format versions do not necessairly increment with each release. For example, Compose file format 3.0 was first introduced in <a href="https://github.com/docker/compose/releases/tag/1.10.0" target="_blank">Compose release 1.10.0</a>, and versioned gradually in subsequent releases.</p> <h2 id="compose-file-structure-and-examples">Compose file structure and examples</h2> <div class="panel panel-default"> <div class="panel-heading collapsed" data-toggle="collapse" data-target="#collapseSample1" style="cursor: pointer"> Example Compose file version 3  </div> <div class="collapse block" id="collapseSample1"> <pre class="highlight" data-language="">
+version: "3"
+services:
+
+redis:
+  image: redis:alpine
+  ports:
+    - "6379"
+  networks:
+    - frontend
+  deploy:
+    replicas: 2
+    update_config:
+      parallelism: 2
+      delay: 10s
+    restart_policy:
+      condition: on-failure
+db:
+  image: postgres:9.4
+  volumes:
+    - db-data:/var/lib/postgresql/data
+  networks:
+    - backend
+  deploy:
+    placement:
+      constraints: [node.role == manager]
+vote:
+  image: dockersamples/examplevotingapp_vote:before
+  ports:
+    - 5000:80
+  networks:
+    - frontend
+  depends_on:
+    - redis
+  deploy:
+    replicas: 2
+    update_config:
+      parallelism: 2
+    restart_policy:
+      condition: on-failure
+result:
+  image: dockersamples/examplevotingapp_result:before
+  ports:
+    - 5001:80
+  networks:
+    - backend
+  depends_on:
+    - db
+  deploy:
+    replicas: 1
+    update_config:
+      parallelism: 2
+      delay: 10s
+    restart_policy:
+      condition: on-failure
+
+worker:
+  image: dockersamples/examplevotingapp_worker
+  networks:
+    - frontend
+    - backend
+  deploy:
+    mode: replicated
+    replicas: 1
+    labels: [APP=VOTING]
+    restart_policy:
+      condition: on-failure
+      delay: 10s
+      max_attempts: 3
+      window: 120s
+    placement:
+      constraints: [node.role == manager]
+
+visualizer:
+  image: dockersamples/visualizer:stable
+  ports:
+    - "8080:8080"
+  stop_grace_period: 1m30s
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  deploy:
+    placement:
+      constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+</pre>  </div> </div> <p>The topics on this reference page are organized alphabetically by top-level key to reflect the structure of the Compose file itself. Top-level keys that define a section in the configuration file such as <code class="highlighter-rouge">build</code>, <code class="highlighter-rouge">deploy</code>, <code class="highlighter-rouge">depends_on</code>, <code class="highlighter-rouge">networks</code>, and so on, are listed with the options that support them as sub-topics. This maps to the <code class="highlighter-rouge">&lt;key&gt;: &lt;option&gt;: &lt;value&gt;</code> indent structure of the Compose file.</p> <p>A good place to start is the <a href="../../get-started/">Getting Started</a> tutorial which uses version 3 Compose stack files to implement multi-container apps, service definitions, and swarm mode. Here are some Compose files used in the tutorial.</p> <ul> <li> <p><a href="../../get-started/part3/#your-first-docker-composeyml-file">Your first docker-compose.yml File</a></p> </li> <li> <p><a href="../../get-started/part5/#adding-a-new-service-and-redeploying">Adding a new service and redeploying</a></p> </li> </ul> <p>Another good reference is the Compose file for the voting app sample used in the <a href="https://github.com/docker/labs/tree/master/beginner/" target="_blank">Docker for Beginners lab</a> topic on <a href="https://github.com/docker/labs/blob/master/beginner/chapters/votingapp/" target="_blank">Deploying an app to a Swarm</a>. This is also shown on the accordion at the top of this section.</p> <h2 id="service-configuration-reference">Service configuration reference</h2> <p>The Compose file is a <a href="http://yaml.org/" target="_blank">YAML</a> file defining <a href="#service-configuration-reference">services</a>, <a href="#network-configuration-reference">networks</a> and <a href="#volume-configuration-reference">volumes</a>. The default path for a Compose file is <code class="highlighter-rouge">./docker-compose.yml</code>.</p> <blockquote> <p><strong>Tip</strong>: You can use either a <code class="highlighter-rouge">.yml</code> or <code class="highlighter-rouge">.yaml</code> extension for this file. They both work.</p> </blockquote> <p>A service definition contains configuration which will be applied to each container started for that service, much like passing command-line parameters to <code class="highlighter-rouge">docker run</code>. Likewise, network and volume definitions are analogous to <code class="highlighter-rouge">docker network create</code> and <code class="highlighter-rouge">docker volume create</code>.</p> <p>As with <code class="highlighter-rouge">docker run</code>, options specified in the Dockerfile (e.g., <code class="highlighter-rouge">CMD</code>, <code class="highlighter-rouge">EXPOSE</code>, <code class="highlighter-rouge">VOLUME</code>, <code class="highlighter-rouge">ENV</code>) are respected by default - you don’t need to specify them again in <code class="highlighter-rouge">docker-compose.yml</code>.</p> <p>You can use environment variables in configuration values with a Bash-like <code class="highlighter-rouge">${VARIABLE}</code> syntax - see <a href="#variable-substitution">variable substitution</a> for full details.</p> <p>This section contains a list of all configuration options supported by a service definition in version 3.</p> <h3 id="build">build</h3> <p>Configuration options that are applied at build time.</p> <p><code class="highlighter-rouge">build</code> can be specified either as a string containing a path to the build context:</p> <pre data-language="">version: '2'
+services:
+  webapp:
+    build: ./dir
+</pre> <p>Or, as an object with the path specified under <a href="#context">context</a> and optionally <a href="#dockerfile">Dockerfile</a> and <a href="#args">args</a>:</p> <pre data-language="">version: '2'
+services:
+  webapp:
+    build:
+      context: ./dir
+      dockerfile: Dockerfile-alternate
+      args:
+        buildno: 1
+</pre> <p>If you specify <code class="highlighter-rouge">image</code> as well as <code class="highlighter-rouge">build</code>, then Compose names the built image with the <code class="highlighter-rouge">webapp</code> and optional <code class="highlighter-rouge">tag</code> specified in <code class="highlighter-rouge">image</code>:</p> <pre class="highlight" data-language="">build: ./dir
+image: webapp:tag
+</pre>  <p>This will result in an image named <code class="highlighter-rouge">webapp</code> and tagged <code class="highlighter-rouge">tag</code>, built from <code class="highlighter-rouge">./dir</code>.</p> <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file. The <code class="highlighter-rouge">docker stack</code> command accepts only pre-built images.</p> </blockquote> <h4 id="context">context</h4> <p>Either a path to a directory containing a Dockerfile, or a url to a git repository.</p> <p>When the value supplied is a relative path, it is interpreted as relative to the location of the Compose file. This directory is also the build context that is sent to the Docker daemon.</p> <p>Compose will build and tag it with a generated name, and use that image thereafter.</p> <pre class="highlight" data-language="">build:
+  context: ./dir
+</pre>  <h4 id="dockerfile">dockerfile</h4> <p>Alternate Dockerfile.</p> <p>Compose will use an alternate file to build with. A build path must also be specified.</p> <pre class="highlight" data-language="">build:
+  context: .
+  dockerfile: Dockerfile-alternate
+</pre>  <h4 id="args">args</h4> <p>Add build arguments, which are environment variables accessible only during the build process.</p> <p>First, specify the arguments in your Dockerfile:</p> <pre class="highlight" data-language="">ARG buildno
+ARG password
+
+RUN echo "Build number: $buildno"
+RUN script-requiring-password.sh "$password"
+</pre>  <p>Then specify the arguments under the <code class="highlighter-rouge">build</code> key. You can pass either a mapping or a list:</p> <pre class="highlight" data-language="">build:
+  context: .
+  args:
+    buildno: 1
+    password: secret
+
+build:
+  context: .
+  args:
+    - buildno=1
+    - password=secret
+</pre>  <p>You can omit the value when specifying a build argument, in which case its value at build time is the value in the environment where Compose is running.</p> <pre class="highlight" data-language="">args:
+  - buildno
+  - password
+</pre>  <blockquote> <p><strong>Note</strong>: YAML boolean values (<code class="highlighter-rouge">true</code>, <code class="highlighter-rouge">false</code>, <code class="highlighter-rouge">yes</code>, <code class="highlighter-rouge">no</code>, <code class="highlighter-rouge">on</code>, <code class="highlighter-rouge">off</code>) must be enclosed in quotes, so that the parser interprets them as strings.</p> </blockquote> <h4 id="cache_from">cache_from</h4> <blockquote> <p><strong>Note:</strong> This option is new in v3.2</p> </blockquote> <p>A list of images that the engine will use for cache resolution.</p> <pre class="highlight" data-language="">build:
+  context: .
+  cache_from:
+    - alpine:latest
+    - corp/web_app:3.14
+</pre>  <h4 id="labels">labels</h4> <blockquote> <p><strong>Note:</strong> This option is new in v3.3</p> </blockquote> <p>Add metadata to the resulting image using <a href="../../engine/userguide/labels-custom-metadata/">Docker labels</a>. You can use either an array or a dictionary.</p> <p>It’s recommended that you use reverse-DNS notation to prevent your labels from conflicting with those used by other software.</p> <pre class="highlight" data-language="">build:
+  context: .
+  labels:
+    com.example.description: "Accounting webapp"
+    com.example.department: "Finance"
+    com.example.label-with-empty-value: ""
+
+
+build:
+  context: .
+  labels:
+    - "com.example.description=Accounting webapp"
+    - "com.example.department=Finance"
+    - "com.example.label-with-empty-value"
+</pre>  <h3 id="cap_add-cap_drop">cap_add, cap_drop</h3> <p>Add or drop container capabilities. See <code class="highlighter-rouge">man 7 capabilities</code> for a full list.</p> <pre class="highlight" data-language="">cap_add:
+  - ALL
+
+cap_drop:
+  - NET_ADMIN
+  - SYS_ADMIN
+</pre>  <blockquote> <p><strong>Note</strong>: These options are ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="command">command</h3> <p>Override the default command.</p> <pre class="highlight" data-language="">command: bundle exec thin -p 3000
+</pre>  <p>The command can also be a list, in a manner similar to <a href="../../engine/reference/builder/#cmd">dockerfile</a>:</p> <pre class="highlight" data-language="">command: ["bundle", "exec", "thin", "-p", "3000"]
+</pre>  <h3 id="configs">configs</h3> <p>Grant access to configs on a per-service basis using the per-service <code class="highlighter-rouge">configs</code> configuration. Two different syntax variants are supported.</p> <blockquote> <p><strong>Note</strong>: The config must already exist or be <a href="#configs-configuration-reference">defined in the top-level <code class="highlighter-rouge">configs</code> configuration</a> of this stack file, or stack deployment will fail.</p> </blockquote> <h4 id="short-syntax">Short syntax</h4> <p>The short syntax variant only specifies the config name. This grants the container access to the config and mounts it at <code class="highlighter-rouge">/&lt;config_name&gt;</code> within the container. The source name and destination mountpoint are both set to the config name.</p> <p>The following example uses the short syntax to grant the <code class="highlighter-rouge">redis</code> service access to the <code class="highlighter-rouge">my_config</code> and <code class="highlighter-rouge">my_other_config</code> configs. The value of <code class="highlighter-rouge">my_config</code> is set to the contents of the file <code class="highlighter-rouge">./my_config.txt</code>, and <code class="highlighter-rouge">my_other_config</code> is defined as an external resource, which means that it has already been defined in Docker, either by running the <code class="highlighter-rouge">docker config create</code> command or by another stack deployment. If the external config does not exist, the stack deployment fails with a <code class="highlighter-rouge">config not found</code> error.</p> <blockquote> <p><strong>Note</strong>: <code class="highlighter-rouge">config</code> definitions are only supported in version 3.3 and higher of the compose file format.</p> </blockquote> <pre data-language="">version: "3.3"
+services:
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 1
+    configs:
+      - my_config
+      - my_other_config
+configs:
+  my_config:
+    file: ./my_config.txt
+  my_other_config:
+    external: true
+</pre> <h4 id="long-syntax">Long syntax</h4> <p>The long syntax provides more granularity in how the config is created within the service’s task containers.</p> <ul> <li>
+<code class="highlighter-rouge">source</code>: The name of the config as it exists in Docker.</li> <li>
+<code class="highlighter-rouge">target</code>: The path and name of the file that will be mounted in the service’s task containers. Defaults to <code class="highlighter-rouge">/&lt;source&gt;</code> if not specified.</li> <li>
+<code class="highlighter-rouge">uid</code> and <code class="highlighter-rouge">gid</code>: The numeric UID or GID which will own the mounted config file within in the service’s task containers. Both default to <code class="highlighter-rouge">0</code> on Linux if not specified. Not supported on Windows.</li> <li>
+<code class="highlighter-rouge">mode</code>: The permissions for the file that will be mounted within the service’s task containers, in octal notation. For instance, <code class="highlighter-rouge">0444</code> represents world-readable. The default is <code class="highlighter-rouge">0444</code>. Configs cannot be writable because they are mounted in a temporary filesystem, so if you set the writable bit, it is ignored. The executable bit can be set. If you aren’t familiar with UNIX file permission modes, you may find this <a href="http://permissions-calculator.org/" target="_blank" class="_">permissions calculator</a> useful.</li> </ul> <p>The following example sets the name of <code class="highlighter-rouge">my_config</code> to <code class="highlighter-rouge">redis_config</code> within the container, sets the mode to <code class="highlighter-rouge">0440</code> (group-readable) and sets the user and group to <code class="highlighter-rouge">103</code>. The <code class="highlighter-rouge">redis</code> service does not have access to the <code class="highlighter-rouge">my_other_config</code> config.</p> <pre data-language="">version: "3.3"
+services:
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 1
+    configs:
+      - source: my_config
+        target: /redis_config
+        uid: '103'
+        gid: '103'
+        mode: 0440
+configs:
+  my_config:
+    file: ./my_config.txt
+  my_other_config:
+    external: true
+</pre> <p>You can grant a service access to multiple configs and you can mix long and short syntax. Defining a config does not imply granting a service access to it.</p> <h3 id="cgroup_parent">cgroup_parent</h3> <p>Specify an optional parent cgroup for the container.</p> <pre class="highlight" data-language="">cgroup_parent: m-executor-abcd
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="container_name">container_name</h3> <p>Specify a custom container name, rather than a generated default name.</p> <pre class="highlight" data-language="">container_name: my-web-container
+</pre>  <p>Because Docker container names must be unique, you cannot scale a service beyond 1 container if you have specified a custom name. Attempting to do so results in an error.</p> <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="credential_spec">credential_spec</h3> <blockquote> <p><strong>Note:</strong> this option was added in v3.3</p> </blockquote> <p>Configure the credential spec for managed service account. This option is only used for services using Windows containers. The <code class="highlighter-rouge">credential_spec</code> must be in the format <code class="highlighter-rouge">file://&lt;filename&gt;</code> or <code class="highlighter-rouge">registry://&lt;value-name&gt;</code>.</p> <p>When using <code class="highlighter-rouge">file:</code>, the referenced file must be present in the <code class="highlighter-rouge">CredentialSpecs</code> subdirectory in the docker data directory, which defaults to <code class="highlighter-rouge">C:\ProgramData\Docker\</code> on Windows. The following example loads the credential spec from a file named <code class="highlighter-rouge">C:\ProgramData\Docker\CredentialSpecs\my-credential-spec.json</code>:</p> <pre class="highlight" data-language="">credential_spec:
+  file: my-credential-spec.json
+</pre>  <p>When using <code class="highlighter-rouge">registry:</code>, the credential spec is read from the Windows registry on the daemon’s host. A registry value with the given name must be located in:</p> <pre class="highlight" data-language="">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\Containers\CredentialSpecs
+</pre>  <p>The following example load the credential spec from a value named <code class="highlighter-rouge">my-credential-spec</code> in the registry:</p> <pre class="highlight" data-language="">credential_spec:
+  registry: my-credential-spec
+</pre>  <h3 id="deploy">deploy</h3> <blockquote> <p><strong><a href="compose-versioning/#version-3">Version 3</a> only.</strong></p> </blockquote> <p>Specify configuration related to the deployment and running of services. This only takes effect when deploying to a <a href="../../engine/swarm/">swarm</a> with <a href="../../engine/reference/commandline/stack_deploy/">docker stack deploy</a>, and is ignored by <code class="highlighter-rouge">docker-compose up</code> and <code class="highlighter-rouge">docker-compose run</code>.</p> <pre class="highlight" data-language="">version: '3'
+services:
+  redis:
+    image: redis:alpine
+    deploy:
+      replicas: 6
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+</pre>  <p>Several sub-options are available:</p> <h4 id="endpoint_mode">endpoint_mode</h4> <p>Specify a service discovery method for external clients connecting to a swarm.</p> <blockquote> <p><strong><a href="compose-versioning/#version-3">Version 3.3</a> only.</strong></p> </blockquote> <ul> <li> <p><code class="highlighter-rouge">endpoint_mode: vip</code> - Docker assigns the service a virtual IP (VIP), which acts as the “front end” for clients to reach the service on a network. Docker routes requests between the client and available worker nodes for the service, without client knowledge of how many nodes are participating in the service or their IP addresses or ports. (This is the default.)</p> </li> <li> <p><code class="highlighter-rouge">endpoint_mode: dnsrr</code> - DNS round-robin (DNSRR) service discovery does not use a single virtual IP. Docker sets up DNS entries for the service such that a DNS query for the service name returns a list of IP addresses, and the client connects directly to one of these. DNS round-robin is useful in cases where you want to use your own load balancer, or for Hybrid Windows and Linux applications.</p> </li> </ul> <pre data-language="">version: "3.3"
+
+services:
+  wordpress:
+    image: wordpress
+    ports:
+      - 8080:80
+    networks:
+      - overlay
+    deploy:
+      mode: replicated
+      replicas: 2
+      endpoint_mode: vip
+
+  mysql:
+    image: mysql
+    volumes:
+       - db-data:/var/lib/mysql/data
+    networks:
+       - overlay
+    deploy:
+      mode: replicated
+      replicas: 2
+      endpoint_mode: dnsrr
+
+volumes:
+  db-data:
+
+networks:
+  overlay:
+</pre> <p>The options for <code class="highlighter-rouge">endpoint_mode</code> also work as flags on the swarm mode CLI command <a href="../../engine/reference/commandline/service_create/">docker service create</a>. For a quick list of all swarm related <code class="highlighter-rouge">docker</code> commands, see <a href="../../engine/swarm/#swarm-mode-key-concepts-and-tutorial">Swarm mode CLI commands</a>.</p> <p>To learn more about service discovery and networking in swarm mode, see <a href="../../engine/swarm/networking/#configure-service-discovery">Configure service discovery</a> in the swarm mode topics.</p> <h4 id="labels-1">labels</h4> <p>Specify labels for the service. These labels will <em>only</em> be set on the service, and <em>not</em> on any containers for the service.</p> <pre class="highlight" data-language="">version: "3"
+services:
+  web:
+    image: web
+    deploy:
+      labels:
+        com.example.description: "This label will appear on the web service"
+</pre>  <p>To set labels on containers instead, use the <code class="highlighter-rouge">labels</code> key outside of <code class="highlighter-rouge">deploy</code>:</p> <pre class="highlight" data-language="">version: "3"
+services:
+  web:
+    image: web
+    labels:
+      com.example.description: "This label will appear on all containers for the web service"
+</pre>  <h4 id="mode">mode</h4> <p>Either <code class="highlighter-rouge">global</code> (exactly one container per swarm node) or <code class="highlighter-rouge">replicated</code> (a specified number of containers). The default is <code class="highlighter-rouge">replicated</code>. (To learn more, see <a href="../../engine/swarm/how-swarm-mode-works/services/#replicated-and-global-services">Replicated and global services</a> in the <a href="../../engine/swarm/">swarm</a> topics.)</p> <pre class="highlight" data-language="">version: '3'
+services:
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    deploy:
+      mode: global
+</pre>  <h4 id="placement">placement</h4> <p>Specify placement constraints. For a full description of the syntax and available types of constraints, see the <a href="../../engine/reference/commandline/service_create/#specify-service-constraints-constraint">docker service create</a> documentation.</p> <pre class="highlight" data-language="">version: '3'
+services:
+  db:
+    image: postgres
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+          - engine.labels.operatingsystem == ubuntu 14.04
+</pre>  <h4 id="replicas">replicas</h4> <p>If the service is <code class="highlighter-rouge">replicated</code> (which is the default), specify the number of containers that should be running at any given time.</p> <pre class="highlight" data-language="">version: '3'
+services:
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 6
+</pre>  <h4 id="resources">resources</h4> <p>Configures resource constraints. This replaces the older resource constraint options in Compose files prior to version 3 (<code class="highlighter-rouge">cpu_shares</code>, <code class="highlighter-rouge">cpu_quota</code>, <code class="highlighter-rouge">cpuset</code>, <code class="highlighter-rouge">mem_limit</code>, <code class="highlighter-rouge">memswap_limit</code>, <code class="highlighter-rouge">mem_swappiness</code>).</p> <p>Each of these is a single value, analogous to its <a href="../../engine/reference/commandline/service_create/">docker service create</a> counterpart.</p> <pre data-language="">version: '3'
+services:
+  redis:
+    image: redis:alpine
+    deploy:
+      resources:
+        limits:
+          cpus: '0.001'
+          memory: 50M
+        reservations:
+          cpus: '0.0001'
+          memory: 20M
+</pre> <h5 id="out-of-memory-exceptions-oome">Out Of Memory Exceptions (OOME)</h5> <p>If your services or containers attempt to use more memory than the system has available, you may experience an Out Of Memory Exception (OOME) and a container, or the Docker daemon, might be killed by the kernel OOM killer. To prevent this from happening, ensure that your application runs on hosts with adequate memory and see <a href="../../engine/admin/resource_constraints/#understand-the-risks-of-running-out-of-memory">Understand the risks of running out of memory</a>.</p> <h4 id="restart_policy">restart_policy</h4> <p>Configures if and how to restart containers when they exit. Replaces <a href="compose-file-v2/#orig-resources"><code class="highlighter-rouge">restart</code></a>.</p> <ul> <li>
+<code class="highlighter-rouge">condition</code>: One of <code class="highlighter-rouge">none</code>, <code class="highlighter-rouge">on-failure</code> or <code class="highlighter-rouge">any</code> (default: <code class="highlighter-rouge">any</code>).</li> <li>
+<code class="highlighter-rouge">delay</code>: How long to wait between restart attempts, specified as a <a href="#specifying-durations">duration</a> (default: 0).</li> <li>
+<code class="highlighter-rouge">max_attempts</code>: How many times to attempt to restart a container before giving up (default: never give up).</li> <li>
+<code class="highlighter-rouge">window</code>: How long to wait before deciding if a restart has succeeded, specified as a <a href="#specifying-durations">duration</a> (default: decide immediately).</li> </ul> <pre data-language="">version: "3"
+services:
+  redis:
+    image: redis:alpine
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+</pre> <h4 id="update_config">update_config</h4> <p>Configures how the service should be updated. Useful for configuring rolling updates.</p> <ul> <li>
+<code class="highlighter-rouge">parallelism</code>: The number of containers to update at a time.</li> <li>
+<code class="highlighter-rouge">delay</code>: The time to wait between updating a group of containers.</li> <li>
+<code class="highlighter-rouge">failure_action</code>: What to do if an update fails. One of <code class="highlighter-rouge">continue</code>, <code class="highlighter-rouge">rollback</code>, or <code class="highlighter-rouge">pause</code> (default: <code class="highlighter-rouge">pause</code>).</li> <li>
+<code class="highlighter-rouge">monitor</code>: Duration after each task update to monitor for failure <code class="highlighter-rouge">(ns|us|ms|s|m|h)</code> (default 0s).</li> <li>
+<code class="highlighter-rouge">max_failure_ratio</code>: Failure rate to tolerate during an update.</li> </ul> <pre data-language="">version: '3'
+services:
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+</pre> <h4 id="not-supported-for-docker-stack-deploy">Not supported for <code class="highlighter-rouge">docker stack deploy</code>
+</h4> <p>The following sub-options (supported for <code class="highlighter-rouge">docker compose up</code> and <code class="highlighter-rouge">docker compose run</code>) are <em>not supported</em> for <code class="highlighter-rouge">docker stack deploy</code> or the <code class="highlighter-rouge">deploy</code> key.</p> <ul> <li><a href="#build">build</a></li> <li><a href="#cgroup_parent">cgroup_parent</a></li> <li><a href="#container_name">container_name</a></li> <li><a href="#devices">devices</a></li> <li><a href="#devices">dns</a></li> <li><a href="#dns_search">dns_search</a></li> <li><a href="#tmpfs">tmpfs</a></li> <li><a href="#external_links">external_links</a></li> <li><a href="#links">links</a></li> <li><a href="#network_mode">network_mode</a></li> <li><a href="#security_opt">security_opt</a></li> <li><a href="#stop_signal">stop_signal</a></li> <li><a href="#sysctls">sysctls</a></li> <li><a href="#userns_mode">userns_mode</a></li> </ul> <blockquote> <p><strong>Tip:</strong> See also, the section on <a href="#volumes-for-services-swarms-and-stack-files">how to configure volumes for services, swarms, and docker-stack.yml files</a>. Volumes <em>are</em> supported but in order to work with swarms and services, they must be configured properly, as named volumes or associated with services that are constrained to nodes with access to the requisite volumes.</p> </blockquote> <h3 id="devices">devices</h3> <p>List of device mappings. Uses the same format as the <code class="highlighter-rouge">--device</code> docker client create option.</p> <pre class="highlight" data-language="">devices:
+  - "/dev/ttyUSB0:/dev/ttyUSB0"
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="depends_on">depends_on</h3> <p>Express dependency between services, which has two effects:</p> <ul> <li> <p><code class="highlighter-rouge">docker-compose up</code> will start services in dependency order. In the following example, <code class="highlighter-rouge">db</code> and <code class="highlighter-rouge">redis</code> will be started before <code class="highlighter-rouge">web</code>.</p> </li> <li> <p><code class="highlighter-rouge">docker-compose up SERVICE</code> will automatically include <code class="highlighter-rouge">SERVICE</code>’s dependencies. In the following example, <code class="highlighter-rouge">docker-compose up web</code> will also create and start <code class="highlighter-rouge">db</code> and <code class="highlighter-rouge">redis</code>.</p> </li> </ul> <p>Simple example:</p> <pre class="highlight" data-language="">version: '3'
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+      - redis
+  redis:
+    image: redis
+  db:
+    image: postgres
+</pre>  <blockquote> <p>There are several things to be aware of when using <code class="highlighter-rouge">depends_on</code>:</p> <ul> <li> <p><code class="highlighter-rouge">depends_on</code> will not wait for <code class="highlighter-rouge">db</code> and <code class="highlighter-rouge">redis</code> to be “ready” before starting <code class="highlighter-rouge">web</code> - only until they have been started. If you need to wait for a service to be ready, see <a href="../startup-order/">Controlling startup order</a> for more on this problem and strategies for solving it.</p> </li> <li> <p>Version 3 no longer supports the <code class="highlighter-rouge">condition</code> form of <code class="highlighter-rouge">depends_on</code>.</p> </li> <li> <p>The <code class="highlighter-rouge">depends_on</code> option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a version 3 Compose file.</p> </li> </ul> </blockquote> <h3 id="dns">dns</h3> <p>Custom DNS servers. Can be a single value or a list.</p> <pre class="highlight" data-language="">dns: 8.8.8.8
+dns:
+  - 8.8.8.8
+  - 9.9.9.9
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="dns_search">dns_search</h3> <p>Custom DNS search domains. Can be a single value or a list.</p> <pre class="highlight" data-language="">dns_search: example.com
+dns_search:
+  - dc1.example.com
+  - dc2.example.com
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="tmpfs">tmpfs</h3> <blockquote> <p><a href="compose-versioning/#version-2">Version 2 file format</a> and up.</p> </blockquote> <p>Mount a temporary file system inside the container. Can be a single value or a list.</p> <pre class="highlight" data-language="">tmpfs: /run
+tmpfs:
+  - /run
+  - /tmp
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="entrypoint">entrypoint</h3> <p>Override the default entrypoint.</p> <pre class="highlight" data-language="">entrypoint: /code/entrypoint.sh
+</pre>  <p>The entrypoint can also be a list, in a manner similar to <a href="../../engine/reference/builder/#entrypoint">dockerfile</a>:</p> <pre class="highlight" data-language="">entrypoint:
+    - php
+    - -d
+    - zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so
+    - -d
+    - memory_limit=-1
+    - vendor/bin/phpunit
+</pre>  <blockquote> <p><strong>Note</strong>: Setting <code class="highlighter-rouge">entrypoint</code> will both override any default entrypoint set on the service’s image with the <code class="highlighter-rouge">ENTRYPOINT</code> Dockerfile instruction, <em>and</em> clear out any default command on the image - meaning that if there’s a <code class="highlighter-rouge">CMD</code> instruction in the Dockerfile, it will be ignored.</p> </blockquote> <h3 id="env_file">env_file</h3> <p>Add environment variables from a file. Can be a single value or a list.</p> <p>If you have specified a Compose file with <code class="highlighter-rouge">docker-compose -f FILE</code>, paths in <code class="highlighter-rouge">env_file</code> are relative to the directory that file is in.</p> <p>Environment variables declared in the <a href="#environment">environment</a> section <em>override</em> these values – this holds true even if those values are empty or undefined.</p> <pre class="highlight" data-language="">env_file: .env
+
+env_file:
+  - ./common.env
+  - ./apps/web.env
+  - /opt/secrets.env
+</pre>  <p>Compose expects each line in an env file to be in <code class="highlighter-rouge">VAR=VAL</code> format. Lines beginning with <code class="highlighter-rouge">#</code> (i.e. comments) are ignored, as are blank lines.</p> <pre class="highlight" data-language=""># Set Rails/Rack environment
+RACK_ENV=development
+</pre>  <blockquote> <p><strong>Note</strong>: If your service specifies a <a href="#build">build</a> option, variables defined in environment files will <em>not</em> be automatically visible during the build. Use the <a href="#args">args</a> sub-option of <code class="highlighter-rouge">build</code> to define build-time environment variables.</p> </blockquote> <p>The value of <code class="highlighter-rouge">VAL</code> is used as is and not modified at all. For example if the value is surrounded by quotes (as is often the case of shell variables), the quotes will be included in the value passed to Compose.</p> <p>Keep in mind that <em>the order of files in the list is significant in determining the value assigned to a variable that shows up more than once</em>. The files in the list are processed from the top down. For the same variable specified in file <code class="highlighter-rouge">a.env</code> and assigned a different value in file <code class="highlighter-rouge">b.env</code>, if <code class="highlighter-rouge">b.env</code> is listed below (after), then the value from <code class="highlighter-rouge">b.env</code> stands. For example, given the following declaration in <code class="highlighter-rouge">docker_compose.yml</code>:</p> <pre data-language="">services:
+  some-service:
+    env_file:
+      - a.env
+      - b.env
+</pre> <p>And the following files:</p> <pre data-language=""># a.env
+VAR=1
+</pre> <p>and</p> <pre data-language=""># b.env
+VAR=hello
+</pre> <p>$VAR will be <code class="highlighter-rouge">hello</code>.</p> <h3 id="environment">environment</h3> <p>Add environment variables. You can use either an array or a dictionary. Any boolean values; true, false, yes no, need to be enclosed in quotes to ensure they are not converted to True or False by the YML parser.</p> <p>Environment variables with only a key are resolved to their values on the machine Compose is running on, which can be helpful for secret or host-specific values.</p> <pre class="highlight" data-language="">environment:
+  RACK_ENV: development
+  SHOW: 'true'
+  SESSION_SECRET:
+
+environment:
+  - RACK_ENV=development
+  - SHOW=true
+  - SESSION_SECRET
+</pre>  <blockquote> <p><strong>Note</strong>: If your service specifies a <a href="#build">build</a> option, variables defined in <code class="highlighter-rouge">environment</code> will <em>not</em> be automatically visible during the build. Use the <a href="#args">args</a> sub-option of <code class="highlighter-rouge">build</code> to define build-time environment variables.</p> </blockquote> <h3 id="expose">expose</h3> <p>Expose ports without publishing them to the host machine - they’ll only be accessible to linked services. Only the internal port can be specified.</p> <pre class="highlight" data-language="">expose:
+ - "3000"
+ - "8000"
+</pre>  <h3 id="external_links">external_links</h3> <p>Link to containers started outside this <code class="highlighter-rouge">docker-compose.yml</code> or even outside of Compose, especially for containers that provide shared or common services. <code class="highlighter-rouge">external_links</code> follow semantics similar to the legacy option <code class="highlighter-rouge">links</code> when specifying both the container name and the link alias (<code class="highlighter-rouge">CONTAINER:ALIAS</code>).</p> <pre class="highlight" data-language="">external_links:
+ - redis_1
+ - project_db_1:mysql
+ - project_db_1:postgresql
+</pre>  <blockquote> <p><strong>Notes:</strong></p> <p>If you’re using the <a href="compose-versioning/#version-2">version 2 or above file format</a>, the externally-created containers must be connected to at least one of the same networks as the service which is linking to them. Starting with Version 2, <a href="compose-file-v2/#links">links</a> are a legacy option. We recommend using <a href="#networks">networks</a> instead.</p> <p>This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="extra_hosts">extra_hosts</h3> <p>Add hostname mappings. Use the same values as the docker client <code class="highlighter-rouge">--add-host</code> parameter.</p> <pre class="highlight" data-language="">extra_hosts:
+ - "somehost:162.242.195.82"
+ - "otherhost:50.31.209.229"
+</pre>  <p>An entry with the ip address and hostname will be created in <code class="highlighter-rouge">/etc/hosts</code> inside containers for this service, e.g:</p> <pre class="highlight" data-language="">162.242.195.82  somehost
+50.31.209.229   otherhost
+</pre>  <h3 id="healthcheck">healthcheck</h3> <blockquote> <p><a href="compose-versioning/#version-21">Version 2.1 file format</a> and up.</p> </blockquote> <p>Configure a check that’s run to determine whether or not containers for this service are “healthy”. See the docs for the <a href="../../engine/reference/builder/#healthcheck">HEALTHCHECK Dockerfile instruction</a> for details on how healthchecks work.</p> <pre class="highlight" data-language="">healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost"]
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+</pre>  <p><code class="highlighter-rouge">interval</code> and <code class="highlighter-rouge">timeout</code> are specified as <a href="#specifying-durations">durations</a>.</p> <p><code class="highlighter-rouge">test</code> must be either a string or a list. If it’s a list, the first item must be either <code class="highlighter-rouge">NONE</code>, <code class="highlighter-rouge">CMD</code> or <code class="highlighter-rouge">CMD-SHELL</code>. If it’s a string, it’s equivalent to specifying <code class="highlighter-rouge">CMD-SHELL</code> followed by that string.</p> <pre class="highlight" data-language=""># Hit the local web app
+test: ["CMD", "curl", "-f", "http://localhost"]
+
+# As above, but wrapped in /bin/sh. Both forms below are equivalent.
+test: ["CMD-SHELL", "curl -f http://localhost &amp;&amp; echo 'cool, it works'"]
+test: curl -f https://localhost &amp;&amp; echo 'cool, it works'
+</pre>  <p>To disable any default healthcheck set by the image, you can use <code class="highlighter-rouge">disable: true</code>. This is equivalent to specifying <code class="highlighter-rouge">test: ["NONE"]</code>.</p> <pre class="highlight" data-language="">healthcheck:
+  disable: true
+</pre>  <h3 id="image">image</h3> <p>Specify the image to start the container from. Can either be a repository/tag or a partial image ID.</p> <pre class="highlight" data-language="">image: redis
+image: ubuntu:14.04
+image: tutum/influxdb
+image: example-registry.com:4000/postgresql
+image: a4bc65fd
+</pre>  <p>If the image does not exist, Compose attempts to pull it, unless you have also specified <a href="#build">build</a>, in which case it builds it using the specified options and tags it with the specified tag.</p> <h3 id="isolation">isolation</h3> <p>Specify a container’s isolation technology. On Linux, the only supported value is <code class="highlighter-rouge">default</code>. On Windows, acceptable values are <code class="highlighter-rouge">default</code>, <code class="highlighter-rouge">process</code> and <code class="highlighter-rouge">hyperv</code>. Refer to the <a href="../../engine/reference/commandline/run/#specify-isolation-technology-for-container---isolation">Docker Engine docs</a> for details.</p> <h3 id="labels-2">labels</h3> <p>Add metadata to containers using <a href="../../engine/userguide/labels-custom-metadata/">Docker labels</a>. You can use either an array or a dictionary.</p> <p>It’s recommended that you use reverse-DNS notation to prevent your labels from conflicting with those used by other software.</p> <pre class="highlight" data-language="">labels:
+  com.example.description: "Accounting webapp"
+  com.example.department: "Finance"
+  com.example.label-with-empty-value: ""
+
+labels:
+  - "com.example.description=Accounting webapp"
+  - "com.example.department=Finance"
+  - "com.example.label-with-empty-value"
+</pre>  <h3 id="links">links</h3> <p>Link to containers in another service. Either specify both the service name and a link alias (<code class="highlighter-rouge">SERVICE:ALIAS</code>), or just the service name.</p> <pre class="highlight" data-language="">web:
+  links:
+   - db
+   - db:database
+   - redis
+</pre>  <p>Containers for the linked service will be reachable at a hostname identical to the alias, or the service name if no alias was specified.</p> <p>Links are not required to enable services to communicate - by default, any service can reach any other service at that service’s name. (See also, the <a href="../networking/#links">Links topic in Networking in Compose</a>.)</p> <p>Links also express dependency between services in the same way as <a href="#depends_on">depends_on</a>, so they determine the order of service startup.</p> <blockquote> <p><strong>Notes</strong></p> <ul> <li> <p>If you define both links and <a href="#networks">networks</a>, services with links between them must share at least one network in common in order to communicate.</p> </li> <li> <p>This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </li> </ul> </blockquote> <h3 id="logging">logging</h3> <p>Logging configuration for the service.</p> <pre class="highlight" data-language="">logging:
+  driver: syslog
+  options:
+    syslog-address: "tcp://192.168.0.42:123"
+</pre>  <p>The <code class="highlighter-rouge">driver</code> name specifies a logging driver for the service’s containers, as with the <code class="highlighter-rouge">--log-driver</code> option for docker run (<a href="../../engine/admin/logging/overview/">documented here</a>).</p> <p>The default value is json-file.</p> <pre class="highlight" data-language="">driver: "json-file"
+driver: "syslog"
+driver: "none"
+</pre>  <blockquote> <p><strong>Note</strong>: Only the <code class="highlighter-rouge">json-file</code> and <code class="highlighter-rouge">journald</code> drivers make the logs available directly from <code class="highlighter-rouge">docker-compose up</code> and <code class="highlighter-rouge">docker-compose logs</code>. Using any other driver will not print any logs.</p> </blockquote> <p>Specify logging options for the logging driver with the <code class="highlighter-rouge">options</code> key, as with the <code class="highlighter-rouge">--log-opt</code> option for <code class="highlighter-rouge">docker run</code>.</p> <p>Logging options are key-value pairs. An example of <code class="highlighter-rouge">syslog</code> options:</p> <pre class="highlight" data-language="">driver: "syslog"
+options:
+  syslog-address: "tcp://192.168.0.42:123"
+</pre>  <p>The default driver <a href="../../engine/admin/logging/overview/#json-file">json-file</a>, has options to limit the amount of logs stored. To do this, use a key-value pair for maximum storage size and maximum number of files:</p> <pre class="highlight" data-language="">options:
+  max-size: "200k"
+  max-file: "10"
+</pre>  <p>The example shown above would store log files until they reach a <code class="highlighter-rouge">max-size</code> of 200kB, and then rotate them. The amount of individual log files stored is specified by the <code class="highlighter-rouge">max-file</code> value. As logs grow beyond the max limits, older log files are removed to allow storage of new logs.</p> <p>Here is an example <code class="highlighter-rouge">docker-compose.yml</code> file that limits logging storage:</p> <pre class="highlight" data-language="">services:
+  some-service:
+    image: some-service
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+</pre>  <blockquote> <p>Logging options available depend on which logging driver you use</p> <p>The above example for controlling log files and sizes uses options specific to the <a href="../../engine/admin/logging/overview/#json-file">json-file driver</a>. These particular options are not available on other logging drivers. For a full list of supported logging drivers and their options, see <a href="../../engine/admin/logging/overview/">logging drivers</a>.</p> </blockquote> <h3 id="network_mode">network_mode</h3> <p>Network mode. Use the same values as the docker client <code class="highlighter-rouge">--net</code> parameter, plus the special form <code class="highlighter-rouge">service:[service name]</code>.</p> <pre class="highlight" data-language="">network_mode: "bridge"
+network_mode: "host"
+network_mode: "none"
+network_mode: "service:[service name]"
+network_mode: "container:[container name/id]"
+</pre>  <blockquote> <p><strong>Notes</strong></p> <ul> <li> <p>This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </li> <li> <p><code class="highlighter-rouge">network_mode: "host"</code> cannot be mixed with <a href="#links">links</a>.</p> </li> </ul> </blockquote> <h3 id="networks">networks</h3> <p>Networks to join, referencing entries under the <a href="#network-configuration-reference">top-level <code class="highlighter-rouge">networks</code> key</a>.</p> <pre class="highlight" data-language="">services:
+  some-service:
+    networks:
+     - some-network
+     - other-network
+</pre>  <h4 id="aliases">aliases</h4> <p>Aliases (alternative hostnames) for this service on the network. Other containers on the same network can use either the service name or this alias to connect to one of the service’s containers.</p> <p>Since <code class="highlighter-rouge">aliases</code> is network-scoped, the same service can have different aliases on different networks.</p> <blockquote> <p><strong>Note</strong>: A network-wide alias can be shared by multiple containers, and even by multiple services. If it is, then exactly which container the name will resolve to is not guaranteed.</p> </blockquote> <p>The general format is shown here.</p> <pre class="highlight" data-language="">services:
+  some-service:
+    networks:
+      some-network:
+        aliases:
+         - alias1
+         - alias3
+      other-network:
+        aliases:
+         - alias2
+</pre>  <p>In the example below, three services are provided (<code class="highlighter-rouge">web</code>, <code class="highlighter-rouge">worker</code>, and <code class="highlighter-rouge">db</code>), along with two networks (<code class="highlighter-rouge">new</code> and <code class="highlighter-rouge">legacy</code>). The <code class="highlighter-rouge">db</code> service is reachable at the hostname <code class="highlighter-rouge">db</code> or <code class="highlighter-rouge">database</code> on the <code class="highlighter-rouge">new</code> network, and at <code class="highlighter-rouge">db</code> or <code class="highlighter-rouge">mysql</code> on the <code class="highlighter-rouge">legacy</code> network.</p> <pre class="highlight" data-language="">version: '2'
+
+services:
+  web:
+    build: ./web
+    networks:
+      - new
+
+  worker:
+    build: ./worker
+    networks:
+      - legacy
+
+  db:
+    image: mysql
+    networks:
+      new:
+        aliases:
+          - database
+      legacy:
+        aliases:
+          - mysql
+
+networks:
+  new:
+  legacy:
+</pre>  <h4 id="ipv4_address-ipv6_address">ipv4_address, ipv6_address</h4> <p>Specify a static IP address for containers for this service when joining the network.</p> <p>The corresponding network configuration in the <a href="#network-configuration-reference">top-level networks section</a> must have an <code class="highlighter-rouge">ipam</code> block with subnet configurations covering each static address. If IPv6 addressing is desired, the <a href="#enableipv6"><code class="highlighter-rouge">enable_ipv6</code></a> option must be set.</p> <p>An example:</p> <pre class="highlight" data-language="">version: '2.1'
+
+services:
+  app:
+    image: busybox
+    command: ifconfig
+    networks:
+      app_net:
+        ipv4_address: 172.16.238.10
+        ipv6_address: 2001:3984:3989::10
+
+networks:
+  app_net:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.16.238.0/24
+      -
+        subnet: 2001:3984:3989::/64
+</pre>  <h3 id="pid">pid</h3> <pre class="highlight" data-language="">pid: "host"
+</pre>  <p>Sets the PID mode to the host PID mode. This turns on sharing between container and the host operating system the PID address space. Containers launched with this flag will be able to access and manipulate other containers in the bare-metal machine’s namespace and vise-versa.</p> <h3 id="ports">ports</h3> <p>Expose ports.</p> <h4 id="short-syntax-1">Short syntax</h4> <p>Either specify both ports (<code class="highlighter-rouge">HOST:CONTAINER</code>), or just the container port (a random host port will be chosen).</p> <blockquote> <p><strong>Note</strong>: When mapping ports in the <code class="highlighter-rouge">HOST:CONTAINER</code> format, you may experience erroneous results when using a container port lower than 60, because YAML will parse numbers in the format <code class="highlighter-rouge">xx:yy</code> as sexagesimal (base 60). For this reason, we recommend always explicitly specifying your port mappings as strings.</p> </blockquote> <pre class="highlight" data-language="">ports:
+ - "3000"
+ - "3000-3005"
+ - "8000:8000"
+ - "9090-9091:8080-8081"
+ - "49100:22"
+ - "127.0.0.1:8001:8001"
+ - "127.0.0.1:5000-5010:5000-5010"
+ - "6060:6060/udp"
+</pre>  <h4 id="long-syntax-1">Long syntax</h4> <p>The long form syntax allows the configuration of additional fields that can’t be expressed in the short form.</p> <ul> <li>
+<code class="highlighter-rouge">target</code>: the port inside the container</li> <li>
+<code class="highlighter-rouge">published</code>: the publicly exposed port</li> <li>
+<code class="highlighter-rouge">protocol</code>: the port protocol (<code class="highlighter-rouge">tcp</code> or <code class="highlighter-rouge">udp</code>)</li> <li>
+<code class="highlighter-rouge">mode</code>: <code class="highlighter-rouge">host</code> for publishing a host port on each node, or <code class="highlighter-rouge">ingress</code> for a swarm mode port which will be load balanced.</li> </ul> <pre data-language="">ports:
+  - target: 80
+    published: 8080
+    protocol: tcp
+    mode: host
+
+</pre> <blockquote> <p><strong>Note:</strong> The long syntax is new in v3.2</p> </blockquote> <h3 id="secrets">secrets</h3> <p>Grant access to secrets on a per-service basis using the per-service <code class="highlighter-rouge">secrets</code> configuration. Two different syntax variants are supported.</p> <blockquote> <p><strong>Note</strong>: The secret must already exist or be <a href="#secrets-configuration-reference">defined in the top-level <code class="highlighter-rouge">secrets</code> configuration</a> of this stack file, or stack deployment will fail.</p> </blockquote> <h4 id="short-syntax-2">Short syntax</h4> <p>The short syntax variant only specifies the secret name. This grants the container access to the secret and mounts it at <code class="highlighter-rouge">/run/secrets/&lt;secret_name&gt;</code> within the container. The source name and destination mountpoint are both set to the secret name.</p> <p>The following example uses the short syntax to grant the <code class="highlighter-rouge">redis</code> service access to the <code class="highlighter-rouge">my_secret</code> and <code class="highlighter-rouge">my_other_secret</code> secrets. The value of <code class="highlighter-rouge">my_secret</code> is set to the contents of the file <code class="highlighter-rouge">./my_secret.txt</code>, and <code class="highlighter-rouge">my_other_secret</code> is defined as an external resource, which means that it has already been defined in Docker, either by running the <code class="highlighter-rouge">docker secret create</code> command or by another stack deployment. If the external secret does not exist, the stack deployment fails with a <code class="highlighter-rouge">secret not found</code> error.</p> <pre data-language="">version: "3.1"
+services:
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 1
+    secrets:
+      - my_secret
+      - my_other_secret
+secrets:
+  my_secret:
+    file: ./my_secret.txt
+  my_other_secret:
+    external: true
+</pre> <h4 id="long-syntax-2">Long syntax</h4> <p>The long syntax provides more granularity in how the secret is created within the service’s task containers.</p> <ul> <li>
+<code class="highlighter-rouge">source</code>: The name of the secret as it exists in Docker.</li> <li>
+<code class="highlighter-rouge">target</code>: The name of the file that will be mounted in <code class="highlighter-rouge">/run/secrets/</code> in the service’s task containers. Defaults to <code class="highlighter-rouge">source</code> if not specified.</li> <li>
+<code class="highlighter-rouge">uid</code> and <code class="highlighter-rouge">gid</code>: The numeric UID or GID which will own the file within <code class="highlighter-rouge">/run/secrets/</code> in the service’s task containers. Both default to <code class="highlighter-rouge">0</code> if not specified.</li> <li>
+<code class="highlighter-rouge">mode</code>: The permissions for the file that will be mounted in <code class="highlighter-rouge">/run/secrets/</code> in the service’s task containers, in octal notation. For instance, <code class="highlighter-rouge">0444</code> represents world-readable. The default in Docker 1.13.1 is <code class="highlighter-rouge">0000</code>, but will be <code class="highlighter-rouge">0444</code> in the future. Secrets cannot be writable because they are mounted in a temporary filesystem, so if you set the writable bit, it is ignored. The executable bit can be set. If you aren’t familiar with UNIX file permission modes, you may find this <a href="http://permissions-calculator.org/" target="_blank" class="_">permissions calculator</a> useful.</li> </ul> <p>The following example sets name of the <code class="highlighter-rouge">my_secret</code> to <code class="highlighter-rouge">redis_secret</code> within the container, sets the mode to <code class="highlighter-rouge">0440</code> (group-readable) and sets the user and group to <code class="highlighter-rouge">103</code>. The <code class="highlighter-rouge">redis</code> service does not have access to the <code class="highlighter-rouge">my_other_secret</code> secret.</p> <pre data-language="">version: "3.1"
+services:
+  redis:
+    image: redis:latest
+    deploy:
+      replicas: 1
+    secrets:
+      - source: my_secret
+        target: redis_secret
+        uid: '103'
+        gid: '103'
+        mode: 0440
+secrets:
+  my_secret:
+    file: ./my_secret.txt
+  my_other_secret:
+    external: true
+</pre> <p>You can grant a service access to multiple secrets and you can mix long and short syntax. Defining a secret does not imply granting a service access to it.</p> <h3 id="security_opt">security_opt</h3> <p>Override the default labeling scheme for each container.</p> <pre class="highlight" data-language="">security_opt:
+  - label:user:USER
+  - label:role:ROLE
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="stop_grace_period">stop_grace_period</h3> <p>Specify how long to wait when attempting to stop a container if it doesn’t handle SIGTERM (or whatever stop signal has been specified with <a href="#stopsignal"><code class="highlighter-rouge">stop_signal</code></a>), before sending SIGKILL. Specified as a <a href="#specifying-durations">duration</a>.</p> <pre class="highlight" data-language="">stop_grace_period: 1s
+stop_grace_period: 1m30s
+</pre>  <p>By default, <code class="highlighter-rouge">stop</code> waits 10 seconds for the container to exit before sending SIGKILL.</p> <h3 id="stop_signal">stop_signal</h3> <p>Sets an alternative signal to stop the container. By default <code class="highlighter-rouge">stop</code> uses SIGTERM. Setting an alternative signal using <code class="highlighter-rouge">stop_signal</code> will cause <code class="highlighter-rouge">stop</code> to send that signal instead.</p> <pre class="highlight" data-language="">stop_signal: SIGUSR1
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="sysctls">sysctls</h3> <p>Kernel parameters to set in the container. You can use either an array or a dictionary.</p> <pre class="highlight" data-language="">sysctls:
+  net.core.somaxconn: 1024
+  net.ipv4.tcp_syncookies: 0
+
+sysctls:
+  - net.core.somaxconn=1024
+  - net.ipv4.tcp_syncookies=0
+</pre>  <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="ulimits">ulimits</h3> <p>Override the default ulimits for a container. You can either specify a single limit as an integer or soft/hard limits as a mapping.</p> <pre class="highlight" data-language="">ulimits:
+  nproc: 65535
+  nofile:
+    soft: 20000
+    hard: 40000
+</pre>  <h3 id="userns_mode">userns_mode</h3> <pre class="highlight" data-language="">userns_mode: "host"
+</pre>  <p>Disables the user namespace for this service, if Docker daemon is configured with user namespaces. See <a href="../../engine/reference/commandline/dockerd/#disable-user-namespace-for-a-container">dockerd</a> for more information.</p> <blockquote> <p><strong>Note</strong>: This option is ignored when <a href="../../engine/reference/commandline/stack_deploy/">deploying a stack in swarm mode</a> with a (version 3) Compose file.</p> </blockquote> <h3 id="volumes">volumes</h3> <p>Mount host paths or named volumes, specified as sub-options to a service.</p> <p>You can mount a host path as part of a definition for a single service, and there is no need to define it in the top level <code class="highlighter-rouge">volumes</code> key.</p> <p>But, if you want to reuse a volume across multiple services, then define a named volume in the <a href="#volume-configuration-reference">top-level <code class="highlighter-rouge">volumes</code> key</a>. Use named volumes with <a href="#volumes-for-services-swarms-and-stack-files">services, swarms, and stack files</a>.</p> <blockquote> <p><strong>Note</strong>: The top-level <a href="#volume-configuration-reference">volumes</a> key defines a named volume and references it from each service’s <code class="highlighter-rouge">volumes</code> list. This replaces <code class="highlighter-rouge">volumes_from</code> in earlier versions of the Compose file format. See <a href="../../engine/admin/volumes/volumes/">Use volumes</a> and <a href="../../engine/extend/plugins_volume/">Volume Plugins</a> for general information on volumes.</p> </blockquote> <p>This example shows a named volume (<code class="highlighter-rouge">mydata</code>) being used by the <code class="highlighter-rouge">web</code> service, and a bind mount defined for a single service (first path under <code class="highlighter-rouge">db</code> service <code class="highlighter-rouge">volumes</code>). The <code class="highlighter-rouge">db</code> service also uses a named volume called <code class="highlighter-rouge">dbdata</code> (second path under <code class="highlighter-rouge">db</code> service <code class="highlighter-rouge">volumes</code>), but defines it using the old string format for mounting a named volume. Named volumes must be listed under the top-level <code class="highlighter-rouge">volumes</code> key, as shown.</p> <pre data-language="">version: "3.2"
+services:
+  web:
+    image: nginx:alpine
+    volumes:
+      - type: volume
+        source: mydata
+        target: /data
+        volume:
+          nocopy: true
+      - type: bind
+        source: ./static
+        target: /opt/app/static
+
+  db:
+    image: postgres:latest
+    volumes:
+      - "/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock"
+      - "dbdata:/var/lib/postgresql/data"
+
+volumes:
+  mydata:
+  dbdata:
+</pre> <blockquote> <p><strong>Note</strong>: See <a href="../../engine/admin/volumes/volumes/">Use volumes</a> and <a href="../../engine/extend/plugins_volume/">Volume Plugins</a> for general information on volumes.</p> </blockquote> <h4 id="short-syntax-3">Short syntax</h4> <p>Optionally specify a path on the host machine (<code class="highlighter-rouge">HOST:CONTAINER</code>), or an access mode (<code class="highlighter-rouge">HOST:CONTAINER:ro</code>).</p> <p>You can mount a relative path on the host, which will expand relative to the directory of the Compose configuration file being used. Relative paths should always begin with <code class="highlighter-rouge">.</code> or <code class="highlighter-rouge">..</code>.</p> <pre class="highlight" data-language="">volumes:
+  # Just specify a path and let the Engine create a volume
+  - /var/lib/mysql
+
+  # Specify an absolute path mapping
+  - /opt/data:/var/lib/mysql
+
+  # Path on the host, relative to the Compose file
+  - ./cache:/tmp/cache
+
+  # User-relative path
+  - ~/configs:/etc/configs/:ro
+
+  # Named volume
+  - datavolume:/var/lib/mysql
+</pre>  <h4 id="long-syntax-3">Long syntax</h4> <p>The long form syntax allows the configuration of additional fields that can’t be expressed in the short form.</p> <ul> <li>
+<code class="highlighter-rouge">type</code>: the mount type <code class="highlighter-rouge">volume</code> or <code class="highlighter-rouge">bind</code>
+</li> <li>
+<code class="highlighter-rouge">source</code>: the source of the mount, a path on the host for a bind mount, or the name of a volume defined in the <a href="#volume-configuration-reference">top-level <code class="highlighter-rouge">volumes</code> key</a>
+</li> <li>
+<code class="highlighter-rouge">target</code>: the path in the container where the volume will be mounted</li> <li>
+<code class="highlighter-rouge">read_only</code>: flag to set the volume as read-only</li> <li>
+<code class="highlighter-rouge">bind</code>: configure additional bind options <ul> <li>
+<code class="highlighter-rouge">propagation</code>: the propagation mode used for the bind</li> </ul> </li> <li>
+<code class="highlighter-rouge">volume</code>: configure additional volume options <ul> <li>
+<code class="highlighter-rouge">nocopy</code>: flag to disable copying of data from a container when a volume is created</li> </ul> </li> </ul> <pre data-language="">version: "3.2"
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+
+networks:
+  webnet:
+
+volumes:
+  - type: volume
+    source: mydata
+    target: /data
+    volume:
+      nocopy: true
+  - type: bind
+    source: ./static
+    target: /opt/app/static
+</pre> <blockquote> <p><strong>Note:</strong> The long syntax is new in v3.2</p> </blockquote> <h4 id="volumes-for-services-swarms-and-stack-files">Volumes for services, swarms, and stack files</h4> <p>When working with services, swarms, and <code class="highlighter-rouge">docker-stack.yml</code> files, keep in mind that the tasks (containers) backing a service can be deployed on any node in a swarm, which may be a different node each time the service is updated.</p> <p>In the absence of having named volumes with specified sources, Docker creates an anonymous volume for each task backing a service. Anonymous volumes do not persist after the associated containers are removed.</p> <p>If you want your data to persist, use a named volume and a volume driver that is multi-host aware, so that the data is accessible from any node. Or, set constraints on the service so that its tasks are deployed on a node that has the volume present.</p> <p>As an example, the <code class="highlighter-rouge">docker-stack.yml</code> file for the <a href="https://github.com/docker/labs/blob/master/beginner/chapters/votingapp/" target="_blank">votingapp sample in Docker Labs</a> defines a service called <code class="highlighter-rouge">db</code> that runs a <code class="highlighter-rouge">postgres</code> database. It is configured as a named volume in order to persist the data on the swarm, <em>and</em> is constrained to run only on <code class="highlighter-rouge">manager</code> nodes. Here is the relevant snip-it from that file:</p> <pre data-language="">version: "3"
+services:
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+</pre> <h4 id="caching-options-for-volume-mounts-docker-for-mac">Caching options for volume mounts (Docker for Mac)</h4> <p>On Docker 17.04 CE Edge and up, including 17.06 CE Edge and Stable, you can configure container-and-host consistency requirements for bind-mounted directories in Compose files to allow for better performance on read/write of volume mounts. These options address issues specific to <code class="highlighter-rouge">osxfs</code> file sharing, and therefore are only applicable on Docker for Mac.</p> <p>The flags are:</p> <ul> <li> <p><code class="highlighter-rouge">consistent</code>: Full consistency. The container runtime and the host maintain an identical view of the mount at all times. This is the default.</p> </li> <li> <p><code class="highlighter-rouge">cached</code>: The host’s view of the mount is authoritative. There may be delays before updates made on the host are visible within a container.</p> </li> <li> <p><code class="highlighter-rouge">delegated</code>: The container runtime’s view of the mount is authoritative. There may be delays before updates made in a container are visible on the host.</p> </li> </ul> <p>Here is an example of configuring a volume as <code class="highlighter-rouge">cached</code>:</p> <pre data-language="">version: '3'
+services:
+  php:
+    image: php:7.1-fpm
+    ports:
+      - 9000
+    volumes:
+      - .:/var/www/project:cached
+</pre> <p>Full detail on these flags, the problems they solve, and their <code class="highlighter-rouge">docker run</code> counterparts is in the Docker for Mac topic <a href="https://docs.docker.com/docker-for-mac/osxfs-caching/" target="_blank">Performance tuning for volume mounts (shared filesystems)</a>.</p> <h3 id="restart">restart</h3> <p><code class="highlighter-rouge">no</code> is the default restart policy, and it will not restart a container under any circumstance. When <code class="highlighter-rouge">always</code> is specified, the container always restarts. The <code class="highlighter-rouge">on-failure</code> policy restarts a container if the exit code indicates an on-failure error.</p> <pre class="highlight" data-language="">restart: "no"
+restart: always
+restart: on-failure
+restart: unless-stopped
+</pre>  <h3 id="domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir">domainname, hostname, ipc, mac_address, privileged, read_only, shm_size, stdin_open, tty, user, working_dir</h3> <p>Each of these is a single value, analogous to its <a href="../../engine/reference/run/">docker run</a> counterpart.</p> <pre class="highlight" data-language="">user: postgresql
+working_dir: /code
+
+domainname: foo.com
+hostname: foo
+ipc: host
+mac_address: 02:42:ac:11:65:43
+
+privileged: true
+
+
+read_only: true
+shm_size: 64M
+stdin_open: true
+tty: true
+</pre>  <h2 id="specifying-durations">Specifying durations</h2> <p>Some configuration options, such as the <code class="highlighter-rouge">interval</code> and <code class="highlighter-rouge">timeout</code> sub-options for <a href="#healthcheck"><code class="highlighter-rouge">healthcheck</code></a>, accept a duration as a string in a format that looks like this:</p> <pre class="highlight" data-language="">2.5s
+10s
+1m30s
+2h32m
+5h34m56s
+</pre>  <p>The supported units are <code class="highlighter-rouge">us</code>, <code class="highlighter-rouge">ms</code>, <code class="highlighter-rouge">s</code>, <code class="highlighter-rouge">m</code> and <code class="highlighter-rouge">h</code>.</p> <h2 id="volume-configuration-reference">Volume configuration reference</h2> <p>While it is possible to declare <a href="#volumes">volumes</a> on the file as part of the service declaration, this section allows you to create named volumes (without relying on <code class="highlighter-rouge">volumes_from</code>) that can be reused across multiple services, and are easily retrieved and inspected using the docker command line or API. See the <a href="../../engine/reference/commandline/volume_create/">docker volume</a> subcommand documentation for more information.</p> <p>See <a href="../../engine/admin/volumes/volumes/">Use volumes</a> and <a href="../../engine/extend/plugins_volume/">Volume Plugins</a> for general information on volumes.</p> <p>Here’s an example of a two-service setup where a database’s data directory is shared with another service as a volume so that it can be periodically backed up:</p> <pre class="highlight" data-language="">version: "3"
+
+services:
+  db:
+    image: db
+    volumes:
+      - data-volume:/var/lib/db
+  backup:
+    image: backup-service
+    volumes:
+      - data-volume:/var/lib/backup/data
+
+volumes:
+  data-volume:
+</pre>  <p>An entry under the top-level <code class="highlighter-rouge">volumes</code> key can be empty, in which case it will use the default driver configured by the Engine (in most cases, this is the <code class="highlighter-rouge">local</code> driver). Optionally, you can configure it with the following keys:</p> <h3 id="driver">driver</h3> <p>Specify which volume driver should be used for this volume. Defaults to whatever driver the Docker Engine has been configured to use, which in most cases is <code class="highlighter-rouge">local</code>. If the driver is not available, the Engine will return an error when <code class="highlighter-rouge">docker-compose up</code> tries to create the volume.</p> <pre class="highlight" data-language=""> driver: foobar
+</pre>  <h3 id="driver_opts">driver_opts</h3> <p>Specify a list of options as key-value pairs to pass to the driver for this volume. Those options are driver-dependent - consult the driver’s documentation for more information. Optional.</p> <pre class="highlight" data-language=""> driver_opts:
+   foo: "bar"
+   baz: 1
+</pre>  <h3 id="external">external</h3> <p>If set to <code class="highlighter-rouge">true</code>, specifies that this volume has been created outside of Compose. <code class="highlighter-rouge">docker-compose up</code> will not attempt to create it, and will raise an error if it doesn’t exist.</p> <p><code class="highlighter-rouge">external</code> cannot be used in conjunction with other volume configuration keys (<code class="highlighter-rouge">driver</code>, <code class="highlighter-rouge">driver_opts</code>).</p> <p>In the example below, instead of attempting to create a volume called <code class="highlighter-rouge">[projectname]_data</code>, Compose will look for an existing volume simply called <code class="highlighter-rouge">data</code> and mount it into the <code class="highlighter-rouge">db</code> service’s containers.</p> <pre class="highlight" data-language="">version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:
+    external: true
+</pre>  <p>You can also specify the name of the volume separately from the name used to refer to it within the Compose file:</p> <pre class="highlight" data-language="">volumes:
+  data:
+    external:
+      name: actual-name-of-volume
+</pre>  <blockquote> <p>External volumes are always created with docker stack deploy</p> <p>External volumes that do not exist <em>will be created</em> if you use <a href="#deploy">docker stack deploy</a> to launch the app in <a href="../../engine/swarm/">swarm mode</a> (instead of <a href="../reference/up/">docker compose up</a>). In swarm mode, a volume is automatically created when it is defined by a service. As service tasks are scheduled on new nodes, <a href="https://github.com/docker/swarmkit/blob/master/README/" target="_blank">swarmkit</a> creates the volume on the local node. To learn more, see <a href="https://github.com/moby/moby/issues/29976" target="_blank">moby/moby#29976</a>.</p> </blockquote> <h3 id="labels-3">labels</h3> <p>Add metadata to containers using <a href="../../engine/userguide/labels-custom-metadata/">Docker labels</a>. You can use either an array or a dictionary.</p> <p>It’s recommended that you use reverse-DNS notation to prevent your labels from conflicting with those used by other software.</p> <pre class="highlight" data-language="">labels:
+  com.example.description: "Database volume"
+  com.example.department: "IT/Ops"
+  com.example.label-with-empty-value: ""
+
+labels:
+  - "com.example.description=Database volume"
+  - "com.example.department=IT/Ops"
+  - "com.example.label-with-empty-value"
+</pre>  <h2 id="network-configuration-reference">Network configuration reference</h2> <p>The top-level <code class="highlighter-rouge">networks</code> key lets you specify networks to be created.</p> <ul> <li> <p>For a full explanation of Compose’s use of Docker networking features and all network driver options, see the <a href="../networking/">Networking guide</a>.</p> </li> <li> <p>For <a href="https://github.com/docker/labs/blob/master/README/" target="_blank">Docker Labs</a> tutorials on networking, start with <a href="https://github.com/docker/labs/blob/master/networking/README/" target="_blank">Designing Scalable, Portable Docker Container Networks</a></p> </li> </ul> <h3 id="driver-1">driver</h3> <p>Specify which driver should be used for this network.</p> <p>The default driver depends on how the Docker Engine you’re using is configured, but in most instances it will be <code class="highlighter-rouge">bridge</code> on a single host and <code class="highlighter-rouge">overlay</code> on a Swarm.</p> <p>The Docker Engine will return an error if the driver is not available.</p> <pre class="highlight" data-language="">driver: overlay
+</pre>  <h4 id="bridge">bridge</h4> <p>Docker defaults to using a <code class="highlighter-rouge">bridge</code> network on a single host. For examples of how to work with bridge networks, see the Docker Labs tutorial on <a href="https://github.com/docker/labs/blob/master/networking/A2-bridge-networking/" target="_blank">Bridge networking</a>.</p> <h4 id="overlay">overlay</h4> <p>The <code class="highlighter-rouge">overlay</code> driver creates a named network across multiple nodes in a <a href="../../engine/swarm/">swarm</a>.</p> <ul> <li> <p>For a working example of how to build and use an <code class="highlighter-rouge">overlay</code> network with a service in swarm mode, see the Docker Labs tutorial on <a href="https://github.com/docker/labs/blob/master/networking/A3-overlay-networking/" target="_blank">Overlay networking and service discovery</a>.</p> </li> <li> <p>For an in-depth look at how it works under the hood, see the networking concepts lab on the <a href="https://github.com/docker/labs/blob/master/networking/concepts/06-overlay-networks/" target="_blank">Overlay Driver Network Architecture</a>.</p> </li> </ul> <h3 id="driver_opts-1">driver_opts</h3> <p>Specify a list of options as key-value pairs to pass to the driver for this network. Those options are driver-dependent - consult the driver’s documentation for more information. Optional.</p> <pre class="highlight" data-language="">  driver_opts:
+    foo: "bar"
+    baz: 1
+</pre>  <h3 id="enable_ipv6">enable_ipv6</h3> <p>Enable IPv6 networking on this network.</p> <h3 id="ipam">ipam</h3> <p>Specify custom IPAM config. This is an object with several properties, each of which is optional:</p> <ul> <li>
+<code class="highlighter-rouge">driver</code>: Custom IPAM driver, instead of the default.</li> <li>
+<code class="highlighter-rouge">config</code>: A list with zero or more config blocks, each containing any of the following keys: <ul> <li>
+<code class="highlighter-rouge">subnet</code>: Subnet in CIDR format that represents a network segment</li> </ul> </li> </ul> <p>A full example:</p> <pre class="highlight" data-language="">ipam:
+  driver: default
+  config:
+    - subnet: 172.28.0.0/16
+</pre>  <blockquote> <p><strong>Note</strong>: Additional IPAM configurations, such as <code class="highlighter-rouge">gateway</code>, are only honored for version 2 at the moment.</p> </blockquote> <h3 id="internal">internal</h3> <p>By default, Docker also connects a bridge network to it to provide external connectivity. If you want to create an externally isolated overlay network, you can set this option to <code class="highlighter-rouge">true</code>.</p> <h3 id="labels-4">labels</h3> <p>Add metadata to containers using <a href="../../engine/userguide/labels-custom-metadata/">Docker labels</a>. You can use either an array or a dictionary.</p> <p>It’s recommended that you use reverse-DNS notation to prevent your labels from conflicting with those used by other software.</p> <pre class="highlight" data-language="">labels:
+  com.example.description: "Financial transaction network"
+  com.example.department: "Finance"
+  com.example.label-with-empty-value: ""
+
+labels:
+  - "com.example.description=Financial transaction network"
+  - "com.example.department=Finance"
+  - "com.example.label-with-empty-value"
+</pre>  <h3 id="external-1">external</h3> <p>If set to <code class="highlighter-rouge">true</code>, specifies that this network has been created outside of Compose. <code class="highlighter-rouge">docker-compose up</code> will not attempt to create it, and will raise an error if it doesn’t exist.</p> <p><code class="highlighter-rouge">external</code> cannot be used in conjunction with other network configuration keys (<code class="highlighter-rouge">driver</code>, <code class="highlighter-rouge">driver_opts</code>, <code class="highlighter-rouge">ipam</code>, <code class="highlighter-rouge">internal</code>).</p> <p>In the example below, <code class="highlighter-rouge">proxy</code> is the gateway to the outside world. Instead of attempting to create a network called <code class="highlighter-rouge">[projectname]_outside</code>, Compose will look for an existing network simply called <code class="highlighter-rouge">outside</code> and connect the <code class="highlighter-rouge">proxy</code> service’s containers to it.</p> <pre class="highlight" data-language="">version: '2'
+
+services:
+  proxy:
+    build: ./proxy
+    networks:
+      - outside
+      - default
+  app:
+    build: ./app
+    networks:
+      - default
+
+networks:
+  outside:
+    external: true
+</pre>  <p>You can also specify the name of the network separately from the name used to refer to it within the Compose file:</p> <pre class="highlight" data-language="">networks:
+  outside:
+    external:
+      name: actual-name-of-network
+</pre>  <h2 id="configs-configuration-reference">configs configuration reference</h2> <p>The top-level <code class="highlighter-rouge">configs</code> declaration defines or references <a href="../../engine/swarm/configs/">configs</a> which can be granted to the services in this stack. The source of the config is either <code class="highlighter-rouge">file</code> or <code class="highlighter-rouge">external</code>.</p> <ul> <li>
+<code class="highlighter-rouge">file</code>: The config is created with the contents of the file at the specified path.</li> <li>
+<code class="highlighter-rouge">external</code>: If set to true, specifies that this config has already been created. Docker will not attempt to create it, and if it does not exist, a <code class="highlighter-rouge">config not found</code> error occurs.</li> </ul> <p>In this example, <code class="highlighter-rouge">my_first_config</code> will be created (as <code class="highlighter-rouge">&lt;stack_name&gt;_my_first_config)</code>when the stack is deployed, and <code class="highlighter-rouge">my_second_config</code> already exists in Docker.</p> <pre data-language="">configs:
+  my_first_config:
+    file: ./config_data
+  my_second_config:
+    external: true
+</pre> <p>Another variant for external configs is when the name of the config in Docker is different from the name that will exist within the service. The following example modifies the previous one to use the external config called <code class="highlighter-rouge">redis_config</code>.</p> <pre data-language="">configs:
+  my_first_config:
+    file: ./config_data
+  my_second_config:
+    external:
+      name: redis_config
+</pre> <p>You still need to <a href="#configs">grant access to the config</a> to each service in the stack.</p> <h2 id="secrets-configuration-reference">secrets configuration reference</h2> <p>The top-level <code class="highlighter-rouge">secrets</code> declaration defines or references <a href="../../engine/swarm/secrets/">secrets</a> which can be granted to the services in this stack. The source of the secret is either <code class="highlighter-rouge">file</code> or <code class="highlighter-rouge">external</code>.</p> <ul> <li>
+<code class="highlighter-rouge">file</code>: The secret is created with the contents of the file at the specified path.</li> <li>
+<code class="highlighter-rouge">external</code>: If set to true, specifies that this secret has already been created. Docker will not attempt to create it, and if it does not exist, a <code class="highlighter-rouge">secret not found</code> error occurs.</li> </ul> <p>In this example, <code class="highlighter-rouge">my_first_secret</code> will be created (as <code class="highlighter-rouge">&lt;stack_name&gt;_my_first_secret)</code>when the stack is deployed, and <code class="highlighter-rouge">my_second_secret</code> already exists in Docker.</p> <pre data-language="">secrets:
+  my_first_secret:
+    file: ./secret_data
+  my_second_secret:
+    external: true
+</pre> <p>Another variant for external secrets is when the name of the secret in Docker is different from the name that will exist within the service. The following example modifies the previous one to use the external secret called <code class="highlighter-rouge">redis_secret</code>.</p> <pre data-language="">secrets:
+  my_first_secret:
+    file: ./secret_data
+  my_second_secret:
+    external:
+      name: redis_secret
+</pre> <p>You still need to <a href="#secrets">grant access to the secrets</a> to each service in the stack.</p> <h2 id="variable-substitution">Variable substitution</h2> <p>Your configuration options can contain environment variables. Compose uses the variable values from the shell environment in which <code class="highlighter-rouge">docker-compose</code> is run. For example, suppose the shell contains <code class="highlighter-rouge">POSTGRES_VERSION=9.3</code> and you supply this configuration:</p> <pre class="highlight" data-language="">db:
+  image: "postgres:${POSTGRES_VERSION}"
+</pre>  <p>When you run <code class="highlighter-rouge">docker-compose up</code> with this configuration, Compose looks for the <code class="highlighter-rouge">POSTGRES_VERSION</code> environment variable in the shell and substitutes its value in. For this example, Compose resolves the <code class="highlighter-rouge">image</code> to <code class="highlighter-rouge">postgres:9.3</code> before running the configuration.</p> <p>If an environment variable is not set, Compose substitutes with an empty string. In the example above, if <code class="highlighter-rouge">POSTGRES_VERSION</code> is not set, the value for the <code class="highlighter-rouge">image</code> option is <code class="highlighter-rouge">postgres:</code>.</p> <p>You can set default values for environment variables using a <a href="../env-file/"><code class="highlighter-rouge">.env</code> file</a>, which Compose will automatically look for. Values set in the shell environment will override those set in the <code class="highlighter-rouge">.env</code> file.</p> <p>Both <code class="highlighter-rouge">$VARIABLE</code> and <code class="highlighter-rouge">${VARIABLE}</code> syntax are supported. Additionally when using the <a href="compose-versioning/#version-21">2.1 file format</a>, it is possible to provide inline default values using typical shell syntax:</p> <ul> <li>
+<code class="highlighter-rouge">${VARIABLE:-default}</code> will evaluate to <code class="highlighter-rouge">default</code> if <code class="highlighter-rouge">VARIABLE</code> is unset or empty in the environment.</li> <li>
+<code class="highlighter-rouge">${VARIABLE-default}</code> will evaluate to <code class="highlighter-rouge">default</code> only if <code class="highlighter-rouge">VARIABLE</code> is unset in the environment.</li> </ul> <p>Other extended shell-style features, such as <code class="highlighter-rouge">${VARIABLE/foo/bar}</code>, are not supported.</p> <p>You can use a <code class="highlighter-rouge">$$</code> (double-dollar sign) when your configuration needs a literal dollar sign. This also prevents Compose from interpolating a value, so a <code class="highlighter-rouge">$$</code> allows you to refer to environment variables that you don’t want processed by Compose.</p> <pre class="highlight" data-language="">web:
+  build: .
+  command: "$$VAR_NOT_INTERPOLATED_BY_COMPOSE"
+</pre>  <p>If you forget and use a single dollar sign (<code class="highlighter-rouge">$</code>), Compose interprets the value as an environment variable and will warn you:</p> <p>The VAR_NOT_INTERPOLATED_BY_COMPOSE is not set. Substituting an empty string.</p> <h2 id="compose-documentation">Compose documentation</h2> <ul> <li><a href="../">User guide</a></li> <li><a href="../install/">Installing Compose</a></li> <li><a href="compose-versioning/">Compose file versions and upgrading</a></li> <li><a href="../../get-started/">Get started with Docker</a></li> <li><a href="https://docs.docker.com/samples/" target="_blank">Samples</a></li> <li><a href="../reference/">Command line reference</a></li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=fig" target="_blank">fig</a>, <a href="https://docs.docker.com/glossary/?term=composition" target="_blank">composition</a>, <a href="https://docs.docker.com/glossary/?term=compose" target="_blank">compose</a>, <a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/compose/compose-file/" class="_attribution-link" target="_blank">https://docs.docker.com/compose/compose-file/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,122 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Log Tags for Logging Driver (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="The tag log option specifies how to format a tag that identifies the container’s log messages. By default, the system uses the first 12 characters &hellip;">
+  <meta name="keywords" content="log, tags, for, logging, driver, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/admin/logging/log_tags/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Log tags for logging driver</h1>  <p>The <code class="highlighter-rouge">tag</code> log option specifies how to format a tag that identifies the container’s log messages. By default, the system uses the first 12 characters of the container id. To override this behavior, specify a <code class="highlighter-rouge">tag</code> option:</p> <pre class="highlight" data-language="bash">$ docker run --log-driver=fluentd --log-opt fluentd-address=myhost.local:24224 --log-opt tag="mailer"
+</pre>  <p>Docker supports some special template markup you can use when specifying a tag’s value:</p> <table> <thead> <tr> <th>Markup</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code class="highlighter-rouge">{{.ID}}</code></td> <td>The first 12 characters of the container id.</td> </tr> <tr> <td><code class="highlighter-rouge">{{.FullID}}</code></td> <td>The full container id.</td> </tr> <tr> <td><code class="highlighter-rouge">{{.Name}}</code></td> <td>The container name.</td> </tr> <tr> <td><code class="highlighter-rouge">{{.ImageID}}</code></td> <td>The first 12 characters of the container’s image id.</td> </tr> <tr> <td><code class="highlighter-rouge">{{.ImageFullID}}</code></td> <td>The container’s full image identifier.</td> </tr> <tr> <td><code class="highlighter-rouge">{{.ImageName}}</code></td> <td>The name of the image used by the container.</td> </tr> <tr> <td><code class="highlighter-rouge">{{.DaemonName}}</code></td> <td>The name of the docker program (<code class="highlighter-rouge">docker</code>).</td> </tr> </tbody> </table> <p>For example, specifying a <code class="highlighter-rouge">--log-opt tag="{{.ImageName}}/{{.Name}}/{{.ID}}"</code> value yields <code class="highlighter-rouge">syslog</code> log lines like:</p> <pre data-language="">Aug  7 18:33:19 HOSTNAME hello-world/foobar/5790672ab6a0[9103]: Hello from Docker.
+</pre> <p>At startup time, the system sets the <code class="highlighter-rouge">container_name</code> field and <code class="highlighter-rouge">{{.Name}}</code> in the tags. If you use <code class="highlighter-rouge">docker rename</code> to rename a container, the new name is not reflected in the log messages. Instead, these messages continue to use the original container name.</p> <p>For advanced usage, the generated tag’s use <a href="http://golang.org/pkg/text/template/" target="_blank">go templates</a> and the container’s <a href="https://github.com/moby/moby/blob/17.05.x/daemon/logger/loginfo.go" target="_blank">logging context</a>.</p> <p>As an example of what is possible with the syslog logger, if you use the following command, you get the output that follows:</p> <pre class="highlight" data-language="bash">
+$ docker run -it --rm \
+    --log-driver syslog \
+    --log-opt tag="{{ (.ExtraAttributes nil).SOME_ENV_VAR }}" \
+    --log-opt env=SOME_ENV_VAR \
+    -e SOME_ENV_VAR=logtester.1234 \
+    flyinprogrammer/logtester
+
+</pre>  <pre data-language="">Apr  1 15:22:17 ip-10-27-39-73 logtester.1234[45499]: + exec app
+Apr  1 15:22:17 ip-10-27-39-73 logtester.1234[45499]: 2016-04-01 15:22:17.075416751 +0000 UTC stderr msg: 1
+</pre>  
+<p><a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=logging" target="_blank">logging</a>, <a href="https://docs.docker.com/glossary/?term=driver" target="_blank">driver</a>, <a href="https://docs.docker.com/glossary/?term=syslog" target="_blank">syslog</a>, <a href="https://docs.docker.com/glossary/?term=Fluentd" target="_blank">Fluentd</a>, <a href="https://docs.docker.com/glossary/?term=gelf" target="_blank">gelf</a>, <a href="https://docs.docker.com/glossary/?term=journald" target="_blank">journald</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/admin/logging/log_tags/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/admin/logging/log_tags/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

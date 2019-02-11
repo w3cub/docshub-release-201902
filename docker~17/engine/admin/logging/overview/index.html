@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Configuring Logging Drivers (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="Docker includes multiple logging mechanisms to help you get information from running containers and services. These mechanisms are called logging &hellip;">
+  <meta name="keywords" content="configure, logging, drivers, configuring, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/admin/logging/overview/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Configure logging drivers</h1>  <p>Docker includes multiple logging mechanisms to help you <a href="../view_container_logs/">get information from running containers and services</a>. These mechanisms are called logging drivers.</p> <p>Each Docker daemon has a default logging driver, which each container uses unless you configure it to use a different logging driver.</p> <p>In addition to using the logging drivers included with Docker, you can also implement and use <a href="../plugins/">logging driver plugins</a>. Logging driver plugins are available in Docker 17.05 and higher.</p> <h2 id="configure-the-default-logging-driver">Configure the default logging driver</h2> <p>To configure the Docker daemon to default to a specific logging driver, set the value of <code class="highlighter-rouge">log-driver</code> to the name of the logging driver in the <code class="highlighter-rouge">daemon.json</code> file, which is located in <code class="highlighter-rouge">/etc/docker/</code> on Linux hosts or <code class="highlighter-rouge">C:\ProgramData\docker\config\</code> on Windows server hosts. The default logging driver is <code class="highlighter-rouge">json-file</code>. The following example explicitly sets the default logging driver to <code class="highlighter-rouge">syslog</code>:</p> <pre class="highlight" data-language="json">{
+  "log-driver": "syslog"
+}
+</pre>  <p>If the logging driver has configurable options, you can set them in the <code class="highlighter-rouge">daemon.json</code> file as a JSON array with the key <code class="highlighter-rouge">log-opts</code>. The following example sets two configurable options on the <code class="highlighter-rouge">json-file</code> logging driver:</p> <pre class="highlight" data-language="json">{
+  "log-driver": "json-file",
+  "log-opts": {
+    "labels": "production_status",
+    "env": "os,customer"
+  }
+}
+</pre>  <p>If you do not specify a logging driver, the default is <code class="highlighter-rouge">json-file</code>. Thus, the default output for commands such as <code class="highlighter-rouge">docker inspect &lt;CONTAINER&gt;</code> is JSON.</p> <p>To find the current default logging driver for the Docker daemon, run <code class="highlighter-rouge">docker info</code> and search for <code class="highlighter-rouge">Logging Driver</code>. You can use the following command on Linux, macOS, or PowerShell on Windows:</p> <pre class="highlight" data-language="bash">$ docker info |grep 'Logging Driver'
+
+Logging Driver: json-file
+</pre>  <h2 id="configure-the-logging-driver-for-a-container">Configure the logging driver for a container</h2> <p>When you start a container, you can configure it to use a different logging driver than the Docker daemon’s default, using the <code class="highlighter-rouge">--log-driver</code> flag. If the logging driver has configurable options, you can set them using one or more instances of the <code class="highlighter-rouge">--log-opt &lt;NAME&gt;=&lt;VALUE&gt;</code> flag. Even if the container uses the default logging driver, it can use different configurable options.</p> <p>The following example starts an Alpine container with the <code class="highlighter-rouge">none</code> logging driver.</p> <pre class="highlight" data-language="bash">$ docker run -it --log-driver none alpine ash
+</pre>  <p>To find the current logging driver for a running container, if the daemon is using the <code class="highlighter-rouge">json-file</code> logging driver, run the following <code class="highlighter-rouge">docker inspect</code> command, substituting the container name or ID for <code class="highlighter-rouge">&lt;CONTAINER&gt;</code>:</p> <pre class="highlight" data-language="bash">
+$ docker inspect -f '{{.HostConfig.LogConfig.Type}}' &lt;CONTAINER&gt;
+
+json-file
+
+</pre>  <h3 id="use-environment-variables-or-labels-with-logging-drivers">Use environment variables or labels with logging drivers</h3> <p>Some logging drivers add the value of a container’s <code class="highlighter-rouge">--env|-e</code> or <code class="highlighter-rouge">--label</code> flags to the container’s logs. This example starts a container using the Docker daemon’s default logging driver (let’s assume <code class="highlighter-rouge">json-file</code>) but sets the environment variable <code class="highlighter-rouge">os=ubuntu</code>.</p> <pre class="highlight" data-language="bash">$ docker run -dit --label production_status=testing -e os=ubuntu alpine sh
+</pre>  <p>If the logging driver supports it, this adds additional fields to the logging output. The following output is generated by the <code class="highlighter-rouge">json-file</code> logging driver:</p> <pre class="highlight" data-language="json">"attrs":{"production_status":"testing","os":"ubuntu"}
+</pre>  <h2 id="supported-logging-drivers">Supported logging drivers</h2> <p>The following logging drivers are supported. See the link to each driver’s documentation for its configurable options, if applicable. If you are using <a href="../plugins/">logging driver plugins</a>, you may see more options.</p> <table> <thead> <tr> <th style="text-align: left">Driver</th> <th style="text-align: left">Description</th> <th> </th> </tr> </thead> <tbody> <tr> <td style="text-align: left"><code class="highlighter-rouge">none</code></td> <td style="text-align: left">No logs will be available for the container and <code class="highlighter-rouge">docker logs</code> will not return any output.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../json-file/"><code class="highlighter-rouge">json-file</code></a></td> <td style="text-align: left">The logs are formatted as JSON. The default logging driver for Docker.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../syslog/"><code class="highlighter-rouge">syslog</code></a></td> <td style="text-align: left">Writes logging messages to the <code class="highlighter-rouge">syslog</code> facility. The <code class="highlighter-rouge">syslog</code> daemon must be running on the host machine.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../journald/"><code class="highlighter-rouge">journald</code></a></td> <td style="text-align: left">Writes log messages to <code class="highlighter-rouge">journald</code>. The <code class="highlighter-rouge">journald</code> daemon must be running on the host machine.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../gelf/"><code class="highlighter-rouge">gelf</code></a></td> <td style="text-align: left">Writes log messages to a Graylog Extended Log Format (GELF) endpoint such as Graylog or Logstash.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../fluentd/"><code class="highlighter-rouge">fluentd</code></a></td> <td style="text-align: left">Writes log messages to <code class="highlighter-rouge">fluentd</code> (forward input). The <code class="highlighter-rouge">fluentd</code> daemon must be running on the host machine.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../awslogs/"><code class="highlighter-rouge">awslogs</code></a></td> <td style="text-align: left">Writes log messages to Amazon CloudWatch Logs.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../splunk/"><code class="highlighter-rouge">splunk</code></a></td> <td style="text-align: left">Writes log messages to <code class="highlighter-rouge">splunk</code> using the HTTP Event Collector.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../etwlogs/"><code class="highlighter-rouge">etwlogs</code></a></td> <td style="text-align: left">Writes log messages as Event Tracing for Windows (ETW) events. Only available on Windows platforms.</td> <td> </td> </tr> <tr> <td style="text-align: left"><a href="../gcplogs/"><code class="highlighter-rouge">gcplogs</code></a></td> <td style="text-align: left">Writes log messages to Google Cloud Platform (GCP) Logging.</td> <td> </td> </tr> </tbody> </table> <h2 id="limitations-of-logging-drivers">Limitations of logging drivers</h2> <p>The <code class="highlighter-rouge">docker logs</code> command is not available for drivers other than <code class="highlighter-rouge">json-file</code> and <code class="highlighter-rouge">journald</code>.</p>  
+<p><a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=logging" target="_blank">logging</a>, <a href="https://docs.docker.com/glossary/?term=driver" target="_blank">driver</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/admin/logging/overview/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/admin/logging/overview/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

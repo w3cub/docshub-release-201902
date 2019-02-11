@@ -1,0 +1,159 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Docker Log Driver Plugins - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content=" This document describes logging driver plugins for Docker. ">
+  <meta name="keywords" content="docker, log, driver, plugins, -, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/extend/plugins_logging/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Docker log driver plugins</h1>   <h2 id="logging-driver-plugins">Logging driver plugins</h2> <p>This document describes logging driver plugins for Docker.</p> <p>Logging drivers enables users to forward container logs to another service for processing. Docker includes several logging drivers as built-ins, however can never hope to support all use-cases with built-in drivers. Plugins allow Docker to support a wide range of logging services without requiring to embed client libraries for these services in the main Docker codebase. See the <a href="../legacy_plugins/">plugin documentation</a> for more information.</p> <h2 id="create-a-logging-plugin">Create a logging plugin</h2> <p>The main interface for logging plugins uses the same JSON+HTTP RPC protocol used by other plugin types. See the <a href="https://github.com/cpuguy83/docker-log-driver-test" target="_blank">example</a> plugin for a reference implementation of a logging plugin. The example wraps the built-in <code class="highlighter-rouge">jsonfilelog</code> log driver.</p> <h2 id="logdriver-protocol">LogDriver protocol</h2> <p>Logging plugins must register as a <code class="highlighter-rouge">LogDriver</code> during plugin activation. Once activated users can specify the plugin as a log driver.</p> <p>There are two HTTP endpoints that logging plugins must implement:</p> <h3 id="logdriverstartlogging"><code class="highlighter-rouge">/LogDriver.StartLogging</code></h3> <p>Signals to the plugin that a container is starting that the plugin should start receiving logs for.</p> <p>Logs will be streamed over the defined file in the request. On Linux this file is a FIFO. Logging plugins are not currently supported on Windows.</p> <p><strong>Request</strong>:</p> <pre class="highlight" data-language="json">{
+		"File": "/path/to/file/stream",
+		"Info": {
+			"ContainerID": "123456"
+		}
+}
+</pre>  <p><code class="highlighter-rouge">File</code> is the path to the log stream that needs to be consumed. Each call to <code class="highlighter-rouge">StartLogging</code> should provide a different file path, even if it’s a container that the plugin has already received logs for prior. The file is created by docker with a randomly generated name.</p> <p><code class="highlighter-rouge">Info</code> is details about the container that’s being logged. This is fairly free-form, but is defined by the following struct definition:</p> <pre class="highlight" data-language="go">type Info struct {
+	Config              map[string]string
+	ContainerID         string
+	ContainerName       string
+	ContainerEntrypoint string
+	ContainerArgs       []string
+	ContainerImageID    string
+	ContainerImageName  string
+	ContainerCreated    time.Time
+	ContainerEnv        []string
+	ContainerLabels     map[string]string
+	LogPath             string
+	DaemonName          string
+}
+</pre>  <p><code class="highlighter-rouge">ContainerID</code> will always be supplied with this struct, but other fields may be empty or missing.</p> <p><strong>Response</strong></p> <pre class="highlight" data-language="json">{
+	"Err": ""
+}
+</pre>  <p>If an error occurred during this request, add an error message to the <code class="highlighter-rouge">Err</code> field in the response. If no error then you can either send an empty response (<code class="highlighter-rouge">{}</code>) or an empty value for the <code class="highlighter-rouge">Err</code> field.</p> <p>The driver should at this point be consuming log messages from the passed in file. If messages are unconsumed, it may cause the container to block while trying to write to its stdio streams.</p> <p>Log stream messages are encoded as protocol buffers. The protobuf definitions are in the <a href="https://github.com/docker/docker/blob/master/api/types/plugins/logdriver/entry.proto" target="_blank">docker repository</a>.</p> <p>Since protocol buffers are not self-delimited you must decode them from the stream using the following stream format:</p> <pre class="highlight" data-language="">[size][message]
+</pre>  <p>Where <code class="highlighter-rouge">size</code> is a 4-byte big endian binary encoded uint32. <code class="highlighter-rouge">size</code> in this case defines the size of the next message. <code class="highlighter-rouge">message</code> is the actual log entry.</p> <p>A reference golang implementation of a stream encoder/decoder can be found <a href="https://github.com/docker/docker/blob/master/api/types/plugins/logdriver/io.go" target="_blank">here</a></p> <h3 id="logdriverstoplogging"><code class="highlighter-rouge">/LogDriver.StopLogging</code></h3> <p>Signals to the plugin to stop collecting logs from the defined file. Once a response is received, the file will be removed by Docker. You must make sure to collect all logs on the stream before responding to this request or risk losing log data.</p> <p>Requests on this endpoint does not mean that the container has been removed only that it has stopped.</p> <p><strong>Request</strong>:</p> <pre class="highlight" data-language="json">{
+		"File": "/path/to/file/stream"
+}
+</pre>  <p><strong>Response</strong>:</p> <pre class="highlight" data-language="json">{
+	"Err": ""
+}
+</pre>  <p>If an error occurred during this request, add an error message to the <code class="highlighter-rouge">Err</code> field in the response. If no error then you can either send an empty response (<code class="highlighter-rouge">{}</code>) or an empty value for the <code class="highlighter-rouge">Err</code> field.</p> <h2 id="optional-endpoints">Optional endpoints</h2> <p>Logging plugins can implement two extra logging endpoints:</p> <h3 id="logdrivercapabilities"><code class="highlighter-rouge">/LogDriver.Capabilities</code></h3> <p>Defines the capabilities of the log driver. You must implement this endpoint for Docker to be able to take advantage of any of the defined capabilities.</p> <p><strong>Request</strong>:</p> <pre class="highlight" data-language="json">{}
+</pre>  <p><strong>Response</strong>:</p> <pre class="highlight" data-language="json">{
+	"ReadLogs": true
+}
+</pre>  <p>Supported capabilities:</p> <ul> <li>
+<code class="highlighter-rouge">ReadLogs</code> - this tells Docker that the plugin is capable of reading back logs to clients. Plugins that report that they support <code class="highlighter-rouge">ReadLogs</code> must implement the <code class="highlighter-rouge">/LogDriver.ReadLogs</code> endpoint</li> </ul> <h3 id="logdriverreadlogs"><code class="highlighter-rouge">/LogDriver.ReadLogs</code></h3> <p>Reads back logs to the client. This is used when <code class="highlighter-rouge">docker logs &lt;container&gt;</code> is called.</p> <p>In order for Docker to use this endpoint, the plugin must specify as much when <code class="highlighter-rouge">/LogDriver.Capabilities</code> is called.</p> <p><strong>Request</strong>:</p> <pre class="highlight" data-language="json">{
+	"ReadConfig": {},
+	"Info": {
+		"ContainerID": "123456"
+	}
+}
+</pre>  <p><code class="highlighter-rouge">ReadConfig</code> is the list of options for reading, it is defined with the following golang struct:</p> <pre class="highlight" data-language="go">type ReadConfig struct {
+	Since  time.Time
+	Tail   int
+	Follow bool
+}
+</pre>  <ul> <li>
+<code class="highlighter-rouge">Since</code> defines the oldest log that should be sent.</li> <li>
+<code class="highlighter-rouge">Tail</code> defines the number of lines to read (e.g. like the command <code class="highlighter-rouge">tail -n 10</code>)</li> <li>
+<code class="highlighter-rouge">Follow</code> signals that the client wants to stay attached to receive new log messages as they come in once the existing logs have been read.</li> </ul> <p><code class="highlighter-rouge">Info</code> is the same type defined in <code class="highlighter-rouge">/LogDriver.StartLogging</code>. It should be used to determine what set of logs to read.</p> <p><strong>Response</strong>:</p>   <p>The response should be the encoded log message using the same format as the messages that the plugin consumed from Docker.</p>  
+<p><a href="https://docs.docker.com/glossary/?term=Examples" target="_blank">Examples</a>, <a href="https://docs.docker.com/glossary/?term=Usage" target="_blank">Usage</a>, <a href="https://docs.docker.com/glossary/?term=plugins" target="_blank">plugins</a>, <a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=documentation" target="_blank">documentation</a>, <a href="https://docs.docker.com/glossary/?term=user%20guide" target="_blank">user guide</a>, <a href="https://docs.docker.com/glossary/?term=logging" target="_blank">logging</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/extend/plugins_logging/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/extend/plugins_logging/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

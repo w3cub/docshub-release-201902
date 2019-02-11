@@ -1,0 +1,143 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Customize the Docker0 Bridge (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="The information in this section explains how to customize the Docker default bridge. This is a bridge network named bridge created automatically &hellip;">
+  <meta name="keywords" content="customize, docker, bridge, engine, -, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/userguide/networking/default_network/custom-docker0/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Customize the docker0 bridge</h1>  <p>The information in this section explains how to customize the Docker default bridge. This is a <code class="highlighter-rouge">bridge</code> network named <code class="highlighter-rouge">bridge</code> created automatically when you install Docker.</p> <blockquote> <p><strong>Note</strong>: The <a href="../../">Docker networks feature</a> allows you to create user-defined networks in addition to the default bridge network.</p> </blockquote> <p>By default, the Docker server creates and configures the host system’s <code class="highlighter-rouge">docker0</code> a network interface called <code class="highlighter-rouge">docker0</code>, which is an ethernet bridge device. If you don’t specify a different network when starting a container, the container is connected to the bridge and all traffic coming from and going to the container flows over the bridge to the Docker daemon, which handles routing on behalf of the container.</p> <p>Docker configures <code class="highlighter-rouge">docker0</code> with an IP address, netmask, and IP allocation range. Containers which are connected to the default bridge are allocated IP addresses within this range. Certain default settings apply to the default bridge unless you specify otherwise. For instance, the default maximum transmission unit (MTU), or the largest packet length that the container will allow, defaults to 1500 bytes.</p> <p>You can configure the default bridge network’s settings using flags to the <code class="highlighter-rouge">dockerd</code> command. However, the recommended way to configure the Docker daemon is to use the <code class="highlighter-rouge">daemon.json</code> file, which is located in <code class="highlighter-rouge">/etc/docker/</code> on Linux. If the file does not exist, create it. You can specify one or more of the following settings to configure the default bridge network:</p> <pre class="highlight" data-language="json">{
+  "bip": "192.168.1.5/24",
+  "fixed-cidr": "10.20.0.0/16",
+  "fixed-cidr-v6": "2001:db8::/64",
+  "mtu": 1500,
+  "default-gateway": "10.20.1.1",
+  "default-gateway-v6": "2001:db8:abcd::89",
+  "dns": ["10.20.1.2","10.20.1.3"]
+}
+</pre>  <p>Restart Docker after making changes to the <code class="highlighter-rouge">daemon.json</code> file.</p> <p>The same options are presented as flags to <code class="highlighter-rouge">dockerd</code>, with an explanation for each:</p> <ul> <li> <p><code class="highlighter-rouge">--bip=CIDR</code>: supply a specific IP address and netmask for the <code class="highlighter-rouge">docker0</code> bridge, using standard CIDR notation. For example: <code class="highlighter-rouge">192.168.1.5/24</code>.</p> </li> <li> <p><code class="highlighter-rouge">--fixed-cidr=CIDR</code> and <code class="highlighter-rouge">--fixed-cidr-v6=CIDRv6</code>: restrict the IP range from the <code class="highlighter-rouge">docker0</code> subnet, using standard CIDR notation. For example: <code class="highlighter-rouge">172.16.1.0/28</code>. This range must be an IPv4 range for fixed IPs, such as <code class="highlighter-rouge">10.20.0.0/16</code>, and must be a subset of the bridge IP range (<code class="highlighter-rouge">docker0</code> or set using <code class="highlighter-rouge">--bridge</code>). For example, with <code class="highlighter-rouge">--fixed-cidr=192.168.1.0/25</code>, IPs for your containers will be chosen from the first half of addresses included in the <code class="highlighter-rouge">192.168.1.0/24</code> subnet.</p> </li> <li> <p><code class="highlighter-rouge">--mtu=BYTES</code>: override the maximum packet length on <code class="highlighter-rouge">docker0</code>.</p> </li> <li> <p><code class="highlighter-rouge">--default-gateway=Container default Gateway IPV4 address</code> and <code class="highlighter-rouge">--default-gateway-v6=Container default gateway IPV6 address</code>: designates the default gateway for containers connected to the <code class="highlighter-rouge">docker0</code> bridge, which controls where they route traffic by default. Applicable for addresses set with <code class="highlighter-rouge">--bip</code> and <code class="highlighter-rouge">--fixed-cidr</code> flags. For instance, you can configure <code class="highlighter-rouge">--fixed-cidr=172.17.2.0/24</code> and <code class="highlighter-rouge">default-gateway=172.17.1.1</code>.</p> </li> <li> <p><code class="highlighter-rouge">--dns=[]</code>: The DNS servers to use. For example: <code class="highlighter-rouge">--dns=172.17.2.10</code>.</p> </li> </ul> <p>Once you have one or more containers up and running, you can confirm that Docker has properly connected them to the <code class="highlighter-rouge">docker0</code> bridge by running the <code class="highlighter-rouge">brctl</code> command on the host machine and looking at the <code class="highlighter-rouge">interfaces</code> column of the output. This example shows a <code class="highlighter-rouge">docker0</code> bridge with two containers connected:</p> <pre class="highlight" data-language="bash">$ sudo brctl show
+
+bridge name     bridge id               STP enabled     interfaces
+docker0         8000.3a1d7362b4ee       no              veth65f9
+                                                        vethdda6
+</pre>  <p>If the <code class="highlighter-rouge">brctl</code> command is not installed on your Docker host, then on Ubuntu you should be able to run <code class="highlighter-rouge">sudo apt-get install bridge-utils</code> to install it.</p> <p>Finally, the <code class="highlighter-rouge">docker0</code> Ethernet bridge settings are used every time you create a new container. Docker selects a free IP address from the range available on the bridge each time you <code class="highlighter-rouge">docker run</code> a new container, and configures the container’s <code class="highlighter-rouge">eth0</code> interface with that IP address and the bridge’s netmask. The Docker host’s own IP address on the bridge is used as the default gateway by which each container reaches the rest of the Internet.</p> <pre class="highlight" data-language="bash"># The network, as seen from a container
+
+$ docker run --rm -it alpine /bin/ash
+
+root@f38c87f2a42d:/# ip addr show eth0
+
+24: eth0: &lt;BROADCAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 32:6f:e0:35:57:91 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.3/16 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::306f:e0ff:fe35:5791/64 scope link
+       valid_lft forever preferred_lft forever
+
+root@f38c87f2a42d:/# ip route
+
+default via 172.17.42.1 dev eth0
+172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.3
+
+root@f38c87f2a42d:/# exit
+</pre>  <p>Remember that the Docker host will not be willing to forward container packets out on to the Internet unless its <code class="highlighter-rouge">ip_forward</code> system setting is <code class="highlighter-rouge">1</code> – see the section on <a href="../container-communication/#communicating-to-the-outside-world">Communicating to the outside world</a> for details.</p>  
+<p><a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=bridge" target="_blank">bridge</a>, <a href="https://docs.docker.com/glossary/?term=docker0" target="_blank">docker0</a>, <a href="https://docs.docker.com/glossary/?term=network" target="_blank">network</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/userguide/networking/default_network/custom-docker0/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/userguide/networking/default_network/custom-docker0/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

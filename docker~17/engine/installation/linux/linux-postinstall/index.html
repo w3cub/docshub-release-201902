@@ -1,0 +1,160 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Optional Linux Post-installation Steps (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content=" This section contains optional procedures for configuring Linux hosts to work better with Docker. ">
+  <meta name="keywords" content="post-installation, steps, for, linux, optional, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/installation/linux/linux-postinstall/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Post-installation steps for Linux</h1>  <p>This section contains optional procedures for configuring Linux hosts to work better with Docker.</p> <h2 id="manage-docker-as-a-non-root-user">Manage Docker as a non-root user</h2> <p>The <code class="highlighter-rouge">docker</code> daemon binds to a Unix socket instead of a TCP port. By default that Unix socket is owned by the user <code class="highlighter-rouge">root</code> and other users can only access it using <code class="highlighter-rouge">sudo</code>. The <code class="highlighter-rouge">docker</code> daemon always runs as the <code class="highlighter-rouge">root</code> user.</p> <p>If you don’t want to use <code class="highlighter-rouge">sudo</code> when you use the <code class="highlighter-rouge">docker</code> command, create a Unix group called <code class="highlighter-rouge">docker</code> and add users to it. When the <code class="highlighter-rouge">docker</code> daemon starts, it makes the ownership of the Unix socket read/writable by the <code class="highlighter-rouge">docker</code> group.</p> <blockquote class="warning"> <p><strong>Warning</strong>: The <code class="highlighter-rouge">docker</code> group grants privileges equivalent to the <code class="highlighter-rouge">root</code> user. For details on how this impacts security in your system, see <a href="../../../security/security/#docker-daemon-attack-surface"><em>Docker Daemon Attack Surface</em></a>.</p> </blockquote> <p>To create the <code class="highlighter-rouge">docker</code> group and add your user:</p> <ol> <li> <p>Create the <code class="highlighter-rouge">docker</code> group.</p> <pre class="highlight" data-language="bash">$ sudo groupadd docker
+</pre>  </li> <li> <p>Add your user to the <code class="highlighter-rouge">docker</code> group.</p> <pre class="highlight" data-language="bash">$ sudo usermod -aG docker $USER
+</pre>  </li> <li> <p>Log out and log back in so that your group membership is re-evaluated.</p> <p>If testing on a virtual machine, it may be necessary to restart the virtual machine for changes to take affect.</p> <p>On a desktop Linux environment such as X Windows, log out of your session completely and then log back in.</p> </li> <li> <p>Verify that you can run <code class="highlighter-rouge">docker</code> commands without <code class="highlighter-rouge">sudo</code>.</p> <pre class="highlight" data-language="bash">$ docker run hello-world
+</pre>  <p>This command downloads a test image and runs it in a container. When the container runs, it prints an informational message and exits.</p> </li> </ol> <h2 id="configure-docker-to-start-on-boot">Configure Docker to start on boot</h2> <p>Most current Linux distributions (RHEL, CentOS, Fedora, Ubuntu 16.04 and higher) use <a href="#systemd"><code class="highlighter-rouge">systemd</code></a> to manage which services start when the system boots. Ubuntu 14.10 and below use <a href="#upstart"><code class="highlighter-rouge">upstart</code></a>.</p> <h3 id="systemd"><code class="highlighter-rouge">systemd</code></h3> <pre class="highlight" data-language="bash">$ sudo systemctl enable docker
+</pre>  <p>To disable this behavior, use <code class="highlighter-rouge">disable</code> instead.</p> <pre class="highlight" data-language="bash">$ sudo systemctl disable docker
+</pre>  <p>If you need to add an HTTP Proxy, set a different directory or partition for the Docker runtime files, or make other customizations, see <a href="../../../admin/systemd/">customize your systemd Docker daemon options</a>.</p> <h3 id="upstart"><code class="highlighter-rouge">upstart</code></h3> <p>Docker is automatically configured to start on boot using <code class="highlighter-rouge">upstart</code>. To disable this behavior, use the following command:</p> <pre class="highlight" data-language="bash">$ echo manual | sudo tee /etc/init/docker.override
+</pre>  <h3 id="chkconfig"><code class="highlighter-rouge">chkconfig</code></h3> <pre class="highlight" data-language="bash">$ sudo chkconfig docker on
+</pre>  <h2 id="use-a-different-storage-engine">Use a different storage engine</h2> <p>For information about the different storage engines, see <a href="../../../userguide/storagedriver/imagesandcontainers/">Storage drivers</a>. The default storage engine and the list of supported storage engines depend on your host’s Linux distribution and available kernel drivers.</p> <h2 id="troubleshooting">Troubleshooting</h2> <h3 id="kernel-compatibility">Kernel compatibility</h3> <p>Docker will not run correctly if your kernel is older than version 3.10 or if it is missing some modules. To check kernel compatibility, you can download and run the <a href="https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh" target="_blank"><code class="highlighter-rouge">check-compatibility.sh</code></a> script.</p> <pre class="highlight" data-language="bash">$ curl https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh &gt; check-config.sh
+
+$ bash ./check-config.sh
+</pre>  <p>The script will only work on Linux, not macOS.</p> <h3 id="cannot-connect-to-the-docker-daemon"><code class="highlighter-rouge">Cannot connect to the Docker daemon</code></h3> <p>If you see an error such as the following, your Docker client may be configured to connect to a Docker daemon on a different host, and that host may not be reachable.</p> <pre data-language="">Cannot connect to the Docker daemon. Is 'docker daemon' running on this host?
+</pre> <p>To see which host your client is configured to connect to, check the value of the <code class="highlighter-rouge">DOCKER_HOST</code> variable in your environment.</p> <pre class="highlight" data-language="bash">$ env | grep DOCKER_HOST
+</pre>  <p>If this command returns a value, the Docker client is set to connect to a Docker daemon running on that host. If it is unset, the Docker client is set to connect to the Docker daemon running on the local host. If it is set in error, use the following command to unset it:</p> <pre class="highlight" data-language="bash">$ unset DOCKER_HOST
+</pre>  <p>You may need to edit your environment in files such as <code class="highlighter-rouge">~/.bashrc</code> or <code class="highlighter-rouge">~/.profile</code> to prevent the <code class="highlighter-rouge">DOCKER_HOST</code> variable from being set erroneously.</p> <p>If <code class="highlighter-rouge">DOCKER_HOST</code> is set as intended, verify that the Docker daemon is running on the remote host and that a firewall or network outage is not preventing you from connecting.</p> <h3 id="ip-forwarding-problems">IP forwarding problems</h3> <p>If you manually configure your network using <code class="highlighter-rouge">systemd-network</code> with <code class="highlighter-rouge">systemd</code> version 219 or higher, Docker containers may be unable to access your network. Beginning with <code class="highlighter-rouge">systemd</code> version 220, the forwarding setting for a given network (<code class="highlighter-rouge">net.ipv4.conf.&lt;interface&gt;.forwarding</code>) defaults to <em>off</em>. This setting prevents IP forwarding. It also conflicts with Docker’s behavior of enabling the <code class="highlighter-rouge">net.ipv4.conf.all.forwarding</code> setting within containers.</p> <p>To work around this on RHEL, CentOS, or Fedora, edit the <code class="highlighter-rouge">&lt;interface&gt;.network</code> file in <code class="highlighter-rouge">/usr/lib/systemd/network/</code> on your Docker host (ex: <code class="highlighter-rouge">/usr/lib/systemd/network/80-container-host0.network</code>) and add the following block within the <code class="highlighter-rouge">[Network]</code> section.</p> <pre class="highlight" data-language="">[Network]
+...
+IPForward=kernel
+# OR
+IPForward=true
+...
+</pre>  <p>This configuration allows IP forwarding from the container as expected.</p> <h3 id="dns-resolver-found-in-resolvconf-and-containers-cant-use-it"><code class="highlighter-rouge">DNS resolver found in resolv.conf and containers can't use it</code></h3> <p>Linux systems which use a GUI often have a network manager running, which uses a <code class="highlighter-rouge">dnsmasq</code> instance running on a loopback address such as <code class="highlighter-rouge">127.0.0.1</code> or <code class="highlighter-rouge">127.0.1.1</code> to cache DNS requests, and adds this entry to <code class="highlighter-rouge">/etc/resolv.conf</code>. The <code class="highlighter-rouge">dnsmasq</code> service speeds up DNS look-ups and also provides DHCP services. This configuration will not work within a Docker container which has its own network namespace, because the Docker container resolves loopback addresses such as <code class="highlighter-rouge">127.0.0.1</code> to <strong>itself</strong>, and it is very unlikely to be running a DNS server on its own loopback address.</p> <p>If Docker detects that no DNS server referenced in <code class="highlighter-rouge">/etc/resolv.conf</code> is a fully functional DNS server, the following warning occurs and Docker uses the public DNS servers provided by Google at <code class="highlighter-rouge">8.8.8.8</code> and <code class="highlighter-rouge">8.8.4.4</code> for DNS resolution.</p> <pre data-language="">WARNING: Local (127.0.0.1) DNS resolver found in resolv.conf and containers
+can't use it. Using default external servers : [8.8.8.8 8.8.4.4]
+</pre> <p>If you see this warning, first check to see if you use <code class="highlighter-rouge">dnsmasq</code>:</p> <pre class="highlight" data-language="bash">$ ps aux |grep dnsmasq
+</pre>  <p>If your container needs to resolve hosts which are internal to your network, the public nameservers will not be adequate. You have two choices:</p> <ul> <li>You can specify a DNS server for Docker to use, <strong>or</strong>
+</li> <li>You can disable <code class="highlighter-rouge">dnsmasq</code> in NetworkManager. If you do this, NetworkManager will add your true DNS nameserver to <code class="highlighter-rouge">/etc/resolv.conf</code>, but you will lose the possible benefits of <code class="highlighter-rouge">dnsmasq</code>.</li> </ul> <p><strong>You only need to use one of these methods.</strong></p> <h3 id="specify-dns-servers-for-docker">Specify DNS servers for Docker</h3> <p>The default location of the configuration file is <code class="highlighter-rouge">/etc/docker/daemon.json</code>. You can change the location of the configuration file using the <code class="highlighter-rouge">--config-file</code> daemon flag. The documentation below assumes the configuration file is located at <code class="highlighter-rouge">/etc/docker/daemon.json</code>.</p> <ol> <li> <p>Create or edit the Docker daemon configuration file, which defaults to <code class="highlighter-rouge">/etc/docker/daemon.json</code> file, which controls the Docker daemon configuration.</p> <pre class="highlight" data-language="bash">$ sudo nano /etc/docker/daemon.json
+</pre>  </li> <li> <p>Add a <code class="highlighter-rouge">dns</code> key with one or more IP addresses as values. If the file has existing contents, you only need to add or edit the <code class="highlighter-rouge">dns</code> line.</p> <pre class="highlight" data-language="json">{
+	"dns": ["8.8.8.8", "8.8.4.4"]
+}
+</pre>  <p>If your internal DNS server cannot resolve public IP addresses, include at least one DNS server which can, so that you can connect to Docker Hub and so that your containers can resolve internet domain names.</p> <p>Save and close the file.</p> </li> <li> <p>Restart the Docker daemon.</p> <pre class="highlight" data-language="bash">$ sudo service docker restart
+</pre>  </li> <li> <p>Verify that Docker can resolve external IP addresses by trying to pull an image:</p> <pre class="highlight" data-language="bash">$ docker pull hello-world
+</pre>  </li> <li> <p>If necessary, verify that Docker containers can resolve an internal hostname by pinging it.</p> <pre class="highlight" data-language="bash">$ docker run --rm -it alpine ping -c4 &lt;my_internal_host&gt;
+
+PING google.com (192.168.1.2): 56 data bytes
+64 bytes from 192.168.1.2: seq=0 ttl=41 time=7.597 ms
+64 bytes from 192.168.1.2: seq=1 ttl=41 time=7.635 ms
+64 bytes from 192.168.1.2: seq=2 ttl=41 time=7.660 ms
+64 bytes from 192.168.1.2: seq=3 ttl=41 time=7.677 ms
+</pre>  </li> </ol> <h4 id="disable-dnsmasq">Disable <code class="highlighter-rouge">dnsmasq</code>
+</h4> <h5 id="ubuntu">Ubuntu</h5> <p>If you prefer not to change the Docker daemon’s configuration to use a specific IP address, follow these instructions to disable <code class="highlighter-rouge">dnsmasq</code> in NetworkManager.</p> <ol> <li> <p>Edit the <code class="highlighter-rouge">/etc/NetworkManager/NetworkManager.conf</code> file.</p> </li> <li> <p>Comment out the <code class="highlighter-rouge">dns=dnsmasq</code> line by adding a <code class="highlighter-rouge">#</code> character to the beginning of the line.</p> <pre># dns=dnsmasq
+</pre> <p>Save and close the file.</p> </li> <li> <p>Restart both NetworkManager and Docker. As an alternative, you can reboot your system.</p> <pre class="highlight" data-language="bash">$ sudo restart network-manager
+$ sudo restart docker
+</pre>  </li> </ol> <h5 id="rhel-centos-or-fedora">RHEL, CentOS, or Fedora</h5> <p>To disable <code class="highlighter-rouge">dnsmasq</code> on RHEL, CentOS, or Fedora:</p> <ol> <li> <p>Disable the <code class="highlighter-rouge">dnsmasq</code> service:</p> <pre class="highlight" data-language="bash">$ sudo service dnsmasq stop
+
+$ sudo systemctl disable dnsmasq
+</pre>  </li> <li> <p>Configure the DNS servers manually using the <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html" target="_blank" class="_">Red Hat documentation</a>.</p> </li> </ol> <h3 id="allow-access-to-the-remote-api-through-a-firewall">Allow access to the remote API through a firewall</h3> <p>If you run a firewall on the same host as you run Docker and you want to access the Docker Remote API from another host and remote access is enabled, you need to configure your firewall to allow incoming connections on the Docker port, which defaults to <code class="highlighter-rouge">2376</code> if TLS encrypted transport is enabled or <code class="highlighter-rouge">2375</code> otherwise.</p> <h4 id="specific-instructions-for-ufw">Specific instructions for UFW</h4> <p><a href="https://help.ubuntu.com/community/UFW" target="_blank">UFW (Uncomplicated Firewall)</a> drops all forwarding traffic and all incoming traffic by default. If you want to access the Docker Remote API from another host and you have enabled remote access, you need to configure UFW to allow incoming connections on the Docker port, which defaults to <code class="highlighter-rouge">2376</code> if TLS encrypted transport is enabled or <code class="highlighter-rouge">2375</code> otherwise. By default, Docker runs <strong>without</strong> TLS enabled. If you do not use TLS, you are strongly discouraged from allowing access to the Docker Remote API from remote hosts, to prevent remote privilege-escalation attacks.</p> <p>To configure UFW and allow incoming connections on the Docker port:</p> <ol> <li> <p>Verify that UFW is enabled.</p> <pre class="highlight" data-language="bash">$ sudo ufw status
+</pre>  <p>If <code class="highlighter-rouge">ufw</code> is not enabled, the remaining steps will not be helpful.</p> </li> <li> <p>Edit the UFW configuration file, which is usually <code class="highlighter-rouge">/etc/default/ufw</code> or <code class="highlighter-rouge">/etc/sysconfig/ufw</code>. Set the <code class="highlighter-rouge">DEFAULT_FORWARD_POLICY</code> policy to <code class="highlighter-rouge">ACCEPT</code>.</p> <pre>DEFAULT_FORWARD_POLICY="ACCEPT"
+</pre> <p>Save and close the file.</p> </li> <li> <p>If you need to enable access to the Docker Remote API from external hosts and understand the security implications (see the section before this procedure), then configure UFW to allow incoming connections on the Docker port, which is <code class="highlighter-rouge">2375</code> if you do not use TLS, and <code class="highlighter-rouge">2376</code> if you do.</p> <pre class="highlight" data-language="bash">$ sudo ufw allow 2376/tcp
+</pre>  </li> <li> <p>Reload UFW.</p> <pre class="highlight" data-language="bash">$ sudo ufw reload
+</pre>  </li> </ol> <h3 id="your-kernel-does-not-support-cgroup-swap-limit-capabilities"><code class="highlighter-rouge">Your kernel does not support cgroup swap limit capabilities</code></h3> <p>On Ubuntu or Debian hosts, You may see messages similar to the following when working with an image.</p> <pre data-language="">WARNING: Your kernel does not support swap limit capabilities. Limitation discarded.
+</pre> <p>This warning does not occur on RPM-based systems, which enable these capabilities by default.</p> <p>If you don’t need these capabilities, you can ignore the warning. You can enable these capabilities on Ubuntu or Debian by following these instructions. Memory and swap accounting incur an overhead of about 1% of the total available memory and a 10% overall performance degradation, even if Docker is not running.</p> <ol> <li> <p>Log into the Ubuntu or Debian host as a user with <code class="highlighter-rouge">sudo</code> privileges.</p> </li> <li> <p>Edit the <code class="highlighter-rouge">/etc/default/grub</code> file. Add or edit the <code class="highlighter-rouge">GRUB_CMDLINE_LINUX</code> line to add the following two key-value pairs:</p> <pre>GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
+</pre> <p>Save and close the file.</p> </li> <li> <p>Update GRUB.</p> <pre class="highlight" data-language="bash">$ sudo update-grub
+</pre>  <p>If your GRUB configuration file has incorrect syntax, an error will occur. In this case, repeat steps 3 and 4.</p> <p>The changes will take effect when the system is rebooted.</p> </li> </ol> <h2 id="next-steps">Next steps</h2> <ul> <li>Continue with the <a href="../../../userguide/">User Guide</a>.</li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=Docker" target="_blank">Docker</a>, <a href="https://docs.docker.com/glossary/?term=Docker%20documentation" target="_blank">Docker documentation</a>, <a href="https://docs.docker.com/glossary/?term=requirements" target="_blank">requirements</a>, <a href="https://docs.docker.com/glossary/?term=apt" target="_blank">apt</a>, <a href="https://docs.docker.com/glossary/?term=installation" target="_blank">installation</a>, <a href="https://docs.docker.com/glossary/?term=ubuntu" target="_blank">ubuntu</a>, <a href="https://docs.docker.com/glossary/?term=install" target="_blank">install</a>, <a href="https://docs.docker.com/glossary/?term=uninstall" target="_blank">uninstall</a>, <a href="https://docs.docker.com/glossary/?term=upgrade" target="_blank">upgrade</a>, <a href="https://docs.docker.com/glossary/?term=update" target="_blank">update</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/installation/linux/linux-postinstall/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/installation/linux/linux-postinstall/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,534 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Get Started (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content=" After you install Docker, you can try out the Docker API. ">
+  <meta name="keywords" content="get, started, with, docker, api, engine, -, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/api/get-started/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Get started with the Docker API</h1>  <p>After you <a href="../../installation/">install Docker</a>, you can try out the Docker API.</p> <p>Optionally, install an SDK for the language you are using. Official SDKs are available for Python and Go, and a number of community maintained libraries for other languages.</p> <p><a href="../sdks/">Learn more about installing and using Docker SDKs</a>.</p> <p>These examples show how to perform the same operation using Python, Go, or by using <code class="highlighter-rouge">curl</code> directly.</p> <h2 id="versioned-api">Versioned API</h2> <p>The Python and Go examples used here do not specify the API version to use, because they use features that have been part of Docker for a long time. The Docker API is fully backward compatible.</p> <p>To see the highest version of the API your Docker daemon and client support, use <code class="highlighter-rouge">docker version</code>:</p> <pre class="highlight" data-language="bash">$ docker version
+
+Client:
+ Version:      17.04.0-ce
+ API version:  1.28
+ Go version:   go1.7.5
+ Git commit:   4845c56
+ Built:        Wed Apr  5 06:06:36 2017
+ OS/Arch:      darwin/amd64
+
+Server:
+ Version:      17.04.0-ce
+ API version:  1.28 (minimum version 1.12)
+ Go version:   go1.7.5
+ Git commit:   4845c56
+ Built:        Tue Apr  4 00:37:25 2017
+ OS/Arch:      linux/amd64
+ Experimental: true
+</pre>  <p>You can specify the API version to use, in one of the following ways:</p> <ul> <li> <p>When using <code class="highlighter-rouge">curl</code> directly, specify the version as the first part of the URL. For instance, if the endpoint is <code class="highlighter-rouge">/containers/</code>, you can use <code class="highlighter-rouge">/v1.27/containers/</code>.</p> </li> <li> <p>For the SDKs, or to force the Docker CLI to use a specific version of the API, set the environment variable <code class="highlighter-rouge">DOCKER_API_VERSION</code> to the correct version. This works on Linux, Windows, or macOS clients.</p> <pre class="highlight" data-language="bash">DOCKER_API_VERSION='1.27'
+</pre>  <p>While the environment variable is set, that version of the API is used, even if the Docker daemon supports a newer version.</p> </li> <li> <p>For the SDKs, you can also specify the API version programmatically, as a parameter to the <code class="highlighter-rouge">client</code> object. See the <a href="https://github.com/moby/moby/blob/master/client/client.go#L136" target="_blank" class="_">Go constructor</a> or the <a href="https://docker-py.readthedocs.io/en/stable/client.html" target="_blank">Python SDK documentation for <code class="highlighter-rouge">client</code></a>.</p> </li> </ul> <h2 id="api-examples">API Examples</h2> <h3 id="run-a-container">Run a container</h3> <p>This first example shows how to run a container using the Docker API. On the command line, you would use the <code class="highlighter-rouge">docker run</code> command, but this is just as easy to do from your own apps too.</p> <p>This is the equivalent of typing <code class="highlighter-rouge">docker run alpine echo hello world</code> at the command prompt:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-run-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-run-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-run-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-run-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+print client.containers.run("alpine", ["echo", "hello", "world"])
+</pre>  </div> <div id="tab-run-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "io"
+  "os"
+
+  "github.com/docker/docker/client"
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/api/types/container"
+  "golang.org/x/net/context"
+)
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  _, err = cli.ImagePull(ctx, "docker.io/library/alpine", types.ImagePullOptions{})
+  if err != nil {
+    panic(err)
+  }
+
+  resp, err := cli.ContainerCreate(ctx, &amp;container.Config{
+    Image: "alpine",
+    Cmd:   []string{"echo", "hello world"},
+  }, nil, nil, "")
+  if err != nil {
+    panic(err)
+  }
+
+  if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
+    panic(err)
+  }
+
+  if _, err = cli.ContainerWait(ctx, resp.ID); err != nil {
+    panic(err)
+  }
+
+  out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{ShowStdout: true})
+  if err != nil {
+    panic(err)
+  }
+
+  io.Copy(os.Stdout, out)
+}
+</pre>  </div> <div id="tab-run-curl" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
+  -d '{"Image": "alpine", "Cmd": ["echo", "hello world"]}' \
+  -X POST http:/v1.24/containers/create
+{"Id":"1c6594faf5","Warnings":null}
+
+$ curl --unix-socket /var/run/docker.sock -X POST http:/v1.24/containers/1c6594faf5/start
+
+$ curl --unix-socket /var/run/docker.sock -X POST http:/v1.24/containers/1c6594faf5/wait
+{"StatusCode":0}
+
+$ curl --unix-socket /var/run/docker.sock "http:/v1.24/containers/1c6594faf5/logs?stdout=1"
+hello world
+</pre>  </div> </div>  <h3 id="run-a-container-in-the-background">Run a container in the background</h3> <p>You can also run containers in the background, the equivalent of typing <code class="highlighter-rouge">docker run -d bfirsh/reticulate-splines</code>:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-rundetach-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-rundetach-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-rundetach-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-rundetach-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+container = client.containers.run("bfirsh/reticulate-splines", detach=True)
+print container.id
+</pre>  </div> <div id="tab-rundetach-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "fmt"
+  "io"
+  "os"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/api/types/container"
+  "github.com/docker/docker/client"
+  "golang.org/x/net/context"
+)
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  imageName := "bfirsh/reticulate-splines"
+
+  out, err := cli.ImagePull(ctx, imageName, types.ImagePullOptions{})
+  if err != nil {
+    panic(err)
+  }
+  io.Copy(os.Stdout, out)
+
+  resp, err := cli.ContainerCreate(ctx, &amp;container.Config{
+    Image: imageName,
+  }, nil, nil, "")
+  if err != nil {
+    panic(err)
+  }
+
+  if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
+    panic(err)
+  }
+
+  fmt.Println(resp.ID)
+}
+</pre>  </div> <div id="tab-rundetach-curl" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
+  -d '{"Image": "bfirsh/reticulate-splines"}' \
+  -X POST http:/v1.24/containers/create
+{"Id":"1c6594faf5","Warnings":null}
+
+$ curl --unix-socket /var/run/docker.sock -X POST http:/v1.24/containers/1c6594faf5/start
+</pre>  </div> </div>  <h3 id="list-and-manage-containers">List and manage containers</h3> <p>You can use the API to list containers that are running, just like using <code class="highlighter-rouge">docker ps</code>:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-listcontainers-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-listcontainers-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-listcontainers-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-listcontainers-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+for container in client.containers.list():
+  print container.id
+</pre>  </div> <div id="tab-listcontainers-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "context"
+  "fmt"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/client"
+)
+
+func main() {
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
+  if err != nil {
+    panic(err)
+  }
+
+  for _, container := range containers {
+    fmt.Println(container.ID)
+  }
+}
+</pre>  </div> <div id="tab-listcontainers-curl" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock http:/v1.24/containers/json
+[{
+  "Id":"ae63e8b89a26f01f6b4b2c9a7817c31a1b6196acf560f66586fbc8809ffcd772",
+  "Names":["/tender_wing"],
+  "Image":"bfirsh/reticulate-splines",
+  ...
+}]
+</pre>  </div> </div>  <h3 id="stop-all-running-containers">Stop all running containers</h3> <p>Now that you know what containers exist, you can perform operations on them. For example, to stop all running containers:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-stopcontainers-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-stopcontainers-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-stopcontainers-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-stopcontainers-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+for container in client.containers.list():
+  container.stop()
+</pre>  </div> <div id="tab-stopcontainers-go" class="tab-pane fade in"> <pre class="highlight" data-language="go">package main
+
+import (
+  "context"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/client"
+)
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+  if err != nil {
+    panic(err)
+  }
+
+  for _, container := range containers {
+    if err := cli.ContainerStop(ctx, container.ID, nil); err != nil {
+      panic(err)
+    }
+  }
+}
+</pre>  </div> <div id="tab-stopcontainers-curl" class="tab-pane fade in"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock http:/v1.24/containers/json
+[{
+  "Id":"ae63e8b89a26f01f6b4b2c9a7817c31a1b6196acf560f66586fbc8809ffcd772",
+  "Names":["/tender_wing"],
+  "Image":"bfirsh/reticulate-splines",
+  ...
+}]
+
+$ curl --unix-socket /var/run/docker.sock \
+  -X POST http:/v1.24/containers/ae63e8b89a26/stop
+</pre>  </div> </div>  <h3 id="print-the-logs-of-a-specific-container">Print the logs of a specific container</h3> <p>You can also perform actions on individual containers. This example prints the logs of a container given its ID:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-containerlogs-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-containerlogs-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-containerlogs-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-containerlogs-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+container = client.containers.get('f1064a8a4c82')
+print container.logs()
+</pre>  </div> <div id="tab-containerlogs-go" class="tab-pane fade in"> <pre class="highlight" data-language="go">package main
+
+import (
+  "context"
+  "io"
+  "os"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/client"
+)
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  options := types.ContainerLogsOptions{ShowStdout: true}
+  out, err := cli.ContainerLogs(ctx, "f1064a8a4c82", options)
+  if err != nil {
+    panic(err)
+  }
+
+  io.Copy(os.Stdout, out)
+}
+</pre>  </div> <div id="tab-containerlogs-curl" class="tab-pane fade in"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock "http:/v1.24/containers/ca5f55cdb/logs?stdout=1"
+Reticulating spline 1...
+Reticulating spline 2...
+Reticulating spline 3...
+Reticulating spline 4...
+Reticulating spline 5...
+</pre>  </div> </div>  <h3 id="list-all-images">List all images</h3> <p>List the images on your Engine, similar to <code class="highlighter-rouge">docker images</code>:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-listimages-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-listimages-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-listimages-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-listimages-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+for image in client.images.list():
+  print image.id
+</pre>  </div> <div id="tab-listimages-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "context"
+  "fmt"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/client"
+)
+
+func main() {
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  images, err := cli.ImageList(context.Background(), types.ImageListOptions{})
+  if err != nil {
+    panic(err)
+  }
+
+  for _, image := range images {
+    fmt.Println(image.ID)
+  }
+}
+</pre>  </div> <div id="tab-listimages-curl" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock http:/v1.24/images/json
+[{
+  "Id":"sha256:31d9a31e1dd803470c5a151b8919ef1988ac3efd44281ac59d43ad623f275dcd",
+  "ParentId":"sha256:ee4603260daafe1a8c2f3b78fd760922918ab2441cbb2853ed5c439e59c52f96",
+  ...
+}]
+</pre>  </div> </div>  <h3 id="pull-images">Pull images</h3> <p>Pull images, like <code class="highlighter-rouge">docker pull</code>:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-pullimages-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-pullimages-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-pullimages-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-pullimages-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+image = client.images.pull("alpine")
+print image.id
+</pre>  </div> <div id="tab-pullimages-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "io"
+  "os"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/client"
+  "golang.org/x/net/context"
+)
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  out, err := cli.ImagePull(ctx, "alpine", types.ImagePullOptions{})
+  if err != nil {
+    panic(err)
+  }
+
+  defer out.Close()
+
+  io.Copy(os.Stdout, out)
+}
+</pre>  </div> <div id="tab-pullimages-curl" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ curl --unix-socket /var/run/docker.sock \
+  -X POST "http:/v1.24/images/create?fromImage=alpine"
+{"status":"Pulling from library/alpine","id":"3.1"}
+{"status":"Pulling fs layer","progressDetail":{},"id":"8f13703509f7"}
+{"status":"Downloading","progressDetail":{"current":32768,"total":2244027},"progress":"[\u003e                                                  ] 32.77 kB/2.244 MB","id":"8f13703509f7"}
+...
+</pre>  </div> </div>  <h3 id="pull-images-with-authentication">Pull images with authentication</h3> <p>Pull images, like <code class="highlighter-rouge">docker pull</code>, with authentication:</p> <blockquote> <p><strong>Note</strong>: Credentials are sent in the clear. Docker’s official registries use HTTPS. Private registries should also be configured to use HTTPS.</p> </blockquote> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-pullimages-auth-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-pullimages-auth-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-pullimages-auth-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-pullimages-auth-python" class="tab-pane fade in active"> <p>The Python SDK retrieves authentication information from the <a href="../../reference/commandline/login/#credentials-store">credentials store</a> file and integrates with <a href="https://github.com/docker/docker-credential-helpers" target="_blank" class="_">credential helpers</a>. It is possible to override these credentials, but that is out of scope for this Getting Started guide. After using <code class="highlighter-rouge">docker login</code>, the Python SDK uses these credentials automatically.</p> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+image = client.images.pull("alpine")
+print image.id
+</pre>  </div> <div id="tab-pullimages-auth-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "io"
+  "os"
+  "encoding/json"
+  "encoding/base64"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/client"
+  "golang.org/x/net/context"
+)
+
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  authConfig := types.AuthConfig{
+      Username: "username",
+      Password: "password",
+  }
+  encodedJSON, err := json.Marshal(authConfig)
+  if err != nil {
+      panic(err)
+  }
+  authStr := base64.URLEncoding.EncodeToString(encodedJSON)
+
+  out, err := cli.ImagePull(ctx, "alpine", types.ImagePullOptions{RegistryAuth:
+  authStr})
+  if err != nil {
+    panic(err)
+  }
+
+  defer out.Close()
+  io.Copy(os.Stdout, out)
+}
+</pre>  </div> <div id="tab-pullimages-curl" class="tab-pane fade"> <p>This example will leave the credentials in your shell’s history, so consider this a naive implementation. The credentials are passed as a Base-64-encoded JSON structure.</p> <pre class="highlight" data-language="bash">$ JSON=$(echo '{"username": "string", "password": "string", "serveraddress": "string"}' | base64)
+
+$ curl --unix-socket /var/run/docker.sock \
+  -H "Content-Type: application/tar" 
+  -X POST "http:/v1.24/images/create?fromImage=alpine"
+  -H "X-Registry-Auth"
+  -d "$JSON"
+{"status":"Pulling from library/alpine","id":"3.1"}
+{"status":"Pulling fs layer","progressDetail":{},"id":"8f13703509f7"}
+{"status":"Downloading","progressDetail":{"current":32768,"total":2244027},"progress":"[\u003e                                                  ] 32.77 kB/2.244 MB","id":"8f13703509f7"}
+...
+</pre>  </div> </div>  <h3 id="commit-containers">Commit containers</h3> <p>Commit containers to create images from their contents:</p> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" data-target="#tab-commit-python" data-group="python">Python</a></li> <li><a data-toggle="tab" data-target="#tab-commit-go" data-group="go">Go</a></li> <li><a data-toggle="tab" data-target="#tab-commit-curl" data-group="curl">Curl</a></li> </ul> <div class="tab-content"> <div id="tab-commit-python" class="tab-pane fade in active"> <pre class="highlight" data-language="python">import docker
+client = docker.from_env()
+container = client.containers.run("alpine", ["touch", "/helloworld"], detach=True)
+container.wait()
+image = container.commit("helloworld")
+print image.id
+</pre>  </div> <div id="tab-commit-go" class="tab-pane fade"> <pre class="highlight" data-language="go">package main
+
+import (
+  "fmt"
+
+  "github.com/docker/docker/api/types"
+  "github.com/docker/docker/api/types/container"
+  "github.com/docker/docker/client"
+  "golang.org/x/net/context"
+)
+
+func main() {
+  ctx := context.Background()
+  cli, err := client.NewEnvClient()
+  if err != nil {
+    panic(err)
+  }
+
+  createResp, err := cli.ContainerCreate(ctx, &amp;container.Config{
+    Image: "alpine",
+    Cmd:   []string{"touch", "/helloworld"},
+  }, nil, nil, "")
+  if err != nil {
+    panic(err)
+  }
+
+  if err := cli.ContainerStart(ctx, createResp.ID, types.ContainerStartOptions{}); err != nil {
+    panic(err)
+  }
+
+  if _, err = cli.ContainerWait(ctx, createResp.ID); err != nil {
+    panic(err)
+  }
+
+  commitResp, err := cli.ContainerCommit(ctx, createResp.ID, types.ContainerCommitOptions{Reference: "helloworld"})
+  if err != nil {
+    panic(err)
+  }
+
+  fmt.Println(commitResp.ID)
+}
+</pre>  </div> <div id="tab-commit-curl" class="tab-pane fade"> <pre class="highlight" data-language="bash">$ docker run -d alpine touch /helloworld
+0888269a9d584f0fa8fc96b3c0d8d57969ceea3a64acf47cd34eebb4744dbc52
+$ curl --unix-socket /var/run/docker.sock\
+  -X POST "http:/v1.24/commit?container=0888269a9d&amp;repo=helloworld"
+{"Id":"sha256:6c86a5cd4b87f2771648ce619e319f3e508394b5bfc2cdbd2d60f59d52acda6c"}
+</pre>  </div> </div>  <h2 id="next-steps">Next steps</h2> <ul> <li><a href="https://docker-py.readthedocs.io" target="_blank">Full documentation for the Python SDK</a></li> <li><a href="https://godoc.org/github.com/moby/moby/client" target="_blank">Full documentation for the Go SDK</a></li> <li><a href="https://docs.docker.com/engine/api/v1.27/" target="_blank">Full documentation for the HTTP API</a></li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=developing" target="_blank">developing</a>, <a href="https://docs.docker.com/glossary/?term=api" target="_blank">api</a>, <a href="https://docs.docker.com/glossary/?term=sdk" target="_blank">sdk</a>, <a href="https://docs.docker.com/glossary/?term=developers" target="_blank">developers</a>, <a href="https://docs.docker.com/glossary/?term=rest" target="_blank">rest</a>, <a href="https://docs.docker.com/glossary/?term=curl" target="_blank">curl</a>, <a href="https://docs.docker.com/glossary/?term=python" target="_blank">python</a>, <a href="https://docs.docker.com/glossary/?term=go" target="_blank">go</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/api/get-started/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/api/get-started/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

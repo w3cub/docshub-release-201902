@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Graylog Extended Format (GELF) Logging Driver (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="The gelf logging driver is a convenient format that is understood by a number of tools such as Graylog, Logstash, and Fluentd. Many tools use this &hellip;">
+  <meta name="keywords" content="graylog, extended, format, logging, driver, gelf, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/admin/logging/gelf/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Graylog Extended Format logging driver</h1>  <p>The <code class="highlighter-rouge">gelf</code> logging driver is a convenient format that is understood by a number of tools such as <a href="https://www.graylog.org/" target="_blank">Graylog</a>, <a href="https://www.elastic.co/products/logstash" target="_blank">Logstash</a>, and <a href="http://www.fluentd.org/" target="_blank">Fluentd</a>. Many tools use this format.</p> <p>In GELF, every log message is a dict with the following fields:</p> <ul> <li>version</li> <li>host (who sent the message in the first place)</li> <li>timestamp</li> <li>short and long version of the message</li> <li>any custom fields you configure yourself</li> </ul> <h2 id="usage">Usage</h2> <p>To use the <code class="highlighter-rouge">gelf</code> driver as the default logging driver, set the <code class="highlighter-rouge">log-driver</code> and <code class="highlighter-rouge">log-opt</code> keys to appropriate values in the <code class="highlighter-rouge">daemon.json</code> file, which is located in <code class="highlighter-rouge">/etc/docker/</code> on Linux hosts or <code class="highlighter-rouge">C:\ProgramData\docker\config\daemon.json</code> on Windows Server. For more about configuring Docker using <code class="highlighter-rouge">daemon.json</code>, see <a href="../../../reference/commandline/dockerd/#daemon-configuration-file">daemon.json</a>.</p> <p>The following example sets the log driver to <code class="highlighter-rouge">gelf</code> and sets the <code class="highlighter-rouge">gelf-address</code> option.</p> <pre class="highlight" data-language="json">{
+  "log-driver": "gelf",
+  "log-opts": {
+    "gelf-address": "udp://1.2.3.4:12201"
+  }
+}
+</pre>  <p>Restart Docker for the changes to take effect.</p> <p>To use <code class="highlighter-rouge">gelf</code> as the default logging driver for new containers, pass the <code class="highlighter-rouge">--log-driver</code> and <code class="highlighter-rouge">--log-opt</code> options to the Docker daemon:</p> <pre class="highlight" data-language="bash">dockerd
+  -–log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
+</pre>  <p>To make the configuration permanent, you can configure it in <code class="highlighter-rouge">/etc/docker/daemon.json</code>:</p> <pre class="highlight" data-language="json">{
+  "log-driver": "gelf",
+  "log-opts":  {
+    "gelf-address": "udp://1.2.3.4:12201"
+  }
+}
+</pre>  <p>You can set the logging driver for a specific container by setting the <code class="highlighter-rouge">--log-driver</code> flag when using <code class="highlighter-rouge">docker create</code> or <code class="highlighter-rouge">docker run</code>:</p> <pre class="highlight" data-language="bash">$ docker run \
+      -–log-driver gelf –-log-opt gelf-address=udp://1.2.3.4:12201 \
+      alpine echo hello world
+</pre>  <h3 id="gelf-options">GELF options</h3> <p>The <code class="highlighter-rouge">gelf</code> logging driver supports the following options:</p> <table> <thead> <tr> <th style="text-align: left">Option</th> <th style="text-align: left">Description</th> <th style="text-align: left">Example value</th> </tr> </thead> <tbody> <tr> <td style="text-align: left"><code class="highlighter-rouge">gelf-address</code></td> <td style="text-align: left">The address of the GELF server. <code class="highlighter-rouge">udp</code> is the only supported URI specifier and you must specify the port.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt gelf-address=udp://192.168.0.42:12201</code></td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">gelf-compression-type</code></td> <td style="text-align: left">The type of compression the GELF driver uses to compress each log message. Allowed values are <code class="highlighter-rouge">gzip</code>, <code class="highlighter-rouge">zlib</code> and <code class="highlighter-rouge">none</code>. The default is <code class="highlighter-rouge">gzip</code>.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt gelf-compression-type=gzip</code></td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">gelf-compression-level</code></td> <td style="text-align: left">The level of compression when <code class="highlighter-rouge">gzip</code> or <code class="highlighter-rouge">zlib</code> is the <code class="highlighter-rouge">gelf-compression-type</code>. An integer in the range of <code class="highlighter-rouge">-1</code> to <code class="highlighter-rouge">9</code> (BestCompression). Default value is 1 (BestSpeed). Higher levels provide more compression at lower speed. Either <code class="highlighter-rouge">-1</code> or <code class="highlighter-rouge">0</code> disables compression.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt gelf-compression-level=2</code></td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">tag</code></td> <td style="text-align: left">A string that is appended to the <code class="highlighter-rouge">APP-NAME</code> in the <code class="highlighter-rouge">gelf</code> message. By default, Docker uses the first 12 characters of the container ID to tag log messages. Refer to the <a href="../log_tags/">log tag option documentation</a> for customizing the log tag format.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt tag=mailer</code></td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">labels</code></td> <td style="text-align: left">Applies when starting the Docker daemon. A comma-separated list of logging-related labels this daemon will accept. Adds additional key on the <code class="highlighter-rouge">extra</code> fields, prefixed by an underscore (<code class="highlighter-rouge">_</code>). Used for advanced <a href="../log_tags/">log tag options</a>.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt labels=production_status,geo</code></td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">env</code></td> <td style="text-align: left">Applies when starting the Docker daemon. A comma-separated list of logging-related environment variables this daemon will accept. Adds additional key on the <code class="highlighter-rouge">extra</code> fields, prefixed by an underscore (<code class="highlighter-rouge">_</code>). Used for advanced <a href="../log_tags/">log tag options</a>.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt env=os,customer</code></td> </tr> <tr> <td style="text-align: left"><code class="highlighter-rouge">env-regex</code></td> <td style="text-align: left">Similar to and compatible with <code class="highlighter-rouge">env</code>. A regular expression to match logging-related environment variables. Used for advanced <a href="../log_tags/">log tag options</a>.</td> <td style="text-align: left"><code class="highlighter-rouge">--log-opt env-regex=^(os | customer).</code></td> </tr> </tbody> </table> <h3 id="examples">Examples</h3> <p>This example configures the container to use the GELF server running at <code class="highlighter-rouge">192.168.0.42</code> on port <code class="highlighter-rouge">12201</code>.</p> <pre class="highlight" data-language="bash">$ docker run -dit \
+             --log-driver=gelf \
+             --log-opt gelf-address=udp://192.168.0.42:12201 \
+             alpine sh
+</pre>   
+<p><a href="https://docs.docker.com/glossary/?term=graylog" target="_blank">graylog</a>, <a href="https://docs.docker.com/glossary/?term=gelf" target="_blank">gelf</a>, <a href="https://docs.docker.com/glossary/?term=logging" target="_blank">logging</a>, <a href="https://docs.docker.com/glossary/?term=driver" target="_blank">driver</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/admin/logging/gelf/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/admin/logging/gelf/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

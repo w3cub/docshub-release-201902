@@ -1,0 +1,158 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Use Multi-stage Builds (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="Multi-stage builds are a new feature in Docker 17.05, and they will be exciting to anyone who has struggled to optimize Dockerfiles while keeping &hellip;">
+  <meta name="keywords" content="use, multi-stage, builds, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/userguide/eng-image/multistage-build/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Use multi-stage builds</h1>  <p>Multi-stage builds are a new feature in Docker 17.05, and they will be exciting to anyone who has struggled to optimize Dockerfiles while keeping them easy to read and maintain.</p> <blockquote> <p><strong>Acknowledgment</strong>: Special thanks to <a href="https://twitter.com/alexellisuk" target="_blank">Alex Ellis</a> for granting permission to use his blog post <a href="http://blog.alexellis.io/mutli-stage-docker-builds/" target="_blank">Builder pattern vs. Multi-stage builds in Docker</a> as the basis of the examples below.</p> </blockquote> <h2 id="before-multi-stage-builds">Before multi-stage builds</h2> <p>One of the most challenging things about building images is keeping the image size down. Each instruction in the Dockerfile adds a layer to the image, and you need to remember to clean up any artifacts you don’t need before moving on to the next layer. To write a really efficient Dockerfile, you have traditionally needed to employ shell tricks and other logic to keep the layers as small as possible and to ensure that each layer has the artifacts it needs from the previous layer and nothing else.</p> <p>It was actually very common to have one Dockerfile to use for development (which contained everything needed to build your application), and a slimmed-down one to use for production, which only contained your application and exactly what was needed to run it. This has been referred to as the “builder pattern”. Maintaining two Dockerfiles is not ideal.</p> <p>Here’s an example of a <code class="highlighter-rouge">Dockerfile.build</code> and <code class="highlighter-rouge">Dockerfile</code> which adhere to the builder pattern above:</p> <p><strong><code class="highlighter-rouge">Dockerfile.build</code></strong>:</p> <pre class="highlight" data-language="conf">FROM golang:1.7.3
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html  
+COPY app.go .
+RUN go get -d -v golang.org/x/net/html \
+  &amp;&amp; CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+</pre>  <p>Notice that this example also artificially compresses two <code class="highlighter-rouge">RUN</code> commands together using the Bash <code class="highlighter-rouge">&amp;&amp;</code> operator, to avoid creating an additional layer in the image. This is failure-prone and hard to maintain. It’s easy to insert another command and forget to continue the line using the <code class="highlighter-rouge">\</code> character, for example.</p> <p><strong><code class="highlighter-rouge">Dockerfile</code></strong>:</p> <pre class="highlight" data-language="conf">FROM alpine:latest  
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY app .
+CMD ["./app"]  
+</pre>  <p><strong><code class="highlighter-rouge">build.sh</code></strong>:</p> <pre class="highlight" data-language="bash">#!/bin/sh
+echo Building alexellis2/href-counter:build
+
+docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \  
+    -t alexellis2/href-counter:build . -f Dockerfile.build
+
+docker create --name extract alexellis2/href-counter:build  
+docker cp extract:/go/src/github.com/alexellis/href-counter/app ./app  
+docker rm -f extract
+
+echo Building alexellis2/href-counter:latest
+
+docker build --no-cache -t alexellis2/href-counter:latest .
+rm ./app
+</pre>  <p>When you run the <code class="highlighter-rouge">build.sh</code> script, it needs to build the first image, create a container from it in order to copy the artifact out, then build the second image. Both images take up room on your system and you still have the <code class="highlighter-rouge">app</code> artifact on your local disk as well.</p> <p>Multi-stage builds vastly simplify this situation!</p> <h2 id="use-multi-stage-builds">Use multi-stage builds</h2> <p>With multi-stage builds, you use multiple <code class="highlighter-rouge">FROM</code> statements in your Dockerfile. Each <code class="highlighter-rouge">FROM</code> instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don’t want in the final image. To show how this works, Let’s adapt the Dockerfile from the previous section to use multi-stage builds.</p> <p><strong><code class="highlighter-rouge">Dockerfile</code></strong>:</p> <pre class="highlight" data-language="conf">FROM golang:1.7.3
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html  
+COPY app.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest  
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=0 /go/src/github.com/alexellis/href-counter/app .
+CMD ["./app"]  
+</pre>  <p>You only need the single Dockerfile. You don’t need a separate build script, either. Just run <code class="highlighter-rouge">docker build</code>.</p> <pre class="highlight" data-language="bash">$ docker build -t alexellis2/href-counter:latest .
+</pre>  <p>The end result is the same tiny production image as before, with a significant reduction in complexity. You don’t need to create any intermediate images and you don’t need to extract any artifacts to your local system at all.</p> <p>How does it work? The second <code class="highlighter-rouge">FROM</code> instruction starts a new build stage with the <code class="highlighter-rouge">alpine:latest</code> image as its base. The <code class="highlighter-rouge">COPY --from=0</code> line copies just the built artifact from the previous stage into this new stage. The Go SDK and any intermediate artifacts are left behind, and not saved in the final image.</p> <h3 id="name-your-build-stages">Name your build stages</h3> <p>By default, the stages are not named, and you refer to them by their integer number, starting with 0 for the first <code class="highlighter-rouge">FROM</code> instruction. However, you can name your stages, by adding an <code class="highlighter-rouge">as &lt;NAME&gt;</code> to the <code class="highlighter-rouge">FROM</code> instruction. This example improves the previous one by naming the stages and using the name in the <code class="highlighter-rouge">COPY</code> instruction. This means that even if the instructions in your Dockerfile are re-ordered later, the <code class="highlighter-rouge">COPY</code> won’t break.</p> <pre class="highlight" data-language="conf">FROM golang:1.7.3 as builder
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html  
+COPY app.go    .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest  
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
+CMD ["./app"]  
+</pre>  <h2 id="next-steps">Next steps</h2> <ul> <li>Check out the blog post <a href="http://blog.alexellis.io/mutli-stage-docker-builds/" target="_blank">Builder pattern vs. Multi-stage builds in Docker</a> for full source code and a walk-through of these examples.</li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=images" target="_blank">images</a>, <a href="https://docs.docker.com/glossary/?term=containers" target="_blank">containers</a>, <a href="https://docs.docker.com/glossary/?term=best%20practices" target="_blank">best practices</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/userguide/eng-image/multistage-build/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/userguide/eng-image/multistage-build/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

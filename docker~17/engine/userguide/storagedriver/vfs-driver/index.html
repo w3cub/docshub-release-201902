@@ -1,0 +1,147 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Use the VFS Storage Driver (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="The VFS storage driver is not a union filesystem; instead, each layer is a directory on disk, and there is no copy-on-write support. To create a new &hellip;">
+  <meta name="keywords" content="use, vfs, storage, driver, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/userguide/storagedriver/vfs-driver/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Use the VFS storage driver</h1>  <p>The VFS storage driver is not a union filesystem; instead, each layer is a directory on disk, and there is no copy-on-write support. To create a new layer, a “deep copy” is done of the previous layer. This leads to lower performance and more space used on disk than other storage drivers. However, it is robust, stable, and works in every environment. It can also be used as a mechanism to verify other storage back-ends against, in a testing environment.</p> <h2 id="configure-docker-with-the-vfs-storage-driver">Configure Docker with the <code class="highlighter-rouge">vfs</code> storage driver</h2> <ol> <li> <p>Stop Docker.</p> <pre class="highlight" data-language="bash">$ sudo systemctl stop docker
+</pre>  </li> <li> <p>Edit <code class="highlighter-rouge">/etc/docker/daemon.json</code>. If it does not yet exist, create it. Assuming that the file was empty, add the following contents.</p> <pre class="highlight" data-language="json">{
+  "storage-driver": "vfs"
+}
+</pre>  <p>Docker will not start if the <code class="highlighter-rouge">daemon.json</code> file contains badly-formed JSON.</p> </li> <li> <p>Start Docker.</p> <pre class="highlight" data-language="bash">$ sudo systemctl start docker
+</pre>  </li> <li> <p>Verify that the daemon is using the <code class="highlighter-rouge">vfs</code> storage driver. Use the <code class="highlighter-rouge">docker info</code> command and look for <code class="highlighter-rouge">Storage Driver</code> and <code class="highlighter-rouge">Backing filesystem</code>.</p> <pre class="highlight" data-language="bash">$ docker info
+
+Storage Driver: vfs
+&lt;output truncated&gt;
+</pre>  </li> </ol> <p>Docker is now using the <code class="highlighter-rouge">vfs</code> storage driver. Docker has automatically created the <code class="highlighter-rouge">/var/lib/docker/vfs/</code> directory, which contains all the layers used by running containers.</p> <h2 id="how-the-vfs-storage-driver-works">How the <code class="highlighter-rouge">vfs</code> storage driver works</h2> <p>VFS is not a union filesystem. Instead, each image layer and the writable container layer are represented on the Docker host as subdirectories within <code class="highlighter-rouge">/var/lib/docker/</code>. The union mount provides the unified view of all layers. The directory names do not directly correspond to the IDs of the layers themselves.</p> <p>VFS does not support copy-on-write (COW), so each time a new layer is created, it is a deep copy of its parent layer. These layers are all located under <code class="highlighter-rouge">/var/lib/docker/dir/</code>.</p> <h3 id="example-image-and-container-on-disk-constructs">Example: Image and container on-disk constructs</h3> <p>The following <code class="highlighter-rouge">docker pull</code> command shows a Docker host downloading a Docker image comprising five layers.</p> <pre class="highlight" data-language="bash">$ docker pull ubuntu
+
+Using default tag: latest
+latest: Pulling from library/ubuntu
+e0a742c2abfd: Pull complete
+486cb8339a27: Pull complete
+dc6f0d824617: Pull complete
+4f7a5649a30e: Pull complete
+672363445ad2: Pull complete
+Digest: sha256:84c334414e2bfdcae99509a6add166bbb4fa4041dc3fa6af08046a66fed3005f
+Status: Downloaded newer image for ubuntu:latest
+</pre>  <p>After pulling, each of these layers is represented as a subdirectory of <code class="highlighter-rouge">/var/lib/docker/vfs/dir/</code>. The directory names do not correlate with the image layer IDs shown in the <code class="highlighter-rouge">docker pull</code> command. To see the size taken up on disk by each layer, you can use the <code class="highlighter-rouge">du -sh</code> command, which gives the size as a human-readable value.</p> <pre class="highlight" data-language="bash">$ ls -l /var/lib/docker/vfs/dir/
+
+total 0
+drwxr-xr-x.  2 root root  19 Aug  2 18:19 3262dfbe53dac3e1ab7dcc8ad5d8c4d586a11d2ac3c4234892e34bff7f6b821e
+drwxr-xr-x. 21 root root 224 Aug  2 18:23 6af21814449345f55d88c403e66564faad965d6afa84b294ae6e740c9ded2561
+drwxr-xr-x. 21 root root 224 Aug  2 18:23 6d3be4585ba32f9f5cbff0110e8d07aea5f5b9fbb1439677c27e7dfee263171c
+drwxr-xr-x. 21 root root 224 Aug  2 18:23 9ecd2d88ca177413ab89f987e1507325285a7418fc76d0dcb4bc021447ba2bab
+drwxr-xr-x. 21 root root 224 Aug  2 18:23 a292ac6341a65bf3a5da7b7c251e19de1294bd2ec32828de621d41c7ad31f895
+drwxr-xr-x. 21 root root 224 Aug  2 18:23 e92be7a4a4e3ccbb7dd87695bca1a0ea373d4f673f455491b1342b33ed91446b
+</pre>  <pre class="highlight" data-language="bash">$ du -sh /var/lib/docker/vfs/dir/*
+
+4.0K	/var/lib/docker/vfs/dir/3262dfbe53dac3e1ab7dcc8ad5d8c4d586a11d2ac3c4234892e34bff7f6b821e
+125M	/var/lib/docker/vfs/dir/6af21814449345f55d88c403e66564faad965d6afa84b294ae6e740c9ded2561
+104M	/var/lib/docker/vfs/dir/6d3be4585ba32f9f5cbff0110e8d07aea5f5b9fbb1439677c27e7dfee263171c
+125M	/var/lib/docker/vfs/dir/9ecd2d88ca177413ab89f987e1507325285a7418fc76d0dcb4bc021447ba2bab
+104M	/var/lib/docker/vfs/dir/a292ac6341a65bf3a5da7b7c251e19de1294bd2ec32828de621d41c7ad31f895
+104M	/var/lib/docker/vfs/dir/e92be7a4a4e3ccbb7dd87695bca1a0ea373d4f673f455491b1342b33ed91446b
+</pre>  <p>The above output shows that three layers each take 104M and two take 125M. These directories have only small differences from each other, but take up nearly the same amount of room on disk. This is one of the disadvantages of using the <code class="highlighter-rouge">vfs</code> storage driver.</p> <h2 id="related-information">Related information</h2> <ul> <li><a href="../imagesandcontainers/">Understand images, containers, and storage drivers</a></li> <li><a href="../selectadriver/">Select a storage driver</a></li> <li><a href="../aufs-driver/">AUFS storage driver in practice</a></li> <li><a href="../overlayfs-driver/">OverlayFS storage driver in practice</a></li> <li><a href="../btrfs-driver/">Btrfs storage driver in practice</a></li> <li><a href="../device-mapper-driver/">Device Mapper storage driver in practice</a></li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=container" target="_blank">container</a>, <a href="https://docs.docker.com/glossary/?term=storage" target="_blank">storage</a>, <a href="https://docs.docker.com/glossary/?term=driver" target="_blank">driver</a>, <a href="https://docs.docker.com/glossary/?term=vfs" target="_blank">vfs</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/userguide/storagedriver/vfs-driver/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/userguide/storagedriver/vfs-driver/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,129 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Create a Base Image (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="Most Dockerfiles start from a parent image. If you need to completely control the contents of your image, you might need to create a base image &hellip;">
+  <meta name="keywords" content="create, base, image, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/userguide/eng-image/baseimages/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Create a base image</h1>  <p>Most Dockerfiles start from a parent image. If you need to completely control the contents of your image, you might need to create a base image instead. Here’s the difference:</p> <ul> <li> <p>A <a href="https://docs.docker.com/reference/glossary/#parent-image" target="_blank">parent image</a> is the image that your image is based on. It refers to the contents of the <code class="highlighter-rouge">FROM</code> directive in the Dockerfile. Each subsequent declaration in the Dockerfile modifies this parent image. Most Dockerfiles start from a parent image, rather than a base image. However, the terms are sometimes used interchangeably.</p> </li> <li> <p>A <a href="https://docs.docker.com/reference/glossary/#base-image" target="_blank">base image</a> either has no <code class="highlighter-rouge">FROM</code> line in its Dockerfile, or has <code class="highlighter-rouge">FROM scratch</code>.</p> </li> </ul> <p>This topic shows you several ways to create a base image. The specific process will depend heavily on the Linux distribution you want to package. We have some examples below, and you are encouraged to submit pull requests to contribute new ones.</p> <h2 id="create-a-full-image-using-tar">Create a full image using tar</h2> <p>In general, you’ll want to start with a working machine that is running the distribution you’d like to package as a parent image, though that is not required for some tools like Debian’s <a href="https://wiki.debian.org/Debootstrap" target="_blank">Debootstrap</a>, which you can also use to build Ubuntu images.</p> <p>It can be as simple as this to create an Ubuntu parent image:</p> <pre class="highlight" data-language="">$ sudo debootstrap xenial xenial &gt; /dev/null
+$ sudo tar -C xenial -c . | docker import - xenial
+
+a29c15f1bf7a
+
+$ docker run xenial cat /etc/lsb-release
+
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=16.04
+DISTRIB_CODENAME=xenial
+DISTRIB_DESCRIPTION="Ubuntu 16.04 LTS"
+</pre>  <p>There are more example scripts for creating parent images in the Docker GitHub Repo:</p> <ul> <li><a href="https://github.com/moby/moby/blob/master/contrib/mkimage/busybox-static" target="_blank">BusyBox</a></li> <li>CentOS / Scientific Linux CERN (SLC) <a href="https://github.com/moby/moby/blob/master/contrib/mkimage/rinse" target="_blank">on Debian/Ubuntu</a> or <a href="https://github.com/moby/moby/blob/master/contrib/mkimage-yum.sh" target="_blank">on CentOS/RHEL/SLC/etc.</a>
+</li> <li><a href="https://github.com/moby/moby/blob/master/contrib/mkimage/debootstrap" target="_blank">Debian / Ubuntu</a></li> </ul> <h2 id="create-a-simple-parent-image-using-scratch">Create a simple parent image using scratch</h2> <p>You can use Docker’s reserved, minimal image, <code class="highlighter-rouge">scratch</code>, as a starting point for building containers. Using the <code class="highlighter-rouge">scratch</code> “image” signals to the build process that you want the next command in the <code class="highlighter-rouge">Dockerfile</code> to be the first filesystem layer in your image.</p> <p>While <code class="highlighter-rouge">scratch</code> appears in Docker’s repository on the hub, you can’t pull it, run it, or tag any image with the name <code class="highlighter-rouge">scratch</code>. Instead, you can refer to it in your <code class="highlighter-rouge">Dockerfile</code>. For example, to create a minimal container using <code class="highlighter-rouge">scratch</code>:</p> <pre class="highlight" data-language="">FROM scratch
+ADD hello /
+CMD ["/hello"]
+</pre>  <p>Assuming you built the “hello” executable example <a href="https://github.com/docker-library/hello-world/blob/master/hello.c" target="_blank">from the Docker GitHub example C-source code</a>, and you compiled it with the <code class="highlighter-rouge">-static</code> flag, you can then build this Docker image using: <code class="highlighter-rouge">docker build --tag hello .</code></p> <blockquote> <p><strong>Note</strong>: Because Docker for Mac and Docker for Windows use a Linux VM, you must compile this code using a Linux toolchain to end up with a Linux binary. Not to worry, you can quickly pull down a Linux image and a build environment and build within it:</p> </blockquote> <pre class="highlight" data-language="">$ docker run --rm -it -v $PWD:/build ubuntu:16.04
+container# apt-get update &amp;&amp; apt-get install build-essential
+container# cd /build
+container# gcc -o hello -static -nostartfiles hello.c
+</pre>  <p>Then you can run it (on Linux, Mac, or Windows) using: <code class="highlighter-rouge">docker run --rm hello</code></p> <p>This example creates the hello-world image used in the tutorials. If you want to test it out, you can clone <a href="https://github.com/docker-library/hello-world" target="_blank">the image repo</a>.</p> <h2 id="more-resources">More resources</h2> <p>There are lots more resources available to help you write your <code class="highlighter-rouge">Dockerfile</code>.</p> <ul> <li>There’s a <a href="../../../reference/builder/">complete guide to all the instructions</a> available for use in a <code class="highlighter-rouge">Dockerfile</code> in the reference section.</li> <li>To help you write a clear, readable, maintainable <code class="highlighter-rouge">Dockerfile</code>, we’ve also written a <a href="../dockerfile_best-practices/"><code class="highlighter-rouge">Dockerfile</code> best practices guide</a>.</li> <li>If your goal is to create a new Official Repository, be sure to read up on Docker’s <a href="https://docs.docker.com/docker-hub/official_repos/" target="_blank">Official Repositories</a>.</li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=images" target="_blank">images</a>, <a href="https://docs.docker.com/glossary/?term=base%20image" target="_blank">base image</a>, <a href="https://docs.docker.com/glossary/?term=examples" target="_blank">examples</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/userguide/eng-image/baseimages/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/userguide/eng-image/baseimages/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

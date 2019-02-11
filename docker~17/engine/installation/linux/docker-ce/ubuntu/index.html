@@ -1,0 +1,171 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ubuntu (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content=" To get started with Docker CE on Ubuntu, make sure you meet the prerequisites, then install Docker. ">
+  <meta name="keywords" content="get, docker, ce, for, ubuntu, engine, -, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/installation/linux/docker-ce/ubuntu/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Get Docker CE for Ubuntu</h1>  <p>To get started with Docker CE on Ubuntu, make sure you <a href="#prerequisites">meet the prerequisites</a>, then <a href="#install-docker-ce">install Docker</a>.</p> <h2 id="prerequisites">Prerequisites</h2> <h3 id="docker-ee-customers">Docker EE customers</h3> <p>To install Docker Enterprise Edition (Docker EE), go to <a href="https://docs.docker.com/engine/installation/linux/docker-ee/ubuntu/" target="_blank">Get Docker EE for Ubuntu</a> <strong>instead of this topic</strong>.</p> <p>To learn more about Docker EE, see <a href="https://www.docker.com/enterprise-edition/" target="_blank" class="_">Docker Enterprise Edition</a>.</p> <h3 id="os-requirements">OS requirements</h3> <p>To install Docker CE, you need the 64-bit version of one of these Ubuntu versions:</p> <ul> <li>Zesty 17.04</li> <li>Xenial 16.04 (LTS)</li> <li>Trusty 14.04 (LTS)</li> </ul> <p>Docker CE is supported on Ubuntu on <code class="highlighter-rouge">x86_64</code> (or <code class="highlighter-rouge">amd64</code>), <code class="highlighter-rouge">armhf</code>, and <code class="highlighter-rouge">s390x</code> (IBM Z) architectures.</p> <blockquote> <p><strong><code class="highlighter-rouge">s390x</code> limitations</strong>: IBM Z is only supported on Ubuntu Xenial and Zesty.</p> </blockquote> <h3 id="uninstall-old-versions">Uninstall old versions</h3> <p>Older versions of Docker were called <code class="highlighter-rouge">docker</code> or <code class="highlighter-rouge">docker-engine</code>. If these are installed, uninstall them:</p> <pre class="highlight" data-language="bash">$ sudo apt-get remove docker docker-engine docker.io
+</pre>  <p>It’s OK if <code class="highlighter-rouge">apt-get</code> reports that none of these packages are installed.</p> <p>The contents of <code class="highlighter-rouge">/var/lib/docker/</code>, including images, containers, volumes, and networks, are preserved. The Docker CE package is now called <code class="highlighter-rouge">docker-ce</code>.</p> <h3 id="recommended-extra-packages-for-trusty-1404">Recommended extra packages for Trusty 14.04</h3> <p>Unless you have a strong reason not to, install the <code class="highlighter-rouge">linux-image-extra-*</code> packages, which allow Docker to use the <code class="highlighter-rouge">aufs</code> storage drivers.</p> <pre class="highlight" data-language="bash">$ sudo apt-get update
+
+$ sudo apt-get install \
+    linux-image-extra-$(uname -r) \
+    linux-image-extra-virtual
+</pre>  <p>For Ubuntu 16.04 and higher, the Linux kernel includes support for OverlayFS, and Docker CE will use the <code class="highlighter-rouge">overlay2</code> storage driver by default.</p> <h2 id="install-docker-ce">Install Docker CE</h2> <p>You can install Docker CE in different ways, depending on your needs:</p> <ul> <li> <p>Most users <a href="#install-using-the-repository">set up Docker’s repositories</a> and install from them, for ease of installation and upgrade tasks. This is the recommended approach.</p> </li> <li> <p>Some users download the DEB package and <a href="#install-from-a-package">install it manually</a> and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.</p> </li> <li> <p>In testing and development environments, some users choose to use automated <a href="#install-using-the-convenience-script">convenience scripts</a> to install Docker.</p> </li> </ul> <h3 id="install-using-the-repository">Install using the repository</h3> <p>Before you install Docker CE for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.</p> <h4 id="set-up-the-repository">Set up the repository</h4> <ol> <li> <p>Update the <code class="highlighter-rouge">apt</code> package index:</p> <pre class="highlight" data-language="bash">$ sudo apt-get update
+</pre>  </li> <li> <p>Install packages to allow <code class="highlighter-rouge">apt</code> to use a repository over HTTPS:</p> <pre class="highlight" data-language="bash">$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+</pre>  </li> <li> <p>Add Docker’s official GPG key:</p> <pre class="highlight" data-language="bash">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+</pre>  <p>Verify that the key fingerprint is <code class="highlighter-rouge">9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88</code>.</p> <pre class="highlight" data-language="bash">$ sudo apt-key fingerprint 0EBFCD88
+
+pub   4096R/0EBFCD88 2017-02-22
+      Key fingerprint = 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release (CE deb) &lt;docker@docker.com&gt;
+sub   4096R/F273FCD8 2017-02-22
+</pre>  </li> <li> <p>Use the following command to set up the <strong>stable</strong> repository. You always need the <strong>stable</strong> repository, even if you want to install builds from the <strong>edge</strong> or <strong>test</strong> repositories as well. To add the <strong>edge</strong> or <strong>test</strong> repository, add the word <code class="highlighter-rouge">edge</code> or <code class="highlighter-rouge">test</code> (or both) after the word <code class="highlighter-rouge">stable</code> in the commands below.</p> <blockquote> <p><strong>Note</strong>: The <code class="highlighter-rouge">lsb_release -cs</code> sub-command below returns the name of your Ubuntu distribution, such as <code class="highlighter-rouge">xenial</code>. Sometimes, in a distribution like Linux Mint, you might have to change <code class="highlighter-rouge">$(lsb_release -cs)</code> to your parent Ubuntu distribution. For example, if you are using <code class="highlighter-rouge">Linux Mint Rafaela</code>, you could use <code class="highlighter-rouge">trusty</code>.</p> </blockquote> <p><strong>x86_64</strong>:</p> <pre class="highlight" data-language="bash">$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+</pre>  <p><strong>armhf</strong>:</p> <pre class="highlight" data-language="bash">$ sudo add-apt-repository \
+   "deb [arch=armhf] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+</pre>  <p><strong>s390x</strong>:</p> <pre class="highlight" data-language="bash">$ sudo add-apt-repository \
+   "deb [arch=s390x] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+</pre>  <blockquote> <p><strong>Note</strong>: Starting with Docker 17.06, stable releases are also pushed to the <strong>edge</strong> and <strong>test</strong> repositories.</p> </blockquote> <p><a href="../../../">Learn about <strong>stable</strong> and <strong>edge</strong> channels</a>.</p> </li> </ol> <h4 id="install-docker-ce-1">Install Docker CE</h4> <ol> <li> <p>Update the <code class="highlighter-rouge">apt</code> package index.</p> <pre class="highlight" data-language="bash">$ sudo apt-get update
+</pre>  </li> <li> <p>Install the latest version of Docker CE, or go to the next step to install a specific version. Any existing installation of Docker is replaced.</p> <pre class="highlight" data-language="bash">$ sudo apt-get install docker-ce
+</pre>  <blockquote class="warning"> <p>Got multiple Docker repositories?</p> <p>If you have multiple Docker repositories enabled, installing or updating without specifying a version in the <code class="highlighter-rouge">apt-get install</code> or <code class="highlighter-rouge">apt-get update</code> command will always install the highest possible version, which may not be appropriate for your stability needs.</p> </blockquote> </li> <li> <p>On production systems, you should install a specific version of Docker CE instead of always using the latest. This output is truncated. List the available versions.</p> <pre class="highlight" data-language="bash">$ apt-cache madison docker-ce
+
+docker-ce | 17.06.0~ce-0~ubuntu | https://download.docker.com/linux/ubuntu xenial/stable amd64 Packages
+</pre>  <p>The contents of the list depend upon which repositories are enabled. Choose a specific version to install. The second column is the version string. The third column is the repository name, which indicates which repository the package is from and by extension its stability level. To install a specific version, append the version string to the package name and separate them by an equals sign (<code class="highlighter-rouge">=</code>):</p> <pre class="highlight" data-language="bash">$ sudo apt-get install docker-ce=&lt;VERSION&gt;
+</pre>  <p>The Docker daemon starts automatically.</p> </li> <li> <p>Verify that Docker CE is installed correctly by running the <code class="highlighter-rouge">hello-world</code> image.</p> <pre class="highlight" data-language="bash">$ sudo docker run hello-world
+</pre>  <p>or if you run on armhf:</p> </li> </ol> <p> <code class="highlighter-rouge">bash $ sudo docker run armhf/hello-world</code></p> <pre class="highlight" data-language="">This command downloads a test image and runs it in a container. When the
+container runs, it prints an informational message and exits.
+</pre>  <p>Docker CE is installed and running. You need to use <code class="highlighter-rouge">sudo</code> to run Docker commands. Continue to <a href="../../linux-postinstall/">Linux postinstall</a> to allow non-privileged users to run Docker commands and for other optional configuration steps.</p> <h4 id="upgrade-docker-ce">Upgrade Docker CE</h4> <p>To upgrade Docker CE, first run <code class="highlighter-rouge">sudo apt-get update</code>, then follow the <a href="#install-docker">installation instructions</a>, choosing the new version you want to install.</p> <h3 id="install-from-a-package">Install from a package</h3> <p>If you cannot use Docker’s repository to install Docker CE, you can download the <code class="highlighter-rouge">.deb</code> file for your release and install it manually. You will need to download a new file each time you want to upgrade Docker CE.</p> <ol> <li> <p>Go to <a href="https://download.docker.com/linux/ubuntu/dists/" target="_blank">https://download.docker.com/linux/ubuntu/dists/</a>, choose your Ubuntu version, browse to <code class="highlighter-rouge">pool/stable/</code> and choose <code class="highlighter-rouge">amd64</code>, <code class="highlighter-rouge">armhf</code>, or <code class="highlighter-rouge">s390x</code>. Download the <code class="highlighter-rouge">.deb</code> file for the Docker version you want to install.</p> <blockquote> <p><strong>Note</strong>: To install an <strong>edge</strong> package, change the word <code class="highlighter-rouge">stable</code> in the URL to <code class="highlighter-rouge">edge</code>. <a href="../../../">Learn about <strong>stable</strong> and <strong>edge</strong> channels</a>.</p> </blockquote> </li> <li> <p>Install Docker CE, changing the path below to the path where you downloaded the Docker package.</p> <pre class="highlight" data-language="bash">$ sudo dpkg -i /path/to/package.deb
+</pre>  <p>The Docker daemon starts automatically.</p> </li> <li> <p>Verify that Docker CE is installed correctly by running the <code class="highlighter-rouge">hello-world</code> image.</p> <pre class="highlight" data-language="bash">$ sudo docker run hello-world
+</pre>  <p>This command downloads a test image and runs it in a container. When the container runs, it prints an informational message and exits.</p> </li> </ol> <p>Docker CE is installed and running. You need to use <code class="highlighter-rouge">sudo</code> to run Docker commands. Continue to <a href="../../linux-postinstall/">Post-installation steps for Linux</a> to allow non-privileged users to run Docker commands and for other optional configuration steps.</p> <h4 id="upgrade-docker-ce-1">Upgrade Docker CE</h4> <p>To upgrade Docker CE, download the newer package file and repeat the <a href="#install-from-a-package">installation procedure</a>, pointing to the new file.</p>  <h3 id="install-using-the-convenience-script">Install using the convenience script</h3> <p>Docker provides convenience scripts at <a href="https://get.docker.com/" target="_blank">get.docker.com</a> and <a href="https://test.docker.com/" target="_blank">test.docker.com</a> for installing stable and testing versions of Docker CE into development environments quickly and non-interactively. The source code for the scripts is in the <a href="https://github.com/docker/docker-install" target="_blank"><code class="highlighter-rouge">docker-install</code> repository</a>. <strong>Using these scripts is not recommended for production environments</strong>, and you should understand the potential risks before you use them:</p> <ul> <li>The scripts require <code class="highlighter-rouge">root</code> or <code class="highlighter-rouge">sudo</code> privileges in order to run. Therefore, you should carefully examine and audit the scripts before running them.</li> <li>The scripts attempt to detect your Linux distribution and version and configure your package management system for you. In addition, the scripts do not allow you to customize any installation parameters. This may lead to an unsupported configuration, either from Docker’s point of view or from your own organization’s guidelines and standards.</li> <li>The scripts install all dependencies and recommendations of the package manager without asking for confirmation. This may install a large number of packages, depending on the current configuration of your host machine.</li> <li>Do not use the convenience script if Docker has already been installed on the host machine using another mechanism.</li> </ul> <p>This example uses the script at <a href="https://get.docker.com/" target="_blank">get.docker.com</a> to install the latest stable release of Docker CE on Linux. To install the latest testing version, use <a href="https://test.docker.com/" target="_blank">test.docker.com</a> instead. In each of the commands below, replace each occurrence of <code class="highlighter-rouge">get</code> with <code class="highlighter-rouge">test</code>.</p> <blockquote class="warning"> <p><strong>Warning</strong>:</p> <p>Always examine scripts downloaded from the internet before running them locally.</p> </blockquote> <pre class="highlight" data-language="bash">$ curl -fsSL get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+
+&lt;output truncated&gt;
+
+If you would like to use Docker as a non-root user, you should now consider
+adding your user to the "docker" group with something like:
+
+  sudo usermod -aG docker your-user
+
+Remember that you will have to log out and back in for this to take effect!
+
+WARNING: Adding a user to the "docker" group will grant the ability to run
+         containers which can be used to obtain root privileges on the
+         docker host.
+         Refer to https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface
+         for more information.
+</pre>  <p>Docker CE is installed. It starts automatically on <code class="highlighter-rouge">DEB</code>-based distributions. On <code class="highlighter-rouge">RPM</code>-based distributions, you need to start it manually using the appropriate <code class="highlighter-rouge">systemctl</code> or <code class="highlighter-rouge">service</code> command. As the message indicates, non-root users are not able to run Docker commands by default.</p> <h4 id="upgrade-docker-after-using-the-convenience-script">Upgrade Docker after using the convenience script</h4> <p>If you installed Docker using the convenience script, you should upgrade Docker using your package manager directly. There is no advantage to re-running the convenience script, and it can cause issues if it attempts to re-add repositories which have already been added to the host machine.</p> <h2 id="uninstall-docker-ce">Uninstall Docker CE</h2> <ol> <li> <p>Uninstall the Docker CE package:</p> <pre class="highlight" data-language="bash">$ sudo apt-get purge docker-ce
+</pre>  </li> <li> <p>Images, containers, volumes, or customized configuration files on your host are not automatically removed. To delete all images, containers, and volumes:</p> <pre class="highlight" data-language="bash">$ sudo rm -rf /var/lib/docker
+</pre>  </li> </ol> <p>You must delete any edited configuration files manually.</p> <h2 id="next-steps">Next steps</h2> <ul> <li> <p>Continue to <a href="../../linux-postinstall/">Post-installation steps for Linux</a></p> </li> <li> <p>Continue with the <a href="../../../../userguide/">User Guide</a>.</p> </li> </ul>  
+<p><a href="https://docs.docker.com/glossary/?term=requirements" target="_blank">requirements</a>, <a href="https://docs.docker.com/glossary/?term=apt" target="_blank">apt</a>, <a href="https://docs.docker.com/glossary/?term=installation" target="_blank">installation</a>, <a href="https://docs.docker.com/glossary/?term=ubuntu" target="_blank">ubuntu</a>, <a href="https://docs.docker.com/glossary/?term=install" target="_blank">install</a>, <a href="https://docs.docker.com/glossary/?term=uninstall" target="_blank">uninstall</a>, <a href="https://docs.docker.com/glossary/?term=upgrade" target="_blank">upgrade</a>, <a href="https://docs.docker.com/glossary/?term=update" target="_blank">update</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

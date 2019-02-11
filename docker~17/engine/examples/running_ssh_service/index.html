@@ -1,0 +1,136 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SSHd (Engine) - Docker 17 - W3cubDocs</title>
+  
+  <meta name="description" content="The following Dockerfile sets up an SSHd service in a container that you can use to connect to and inspect other container’s volumes, or to get &hellip;">
+  <meta name="keywords" content="dockerize, ssh, service, sshd, engine, -, docker, docker~17">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/docker~17/engine/examples/running_ssh_service/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/docker~17.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>Dockerize an SSH service</h1>  <h2 id="build-an-eg_sshd-image">Build an <code class="highlighter-rouge">eg_sshd</code> image</h2> <p>The following <code class="highlighter-rouge">Dockerfile</code> sets up an SSHd service in a container that you can use to connect to and inspect other container’s volumes, or to get quick access to a test container.</p> <pre data-language="">FROM ubuntu:16.04
+
+RUN apt-get update &amp;&amp; apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:screencast' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" &gt;&gt; /etc/profile
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
+</pre> <p>Build the image using:</p> <pre class="highlight" data-language="bash">$ docker build -t eg_sshd .
+</pre>  <h2 id="run-a-test_sshd-container">Run a <code class="highlighter-rouge">test_sshd</code> container</h2> <p>Then run it. You can then use <code class="highlighter-rouge">docker port</code> to find out what host port the container’s port 22 is mapped to:</p> <pre class="highlight" data-language="bash">$ docker run -d -P --name test_sshd eg_sshd
+$ docker port test_sshd 22
+
+0.0.0.0:49154
+</pre>  <p>And now you can ssh as <code class="highlighter-rouge">root</code> on the container’s IP address (you can find it with <code class="highlighter-rouge">docker inspect</code>) or on port <code class="highlighter-rouge">49154</code> of the Docker daemon’s host IP address (<code class="highlighter-rouge">ip address</code> or <code class="highlighter-rouge">ifconfig</code> can tell you that) or <code class="highlighter-rouge">localhost</code> if on the Docker daemon host:</p> <pre class="highlight" data-language="bash">$ ssh root@192.168.1.2 -p 49154
+# The password is ``screencast``.
+root@f38c87f2a42d:/#
+</pre>  <h2 id="environment-variables">Environment variables</h2> <p>Using the <code class="highlighter-rouge">sshd</code> daemon to spawn shells makes it complicated to pass environment variables to the user’s shell via the normal Docker mechanisms, as <code class="highlighter-rouge">sshd</code> scrubs the environment before it starts the shell.</p> <p>If you’re setting values in the <code class="highlighter-rouge">Dockerfile</code> using <code class="highlighter-rouge">ENV</code>, you’ll need to push them to a shell initialization file like the <code class="highlighter-rouge">/etc/profile</code> example in the <code class="highlighter-rouge">Dockerfile</code> above.</p> <p>If you need to pass<code class="highlighter-rouge">docker run -e ENV=value</code> values, you will need to write a short script to do the same before you start <code class="highlighter-rouge">sshd -D</code> and then replace the <code class="highlighter-rouge">CMD</code> with that script.</p> <h2 id="clean-up">Clean up</h2> <p>Finally, clean up after your test by stopping and removing the container, and then removing the image.</p> <pre class="highlight" data-language="bash">$ docker stop test_sshd
+$ docker rm test_sshd
+$ docker rmi eg_sshd
+</pre>   
+<p><a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=example" target="_blank">example</a>, <a href="https://docs.docker.com/glossary/?term=package%20installation" target="_blank">package installation</a>, <a href="https://docs.docker.com/glossary/?term=networking" target="_blank">networking</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Docker, Inc.<br>Licensed under the Apache License, Version 2.0.<br>Docker and the Docker logo are trademarks or registered trademarks of Docker, Inc. in the United States and/or other countries.<br>Docker, Inc. and other parties may also have trademark rights in other terms used herein.<br>
+    <a href="https://docs.docker.com/engine/examples/running_ssh_service/" class="_attribution-link" target="_blank">https://docs.docker.com/engine/examples/running_ssh_service/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
