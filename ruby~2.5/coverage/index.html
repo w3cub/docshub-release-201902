@@ -1,0 +1,213 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Coverage - Ruby 2.5 - W3cubDocs</title>
+  
+  <meta name="description" content=" Coverage provides coverage measurement feature for Ruby. This feature is experimental, so these APIs may be changed in future. ">
+  <meta name="keywords" content="module, coverage, usageexample, -, ruby, ruby~2.5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ruby~2.5/coverage/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/ruby~2.5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ruby~2.5/" class="_nav-link" title="" style="margin-left:0;">Ruby 2.5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="module-Coverage" class="module"> module Coverage </h1> <section class="description"> <p><a href="../coverage/">Coverage</a> provides coverage measurement feature for Ruby. This feature is experimental, so these APIs may be changed in future.</p> <h1 id="module-Coverage-label-Usage">Usage</h1> <ol>
+<li> <p>require “coverage”</p> </li>
+<li> <p>do <a href="../coverage/#method-c-start">::start</a></p> </li>
+<li> <p>require or load Ruby source file</p> </li>
+<li> <p><a href="../coverage/#method-c-result">::result</a> will return a hash that contains filename as key and coverage array as value. A coverage array gives, for each line, the number of line execution by the interpreter. A <code>nil</code> value means coverage is disabled for this line (lines like <code>else</code> and <code>end</code>).</p> </li>
+</ol> <h1 id="module-Coverage-label-Example">Example</h1> <pre class="ruby" data-language="ruby">[foo.rb]
+s = 0
+10.times do |x|
+  s += x
+end
+
+if s == 45
+  p :ok
+else
+  p :ng
+end
+[EOF]
+
+require "coverage"
+Coverage.start
+require "foo.rb"
+p Coverage.result  #=&gt; {"foo.rb"=&gt;[1, 1, 10, nil, nil, 1, 1, nil, 0, nil]}
+</pre> </section> <section id="5Buntitled-5D" class="documentation-section"> <section id="public-class-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Class Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-c-peek_result"> <span class="method-callseq"> peek_result → hash </span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="peek_result-source"> <pre class="c" data-language="c">static VALUE
+rb_coverage_peek_result(VALUE klass)
+{
+    VALUE coverages = rb_get_coverages();
+    VALUE ncoverages = rb_hash_new();
+    if (!RTEST(coverages)) {
+        rb_raise(rb_eRuntimeError, "coverage measurement is not enabled");
+    }
+    st_foreach(RHASH_TBL(coverages), coverage_peek_result_i, ncoverages);
+
+    if (current_mode &amp; COVERAGE_TARGET_METHODS) {
+        rb_objspace_each_objects(method_coverage_i, &amp;ncoverages);
+    }
+
+    rb_hash_freeze(ncoverages);
+    return ncoverages;
+}</pre> </div> <p>Returns a hash that contains filename as key and coverage array as value.</p> <pre>{
+  "file.rb" =&gt; [1, 2, nil],
+  ...
+}</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-result"> <span class="method-callseq"> result → hash </span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="result-source"> <pre class="c" data-language="c">static VALUE
+rb_coverage_result(VALUE klass)
+{
+    VALUE ncoverages = rb_coverage_peek_result(klass);
+    rb_reset_coverages();
+    me2counter = Qnil;
+    return ncoverages;
+}</pre> </div> <p>Returns a hash that contains filename as key and coverage array as value and disables coverage measurement.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-running-3F"> <span class="method-callseq"> running? → bool </span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="running-3F-source"> <pre class="c" data-language="c">static VALUE
+rb_coverage_running(VALUE klass)
+{
+    VALUE coverages = rb_get_coverages();
+    return RTEST(coverages) ? Qtrue : Qfalse;
+}</pre> </div> <p>Returns true if coverage stats are currently being collected (after <a href="../coverage/#method-c-start">::start</a> call, but before <a href="../coverage/#method-c-result">::result</a> call)</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-start"> <span class="method-callseq"> start → nil </span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="start-source"> <pre class="c" data-language="c">static VALUE
+rb_coverage_start(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE coverages, opt;
+    int mode;
+
+    rb_scan_args(argc, argv, "01", &amp;opt);
+
+    if (argc == 0) {
+        mode = 0; /* compatible mode */
+    }
+    else if (opt == ID2SYM(rb_intern("all"))) {
+        mode = COVERAGE_TARGET_LINES | COVERAGE_TARGET_BRANCHES | COVERAGE_TARGET_METHODS;
+    }
+    else {
+        mode = 0;
+        opt = rb_convert_type(opt, T_HASH, "Hash", "to_hash");
+
+        if (RTEST(rb_hash_lookup(opt, ID2SYM(rb_intern("lines")))))
+            mode |= COVERAGE_TARGET_LINES;
+        if (RTEST(rb_hash_lookup(opt, ID2SYM(rb_intern("branches")))))
+            mode |= COVERAGE_TARGET_BRANCHES;
+        if (RTEST(rb_hash_lookup(opt, ID2SYM(rb_intern("methods")))))
+            mode |= COVERAGE_TARGET_METHODS;
+        if (mode == 0) {
+            rb_raise(rb_eRuntimeError, "no measuring target is specified");
+        }
+    }
+
+    if (mode &amp; COVERAGE_TARGET_METHODS) {
+        me2counter = rb_hash_new_compare_by_id();
+    }
+    else {
+        me2counter = Qnil;
+    }
+
+    coverages = rb_get_coverages();
+    if (!RTEST(coverages)) {
+        coverages = rb_hash_new();
+        rb_obj_hide(coverages);
+        current_mode = mode;
+        if (mode == 0) mode = COVERAGE_TARGET_LINES;
+        rb_set_coverages(coverages, mode, me2counter);
+    }
+    else if (current_mode != mode) {
+        rb_raise(rb_eRuntimeError, "cannot change the measuring target during coverage measurement");
+    }
+    return Qnil;
+}</pre> </div> <p>Enables coverage measurement.</p>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    Ruby Core © 1993–2017 Yukihiro Matsumoto<br>Licensed under the Ruby License.<br>Ruby Standard Library © contributors<br>Licensed under their own licenses.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
