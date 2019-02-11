@@ -1,0 +1,158 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Creating a RESTful Web Service With Spring Boot - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Kotlin works quite smoothly with Spring Boot and many of the steps found on the Spring Guides for creating a RESTful service can be followed &hellip;">
+  <meta name="keywords" content="creating, restful, web, service, with, spring, boot, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/tutorials/spring-boot-restful/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _kotlin">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1> Creating a RESTful Web Service with Spring Boot </h1> <table> <tr> <td> <strong>Author</strong> </td> <td> Hadi Hariri, Edoardo Vacchi, Sébastien Deleuze </td> </tr> <tr> <td> <strong>Source</strong> </td> <td> <a href="https://github.com/JetBrains/kotlin-examples/tree/master/tutorials/spring-boot-restful" target="_blank">On GitHub</a> </td> </tr> </table> This tutorial walks us through the process of creating a simple REST controller with Spring Boot <br> <br> <p>Kotlin works quite smoothly with Spring Boot and many of the steps found on the <a href="https://spring.io/guides" target="_blank">Spring Guides</a> for creating a RESTful service can be followed verbatim for Kotlin. There are some minor differences however when it comes to defining the Gradle configuration and the project layout structure, as well as the initialization code.</p> <p>In this tutorial we'll walk through the steps required. For a more thorough explanation of Spring Boot and RESTful services, please see <a href="https://spring.io/guides/gs/rest-service/" target="_blank">Building a RESTful Web Service</a>.</p> <p>Note that all classes in this tutorial are in the <code>org.jetbrains.kotlin.demo</code> package.</p> <h3 id="defining-the-project-and-dependencies">Defining the project and dependencies</h3> <p>In this tutorial we're going to be using Gradle but the same can be accomplished using either IntelliJ IDEA project structure or Maven. For details on setting up Gradle to work with Kotlin, see <a href="../../reference/using-gradle/">Using Gradle</a>.</p> <p>The Gradle file is pretty much standard for Spring Boot. The only differences are the structure layout for source folders for Kotlin, the required Kotlin dependencies and the <a href="../../reference/compiler-plugins/#kotlin-spring-compiler-plugi"><em>kotlin-spring</em></a> Gradle plugin (CGLIB proxies used for example for <code>@Configuration</code> and <code>@Bean</code> processing require <code>open</code> classes).</p> <pre>buildscript {
+    ext.kotlin_version = '1.2.41' // Required for Kotlin integration
+    ext.spring_boot_version = '1.5.4.RELEASE'
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Required for Kotlin integration
+	classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+    }
+}
+
+apply plugin: 'kotlin' // Required for Kotlin integration
+apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gs-rest-service'
+    version = '0.1.0'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+</pre> <h3 id="creating-a-greeting-data-class-and-controller">Creating a Greeting Data Class and Controller</h3> <p>The next step is to create Greeting Data class that has two properties: <em>id</em> and a <em>content</em></p> <pre data-language="kotlin">data class Greeting(val id: Long, val content: String)
+</pre> <p>We now define the <em>GreetingController</em> which serves requests of the form <em>/greeting?name={value}</em> and returns a JSON object representing an instance of <em>Greeting</em></p> <pre data-language="kotlin">@RestController
+class GreetingController {
+
+    val counter = AtomicLong()
+
+    @GetMapping("/greeting")
+    fun greeting(@RequestParam(value = "name", defaultValue = "World") name: String) =
+            Greeting(counter.incrementAndGet(), "Hello, $name")
+
+}
+</pre> <p>As can be seen, this is again pretty much a one-to-one translation of Java to Kotlin, with nothing special required for Kotlin.</p> <h3 id="creating-the-application-class">Creating the Application class</h3> <p>Finally we need to define an Application class. As Spring Boot looks for a public static main method, we need to define this in Kotlin. It could be done with the <em>@JvmStatic</em> annotation and a companion object but here we prefer using a <a href="../../reference/functions/">top-level function</a> defined outside Application class since it leads to more concise and clean code.</p> <p>No need to mark the Application class as <em>open</em> since we are using the <em>kotlin-spring</em> Gradle plugin which does that automatically.</p> <pre data-language="kotlin">@SpringBootApplication
+class Application
+
+fun main(args: Array&lt;String&gt;) {
+    SpringApplication.run(Application::class.java, *args)
+}
+</pre> <h3 id="running-the-application">Running the application</h3> <p>We can now use the any of the standard Gradle tasks for Spring Boot to run the application. As such, running</p> <pre>./gradlew bootRun
+</pre> <p>the application is compiled, resources bundled and launched, allowing us to access is via the browser (default port is 8080)</p> <p><img alt="Running App" src="data:image/png;base64,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"></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/tutorials/spring-boot-restful.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/tutorials/spring-boot-restful.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

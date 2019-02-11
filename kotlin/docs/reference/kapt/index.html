@@ -1,0 +1,187 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Annotation Processing With Kotlin - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content=" Annotation processors (see JSR 269) are supported in Kotlin with the kapt compiler plugin. ">
+  <meta name="keywords" content="annotation, processing, with, kotlin, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/kapt/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _kotlin">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="annotation-processing-with-kotlin">Annotation Processing with Kotlin</h1> <p>Annotation processors (see <a href="https://jcp.org/en/jsr/detail?id=269" target="_blank">JSR 269</a>) are supported in Kotlin with the <em>kapt</em> compiler plugin.</p> <p>Being short, you can use libraries such as <a href="https://google.github.io/dagger/" target="_blank">Dagger</a> or <a href="https://developer.android.com/topic/libraries/data-binding/index.html" target="_blank">Data Binding</a> in your Kotlin projects.</p> <p>Please read below about how to apply the <em>kapt</em> plugin to your Gradle/Maven build.</p> <h2 id="using-in-gradle">Using in Gradle</h2> <p>Apply the <code>kotlin-kapt</code> Gradle plugin:</p> <pre>apply plugin: 'kotlin-kapt'
+</pre> <p>Or you can apply it using the plugins DSL:</p> <pre>plugins {
+    id "org.jetbrains.kotlin.kapt" version "1.2.41"
+}
+</pre> <p>Then add the respective dependencies using the <code>kapt</code> configuration in your <code>dependencies</code> block:</p> <pre>dependencies {
+    kapt 'groupId:artifactId:version'
+}
+</pre> <p>If you previously used the <a href="https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#annotationProcessor_config" target="_blank">Android support</a> for annotation processors, replace usages of the <code>annotationProcessor</code> configuration with <code>kapt</code>. If your project contains Java classes, <code>kapt</code> will also take care of them.</p> <p>If you use annotation processors for your <code>androidTest</code> or <code>test</code> sources, the respective <code>kapt</code> configurations are named <code>kaptAndroidTest</code> and <code>kaptTest</code>. Note that <code>kaptAndroidTest</code> and <code>kaptTest</code> extends <code>kapt</code>, so you can just provide the <code>kapt</code> dependency and it will be available both for production sources and tests.</p> <h2 id="annotation-processor-arguments">Annotation Processor Arguments</h2> <p>Use <code>arguments {}</code> block to pass arguments to annotation processors:</p> <pre>kapt {
+    arguments {
+        arg("key", "value")
+    }
+}
+</pre> <h2 id="java-compiler-options">Java Compiler Options</h2> <p>Kapt uses Java compiler to run annotation processors.<br> Here is how you can pass arbitrary options to javac:</p> <pre>kapt {
+    javacOptions {
+        // Increase the max count of errors from annotation processors.
+        // Default is 100.
+        option("-Xmaxerrs", 500)
+    }
+}
+</pre> <h2 id="non-existent-type-correction">Non Existent Type Correction</h2> <p>Some annotation processors (such as <code>AutoFactory</code>) rely on precise types in declaration signatures. By default, Kapt replaces every unknown type (including types for the generated classes) to <code>NonExistentClass</code>, but you can change this behavior. Add the additional flag to the <code>build.gradle</code> file to enable error type inferring in stubs:</p> <pre>kapt {
+    correctErrorTypes = true
+}
+</pre> <h2 id="using-in-maven">Using in Maven</h2> <p>Add an execution of the <code>kapt</code> goal from kotlin-maven-plugin before <code>compile</code>:</p> <pre data-language="xml">&lt;execution&gt;
+    &lt;id&gt;kapt&lt;/id&gt;
+    &lt;goals&gt;
+        &lt;goal&gt;kapt&lt;/goal&gt;
+    &lt;/goals&gt;
+    &lt;configuration&gt;
+        &lt;sourceDirs&gt;
+            &lt;sourceDir&gt;src/main/kotlin&lt;/sourceDir&gt;
+            &lt;sourceDir&gt;src/main/java&lt;/sourceDir&gt;
+        &lt;/sourceDirs&gt;
+        &lt;annotationProcessorPaths&gt;
+            &lt;!-- Specify your annotation processors here. --&gt;
+            &lt;annotationProcessorPath&gt;
+                &lt;groupId&gt;com.google.dagger&lt;/groupId&gt;
+                &lt;artifactId&gt;dagger-compiler&lt;/artifactId&gt;
+                &lt;version&gt;2.9&lt;/version&gt;
+            &lt;/annotationProcessorPath&gt;
+        &lt;/annotationProcessorPaths&gt;
+    &lt;/configuration&gt;
+&lt;/execution&gt;
+</pre> <p>You can find a complete sample project showing the use of Kotlin, Maven and Dagger in the <a href="https://github.com/JetBrains/kotlin-examples/tree/master/maven/dagger-maven-example" target="_blank">Kotlin examples repository</a>.</p> <p>Please note that kapt is still not supported for IntelliJ IDEA’s own build system. Launch the build from the “Maven Projects” toolbar whenever you want to re-run the annotation processing.</p> <h2 id="using-in-cli">Using in CLI</h2> <p>Kapt compiler plugin is available in the binary distribution of the Kotlin compiler.</p> <p>You can attach the plugin by providing the path to its JAR file using the <code>Xplugin</code> kotlinc option:</p> <pre>-Xplugin=$KOTLIN_HOME/lib/kotlin-annotation-processing.jar
+</pre> <p>Here is a list of the available options:</p> <ul> <li>
+<code>sources</code> (<em>required</em>): An output path for the generated files.</li> <li>
+<code>classes</code> (<em>required</em>): An output path for the generated class files and resources.</li> <li>
+<code>stubs</code> (<em>required</em>): An output path for the stub files. In other words, some temporary directory.</li> <li>
+<code>incrementalData</code>: An output path for the binary stubs.</li> <li>
+<code>apclasspath</code> (<em>repeatable</em>): A path to the annotation processor JAR. Pass as many <code>apclasspath</code> options as many JARs you have.</li> <li>
+<code>apoptions</code>: A base64-encoded list of the annotation processor options. See <a href="#apjavac-options-encoding">AP/javac options encoding</a> for more information.</li> <li>
+<code>javacArguments</code>: A base64-encoded list of the options passed to javac. See <a href="#apjavac-options-encoding">AP/javac options encoding</a> for more information.</li> <li>
+<code>processors</code>: A comma-specified list of annotation processor qualified class names. If specified, kapt does not try to find annotation processors in <code>apclasspath</code>.</li> <li>
+<code>verbose</code>: Enable verbose output.</li> <li>
+<code>aptMode</code> (<em>required</em>) <ul> <li>
+<code>stubs</code> – only generate stubs needed for annotation processing;</li> <li>
+<code>apt</code> – only run annotation processing;</li> <li>
+<code>stubsAndApt</code> – generate stubs and run annotation processing.</li> </ul> </li> <li>
+<code>correctErrorTypes</code>: See <a href="#using-in-gradle">below</a>. Disabled by default.</li> </ul> <p>The plugin option format is: <code>-P plugin:&lt;plugin id&gt;:&lt;key&gt;=&lt;value&gt;</code>. Options can be repeated.</p> <p>An example:</p> <pre>-P plugin:org.jetbrains.kotlin.kapt3:sources=build/kapt/sources
+-P plugin:org.jetbrains.kotlin.kapt3:classes=build/kapt/classes
+-P plugin:org.jetbrains.kotlin.kapt3:stubs=build/kapt/stubs
+
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=lib/ap.jar
+-P plugin:org.jetbrains.kotlin.kapt3:apclasspath=lib/anotherAp.jar
+
+-P plugin:org.jetbrains.kotlin.kapt3:correctErrorTypes=true
+</pre> <h2 id="generating-kotlin-sources">Generating Kotlin Sources</h2> <p>Kapt can generate Kotlin sources. Just write the generated Kotlin source files to the directory specified by <code>processingEnv.options["kapt.kotlin.generated"]</code>, and these files will be compiled together with the main sources.</p> <p>You can find the complete sample in the <a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/kotlin-code-generation" target="_blank">kotlin-examples</a> Github repository.</p> <p>Note that Kapt does not support multiple rounds for the generated Kotlin files.</p> <h2 id="apjavac-options-encoding">AP/Javac Options Encoding</h2> <p><code>apoptions</code> and <code>javacArguments</code> CLI options accept an encoded map of options.<br> Here is how you can encode options by yourself:</p> <pre data-language="kotlin">fun encodeList(options: Map&lt;String, String&gt;): String {
+    val os = ByteArrayOutputStream()
+    val oos = ObjectOutputStream(os)
+
+    oos.writeInt(options.size)
+    for ((key, value) in options.entries) {
+        oos.writeUTF(key)
+        oos.writeUTF(value)
+    }
+
+    oos.flush()
+    return Base64.getEncoder().encodeToString(os.toByteArray())
+}
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/kapt.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/kapt.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

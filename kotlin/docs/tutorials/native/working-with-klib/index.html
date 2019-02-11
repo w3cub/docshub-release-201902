@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Working With Kotlin&#47;Native Libraries - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content=" In this tutorial we&#39;ll see ">
+  <meta name="keywords" content="working, with, kotlin, native, libraries, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/tutorials/native/working-with-klib/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _kotlin">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1> Working with Kotlin/Native Libraries </h1> <table> <tr> <td> <strong>Last Updated</strong> </td> <td> 22 January 2018 </td> </tr> </table> A look at how to work with Kotlin/Native libraries <br> <br> <p>In this tutorial we'll see</p> <ul> <li><a href="#what-is-kotlinnative-library">What is a Kotlin/Native Libary</a></li> <li><a href="#creating-a-kotlinnative-libraries">How to create a Kotlin/Native Library</a></li> <li><a href="#consuming-a-kotlinnative-library">How to consume Kotlin/Native libraries</a></li> <li><a href="#using-and-creating-library-repositories">How to use and create library repositories</a></li> </ul> <h2 id="what-is-kotlinnative-library">What is Kotlin/Native Library</h2> <p>The concept of a library, a collection of functions and other resources such as images, to be used by applications is available in Kotlin/Native and it is represented as a file with the extension <code>klib</code>. Kotlin/Native libraries are artifacts that are only available at compile time, i.e. we do not ship these as dependencies to our application (as we would for instance with DLL files on the Windows platform).</p> <p>A <code>klib</code> file is a compressed archive in zip format with the following directory structure:</p> <p>File <code>utils.klib</code></p> <pre>    targets/                    /* One or more target platforms */
+    
+        macbook/                /* When targeting macbook, this entry would appear */
+        
+            kotlin/             /* Kotlin code compiled to LLVM bitcode */
+            
+            native/             /* Bitcode for additonal native objects */ 
+            
+        linux/                  /* When targeting Linux, this entry would appear */
+        
+            kotlin/
+            
+            native/
+            
+    linkdata/                   /* A set of [ProtoBuf](https://github.com/google/protobuf) files with serialised linkage metadata */ 
+    
+    resources/                  /* Resource files such as images, etc. */
+
+    manifest                    /* A file in Java Property Format describing the library */ 
+</pre> <h2 id="creating-a-kotlinnative-libraries">Creating a Kotlin/Native Libraries</h2> <p>There are two ways we can create a Kotlin/Native library. The first and most common way is to use the Kotlin compiler. Let's assume we create a small library called <code>utils.kt</code> which contains the following two functions</p> <pre data-language="kotlin">package utils
+
+fun printMessage(message: String) {
+    println("Message: $message")
+}
+
+fun printWarning(warning: String) {
+    println("Warning: $warning")
+}
+</pre> <p>To create a library from this file, we can use the compiler with the parameter <code>-produce library</code> or <code>-p library</code> for short:</p> <pre>konanc utils.kt -p library
+</pre> <p>By default, the output of the filename is <code>library.klib</code>. We can override it using the <code>-output</code> or <code>-o</code> parameter:</p> <pre>konanc utils.kt -p library -o utils
+</pre> <p>The second way to create a library is using the <code>cinterop</code> tool which allows us to create a Kotlin/Native library from an existing C library. See the <a href="../interop-with-c/">Interop with C tutorial</a> on how to accomplish this.</p> <h2 id="consuming-a-kotlinnative-library">Consuming a Kotlin/Native Library</h2> <p>Now that we have our library, we can use it in our application. In our case this is a simple file named <code>sample.kt</code> with the following contents:</p> <pre data-language="kotlin">import utils.*
+
+fun main(args: Array&lt;String&gt;) {
+    printWarning("App is about to shut down!")
+}
+</pre> <p>Notice how we need to import the necessary package from the library on the first line using the <code>import</code> statement.</p> <p>In order for the compiler to correctly link in the library, we need to pass the library name using the <code>-library</code> or <code>-l</code> parameter</p> <pre>konanc sample.kt -l utils
+</pre> <p>This would then produce a single executable file with no runtime dependencies.</p> <h2 id="using-and-creating-library-repositories">Using and creating library repositories</h2> <p>Often it is useful to use the same library across multiple applications. To avoid having various copies of the same library, the Kotlin compiler can search for libraries in what's called a library repository. The default repository is usually installed under the folder <code>~/konanc/klib</code> and we can add and remove our own libraries with a utility named <code>klib</code> that ships as part of the compiler tools.</p> <h3 id="installing-libraries-to-the-default-repository">Installing libraries to the default repository</h3> <p>The easiest way to install a library so that it can be later referenced by any application is to use <code>klib</code> with the following command:</p> <pre>klib install utils
+</pre> <p>This will copy and extract the necessary files to the proper locations in the default library folder, allowing us to then compile our application and link a specific library without needing to have the <code>klib</code> file in the project folder:</p> <pre>konanc sample.kt -l utils
+</pre> <p>We can of course also uninstall libraries at any point by issuing the command:</p> <pre>klib remove utils
+</pre> <h3 id="installing-libraries-to-custom-repositories">Installing libraries to custom repositories</h3> <p>In addition to using the default repository, we can also have libraries stored in custom repositories, which can be useful for instance if we want to share libraries amongst a group of projects.</p> <p>In order to do this, we can once again use the command <code>klib</code>:</p> <pre>klib install utils -repository jetbrains
+</pre> <p>but this time adding the parameter <code>-repository</code> with the value <code>jetbrains</code>. This installs the <code>utils</code> library into a custom repository located in a subdirecty named <code>jetbrains</code> relative to where we execute the command. For instance if our project is located under the directory <code>/home/kotlin/projects/</code>, the above command would install the library to the directory <code>/home/kotlin/projects/jetbrains/utils</code>.</p> <p>For more information about the commands available for <code>klib</code> as well as the sequence when searching for libraries, please see the <a href="https://github.com/JetBrains/kotlin-native/blob/master/LIBRARIES.md#advanced-topics" target="_blank">README</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/tutorials/native/working-with-klib.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/tutorials/native/working-with-klib.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

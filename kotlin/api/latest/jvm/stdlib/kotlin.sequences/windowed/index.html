@@ -1,0 +1,157 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>kotlin.sequences.windowed - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content=" Platform and version requirements&#58; Kotlin 1.2 ">
+  <meta name="keywords" content="windowed, kotlin, sequences, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/api/latest/jvm/stdlib/kotlin.sequences/windowed/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _kotlin">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="windowed">windowed</h1>
+<div class="api-docs-breadcrumbs">
+<a href="../../../../../../">kotlin-stdlib</a> / <a href="../">kotlin.sequences</a> / <a href="../windowed/">windowed</a>
+</div> <div class="overload-group" data-kotlin-version="Kotlin 1.2">
+ <pre class="signature" data-language="kotlin">fun &lt;T&gt; Sequence&lt;T&gt;.windowed(
+    size: Int, 
+    step: Int = 1, 
+    partialWindows: Boolean = false
+): Sequence&lt;List&lt;T&gt;&gt;</pre> <p><strong>Platform and version requirements:</strong> Kotlin 1.2</p> <p>Returns a sequence of snapshots of the window of the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean)/size">size</a> sliding along this sequence with the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean)/step">step</a>, where each snapshot is a list.</p> <p>Several last lists may have less elements than the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean)/size">size</a>.</p> <p>Both <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean)/size">size</a> and <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean)/step">step</a> must be positive and can be greater than the number of elements in this sequence.</p> <div class="sample"><pre><code class="lang-kotlin">import kotlin.test.*
+import kotlin.coroutines.experimental.buildIterator
+import kotlin.coroutines.experimental.buildSequence
+
+fun main(args: Array&lt;String&gt;) {
+//sampleStart
+val sequence = generateSequence(1) { it + 1 }
+
+val windows = sequence.windowed(size = 5, step = 1)
+println(windows.take(4).toList()) // [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6], [3, 4, 5, 6, 7], [4, 5, 6, 7, 8]]
+
+val moreSparseWindows = sequence.windowed(size = 5, step = 3)
+println(moreSparseWindows.take(4).toList()) // [[1, 2, 3, 4, 5], [4, 5, 6, 7, 8], [7, 8, 9, 10, 11], [10, 11, 12, 13, 14]]
+
+val fullWindows = sequence.take(10).windowed(size = 5, step = 3)
+println(fullWindows.toList()) // [[1, 2, 3, 4, 5], [4, 5, 6, 7, 8]]
+
+val partialWindows = sequence.take(10).windowed(size = 5, step = 3, partialWindows = true)
+println(partialWindows.toList()) // [[1, 2, 3, 4, 5], [4, 5, 6, 7, 8], [7, 8, 9, 10], [10]]
+//sampleEnd
+}</code></pre></div> <h2 id="parameters">Parameters</h2> <p> <code>size</code> - the number of elements to take in each window</p> <p> <code>step</code> - the number of elements to move the window forward by on an each step, by default 1</p> <p> <code>partialWindows</code> - controls whether or not to keep partial windows in the end if any, by default <code>false</code> which means partial windows won't be preserved</p> </div> <div class="overload-group" data-kotlin-version="Kotlin 1.2">
+ <pre class="signature" data-language="kotlin">fun &lt;T, R&gt; Sequence&lt;T&gt;.windowed(
+    size: Int, 
+    step: Int = 1, 
+    partialWindows: Boolean = false, 
+    transform: (List&lt;T&gt;) -&gt; R
+): Sequence&lt;R&gt;</pre> <p><strong>Platform and version requirements:</strong> Kotlin 1.2</p> <p>Returns a sequence of results of applying the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/transform">transform</a> function to an each list representing a view over the window of the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/size">size</a> sliding along this sequence with the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/step">step</a>.</p> <p>Note that the list passed to the <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/transform">transform</a> function is ephemeral and is valid only inside that function. You should not store it or allow it to escape in some way, unless you made a snapshot of it. Several last lists may have less elements than the given <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/size">size</a>.</p> <p>Both <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/size">size</a> and <a href="../windowed/#kotlin.sequences%24windowed(kotlin.sequences.Sequence((kotlin.sequences.windowed.T)),%20kotlin.Int,%20kotlin.Int,%20kotlin.Boolean,%20kotlin.Function1((kotlin.collections.List((kotlin.sequences.windowed.T)),%20kotlin.sequences.windowed.R)))/step">step</a> must be positive and can be greater than the number of elements in this sequence.</p> <div class="sample"><pre><code class="lang-kotlin">import kotlin.test.*
+import kotlin.coroutines.experimental.buildIterator
+import kotlin.coroutines.experimental.buildSequence
+
+fun main(args: Array&lt;String&gt;) {
+//sampleStart
+val dataPoints = sequenceOf(10, 15, 18, 25, 19, 21, 14, 8, 5)
+
+val averaged = dataPoints.windowed(size = 4, step = 1, partialWindows = true) { window -&gt; window.average() }
+println(averaged.toList()) // [17.0, 19.25, 20.75, 19.75, 15.5, 12.0, 9.0, 6.5, 5.0]
+
+val averagedNoPartialWindows = dataPoints.windowed(size = 4, step = 1).map { it.average() }
+println(averagedNoPartialWindows.toList()) // [17.0, 19.25, 20.75, 19.75, 15.5, 12.0]
+//sampleEnd
+}</code></pre></div> <h2>Parameters</h2> <p> <code>size</code> - the number of elements to take in each window</p> <p> <code>step</code> - the number of elements to move the window forward by on an each step, by default 1</p> <p> <code>partialWindows</code> - controls whether or not to keep partial windows in the end if any, by default <code>false</code> which means partial windows won't be preserved</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/windowed.html" class="_attribution-link" target="_blank">https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/windowed.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
