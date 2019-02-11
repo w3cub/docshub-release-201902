@@ -1,0 +1,218 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Internal&#47;poll - Go - W3cubDocs</title>
+  
+  <meta name="description" content="Package poll supports non-blocking I&#47;O on file descriptors with polling. This supports I&#47;O operations that block only a goroutine, not a &hellip;">
+  <meta name="keywords" content="package, poll, internal, -, go">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/go/internal/poll/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/go.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/go/" class="_nav-link" title="" style="margin-left:0;">Go</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _go">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1> Package poll  </h1>     <ul id="short-nav">
+<li><code>import "internal/poll"</code></li>
+<li><a href="#pkg-overview" class="overviewLink">Overview</a></li>
+<li><a href="#pkg-index" class="indexLink">Index</a></li>
+</ul>     <h2>Overview </h2> <p> Package poll supports non-blocking I/O on file descriptors with polling. This supports I/O operations that block only a goroutine, not a thread. This is used by the net and os packages. It uses a poller built into the runtime, with support from the runtime scheduler. </p>      <h2>Index </h2>  <ul id="manual-nav">
+<li><a href="#pkg-variables">Variables</a></li>
+<li><a href="#DupCloseOnExec">func DupCloseOnExec(fd int) (int, string, error)</a></li>
+<li><a href="#PollDescriptor">func PollDescriptor() uintptr</a></li>
+<li><a href="#SendFile">func SendFile(dstFD *FD, src int, remain int64) (int64, error)</a></li>
+<li><a href="#Splice">func Splice(dst, src *FD, remain int64) (written int64, handled bool, sc string, err error)</a></li>
+<li><a href="#FD">type FD</a></li>
+<li> <a href="#FD.Accept">func (fd *FD) Accept() (int, syscall.Sockaddr, string, error)</a>
+</li>
+<li> <a href="#FD.Close">func (fd *FD) Close() error</a>
+</li>
+<li> <a href="#FD.Dup">func (fd *FD) Dup() (int, string, error)</a>
+</li>
+<li> <a href="#FD.Fchdir">func (fd *FD) Fchdir() error</a>
+</li>
+<li> <a href="#FD.Fchmod">func (fd *FD) Fchmod(mode uint32) error</a>
+</li>
+<li> <a href="#FD.Fchown">func (fd *FD) Fchown(uid, gid int) error</a>
+</li>
+<li> <a href="#FD.Fstat">func (fd *FD) Fstat(s *syscall.Stat_t) error</a>
+</li>
+<li> <a href="#FD.Fsync">func (fd *FD) Fsync() error</a>
+</li>
+<li> <a href="#FD.Ftruncate">func (fd *FD) Ftruncate(size int64) error</a>
+</li>
+<li> <a href="#FD.Init">func (fd *FD) Init(net string, pollable bool) error</a>
+</li>
+<li> <a href="#FD.Pread">func (fd *FD) Pread(p []byte, off int64) (int, error)</a>
+</li>
+<li> <a href="#FD.Pwrite">func (fd *FD) Pwrite(p []byte, off int64) (int, error)</a>
+</li>
+<li> <a href="#FD.RawControl">func (fd *FD) RawControl(f func(uintptr)) error</a>
+</li>
+<li> <a href="#FD.RawRead">func (fd *FD) RawRead(f func(uintptr) bool) error</a>
+</li>
+<li> <a href="#FD.RawWrite">func (fd *FD) RawWrite(f func(uintptr) bool) error</a>
+</li>
+<li> <a href="#FD.Read">func (fd *FD) Read(p []byte) (int, error)</a>
+</li>
+<li> <a href="#FD.ReadDirent">func (fd *FD) ReadDirent(buf []byte) (int, error)</a>
+</li>
+<li> <a href="#FD.ReadFrom">func (fd *FD) ReadFrom(p []byte) (int, syscall.Sockaddr, error)</a>
+</li>
+<li> <a href="#FD.ReadMsg">func (fd *FD) ReadMsg(p []byte, oob []byte) (int, int, int, syscall.Sockaddr, error)</a>
+</li>
+<li> <a href="#FD.Seek">func (fd *FD) Seek(offset int64, whence int) (int64, error)</a>
+</li>
+<li> <a href="#FD.SetBlocking">func (fd *FD) SetBlocking() error</a>
+</li>
+<li> <a href="#FD.SetDeadline">func (fd *FD) SetDeadline(t time.Time) error</a>
+</li>
+<li> <a href="#FD.SetReadDeadline">func (fd *FD) SetReadDeadline(t time.Time) error</a>
+</li>
+<li> <a href="#FD.SetWriteDeadline">func (fd *FD) SetWriteDeadline(t time.Time) error</a>
+</li>
+<li> <a href="#FD.SetsockoptByte">func (fd *FD) SetsockoptByte(level, name int, arg byte) error</a>
+</li>
+<li> <a href="#FD.SetsockoptIPMreq">func (fd *FD) SetsockoptIPMreq(level, name int, mreq *syscall.IPMreq) error</a>
+</li>
+<li> <a href="#FD.SetsockoptIPMreqn">func (fd *FD) SetsockoptIPMreqn(level, name int, mreq *syscall.IPMreqn) error</a>
+</li>
+<li> <a href="#FD.SetsockoptIPv6Mreq">func (fd *FD) SetsockoptIPv6Mreq(level, name int, mreq *syscall.IPv6Mreq) error</a>
+</li>
+<li> <a href="#FD.SetsockoptInet4Addr">func (fd *FD) SetsockoptInet4Addr(level, name int, arg [4]byte) error</a>
+</li>
+<li> <a href="#FD.SetsockoptInt">func (fd *FD) SetsockoptInt(level, name, arg int) error</a>
+</li>
+<li> <a href="#FD.SetsockoptLinger">func (fd *FD) SetsockoptLinger(level, name int, l *syscall.Linger) error</a>
+</li>
+<li> <a href="#FD.Shutdown">func (fd *FD) Shutdown(how int) error</a>
+</li>
+<li> <a href="#FD.WaitWrite">func (fd *FD) WaitWrite() error</a>
+</li>
+<li> <a href="#FD.Write">func (fd *FD) Write(p []byte) (int, error)</a>
+</li>
+<li> <a href="#FD.WriteMsg">func (fd *FD) WriteMsg(p []byte, oob []byte, sa syscall.Sockaddr) (int, int, error)</a>
+</li>
+<li> <a href="#FD.WriteOnce">func (fd *FD) WriteOnce(p []byte) (int, error)</a>
+</li>
+<li> <a href="#FD.WriteTo">func (fd *FD) WriteTo(p []byte, sa syscall.Sockaddr) (int, error)</a>
+</li>
+<li> <a href="#FD.Writev">func (fd *FD) Writev(v *[][]byte) (int64, error)</a>
+</li>
+<li><a href="#TimeoutError">type TimeoutError</a></li>
+<li> <a href="#TimeoutError.Error">func (e *TimeoutError) Error() string</a>
+</li>
+<li> <a href="#TimeoutError.Temporary">func (e *TimeoutError) Temporary() bool</a>
+</li>
+<li> <a href="#TimeoutError.Timeout">func (e *TimeoutError) Timeout() bool</a>
+</li>
+</ul> <h3>Package files</h3> <p>  <a href="https://golang.org/src/internal/poll/fd.go" target="_blank">fd.go</a> <a href="https://golang.org/src/internal/poll/fd_mutex.go" target="_blank">fd_mutex.go</a> <a href="https://golang.org/src/internal/poll/fd_poll_runtime.go" target="_blank">fd_poll_runtime.go</a> <a href="https://golang.org/src/internal/poll/fd_posix.go" target="_blank">fd_posix.go</a> <a href="https://golang.org/src/internal/poll/fd_unix.go" target="_blank">fd_unix.go</a> <a href="https://golang.org/src/internal/poll/hook_cloexec.go" target="_blank">hook_cloexec.go</a> <a href="https://golang.org/src/internal/poll/hook_unix.go" target="_blank">hook_unix.go</a> <a href="https://golang.org/src/internal/poll/sendfile_linux.go" target="_blank">sendfile_linux.go</a> <a href="https://golang.org/src/internal/poll/sock_cloexec.go" target="_blank">sock_cloexec.go</a> <a href="https://golang.org/src/internal/poll/sockopt.go" target="_blank">sockopt.go</a> <a href="https://golang.org/src/internal/poll/sockopt_linux.go" target="_blank">sockopt_linux.go</a> <a href="https://golang.org/src/internal/poll/sockopt_unix.go" target="_blank">sockopt_unix.go</a> <a href="https://golang.org/src/internal/poll/sockoptip.go" target="_blank">sockoptip.go</a> <a href="https://golang.org/src/internal/poll/splice_linux.go" target="_blank">splice_linux.go</a> <a href="https://golang.org/src/internal/poll/writev.go" target="_blank">writev.go</a>  </p>   <h2 id="pkg-variables">Variables</h2> <p> Accept4Func is used to hook the accept4 call. </p> <pre data-language="go">var Accept4Func func(int, int) (int, syscall.Sockaddr, error) = syscall.Accept4</pre> <p> AcceptFunc is used to hook the accept call. </p> <pre data-language="go">var AcceptFunc func(int) (int, syscall.Sockaddr, error) = syscall.Accept</pre> <p> CloseFunc is used to hook the close call. </p> <pre data-language="go">var CloseFunc func(int) error = syscall.Close</pre> <p> ErrFileClosing is returned when a file descriptor is used after it has been closed. </p> <pre data-language="go">var ErrFileClosing = errors.New("use of closed file")</pre> <p> ErrNetClosing is returned when a network descriptor is used after it has been closed. Keep this string consistent because of issue #4373: since historically programs have not been able to detect this error, they look for the string. </p> <pre data-language="go">var ErrNetClosing = errors.New("use of closed network connection")</pre> <p> ErrNoDeadline is returned when a request is made to set a deadline on a file type that does not use the poller. </p> <pre data-language="go">var ErrNoDeadline = errors.New("file type does not support deadline")</pre> <p> ErrTimeout is returned for an expired deadline. </p> <pre data-language="go">var ErrTimeout error = &amp;TimeoutError{}</pre> <p> TestHookDidWritev is a hook for testing writev. </p> <pre data-language="go">var TestHookDidWritev = func(wrote int) {}</pre> <h2 id="DupCloseOnExec">func DupCloseOnExec<a href="https://golang.org/src/internal/poll/fd_unix.go?s=11309:11357#L443" class="source" target="_blank">Source</a>  </h2> <pre data-language="go">func DupCloseOnExec(fd int) (int, string, error)</pre> <p> DupCloseOnExec dups fd and marks it close-on-exec. </p> <h2 id="PollDescriptor">func PollDescriptor<a href="https://golang.org/src/internal/poll/fd_poll_runtime.go?s=3762:3791#L150" class="source" target="_blank">Source</a>  </h2> <pre data-language="go">func PollDescriptor() uintptr</pre> <p> PollDescriptor returns the descriptor being used by the poller, or ^uintptr(0) if there isn't one. This is only used for testing. </p> <h2 id="SendFile">func SendFile<a href="https://golang.org/src/internal/poll/sendfile_linux.go?s=358:420#L4" class="source" target="_blank">Source</a>  </h2> <pre data-language="go">func SendFile(dstFD *FD, src int, remain int64) (int64, error)</pre> <p> SendFile wraps the sendfile system call. </p> <h2 id="Splice">func Splice<a href="https://golang.org/src/internal/poll/splice_linux.go?s=804:895#L19" class="source" target="_blank">Source</a>  </h2> <pre data-language="go">func Splice(dst, src *FD, remain int64) (written int64, handled bool, sc string, err error)</pre> <p> Splice transfers at most remain bytes of data from src to dst, using the splice system call to minimize copies of data from and to userspace. </p> <p> Splice creates a temporary pipe, to serve as a buffer for the data transfer. src and dst must both be stream-oriented sockets. </p> <p> If err != nil, sc is the system call which caused the error. </p> <h2 id="FD">type FD<a href="https://golang.org/src/internal/poll/fd_unix.go?s=450:1145#L8" class="source" target="_blank">Source</a>  </h2> <p> FD is a file descriptor. The net and os packages use this type as a field of a larger type representing a network connection or OS file. </p> <pre data-language="go">type FD struct {
+
+        // System file descriptor. Immutable until Close.
+        Sysfd int
+
+        // Whether this is a streaming descriptor, as opposed to a
+        // packet-based descriptor like a UDP socket. Immutable.
+        IsStream bool
+
+        // Whether a zero byte read indicates EOF. This is false for a
+        // message based socket connection.
+        ZeroReadIsEOF bool
+        // contains filtered or unexported fields
+}
+</pre> <h3 id="FD.Accept">func (*FD) Accept<a href="https://golang.org/src/internal/poll/fd_unix.go?s=9273:9334#L357" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Accept() (int, syscall.Sockaddr, string, error)</pre> <p> Accept wraps the accept network call. </p> <h3 id="FD.Close">func (*FD) Close<a href="https://golang.org/src/internal/poll/fd_unix.go?s=2285:2312#L76" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Close() error</pre> <p> Close closes the FD. The underlying file descriptor is closed by the destroy method when there are no remaining references. </p> <h3 id="FD.Dup">func (*FD) Dup<a href="https://golang.org/src/internal/poll/fd_unix.go?s=12207:12247#L475" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Dup() (int, string, error)</pre> <p> Dup duplicates the file descriptor. </p> <h3 id="FD.Fchdir">func (*FD) Fchdir<a href="https://golang.org/src/internal/poll/fd_unix.go?s=10778:10806#L421" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Fchdir() error</pre> <p> Fchdir wraps syscall.Fchdir. </p> <h3 id="FD.Fchmod">func (*FD) Fchmod<a href="https://golang.org/src/internal/poll/fd_posix.go?s=527:566#L14" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Fchmod(mode uint32) error</pre> <p> Fchmod wraps syscall.Fchmod. </p> <h3 id="FD.Fchown">func (*FD) Fchown<a href="https://golang.org/src/internal/poll/fd_posix.go?s=715:755#L23" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Fchown(uid, gid int) error</pre> <p> Fchown wraps syscall.Fchown. </p> <h3 id="FD.Fstat">func (*FD) Fstat<a href="https://golang.org/src/internal/poll/fd_unix.go?s=10946:10990#L430" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Fstat(s *syscall.Stat_t) error</pre> <p> Fstat wraps syscall.Fstat </p> <h3 id="FD.Fsync">func (*FD) Fsync<a href="https://golang.org/src/internal/poll/fd_posix.go?s=1105:1132#L41" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Fsync() error</pre> <p> Fsync wraps syscall.Fsync. </p> <h3 id="FD.Ftruncate">func (*FD) Ftruncate<a href="https://golang.org/src/internal/poll/fd_posix.go?s=914:955#L32" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Ftruncate(size int64) error</pre> <p> Ftruncate wraps syscall.Ftruncate. </p> <h3 id="FD.Init">func (*FD) Init<a href="https://golang.org/src/internal/poll/fd_unix.go?s=1423:1474#L44" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Init(net string, pollable bool) error</pre> <p> Init initializes the FD. The Sysfd field should already be set. This can be called multiple times on a single FD. The net argument is a network name from the net package (e.g., "tcp"), or "file". Set pollable to true if fd should be managed by runtime netpoll. </p> <h3 id="FD.Pread">func (*FD) Pread<a href="https://golang.org/src/internal/poll/fd_unix.go?s=5171:5224#L176" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Pread(p []byte, off int64) (int, error)</pre> <p> Pread wraps the pread system call. </p> <h3 id="FD.Pwrite">func (*FD) Pwrite<a href="https://golang.org/src/internal/poll/fd_unix.go?s=7535:7589#L280" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Pwrite(p []byte, off int64) (int, error)</pre> <p> Pwrite wraps the pwrite system call. </p> <h3 id="FD.RawControl">func (*FD) RawControl<a href="https://golang.org/src/internal/poll/fd_unix.go?s=12865:12912#L501" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) RawControl(f func(uintptr)) error</pre> <p> RawControl invokes the user-defined function f for a non-IO operation. </p> <h3 id="FD.RawRead">func (*FD) RawRead<a href="https://golang.org/src/internal/poll/fd_unix.go?s=13093:13142#L511" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) RawRead(f func(uintptr) bool) error</pre> <p> RawRead invokes the user-defined function f for a read operation. </p> <h3 id="FD.RawWrite">func (*FD) RawWrite<a href="https://golang.org/src/internal/poll/fd_unix.go?s=13493:13543#L530" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) RawWrite(f func(uintptr) bool) error</pre> <p> RawWrite invokes the user-defined function f for a write operation. </p> <h3 id="FD.Read">func (*FD) Read<a href="https://golang.org/src/internal/poll/fd_unix.go?s=4170:4211#L135" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Read(p []byte) (int, error)</pre> <p> Read implements io.Reader. </p> <h3 id="FD.ReadDirent">func (*FD) ReadDirent<a href="https://golang.org/src/internal/poll/fd_unix.go?s=10320:10369#L400" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) ReadDirent(buf []byte) (int, error)</pre> <p> ReadDirent wraps syscall.ReadDirent. We treat this like an ordinary system call rather than a call that tries to fill the buffer. </p> <h3 id="FD.ReadFrom">func (*FD) ReadFrom<a href="https://golang.org/src/internal/poll/fd_unix.go?s=5686:5749#L196" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) ReadFrom(p []byte) (int, syscall.Sockaddr, error)</pre> <p> ReadFrom wraps the recvfrom network call. </p> <h3 id="FD.ReadMsg">func (*FD) ReadMsg<a href="https://golang.org/src/internal/poll/fd_unix.go?s=6228:6312#L220" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) ReadMsg(p []byte, oob []byte) (int, int, int, syscall.Sockaddr, error)</pre> <p> ReadMsg wraps the recvmsg network call. </p> <h3 id="FD.Seek">func (*FD) Seek<a href="https://golang.org/src/internal/poll/fd_unix.go?s=9994:10053#L389" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Seek(offset int64, whence int) (int64, error)</pre> <p> Seek wraps syscall.Seek. </p> <h3 id="FD.SetBlocking">func (*FD) SetBlocking<a href="https://golang.org/src/internal/poll/fd_unix.go?s=3477:3510#L115" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetBlocking() error</pre> <p> SetBlocking puts the file into blocking mode. </p> <h3 id="FD.SetDeadline">func (*FD) SetDeadline<a href="https://golang.org/src/internal/poll/fd_poll_runtime.go?s=2705:2749#L112" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetDeadline(t time.Time) error</pre> <p> SetDeadline sets the read and write deadlines associated with fd. </p> <h3 id="FD.SetReadDeadline">func (*FD) SetReadDeadline<a href="https://golang.org/src/internal/poll/fd_poll_runtime.go?s=2857:2905#L117" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetReadDeadline(t time.Time) error</pre> <p> SetReadDeadline sets the read deadline associated with fd. </p> <h3 id="FD.SetWriteDeadline">func (*FD) SetWriteDeadline<a href="https://golang.org/src/internal/poll/fd_poll_runtime.go?s=3011:3060#L122" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetWriteDeadline(t time.Time) error</pre> <p> SetWriteDeadline sets the write deadline associated with fd. </p> <h3 id="FD.SetsockoptByte">func (*FD) SetsockoptByte<a href="https://golang.org/src/internal/poll/sockopt_unix.go?s=331:392#L2" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptByte(level, name int, arg byte) error</pre> <p> SetsockoptByte wraps the setsockopt network call with a byte argument. </p> <h3 id="FD.SetsockoptIPMreq">func (*FD) SetsockoptIPMreq<a href="https://golang.org/src/internal/poll/sockoptip.go?s=344:419#L2" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptIPMreq(level, name int, mreq *syscall.IPMreq) error</pre> <p> SetsockoptIPMreq wraps the setsockopt network call with an IPMreq argument. </p> <h3 id="FD.SetsockoptIPMreqn">func (*FD) SetsockoptIPMreqn<a href="https://golang.org/src/internal/poll/sockopt_linux.go?s=273:350#L1" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptIPMreqn(level, name int, mreq *syscall.IPMreqn) error</pre> <p> SetsockoptIPMreqn wraps the setsockopt network call with an IPMreqn argument. </p> <h3 id="FD.SetsockoptIPv6Mreq">func (*FD) SetsockoptIPv6Mreq<a href="https://golang.org/src/internal/poll/sockoptip.go?s=642:721#L11" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptIPv6Mreq(level, name int, mreq *syscall.IPv6Mreq) error</pre> <p> SetsockoptIPv6Mreq wraps the setsockopt network call with an IPv6Mreq argument. </p> <h3 id="FD.SetsockoptInet4Addr">func (*FD) SetsockoptInet4Addr<a href="https://golang.org/src/internal/poll/sockopt.go?s=608:677#L11" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptInet4Addr(level, name int, arg [4]byte) error</pre> <p> SetsockoptInet4Addr wraps the setsockopt network call with an IPv4 address. </p> <h3 id="FD.SetsockoptInt">func (*FD) SetsockoptInt<a href="https://golang.org/src/internal/poll/sockopt.go?s=338:393#L2" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptInt(level, name, arg int) error</pre> <p> SetsockoptInt wraps the setsockopt network call with an int argument. </p> <h3 id="FD.SetsockoptLinger">func (*FD) SetsockoptLinger<a href="https://golang.org/src/internal/poll/sockopt.go?s=897:969#L20" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) SetsockoptLinger(level, name int, l *syscall.Linger) error</pre> <p> SetsockoptLinger wraps the setsockopt network call with a Linger argument. </p> <h3 id="FD.Shutdown">func (*FD) Shutdown<a href="https://golang.org/src/internal/poll/fd_unix.go?s=3273:3310#L106" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Shutdown(how int) error</pre> <p> Shutdown wraps the shutdown network call. </p> <h3 id="FD.WaitWrite">func (*FD) WaitWrite<a href="https://golang.org/src/internal/poll/fd_unix.go?s=12482:12513#L486" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) WaitWrite() error</pre> <p> WaitWrite waits until data can be read from fd. </p> <h3 id="FD.Write">func (*FD) Write<a href="https://golang.org/src/internal/poll/fd_unix.go?s=6858:6900#L244" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Write(p []byte) (int, error)</pre> <p> Write implements io.Writer. </p> <h3 id="FD.WriteMsg">func (*FD) WriteMsg<a href="https://golang.org/src/internal/poll/fd_unix.go?s=8724:8807#L334" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) WriteMsg(p []byte, oob []byte, sa syscall.Sockaddr) (int, int, error)</pre> <p> WriteMsg wraps the sendmsg network call. </p> <h3 id="FD.WriteOnce">func (*FD) WriteOnce<a href="https://golang.org/src/internal/poll/fd_unix.go?s=12618:12664#L491" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) WriteOnce(p []byte) (int, error)</pre> <p> WriteOnce is for testing only. It makes a single write call. </p> <h3 id="FD.WriteTo">func (*FD) WriteTo<a href="https://golang.org/src/internal/poll/fd_unix.go?s=8214:8279#L311" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) WriteTo(p []byte, sa syscall.Sockaddr) (int, error)</pre> <p> WriteTo wraps the sendto network call. </p> <h3 id="FD.Writev">func (*FD) Writev<a href="https://golang.org/src/internal/poll/writev.go?s=310:358#L6" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (fd *FD) Writev(v *[][]byte) (int64, error)</pre> <p> Writev wraps the writev system call. </p> <h2 id="TimeoutError">type TimeoutError<a href="https://golang.org/src/internal/poll/fd.go?s=1424:1450#L30" class="source" target="_blank">Source</a>  </h2> <p> TimeoutError is returned for an expired deadline. </p> <pre data-language="go">type TimeoutError struct{}
+</pre> <h3 id="TimeoutError.Error">func (*TimeoutError) Error<a href="https://golang.org/src/internal/poll/fd.go?s=1490:1527#L33" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (e *TimeoutError) Error() string</pre> <p> Implement the net.Error interface. </p> <h3 id="TimeoutError.Temporary">func (*TimeoutError) Temporary<a href="https://golang.org/src/internal/poll/fd.go?s=1611:1650#L35" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (e *TimeoutError) Temporary() bool</pre> <h3 id="TimeoutError.Timeout">func (*TimeoutError) Timeout<a href="https://golang.org/src/internal/poll/fd.go?s=1555:1592#L34" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (e *TimeoutError) Timeout() bool</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © Google, Inc.<br>Licensed under the Creative Commons Attribution License 3.0.<br>
+    <a href="https://golang.org/pkg/internal/poll/" class="_attribution-link" target="_blank">https://golang.org/pkg/internal/poll/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

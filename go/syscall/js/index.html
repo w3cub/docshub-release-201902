@@ -1,0 +1,235 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Syscall&#47;js - Go - W3cubDocs</title>
+  
+  <meta name="description" content=" Package js gives access to the WebAssembly host environment when using the js&#47;wasm architecture. Its API is based on JavaScript semantics. ">
+  <meta name="keywords" content="package, js, syscall, -, go">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/go/syscall/js/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/go.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/go/" class="_nav-link" title="" style="margin-left:0;">Go</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _go">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1> Package js  </h1>     <ul id="short-nav">
+<li><code>import "syscall/js"</code></li>
+<li><a href="#pkg-overview" class="overviewLink">Overview</a></li>
+<li><a href="#pkg-index" class="indexLink">Index</a></li>
+<li><a href="#pkg-examples" class="examplesLink">Examples</a></li>
+</ul>     <h2>Overview </h2> <p> Package js gives access to the WebAssembly host environment when using the js/wasm architecture. Its API is based on JavaScript semantics. </p> <p> This package is EXPERIMENTAL. Its current scope is only to allow tests to run, but not yet to provide a comprehensive API for users. It is exempt from the Go compatibility promise. </p>      <h2>Index </h2>  <ul id="manual-nav">
+<li><a href="#Callback">type Callback</a></li>
+<li> <a href="#NewCallback">func NewCallback(fn func(args []Value)) Callback</a>
+</li>
+<li> <a href="#NewEventCallback">func NewEventCallback(flags EventCallbackFlag, fn func(event Value)) Callback</a>
+</li>
+<li> <a href="#Callback.Release">func (c Callback) Release()</a>
+</li>
+<li><a href="#Error">type Error</a></li>
+<li> <a href="#Error.Error">func (e Error) Error() string</a>
+</li>
+<li><a href="#EventCallbackFlag">type EventCallbackFlag</a></li>
+<li><a href="#Type">type Type</a></li>
+<li> <a href="#Type.String">func (t Type) String() string</a>
+</li>
+<li><a href="#TypedArray">type TypedArray</a></li>
+<li> <a href="#TypedArrayOf">func TypedArrayOf(slice interface{}) TypedArray</a>
+</li>
+<li> <a href="#TypedArray.Release">func (a TypedArray) Release()</a>
+</li>
+<li><a href="#Value">type Value</a></li>
+<li> <a href="#Global">func Global() Value</a>
+</li>
+<li> <a href="#Null">func Null() Value</a>
+</li>
+<li> <a href="#Undefined">func Undefined() Value</a>
+</li>
+<li> <a href="#ValueOf">func ValueOf(x interface{}) Value</a>
+</li>
+<li> <a href="#Value.Bool">func (v Value) Bool() bool</a>
+</li>
+<li> <a href="#Value.Call">func (v Value) Call(m string, args ...interface{}) Value</a>
+</li>
+<li> <a href="#Value.Float">func (v Value) Float() float64</a>
+</li>
+<li> <a href="#Value.Get">func (v Value) Get(p string) Value</a>
+</li>
+<li> <a href="#Value.Index">func (v Value) Index(i int) Value</a>
+</li>
+<li> <a href="#Value.InstanceOf">func (v Value) InstanceOf(t Value) bool</a>
+</li>
+<li> <a href="#Value.Int">func (v Value) Int() int</a>
+</li>
+<li> <a href="#Value.Invoke">func (v Value) Invoke(args ...interface{}) Value</a>
+</li>
+<li> <a href="#Value.Length">func (v Value) Length() int</a>
+</li>
+<li> <a href="#Value.New">func (v Value) New(args ...interface{}) Value</a>
+</li>
+<li> <a href="#Value.Set">func (v Value) Set(p string, x interface{})</a>
+</li>
+<li> <a href="#Value.SetIndex">func (v Value) SetIndex(i int, x interface{})</a>
+</li>
+<li> <a href="#Value.String">func (v Value) String() string</a>
+</li>
+<li> <a href="#Value.Type">func (v Value) Type() Type</a>
+</li>
+<li><a href="#ValueError">type ValueError</a></li>
+<li> <a href="#ValueError.Error">func (e *ValueError) Error() string</a>
+</li>
+</ul> <div id="pkg-examples"> <h3>Examples</h3>  <dl> <dd><a class="exampleLink" href="#example_NewCallback">NewCallback</a></dd> </dl> </div> <h3>Package files</h3> <p>  <a href="https://golang.org/src/syscall/js/callback.go" target="_blank">callback.go</a> <a href="https://golang.org/src/syscall/js/js.go" target="_blank">js.go</a> <a href="https://golang.org/src/syscall/js/typedarray.go" target="_blank">typedarray.go</a>  </p>   <h2 id="Callback">type Callback<a href="https://golang.org/src/syscall/js/callback.go?s=620:731#L14" class="source" target="_blank">Source</a>  </h2> <p> Callback is a Go function that got wrapped for use as a JavaScript callback. </p> <pre data-language="go">type Callback struct {
+        Value // the JavaScript function that queues the callback for execution
+        // contains filtered or unexported fields
+}
+</pre> <h3 id="NewCallback">func NewCallback<a href="https://golang.org/src/syscall/js/callback.go?s=1302:1350#L28" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func NewCallback(fn func(args []Value)) Callback</pre> <p> NewCallback returns a wrapped callback function. </p> <p> Invoking the callback in JavaScript will queue the Go function fn for execution. This execution happens asynchronously on a special goroutine that handles all callbacks and preserves the order in which the callbacks got called. As a consequence, if one callback blocks this goroutine, other callbacks will not be processed. A blocking callback should therefore explicitly start a new goroutine. </p> <p> Callback.Release must be called to free up resources when the callback will not be used any more. </p>    <h4> <span class="text">Example</span>
+</h4> <pre class="play" data-language="go">package main
+
+import (
+	"fmt"
+	"syscall/js"
+)
+
+func main() {
+	var cb js.Callback
+	cb = js.NewCallback(func(args []js.Value) {
+		fmt.Println("button clicked")
+		cb.Release() // release the callback if the button will not be clicked again
+	})
+	js.Global().Get("document").Call("getElementById", "myButton").Call("addEventListener", "click", cb)
+}
+</pre>   <h3 id="NewEventCallback">func NewEventCallback<a href="https://golang.org/src/syscall/js/callback.go?s=2382:2459#L58" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func NewEventCallback(flags EventCallbackFlag, fn func(event Value)) Callback</pre> <p> NewEventCallback returns a wrapped callback function, just like NewCallback, but the callback expects to have exactly one argument, the event. Depending on flags, it will synchronously call event.preventDefault, event.stopPropagation and/or event.stopImmediatePropagation before queuing the Go function fn for execution. </p> <h3 id="Callback.Release">func (Callback) Release<a href="https://golang.org/src/syscall/js/callback.go?s=2825:2852#L75" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (c Callback) Release()</pre> <p> Release frees up resources allocated for the callback. The callback must not be invoked after calling Release. </p> <h2 id="Error">type Error<a href="https://golang.org/src/syscall/js/js.go?s=1469:1549#L38" class="source" target="_blank">Source</a>  </h2> <p> Error wraps a JavaScript error. </p> <pre data-language="go">type Error struct {
+        // Value is the underlying JavaScript error value.
+        Value
+}
+</pre> <h3 id="Error.Error">func (Error) Error<a href="https://golang.org/src/syscall/js/js.go?s=1592:1621#L44" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (e Error) Error() string</pre> <p> Error implements the error interface. </p> <h2 id="EventCallbackFlag">type EventCallbackFlag<a href="https://golang.org/src/syscall/js/callback.go?s=1611:1637#L44" class="source" target="_blank">Source</a>  </h2> <pre data-language="go">type EventCallbackFlag int</pre> <pre data-language="go">const (
+        // PreventDefault can be used with NewEventCallback to call event.preventDefault synchronously.
+        PreventDefault EventCallbackFlag = 1 &lt;&lt; iota
+        // StopPropagation can be used with NewEventCallback to call event.stopPropagation synchronously.
+        StopPropagation
+        // StopImmediatePropagation can be used with NewEventCallback to call event.stopImmediatePropagation synchronously.
+        StopImmediatePropagation
+)</pre> <h2 id="Type">type Type<a href="https://golang.org/src/syscall/js/js.go?s=4412:4425#L156" class="source" target="_blank">Source</a>  </h2> <p> Type represents the JavaScript type of a Value. </p> <pre data-language="go">type Type int</pre> <pre data-language="go">const (
+        TypeUndefined Type = iota
+        TypeNull
+        TypeBoolean
+        TypeNumber
+        TypeString
+        TypeSymbol
+        TypeObject
+        TypeFunction
+)</pre> <h3 id="Type.String">func (Type) String<a href="https://golang.org/src/syscall/js/js.go?s=4550:4579#L169" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (t Type) String() string</pre> <h2 id="TypedArray">type TypedArray<a href="https://golang.org/src/syscall/js/typedarray.go?s=630:663#L16" class="source" target="_blank">Source</a>  </h2> <p> TypedArray represents a JavaScript typed array. </p> <pre data-language="go">type TypedArray struct {
+        Value
+}
+</pre> <h3 id="TypedArrayOf">func TypedArrayOf<a href="https://golang.org/src/syscall/js/typedarray.go?s=1382:1429#L39" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func TypedArrayOf(slice interface{}) TypedArray</pre> <p> TypedArrayOf returns a JavaScript typed array backed by the slice's underlying array. </p> <p> The supported types are []int8, []int16, []int32, []uint8, []uint16, []uint32, []float32 and []float64. Passing an unsupported value causes a panic. </p> <p> TypedArray.Release must be called to free up resources when the typed array will not be used any more. </p> <h3 id="TypedArray.Release">func (TypedArray) Release<a href="https://golang.org/src/syscall/js/typedarray.go?s=804:833#L22" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (a TypedArray) Release()</pre> <p> Release frees up resources allocated for the typed array. The typed array and its buffer must not be accessed after calling Release. </p> <h2 id="Value">type Value<a href="https://golang.org/src/syscall/js/js.go?s=1146:1176#L18" class="source" target="_blank">Source</a>  </h2> <p> Value represents a JavaScript value. </p> <pre data-language="go">type Value struct {
+        // contains filtered or unexported fields
+}
+</pre> <h3 id="Global">func Global<a href="https://golang.org/src/syscall/js/js.go?s=2392:2411#L73" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func Global() Value</pre> <p> Global returns the JavaScript global object, usually "window" or "global". </p> <h3 id="Null">func Null<a href="https://golang.org/src/syscall/js/js.go?s=2273:2290#L68" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func Null() Value</pre> <p> Null returns the JavaScript value "null". </p> <h3 id="Undefined">func Undefined<a href="https://golang.org/src/syscall/js/js.go?s=2177:2199#L63" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func Undefined() Value</pre> <p> Undefined returns the JavaScript value "undefined". </p> <h3 id="ValueOf">func ValueOf<a href="https://golang.org/src/syscall/js/js.go?s=3100:3133#L90" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func ValueOf(x interface{}) Value</pre> <p> ValueOf returns x as a JavaScript value: </p> <pre data-language="go">| Go                     | JavaScript             |
+| ---------------------- | ---------------------- |
+| js.Value               | [its value]            |
+| js.TypedArray          | typed array            |
+| js.Callback            | function               |
+| nil                    | null                   |
+| bool                   | boolean                |
+| integers and floats    | number                 |
+| string                 | string                 |
+| []interface{}          | new array              |
+| map[string]interface{} | new object             |
+</pre> <h3 id="Value.Bool">func (Value) Bool<a href="https://golang.org/src/syscall/js/js.go?s=8912:8938#L332" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Bool() bool</pre> <p> Bool returns the value v as a bool. It panics if v is not a JavaScript boolean. </p> <h3 id="Value.Call">func (Value) Call<a href="https://golang.org/src/syscall/js/js.go?s=6725:6781#L265" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Call(m string, args ...interface{}) Value</pre> <p> Call does a JavaScript call to the method m of value v with the given arguments. It panics if v has no method m. The arguments get mapped to JavaScript values according to the ValueOf function. </p> <h3 id="Value.Float">func (Value) Float<a href="https://golang.org/src/syscall/js/js.go?s=8607:8637#L322" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Float() float64</pre> <p> Float returns the value v as a float64. It panics if v is not a JavaScript number. </p> <h3 id="Value.Get">func (Value) Get<a href="https://golang.org/src/syscall/js/js.go?s=5554:5588#L220" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Get(p string) Value</pre> <p> Get returns the JavaScript property p of value v. </p> <h3 id="Value.Index">func (Value) Index<a href="https://golang.org/src/syscall/js/js.go?s=5904:5937#L234" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Index(i int) Value</pre> <p> Index returns JavaScript index i of value v. </p> <h3 id="Value.InstanceOf">func (Value) InstanceOf<a href="https://golang.org/src/syscall/js/js.go?s=9516:9555#L356" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) InstanceOf(t Value) bool</pre> <p> InstanceOf reports whether v is an instance of type t according to JavaScript's instanceof operator. </p> <h3 id="Value.Int">func (Value) Int<a href="https://golang.org/src/syscall/js/js.go?s=8765:8789#L327" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Int() int</pre> <p> Int returns the value v truncated to an int. It panics if v is not a JavaScript number. </p> <h3 id="Value.Invoke">func (Value) Invoke<a href="https://golang.org/src/syscall/js/js.go?s=7484:7532#L284" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Invoke(args ...interface{}) Value</pre> <p> Invoke does a JavaScript call of the value v with the given arguments. It panics if v is not a function. The arguments get mapped to JavaScript values according to the ValueOf function. </p> <h3 id="Value.Length">func (Value) Length<a href="https://golang.org/src/syscall/js/js.go?s=6433:6460#L256" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Length() int</pre> <p> Length returns the JavaScript property "length" of v. </p> <h3 id="Value.New">func (Value) New<a href="https://golang.org/src/syscall/js/js.go?s=8060:8105#L300" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) New(args ...interface{}) Value</pre> <p> New uses JavaScript's "new" operator with value v as constructor and the given arguments. It panics if v is not a function. The arguments get mapped to JavaScript values according to the ValueOf function. </p> <h3 id="Value.Set">func (Value) Set<a href="https://golang.org/src/syscall/js/js.go?s=5732:5775#L227" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Set(p string, x interface{})</pre> <p> Set sets the JavaScript property p of value v to ValueOf(x). </p> <h3 id="Value.SetIndex">func (Value) SetIndex<a href="https://golang.org/src/syscall/js/js.go?s=6084:6129#L241" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) SetIndex(i int, x interface{})</pre> <p> SetIndex sets the JavaScript index i of value v to ValueOf(x). </p> <h3 id="Value.String">func (Value) String<a href="https://golang.org/src/syscall/js/js.go?s=9182:9212#L344" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) String() string</pre> <p> String returns the value v converted to string according to JavaScript type conversions. </p> <h3 id="Value.Type">func (Value) Type<a href="https://golang.org/src/syscall/js/js.go?s=5092:5118#L194" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (v Value) Type() Type</pre> <p> Type returns the JavaScript type of the value v. It is similar to JavaScript's typeof operator, except that it returns TypeNull instead of TypeObject for null. </p> <h2 id="ValueError">type ValueError<a href="https://golang.org/src/syscall/js/js.go?s=9798:9852#L365" class="source" target="_blank">Source</a>  </h2> <p> A ValueError occurs when a Value method is invoked on a Value that does not support it. Such cases are documented in the description of each method. </p> <pre data-language="go">type ValueError struct {
+        Method string
+        Type   Type
+}
+</pre> <h3 id="ValueError.Error">func (*ValueError) Error<a href="https://golang.org/src/syscall/js/js.go?s=9854:9889#L370" class="source" target="_blank">Source</a>  </h3> <pre data-language="go">func (e *ValueError) Error() string</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © Google, Inc.<br>Licensed under the Creative Commons Attribution License 3.0.<br>
+    <a href="https://golang.org/pkg/syscall/js/" class="_attribution-link" target="_blank">https://golang.org/pkg/syscall/js/</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
