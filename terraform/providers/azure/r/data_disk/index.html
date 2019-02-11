@@ -1,0 +1,129 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Azure_data_disk - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content="Adds a data disk to a virtual machine. If the name of an existing disk is given, it will attach that disk. Otherwise it will create and attach a new &hellip;">
+  <meta name="keywords" content="azure, data, disk, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/azure/r/data_disk/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<blockquote class="alert alert-warning" role="alert"> <strong>NOTE:</strong> The Azure Service Management Provider has been superseded by the <a href="../../../azurerm/">Azure Resource Manager Provider</a> and is no longer being actively developed by HashiCorp employees. It continues to be supported by the community. We recommend using the Azure Resource Manager based <a href="../../../azurerm/">Microsoft Azure Provider</a> if possible. </blockquote> <h1 id="azure_data_disk">  azure_data_disk </h1> <p>Adds a data disk to a virtual machine. If the name of an existing disk is given, it will attach that disk. Otherwise it will create and attach a new empty disk.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">resource "azure_data_disk" "data" {
+  lun                  = 0
+  size                 = 10
+  storage_service_name = "yourstorage"
+  virtual_machine      = "server1"
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<p><a href="#name"><code>name</code></a> - (Optional) The name of an existing registered disk to attach to the virtual machine. If left empty, a new empty disk will be created and attached instead. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#label"><code>label</code></a> - (Optional) The identifier of the data disk. Changing this forces a new resource to be created (defaults to "virtual_machine-lun")</p> </li> <li>
+<p><a href="#lun"><code>lun</code></a> - (Required) The Logical Unit Number (LUN) for the disk. The LUN specifies the slot in which the data drive appears when mounted for usage by the virtual machine. Valid LUN values are 0 through 31.</p> </li> <li>
+<p><a href="#size"><code>size</code></a> - (Optional) The size, in GB, of an empty disk to be attached to the virtual machine. Required when creating a new disk, not used otherwise.</p> </li> <li>
+<p><a href="#caching"><code>caching</code></a> - (Optional) The caching behavior of data disk. Valid options are: <code>None</code>, <code>ReadOnly</code> and <code>ReadWrite</code> (defaults <code>None</code>)</p> </li> <li>
+<p><a href="#storage_service_name"><code>storage_service_name</code></a> - (Optional) The name of an existing storage account within the subscription which will be used to store the VHD of this disk. Required if no value is supplied for <code>media_link</code>. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#media_link"><code>media_link</code></a> - (Optional) The location of the blob in storage where the VHD of this disk will be created. The storage account where must be associated with the subscription. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#source_media_link"><code>source_media_link</code></a> - (Optional) The location of a blob in storage where a VHD file is located that is imported and registered as a disk. If a value is supplied, <code>media_link</code> will not be used.</p> </li> <li>
+<p><a href="#virtual_machine"><code>virtual_machine</code></a> - (Required) The name of the virtual machine the disk will be attached to.</p> </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>The following attributes are exported:</p> <ul> <li>
+<a href="#id"><code>id</code></a> - The security group ID. </li> <li>
+<a href="#name-1"><code>name</code></a> - The name of the disk. </li> <li>
+<a href="#label-1"><code>label</code></a> - The identifier for the disk. </li> <li>
+<a href="#media_link-1"><code>media_link</code></a> - The location of the blob in storage where the VHD of this disk is created. </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/azure/r/data_disk.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/azure/r/data_disk.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

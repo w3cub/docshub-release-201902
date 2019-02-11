@@ -1,0 +1,137 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Alicloud_zones - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content="The Zones data source allows access to the list of Alicloud Zones which can be accessed by an Alicloud account within the region configured in the &hellip;">
+  <meta name="keywords" content="alicloud, zones, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/alicloud/d/zones/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="alicloud_zones">  alicloud_zones </h1> <p>The Zones data source allows access to the list of Alicloud Zones which can be accessed by an Alicloud account within the region configured in the provider.</p> <blockquote class="alert alert-warning" role="alert"> <p><strong>NOTE:</strong> If one zone is sold out, it will not be exported.</p> </blockquote> <h2 id="example-usage">  Example Usage </h2> <pre># Declare the data source
+data "alicloud_zones" "default" {
+    "available_instance_type"= "ecs.n4.large"
+    "available_disk_category"= "cloud_ssd"
+}
+
+# Create ecs instance with the first matched zone
+
+resource "alicloud_instance" "instance" {
+  availability_zone = "${data.alicloud_zones.default.zones.0.id}"
+
+  # Other properties...
+}
+
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<a href="#available_instance_type"><code>available_instance_type</code></a> - (Optional) Limit search to specific instance type. </li> <li>
+<a href="#available_resource_creation"><code>available_resource_creation</code></a> - (Optional) Limit search to specific resource type. The following values are allowed <code>Instance</code>, <code>Disk</code>, <code>VSwitch</code> and <code>Rds</code>. </li> <li>
+<a href="#available_disk_category"><code>available_disk_category</code></a> - (Optional) Limit search to specific disk category. Can be either <code>cloud</code>, <code>cloud_efficiency</code>, <code>cloud_ssd</code>. </li> <li>
+<a href="#multi"><code>multi</code></a> - (Optional) Whether to retrieve multiple availability. Default to <code>false</code>. Multiple zone usually is used to launch RDS. </li> <li>
+<a href="#instance_charge_type"><code>instance_charge_type</code></a> - (Optional) According to ECS instance charge type to filter all availability zones. Valid values: <code>PrePaid</code> and <code>PostPaid</code>. Default to <code>PostPaid</code>. </li> <li>
+<a href="#network_type"><code>network_type</code></a> - (Optional) According to network type to filter all availability zones. Valid values: <code>Classic</code> and <code>Vpc</code>. </li> <li>
+<a href="#spot_strategy"><code>spot_strategy</code></a> - - (Optional) According to ECS spot type to filter all availability zones. Valid values: <code>NoSpot</code>, <code>SpotWithPriceLimit</code> and <code>SpotAsPriceGo</code>. Default to <code>NoSpot</code>. </li> <li>
+<a href="#output_file"><code>output_file</code></a> - (Optional) The name of file that can save zones data source after running <code>terraform plan</code>. </li> </ul> <blockquote class="alert alert-warning" role="alert"> <p><strong>NOTE:</strong> Available disk category <code>cloud</code> has been outdated and it only can be used none I/O Optimized ECS instances. So many available zones haven't support it. Recommend <code>cloud_efficiency</code> and <code>cloud_ssd</code>.</p> </blockquote> <h2 id="attributes-reference">  Attributes Reference </h2> <p>A list of zones will be exported and its every element contains the following attributes:</p> <ul> <li>
+<a href="#id"><code>id</code></a> - ID of the zone. </li> <li>
+<a href="#local_name"><code>local_name</code></a> - Name of the zone in the local language. </li> <li>
+<a href="#available_instance_types"><code>available_instance_types</code></a> - Instance types allowed. </li> <li>
+<a href="#available_resource_creation-1"><code>available_resource_creation</code></a> - Type of resource that can be created. </li> <li>
+<a href="#available_disk_categories"><code>available_disk_categories</code></a> - Set of supported disk categories. </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/alicloud/d/zones.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/alicloud/d/zones.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

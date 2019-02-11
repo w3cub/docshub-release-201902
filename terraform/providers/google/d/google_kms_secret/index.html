@@ -1,0 +1,153 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Google_kms_secret - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" This data source allows you to use data encrypted with Google Cloud KMS within your resource definitions. ">
+  <meta name="keywords" content="google, kms, secret, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/google/d/google_kms_secret/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="google_kms_secret">  google_kms_secret </h1> <p>This data source allows you to use data encrypted with Google Cloud KMS within your resource definitions.</p> <p>For more information see <a href="https://cloud.google.com/kms/docs/encrypt-decrypt" target="_blank">the official documentation</a>.</p> <blockquote class="alert alert-warning" role="alert"> <p><strong>NOTE</strong>: Using this data provider will allow you to conceal secret data within your resource definitions, but it does not take care of protecting that data in the logging output, plan output, or state output. Please take care to secure your secret data outside of resource definitions.</p> </blockquote> <h2 id="example-usage">  Example Usage </h2> <p>First, create a KMS KeyRing and CryptoKey using the resource definitions:</p> <pre data-language="ruby">resource "google_kms_key_ring" "my_key_ring" {
+  project  = "my-project"
+  name     = "my-key-ring"
+  location = "us-central1"
+}
+
+resource "google_kms_crypto_key" "my_crypto_key" {
+  name     = "my-crypto-key"
+  key_ring = "${google_kms_key_ring.my_key_ring.id}"
+}
+</pre>
+<p>Next, use the <a href="https://cloud.google.com/sdk/gcloud/reference/kms/encrypt" target="_blank">Cloud SDK</a> to encrypt some sensitive information:</p> <pre data-language="shell">$ echo -n my-secret-password | gcloud kms encrypt \
+&gt; --project my-project \
+&gt; --location us-central1 \
+&gt; --keyring my-key-ring \
+&gt; --key my-crypto-key \
+&gt; --plaintext-file - \
+&gt; --ciphertext-file - \
+&gt; | base64
+CiQAqD+xX4SXOSziF4a8JYvq4spfAuWhhYSNul33H85HnVtNQW4SOgDu2UZ46dQCRFl5MF6ekabviN8xq+F+2035ZJ85B+xTYXqNf4mZs0RJitnWWuXlYQh6axnnJYu3kDU=
+</pre>
+<p>Finally, reference the encrypted ciphertext in your resource definitions:</p> <pre data-language="ruby">data "google_kms_secret" "sql_user_password" {
+  crypto_key = "${google_kms_crypto_key.my_crypto_key.id}"
+  ciphertext = "CiQAqD+xX4SXOSziF4a8JYvq4spfAuWhhYSNul33H85HnVtNQW4SOgDu2UZ46dQCRFl5MF6ekabviN8xq+F+2035ZJ85B+xTYXqNf4mZs0RJitnWWuXlYQh6axnnJYu3kDU="
+}
+
+resource "google_sql_database_instance" "master" {
+  name = "master-instance"
+
+  settings {
+    tier = "D0"
+  }
+}
+
+resource "google_sql_user" "users" {
+  name     = "me"
+  instance = "${google_sql_database_instance.master.name}"
+  host     = "me.com"
+  password = "${data.google_kms_secret.sql_user_password.plaintext}"
+}
+</pre>
+<p>This will result in a Cloud SQL user being created with password <code>my-secret-password</code>.</p> <h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<a href="#ciphertext"><code>ciphertext</code></a> (Required) - The ciphertext to be decrypted, encoded in base64 </li> <li>
+<a href="#crypto_key"><code>crypto_key</code></a> (Required) - The id of the CryptoKey that will be used to decrypt the provided ciphertext. This is represented by the format <code>{projectId}/{location}/{keyRingName}/{cryptoKeyName}</code>. </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>The following attribute is exported:</p> <ul> <li>
+<a href="#plaintext"><code>plaintext</code></a> - Contains the result of decrypting the provided ciphertext. </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/google/d/google_kms_secret.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/google/d/google_kms_secret.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

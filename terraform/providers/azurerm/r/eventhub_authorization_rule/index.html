@@ -1,0 +1,157 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Azurerm_eventhub_authorization_rule - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Manages a Event Hubs authorization Rule within an Event Hub. ">
+  <meta name="keywords" content="azurerm, eventhub, authorization, rule, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/azurerm/r/eventhub_authorization_rule/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="azurerm_eventhub_authorization_rule">  azurerm_eventhub_authorization_rule </h1> <p>Manages a Event Hubs authorization Rule within an Event Hub.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">resource "azurerm_resource_group" "test" {
+  name     = "resourceGroup1"
+  location = "West US"
+}
+
+resource "azurerm_eventhub_namespace" "test" {
+  name                = "acceptanceTestEventHubNamespace"
+  location            = "West US"
+  resource_group_name = "${azurerm_resource_group.test.name}"
+  sku                 = "Basic"
+  capacity            = 2
+
+  tags {
+    environment = "Production"
+  }
+}
+
+resource "azurerm_eventhub" "test" {
+  name                = "acceptanceTestEventHub"
+  namespace_name      = "${azurerm_eventhub_namespace.test.name}"
+  resource_group_name = "${azurerm_resource_group.test.name}"
+  partition_count     = 2
+  message_retention   = 2
+}
+
+resource "azurerm_eventhub_authorization_rule" "test" {
+  name                = "navi"
+  namespace_name      = "${azurerm_eventhub_namespace.test.name}"
+  eventhub_name       = "${azurerm_eventhub.test.name}"
+  resource_group_name = "${azurerm_resource_group.test.name}"
+  listen              = true
+  send                = false
+  manage              = false
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<p><a href="#name"><code>name</code></a> - (Required) Specifies the name of the EventHub Authorization Rule resource. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#namespace_name"><code>namespace_name</code></a> - (Required) Specifies the name of the grandparent EventHub Namespace. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#eventhub_name"><code>eventhub_name</code></a> - (Required) Specifies the name of the EventHub. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#resource_group_name"><code>resource_group_name</code></a> - (Required) The name of the resource group in which the EventHub Namespace exists. Changing this forces a new resource to be created.</p> </li> </ul> <blockquote class="alert alert-warning" role="alert"> <p><strong>NOTE</strong> At least one of the 3 permissions below needs to be set.</p> </blockquote> <ul> <li>
+<p><a href="#listen"><code>listen</code></a> - (Optional) Does this Authorization Rule have permissions to Listen to the Event Hub? Defaults to <code>false</code>.</p> </li> <li>
+<p><a href="#send"><code>send</code></a> - (Optional) Does this Authorization Rule have permissions to Send to the Event Hub? Defaults to <code>false</code>.</p> </li> <li>
+<p><a href="#manage"><code>manage</code></a> - (Optional) Does this Authorization Rule have permissions to Manage to the Event Hub? When this property is <code>true</code> - both <code>listen</code> and <code>send</code> must be too. Defaults to <code>false</code>.</p> </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>The following attributes are exported:</p> <ul> <li>
+<p><a href="#id"><code>id</code></a> - The EventHub ID.</p> </li> <li>
+<p><a href="#primary_key"><code>primary_key</code></a> - The Primary Key for the Event Hubs authorization Rule.</p> </li> <li>
+<p><a href="#primary_connection_string"><code>primary_connection_string</code></a> - The Primary Connection String for the Event Hubs authorization Rule.</p> </li> <li>
+<p><a href="#secondary_key"><code>secondary_key</code></a> - The Secondary Key for the Event Hubs authorization Rule.</p> </li> <li>
+<p><a href="#secondary_connection_string"><code>secondary_connection_string</code></a> - The Secondary Connection String for the Event Hubs authorization Rule.</p> </li> </ul> <h2 id="import">  Import </h2> <p>EventHubs can be imported using the <code>resource id</code>, e.g.</p> <pre data-language="shell">terraform import azurerm_eventhub_authorization_rule.rule1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.EventHub/namespaces/namespace1/eventhubs/eventhub1/authorizationRules/rule1
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/azurerm/r/eventhub_authorization_rule.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/azurerm/r/eventhub_authorization_rule.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

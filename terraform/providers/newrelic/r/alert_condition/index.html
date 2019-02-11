@@ -1,0 +1,154 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Newrelic_alert_condition - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" The following arguments are supported&#58; ">
+  <meta name="keywords" content="newrelic, alert, condition, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/newrelic/r/alert_condition/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="newrelic_alert_condition">  newrelic_alert_condition </h1> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">data "newrelic_application" "app" {
+  name = "my-app"
+}
+
+resource "newrelic_alert_policy" "foo" {
+  name = "foo"
+}
+
+resource "newrelic_alert_condition" "foo" {
+  policy_id = "${newrelic_alert_policy.foo.id}"
+
+  name        = "foo"
+  type        = "apm_app_metric"
+  entities    = ["${data.newrelic_application.app.id}"]
+  metric      = "apdex"
+  runbook_url = "https://www.example.com"
+
+  term {
+    duration      = 5
+    operator      = "below"
+    priority      = "critical"
+    threshold     = "0.75"
+    time_function = "all"
+  }
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<a href="#policy_id"><code>policy_id</code></a> - (Required) The ID of the policy where this condition should be used. </li> <li>
+<a href="#name"><code>name</code></a> - (Required) The title of the condition </li> <li>
+<a href="#type"><code>type</code></a> - (Required) The type of condition. One of: <code>apm_app_metric</code>, <code>apm_jvm_metric</code>, <code>apm_kt_metric</code>, <code>servers_metric</code>, <code>browser_metric</code>, <code>mobile_metric</code> </li> <li>
+<a href="#entities"><code>entities</code></a> - (Required) The instance IDS associated with this condition. </li> <li>
+<a href="#metric"><code>metric</code></a> - (Required) The metric field accepts parameters based on the <code>type</code> set. </li> <li>
+<a href="#gc_metric"><code>gc_metric</code></a> - (Optional) A valid Garbage Collection metric e.g. <code>GC/G1 Young Generation</code>. This is required if you are using <code>apm_jvm_metric</code> with <code>gc_cpu_time</code> condition type. </li> <li>
+<a href="#violation_close_timer"><code>violation_close_timer</code></a> - (Optional) Automatically close instance-based violations, including JVM health metric violations, after the number of hours specified. Must be: <code>1</code>, <code>2</code>, <code>4</code>, <code>8</code>, <code>12</code> or <code>24</code>. </li> <li>
+<a href="#runbook_url"><code>runbook_url</code></a> - (Optional) Runbook URL to display in notifications. </li> <li>
+<a href="#condition_scope"><code>condition_scope</code></a> - (Optional) <code>instance</code> or <code>application</code>. This is required if you are using the JVM plugin in New Relic. </li> <li>
+<a href="#term"><code>term</code></a> - (Required) A list of terms for this condition. See <a href="#terms">Terms</a> below for details. </li> <li>
+<a href="#user_defined_metric"><code>user_defined_metric</code></a> - (Optional) A custom metric to be evaluated. </li> <li>
+<a href="#user_defined_value_function"><code>user_defined_value_function</code></a> - (Optional) One of: <code>average</code>, <code>min</code>, <code>max</code>, <code>total</code>, or <code>sample_size</code>. </li> </ul> <h2 id="terms">  Terms </h2> <p>The <code>term</code> mapping supports the following arguments:</p> <ul> <li>
+<a href="#duration"><code>duration</code></a> - (Required) In minutes, must be: <code>5</code>, <code>10</code>, <code>15</code>, <code>30</code>, <code>60</code>, or <code>120</code>. </li> <li>
+<a href="#operator"><code>operator</code></a> - (Optional) <code>above</code>, <code>below</code>, or <code>equal</code>. Defaults to <code>equal</code>. </li> <li>
+<a href="#priority"><code>priority</code></a> - (Optional) <code>critical</code> or <code>warning</code>. Defaults to <code>critical</code>. </li> <li>
+<a href="#threshold"><code>threshold</code></a> - (Required) Must be 0 or greater. </li> <li>
+<a href="#time_function"><code>time_function</code></a> - (Required) <code>all</code> or <code>any</code>. </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>The following attributes are exported:</p> <ul> <li>
+<a href="#id"><code>id</code></a> - The ID of the alert condition. </li> </ul> <h2 id="import">  Import </h2> <p>Alert conditions can be imported using the <code>id</code>, e.g.</p> <pre>$ terraform import newrelic_alert_condition.main 12345
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/newrelic/r/alert_condition.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/newrelic/r/alert_condition.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

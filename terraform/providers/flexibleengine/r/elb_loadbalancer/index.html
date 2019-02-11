@@ -1,0 +1,143 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Flexibleengine_elb_loadbalancer - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Manages an elastic loadbalancer resource within FlexibleEngine. ">
+  <meta name="keywords" content="flexibleengine, elb, loadbalancer, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/flexibleengine/r/elb_loadbalancer/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="flexibleengine_elb_loadbalancer">  flexibleengine_elb_loadbalancer </h1> <p>Manages an elastic loadbalancer resource within FlexibleEngine.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">resource "flexibleengine_elb_loadbalancer" "elb" {
+  name = "elb"
+  type = "External"
+  description = "test elb"
+  vpc_id = "e346dc4a-d9a6-46f4-90df-10153626076e"
+  admin_state_up = 1
+  bandwidth = 5
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<p><a href="#region"><code>region</code></a> - (Optional) The region in which to create the loadbalancer. If omitted, the <code>region</code> argument of the provider is used. Changing this creates a new loadbalancer.</p> </li> <li>
+<p><a href="#name"><code>name</code></a> - (Required) Specifies the load balancer name. The name is a string of 1 to 64 characters that consist of letters, digits, underscores (_), and hyphens (-).</p> </li> <li>
+<p><a href="#description"><code>description</code></a> - (Optional) Provides supplementary information about the listener. The value is a string of 0 to 128 characters and cannot be &lt;&gt;.</p> </li> <li>
+<p><a href="#vpc_id"><code>vpc_id</code></a> - (Required) Specifies the VPC ID.</p> </li> <li>
+<p><a href="#bandwidth"><code>bandwidth</code></a> - (Optional) Specifies the bandwidth (Mbit/s). This parameter is mandatory when type is set to External, and it is invalid when type is set to Internal. The value ranges from 1 to 300.</p> </li> <li>
+<p><a href="#type"><code>type</code></a> - (Required) Specifies the load balancer type. The value can be Internal or External.</p> </li> <li>
+<p><a href="#admin_state_up"><code>admin_state_up</code></a> - (Required) Specifies the status of the load balancer. Value range: 0 or false: indicates that the load balancer is stopped. Only tenants are allowed to enter these two values. 1 or true: indicates that the load balancer is running properly. 2 or false: indicates that the load balancer is frozen. Only tenants are allowed to enter these two values.</p> </li> <li>
+<p><a href="#vip_subnet_id"><code>vip_subnet_id</code></a> - (Optional) Specifies the ID of the private network to be added. This parameter is mandatory when type is set to Internal, and it is invalid when type is set to External.</p> </li> <li>
+<p><a href="#az"><code>az</code></a> - (Optional) Specifies the ID of the availability zone (AZ). This parameter is mandatory when type is set to Internal, and it is invalid when type is set to External.</p> </li> <li>
+<p><a href="#security_group_id"><code>security_group_id</code></a> - (Optional) Specifies the security group ID. The value is a string of 1 to 200 characters that consists of uppercase and lowercase letters, digits, and hyphens (-). This parameter is mandatory only when type is set to Internal.</p> </li> <li>
+<p><a href="#vip_address"><code>vip_address</code></a> - (Optional) Specifies the IP address provided by ELB. When type is set to External, the value of this parameter is the elastic IP address. When type is set to Internal, the value of this parameter is the private network IP address. You can select an existing elastic IP address and create a public network load balancer. When this parameter is configured, parameter bandwidth is invalid.</p> </li> <li>
+<p><a href="#tenantid"><code>tenantid</code></a> - (Optional) Specifies the tenant ID. This parameter is mandatory only when type is set to Internal.</p> </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>The following attributes are exported:</p> <ul> <li>
+<a href="#region-1"><code>region</code></a> - See Argument Reference above. </li> <li>
+<a href="#name-1"><code>name</code></a> - See Argument Reference above. </li> <li>
+<a href="#description-1"><code>description</code></a> - See Argument Reference above. </li> <li>
+<a href="#vpc_id-1"><code>vpc_id</code></a> - See Argument Reference above. </li> <li>
+<a href="#bandwidth-1"><code>bandwidth</code></a> - See Argument Reference above. </li> <li>
+<a href="#type-1"><code>type</code></a> - See Argument Reference above. </li> <li>
+<a href="#admin_state_up-1"><code>admin_state_up</code></a> - See Argument Reference above. </li> <li>
+<a href="#vip_subnet_id-1"><code>vip_subnet_id</code></a> - See Argument Reference above. </li> <li>
+<a href="#az-1"><code>az</code></a> - See Argument Reference above. </li> <li>
+<a href="#security_group_id-1"><code>security_group_id</code></a> - See Argument Reference above. </li> <li>
+<a href="#vip_address-1"><code>vip_address</code></a> - See Argument Reference above. </li> <li>
+<a href="#tenantid-1"><code>tenantid</code></a> - See Argument Reference above. </li> <li>
+<a href="#id"><code>id</code></a> - Specifies the load balancer ID. </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/flexibleengine/r/elb_loadbalancer.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/flexibleengine/r/elb_loadbalancer.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

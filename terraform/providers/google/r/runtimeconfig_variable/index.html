@@ -1,0 +1,136 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Google_runtimeconfig_variable - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Manages a RuntimeConfig variable in Google Cloud. For more information, see the official documentation, or the JSON API. ">
+  <meta name="keywords" content="google, runtimeconfig, variable, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/google/r/runtimeconfig_variable/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="google_runtimeconfig_variable">  google_runtimeconfig_variable </h1> <p>Manages a RuntimeConfig variable in Google Cloud. For more information, see the <a href="https://cloud.google.com/deployment-manager/runtime-configurator/" target="_blank">official documentation</a>, or the <a href="https://cloud.google.com/deployment-manager/runtime-configurator/reference/rest/" target="_blank">JSON API</a>.</p> <h2 id="example-usage">  Example Usage </h2> <p>Example creating a RuntimeConfig variable.</p> <pre data-language="ruby">resource "google_runtimeconfig_config" "my-runtime-config" {
+    name = "my-service-runtime-config"
+    description = "Runtime configuration values for my service"
+}
+
+resource "google_runtimeconfig_variable" "environment" {
+    parent = "${google_runtimeconfig_config.my-runtime-config.name}"
+    name = "prod-variables/hostname"
+    text = "example.com"
+}
+</pre>
+<p>You can also encode binary content using the <code>value</code> argument instead. The value must be base64 encoded.</p> <p>Example of using the <code>value</code> argument.</p> <pre data-language="ruby">resource "google_runtimeconfig_config" "my-runtime-config" {
+    name = "my-service-runtime-config"
+    description = "Runtime configuration values for my service"
+}
+
+resource "google_runtimeconfig_variable" "my-secret" {
+    parent = "${google_runtimeconfig_config.my-runtime-config.name}"
+    name = "secret"
+    value = "${base64encode(file("my-encrypted-secret.dat"))}"
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<p><a href="#name"><code>name</code></a> - (Required) The name of the variable to manage. Note that variable names can be hierarchical using slashes (e.g. "prod-variables/hostname").</p> </li> <li>
+<p><a href="#parent"><code>parent</code></a> - (Required) The name of the RuntimeConfig resource containing this variable.</p> </li> <li>
+<p><a href="#text"><code>text</code></a> or <code>value</code> - (Required) The content to associate with the variable. Exactly one of <code>text</code> or <code>variable</code> must be specified. If <code>text</code> is specified, it must be a valid UTF-8 string and less than 4096 bytes in length. If <code>value</code> is specified, it must be base64 encoded and less than 4096 bytes in length.</p> </li> </ul>  <ul> <li>
+<a href="#project"><code>project</code></a> - (Optional) The ID of the project in which the resource belongs. If it is not provided, the provider project is used. </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>In addition to the arguments listed above, the following computed attributes are exported:</p> <ul> <li>
+<a href="#update_time"><code>update_time</code></a> - (Computed) The timestamp in RFC3339 UTC "Zulu" format, accurate to nanoseconds, representing when the variable was last updated. Example: "2016-10-09T12:33:37.578138407Z". </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/google/r/runtimeconfig_variable.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/google/r/runtimeconfig_variable.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

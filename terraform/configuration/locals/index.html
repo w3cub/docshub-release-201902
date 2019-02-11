@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Local Value Configuration - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Local values assign a name to an expression, that can then be used multiple times within a module. ">
+  <meta name="keywords" content="local, value, configuration, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/configuration/locals/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="local-value-configuration">  Local Value Configuration </h1> <p>Local values assign a name to an expression, that can then be used multiple times within a module.</p> <p>Comparing modules to functions in a traditional programming language, if <a href="../variables/">variables</a> are analogous to function arguments and <a href="../outputs/">outputs</a> are analogous to function return values then <em>local values</em> are comparable to a function's local variables.</p> <p>This page assumes you're already familiar with <a href="../syntax/">the configuration syntax</a>.</p> <h2 id="examples">  Examples </h2> <p>Local values are defined in <code>locals</code> blocks:</p> <pre data-language="ruby"># Ids for multiple sets of EC2 instances, merged together
+locals {
+  instance_ids = "${concat(aws_instance.blue.*.id, aws_instance.green.*.id)}"
+}
+
+# A computed default name prefix
+locals {
+  default_name_prefix = "${var.project_name}-web"
+  name_prefix         = "${var.name_prefix != "" ? var.name_prefix : local.default_name_prefix}"
+}
+
+# Local values can be interpolated elsewhere using the "local." prefix.
+resource "aws_s3_bucket" "files" {
+  bucket = "${local.name_prefix}-files"
+  # ...
+}
+</pre>
+<p>Named local maps can be merged with local maps to implement common or default values:</p> <pre data-language="ruby"># Define the common tags for all resources
+locals {
+  common_tags = {
+    Component   = "awesome-app"
+    Environment = "production"
+  }
+}
+
+# Create a resource that blends the common tags with instance-specific tags.
+resource "aws_instance" "server" {
+  ami           = "ami-123456"
+  instance_type = "t2.micro"
+
+  tags = "${merge(
+    local.common_tags,
+    map(
+      "Name", "awesome-app-server",
+      "Role", "server"
+    )
+  )}"
+}
+</pre>
+<h2 id="description">  Description </h2> <p>The <code>locals</code> block defines one or more local variables within a module. Each <code>locals</code> block can have as many locals as needed, and there can be any number of <code>locals</code> blocks within a module.</p> <p>The names given for the items in the <code>locals</code> block must be unique throughout a module. The given value can be any expression that is valid within the current module.</p> <p>The expression of a local value can refer to other locals, but as usual reference cycles are not allowed. That is, a local cannot refer to itself or to a variable that refers (directly or indirectly) back to it.</p> <p>It's recommended to group together logically-related local values into a single block, particularly if they depend on each other. This will help the reader understand the relationships between variables. Conversely, prefer to define <em>unrelated</em> local values in <em>separate</em> blocks, and consider annotating each block with a comment describing any context common to all of the enclosed locals.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/configuration/locals.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/configuration/locals.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

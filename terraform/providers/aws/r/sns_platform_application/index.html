@@ -1,0 +1,136 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Aws_sns_platform_application - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Provides an SNS platform application resource ">
+  <meta name="keywords" content="aws, sns, platform, application, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/aws/r/sns_platform_application/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="aws_sns_platform_application">  aws_sns_platform_application </h1> <p>Provides an SNS platform application resource</p> <h2 id="example-usage">  Example Usage </h2> <h3 id="apple-push-notification-service-apns-">  Apple Push Notification Service (APNS) </h3> <pre data-language="ruby">resource "aws_sns_platform_application" "apns_application" {
+  name                = "apns_application"
+  platform            = "APNS"
+  platform_credential = "&lt;APNS PRIVATE KEY&gt;"
+  platform_principal  = "&lt;APNS CERTIFICATE&gt;"
+}
+</pre>
+<h3 id="google-cloud-messaging-gcm-">  Google Cloud Messaging (GCM) </h3> <pre data-language="ruby">resource "aws_sns_platform_application" "gcm_application" {
+  name                = "gcm_application"
+  platform            = "GCM"
+  platform_credential = "&lt;GCM API KEY&gt;"
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<a href="#name"><code>name</code></a> - (Required) The friendly name for the SNS platform application </li> <li>
+<a href="#platform"><code>platform</code></a> - (Required) The platform that the app is registered with. See <a href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-register.html" target="_blank">Platform</a> for supported platforms. </li> <li>
+<a href="#platform_credential"><code>platform_credential</code></a> - (Required) Application Platform credential. See <a href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-register.html" target="_blank">Credential</a> for type of credential required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources. </li> <li>
+<a href="#event_delivery_failure_topic_arn"><code>event_delivery_failure_topic_arn</code></a> - (Optional) SNS Topic triggered when a delivery to any of the platform endpoints associated with your platform application encounters a permanent failure. </li> <li>
+<a href="#event_endpoint_created_topic_arn"><code>event_endpoint_created_topic_arn</code></a> - (Optional) SNS Topic triggered when a new platform endpoint is added to your platform application. </li> <li>
+<a href="#event_endpoint_deleted_topic_arn"><code>event_endpoint_deleted_topic_arn</code></a> - (Optional) SNS Topic triggered when an existing platform endpoint is deleted from your platform application. </li> <li>
+<a href="#event_endpoint_updated_topic_arn"><code>event_endpoint_updated_topic_arn</code></a> - (Optional) SNS Topic triggered when an existing platform endpoint is changed from your platform application. </li> <li>
+<a href="#failure_feedback_role_arn"><code>failure_feedback_role_arn</code></a> - (Optional) The IAM role permitted to receive failure feedback for this application. </li> <li>
+<a href="#platform_principal"><code>platform_principal</code></a> - (Optional) Application Platform principal. See <a href="http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformApplication.html" target="_blank">Principal</a> for type of principal required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources. </li> <li>
+<a href="#success_feedback_role_arn"><code>success_feedback_role_arn</code></a> - (Optional) The IAM role permitted to receive success feedback for this application. </li> <li>
+<a href="#success_feedback_sample_rate"><code>success_feedback_sample_rate</code></a> - (Optional) The percentage of success to sample (0-100) </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>In addition to all arguments above, the following attributes are exported:</p> <ul> <li>
+<a href="#id"><code>id</code></a> - The ARN of the SNS platform application </li> <li>
+<a href="#arn"><code>arn</code></a> - The ARN of the SNS platform application </li> </ul> <h2 id="import">  Import </h2> <p>SNS platform applications can be imported using the ARN, e.g.</p> <pre>$ terraform import aws_sns_platform_application.gcm_application arn:aws:sns:us-west-2:0123456789012:app/GCM/gcm_application
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/aws/r/sns_platform_application.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/aws/r/sns_platform_application.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

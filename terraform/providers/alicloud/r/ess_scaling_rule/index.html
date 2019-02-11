@@ -1,0 +1,136 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Alicloud_ess_scaling_rule - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Provides a ESS scaling rule resource. ">
+  <meta name="keywords" content="alicloud, ess, scaling, rule, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/alicloud/r/ess_scaling_rule/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="alicloud_ess_scaling_rule">  alicloud_ess_scaling_rule </h1> <p>Provides a ESS scaling rule resource.</p> <h2 id="example-usage">  Example Usage </h2> <pre>resource "alicloud_ess_scaling_group" "scaling" {
+  # Other parameters...
+}
+
+resource "alicloud_ess_scaling_configuration" "config" {
+  # Other parameters...
+}
+
+resource "alicloud_ess_scaling_rule" "rule" {
+  scaling_group_id = "${alicloud_ess_scaling_group.scaling.id}"
+  adjustment_type  = "TotalCapacity"
+  adjustment_value = 2
+  cooldown         = 60
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<a href="#scaling_group_id"><code>scaling_group_id</code></a> - (Required) ID of the scaling group of a scaling rule. </li> <li>
+<a href="#adjustment_type"><code>adjustment_type</code></a> - (Required) Adjustment mode of a scaling rule. Optional values: <ul> <li>QuantityChangeInCapacity: It is used to increase or decrease a specified number of ECS instances. </li> <li>PercentChangeInCapacity: It is used to increase or decrease a specified proportion of ECS instances. </li> <li>TotalCapacity: It is used to adjust the quantity of ECS instances in the current scaling group to a specified value. </li> </ul> </li> <li>
+<a href="#adjustment_value"><code>adjustment_value</code></a> - (Required) Adjusted value of a scaling rule. Value range: <ul> <li>QuantityChangeInCapacity：(0, 100] U (-100, 0] </li> <li>PercentChangeInCapacity：[0, 10000] U [-10000, 0] </li> <li>TotalCapacity：[0, 100] </li> </ul> </li> <li>
+<a href="#scaling_rule_name"><code>scaling_rule_name</code></a> - (Optional) Name shown for the scaling rule, which is a string containing 2 to 40 English or Chinese characters. </li> <li>
+<a href="#cooldown"><code>cooldown</code></a> - (Optional) Cool-down time of a scaling rule. Value range: [0, 86,400], in seconds. The default value is empty. </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>The following attributes are exported:</p> <ul> <li>
+<a href="#id"><code>id</code></a> - The scaling rule ID. </li> <li>
+<a href="#scaling_group_id-1"><code>scaling_group_id</code></a> - The id of scaling group. </li> <li>
+<a href="#ari"><code>ari</code></a> - Unique identifier of a scaling rule. </li> <li>
+<a href="#adjustment_type-1"><code>adjustment_type</code></a> - Adjustment mode of a scaling rule. </li> <li>
+<a href="#adjustment_value-1"><code>adjustment_value</code></a> - Adjustment value of a scaling rule. </li> <li>
+<a href="#scaling_rule_name-1"><code>scaling_rule_name</code></a> - Name of a scaling rule. </li> <li>
+<a href="#cooldown-1"><code>cooldown</code></a> - Cool-down time of a scaling rule. </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/alicloud/r/ess_scaling_rule.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/alicloud/r/ess_scaling_rule.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

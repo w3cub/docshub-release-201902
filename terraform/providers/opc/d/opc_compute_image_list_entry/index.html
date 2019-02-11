@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Opc_compute_image_list_entry - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Use this data source to access the configuration of an Image List Entry. ">
+  <meta name="keywords" content="opc, compute, image, list, entry, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/opc/d/opc_compute_image_list_entry/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="opc_compute_image_list_entry">  opc_compute_image_list_entry </h1> <p>Use this data source to access the configuration of an Image List Entry.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">data "opc_compute_image_list_entry" "foo" {
+  image_list = "my_image_list"
+  version = "version_of_my_list"
+}
+
+output "machine_images" {
+  value = "${data.opc_compute_image_list_entry.foo.machine_images}"
+}
+
+output "single_image" {
+  value = "${data.opc_compute_image_list_entry.foo.machine_images[1]}"
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <ul> <li>
+<a href="#image_list"><code>image_list</code></a> - (Required) - The name of the image list to lookup. </li> <li>
+<a href="#version"><code>version</code></a> - (Required) - The version (integer) of the Image List to use. </li> <li>
+<a href="#entry"><code>entry</code></a> - (Optional) - Which machine image to use. See <a href="#entry">Entry</a> below for more details </li> </ul> <h2 id="entry-1">  Entry </h2> <p>The <code>entry</code> argument is fully optional when configuring the Data Source. If specified, however, the returned array of machine images will have a length of 1, and only contain the desired image.</p> <p>Thus, if "my_image_list" is an image list that contains the following images:</p> <pre>["image1", "image2", "image3", "image4", "image5"]
+</pre>
+<p>Then specifing an <code>entry</code> of <code>3</code>, the returned <code>machine_images</code> array will have a sigle element: <code>"image3"</code>. If <code>entry</code> was omitted, or set to <code>0</code>, the returned <code>machine_images</code> array will contain all of the images for that image list version.</p> <p>If the supplied <code>entry</code> value is invalid for the image list, Terraform will exit with an error, that the desired image list entry was not found.</p> <h2 id="attributes-reference">  Attributes Reference </h2> <ul> <li>
+<a href="#dns"><code>dns</code></a> - Array of DNS servers for the interface. </li> <li>
+<a href="#attributes"><code>attributes</code></a> - JSON object of all of the image list's attributes </li> <li>
+<a href="#machine_images"><code>machine_images</code></a> - An array of machine images as strings </li> <li>
+<a href="#uri"><code>uri</code></a> - The URI of the image list </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/opc/d/opc_compute_image_list_entry.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/opc/d/opc_compute_image_list_entry.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

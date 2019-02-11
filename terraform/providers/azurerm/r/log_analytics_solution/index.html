@@ -1,0 +1,153 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Azurerm_log_analytics_solution - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Manages a Log Analytics (formally Operational Insights) Solution. ">
+  <meta name="keywords" content="azurerm, log, analytics, solution, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/azurerm/r/log_analytics_solution/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _terraform">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="azurerm_log_analytics_solution">  azurerm_log_analytics_solution </h1> <p>Manages a Log Analytics (formally Operational Insights) Solution.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">resource "azurerm_resource_group" "test" {
+  name     = "k8s-log-analytics-test"
+  location = "westeurope"
+}
+
+resource "random_id" "workspace" {
+  keepers = {
+    # Generate a new id each time we switch to a new resource group
+    group_name = "${azurerm_resource_group.test.name}"
+  }
+
+  byte_length = 8
+}
+
+resource "azurerm_log_analytics_workspace" "test" {
+  name                = "k8s-workspace-${random_id.workspace.hex}"
+  location            = "${azurerm_resource_group.test.location}"
+  resource_group_name = "${azurerm_resource_group.test.name}"
+  sku                 = "Free"
+}
+
+resource "azurerm_log_analytics_solution" "test" {
+  solution_name         = "Containers"
+  location              = "${azurerm_resource_group.test.location}"
+  resource_group_name   = "${azurerm_resource_group.test.name}"
+  workspace_resource_id = "${azurerm_log_analytics_workspace.test.id}"
+  workspace_name        = "${azurerm_log_analytics_workspace.test.name}"
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/Containers"
+  }
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<p><a href="#solution_name"><code>solution_name</code></a> - (Required) Specifies the name of the solution to be deployed. See <a href="https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-add-solutions" target="_blank">here for options</a>.Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#resource_group_name"><code>resource_group_name</code></a> - (Required) The name of the resource group in which the Log Analytics solution is created. Changing this forces a new resource to be created. Note: The solution and it's related workspace can only exist in the same resource group.</p> </li> <li>
+<p><a href="#location"><code>location</code></a> - (Required) Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#workspace_resource_id"><code>workspace_resource_id</code></a> - (Required) The full resource ID of the Log Analytics workspace with which the solution will be linked. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#workspace_resource_name"><code>workspace_resource_name</code></a> - (Required) The full name of the Log Analytics workspace with which the solution will be linked. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#plan"><code>plan</code></a> - A <code>plan</code> block as documented below.</p> </li> </ul>  <p>A <code>plan</code> block includes:</p> <ul> <li>
+<p><a href="#publisher"><code>publisher</code></a> - (Required) The publisher of the solution. For example <code>Microsoft</code>. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#product"><code>product</code></a> - (Required) The product name of the solution. For example <code>OMSGallery/Containers</code>. Changing this forces a new resource to be created.</p> </li> <li>
+<p><a href="#promotion_code"><code>promotion_code</code></a> - (Optional) A promotion code to be used with the solution.</p> </li> </ul> <h2 id="import">  Import </h2> <p>Log Analytics Solutions can be imported using the <code>resource id</code>, e.g.</p> <pre data-language="shell">terraform import azurerm_log_analytics_solution.solution1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup1/providers/Microsoft.OperationsManagement/solutions/solution1
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/azurerm/r/log_analytics_solution.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/azurerm/r/log_analytics_solution.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
