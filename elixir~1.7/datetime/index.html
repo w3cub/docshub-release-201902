@@ -1,0 +1,332 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>DateTime - Elixir 1.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" A datetime implementation with a time zone. ">
+  <meta name="keywords" content="datetime, summary, types, functions, -, elixir, elixir~1.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.7/datetime/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/elixir~1.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.7/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _elixir">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1>  DateTime  </h1>  <p>A datetime implementation with a time zone.</p> <p>This datetime can be seen as an ephemeral snapshot of a datetime at a given time zone. For such purposes, it also includes both UTC and Standard offsets, as well as the zone abbreviation field used exclusively for formatting purposes.</p> <p>Remember, comparisons in Elixir using <a href="../kernel/#==/2"><code class="inline">==/2</code></a>, <a href="../kernel/#%253E/2"><code class="inline">&gt;/2</code></a>, <a href="../kernel/#%253C/2"><code class="inline">&lt;/2</code></a> and friends are structural and based on the DateTime struct fields. For proper comparison between datetimes, use the <a href="#compare/2"><code class="inline">compare/2</code></a> function.</p> <p>The functions on this module work with the <a href="../datetime/#content"><code class="inline">DateTime</code></a> struct as well as any struct that contains the same fields as the <a href="../datetime/#content"><code class="inline">DateTime</code></a> struct. Such functions expect <a href="../calendar/#t:datetime/0"><code class="inline">Calendar.datetime/0</code></a> in their typespecs (instead of <a href="#t:t/0"><code class="inline">t/0</code></a>).</p> <p>Developers should avoid creating the <a href="../datetime/#content"><code class="inline">DateTime</code></a> struct directly and instead rely on the functions provided by this module as well as the ones in 3rd party calendar libraries.</p> <h2 id="module-where-are-my-functions" class="section-heading">  Where are my functions? </h2> <p>You will notice this module only contains conversion functions as well as functions that work on UTC. This is because a proper <a href="../datetime/#content"><code class="inline">DateTime</code></a> implementation requires a time zone database which currently is not provided as part of Elixir.</p> <p>Such may be addressed in upcoming versions, meanwhile, use 3rd party packages to provide <a href="../datetime/#content"><code class="inline">DateTime</code></a> building and similar functionality with time zone backing.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:t/0">t()</a> </dt>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#compare/2">compare(datetime1, datetime2)</a> </dt> <dd class="summary-synopsis">
+<p>Compares two datetime structs</p> </dd>   <dt class="summary-signature"> <a href="#convert!/2">convert!(datetime, calendar)</a> </dt> <dd class="summary-synopsis">
+<p>Converts a given <code class="inline">datetime</code> from one calendar to another</p> </dd>   <dt class="summary-signature"> <a href="#convert/2">convert(datetime, calendar)</a> </dt> <dd class="summary-synopsis">
+<p>Converts a given <code class="inline">datetime</code> from one calendar to another</p> </dd>   <dt class="summary-signature"> <a href="#diff/3">diff(datetime1, datetime2, unit \\ :second)</a> </dt> <dd class="summary-synopsis">
+<p>Subtracts <code class="inline">datetime2</code> from <code class="inline">datetime1</code></p> </dd>   <dt class="summary-signature"> <a href="#from_iso8601/2">from_iso8601(string, calendar \\ Calendar.ISO)</a> </dt> <dd class="summary-synopsis">
+<p>Parses the extended “Date and time of day” format described by <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601:2004</a></p> </dd>   <dt class="summary-signature"> <a href="#from_naive!/2">from_naive!(naive_datetime, time_zone)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a> to <a href="../datetime/#content"><code class="inline">DateTime</code></a></p> </dd>   <dt class="summary-signature"> <a href="#from_naive/2">from_naive(naive_datetime, time_zone)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a> to <a href="../datetime/#content"><code class="inline">DateTime</code></a></p> </dd>   <dt class="summary-signature"> <a href="#from_unix!/3">from_unix!(integer, unit \\ :second, calendar \\ Calendar.ISO)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given Unix time to <a href="../datetime/#content"><code class="inline">DateTime</code></a></p> </dd>   <dt class="summary-signature"> <a href="#from_unix/3">from_unix(integer, unit \\ :second, calendar \\ Calendar.ISO)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given Unix time to <a href="../datetime/#content"><code class="inline">DateTime</code></a></p> </dd>   <dt class="summary-signature"> <a href="#to_date/1">to_date(datetime)</a> </dt> <dd class="summary-synopsis">
+<p>Converts a <a href="../datetime/#content"><code class="inline">DateTime</code></a> into a <a href="../date/"><code class="inline">Date</code></a></p> </dd>   <dt class="summary-signature"> <a href="#to_iso8601/2">to_iso8601(datetime, format \\ :extended)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given datetime to <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601:2004</a> format</p> </dd>   <dt class="summary-signature"> <a href="#to_naive/1">to_naive(datetime)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given <code class="inline">datetime</code> into a <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a></p> </dd>   <dt class="summary-signature"> <a href="#to_string/1">to_string(datetime)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given <code class="inline">datetime</code> to a string according to its calendar</p> </dd>   <dt class="summary-signature"> <a href="#to_time/1">to_time(datetime)</a> </dt> <dd class="summary-synopsis">
+<p>Converts a <a href="../datetime/#content"><code class="inline">DateTime</code></a> into <a href="../time/"><code class="inline">Time</code></a></p> </dd>   <dt class="summary-signature"> <a href="#to_unix/2">to_unix(datetime, unit \\ :second)</a> </dt> <dd class="summary-synopsis">
+<p>Converts the given <code class="inline">datetime</code> to Unix time</p> </dd>   <dt class="summary-signature"> <a href="#truncate/2">truncate(datetime, precision)</a> </dt> <dd class="summary-synopsis">
+<p>Returns the given datetime with the microsecond field truncated to the given precision (<code class="inline">:microsecond</code>, <code class="inline">millisecond</code> or <code class="inline">:second</code>)</p> </dd>   <dt class="summary-signature"> <a href="#utc_now/1">utc_now(calendar \\ Calendar.ISO)</a> </dt> <dd class="summary-synopsis">
+<p>Returns the current datetime in UTC</p> </dd>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:t/0">  <span class="signature">t()</span>     </h3>
+<pre data-language="elixir">t() :: %DateTime{
+  calendar: Calendar.calendar(),
+  day: Calendar.day(),
+  hour: Calendar.hour(),
+  microsecond: Calendar.microsecond(),
+  minute: Calendar.minute(),
+  month: Calendar.month(),
+  second: Calendar.second(),
+  std_offset: Calendar.std_offset(),
+  time_zone: Calendar.time_zone(),
+  utc_offset: Calendar.utc_offset(),
+  year: Calendar.year(),
+  zone_abbr: Calendar.zone_abbr()
+}</pre>       <h1 class="section-heading" id="functions">  Functions </h1>  <h3 class="detail-header function" id="compare/2">  <span class="signature">compare(datetime1, datetime2)</span>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">compare(Calendar.datetime(), Calendar.datetime()) :: :lt | :eq | :gt</pre>  <p>Compares two datetime structs.</p> <p>Returns <code class="inline">:gt</code> if the first datetime is later than the second and <code class="inline">:lt</code> for vice versa. If the two datetimes are equal <code class="inline">:eq</code> is returned.</p> <p>Note that both UTC and Standard offsets will be taken into account when comparison is done.</p> <h4 id="compare/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; dt1 = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                 hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                 utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; dt2 = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                 hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                 utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.compare(dt1, dt2)
+:gt</pre>    <h3 class="detail-header function" id="convert!/2">  <span class="signature">convert!(datetime, calendar)</span>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">convert!(Calendar.datetime(), Calendar.calendar()) :: t() | no_return()</pre>  <p>Converts a given <code class="inline">datetime</code> from one calendar to another.</p> <p>If it is not possible to convert unambiguously between the calendars (see <a href="../calendar/#compatible_calendars?/2"><code class="inline">Calendar.compatible_calendars?/2</code></a>), an ArgumentError is raised.</p> <h4 id="convert!/2-examples" class="section-heading">  Examples </h4> <p>Imagine someone implements <code class="inline">Calendar.Holocene</code>, a calendar based on the Gregorian calendar that adds exactly 10,000 years to the current Gregorian year:</p> <pre data-language="elixir">iex&gt; dt1 = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                 hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                 utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; DateTime.convert!(dt1, Calendar.Holocene)
+%DateTime{calendar: Calendar.Holocene, day: 29, hour: 23,
+          microsecond: {0, 0}, minute: 0, month: 2, second: 7, std_offset: 0,
+          time_zone: "America/Manaus", utc_offset: -14400, year: 12000,
+          zone_abbr: "AMT"}</pre>    <h3 class="detail-header function" id="convert/2">  <span class="signature">convert(datetime, calendar)</span>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">convert(Calendar.datetime(), Calendar.calendar()) ::
+  {:ok, t()} | {:error, :incompatible_calendars}</pre>  <p>Converts a given <code class="inline">datetime</code> from one calendar to another.</p> <p>If it is not possible to convert unambiguously between the calendars (see <a href="../calendar/#compatible_calendars?/2"><code class="inline">Calendar.compatible_calendars?/2</code></a>), an <code class="inline">{:error, :incompatible_calendars}</code> tuple is returned.</p> <h4 id="convert/2-examples" class="section-heading">  Examples </h4> <p>Imagine someone implements <code class="inline">Calendar.Holocene</code>, a calendar based on the Gregorian calendar that adds exactly 10,000 years to the current Gregorian year:</p> <pre data-language="elixir">iex&gt; dt1 = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                 hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                 utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; DateTime.convert(dt1, Calendar.Holocene)
+{:ok, %DateTime{calendar: Calendar.Holocene, day: 29, hour: 23,
+                microsecond: {0, 0}, minute: 0, month: 2, second: 7, std_offset: 0,
+                time_zone: "America/Manaus", utc_offset: -14400, year: 12000,
+                zone_abbr: "AMT"}}</pre>     <h3 class="detail-header function" id="diff/3">  <span class="signature">diff(datetime1, datetime2, unit \\ :second)</span>  <span class="note">(since 1.5.0)</span> </h3>  <p>Subtracts <code class="inline">datetime2</code> from <code class="inline">datetime1</code>.</p> <p>The answer can be returned in any <code class="inline">unit</code> available from <a href="../system/#t:time_unit/0"><code class="inline">System.time_unit/0</code></a>.</p> <p>Leap seconds are not taken into account.</p> <p>This function returns the difference in seconds where seconds are measured according to <a href="../calendar.iso/"><code class="inline">Calendar.ISO</code></a>.</p> <h4 id="diff/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; dt1 = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                 hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                 utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; dt2 = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                 hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                 utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.diff(dt1, dt2)
+18000
+iex&gt; DateTime.diff(dt2, dt1)
+-18000</pre>     <h3 class="detail-header function" id="from_iso8601/2">  <span class="signature">from_iso8601(string, calendar \\ Calendar.ISO)</span>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">from_iso8601(String.t(), Calendar.calendar()) ::
+  {:ok, t(), Calendar.utc_offset()} | {:error, atom()}</pre>  <p>Parses the extended “Date and time of day” format described by <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601:2004</a>.</p> <p>Since ISO 8601 does not include the proper time zone, the given string will be converted to UTC and its offset in seconds will be returned as part of this function. Therefore offset information must be present in the string.</p> <p>As specified in the standard, the separator “T” may be omitted if desired as there is no ambiguity within this function.</p> <p>Time representations with reduced accuracy are not supported.</p> <p>Note that while ISO 8601 allows datetimes to specify 24:00:00 as the zero hour of the next day, this notation is not supported by Elixir.</p> <h4 id="from_iso8601/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; {:ok, datetime, 0} = DateTime.from_iso8601("2015-01-23T23:50:07Z")
+iex&gt; datetime
+#DateTime&lt;2015-01-23 23:50:07Z&gt;
+
+iex&gt; {:ok, datetime, 9000} = DateTime.from_iso8601("2015-01-23T23:50:07.123+02:30")
+iex&gt; datetime
+#DateTime&lt;2015-01-23 21:20:07.123Z&gt;
+
+iex&gt; {:ok, datetime, 9000} = DateTime.from_iso8601("2015-01-23T23:50:07,123+02:30")
+iex&gt; datetime
+#DateTime&lt;2015-01-23 21:20:07.123Z&gt;
+
+iex&gt; {:ok, datetime, 0} = DateTime.from_iso8601("-2015-01-23T23:50:07Z")
+iex&gt; datetime
+#DateTime&lt;-2015-01-23 23:50:07Z&gt;
+
+iex&gt; {:ok, datetime, 9000} = DateTime.from_iso8601("-2015-01-23T23:50:07,123+02:30")
+iex&gt; datetime
+#DateTime&lt;-2015-01-23 21:20:07.123Z&gt;
+
+iex&gt; DateTime.from_iso8601("2015-01-23P23:50:07")
+{:error, :invalid_format}
+iex&gt; DateTime.from_iso8601("2015-01-23 23:50:07A")
+{:error, :invalid_format}
+iex&gt; DateTime.from_iso8601("2015-01-23T23:50:07")
+{:error, :missing_offset}
+iex&gt; DateTime.from_iso8601("2015-01-23 23:50:61")
+{:error, :invalid_time}
+iex&gt; DateTime.from_iso8601("2015-01-32 23:50:07")
+{:error, :invalid_date}
+
+iex&gt; DateTime.from_iso8601("2015-01-23T23:50:07.123-00:00")
+{:error, :invalid_format}
+iex&gt; DateTime.from_iso8601("2015-01-23T23:50:07.123-00:60")
+{:error, :invalid_format}</pre>    <h3 class="detail-header function" id="from_naive!/2">  <span class="signature">from_naive!(naive_datetime, time_zone)</span>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">from_naive!(NaiveDateTime.t(), Calendar.time_zone()) :: t()</pre>  <p>Converts the given <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a> to <a href="../datetime/#content"><code class="inline">DateTime</code></a>.</p> <p>It expects a time zone to put the NaiveDateTime in. Currently it only supports “Etc/UTC” as time zone.</p> <h4 id="from_naive!/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; DateTime.from_naive!(~N[2016-05-24 13:26:08.003], "Etc/UTC")
+#DateTime&lt;2016-05-24 13:26:08.003Z&gt;</pre>    <h3 class="detail-header function" id="from_naive/2">  <span class="signature">from_naive(naive_datetime, time_zone)</span>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">from_naive(NaiveDateTime.t(), Calendar.time_zone()) :: {:ok, t()}</pre>  <p>Converts the given <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a> to <a href="../datetime/#content"><code class="inline">DateTime</code></a>.</p> <p>It expects a time zone to put the NaiveDateTime in. Currently it only supports “Etc/UTC” as time zone.</p> <h4 id="from_naive/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; {:ok, datetime} = DateTime.from_naive(~N[2016-05-24 13:26:08.003], "Etc/UTC")
+iex&gt; datetime
+#DateTime&lt;2016-05-24 13:26:08.003Z&gt;</pre>      <h3 class="detail-header function" id="from_unix!/3">  <span class="signature">from_unix!(integer, unit \\ :second, calendar \\ Calendar.ISO)</span>     </h3>
+<pre data-language="elixir">from_unix!(integer(), :native | System.time_unit(), Calendar.calendar()) ::
+  t()</pre>  <p>Converts the given Unix time to <a href="../datetime/#content"><code class="inline">DateTime</code></a>.</p> <p>The integer can be given in different unit according to <a href="../system/#convert_time_unit/3"><code class="inline">System.convert_time_unit/3</code></a> and it will be converted to microseconds internally.</p> <p>Unix times are always in UTC and therefore the DateTime will be returned in UTC.</p> <h4 id="from_unix!/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir"># An easy way to get the Unix epoch is passing 0 to this function
+iex&gt; DateTime.from_unix!(0)
+#DateTime&lt;1970-01-01 00:00:00Z&gt;
+
+iex&gt; DateTime.from_unix!(1_464_096_368)
+#DateTime&lt;2016-05-24 13:26:08Z&gt;
+
+iex&gt; DateTime.from_unix!(1_432_560_368_868_569, :microsecond)
+#DateTime&lt;2015-05-25 13:26:08.868569Z&gt;</pre>      <h3 class="detail-header function" id="from_unix/3">  <span class="signature">from_unix(integer, unit \\ :second, calendar \\ Calendar.ISO)</span>     </h3>
+<pre data-language="elixir">from_unix(integer(), :native | System.time_unit(), Calendar.calendar()) ::
+  {:ok, t()} | {:error, atom()}</pre>  <p>Converts the given Unix time to <a href="../datetime/#content"><code class="inline">DateTime</code></a>.</p> <p>The integer can be given in different unit according to <a href="../system/#convert_time_unit/3"><code class="inline">System.convert_time_unit/3</code></a> and it will be converted to microseconds internally.</p> <p>Unix times are always in UTC and therefore the DateTime will be returned in UTC.</p> <h4 id="from_unix/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; {:ok, datetime} = DateTime.from_unix(1_464_096_368)
+iex&gt; datetime
+#DateTime&lt;2016-05-24 13:26:08Z&gt;
+
+iex&gt; {:ok, datetime} = DateTime.from_unix(1_432_560_368_868_569, :microsecond)
+iex&gt; datetime
+#DateTime&lt;2015-05-25 13:26:08.868569Z&gt;</pre> <p>The unit can also be an integer as in <a href="../system/#t:time_unit/0"><code class="inline">System.time_unit/0</code></a>:</p> <pre data-language="elixir">iex&gt; {:ok, datetime} = DateTime.from_unix(143_256_036_886_856, 1024)
+iex&gt; datetime
+#DateTime&lt;6403-03-17 07:05:22.320Z&gt;</pre> <p>Negative Unix times are supported, up to -62167219200 seconds, which is equivalent to “0000-01-01T00:00:00Z” or 0 Gregorian seconds.</p>    <h3 class="detail-header function" id="to_date/1">  <span class="signature">to_date(datetime)</span>     </h3>
+<pre data-language="elixir">to_date(t()) :: Date.t()</pre>  <p>Converts a <a href="../datetime/#content"><code class="inline">DateTime</code></a> into a <a href="../date/"><code class="inline">Date</code></a>.</p> <p>Because <a href="../date/"><code class="inline">Date</code></a> does not hold time nor time zone information, data will be lost during the conversion.</p> <h4 id="to_date/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.to_date(dt)
+~D[2000-02-29]</pre>     <h3 class="detail-header function" id="to_iso8601/2">  <span class="signature">to_iso8601(datetime, format \\ :extended)</span>     </h3>
+<pre data-language="elixir">to_iso8601(Calendar.datetime(), :extended | :basic) :: String.t()</pre>  <p>Converts the given datetime to <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601:2004</a> format.</p> <p>By default, <a href="../datetime/#to_iso8601/2"><code class="inline">DateTime.to_iso8601/2</code></a> returns datetimes formatted in the “extended” format, for human readability. It also supports the “basic” format through passing the <code class="inline">:basic</code> option.</p> <p>Only supports converting datetimes which are in the ISO calendar, attempting to convert datetimes from other calendars will raise.</p> <p>WARNING: the ISO 8601 datetime format does not contain the time zone nor its abbreviation, which means information is lost when converting to such format.</p> <h3 id="to_iso8601/2-examples" class="section-heading">  Examples </h3> <pre data-language="elixir">iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.to_iso8601(dt)
+"2000-02-29T23:00:07+01:00"
+
+iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "UTC",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: 0, std_offset: 0, time_zone: "Etc/UTC"}
+iex&gt; DateTime.to_iso8601(dt)
+"2000-02-29T23:00:07Z"
+
+iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; DateTime.to_iso8601(dt, :extended)
+"2000-02-29T23:00:07-04:00"
+
+iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; DateTime.to_iso8601(dt, :basic)
+"20000229T230007-0400"</pre>    <h3 class="detail-header function" id="to_naive/1">  <span class="signature">to_naive(datetime)</span>     </h3>
+<pre data-language="elixir">to_naive(t()) :: NaiveDateTime.t()</pre>  <p>Converts the given <code class="inline">datetime</code> into a <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a>.</p> <p>Because <a href="../naivedatetime/"><code class="inline">NaiveDateTime</code></a> does not hold time zone information, any time zone related data will be lost during the conversion.</p> <h4 id="to_naive/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 1},
+...&gt;                utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.to_naive(dt)
+~N[2000-02-29 23:00:07.0]</pre>    <h3 class="detail-header function" id="to_string/1">  <span class="signature">to_string(datetime)</span>     </h3>
+<pre data-language="elixir">to_string(Calendar.datetime()) :: String.t()</pre>  <p>Converts the given <code class="inline">datetime</code> to a string according to its calendar.</p> <h3 id="to_string/1-examples" class="section-heading">  Examples </h3> <pre data-language="elixir">iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.to_string(dt)
+"2000-02-29 23:00:07+01:00 CET Europe/Warsaw"
+
+iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "UTC",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: 0, std_offset: 0, time_zone: "Etc/UTC"}
+iex&gt; DateTime.to_string(dt)
+"2000-02-29 23:00:07Z"
+
+iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "AMT",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 0},
+...&gt;                utc_offset: -14400, std_offset: 0, time_zone: "America/Manaus"}
+iex&gt; DateTime.to_string(dt)
+"2000-02-29 23:00:07-04:00 AMT America/Manaus"
+
+iex&gt; dt = %DateTime{year: -100, month: 12, day: 19, zone_abbr: "CET",
+...&gt;                hour: 3, minute: 20, second: 31, microsecond: {0, 0},
+...&gt;                utc_offset: 3600, std_offset: 0, time_zone: "Europe/Stockholm"}
+iex&gt; DateTime.to_string(dt)
+"-0100-12-19 03:20:31+01:00 CET Europe/Stockholm"</pre>    <h3 class="detail-header function" id="to_time/1">  <span class="signature">to_time(datetime)</span>     </h3>
+<pre data-language="elixir">to_time(t()) :: Time.t()</pre>  <p>Converts a <a href="../datetime/#content"><code class="inline">DateTime</code></a> into <a href="../time/"><code class="inline">Time</code></a>.</p> <p>Because <a href="../time/"><code class="inline">Time</code></a> does not hold date nor time zone information, data will be lost during the conversion.</p> <h4 id="to_time/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; dt = %DateTime{year: 2000, month: 2, day: 29, zone_abbr: "CET",
+...&gt;                hour: 23, minute: 0, second: 7, microsecond: {0, 1},
+...&gt;                utc_offset: 3600, std_offset: 0, time_zone: "Europe/Warsaw"}
+iex&gt; DateTime.to_time(dt)
+~T[23:00:07.0]</pre>     <h3 class="detail-header function" id="to_unix/2">  <span class="signature">to_unix(datetime, unit \\ :second)</span>     </h3>
+<pre data-language="elixir">to_unix(Calendar.datetime(), System.time_unit()) :: integer()</pre>  <p>Converts the given <code class="inline">datetime</code> to Unix time.</p> <p>The <code class="inline">datetime</code> is expected to be using the ISO calendar with a year greater than or equal to 0.</p> <p>It will return the integer with the given unit, according to <a href="../system/#convert_time_unit/3"><code class="inline">System.convert_time_unit/3</code></a>.</p> <h4 id="to_unix/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; 1_464_096_368 |&gt; DateTime.from_unix!() |&gt; DateTime.to_unix()
+1464096368
+
+iex&gt; dt = %DateTime{calendar: Calendar.ISO, day: 20, hour: 18, microsecond: {273806, 6},
+...&gt;                minute: 58, month: 11, second: 19, time_zone: "America/Montevideo",
+...&gt;                utc_offset: -10800, std_offset: 3600, year: 2014, zone_abbr: "UYST"}
+iex&gt; DateTime.to_unix(dt)
+1416517099
+
+iex&gt; flamel = %DateTime{calendar: Calendar.ISO, day: 22, hour: 8, microsecond: {527771, 6},
+...&gt;                minute: 2, month: 3, second: 25, std_offset: 0, time_zone: "Etc/UTC",
+...&gt;                utc_offset: 0, year: 1418, zone_abbr: "UTC"}
+iex&gt; DateTime.to_unix(flamel)
+-17412508655</pre>    <h3 class="detail-header function" id="truncate/2">  <span class="signature">truncate(datetime, precision)</span>  <span class="note">(since 1.6.0)</span>    </h3>
+<pre data-language="elixir">truncate(t(), :microsecond | :millisecond | :second) :: t()</pre>  <p>Returns the given datetime with the microsecond field truncated to the given precision (<code class="inline">:microsecond</code>, <code class="inline">millisecond</code> or <code class="inline">:second</code>).</p> <h4 id="truncate/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; dt1 = %DateTime{year: 2017, month: 11, day: 7, zone_abbr: "CET",
+...&gt;                 hour: 11, minute: 45, second: 18, microsecond: {123456, 6},
+...&gt;                 utc_offset: 3600, std_offset: 0, time_zone: "Europe/Paris"}
+iex&gt; DateTime.truncate(dt1, :microsecond)
+#DateTime&lt;2017-11-07 11:45:18.123456+01:00 CET Europe/Paris&gt;
+
+iex&gt; dt2 = %DateTime{year: 2017, month: 11, day: 7, zone_abbr: "CET",
+...&gt;                 hour: 11, minute: 45, second: 18, microsecond: {123456, 6},
+...&gt;                 utc_offset: 3600, std_offset: 0, time_zone: "Europe/Paris"}
+iex&gt; DateTime.truncate(dt2, :millisecond)
+#DateTime&lt;2017-11-07 11:45:18.123+01:00 CET Europe/Paris&gt;
+
+iex&gt; dt3 = %DateTime{year: 2017, month: 11, day: 7, zone_abbr: "CET",
+...&gt;                 hour: 11, minute: 45, second: 18, microsecond: {123456, 6},
+...&gt;                 utc_offset: 3600, std_offset: 0, time_zone: "Europe/Paris"}
+iex&gt; DateTime.truncate(dt3, :second)
+#DateTime&lt;2017-11-07 11:45:18+01:00 CET Europe/Paris&gt;</pre>     <h3 class="detail-header function" id="utc_now/1">  <span class="signature">utc_now(calendar \\ Calendar.ISO)</span>     </h3>
+<pre data-language="elixir">utc_now(Calendar.calendar()) :: t()</pre>  <p>Returns the current datetime in UTC.</p> <h4 id="utc_now/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; datetime = DateTime.utc_now()
+iex&gt; datetime.time_zone
+"Etc/UTC"</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.7.3/DateTime.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.7.3/DateTime.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
