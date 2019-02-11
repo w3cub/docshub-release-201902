@@ -1,0 +1,251 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Class - Ruby on Rails 5.2 - W3cubDocs</title>
+  
+  <meta name="description" content=" Declare a class-level attribute whose value is inheritable by subclasses. Subclasses can change their own value and it will not impact parent class. ">
+  <meta name="keywords" content="class, -, ruby, on, rails, rails~5.2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rails~5.2/class/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rails~5.2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rails~5.2/" class="_nav-link" title="" style="margin-left:0;">Ruby on Rails 5.2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="class-Class" class="class"> class Class </h1>
+<dl class="meta">
+<dt>Parent:</dt>
+<dd class="meta-parent"><a href="../object/">Object</a></dd>
+</dl>  <section id="5Buntitled-5D" class="documentation-section"> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-class_attribute"> <span class="method-name">class_attribute</span><span class="method-args">(*attrs)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="class_attribute-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/core_ext/class/attribute.rb, line 87
+def class_attribute(*attrs)
+  options = attrs.extract_options!
+  instance_reader    = options.fetch(:instance_accessor, true) &amp;&amp; options.fetch(:instance_reader, true)
+  instance_writer    = options.fetch(:instance_accessor, true) &amp;&amp; options.fetch(:instance_writer, true)
+  instance_predicate = options.fetch(:instance_predicate, true)
+  default_value      = options.fetch(:default, nil)
+
+  attrs.each do |name|
+    singleton_class.silence_redefinition_of_method(name)
+    define_singleton_method(name) { nil }
+
+    singleton_class.silence_redefinition_of_method("#{name}?")
+    define_singleton_method("#{name}?") { !!public_send(name) } if instance_predicate
+
+    ivar = "@#{name}"
+
+    singleton_class.silence_redefinition_of_method("#{name}=")
+    define_singleton_method("#{name}=") do |val|
+      singleton_class.class_eval do
+        redefine_method(name) { val }
+      end
+
+      if singleton_class?
+        class_eval do
+          redefine_method(name) do
+            if instance_variable_defined? ivar
+              instance_variable_get ivar
+            else
+              singleton_class.send name
+            end
+          end
+        end
+      end
+      val
+    end
+
+    if instance_reader
+      redefine_method(name) do
+        if instance_variable_defined?(ivar)
+          instance_variable_get ivar
+        else
+          self.class.public_send name
+        end
+      end
+
+      redefine_method("#{name}?") { !!public_send(name) } if instance_predicate
+    end
+
+    if instance_writer
+      redefine_method("#{name}=") do |val|
+        instance_variable_set ivar, val
+      end
+    end
+
+    unless default_value.nil?
+      self.send("#{name}=", default_value)
+    end
+  end
+end</pre> </div> <p>Declare a class-level attribute whose value is inheritable by subclasses. Subclasses can change their own value and it will not impact parent class.</p> <h4 id="method-i-class_attribute-label-Options">Options</h4> <ul>
+<li> <p><code>:instance_reader</code> - Sets the instance reader method (defaults to true).</p> </li>
+<li> <p><code>:instance_writer</code> - Sets the instance writer method (defaults to true).</p> </li>
+<li> <p><code>:instance_accessor</code> - Sets both instance methods (defaults to true).</p> </li>
+<li> <p><code>:instance_predicate</code> - Sets a predicate method (defaults to true).</p> </li>
+<li> <p><code>:default</code> - Sets a default value for the attribute (defaults to nil).</p> </li>
+</ul> <h4 id="method-i-class_attribute-label-Examples">Examples</h4> <pre class="ruby" data-language="ruby">class Base
+  class_attribute :setting
+end
+
+class Subclass &lt; Base
+end
+
+Base.setting = true
+Subclass.setting            # =&gt; true
+Subclass.setting = false
+Subclass.setting            # =&gt; false
+Base.setting                # =&gt; true
+</pre> <p>In the above case as long as Subclass does not assign a value to setting by performing <code>Subclass.setting = <em>something</em></code>, <code>Subclass.setting</code> would read value assigned to parent class. Once Subclass assigns a value then the value assigned by Subclass would be returned.</p> <p>This matches normal Ruby method inheritance: think of writing an attribute on a subclass as overriding the reader method. However, you need to be aware when using <code>class_attribute</code> with mutable structures as <code>Array</code> or <code>Hash</code>. In such cases, you don't want to do changes in place. Instead use setters:</p> <pre class="ruby" data-language="ruby">Base.setting = []
+Base.setting                # =&gt; []
+Subclass.setting            # =&gt; []
+
+# Appending in child changes both parent and child because it is the same object:
+Subclass.setting &lt;&lt; :foo
+Base.setting               # =&gt; [:foo]
+Subclass.setting           # =&gt; [:foo]
+
+# Use setters to not propagate changes:
+Base.setting = []
+Subclass.setting += [:foo]
+Base.setting               # =&gt; []
+Subclass.setting           # =&gt; [:foo]
+</pre> <p>For convenience, an instance predicate method is defined as well. To skip it, pass <code>instance_predicate: false</code>.</p> <pre class="ruby" data-language="ruby">Subclass.setting?       # =&gt; false
+</pre> <p>Instances may overwrite the class value in the same way:</p> <pre class="ruby" data-language="ruby">Base.setting = true
+object = Base.new
+object.setting          # =&gt; true
+object.setting = false
+object.setting          # =&gt; false
+Base.setting            # =&gt; true
+</pre> <p>To opt out of the instance reader method, pass <code>instance_reader:
+false</code>.</p> <pre class="ruby" data-language="ruby">object.setting          # =&gt; NoMethodError
+object.setting?         # =&gt; NoMethodError
+</pre> <p>To opt out of the instance writer method, pass <code>instance_writer:
+false</code>.</p> <pre class="ruby" data-language="ruby">object.setting = false  # =&gt; NoMethodError
+</pre> <p>To opt out of both instance methods, pass <code>instance_accessor:
+false</code>.</p> <p>To set a default value for the attribute, pass <code>default:</code>, like so:</p> <pre class="ruby" data-language="ruby">class_attribute :settings, default: {}
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-descendants"> <span class="method-name">descendants</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="descendants-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/core_ext/class/subclasses.rb, line 21
+def descendants
+  descendants = []
+  ObjectSpace.each_object(singleton_class) do |k|
+    next if k.singleton_class?
+    descendants.unshift k unless k == self
+  end
+  descendants
+end</pre> </div> <p>Returns an array with all classes that are &lt; than its receiver.</p> <pre class="ruby" data-language="ruby">class C; end
+C.descendants # =&gt; []
+
+class B &lt; C; end
+C.descendants # =&gt; [B]
+
+class A &lt; B; end
+C.descendants # =&gt; [B, A]
+
+class D &lt; C; end
+C.descendants # =&gt; [B, A, D]
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-subclasses"> <span class="method-name">subclasses</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="subclasses-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/core_ext/class/subclasses.rb, line 47
+def subclasses
+  subclasses, chain = [], descendants
+  chain.each do |k|
+    subclasses &lt;&lt; k unless chain.any? { |c| c &gt; k }
+  end
+  subclasses
+end</pre> </div> <p>Returns an array with the direct children of <code>self</code>.</p> <pre class="ruby" data-language="ruby">class Foo; end
+class Bar &lt; Foo; end
+class Baz &lt; Bar; end
+
+Foo.subclasses # =&gt; [Bar]
+</pre>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    © 2004–2018 David Heinemeier Hansson<br>Licensed under the MIT License.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

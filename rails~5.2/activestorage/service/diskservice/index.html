@@ -1,0 +1,224 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ActiveStorage&#58;&#58;Service&#58;&#58;DiskService - Ruby on Rails 5.2 - W3cubDocs</title>
+  
+  <meta name="description" content="Wraps a local disk path as an Active Storage service. See ActiveStorage&#58;&#58;Service for the generic API documentation that applies to all &hellip;">
+  <meta name="keywords" content="class, activestorage, service, diskservice, -, ruby, on, rails, rails~5.2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rails~5.2/activestorage/service/diskservice/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rails~5.2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rails~5.2/" class="_nav-link" title="" style="margin-left:0;">Ruby on Rails 5.2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="class-ActiveStorage::Service::DiskService" class="class"> class ActiveStorage::Service::DiskService </h1>
+<dl class="meta">
+<dt>Parent:</dt>
+<dd class="meta-parent"><a href="../../service/">ActiveStorage::Service</a></dd>
+</dl> <section class="description"> <p>Wraps a local disk path as an Active Storage service. See <a href="../../service/">ActiveStorage::Service</a> for the generic API documentation that applies to all services.</p> </section> <section id="5Buntitled-5D" class="documentation-section"> <section class="attribute-method-details"> <header> <h3>Attributes</h3> </header> <div class="method-detail"> <div class="method-heading attribute-method-heading" id="attribute-i-root"> <span class="method-name">root</span><span class="attribute-access-type">[R]</span> </div>  </div> </section> <section id="public-class-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Class Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-c-new"> <span class="method-name">new</span><span class="method-args">(root:)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="new-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 14
+def initialize(root:)
+  @root = root
+end</pre> </div>  </div> </div> </section> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-delete"> <span class="method-name">delete</span><span class="method-args">(key)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="delete-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 50
+def delete(key)
+  instrument :delete, key: key do
+    begin
+      File.delete path_for(key)
+    rescue Errno::ENOENT
+      # Ignore files already deleted
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-delete_prefixed"> <span class="method-name">delete_prefixed</span><span class="method-args">(prefix)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="delete_prefixed-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 60
+def delete_prefixed(prefix)
+  instrument :delete_prefixed, prefix: prefix do
+    Dir.glob(path_for("#{prefix}*")).each do |path|
+      FileUtils.rm_rf(path)
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-download"> <span class="method-name">download</span><span class="method-args">(key) { |data| ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="download-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 25
+def download(key)
+  if block_given?
+    instrument :streaming_download, key: key do
+      File.open(path_for(key), "rb") do |file|
+        while data = file.read(5.megabytes)
+          yield data
+        end
+      end
+    end
+  else
+    instrument :download, key: key do
+      File.binread path_for(key)
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-download_chunk"> <span class="method-name">download_chunk</span><span class="method-args">(key, range)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="download_chunk-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 41
+def download_chunk(key, range)
+  instrument :download_chunk, key: key, range: range do
+    File.open(path_for(key), "rb") do |file|
+      file.seek range.begin
+      file.read range.size
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-exist-3F"> <span class="method-name">exist?</span><span class="method-args">(key)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="exist-3F-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 68
+def exist?(key)
+  instrument :exist, key: key do |payload|
+    answer = File.exist? path_for(key)
+    payload[:exist] = answer
+    answer
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-headers_for_direct_upload"> <span class="method-name">headers_for_direct_upload</span><span class="method-args">(key, content_type:, **)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="headers_for_direct_upload-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 122
+def headers_for_direct_upload(key, content_type:, **)
+  { "Content-Type" =&gt; content_type }
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-upload"> <span class="method-name">upload</span><span class="method-args">(key, io, checksum: nil, **)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="upload-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 18
+def upload(key, io, checksum: nil, **)
+  instrument :upload, key: key, checksum: checksum do
+    IO.copy_stream(io, make_path_for(key))
+    ensure_integrity_of(key, checksum) if checksum
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-url"> <span class="method-name">url</span><span class="method-args">(key, expires_in:, filename:, disposition:, content_type:)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="url-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 76
+def url(key, expires_in:, filename:, disposition:, content_type:)
+  instrument :url, key: key do |payload|
+    content_disposition = content_disposition_with(type: disposition, filename: filename)
+    verified_key_with_expiration = ActiveStorage.verifier.generate(
+      {
+        key: key,
+        disposition: content_disposition,
+        content_type: content_type
+      },
+      { expires_in: expires_in,
+      purpose: :blob_key }
+    )
+
+    generated_url = url_helpers.rails_disk_service_url(verified_key_with_expiration,
+      host: current_host,
+      disposition: content_disposition,
+      content_type: content_type,
+      filename: filename
+    )
+    payload[:url] = generated_url
+
+    generated_url
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-url_for_direct_upload"> <span class="method-name">url_for_direct_upload</span><span class="method-args">(key, expires_in:, content_type:, content_length:, checksum:)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="url_for_direct_upload-source"> <pre class="ruby" data-language="ruby"># File activestorage/lib/active_storage/service/disk_service.rb, line 101
+def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:)
+  instrument :url, key: key do |payload|
+    verified_token_with_expiration = ActiveStorage.verifier.generate(
+      {
+        key: key,
+        content_type: content_type,
+        content_length: content_length,
+        checksum: checksum
+      },
+      { expires_in: expires_in,
+      purpose: :blob_token }
+    )
+
+    generated_url = url_helpers.update_rails_disk_service_url(verified_token_with_expiration, host: current_host)
+
+    payload[:url] = generated_url
+
+    generated_url
+  end
+end</pre> </div>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    © 2004–2018 David Heinemeier Hansson<br>Licensed under the MIT License.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

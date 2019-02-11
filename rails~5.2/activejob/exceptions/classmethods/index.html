@@ -1,0 +1,165 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ActiveJob&#58;&#58;Exceptions&#58;&#58;ClassMethods - Ruby on Rails 5.2 - W3cubDocs</title>
+  
+  <meta name="description" content="Discard the job with no attempts to retry, if the exception is raised. This is useful when the subject of the job, like an Active Record, is no &hellip;">
+  <meta name="keywords" content="module, activejob, exceptions, classmethods, -, ruby, on, rails, rails~5.2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rails~5.2/activejob/exceptions/classmethods/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rails~5.2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rails~5.2/" class="_nav-link" title="" style="margin-left:0;">Ruby on Rails 5.2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="module-ActiveJob::Exceptions::ClassMethods" class="module"> module ActiveJob::Exceptions::ClassMethods </h1>  <section id="5Buntitled-5D" class="documentation-section"> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-discard_on"> <span class="method-name">discard_on</span><span class="method-args">(exception) { |self, error| ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="discard_on-source"> <pre class="ruby" data-language="ruby"># File activejob/lib/active_job/exceptions.rb, line 79
+def discard_on(exception)
+  rescue_from exception do |error|
+    if block_given?
+      yield self, error
+    else
+      logger.error "Discarded #{self.class} due to a #{exception}. The original exception was #{error.cause.inspect}."
+    end
+  end
+end</pre> </div> <p>Discard the job with no attempts to retry, if the exception is raised. This is useful when the subject of the job, like an Active Record, is no longer available, and the job is thus no longer relevant.</p> <p>You can also pass a block that'll be invoked. This block is yielded with the job instance as the first and the error instance as the second parameter.</p> <h4 id="method-i-discard_on-label-Example">Example</h4> <pre class="ruby" data-language="ruby">class SearchIndexingJob &lt; ActiveJob::Base
+  discard_on ActiveJob::DeserializationError
+  discard_on(CustomAppException) do |job, error|
+    ExceptionNotifier.caught(error)
+  end
+
+  def perform(record)
+    # Will raise ActiveJob::DeserializationError if the record can't be deserialized
+    # Might raise CustomAppException for something domain specific
+  end
+end
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-retry_on"> <span class="method-name">retry_on</span><span class="method-args">(exception, wait: 3.seconds, attempts: 5, queue: nil, priority: nil) { |self, error| ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="retry_on-source"> <pre class="ruby" data-language="ruby"># File activejob/lib/active_job/exceptions.rb, line 45
+def retry_on(exception, wait: 3.seconds, attempts: 5, queue: nil, priority: nil)
+  rescue_from exception do |error|
+    if executions &lt; attempts
+      logger.error "Retrying #{self.class} in #{wait} seconds, due to a #{exception}. The original exception was #{error.cause.inspect}."
+      retry_job wait: determine_delay(wait), queue: queue, priority: priority
+    else
+      if block_given?
+        yield self, error
+      else
+        logger.error "Stopped retrying #{self.class} due to a #{exception}, which reoccurred on #{executions} attempts. The original exception was #{error.cause.inspect}."
+        raise error
+      end
+    end
+  end
+end</pre> </div> <p>Catch the exception and reschedule job for re-execution after so many seconds, for a specific number of attempts. If the exception keeps getting raised beyond the specified number of attempts, the exception is allowed to bubble up to the underlying queuing system, which may have its own retry mechanism or place it in a holding queue for inspection.</p> <p>You can also pass a block that'll be invoked if the retry attempts fail for custom logic rather than letting the exception bubble up. This block is yielded with the job instance as the first and the error instance as the second parameter.</p> <h4 id="method-i-retry_on-label-Options">Options</h4> <ul>
+<li> <p><code>:wait</code> - Re-enqueues the job with a delay specified either in seconds (default: 3 seconds), as a computing proc that the number of executions so far as an argument, or as a symbol reference of <code>:exponentially_longer</code>, which applies the wait algorithm of <code>(executions ** 4) + 2</code> (first wait 3s, then 18s, then 83s, etc)</p> </li>
+<li> <p><code>:attempts</code> - Re-enqueues the job the specified number of times (default: 5 attempts)</p> </li>
+<li> <p><code>:queue</code> - Re-enqueues the job on a different queue</p> </li>
+<li> <p><code>:priority</code> - Re-enqueues the job with a different priority</p> </li>
+</ul> <h4 id="method-i-retry_on-label-Examples">Examples</h4> <pre class="ruby" data-language="ruby">class RemoteServiceJob &lt; ActiveJob::Base
+  retry_on CustomAppException # defaults to 3s wait, 5 attempts
+  retry_on AnotherCustomAppException, wait: -&gt;(executions) { executions * 2 }
+  retry_on(YetAnotherCustomAppException) do |job, error|
+    ExceptionNotifier.caught(error)
+  end
+  retry_on ActiveRecord::Deadlocked, wait: 5.seconds, attempts: 3
+  retry_on Net::OpenTimeout, wait: :exponentially_longer, attempts: 10
+
+  def perform(*args)
+    # Might raise CustomAppException, AnotherCustomAppException, or YetAnotherCustomAppException for something domain specific
+    # Might raise ActiveRecord::Deadlocked when a local db deadlock is detected
+    # Might raise Net::OpenTimeout when the remote service is down
+  end
+end
+</pre>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    © 2004–2018 David Heinemeier Hansson<br>Licensed under the MIT License.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,169 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ActiveRecord&#58;&#58;AttributeMethods&#58;&#58;Dirty - Ruby on Rails 5.2 - W3cubDocs</title>
+  
+  <meta name="description" content="Returns the original value of an attribute before the last save. Behaves similarly to attribute_was. This method is useful in after callbacks to get &hellip;">
+  <meta name="keywords" content="module, activerecord, attributemethods, dirty, -, ruby, on, rails, rails~5.2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rails~5.2/activerecord/attributemethods/dirty/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rails~5.2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rails~5.2/" class="_nav-link" title="" style="margin-left:0;">Ruby on Rails 5.2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="module-ActiveRecord::AttributeMethods::Dirty" class="module"> module ActiveRecord::AttributeMethods::Dirty </h1>
+<dl class="meta">
+<dt>Included modules:</dt>
+<dd class="meta-includes"><a class="include" href="../../../activemodel/dirty/">ActiveModel::Dirty</a></dd>
+</dl>  <section id="5Buntitled-5D" class="documentation-section"> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-attribute_before_last_save"> <span class="method-name">attribute_before_last_save</span><span class="method-args">(attr_name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="attribute_before_last_save-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 73
+def attribute_before_last_save(attr_name)
+  mutations_before_last_save.original_value(attr_name)
+end</pre> </div> <p>Returns the original value of an attribute before the last save. Behaves similarly to <code>attribute_was</code>. This method is useful in after callbacks to get the original value of an attribute before the save that just occurred</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-attribute_change_to_be_saved"> <span class="method-name">attribute_change_to_be_saved</span><span class="method-args">(attr_name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="attribute_change_to_be_saved-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 93
+def attribute_change_to_be_saved(attr_name)
+  mutations_from_database.change_to_attribute(attr_name)
+end</pre> </div> <p>Alias for <code>attribute_change</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-attribute_in_database"> <span class="method-name">attribute_in_database</span><span class="method-args">(attr_name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="attribute_in_database-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 98
+def attribute_in_database(attr_name)
+  mutations_from_database.original_value(attr_name)
+end</pre> </div> <p>Alias for <code>attribute_was</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-attributes_in_database"> <span class="method-name">attributes_in_database</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="attributes_in_database-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 118
+def attributes_in_database
+  mutations_from_database.changed_values
+end</pre> </div> <p>Alias for <code>changed_attributes</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-changed_attribute_names_to_save"> <span class="method-name">changed_attribute_names_to_save</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="changed_attribute_names_to_save-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 113
+def changed_attribute_names_to_save
+  mutations_from_database.changed_attribute_names
+end</pre> </div> <p>Alias for <code>changed</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-changes_to_save"> <span class="method-name">changes_to_save</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="changes_to_save-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 108
+def changes_to_save
+  mutations_from_database.changes
+end</pre> </div> <p>Alias for <code>changes</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-has_changes_to_save-3F"> <span class="method-name">has_changes_to_save?</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="has_changes_to_save-3F-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 103
+def has_changes_to_save?
+  mutations_from_database.any_changes?
+end</pre> </div> <p>Alias for <code>changed?</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-reload"> <span class="method-name">reload</span><span class="method-args">(*)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="reload-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 30
+def reload(*)
+  super.tap do
+    @previously_changed = ActiveSupport::HashWithIndifferentAccess.new
+    @mutations_before_last_save = nil
+    @attributes_changed_by_setter = ActiveSupport::HashWithIndifferentAccess.new
+    @mutations_from_database = nil
+  end
+end</pre> </div> <p><code>reload</code> the record and clears changed attributes.</p> <div class="method-calls-super"> Calls superclass method </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-saved_change_to_attribute"> <span class="method-name">saved_change_to_attribute</span><span class="method-args">(attr_name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="saved_change_to_attribute-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 65
+def saved_change_to_attribute(attr_name)
+  mutations_before_last_save.change_to_attribute(attr_name)
+end</pre> </div> <p>Returns the change to an attribute during the last save. If the attribute was changed, the result will be an array containing the original value and the saved value.</p> <p>Behaves similarly to <code>attribute_change</code>. This method is useful in after callbacks, to see the change in an attribute that just occurred</p> <p>This method can be invoked as <code>saved_change_to_name</code> in instead of <code>saved_change_to_attribute("name")</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-saved_change_to_attribute-3F"> <span class="method-name">saved_change_to_attribute?</span><span class="method-args">(attr_name, **options)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="saved_change_to_attribute-3F-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 52
+def saved_change_to_attribute?(attr_name, **options)
+  mutations_before_last_save.changed?(attr_name, **options)
+end</pre> </div> <p>Did this attribute change when we last saved? This method can be invoked as <code>saved_change_to_name?</code> instead of <code>saved_change_to_attribute?("name")</code>. Behaves similarly to <code>attribute_changed?</code>. This method is useful in after callbacks to determine if the call to save changed a certain attribute.</p> <h4 id="method-i-saved_change_to_attribute-3F-label-Options">Options</h4> <p><code>from</code> When passed, this method will return false unless the original value is equal to the given option</p> <p><code>to</code> When passed, this method will return false unless the value was changed to the given value</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-saved_changes"> <span class="method-name">saved_changes</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="saved_changes-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 83
+def saved_changes
+  mutations_before_last_save.changes
+end</pre> </div> <p>Returns a hash containing all the changes that were just saved.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-saved_changes-3F"> <span class="method-name">saved_changes?</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="saved_changes-3F-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 78
+def saved_changes?
+  mutations_before_last_save.any_changes?
+end</pre> </div> <p>Did the last call to <code>save</code> have any changes to change?</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-will_save_change_to_attribute-3F"> <span class="method-name">will_save_change_to_attribute?</span><span class="method-args">(attr_name, **options)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="will_save_change_to_attribute-3F-source"> <pre class="ruby" data-language="ruby"># File activerecord/lib/active_record/attribute_methods/dirty.rb, line 88
+def will_save_change_to_attribute?(attr_name, **options)
+  mutations_from_database.changed?(attr_name, **options)
+end</pre> </div> <p>Alias for <code>attribute_changed?</code></p>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    © 2004–2018 David Heinemeier Hansson<br>Licensed under the MIT License.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

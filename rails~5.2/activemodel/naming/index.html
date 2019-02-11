@@ -1,0 +1,179 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ActiveModel&#58;&#58;Naming - Ruby on Rails 5.2 - W3cubDocs</title>
+  
+  <meta name="description" content=" Creates a model_name method on your object. ">
+  <meta name="keywords" content="module, activemodel, naming, -, ruby, on, rails, rails~5.2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rails~5.2/activemodel/naming/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rails~5.2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rails~5.2/" class="_nav-link" title="" style="margin-left:0;">Ruby on Rails 5.2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="module-ActiveModel::Naming" class="module"> module ActiveModel::Naming </h1> <section class="description"> <h2 id="module-ActiveModel::Naming-label-Active+Model+Naming">Active Model Naming</h2> <p>Creates a <code>model_name</code> method on your object.</p> <p>To implement, just extend <a href="../naming/">ActiveModel::Naming</a> in your object:</p> <pre class="ruby" data-language="ruby">class BookCover
+  extend ActiveModel::Naming
+end
+
+BookCover.model_name.name   # =&gt; "BookCover"
+BookCover.model_name.human  # =&gt; "Book cover"
+
+BookCover.model_name.i18n_key              # =&gt; :book_cover
+BookModule::BookCover.model_name.i18n_key  # =&gt; :"book_module/book_cover"
+</pre> <p>Providing the functionality that <a href="../naming/">ActiveModel::Naming</a> provides in your object is required to pass the Active Model <span>Lint</span> test. So either extending the provided method below, or rolling your own is required.</p> </section> <section id="5Buntitled-5D" class="documentation-section"> <section id="public-class-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Class Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-c-param_key"> <span class="method-name">param_key</span><span class="method-args">(record_or_class)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="param_key-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 305
+def self.param_key(record_or_class)
+  model_name_from_record_or_class(record_or_class).param_key
+end</pre> </div> <p>Returns string to use for params names. It differs for namespaced models regarding whether it's inside isolated engine.</p> <pre class="ruby" data-language="ruby"># For isolated engine:
+ActiveModel::Naming.param_key(Blog::Post) # =&gt; "post"
+
+# For shared engine:
+ActiveModel::Naming.param_key(Blog::Post) # =&gt; "blog_post"
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-plural"> <span class="method-name">plural</span><span class="method-args">(record_or_class)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="plural-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 250
+def self.plural(record_or_class)
+  model_name_from_record_or_class(record_or_class).plural
+end</pre> </div> <p>Returns the plural class name of a record or class.</p> <pre class="ruby" data-language="ruby">ActiveModel::Naming.plural(post)             # =&gt; "posts"
+ActiveModel::Naming.plural(Highrise::Person) # =&gt; "highrise_people"
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-route_key"> <span class="method-name">route_key</span><span class="method-args">(record_or_class)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="route_key-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 293
+def self.route_key(record_or_class)
+  model_name_from_record_or_class(record_or_class).route_key
+end</pre> </div> <p>Returns string to use while generating route names. It differs for namespaced models regarding whether it's inside isolated engine.</p> <pre class="ruby" data-language="ruby"># For isolated engine:
+ActiveModel::Naming.route_key(Blog::Post) # =&gt; "posts"
+
+# For shared engine:
+ActiveModel::Naming.route_key(Blog::Post) # =&gt; "blog_posts"
+</pre> <p>The route key also considers if the noun is uncountable and, in such cases, automatically appends _index.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-singular"> <span class="method-name">singular</span><span class="method-args">(record_or_class)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="singular-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 258
+def self.singular(record_or_class)
+  model_name_from_record_or_class(record_or_class).singular
+end</pre> </div> <p>Returns the singular class name of a record or class.</p> <pre class="ruby" data-language="ruby">ActiveModel::Naming.singular(post)             # =&gt; "post"
+ActiveModel::Naming.singular(Highrise::Person) # =&gt; "highrise_person"
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-singular_route_key"> <span class="method-name">singular_route_key</span><span class="method-args">(record_or_class)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="singular_route_key-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 278
+def self.singular_route_key(record_or_class)
+  model_name_from_record_or_class(record_or_class).singular_route_key
+end</pre> </div> <p>Returns string to use while generating route names. It differs for namespaced models regarding whether it's inside isolated engine.</p> <pre class="ruby" data-language="ruby"># For isolated engine:
+ActiveModel::Naming.singular_route_key(Blog::Post) # =&gt; "post"
+
+# For shared engine:
+ActiveModel::Naming.singular_route_key(Blog::Post) # =&gt; "blog_post"
+</pre>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-uncountable-3F"> <span class="method-name">uncountable?</span><span class="method-args">(record_or_class)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="uncountable-3F-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 266
+def self.uncountable?(record_or_class)
+  plural(record_or_class) == singular(record_or_class)
+end</pre> </div> <p>Identifies whether the class name of a record or class is uncountable.</p> <pre class="ruby" data-language="ruby">ActiveModel::Naming.uncountable?(Sheep) # =&gt; true
+ActiveModel::Naming.uncountable?(Post)  # =&gt; false
+</pre>  </div> </div> </section> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-model_name"> <span class="method-name">model_name</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="model_name-source"> <pre class="ruby" data-language="ruby"># File activemodel/lib/active_model/naming.rb, line 237
+def model_name
+  @_model_name ||= begin
+    namespace = parents.detect do |n|
+      n.respond_to?(:use_relative_model_naming?) &amp;&amp; n.use_relative_model_naming?
+    end
+    ActiveModel::Name.new(self, namespace)
+  end
+end</pre> </div> <p>Returns an <a href="../name/">ActiveModel::Name</a> object for module. It can be used to retrieve all kinds of naming-related information (See <a href="../name/">ActiveModel::Name</a> for more information).</p> <pre class="ruby" data-language="ruby">class Person
+  extend ActiveModel::Naming
+end
+
+Person.model_name.name     # =&gt; "Person"
+Person.model_name.class    # =&gt; ActiveModel::Name
+Person.model_name.singular # =&gt; "person"
+Person.model_name.plural   # =&gt; "people"
+</pre>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    © 2004–2018 David Heinemeier Hansson<br>Licensed under the MIT License.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

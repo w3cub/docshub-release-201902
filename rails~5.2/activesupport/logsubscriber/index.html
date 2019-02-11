@@ -1,0 +1,179 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ActiveSupport&#58;&#58;LogSubscriber - Ruby on Rails 5.2 - W3cubDocs</title>
+  
+  <meta name="description" content="ActiveSupport&#58;&#58;LogSubscriber is an object set to consume ActiveSupport&#58;&#58;Notifications with the sole purpose of logging them. The log &hellip;">
+  <meta name="keywords" content="class, activesupport, logsubscriber, -, ruby, on, rails, rails~5.2">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rails~5.2/activesupport/logsubscriber/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rails~5.2.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rails~5.2/" class="_nav-link" title="" style="margin-left:0;">Ruby on Rails 5.2</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rdoc">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="class-ActiveSupport::LogSubscriber" class="class"> class ActiveSupport::LogSubscriber </h1>
+<dl class="meta">
+<dt>Parent:</dt>
+<dd class="meta-parent">Subscriber</dd>
+</dl> <section class="description"> <p><a href="../logsubscriber/">ActiveSupport::LogSubscriber</a> is an object set to consume <a href="../notifications/">ActiveSupport::Notifications</a> with the sole purpose of logging them. The log subscriber dispatches notifications to a registered object based on its given namespace.</p> <p>An example would be Active Record log subscriber responsible for logging queries:</p> <pre class="ruby" data-language="ruby">module ActiveRecord
+  class LogSubscriber &lt; ActiveSupport::LogSubscriber
+    def sql(event)
+      "#{event.payload[:name]} (#{event.duration}) #{event.payload[:sql]}"
+    end
+  end
+end
+</pre> <p>And it's finally registered as:</p> <pre class="ruby" data-language="ruby">ActiveRecord::LogSubscriber.attach_to :active_record
+</pre> <p>Since we need to know all instance methods before attaching the log subscriber, the line above should be called after your <code>ActiveRecord::LogSubscriber</code> definition.</p> <p>After configured, whenever a “sql.active_record” notification is published, it will properly dispatch the event (ActiveSupport::Notifications::Event) to the sql method.</p> <p>Log subscriber also has some helpers to deal with logging and automatically flushes all logs when the request finishes (via action_dispatch.callback notification) in a Rails environment.</p> </section> <section id="5Buntitled-5D" class="documentation-section"> <section class="constants-list"> <header> <h3>Constants</h3> </header> <dl> <dt id="BLACK">BLACK </dt>
+<dd>
+<p>Colors</p> </dd>
+<dt id="BLUE">BLUE </dt>
+
+<dt id="BOLD">BOLD </dt>
+
+<dt id="CLEAR">CLEAR </dt>
+<dd>
+<p>Embed in a <a href="../../string/">String</a> to clear all previous ANSI sequences.</p> </dd>
+<dt id="CYAN">CYAN </dt>
+
+<dt id="GREEN">GREEN </dt>
+
+<dt id="MAGENTA">MAGENTA </dt>
+
+<dt id="RED">RED </dt>
+
+<dt id="WHITE">WHITE </dt>
+
+<dt id="YELLOW">YELLOW </dt>
+
+</dl> </section> <section class="attribute-method-details"> <header> <h3>Attributes</h3> </header> <div class="method-detail"> <div class="method-heading attribute-method-heading" id="attribute-c-logger"> <span class="method-name">logger</span><span class="attribute-access-type">[W]</span> </div>  </div> </section> <section id="public-class-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Class Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-c-flush_all-21"> <span class="method-name">flush_all!</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="flush_all-21-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 70
+def flush_all!
+  logger.flush if logger.respond_to?(:flush)
+end</pre> </div> <p>Flush all <a href="../logsubscriber/#method-c-log_subscribers">::log_subscribers</a>' logger.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-log_subscribers"> <span class="method-name">log_subscribers</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="log_subscribers-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 65
+def log_subscribers
+  subscribers
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-logger"> <span class="method-name">logger</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="logger-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 57
+def logger
+  @logger ||= if defined?(Rails) &amp;&amp; Rails.respond_to?(:logger)
+    Rails.logger
+  end
+end</pre> </div>  </div> </div> </section> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-finish"> <span class="method-name">finish</span><span class="method-args">(name, id, payload)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="finish-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 83
+def finish(name, id, payload)
+  super if logger
+rescue =&gt; e
+  if logger
+    logger.error "Could not log #{name.inspect} event. #{e.class}: #{e.message} #{e.backtrace}"
+  end
+end</pre> </div> <div class="method-calls-super"> Calls superclass method </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-logger"> <span class="method-name">logger</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="logger-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 75
+def logger
+  LogSubscriber.logger
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-start"> <span class="method-name">start</span><span class="method-args">(name, id, payload)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="start-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 79
+def start(name, id, payload)
+  super if logger
+end</pre> </div> <div class="method-calls-super"> Calls superclass method </div>  </div> </div> </section> <section id="private-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Private Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-color"> <span class="method-name">color</span><span class="method-args">(text, color, bold = false)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="color-source"> <pre class="ruby" data-language="ruby"># File activesupport/lib/active_support/log_subscriber.rb, line 105
+def color(text, color, bold = false) # :doc:
+  return text unless colorize_logging
+  color = self.class.const_get(color.upcase) if color.is_a?(Symbol)
+  bold  = bold ? BOLD : ""
+  "#{bold}#{color}#{text}#{CLEAR}"
+end</pre> </div> <p>Set color by using a symbol or one of the defined constants. If a third option is set to <code>true</code>, it also adds bold to the string. This is based on the Highline implementation and will automatically append <a href="../logsubscriber/#CLEAR">CLEAR</a> to the end of the returned <a href="../../string/">String</a>.</p>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    © 2004–2018 David Heinemeier Hansson<br>Licensed under the MIT License.<br>
+    
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
