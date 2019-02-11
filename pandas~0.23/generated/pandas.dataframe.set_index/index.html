@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>DataFrame.set_index() - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content=" Set the DataFrame index (row labels) using one or more existing columns. By default yields a new object. ">
+  <meta name="keywords" content="pandas, dataframe, set, index, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.dataframe.set_index/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-dataframe-set-index">pandas.DataFrame.set_index</h1> <dl class="method"> <dt id="pandas.DataFrame.set_index">
+<code>DataFrame.set_index(keys, drop=True, append=False, inplace=False, verify_integrity=False)</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/core/frame.py#L3805-L3931" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Set the DataFrame index (row labels) using one or more existing columns. By default yields a new object.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<dl class="first docutils"> <dt>
+<code>keys : column label or list of column labels / arrays</code> </dt>  </dl> <p><strong>drop</strong> : boolean, default True</p>  <p>Delete columns to be used as the new index</p>  <p><strong>append</strong> : boolean, default False</p>  <p>Whether to append columns to existing index</p>  <p><strong>inplace</strong> : boolean, default False</p>  <p>Modify the DataFrame in place (do not create a new object)</p>  <p><strong>verify_integrity</strong> : boolean, default False</p>  <p>Check the new index for duplicates. Otherwise defer the check until necessary. Setting to False will improve the performance of this method</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<dl class="first last docutils"> <dt>
+<code>dataframe : DataFrame</code> </dt>  </dl> </td> </tr>  </table> <h4 class="rubric">Examples</h4> <pre data-language="python">&gt;&gt;&gt; df = pd.DataFrame({'month': [1, 4, 7, 10],
+...                    'year': [2012, 2014, 2013, 2014],
+...                    'sale':[55, 40, 84, 31]})
+   month  sale  year
+0  1      55    2012
+1  4      40    2014
+2  7      84    2013
+3  10     31    2014
+</pre> <p>Set the index to become the ‘month’ column:</p> <pre data-language="python">&gt;&gt;&gt; df.set_index('month')
+       sale  year
+month
+1      55    2012
+4      40    2014
+7      84    2013
+10     31    2014
+</pre> <p>Create a multi-index using columns ‘year’ and ‘month’:</p> <pre data-language="python">&gt;&gt;&gt; df.set_index(['year', 'month'])
+            sale
+year  month
+2012  1     55
+2014  4     40
+2013  7     84
+2014  10    31
+</pre> <p>Create a multi-index using a set of values and a column:</p> <pre data-language="python">&gt;&gt;&gt; df.set_index([[1, 2, 3, 4], 'year'])
+         month  sale
+   year
+1  2012  1      55
+2  2014  4      40
+3  2013  7      84
+4  2014  10     31
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.DataFrame.set_index.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.DataFrame.set_index.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

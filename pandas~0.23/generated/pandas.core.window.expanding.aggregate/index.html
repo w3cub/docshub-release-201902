@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Expanding.aggregate() - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content=" Aggregate using one or more operations over the specified axis. ">
+  <meta name="keywords" content="pandas, core, window, expanding, aggregate, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.core.window.expanding.aggregate/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-core-window-expanding-aggregate">pandas.core.window.Expanding.aggregate</h1> <dl class="method"> <dt id="pandas.core.window.Expanding.aggregate">
+<code>Expanding.aggregate(arg, *args, **kwargs)</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/core/window.py#L1820-L1826" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Aggregate using one or more operations over the specified axis.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>func</strong> : function, string, dictionary, or list of string/functions</p>  <p>Function to use for aggregating the data. If a function, must either work when passed a Series/DataFrame or when passed to Series/DataFrame.apply. For a DataFrame, can pass a dict, if the keys are DataFrame column names.</p> <p>Accepted combinations are:</p> <ul class="simple"> <li>string function name.</li> <li>function.</li> <li>list of functions.</li> <li>dict of column names -&gt; functions (or list of functions).</li> </ul>  <p><strong>*args</strong></p>  <p>Positional arguments to pass to <code>func</code>.</p>  <p><strong>**kwargs</strong></p>  <p>Keyword arguments to pass to <code>func</code>.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<dl class="first last docutils"> <dt>
+<code>aggregated : Series/DataFrame</code> </dt>  </dl> </td> </tr>  </table> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <p class="last"><code>pandas.DataFrame.expanding.aggregate</code>, <code>pandas.DataFrame.rolling.aggregate</code>, <a class="reference internal" href="../pandas.dataframe.aggregate/#pandas.DataFrame.aggregate" title="pandas.DataFrame.aggregate"><code>pandas.DataFrame.aggregate</code></a></p> </div> <h4 class="rubric">Notes</h4> <p><code>agg</code> is an alias for <code>aggregate</code>. Use the alias.</p> <p>A passed user-defined-function will be passed a Series for evaluation.</p> <h4 class="rubric">Examples</h4> <pre data-language="python">&gt;&gt;&gt; df = pd.DataFrame(np.random.randn(10, 3), columns=['A', 'B', 'C'])
+&gt;&gt;&gt; df
+          A         B         C
+0 -2.385977 -0.102758  0.438822
+1 -1.004295  0.905829 -0.954544
+2  0.735167 -0.165272 -1.619346
+3 -0.702657 -1.340923 -0.706334
+4 -0.246845  0.211596 -0.901819
+5  2.463718  3.157577 -1.380906
+6 -1.142255  2.340594 -0.039875
+7  1.396598 -1.647453  1.677227
+8 -0.543425  1.761277 -0.220481
+9 -0.640505  0.289374 -1.550670
+</pre> <pre data-language="python">&gt;&gt;&gt; df.ewm(alpha=0.5).mean()
+          A         B         C
+0 -2.385977 -0.102758  0.438822
+1 -1.464856  0.569633 -0.490089
+2 -0.207700  0.149687 -1.135379
+3 -0.471677 -0.645305 -0.906555
+4 -0.355635 -0.203033 -0.904111
+5  1.076417  1.503943 -1.146293
+6 -0.041654  1.925562 -0.588728
+7  0.680292  0.132049  0.548693
+8  0.067236  0.948257  0.163353
+9 -0.286980  0.618493 -0.694496
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.core.window.Expanding.aggregate.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.core.window.Expanding.aggregate.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

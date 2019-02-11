@@ -1,0 +1,165 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>pandas.read_excel() - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content=" Read an Excel table into a pandas DataFrame ">
+  <meta name="keywords" content="pandas, read, excel, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.read_excel/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-read-excel">pandas.read_excel</h1> <dl class="function"> <dt id="pandas.read_excel">
+<code>pandas.read_excel(io, sheet_name=0, header=0, names=None, index_col=None, usecols=None, squeeze=False, dtype=None, engine=None, converters=None, true_values=None, false_values=None, skiprows=None, nrows=None, na_values=None, parse_dates=False, date_parser=None, thousands=None, comment=None, skipfooter=0, convert_float=True, **kwds)</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/util/_decorators.py#L280-L329" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Read an Excel table into a pandas DataFrame</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>io</strong> : string, path object (pathlib.Path or py._path.local.LocalPath),</p>  <p>file-like object, pandas ExcelFile, or xlrd workbook. The string could be a URL. Valid URL schemes include http, ftp, s3, and file. For file URLs, a host is expected. For instance, a local file could be <a class="reference external" href="../file://localhost/path/to/workbook.xlsx/">file://localhost/path/to/workbook.xlsx</a></p>  <p><strong>sheet_name</strong> : string, int, mixed list of strings/ints, or None, default 0</p>  <p>Strings are used for sheet names, Integers are used in zero-indexed sheet positions.</p> <p>Lists of strings/integers are used to request multiple sheets.</p> <p>Specify None to get all sheets.</p> <p>str|int -&gt; DataFrame is returned. list|None -&gt; Dict of DataFrames is returned, with keys representing sheets.</p> <p>Available Cases</p> <ul class="simple"> <li>Defaults to 0 -&gt; 1st sheet as a DataFrame</li> <li>1 -&gt; 2nd sheet as a DataFrame</li> <li>“Sheet1” -&gt; 1st sheet as a DataFrame</li> <li>[0,1,”Sheet5”] -&gt; 1st, 2nd &amp; 5th sheet as a dictionary of DataFrames</li> <li>None -&gt; All sheets as a dictionary of DataFrames</li> </ul>  <p><strong>sheetname</strong> : string, int, mixed list of strings/ints, or None, default 0</p>  <div class="deprecated"> <p><span class="versionmodified">Deprecated since version 0.21.0: </span>Use <code>sheet_name</code> instead</p> </div>  <p><strong>header</strong> : int, list of ints, default 0</p>  <p>Row (0-indexed) to use for the column labels of the parsed DataFrame. If a list of integers is passed those row positions will be combined into a <code>MultiIndex</code>. Use None if there is no header.</p>  <p><strong>names</strong> : array-like, default None</p>  <p>List of column names to use. If file contains no header row, then you should explicitly pass header=None</p>  <p><strong>index_col</strong> : int, list of ints, default None</p>  <p>Column (0-indexed) to use as the row labels of the DataFrame. Pass None if there is no such column. If a list is passed, those columns will be combined into a <code>MultiIndex</code>. If a subset of data is selected with <code>usecols</code>, index_col is based on the subset.</p>  <p><strong>parse_cols</strong> : int or list, default None</p>  <div class="deprecated"> <p><span class="versionmodified">Deprecated since version 0.21.0: </span>Pass in <code>usecols</code> instead.</p> </div>  <p><strong>usecols</strong> : int or list, default None</p>  <ul class="simple"> <li>If None then parse all columns,</li> <li>If int then indicates last column to be parsed</li> <li>If list of ints then indicates list of column numbers to be parsed</li> <li>If string then indicates comma separated list of Excel column letters and column ranges (e.g. “A:E” or “A,C,E:F”). Ranges are inclusive of both sides.</li> </ul>  <p><strong>squeeze</strong> : boolean, default False</p>  <p>If the parsed data only contains one column then return a Series</p>  <p><strong>dtype</strong> : Type name or dict of column -&gt; type, default None</p>  <p>Data type for data or columns. E.g. {‘a’: np.float64, ‘b’: np.int32} Use <code>object</code> to preserve data as stored in Excel and not interpret dtype. If converters are specified, they will be applied INSTEAD of dtype conversion.</p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.20.0.</span></p> </div>  <p><strong>engine: string, default None</strong></p>  <p>If io is not a buffer or path, this must be set to identify io. Acceptable values are None or xlrd</p>  <p><strong>converters</strong> : dict, default None</p>  <p>Dict of functions for converting values in certain columns. Keys can either be integers or column labels, values are functions that take one input argument, the Excel cell content, and return the transformed content.</p>  <p><strong>true_values</strong> : list, default None</p>  <p>Values to consider as True</p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.19.0.</span></p> </div>  <p><strong>false_values</strong> : list, default None</p>  <p>Values to consider as False</p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.19.0.</span></p> </div>  <p><strong>skiprows</strong> : list-like</p>  <p>Rows to skip at the beginning (0-indexed)</p>  <p><strong>nrows</strong> : int, default None</p>  <p>Number of rows to parse</p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.23.0.</span></p> </div>  <p><strong>na_values</strong> : scalar, str, list-like, or dict, default None</p>  <p>Additional strings to recognize as NA/NaN. If dict passed, specific per-column NA values. By default the following values are interpreted as NaN: ‘’, ‘#N/A’, ‘#N/A N/A’, ‘#NA’, ‘-1.#IND’, ‘-1.#QNAN’, ‘-NaN’, ‘-nan’, ‘1.#IND’, ‘1.#QNAN’, ‘N/A’, ‘NA’, ‘NULL’, ‘NaN’, ‘n/a’, ‘nan’, ‘null’.</p>  <p><strong>keep_default_na</strong> : bool, default True</p>  <p>If na_values are specified and keep_default_na is False the default NaN values are overridden, otherwise they’re appended to.</p>  <p><strong>verbose</strong> : boolean, default False</p>  <p>Indicate number of NA values placed in non-numeric columns</p>  <p><strong>thousands</strong> : str, default None</p>  <p>Thousands separator for parsing string columns to numeric. Note that this parameter is only necessary for columns stored as TEXT in Excel, any numeric columns will automatically be parsed, regardless of display format.</p>  <p><strong>comment</strong> : str, default None</p>  <p>Comments out remainder of line. Pass a character or characters to this argument to indicate comments in the input file. Any data between the comment string and the end of the current line is ignored.</p>  <p><strong>skip_footer</strong> : int, default 0</p>  <div class="deprecated"> <p><span class="versionmodified">Deprecated since version 0.23.0: </span>Pass in <code>skipfooter</code> instead.</p> </div>  <p><strong>skipfooter</strong> : int, default 0</p>  <p>Rows at the end to skip (0-indexed)</p>  <p><strong>convert_float</strong> : boolean, default True</p>  <p>convert integral floats to int (i.e., 1.0 –&gt; 1). If False, all numeric data will be read in as floats: Excel stores all numbers as floats internally</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>parsed</strong> : DataFrame or Dict of DataFrames</p>  <p>DataFrame from the passed in Excel file. See notes in sheet_name argument for more information on when a Dict of Dataframes is returned.</p>  </td> </tr>  </table> <h4 class="rubric">Examples</h4> <p>An example DataFrame written to a local file</p> <pre data-language="python">&gt;&gt;&gt; df_out = pd.DataFrame([('string1', 1),
+...                        ('string2', 2),
+...                        ('string3', 3)],
+...                       columns=['Name', 'Value'])
+&gt;&gt;&gt; df_out
+      Name  Value
+0  string1      1
+1  string2      2
+2  string3      3
+&gt;&gt;&gt; df_out.to_excel('tmp.xlsx')
+</pre> <p>The file can be read using the file name as string or an open file object:</p> <pre data-language="python">&gt;&gt;&gt; pd.read_excel('tmp.xlsx')
+      Name  Value
+0  string1      1
+1  string2      2
+2  string3      3
+</pre> <pre data-language="python">&gt;&gt;&gt; pd.read_excel(open('tmp.xlsx','rb'))
+      Name  Value
+0  string1      1
+1  string2      2
+2  string3      3
+</pre> <p>Index and header can be specified via the <code>index_col</code> and <code>header</code> arguments</p> <pre data-language="python">&gt;&gt;&gt; pd.read_excel('tmp.xlsx', index_col=None, header=None)
+     0        1      2
+0  NaN     Name  Value
+1  0.0  string1      1
+2  1.0  string2      2
+3  2.0  string3      3
+</pre> <p>Column types are inferred but can be explicitly specified</p> <pre data-language="python">&gt;&gt;&gt; pd.read_excel('tmp.xlsx', dtype={'Name':str, 'Value':float})
+      Name  Value
+0  string1    1.0
+1  string2    2.0
+2  string3    3.0
+</pre> <p>True, False, and NA values, and thousands separators have defaults, but can be explicitly specified, too. Supply the values you would like as strings or lists of strings!</p> <pre data-language="python">&gt;&gt;&gt; pd.read_excel('tmp.xlsx',
+...               na_values=['string1', 'string2'])
+      Name  Value
+0      NaN      1
+1      NaN      2
+2  string3      3
+</pre> <p>Comment lines in the excel input file can be skipped using the <code>comment</code> kwarg</p> <pre data-language="python">&gt;&gt;&gt; df = pd.DataFrame({'a': ['1', '#2'], 'b': ['2', '3']})
+&gt;&gt;&gt; df.to_excel('tmp.xlsx', index=False)
+&gt;&gt;&gt; pd.read_excel('tmp.xlsx')
+    a  b
+0   1  2
+1  #2  3
+</pre> <pre data-language="python">&gt;&gt;&gt; pd.read_excel('tmp.xlsx', comment='#')
+   a  b
+0  1  2
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.read_excel.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.read_excel.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

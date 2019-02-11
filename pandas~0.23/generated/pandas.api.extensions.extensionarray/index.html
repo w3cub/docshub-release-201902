@@ -1,0 +1,133 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>api.extensions.ExtensionArray[source] - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content=" Abstract base class for custom 1-D array types. ">
+  <meta name="keywords" content="pandas, api, extensions, extensionarray, source, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.api.extensions.extensionarray/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-api-extensions-extensionarray">pandas.api.extensions.ExtensionArray</h1> <dl class="class"> <dt id="pandas.api.extensions.ExtensionArray">
+<code>class pandas.api.extensions.ExtensionArray</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/core/arrays/base.py#L16-L612" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Abstract base class for custom 1-D array types.</p> <p>pandas will recognize instances of this class as proper arrays with a custom type and will not attempt to coerce them to objects. They may be stored directly inside a <code>DataFrame</code> or <code>Series</code>.</p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.23.0.</span></p> </div> <h4 class="rubric">Notes</h4> <p>The interface includes the following abstract methods that must be implemented by subclasses:</p> <ul class="simple"> <li>_from_sequence</li> <li>_from_factorized</li> <li>__getitem__</li> <li>__len__</li> <li>dtype</li> <li>nbytes</li> <li>isna</li> <li>take</li> <li>copy</li> <li>_concat_same_type</li> </ul> <p>An additional method is available to satisfy pandas’ internal, private block API.</p> <ul class="simple"> <li>_formatting_values</li> </ul> <p>Some methods require casting the ExtensionArray to an ndarray of Python objects with <code>self.astype(object)</code>, which may be expensive. When performance is a concern, we highly recommend overriding the following methods:</p> <ul class="simple"> <li>fillna</li> <li>unique</li> <li>factorize / _values_for_factorize</li> <li>argsort / _values_for_argsort</li> </ul> <p>This class does not inherit from ‘abc.ABCMeta’ for performance reasons. Methods and properties required by the interface raise <code>pandas.errors.AbstractMethodError</code> and no <code>register</code> method is provided for registering virtual subclasses.</p> <p>ExtensionArrays are limited to 1 dimension.</p> <p>They may be backed by none, one, or many NumPy arrays. For example, <code>pandas.Categorical</code> is an extension array backed by two arrays, one for codes and one for categories. An array of IPv6 address may be backed by a NumPy structured array with two fields, one for the lower 64 bits and one for the upper 64 bits. Or they may be backed by some other storage type, like Python lists. Pandas makes no assumptions on how the data are stored, just that it can be converted to a NumPy array. The ExtensionArray interface does not impose any rules on how this data is stored. However, currently, the backing data cannot be stored in attributes called <code>.values</code> or <code>._values</code> to ensure full compatibility with pandas internals. But other names as <code>.data</code>, <code>._data</code>, <code>._items</code>, … can be freely used.</p> <h4 class="rubric">Attributes</h4> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../pandas.api.extensions.extensionarray.dtype/#pandas.api.extensions.ExtensionArray.dtype" title="pandas.api.extensions.ExtensionArray.dtype"><code>dtype</code></a></td> <td>An instance of ‘ExtensionDtype’.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.api.extensions.extensionarray.nbytes/#pandas.api.extensions.ExtensionArray.nbytes" title="pandas.api.extensions.ExtensionArray.nbytes"><code>nbytes</code></a></td> <td>The number of bytes needed to store this object in memory.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.api.extensions.extensionarray.ndim/#pandas.api.extensions.ExtensionArray.ndim" title="pandas.api.extensions.ExtensionArray.ndim"><code>ndim</code></a></td> <td>Extension Arrays are only allowed to be 1-dimensional.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.api.extensions.extensionarray.shape/#pandas.api.extensions.ExtensionArray.shape" title="pandas.api.extensions.ExtensionArray.shape"><code>shape</code></a></td> <td>Return a tuple of the array dimensions.</td> </tr>  </table> <h4 class="rubric">Methods</h4> <table class="longtable docutils">   <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.argsort/#pandas.api.extensions.ExtensionArray.argsort" title="pandas.api.extensions.ExtensionArray.argsort"><code>argsort</code></a>([ascending, kind])</td> <td>Return the indices that would sort this array.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.astype/#pandas.api.extensions.ExtensionArray.astype" title="pandas.api.extensions.ExtensionArray.astype"><code>astype</code></a>(dtype[, copy])</td> <td>Cast to a NumPy array with ‘dtype’.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.copy/#pandas.api.extensions.ExtensionArray.copy" title="pandas.api.extensions.ExtensionArray.copy"><code>copy</code></a>([deep])</td> <td>Return a copy of the array.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.factorize/#pandas.api.extensions.ExtensionArray.factorize" title="pandas.api.extensions.ExtensionArray.factorize"><code>factorize</code></a>([na_sentinel])</td> <td>Encode the extension array as an enumerated type.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.fillna/#pandas.api.extensions.ExtensionArray.fillna" title="pandas.api.extensions.ExtensionArray.fillna"><code>fillna</code></a>([value, method, limit])</td> <td>Fill NA/NaN values using the specified method.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.isna/#pandas.api.extensions.ExtensionArray.isna" title="pandas.api.extensions.ExtensionArray.isna"><code>isna</code></a>()</td> <td>Boolean NumPy array indicating if each value is missing.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.take/#pandas.api.extensions.ExtensionArray.take" title="pandas.api.extensions.ExtensionArray.take"><code>take</code></a>(indices[, allow_fill, fill_value])</td> <td>Take elements from an array.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.api.extensions.extensionarray.unique/#pandas.api.extensions.ExtensionArray.unique" title="pandas.api.extensions.ExtensionArray.unique"><code>unique</code></a>()</td> <td>Compute the ExtensionArray of unique values.</td> </tr>  </table> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.api.extensions.ExtensionArray.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.api.extensions.ExtensionArray.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

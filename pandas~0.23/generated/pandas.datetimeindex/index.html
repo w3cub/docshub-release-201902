@@ -1,0 +1,182 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>DatetimeIndex[source] - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content="Immutable ndarray of datetime64 data, represented internally as int64, and which can be boxed to Timestamp objects that are subclasses of datetime &hellip;">
+  <meta name="keywords" content="pandas, datetimeindex, source, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.datetimeindex/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-datetimeindex">pandas.DatetimeIndex</h1> <dl class="class"> <dt id="pandas.DatetimeIndex">
+<code>class pandas.DatetimeIndex</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/core/indexes/datetimes.py#L175-L2555" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Immutable ndarray of datetime64 data, represented internally as int64, and which can be boxed to Timestamp objects that are subclasses of datetime and carry metadata such as frequency information.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>data</strong> : array-like (1-dimensional), optional</p>  <p>Optional datetime-like data to construct index with</p>  <p><strong>copy</strong> : bool</p>  <p>Make a copy of input ndarray</p>  <p><strong>freq</strong> : string or pandas offset object, optional</p>  <p>One of pandas date offset strings or corresponding objects</p>  <p><strong>start</strong> : starting value, datetime-like, optional</p>  <p>If data is None, start is used as the start point in generating regular timestamp data.</p>  <p><strong>periods</strong> : int, optional, &gt; 0</p>  <p>Number of periods to generate, if generating index. Takes precedence over end argument</p>  <p><strong>end</strong> : end time, datetime-like, optional</p>  <p>If periods is none, generated index will extend to first conforming time on or just past end argument</p>  <p><strong>closed</strong> : string or None, default None</p>  <p>Make the interval closed with respect to the given frequency to the ‘left’, ‘right’, or both sides (None)</p>  <dl class="docutils"> <dt>
+<code>tz : pytz.timezone or dateutil.tz.tzfile</code> </dt>  </dl> <p><strong>ambiguous</strong> : ‘infer’, bool-ndarray, ‘NaT’, default ‘raise’</p>  <ul class="simple"> <li>‘infer’ will attempt to infer fall dst-transition hours based on order</li> <li>bool-ndarray where True signifies a DST time, False signifies a non-DST time (note that this flag is only applicable for ambiguous times)</li> <li>‘NaT’ will return NaT where there are ambiguous times</li> <li>‘raise’ will raise an AmbiguousTimeError if there are ambiguous times</li> </ul>  <p><strong>name</strong> : object</p>  <p>Name to be stored in the index</p>  <p><strong>dayfirst</strong> : bool, default False</p>  <p>If True, parse dates in <code>data</code> with the day first order</p>  <p><strong>yearfirst</strong> : bool, default False</p>  <p>If True parse dates in <code>data</code> with the year first order</p>  </td> </tr>  </table> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt>
+ <a class="reference internal" href="../pandas.index/#pandas.Index" title="pandas.Index"><code>Index</code></a>
+</dt> <dd>The base pandas Index type</dd> <dt>
+ <a class="reference internal" href="../pandas.timedeltaindex/#pandas.TimedeltaIndex" title="pandas.TimedeltaIndex"><code>TimedeltaIndex</code></a>
+</dt> <dd>Index of timedelta64 data</dd> <dt>
+ <a class="reference internal" href="../pandas.periodindex/#pandas.PeriodIndex" title="pandas.PeriodIndex"><code>PeriodIndex</code></a>
+</dt> <dd>Index of Period data</dd> <dt>
+ <a class="reference internal" href="../pandas.to_datetime/#pandas.to_datetime" title="pandas.to_datetime"><code>pandas.to_datetime</code></a>
+</dt> <dd>Convert argument to datetime</dd> </dl> </div> <h4 class="rubric">Notes</h4> <p>To learn more about the frequency strings, please see <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html#offset-aliases" target="_blank">this link</a>.</p> <h4 class="rubric">Attributes</h4> <table class="longtable docutils">   <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.year/#pandas.DatetimeIndex.year" title="pandas.DatetimeIndex.year"><code>year</code></a></td> <td>The year of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.month/#pandas.DatetimeIndex.month" title="pandas.DatetimeIndex.month"><code>month</code></a></td> <td>The month as January=1, December=12</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.day/#pandas.DatetimeIndex.day" title="pandas.DatetimeIndex.day"><code>day</code></a></td> <td>The days of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.hour/#pandas.DatetimeIndex.hour" title="pandas.DatetimeIndex.hour"><code>hour</code></a></td> <td>The hours of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.minute/#pandas.DatetimeIndex.minute" title="pandas.DatetimeIndex.minute"><code>minute</code></a></td> <td>The minutes of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.second/#pandas.DatetimeIndex.second" title="pandas.DatetimeIndex.second"><code>second</code></a></td> <td>The seconds of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.microsecond/#pandas.DatetimeIndex.microsecond" title="pandas.DatetimeIndex.microsecond"><code>microsecond</code></a></td> <td>The microseconds of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.nanosecond/#pandas.DatetimeIndex.nanosecond" title="pandas.DatetimeIndex.nanosecond"><code>nanosecond</code></a></td> <td>The nanoseconds of the datetime</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.date/#pandas.DatetimeIndex.date" title="pandas.DatetimeIndex.date"><code>date</code></a></td> <td>Returns numpy array of python datetime.date objects (namely, the date part of Timestamps without timezone information).</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.time/#pandas.DatetimeIndex.time" title="pandas.DatetimeIndex.time"><code>time</code></a></td> <td>Returns numpy array of datetime.time.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.dayofyear/#pandas.DatetimeIndex.dayofyear" title="pandas.DatetimeIndex.dayofyear"><code>dayofyear</code></a></td> <td>The ordinal day of the year</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.weekofyear/#pandas.DatetimeIndex.weekofyear" title="pandas.DatetimeIndex.weekofyear"><code>weekofyear</code></a></td> <td>The week ordinal of the year</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.week/#pandas.DatetimeIndex.week" title="pandas.DatetimeIndex.week"><code>week</code></a></td> <td>The week ordinal of the year</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.dayofweek/#pandas.DatetimeIndex.dayofweek" title="pandas.DatetimeIndex.dayofweek"><code>dayofweek</code></a></td> <td>The day of the week with Monday=0, Sunday=6</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.weekday/#pandas.DatetimeIndex.weekday" title="pandas.DatetimeIndex.weekday"><code>weekday</code></a></td> <td>The day of the week with Monday=0, Sunday=6</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.quarter/#pandas.DatetimeIndex.quarter" title="pandas.DatetimeIndex.quarter"><code>quarter</code></a></td> <td>The quarter of the date</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.freq/#pandas.DatetimeIndex.freq" title="pandas.DatetimeIndex.freq"><code>freq</code></a></td> <td>Return the frequency object if it is set, otherwise None</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.freqstr/#pandas.DatetimeIndex.freqstr" title="pandas.DatetimeIndex.freqstr"><code>freqstr</code></a></td> <td>Return the frequency object as a string if it is set, otherwise None</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_month_start/#pandas.DatetimeIndex.is_month_start" title="pandas.DatetimeIndex.is_month_start"><code>is_month_start</code></a></td> <td>Logical indicating if first day of month (defined by frequency)</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_month_end/#pandas.DatetimeIndex.is_month_end" title="pandas.DatetimeIndex.is_month_end"><code>is_month_end</code></a></td> <td>Indicator for whether the date is the last day of the month.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_quarter_start/#pandas.DatetimeIndex.is_quarter_start" title="pandas.DatetimeIndex.is_quarter_start"><code>is_quarter_start</code></a></td> <td>Indicator for whether the date is the first day of a quarter.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_quarter_end/#pandas.DatetimeIndex.is_quarter_end" title="pandas.DatetimeIndex.is_quarter_end"><code>is_quarter_end</code></a></td> <td>Indicator for whether the date is the last day of a quarter.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_year_start/#pandas.DatetimeIndex.is_year_start" title="pandas.DatetimeIndex.is_year_start"><code>is_year_start</code></a></td> <td>Indicate whether the date is the first day of a year.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_year_end/#pandas.DatetimeIndex.is_year_end" title="pandas.DatetimeIndex.is_year_end"><code>is_year_end</code></a></td> <td>Indicate whether the date is the last day of the year.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.is_leap_year/#pandas.DatetimeIndex.is_leap_year" title="pandas.DatetimeIndex.is_leap_year"><code>is_leap_year</code></a></td> <td>Boolean indicator if the date belongs to a leap year.</td> </tr> <tr>
+<td><a class="reference internal" href="../pandas.datetimeindex.inferred_freq/#pandas.DatetimeIndex.inferred_freq" title="pandas.DatetimeIndex.inferred_freq"><code>inferred_freq</code></a></td> <td>Tries to return a string representing a frequency guess, generated by infer_freq.</td> </tr>  </table> <table class="docutils">   <tr>
+<td><strong>tz</strong></td> <td> </td> </tr>  </table> <h4 class="rubric">Methods</h4> <table class="longtable docutils">   <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.normalize/#pandas.DatetimeIndex.normalize" title="pandas.DatetimeIndex.normalize"><code>normalize</code></a>()</td> <td>Convert times to midnight.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.strftime/#pandas.DatetimeIndex.strftime" title="pandas.DatetimeIndex.strftime"><code>strftime</code></a>(date_format)</td> <td>Convert to Index using specified date_format.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.snap/#pandas.DatetimeIndex.snap" title="pandas.DatetimeIndex.snap"><code>snap</code></a>([freq])</td> <td>Snap time stamps to nearest occurring frequency</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.tz_convert/#pandas.DatetimeIndex.tz_convert" title="pandas.DatetimeIndex.tz_convert"><code>tz_convert</code></a>(tz)</td> <td>Convert tz-aware DatetimeIndex from one time zone to another.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.tz_localize/#pandas.DatetimeIndex.tz_localize" title="pandas.DatetimeIndex.tz_localize"><code>tz_localize</code></a>(tz[, ambiguous, errors])</td> <td>Localize tz-naive DatetimeIndex to tz-aware DatetimeIndex.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.round/#pandas.DatetimeIndex.round" title="pandas.DatetimeIndex.round"><code>round</code></a>(freq, *args, **kwargs)</td> <td>round the data to the specified <code>freq</code>.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.floor/#pandas.DatetimeIndex.floor" title="pandas.DatetimeIndex.floor"><code>floor</code></a>(freq)</td> <td>floor the data to the specified <code>freq</code>.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.ceil/#pandas.DatetimeIndex.ceil" title="pandas.DatetimeIndex.ceil"><code>ceil</code></a>(freq)</td> <td>ceil the data to the specified <code>freq</code>.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.to_period/#pandas.DatetimeIndex.to_period" title="pandas.DatetimeIndex.to_period"><code>to_period</code></a>([freq])</td> <td>Cast to PeriodIndex at a particular frequency.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.to_perioddelta/#pandas.DatetimeIndex.to_perioddelta" title="pandas.DatetimeIndex.to_perioddelta"><code>to_perioddelta</code></a>(freq)</td> <td>Calculate TimedeltaIndex of difference between index values and index converted to periodIndex at specified freq.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.to_pydatetime/#pandas.DatetimeIndex.to_pydatetime" title="pandas.DatetimeIndex.to_pydatetime"><code>to_pydatetime</code></a>()</td> <td>Return DatetimeIndex as object ndarray of datetime.datetime objects</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.to_series/#pandas.DatetimeIndex.to_series" title="pandas.DatetimeIndex.to_series"><code>to_series</code></a>([keep_tz, index, name])</td> <td>Create a Series with both index and values equal to the index keys useful with map for returning an indexer based on an index</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.to_frame/#pandas.DatetimeIndex.to_frame" title="pandas.DatetimeIndex.to_frame"><code>to_frame</code></a>([index])</td> <td>Create a DataFrame with a column containing the Index.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.month_name/#pandas.DatetimeIndex.month_name" title="pandas.DatetimeIndex.month_name"><code>month_name</code></a>([locale])</td> <td>Return the month names of the DateTimeIndex with specified locale.</td> </tr> <tr>
+<td>
+<a class="reference internal" href="../pandas.datetimeindex.day_name/#pandas.DatetimeIndex.day_name" title="pandas.DatetimeIndex.day_name"><code>day_name</code></a>([locale])</td> <td>Return the day names of the DateTimeIndex with specified locale.</td> </tr>  </table> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.DatetimeIndex.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.DatetimeIndex.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

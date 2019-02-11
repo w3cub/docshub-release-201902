@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Series.between() - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content=" Return boolean Series equivalent to left &#60;&#61; series &#60;&#61; right. ">
+  <meta name="keywords" content="pandas, series, between, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.series.between/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-series-between">pandas.Series.between</h1> <dl class="method"> <dt id="pandas.Series.between">
+<code>Series.between(left, right, inclusive=True)</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/core/series.py#L3593-L3665" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Return boolean Series equivalent to left &lt;= series &lt;= right.</p> <p>This function returns a boolean vector containing <code>True</code> wherever the corresponding Series element is between the boundary values <code>left</code> and <code>right</code>. NA values are treated as <code>False</code>.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>left</strong> : scalar</p>  <p>Left boundary.</p>  <p><strong>right</strong> : scalar</p>  <p>Right boundary.</p>  <p><strong>inclusive</strong> : bool, default True</p>  <p>Include boundaries.</p>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>Series</strong></p>  <p>Each element will be a boolean.</p>  </td> </tr>  </table> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt>
+ <a class="reference internal" href="../pandas.series.gt/#pandas.Series.gt" title="pandas.Series.gt"><code>pandas.Series.gt</code></a>
+</dt> <dd>Greater than of series and other</dd> <dt>
+ <a class="reference internal" href="../pandas.series.lt/#pandas.Series.lt" title="pandas.Series.lt"><code>pandas.Series.lt</code></a>
+</dt> <dd>Less than of series and other</dd> </dl> </div> <h4 class="rubric">Notes</h4> <p>This function is equivalent to <code>(left &lt;= ser) &amp; (ser &lt;= right)</code></p> <h4 class="rubric">Examples</h4> <pre data-language="python">&gt;&gt;&gt; s = pd.Series([2, 0, 4, 8, np.nan])
+</pre> <p>Boundary values are included by default:</p> <pre data-language="python">&gt;&gt;&gt; s.between(1, 4)
+0     True
+1    False
+2     True
+3    False
+4    False
+dtype: bool
+</pre> <p>With <code>inclusive</code> set to <code>False</code> boundary values are excluded:</p> <pre data-language="python">&gt;&gt;&gt; s.between(1, 4, inclusive=False)
+0     True
+1    False
+2    False
+3    False
+4    False
+dtype: bool
+</pre> <p><code>left</code> and <code>right</code> can be any scalar value:</p> <pre data-language="python">&gt;&gt;&gt; s = pd.Series(['Alice', 'Bob', 'Carol', 'Eve'])
+&gt;&gt;&gt; s.between('Anna', 'Daniel')
+0    False
+1     True
+2     True
+3    False
+dtype: bool
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.Series.between.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.Series.between.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,271 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>pandas.wide_to_long() - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content=" Wide panel to long format. Less flexible but more user-friendly than melt. ">
+  <meta name="keywords" content="pandas, wide, long, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/generated/pandas.wide_to_long/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="pandas-wide-to-long">pandas.wide_to_long</h1> <dl class="function"> <dt id="pandas.wide_to_long">
+<code>pandas.wide_to_long(df, stubnames, i, j, sep='', suffix='\\d+')</code> <a class="reference external" href="http://github.com/pandas-dev/pandas/blob/v0.23.4/pandas/core/reshape/melt.py#L164-L446" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Wide panel to long format. Less flexible but more user-friendly than melt.</p> <p>With stubnames [‘A’, ‘B’], this function expects to find one or more group of columns with format Asuffix1, Asuffix2,…, Bsuffix1, Bsuffix2,… You specify what you want to call this suffix in the resulting long format with <code>j</code> (for example <code>j=’year’</code>)</p> <p>Each row of these wide variables are assumed to be uniquely identified by <code>i</code> (can be a single column name or a list of column names)</p> <p>All remaining variables in the data frame are left intact.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<p class="first"><strong>df</strong> : DataFrame</p>  <p>The wide-format DataFrame</p>  <p><strong>stubnames</strong> : str or list-like</p>  <p>The stub name(s). The wide format variables are assumed to start with the stub names.</p>  <p><strong>i</strong> : str or list-like</p>  <p>Column(s) to use as id variable(s)</p>  <p><strong>j</strong> : str</p>  <p>The name of the subobservation variable. What you wish to name your suffix in the long format.</p>  <p><strong>sep</strong> : str, default “”</p>  <p>A character indicating the separation of the variable names in the wide format, to be stripped from the names in the long format. For example, if your column names are A-suffix1, A-suffix2, you can strip the hyphen by specifying <code>sep=’-‘</code></p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.20.0.</span></p> </div>  <p><strong>suffix</strong> : str, default ‘\d+’</p>  <p>A regular expression capturing the wanted suffixes. ‘\d+’ captures numeric suffixes. Suffixes with no numbers could be specified with the negated character class ‘\D+’. You can also further disambiguate suffixes, for example, if your wide variables are of the form Aone, Btwo,.., and you have an unrelated column Arating, you can ignore the last one by specifying <code>suffix=’(!?one|two)’</code></p> <div class="versionadded"> <p><span class="versionmodified">New in version 0.20.0.</span></p> </div> <div class="versionchanged"> <p><span class="versionmodified">Changed in version 0.23.0: </span>When all suffixes are numeric, they are cast to int64/float64.</p> </div>  </td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">
+<p class="first"><strong>DataFrame</strong></p>  <p>A DataFrame that contains each stub name as a variable, with new index (i, j)</p>  </td> </tr>  </table> <h4 class="rubric">Notes</h4> <p>All extra variables are left untouched. This simply uses <code>pandas.melt</code> under the hood, but is hard-coded to “do the right thing” in a typical case.</p> <h4 class="rubric">Examples</h4> <pre data-language="python">&gt;&gt;&gt; import pandas as pd
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; np.random.seed(123)
+&gt;&gt;&gt; df = pd.DataFrame({"A1970" : {0 : "a", 1 : "b", 2 : "c"},
+...                    "A1980" : {0 : "d", 1 : "e", 2 : "f"},
+...                    "B1970" : {0 : 2.5, 1 : 1.2, 2 : .7},
+...                    "B1980" : {0 : 3.2, 1 : 1.3, 2 : .1},
+...                    "X"     : dict(zip(range(3), np.random.randn(3)))
+...                   })
+&gt;&gt;&gt; df["id"] = df.index
+&gt;&gt;&gt; df
+  A1970 A1980  B1970  B1980         X  id
+0     a     d    2.5    3.2 -1.085631   0
+1     b     e    1.2    1.3  0.997345   1
+2     c     f    0.7    0.1  0.282978   2
+&gt;&gt;&gt; pd.wide_to_long(df, ["A", "B"], i="id", j="year")
+... 
+                X  A    B
+id year
+0  1970 -1.085631  a  2.5
+1  1970  0.997345  b  1.2
+2  1970  0.282978  c  0.7
+0  1980 -1.085631  d  3.2
+1  1980  0.997345  e  1.3
+2  1980  0.282978  f  0.1
+</pre> <p>With multuple id columns</p> <pre data-language="python">&gt;&gt;&gt; df = pd.DataFrame({
+...     'famid': [1, 1, 1, 2, 2, 2, 3, 3, 3],
+...     'birth': [1, 2, 3, 1, 2, 3, 1, 2, 3],
+...     'ht1': [2.8, 2.9, 2.2, 2, 1.8, 1.9, 2.2, 2.3, 2.1],
+...     'ht2': [3.4, 3.8, 2.9, 3.2, 2.8, 2.4, 3.3, 3.4, 2.9]
+... })
+&gt;&gt;&gt; df
+   birth  famid  ht1  ht2
+0      1      1  2.8  3.4
+1      2      1  2.9  3.8
+2      3      1  2.2  2.9
+3      1      2  2.0  3.2
+4      2      2  1.8  2.8
+5      3      2  1.9  2.4
+6      1      3  2.2  3.3
+7      2      3  2.3  3.4
+8      3      3  2.1  2.9
+&gt;&gt;&gt; l = pd.wide_to_long(df, stubnames='ht', i=['famid', 'birth'], j='age')
+&gt;&gt;&gt; l
+... 
+                  ht
+famid birth age
+1     1     1    2.8
+            2    3.4
+      2     1    2.9
+            2    3.8
+      3     1    2.2
+            2    2.9
+2     1     1    2.0
+            2    3.2
+      2     1    1.8
+            2    2.8
+      3     1    1.9
+            2    2.4
+3     1     1    2.2
+            2    3.3
+      2     1    2.3
+            2    3.4
+      3     1    2.1
+            2    2.9
+</pre> <p>Going from long back to wide just takes some creative use of <code>unstack</code></p> <pre data-language="python">&gt;&gt;&gt; w = l.unstack()
+&gt;&gt;&gt; w.columns = w.columns.map('{0[0]}{0[1]}'.format)
+&gt;&gt;&gt; w.reset_index()
+   famid  birth  ht1  ht2
+0      1      1  2.8  3.4
+1      1      2  2.9  3.8
+2      1      3  2.2  2.9
+3      2      1  2.0  3.2
+4      2      2  1.8  2.8
+5      2      3  1.9  2.4
+6      3      1  2.2  3.3
+7      3      2  2.3  3.4
+8      3      3  2.1  2.9
+</pre> <p>Less wieldy column names are also handled</p> <pre data-language="python">&gt;&gt;&gt; np.random.seed(0)
+&gt;&gt;&gt; df = pd.DataFrame({'A(quarterly)-2010': np.random.rand(3),
+...                    'A(quarterly)-2011': np.random.rand(3),
+...                    'B(quarterly)-2010': np.random.rand(3),
+...                    'B(quarterly)-2011': np.random.rand(3),
+...                    'X' : np.random.randint(3, size=3)})
+&gt;&gt;&gt; df['id'] = df.index
+&gt;&gt;&gt; df 
+   A(quarterly)-2010  A(quarterly)-2011  B(quarterly)-2010  ...
+0           0.548814           0.544883           0.437587  ...
+1           0.715189           0.423655           0.891773  ...
+2           0.602763           0.645894           0.963663  ...
+   X  id
+0  0   0
+1  1   1
+2  1   2
+</pre> <pre data-language="python">&gt;&gt;&gt; pd.wide_to_long(df, ['A(quarterly)', 'B(quarterly)'], i='id',
+...                 j='year', sep='-')
+... 
+         X  A(quarterly)  B(quarterly)
+id year
+0  2010  0      0.548814     0.437587
+1  2010  1      0.715189     0.891773
+2  2010  1      0.602763     0.963663
+0  2011  0      0.544883     0.383442
+1  2011  1      0.423655     0.791725
+2  2011  1      0.645894     0.528895
+</pre> <p>If we have many columns, we could also use a regex to find our stubnames and pass that list on to wide_to_long</p> <pre data-language="python">&gt;&gt;&gt; stubnames = sorted(
+...     set([match[0] for match in df.columns.str.findall(
+...         r'[A-B]\(.*\)').values if match != [] ])
+... )
+&gt;&gt;&gt; list(stubnames)
+['A(quarterly)', 'B(quarterly)']
+</pre> <p>All of the above examples have integers as suffixes. It is possible to have non-integers as suffixes.</p> <pre data-language="python">&gt;&gt;&gt; df = pd.DataFrame({
+...     'famid': [1, 1, 1, 2, 2, 2, 3, 3, 3],
+...     'birth': [1, 2, 3, 1, 2, 3, 1, 2, 3],
+...     'ht_one': [2.8, 2.9, 2.2, 2, 1.8, 1.9, 2.2, 2.3, 2.1],
+...     'ht_two': [3.4, 3.8, 2.9, 3.2, 2.8, 2.4, 3.3, 3.4, 2.9]
+... })
+&gt;&gt;&gt; df
+   birth  famid  ht_one  ht_two
+0      1      1     2.8     3.4
+1      2      1     2.9     3.8
+2      3      1     2.2     2.9
+3      1      2     2.0     3.2
+4      2      2     1.8     2.8
+5      3      2     1.9     2.4
+6      1      3     2.2     3.3
+7      2      3     2.3     3.4
+8      3      3     2.1     2.9
+</pre> <pre data-language="python">&gt;&gt;&gt; l = pd.wide_to_long(df, stubnames='ht', i=['famid', 'birth'], j='age',
+                        sep='_', suffix='\w')
+&gt;&gt;&gt; l
+... 
+                  ht
+famid birth age
+1     1     one  2.8
+            two  3.4
+      2     one  2.9
+            two  3.8
+      3     one  2.2
+            two  2.9
+2     1     one  2.0
+            two  3.2
+      2     one  1.8
+            two  2.8
+      3     one  1.9
+            two  2.4
+3     1     one  2.2
+            two  3.3
+      2     one  2.3
+            two  3.4
+      3     one  2.1
+            two  2.9
+</pre> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.wide_to_long.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.wide_to_long.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

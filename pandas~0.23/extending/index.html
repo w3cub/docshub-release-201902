@@ -1,0 +1,232 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>34. Extending Pandas - Pandas 0.23 - W3cubDocs</title>
+  
+  <meta name="description" content="While pandas provides a rich set of methods, containers, and data types, your needs may not be fully satisfied. Pandas offers a few options for &hellip;">
+  <meta name="keywords" content="extending, pandas, -, pandas~0.23">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pandas~0.23/extending/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pandas~0.23.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pandas~0.23/" class="_nav-link" title="" style="margin-left:0;">pandas 0.23</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="extending">Extending Pandas</h1> <p id="extending-pandas">While pandas provides a rich set of methods, containers, and data types, your needs may not be fully satisfied. Pandas offers a few options for extending pandas.</p>  <h2 id="extending-register-accessors">Registering Custom Accessors</h2> <p id="registering-custom-accessors">Libraries can use the decorators <a class="reference internal" href="../generated/pandas.api.extensions.register_dataframe_accessor/#pandas.api.extensions.register_dataframe_accessor" title="pandas.api.extensions.register_dataframe_accessor"><code>pandas.api.extensions.register_dataframe_accessor()</code></a>, <a class="reference internal" href="../generated/pandas.api.extensions.register_series_accessor/#pandas.api.extensions.register_series_accessor" title="pandas.api.extensions.register_series_accessor"><code>pandas.api.extensions.register_series_accessor()</code></a>, and <a class="reference internal" href="../generated/pandas.api.extensions.register_index_accessor/#pandas.api.extensions.register_index_accessor" title="pandas.api.extensions.register_index_accessor"><code>pandas.api.extensions.register_index_accessor()</code></a>, to add additional “namespaces” to pandas objects. All of these follow a similar convention: you decorate a class, providing the name of attribute to add. The class’s <code>__init__</code> method gets the object being decorated. For example:</p> <pre data-language="python">@pd.api.extensions.register_dataframe_accessor("geo")
+class GeoAccessor(object):
+    def __init__(self, pandas_obj):
+        self._obj = pandas_obj
+
+    @property
+    def center(self):
+        # return the geographic center point of this DataFrame
+        lat = self._obj.latitude
+        lon = self._obj.longitude
+        return (float(lon.mean()), float(lat.mean()))
+
+    def plot(self):
+        # plot this array's data on a map, e.g., using Cartopy
+        pass
+</pre> <p>Now users can access your methods using the <code>geo</code> namespace:</p> <pre data-language="python">&gt;&gt;&gt; ds = pd.DataFrame({'longitude': np.linspace(0, 10),
+...                    'latitude': np.linspace(0, 20)})
+&gt;&gt;&gt; ds.geo.center
+(5.0, 10.0)
+&gt;&gt;&gt; ds.geo.plot()
+# plots data on a map
+</pre> <p>This can be a convenient way to extend pandas objects without subclassing them. If you write a custom accessor, make a pull request adding it to our <a class="reference internal" href="../ecosystem/#ecosystem"><span class="std std-ref">pandas Ecosystem</span></a> page.</p>   <h2 id="extending-extension-types">Extension Types</h2> <div class="versionadded" id="extension-types"> <p><span class="versionmodified">New in version 0.23.0.</span></p> </div> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">The <code>pandas.api.extension.ExtensionDtype</code> and <code>pandas.api.extension.ExtensionArray</code> APIs are new and experimental. They may change between versions without warning.</p> </div> <p>Pandas defines an interface for implementing data types and arrays that <em>extend</em> NumPy’s type system. Pandas itself uses the extension system for some types that aren’t built into NumPy (categorical, period, interval, datetime with timezone).</p> <p>Libraries can define a custom array and data type. When pandas encounters these objects, they will be handled properly (i.e. not converted to an ndarray of objects). Many methods like <a class="reference internal" href="../generated/pandas.isna/#pandas.isna" title="pandas.isna"><code>pandas.isna()</code></a> will dispatch to the extension type’s implementation.</p> <p>If you’re building a library that implements the interface, please publicize it on <a class="reference internal" href="../ecosystem/#ecosystem-extensions"><span class="std std-ref">Extension Data Types</span></a>.</p> <p>The interface consists of two classes.</p>  <h3 id="extensiondtype"><code>ExtensionDtype</code></h3> <p>A <code>pandas.api.extension.ExtensionDtype</code> is similar to a <code>numpy.dtype</code> object. It describes the data type. Implementors are responsible for a few unique items like the name.</p> <p>One particularly important item is the <code>type</code> property. This should be the class that is the scalar type for your data. For example, if you were writing an extension array for IP Address data, this might be <code>ipaddress.IPv4Address</code>.</p> <p>See the <a class="reference external" href="https://github.com/pandas-dev/pandas/blob/master/pandas/core/dtypes/base.py" target="_blank">extension dtype source</a> for interface definition.</p>   <h3 id="extensionarray"><code>ExtensionArray</code></h3> <p>This class provides all the array-like functionality. ExtensionArrays are limited to 1 dimension. An ExtensionArray is linked to an ExtensionDtype via the <code>dtype</code> attribute.</p> <p>Pandas makes no restrictions on how an extension array is created via its <code>__new__</code> or <code>__init__</code>, and puts no restrictions on how you store your data. We do require that your array be convertible to a NumPy array, even if this is relatively expensive (as it is for <code>Categorical</code>).</p> <p>They may be backed by none, one, or many NumPy arrays. For example, <code>pandas.Categorical</code> is an extension array backed by two arrays, one for codes and one for categories. An array of IPv6 addresses may be backed by a NumPy structured array with two fields, one for the lower 64 bits and one for the upper 64 bits. Or they may be backed by some other storage type, like Python lists.</p> <p>See the <a class="reference external" href="https://github.com/pandas-dev/pandas/blob/master/pandas/core/arrays/base.py" target="_blank">extension array source</a> for the interface definition. The docstrings and comments contain guidance for properly implementing the interface.</p> <p>We provide a test suite for ensuring that your extension arrays satisfy the expected behavior. To use the test suite, you must provide several pytest fixtures and inherit from the base test class. The required fixtures are found in <a class="reference external" href="https://github.com/pandas-dev/pandas/blob/master/pandas/tests/extension/conftest.py" target="_blank">https://github.com/pandas-dev/pandas/blob/master/pandas/tests/extension/conftest.py</a>.</p> <p>To use a test, subclass it:</p> <pre data-language="python">from pandas.tests.extension import base
+
+class TestConstructors(base.BaseConstructorsTests):
+    pass
+</pre> <p>See <a class="reference external" href="https://github.com/pandas-dev/pandas/blob/master/pandas/tests/extension/base/__init__.py" target="_blank">https://github.com/pandas-dev/pandas/blob/master/pandas/tests/extension/base/__init__.py</a> for a list of all the tests available.</p>    <h2 id="extending-subclassing-pandas">Subclassing pandas Data Structures</h2> <div class="admonition warning" id="subclassing-pandas-data-structures"> <p class="first admonition-title">Warning</p> <p>There are some easier alternatives before considering subclassing <code>pandas</code> data structures.</p> <ol class="last arabic simple"> <li>Extensible method chains with <a class="reference internal" href="../basics/#basics-pipe"><span class="std std-ref">pipe</span></a>
+</li> <li>Use <em>composition</em>. See <a class="reference external" href="http://en.wikipedia.org/wiki/Composition_over_inheritance" target="_blank">here</a>.</li> <li>Extending by <a class="reference internal" href="#extending-register-accessors"><span class="std std-ref">registering an accessor</span></a>
+</li> <li>Extending by <a class="reference internal" href="#extending-extension-types"><span class="std std-ref">extension type</span></a>
+</li> </ol> </div> <p>This section describes how to subclass <code>pandas</code> data structures to meet more specific needs. There are two points that need attention:</p> <ol class="arabic simple"> <li>Override constructor properties.</li> <li>Define original properties</li> </ol> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">You can find a nice example in <a class="reference external" href="https://github.com/geopandas/geopandas" target="_blank">geopandas</a> project.</p> </div>  <h3 id="override-constructor-properties">Override Constructor Properties</h3> <p>Each data structure has several <em>constructor properties</em> for returning a new data structure as the result of an operation. By overriding these properties, you can retain subclasses through <code>pandas</code> data manipulations.</p> <p>There are 3 constructor properties to be defined:</p> <ul class="simple"> <li>
+<code>_constructor</code>: Used when a manipulation result has the same dimesions as the original.</li> <li>
+<code>_constructor_sliced</code>: Used when a manipulation result has one lower dimension(s) as the original, such as <code>DataFrame</code> single columns slicing.</li> <li>
+<code>_constructor_expanddim</code>: Used when a manipulation result has one higher dimension as the original, such as <code>Series.to_frame()</code> and <code>DataFrame.to_panel()</code>.</li> </ul> <p>Following table shows how <code>pandas</code> data structures define constructor properties by default.</p> <table class="docutils">  <thead valign="bottom"> <tr>
+<th class="head">Property Attributes</th> <th class="head"><code>Series</code></th> <th class="head"><code>DataFrame</code></th> </tr> </thead>  <tr>
+<td><code>_constructor</code></td> <td><code>Series</code></td> <td><code>DataFrame</code></td> </tr> <tr>
+<td><code>_constructor_sliced</code></td> <td><code>NotImplementedError</code></td> <td><code>Series</code></td> </tr> <tr>
+<td><code>_constructor_expanddim</code></td> <td><code>DataFrame</code></td> <td><code>Panel</code></td> </tr>  </table> <p>Below example shows how to define <code>SubclassedSeries</code> and <code>SubclassedDataFrame</code> overriding constructor properties.</p> <pre data-language="python">class SubclassedSeries(Series):
+
+    @property
+    def _constructor(self):
+        return SubclassedSeries
+
+    @property
+    def _constructor_expanddim(self):
+        return SubclassedDataFrame
+
+class SubclassedDataFrame(DataFrame):
+
+    @property
+    def _constructor(self):
+        return SubclassedDataFrame
+
+    @property
+    def _constructor_sliced(self):
+        return SubclassedSeries
+</pre> <pre data-language="python">&gt;&gt;&gt; s = SubclassedSeries([1, 2, 3])
+&gt;&gt;&gt; type(s)
+&lt;class '__main__.SubclassedSeries'&gt;
+
+&gt;&gt;&gt; to_framed = s.to_frame()
+&gt;&gt;&gt; type(to_framed)
+&lt;class '__main__.SubclassedDataFrame'&gt;
+
+&gt;&gt;&gt; df = SubclassedDataFrame({'A', [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
+&gt;&gt;&gt; df
+   A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9
+
+&gt;&gt;&gt; type(df)
+&lt;class '__main__.SubclassedDataFrame'&gt;
+
+&gt;&gt;&gt; sliced1 = df[['A', 'B']]
+&gt;&gt;&gt; sliced1
+   A  B
+0  1  4
+1  2  5
+2  3  6
+&gt;&gt;&gt; type(sliced1)
+&lt;class '__main__.SubclassedDataFrame'&gt;
+
+&gt;&gt;&gt; sliced2 = df['A']
+&gt;&gt;&gt; sliced2
+0    1
+1    2
+2    3
+Name: A, dtype: int64
+&gt;&gt;&gt; type(sliced2)
+&lt;class '__main__.SubclassedSeries'&gt;
+</pre>   <h3 id="define-original-properties">Define Original Properties</h3> <p>To let original data structures have additional properties, you should let <code>pandas</code> know what properties are added. <code>pandas</code> maps unknown properties to data names overriding <code>__getattribute__</code>. Defining original properties can be done in one of 2 ways:</p> <ol class="arabic simple"> <li>Define <code>_internal_names</code> and <code>_internal_names_set</code> for temporary properties which WILL NOT be passed to manipulation results.</li> <li>Define <code>_metadata</code> for normal properties which will be passed to manipulation results.</li> </ol> <p>Below is an example to define two original properties, “internal_cache” as a temporary property and “added_property” as a normal property</p> <pre data-language="python">class SubclassedDataFrame2(DataFrame):
+
+    # temporary properties
+    _internal_names = pd.DataFrame._internal_names + ['internal_cache']
+    _internal_names_set = set(_internal_names)
+
+    # normal properties
+    _metadata = ['added_property']
+
+    @property
+    def _constructor(self):
+        return SubclassedDataFrame2
+</pre> <pre data-language="python">&gt;&gt;&gt; df = SubclassedDataFrame2({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
+&gt;&gt;&gt; df
+   A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9
+
+&gt;&gt;&gt; df.internal_cache = 'cached'
+&gt;&gt;&gt; df.added_property = 'property'
+
+&gt;&gt;&gt; df.internal_cache
+cached
+&gt;&gt;&gt; df.added_property
+property
+
+# properties defined in _internal_names is reset after manipulation
+&gt;&gt;&gt; df[['A', 'B']].internal_cache
+AttributeError: 'SubclassedDataFrame2' object has no attribute 'internal_cache'
+
+# properties defined in _metadata are retained
+&gt;&gt;&gt; df[['A', 'B']].added_property
+property
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2008–2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>Licensed under the 3-clause BSD License.<br>
+    <a href="http://pandas.pydata.org/pandas-docs/version/0.23.4/extending.html" class="_attribution-link" target="_blank">http://pandas.pydata.org/pandas-docs/version/0.23.4/extending.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
