@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>3.7. Options to Control Diagnostic Messages Formatting - GCC 7 - W3cubDocs</title>
+  
+  <meta name="description" content="Traditionally, diagnostic messages have been formatted irrespective of the output device’s aspect (e.g. its width, …). You can use the options &hellip;">
+  <meta name="keywords" content="options, control, diagnostic, messages, formatting, -, gcc, gcc~7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/gcc~7/diagnostic-message-formatting-options/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/gcc~7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/gcc~7/" class="_nav-link" title="" style="margin-left:0;">GCC 7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="section" id="Options-to-Control-Diagnostic-Messages-Formatting">3.7 Options to Control Diagnostic Messages Formatting</h1>    <p id="index-message-formatting">Traditionally, diagnostic messages have been formatted irrespective of the output device’s aspect (e.g. its width, …). You can use the options described below to control the formatting algorithm for diagnostic messages, e.g. how many characters per line, how often source location information should be reported. Note that some language front ends may not honor these options. </p> <dl compact> <dt><code>-fmessage-length=<var>n</var></code></dt> <dd> <p id="index-fmessage_002dlength">Try to format error messages so that they fit on lines of about <var>n</var> characters. If <var>n</var> is zero, then no line-wrapping is done; each error message appears on a single line. This is the default for all front ends. </p> </dd> <dt><code>-fdiagnostics-show-location=once</code></dt> <dd> <p id="index-fdiagnostics_002dshow_002dlocation">Only meaningful in line-wrapping mode. Instructs the diagnostic messages reporter to emit source location information <em>once</em>; that is, in case the message is too long to fit on a single physical line and has to be wrapped, the source location won’t be emitted (as prefix) again, over and over, in subsequent continuation lines. This is the default behavior. </p> </dd> <dt><code>-fdiagnostics-show-location=every-line</code></dt> <dd>
+<p>Only meaningful in line-wrapping mode. Instructs the diagnostic messages reporter to emit the same source location information (as prefix) for physical lines that result from the process of breaking a message which is too long to fit on a single line. </p> </dd> <dt><code>-fdiagnostics-color[=<var>WHEN</var>]</code></dt> <dt><code>-fno-diagnostics-color</code></dt> <dd>   <p id="index-GCC_005fCOLORS-environment-variable">Use color in diagnostics. <var>WHEN</var> is ‘<samp>never</samp>’, ‘<samp>always</samp>’, or ‘<samp>auto</samp>’. The default depends on how the compiler has been configured, it can be any of the above <var>WHEN</var> options or also ‘<samp>never</samp>’ if <code>GCC_COLORS</code> environment variable isn’t present in the environment, and ‘<samp>auto</samp>’ otherwise. ‘<samp>auto</samp>’ means to use color only when the standard error is a terminal. The forms <samp>-fdiagnostics-color</samp> and <samp>-fno-diagnostics-color</samp> are aliases for <samp>-fdiagnostics-color=always</samp> and <samp>-fdiagnostics-color=never</samp>, respectively. </p> <p>The colors are defined by the environment variable <code>GCC_COLORS</code>. Its value is a colon-separated list of capabilities and Select Graphic Rendition (SGR) substrings. SGR commands are interpreted by the terminal or terminal emulator. (See the section in the documentation of your text terminal for permitted values and their meanings as character attributes.) These substring values are integers in decimal representation and can be concatenated with semicolons. Common values to concatenate include ‘<samp>1</samp>’ for bold, ‘<samp>4</samp>’ for underline, ‘<samp>5</samp>’ for blink, ‘<samp>7</samp>’ for inverse, ‘<samp>39</samp>’ for default foreground color, ‘<samp>30</samp>’ to ‘<samp>37</samp>’ for foreground colors, ‘<samp>90</samp>’ to ‘<samp>97</samp>’ for 16-color mode foreground colors, ‘<samp>38;5;0</samp>’ to ‘<samp>38;5;255</samp>’ for 88-color and 256-color modes foreground colors, ‘<samp>49</samp>’ for default background color, ‘<samp>40</samp>’ to ‘<samp>47</samp>’ for background colors, ‘<samp>100</samp>’ to ‘<samp>107</samp>’ for 16-color mode background colors, and ‘<samp>48;5;0</samp>’ to ‘<samp>48;5;255</samp>’ for 88-color and 256-color modes background colors. </p> <p>The default <code>GCC_COLORS</code> is </p>
+<div class="smallexample"> <pre class="smallexample">error=01;31:warning=01;35:note=01;36:range1=32:range2=34:locus=01:\
+quote=01:fixit-insert=32:fixit-delete=31:\
+diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32</pre>
+</div> <p>where ‘<samp>01;31</samp>’ is bold red, ‘<samp>01;35</samp>’ is bold magenta, ‘<samp>01;36</samp>’ is bold cyan, ‘<samp>32</samp>’ is green, ‘<samp>34</samp>’ is blue, ‘<samp>01</samp>’ is bold, and ‘<samp>31</samp>’ is red. Setting <code>GCC_COLORS</code> to the empty string disables colors. Supported capabilities are as follows. </p> <dl compact> <dt><code>error=</code></dt> <dd> <p id="index-error-GCC_005fCOLORS-capability">SGR substring for error: markers. </p> </dd> <dt><code>warning=</code></dt> <dd> <p id="index-warning-GCC_005fCOLORS-capability">SGR substring for warning: markers. </p> </dd> <dt><code>note=</code></dt> <dd> <p id="index-note-GCC_005fCOLORS-capability">SGR substring for note: markers. </p> </dd> <dt><code>range1=</code></dt> <dd> <p id="index-range1-GCC_005fCOLORS-capability">SGR substring for first additional range. </p> </dd> <dt><code>range2=</code></dt> <dd> <p id="index-range2-GCC_005fCOLORS-capability">SGR substring for second additional range. </p> </dd> <dt><code>locus=</code></dt> <dd> <p id="index-locus-GCC_005fCOLORS-capability">SGR substring for location information, ‘<samp>file:line</samp>’ or ‘<samp>file:line:column</samp>’ etc. </p> </dd> <dt><code>quote=</code></dt> <dd> <p id="index-quote-GCC_005fCOLORS-capability">SGR substring for information printed within quotes. </p> </dd> <dt><code>fixit-insert=</code></dt> <dd> <p id="index-fixit_002dinsert-GCC_005fCOLORS-capability">SGR substring for fix-it hints suggesting text to be inserted or replaced. </p> </dd> <dt><code>fixit-delete=</code></dt> <dd> <p id="index-fixit_002ddelete-GCC_005fCOLORS-capability">SGR substring for fix-it hints suggesting text to be deleted. </p> </dd> <dt><code>diff-filename=</code></dt> <dd> <p id="index-diff_002dfilename-GCC_005fCOLORS-capability">SGR substring for filename headers within generated patches. </p> </dd> <dt><code>diff-hunk=</code></dt> <dd> <p id="index-diff_002dhunk-GCC_005fCOLORS-capability">SGR substring for the starts of hunks within generated patches. </p> </dd> <dt><code>diff-delete=</code></dt> <dd> <p id="index-diff_002ddelete-GCC_005fCOLORS-capability">SGR substring for deleted lines within generated patches. </p> </dd> <dt><code>diff-insert=</code></dt> <dd> <p id="index-diff_002dinsert-GCC_005fCOLORS-capability">SGR substring for inserted lines within generated patches. </p>
+</dd> </dl> </dd> <dt><code>-fno-diagnostics-show-option</code></dt> <dd>  <p id="index-fdiagnostics_002dshow_002doption">By default, each diagnostic emitted includes text indicating the command-line option that directly controls the diagnostic (if such an option is known to the diagnostic machinery). Specifying the <samp>-fno-diagnostics-show-option</samp> flag suppresses that behavior. </p> </dd> <dt><code>-fno-diagnostics-show-caret</code></dt> <dd>  <p id="index-fdiagnostics_002dshow_002dcaret">By default, each diagnostic emitted includes the original source line and a caret ‘<samp>^</samp>’ indicating the column. This option suppresses this information. The source line is truncated to <var>n</var> characters, if the <samp>-fmessage-length=n</samp> option is given. When the output is done to the terminal, the width is limited to the width given by the <code>COLUMNS</code> environment variable or, if not set, to the terminal width. </p> </dd> <dt><code>-fdiagnostics-parseable-fixits</code></dt> <dd> <p id="index-fdiagnostics_002dparseable_002dfixits">Emit fix-it hints in a machine-parseable format, suitable for consumption by IDEs. For each fix-it, a line will be printed after the relevant diagnostic, starting with the string “fix-it:”. For example: </p> <div class="smallexample"> <pre class="smallexample">fix-it:"test.c":{45:3-45:21}:"gtk_widget_show_all"</pre>
+</div> <p>The location is expressed as a half-open range, expressed as a count of bytes, starting at byte 1 for the initial column. In the above example, bytes 3 through 20 of line 45 of “test.c” are to be replaced with the given string: </p> <div class="smallexample"> <pre class="smallexample">00000000011111111112222222222
+12345678901234567890123456789
+  gtk_widget_showall (dlg);
+  ^^^^^^^^^^^^^^^^^^
+  gtk_widget_show_all</pre>
+</div> <p>The filename and replacement string escape backslash as “\\", tab as “\t”, newline as “\n”, double quotes as “\"”, non-printable characters as octal (e.g. vertical tab as “\013”). </p> <p>An empty replacement string indicates that the given range is to be removed. An empty range (e.g. “45:3-45:3”) indicates that the string is to be inserted at the given position. </p> </dd> <dt><code>-fdiagnostics-generate-patch</code></dt> <dd> <p id="index-fdiagnostics_002dgenerate_002dpatch">Print fix-it hints to stderr in unified diff format, after any diagnostics are printed. For example: </p> <div class="smallexample"> <pre class="smallexample">--- test.c
++++ test.c
+@ -42,5 +42,5 @
+
+ void show_cb(GtkDialog *dlg)
+ {
+-  gtk_widget_showall(dlg);
++  gtk_widget_show_all(dlg);
+ }</pre>
+</div> <p>The diff may or may not be colorized, following the same rules as for diagnostics (see <samp>-fdiagnostics-color</samp>). </p> </dd> <dt><code>-fno-show-column</code></dt> <dd> <p id="index-fno_002dshow_002dcolumn">Do not print column numbers in diagnostics. This may be necessary if diagnostics are being scanned by a program that does not understand the column numbers, such as <code>dejagnu</code>. </p> </dd> </dl>  <p class="header"> </p>
+<p> Next: <a href="../warning-options/#Warning-Options" accesskey="n" rel="next">Warning Options</a>, Previous: <a href="../objective_002dc-and-objective_002dc_002b_002b-dialect-options/#Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options" accesskey="p" rel="prev">Objective-C and Objective-C++ Dialect Options</a>, Up: <a href="../invoking-gcc/#Invoking-GCC" accesskey="u" rel="up">Invoking GCC</a> [<a href="../#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/Option-Index.html#Option-Index" title="Index" rel="index" target="_blank">Index</a>]</p> <div class="_attribution">
+  <p class="_attribution-p">
+    © Free Software Foundation<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/Diagnostic-Message-Formatting-Options.html" class="_attribution-link" target="_blank">https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/Diagnostic-Message-Formatting-Options.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

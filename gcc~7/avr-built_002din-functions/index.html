@@ -1,0 +1,140 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>6.60.10. AVR Built-in Functions - GCC 7 - W3cubDocs</title>
+  
+  <meta name="description" content="For each built-in function for AVR, there is an equally named, uppercase built-in macro defined. That way users can easily query if or if not a &hellip;">
+  <meta name="keywords" content="avr, built-in, functions, -, gcc, gcc~7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/gcc~7/avr-built_002din-functions/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/gcc~7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/gcc~7/" class="_nav-link" title="" style="margin-left:0;">GCC 7</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="subsection" id="AVR-Built_002din-Functions-1">6.60.10 AVR Built-in Functions</h1> <p>For each built-in function for AVR, there is an equally named, uppercase built-in macro defined. That way users can easily query if or if not a specific built-in is implemented or not. For example, if <code>__builtin_avr_nop</code> is available the macro <code>__BUILTIN_AVR_NOP</code> is defined to <code>1</code> and undefined otherwise. </p> <p>The following built-in functions map to the respective machine instruction, i.e. <code>nop</code>, <code>sei</code>, <code>cli</code>, <code>sleep</code>, <code>wdr</code>, <code>swap</code>, <code>fmul</code>, <code>fmuls</code> resp. <code>fmulsu</code>. The three <code>fmul*</code> built-ins are implemented as library call if no hardware multiplier is available. </p> <div class="smallexample"> <pre class="smallexample">void __builtin_avr_nop (void)
+void __builtin_avr_sei (void)
+void __builtin_avr_cli (void)
+void __builtin_avr_sleep (void)
+void __builtin_avr_wdr (void)
+unsigned char __builtin_avr_swap (unsigned char)
+unsigned int __builtin_avr_fmul (unsigned char, unsigned char)
+int __builtin_avr_fmuls (char, char)
+int __builtin_avr_fmulsu (char, unsigned char)</pre>
+</div> <p>In order to delay execution for a specific number of cycles, GCC implements </p>
+<div class="smallexample"> <pre class="smallexample">void __builtin_avr_delay_cycles (unsigned long ticks)</pre>
+</div> <p><code>ticks</code> is the number of ticks to delay execution. Note that this built-in does not take into account the effect of interrupts that might increase delay time. <code>ticks</code> must be a compile-time integer constant; delays with a variable number of cycles are not supported. </p> <div class="smallexample"> <pre class="smallexample">char __builtin_avr_flash_segment (const __memx void*)</pre>
+</div> <p>This built-in takes a byte address to the 24-bit <a href="../named-address-spaces/#AVR-Named-Address-Spaces">address space</a> <code>__memx</code> and returns the number of the flash segment (the 64 KiB chunk) where the address points to. Counting starts at <code>0</code>. If the address does not point to flash memory, return <code>-1</code>. </p> <div class="smallexample"> <pre class="smallexample">unsigned char __builtin_avr_insert_bits (unsigned long map,
+                                         unsigned char bits,
+                                         unsigned char val)</pre>
+</div> <p>Insert bits from <var>bits</var> into <var>val</var> and return the resulting value. The nibbles of <var>map</var> determine how the insertion is performed: Let <var>X</var> be the <var>n</var>-th nibble of <var>map</var> </p>
+<ol> <li> If <var>X</var> is <code>0xf</code>, then the <var>n</var>-th bit of <var>val</var> is returned unaltered. </li>
+<li> If X is in the range 0…7, then the <var>n</var>-th result bit is set to the <var>X</var>-th bit of <var>bits</var> </li>
+<li> If X is in the range 8…<code>0xe</code>, then the <var>n</var>-th result bit is undefined. </li>
+</ol> <p>One typical use case for this built-in is adjusting input and output values to non-contiguous port layouts. Some examples: </p> <div class="smallexample"> <pre class="smallexample">// same as val, bits is unused
+__builtin_avr_insert_bits (0xffffffff, bits, val)</pre>
+</div> <div class="smallexample"> <pre class="smallexample">// same as bits, val is unused
+__builtin_avr_insert_bits (0x76543210, bits, val)</pre>
+</div> <div class="smallexample"> <pre class="smallexample">// same as rotating bits by 4
+__builtin_avr_insert_bits (0x32107654, bits, 0)</pre>
+</div> <div class="smallexample"> <pre class="smallexample">// high nibble of result is the high nibble of val
+// low nibble of result is the low nibble of bits
+__builtin_avr_insert_bits (0xffff3210, bits, val)</pre>
+</div> <div class="smallexample"> <pre class="smallexample">// reverse the bit order of bits
+__builtin_avr_insert_bits (0x01234567, bits, 0)</pre>
+</div> <div class="smallexample"> <pre class="smallexample">void __builtin_avr_nops (unsigned count)</pre>
+</div> <p>Insert <code>count</code> <code>NOP</code> instructions. The number of instructions must be a compile-time integer constant. </p>  <p class="header"> </p>
+<p> Next: <a href="../blackfin-built_002din-functions/#Blackfin-Built_002din-Functions" accesskey="n" rel="next">Blackfin Built-in Functions</a>, Previous: <a href="../arm-armv8_002dm-security-extensions/#ARM-ARMv8_002dM-Security-Extensions" accesskey="p" rel="prev">ARM ARMv8-M Security Extensions</a>, Up: <a href="../target-builtins/#Target-Builtins" accesskey="u" rel="up">Target Builtins</a> [<a href="../#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/Option-Index.html#Option-Index" title="Index" rel="index" target="_blank">Index</a>]</p> <div class="_attribution">
+  <p class="_attribution-p">
+    © Free Software Foundation<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/AVR-Built_002din-Functions.html" class="_attribution-link" target="_blank">https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/AVR-Built_002din-Functions.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
