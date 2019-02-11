@@ -1,0 +1,288 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Hooks FAQ - React - W3cubDocs</title>
+  
+  <meta name="description" content="Hooks are a new feature proposal that lets you use state and other React features without writing a class. They’re currently in React v16.7.0-alpha &hellip;">
+  <meta name="keywords" content="hooks, faq, -, react">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/react/hooks-faq/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/react.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/react/" class="_nav-link" title="" style="margin-left:0;">React</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="css-1a9m1x6">Hooks FAQ</h1>
+<p><em>Hooks</em> are a new feature proposal that lets you use state and other React features without writing a class. They’re currently in React v16.7.0-alpha and being discussed in <a href="https://github.com/reactjs/rfcs/pull/68" target="_blank">an open RFC</a>.</p> <p>This page answers some of the frequently asked questions about <a href="../hooks-overview/">Hooks</a>.</p>  <ul> <li> <p><strong><a href="#adoption-strategy">Adoption Strategy</a></strong></p> <ul> <li><a href="#do-i-need-to-rewrite-all-my-class-components">Do I need to rewrite all my class components?</a></li> <li><a href="#how-much-of-my-react-knowledge-stays-relevant">How much of my React knowledge stays relevant?</a></li> <li><a href="#should-i-use-hooks-classes-or-a-mix-of-both">Should I use Hooks, classes, or a mix of both?</a></li> <li><a href="#do-hooks-cover-all-use-cases-for-classes">Do Hooks cover all use cases for classes?</a></li> <li><a href="#do-hooks-replace-render-props-and-higher-order-components">Do Hooks replace render props and higher-order components?</a></li> <li><a href="#what-do-hooks-mean-for-popular-apis-like-redux-connect-and-react-router">What do Hooks mean for popular APIs like Redux connect() and React Router?</a></li> <li><a href="#do-hooks-work-with-static-typing">Do Hooks work with static typing?</a></li> <li><a href="#how-to-test-components-that-use-hooks">How to test components that use Hooks?</a></li> <li><a href="#what-exactly-do-the-lint-rules-enforce">What exactly do the lint rules enforce?</a></li> </ul> </li> <li> <p><strong><a href="#from-classes-to-hooks">From Classes to Hooks</a></strong></p> <ul> <li><a href="#how-do-lifecycle-methods-correspond-to-hooks">How do lifecycle methods correspond to Hooks?</a></li> <li><a href="#is-there-something-like-instance-variables">Is there something like instance variables?</a></li> <li><a href="#should-i-use-one-or-many-state-variables">Should I use one or many state variables?</a></li> <li><a href="#can-i-run-an-effect-only-on-updates">Can I run an effect only on updates?</a></li> <li><a href="#how-to-get-the-previous-props-or-state">How to get the previous props or state?</a></li> <li><a href="#how-do-i-implement-getderivedstatefromprops">How do I implement getDerivedStateFromProps?</a></li> <li><a href="#can-i-make-a-ref-to-a-function-component">Can I make a ref to a function component?</a></li> <li><a href="#what-does-const-thing-setthing--usestate-mean">What does const [thing, setThing] = useState() mean?</a></li> </ul> </li> <li> <p><strong><a href="#performance-optimizations">Performance Optimizations</a></strong></p> <ul> <li><a href="#can-i-skip-an-effect-on-updates">Can I skip an effect on updates?</a></li> <li><a href="#how-do-i-implement-shouldcomponentupdate">How do I implement shouldComponentUpdate?</a></li> <li><a href="#how-to-memoize-calculations">How to memoize calculations?</a></li> <li><a href="#are-hooks-slow-because-of-creating-functions-in-render">Are Hooks slow because of creating functions in render?</a></li> <li><a href="#how-to-avoid-passing-callbacks-down">How to avoid passing callbacks down?</a></li> <li><a href="#how-to-read-an-often-changing-value-from-usecallback">How to read an often-changing value from useCallback?</a></li> </ul> </li> <li> <p><strong><a href="#under-the-hood">Under the Hood</a></strong></p> <ul> <li><a href="#how-does-react-associate-hook-calls-with-components">How does React associate Hook calls with components?</a></li> <li><a href="#what-is-the-prior-art-for-hooks">What is the prior art for Hooks?</a></li> </ul> </li> </ul> <h2 id="adoption-strategy">Adoption Strategy</h2> <h3 id="do-i-need-to-rewrite-all-my-class-components">Do I need to rewrite all my class components?</h3> <p>No. There are <a href="../hooks-intro/#gradual-adoption-strategy">no plans</a> to remove classes from React — we all need to keep shipping products and can’t afford rewrites. We recommend trying Hooks in new code.</p> <h3 id="how-much-of-my-react-knowledge-stays-relevant">How much of my React knowledge stays relevant?</h3> <p>Hooks are a more direct way to use the React features you already know — such as state, lifecycle, context, and refs. They don’t fundamentally change how React works, and your knowledge of components, props, and top-down data flow is just as relevant.</p> <p>Hooks do have a learning curve of their own. If there’s something missing in this documentation, <a href="https://github.com/reactjs/reactjs.org/issues/new" target="_blank">raise an issue</a> and we’ll try to help.</p> <h3 id="should-i-use-hooks-classes-or-a-mix-of-both">Should I use Hooks, classes, or a mix of both?</h3> <p>When you’re ready, we’d encourage you to start trying Hooks in new components you write. Make sure everyone on your team is on board with using them and familiar with this documentation. We don’t recommend rewriting your existing classes to Hooks unless you planned to rewrite them anyway (e.g. to fix bugs).</p> <p>You can’t use Hooks <em>inside</em> of a class component, but you can definitely mix classes and function components with Hooks in a single tree. Whether a component is a class or a function that uses Hooks is an implementation detail of that component. In the longer term, we expect Hooks to be the primary way people write React components.</p> <h3 id="do-hooks-cover-all-use-cases-for-classes">Do Hooks cover all use cases for classes?</h3> <p>Our goal is for Hooks to cover all use cases for classes as soon as possible. There are no Hook equivalents to the uncommon <code class="gatsby-code-text">getSnapshotBeforeUpdate</code> and <code class="gatsby-code-text">componentDidCatch</code> lifecycles yet, but we plan to add them soon.</p> <p>It is a very early time for Hooks, so some integrations like DevTools support or Flow/TypeScript typings may not be ready yet. Some third-party libraries might also not be compatible with Hooks at the moment.</p> <h3 id="do-hooks-replace-render-props-and-higher-order-components">Do Hooks replace render props and higher-order components?</h3> <p>Often, render props and higher-order components render only a single child. We think Hooks are a simpler way to serve this use case. There is still a place for both patterns (for example, a virtual scroller component might have a <code class="gatsby-code-text">renderItem</code> prop, or a visual container component might have its own DOM structure). But in most cases, Hooks will be sufficient and can help reduce nesting in your tree.</p> <h3 id="what-do-hooks-mean-for-popular-apis-like-redux-connect-and-react-router">What do Hooks mean for popular APIs like Redux <code class="gatsby-code-text">connect()</code> and React Router?</h3> <p>You can continue to use the exact same APIs as you always have; they’ll continue to work.</p> <p>In the future, new versions of these libraries might also export custom Hooks such as <code class="gatsby-code-text">useRedux()</code> or <code class="gatsby-code-text">useRouter()</code> that let you use the same features without needing wrapper components.</p> <h3 id="do-hooks-work-with-static-typing">Do Hooks work with static typing?</h3> <p>Hooks were designed with static typing in mind. Because they’re functions, they are easier to type correctly than patterns like higher-order components. We have reached out both to Flow and TypeScript teams in advance, and they plan to include definitions for React Hooks in the future.</p> <p>Importantly, custom Hooks give you the power to constrain React API if you’d like to type them more strictly in some way. React gives you the primitives, but you can combine them in different ways than what we provide out of the box.</p> <h3 id="how-to-test-components-that-use-hooks">How to test components that use Hooks?</h3> <p>From React’s point of view, a component using Hooks is just a regular component. If your testing solution doesn’t rely on React internals, testing components with Hooks shouldn’t be different from how you normally test components.</p> <p>If you need to test a custom Hook, you can do so by creating a component in your test, and using your Hook from it. Then you can test the component you wrote.</p> <h3 id="what-exactly-do-the-lint-rules-enforce">What exactly do the <a href="https://www.npmjs.com/package/eslint-plugin-react-hooks" target="_blank">lint rules</a> enforce?</h3> <p>We provide an <a href="https://www.npmjs.com/package/eslint-plugin-react-hooks" target="_blank">ESLint plugin</a> that enforces <a href="../hooks-rules/">rules of Hooks</a> to avoid bugs. It assumes that any function starting with ”<code class="gatsby-code-text">use</code>” and a capital letter right after it is a Hook. We recognize this heuristic isn’t perfect and there may be some false positives, but without an ecosystem-wide convention there is just no way to make Hooks work well — and longer names will discourage people from either adopting Hooks or following the convention.</p> <p>In particular, the rule enforces that:</p> <ul> <li>Calls to Hooks are either inside a <code class="gatsby-code-text">PascalCase</code> function (assumed to be a component) or another <code class="gatsby-code-text">useSomething</code> function (assumed to be a custom Hook).</li> <li>Hooks are called in the same order on every render.</li> </ul> <p>There are a few more heuristics, and they might change over time as we fine-tune the rule to balance finding bugs with avoiding false positives.</p> <h2 id="from-classes-to-hooks">From Classes to Hooks</h2> <h3 id="how-do-lifecycle-methods-correspond-to-hooks">How do lifecycle methods correspond to Hooks?</h3> <ul> <li> <p><code class="gatsby-code-text">constructor</code>: Function components don’t need a constructor. You can initialize the state in the <a href="../hooks-reference/#usestate"><code class="gatsby-code-text">useState</code></a> call. If computing it is expensive, you can pass a function to <code class="gatsby-code-text">useState</code>.</p> </li> <li> <p><code class="gatsby-code-text">getDerivedStateFromProps</code>: Schedule an update <a href="#how-do-i-implement-getderivedstatefromprops">while rendering</a> instead.</p> </li> <li> <p><code class="gatsby-code-text">shouldComponentUpdate</code>: See <code class="gatsby-code-text">React.memo</code> <a href="#how-do-i-implement-shouldcomponentupdate">below</a>.</p> </li> <li> <p><code class="gatsby-code-text">render</code>: This is the function component body itself.</p> </li> <li> <p><code class="gatsby-code-text">componentDidMount</code>, <code class="gatsby-code-text">componentDidUpdate</code>, <code class="gatsby-code-text">componentWillUnmount</code>: The <a href="../hooks-reference/#useeffect"><code class="gatsby-code-text">useEffect</code> Hook</a> can express all combinations of these (including <a href="#can-i-skip-an-effect-on-updates">less</a> <a href="#can-i-run-an-effect-only-on-updates">common</a> cases).</p> </li> <li> <p><code class="gatsby-code-text">componentDidCatch</code> and <code class="gatsby-code-text">getDerivedStateFromError</code>: There are no Hook equivalents for these methods yet, but they will be added soon.</p> </li> </ul> <h3 id="is-there-something-like-instance-variables">Is there something like instance variables?</h3> <p>Yes! The <a href="../hooks-reference/#useref"><code class="gatsby-code-text">useRef()</code></a> Hook isn’t just for DOM refs. The “ref” object is a generic container whose <code class="gatsby-code-text">current</code> property is mutable and can hold any value, similar to an instance property on a class.</p> <p>You can write to it from inside <code class="gatsby-code-text">useEffect</code>:</p> <pre data-language="jsx">function Timer() {
+  const intervalRef = useRef();
+
+  useEffect(() =&gt; {
+    const id = setInterval(() =&gt; {
+      // ...
+    });
+    intervalRef.current = id;
+    return () =&gt; {
+      clearInterval(intervalRef.current);
+    };
+  });
+
+  // ...
+}</pre> <p>If we just wanted to set an interval, we wouldn’t need the ref (<code class="gatsby-code-text">id</code> could be local to the effect), but it’s useful if we want to clear the interval from an event handler:</p> <pre data-language="jsx">  // ...
+  function handleCancelClick() {
+    clearInterval(intervalRef.current);
+  }
+  // ...</pre> <p>Conceptually, you can think of refs as similar to instance variables in a class. Avoid setting refs during rendering — this can lead to surprising behavior. Instead, only modify refs in event handlers and effects.</p> <h3 id="should-i-use-one-or-many-state-variables">Should I use one or many state variables?</h3> <p>If you’re coming from classes, you might be tempted to always call <code class="gatsby-code-text">useState()</code> once and put all state into a single object. You can do it if you’d like. Here is an example of a component that follows the mouse movement. We keep its position and size in the local state:</p> <pre data-language="jsx">function Box() {
+  const [state, setState] = useState({ left: 0, top: 0, width: 100, height: 100 });
+  // ...
+}</pre> <p>Now let’s say we want to write some logic that changes <code class="gatsby-code-text">left</code> and <code class="gatsby-code-text">top</code> when the user moves their mouse. Note how we have to merge these fields into the previous state object manually:</p> <pre data-language="jsx">  // ...
+  useEffect(() =&gt; {
+    function handleWindowMouseMove(e) {
+      // Spreading "...state" ensures we don't "lose" width and height
+      setState(state =&gt; ({ ...state, left: e.pageX, top: e.pageY }));
+    }
+    // Note: this implementation is a bit simplified
+    window.addEventListener('mousemove', handleWindowMouseMove);
+    return () =&gt; window.removeEventListener('mousemove', handleWindowMouseMove);
+  }, []);
+  // ...</pre> <p>This is because when we update a state variable, we <em>replace</em> its value. This is different from <code class="gatsby-code-text">this.setState</code> in a class, which <em>merges</em> the updated fields into the object.</p> <p>If you miss automatic merging, you can write a custom <code class="gatsby-code-text">useLegacyState</code> Hook that merges object state updates. However, instead <strong>we recommend to split state into multiple state variables based on which values tend to change together.</strong></p> <p>For example, we could split our component state into <code class="gatsby-code-text">position</code> and <code class="gatsby-code-text">size</code> objects, and always replace the <code class="gatsby-code-text">position</code> with no need for merging:</p> <pre data-language="jsx">function Box() {
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [size, setSize] = useState({ width: 100, height: 100 });
+
+  useEffect(() =&gt; {
+    function handleWindowMouseMove(e) {
+      setPosition({ left: e.pageX, top: e.pageY });
+    }
+    // ...</pre> <p>Separating independent state variables also has another benefit. It makes it easy to later extract some related logic into a custom Hook, for example:</p> <pre data-language="jsx">function Box() {
+  const position = useWindowPosition();
+  const [size, setSize] = useState({ width: 100, height: 100 });
+  // ...
+}
+
+function useWindowPosition() {
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  useEffect(() =&gt; {
+    // ...
+  }, []);
+  return position;
+}</pre> <p>Note how we were able to move the <code class="gatsby-code-text">useState</code> call for the <code class="gatsby-code-text">position</code> state variable and the related effect into a custom Hook without changing their code. If all state was in a single object, extracting it would be more difficult.</p> <p>Both putting all state in a single <code class="gatsby-code-text">useState</code> call, and having a <code class="gatsby-code-text">useState</code> call per each field can work. Components tend to be most readable when you find a balance between these two extremes, and group related state into a few independent state variables. If the state logic becomes complex, we recommend <a href="../hooks-reference/#usereducer">managing it with a reducer</a> or a custom Hook.</p> <h3 id="can-i-run-an-effect-only-on-updates">Can I run an effect only on updates?</h3> <p>This is a rare use case. If you need it, you can <a href="#is-there-something-like-instance-variables">use a mutable ref</a> to manually store a boolean value corresponding to whether you are on the first or a subsequent render, then check that flag in your effect. (If you find yourself doing this often, you could create a custom Hook for it.)</p> <h3 id="how-to-get-the-previous-props-or-state">How to get the previous props or state?</h3> <p>Currently, you can do it manually <a href="#is-there-something-like-instance-variables">with a ref</a>:</p> <pre data-language="jsx">function Counter() {
+  const [count, setCount] = useState(0);
+
+  const prevCountRef = useRef();
+  useEffect(() =&gt; {
+    prevCountRef.current = count;
+  });
+  const prevCount = prevCountRef.current;
+
+  return &lt;h1&gt;Now: {count}, before: {prevCount}&lt;/h1&gt;;
+}</pre> <p>This might be a bit convoluted but you can extract it into a custom Hook:</p> <pre data-language="jsx">function Counter() {
+  const [count, setCount] = useState(0);
+  const prevCount = usePrevious(count);
+  return &lt;h1&gt;Now: {count}, before: {prevCount}&lt;/h1&gt;;
+}
+
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() =&gt; {
+    ref.current = value;
+  });
+  return ref.current;
+}</pre> <p>Note how this would work for props, state, or any other calculated value.</p> <pre data-language="jsx">function Counter() {
+  const [count, setCount] = useState(0);
+
+  const calculation = count * 100;
+  const prevCalculation = usePrevious(calculation);
+  // ...</pre> <p>It’s possible that in the future React will provide a <code class="gatsby-code-text">usePrevious</code> Hook out of the box since it’s a relatively common use case.</p> <p>See also <a href="#how-do-i-implement-getderivedstatefromprops">the recommended pattern for derived state</a>.</p> <h3 id="how-do-i-implement-getderivedstatefromprops">How do I implement <code class="gatsby-code-text">getDerivedStateFromProps</code>?</h3> <p>While you probably <a href="https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html" target="_blank">don’t need it</a>, for the rare cases that you do (such as implementing a <code class="gatsby-code-text">&lt;Transition&gt;</code> component), you can update the state right during rendering. React will re-run the component with updated state immediately after exiting the first render so it wouldn’t be expensive.</p> <p>Here, we store the previous value of the <code class="gatsby-code-text">row</code> prop in a state variable so that we can compare:</p> <pre data-language="jsx">function ScrollView({row}) {
+  let [isScrollingDown, setIsScrollingDown] = useState(false);
+  let [prevRow, setPrevRow] = useState(null);
+
+  if (row !== prevRow) {
+    // Row changed since last render. Update isScrollingDown.
+    setIsScrollingDown(prevRow !== null &amp;&amp; row &gt; prevRow);
+    setPrevRow(row);
+  }
+
+  return `Scrolling down: ${isScrollingDown}`;
+}</pre> <p>This might look strange at first, but an update during rendering is exactly what <code class="gatsby-code-text">getDerivedStateFromProps</code> has always been like conceptually.</p> <h3 id="can-i-make-a-ref-to-a-function-component">Can I make a ref to a function component?</h3> <p>While you shouldn’t need this often, you may expose some imperative methods to a parent component with the <a href="../hooks-reference/#useimperativemethods"><code class="gatsby-code-text">useImperativeMethods</code></a> Hook.</p> <h3 id="what-does-const-thing-setthing--usestate-mean">What does <code class="gatsby-code-text">const [thing, setThing] = useState()</code> mean?</h3> <p>If you’re not familiar with this syntax, check out the <a href="../hooks-state/#tip-what-do-square-brackets-mean">explanation</a> in the State Hook documentation.</p> <h2 id="performance-optimizations">Performance Optimizations</h2> <h3 id="can-i-skip-an-effect-on-updates">Can I skip an effect on updates?</h3> <p>Yes. See <a href="../hooks-reference/#conditionally-firing-an-effect">conditionally firing an effect</a>. Note that forgetting to handle updates often <a href="../hooks-effect/#explanation-why-effects-run-on-each-update">introduces bugs</a>, which is why this isn’t the default behavior.</p> <h3 id="how-do-i-implement-shouldcomponentupdate">How do I implement <code class="gatsby-code-text">shouldComponentUpdate</code>?</h3> <p>You can wrap a function component with <code class="gatsby-code-text">React.memo</code> to shallowly compare its props:</p> <pre data-language="jsx">const Button = React.memo((props) =&gt; {
+  // your component
+});</pre> <p>It’s not a Hook because it doesn’t compose like Hooks do. <code class="gatsby-code-text">React.memo</code> is equivalent to <code class="gatsby-code-text">PureComponent</code>, but it only compares props. (You can also add a second argument to specify a custom comparison function that takes the old and new props. If it returns true, the update is skipped.)</p> <p><code class="gatsby-code-text">React.memo</code> doesn’t compare state because there is no single state object to compare. But you can make children pure too, or even <a href="../hooks-faq/#how-to-memoize-calculations">optimize individual children with <code class="gatsby-code-text">useMemo</code></a>.</p> <h3 id="how-to-memoize-calculations">How to memoize calculations?</h3> <p>The <a href="../hooks-reference/#usememo"><code class="gatsby-code-text">useMemo</code></a> Hook lets you cache calculations between multiple renders by “remembering” the previous computation:</p> <pre data-language="jsx">const memoizedValue = useMemo(() =&gt; computeExpensiveValue(a, b), [a, b]);</pre> <p>This code calls <code class="gatsby-code-text">computeExpensiveValue(a, b)</code>. But if the inputs <code class="gatsby-code-text">[a, b]</code> haven’t changed since the last value, <code class="gatsby-code-text">useMemo</code> skips calling it a second time and simply reuses the last value it returned.</p> <p>Conveniently, this also lets you skip an expensive re-render of a child:</p> <pre data-language="jsx">function Parent({ a, b }) {
+  // Only re-rendered if `a` changes:
+  const child1 = useMemo(() =&gt; &lt;Child1 a={a} /&gt;, [a]);
+  // Only re-rendered if `b` changes:
+  const child2 = useMemo(() =&gt; &lt;Child2 b={b} /&gt;, [b]);
+  return (
+    &lt;&gt;
+      {child1}
+      {child2}
+    &lt;/&gt;
+  )
+}</pre> <p>Note that this approach won’t work in a loop because Hook calls <a href="../hooks-rules/">can’t</a> be placed inside loops. But you can extract a separate component for the list item, and call <code class="gatsby-code-text">useMemo</code> there.</p> <h3 id="are-hooks-slow-because-of-creating-functions-in-render">Are Hooks slow because of creating functions in render?</h3> <p>No. In modern browsers, the raw performance of closures compared to classes doesn’t differ significantly except in extreme scenarios.</p> <p>In addition, consider that the design of Hooks is more efficient in a couple ways:</p> <ul> <li> <p>Hooks avoid a lot of the overhead that classes require, like the cost of creating class instances and binding event handlers in the constructor.</p> </li> <li> <p><strong>Idiomatic code using Hooks doesn’t need the deep component tree nesting</strong> that is prevalent in codebases that use higher-order components, render props, and context. With smaller component trees, React has less work to do.</p> </li> </ul> <p>Traditionally, performance concerns around inline functions in React have been related to how passing new callbacks on each render breaks <code class="gatsby-code-text">shouldComponentUpdate</code> optimizations in child components. Hooks approach this problem from three sides.</p> <ul> <li> <p>The <a href="../hooks-reference/#usecallback"><code class="gatsby-code-text">useCallback</code></a> Hook lets you keep the same callback reference between re-renders so that <code class="gatsby-code-text">shouldComponentUpdate</code> continues to work:</p> <pre data-language="jsx">// Will not change unless `a` or `b` changes
+const memoizedCallback = useCallback(() =&gt; {
+  doSomething(a, b);
+}, [a, b]);</pre> </li> <li> <p>The <a href="../hooks-faq/#how-to-memoize-calculations"><code class="gatsby-code-text">useMemo</code> Hook</a> makes it easier to control when individual children update, reducing the need for pure components.</p> </li> <li> <p>Finally, the <code class="gatsby-code-text">useReducer</code> Hook reduces the need to pass callbacks deeply, as explained below.</p> </li> </ul> <h3 id="how-to-avoid-passing-callbacks-down">How to avoid passing callbacks down?</h3> <p>We’ve found that most people don’t enjoy manually passing callbacks through every level of a component tree. Even though it is more explicit, it can feel like a lot of “plumbing”.</p> <p>In large component trees, an alternative we recommend is to pass down a <code class="gatsby-code-text">dispatch</code> function from <a href="../hooks-reference/#usereducer"><code class="gatsby-code-text">useReducer</code></a> via context:</p> <pre data-language="jsx">const TodosDispatch = React.createContext(null);
+
+function TodosApp() {
+  // Tip: `dispatch` won't change between re-renders
+  const [todos, dispatch] = useReducer(todosReducer);
+
+  return (
+    &lt;TodosDispatch.Provider value={dispatch}&gt;
+      &lt;DeepTree todos={todos} /&gt;
+    &lt;/TodosDispatch.Provider&gt;
+  );
+}</pre> <p>Any child in the tree inside <code class="gatsby-code-text">TodosApp</code> can read use the <code class="gatsby-code-text">dispatch</code> function to pass actions up to <code class="gatsby-code-text">TodosApp</code>:</p> <pre data-language="jsx">function DeepChild(props) {
+  // If we want to perform an action, we can get dispatch from context.
+  const dispatch = useContext(TodosDispatch);
+
+  function handleClick() {
+    dispatch({ type: 'add', text: 'hello' });
+  }
+
+  return (
+    &lt;button onClick={handleClick}&gt;Add todo&lt;/button&gt;
+  );
+}</pre> <p>This is both more convenient from the maintenance perspective (no need to keep forwarding callbacks), and avoids the callback problem altogether. Passing <code class="gatsby-code-text">dispatch</code> down like this is the recommended pattern for deep updates.</p> <p>Note that you can still choose whether to pass the application <em>state</em> down as props (more explicit) or as context (more convenient for very deep updates). If you use context to pass down the state too, use two different context types — the <code class="gatsby-code-text">dispatch</code> context never changes, so components that read it don’t need to rerender unless they also need the application state.</p> <h3 id="how-to-read-an-often-changing-value-from-usecallback">How to read an often-changing value from <code class="gatsby-code-text">useCallback</code>?</h3> <blockquote> <p>Note</p> <p>We recommend to <a href="#how-to-avoid-passing-callbacks-down">pass <code class="gatsby-code-text">dispatch</code> down in context</a> rather than individual callbacks in props. The approach below is only mentioned here for completeness and as an escape hatch.</p> <p>Also note that this pattern might cause problems in the <a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" target="_blank">concurrent mode</a>. We plan to provide more ergonomic alternatives in the future, but the safest solution right now is to always invalidate the callback if some value it depends on changes.</p> </blockquote> <p>In some rare cases you might need to memoize a callback with <a href="../hooks-reference/#usecallback"><code class="gatsby-code-text">useCallback</code></a> but the memoization doesn’t work very well because the inner function has to be re-created too often. If the function you’re memoizing is an event handler and isn’t used during rendering, you can use <a href="#is-there-something-like-instance-variables">ref as an instance variable</a>, and save the last committed value into it manually:</p> <pre data-language="jsx">function Form() {
+  const [text, updateText] = useState('');
+  const textRef = useRef();
+
+  useMutationEffect(() =&gt; {
+    textRef.current = text; // Write it to the ref
+  });
+
+  const handleSubmit = useCallback(() =&gt; {
+    const currentText = textRef.current; // Read it from the ref
+    alert(currentText);
+  }, [textRef]); // Don't recreate handleSubmit like [text] would do
+
+  return (
+    &lt;&gt;
+      &lt;input value={text} onChange={e =&gt; updateText(e.target.value)} /&gt;
+      &lt;ExpensiveTree onSubmit={handleSubmit} /&gt;
+    &lt;/&gt;
+  );
+}</pre> <p>This is a rather convoluted pattern but it shows that you can do this escape hatch optimization if you need it. It’s more bearable if you extract it to a custom Hook:</p> <pre data-language="jsx">function Form() {
+  const [text, updateText] = useState('');
+  // Will be memoized even if `text` changes:
+  const handleSubmit = useEventCallback(() =&gt; {
+    alert(text);
+  }, [text]);
+
+  return (
+    &lt;&gt;
+      &lt;input value={text} onChange={e =&gt; updateText(e.target.value)} /&gt;
+      &lt;ExpensiveTree onSubmit={handleSubmit} /&gt;
+    &lt;/&gt;
+  );
+}
+
+function useEventCallback(fn, dependencies) {
+  const ref = useRef(() =&gt; {
+    throw new Error('Cannot call an event handler while rendering.');
+  });
+
+  useMutationEffect(() =&gt; {
+    ref.current = fn;
+  }, [fn, ...dependencies]);
+
+  return useCallback(() =&gt; {
+    const fn = ref.current;
+    return fn();
+  }, [ref]);
+}</pre> <p>In either case, we <strong>don’t recommend this pattern</strong> and only show it here for completeness. Instead, it is preferable to <a href="#how-to-avoid-passing-callbacks-down">avoid passing callbacks deep down</a>.</p> <h2 id="under-the-hood">Under the Hood</h2> <h3 id="how-does-react-associate-hook-calls-with-components">How does React associate Hook calls with components?</h3> <p>React keeps track of the currently rendering component. Thanks to the <a href="../hooks-rules/">Rules of Hooks</a>, we know that Hooks are only called from React components (or custom Hooks — which are also only called from React components).</p> <p>There is an internal list of “memory cells” associated with each component. They’re just JavaScript objects where we can put some data. When you call a Hook like <code class="gatsby-code-text">useState()</code>, it reads the current cell (or initializes it during the first render), and then moves the pointer to the next one. This is how multiple <code class="gatsby-code-text">useState()</code> calls each get independent local state.</p> <h3 id="what-is-the-prior-art-for-hooks">What is the prior art for Hooks?</h3> <p>Hooks synthesize ideas from several different sources:</p> <ul> <li>Our old experiments with functional APIs in the <a href="https://github.com/reactjs/react-future/tree/master/07%20-%20Returning%20State" target="_blank">react-future</a> repository.</li> <li>React community’s experiments with render prop APIs, including <a href="https://github.com/ryanflorence" target="_blank">Ryan Florence</a>’s <a href="https://github.com/reactions/component" target="_blank">Reactions Component</a>.</li> <li>
+<a href="https://github.com/trueadm" target="_blank">Dominic Gannaway</a>’s <a href="https://gist.github.com/trueadm/17beb64288e30192f3aa29cad0218067" target="_blank"><code class="gatsby-code-text">adopt</code> keyword</a> proposal as a sugar syntax for render props.</li> <li>State variables and state cells in <a href="http://displayscript.org/introduction.html" target="_blank">DisplayScript</a>.</li> <li>
+<a href="https://reasonml.github.io/reason-react/docs/en/state-actions-reducer.html" target="_blank">Reducer components</a> in ReasonReact.</li> <li>
+<a href="http://reactivex.io/rxjs/class/es6/Subscription.js~Subscription.html" target="_blank">Subscriptions</a> in Rx.</li> <li>
+<a href="https://github.com/ocamllabs/ocaml-effects-tutorial#2-effectful-computations-in-a-pure-setting" target="_blank">Algebraic effects</a> in Multicore OCaml.</li> </ul> <p><a href="https://github.com/sebmarkbage" target="_blank">Sebastian Markbåge</a> came up with the original design for Hooks, later refined by <a href="https://github.com/acdlite" target="_blank">Andrew Clark</a>, <a href="https://github.com/sophiebits" target="_blank">Sophie Alpert</a>, <a href="https://github.com/trueadm" target="_blank">Dominic Gannaway</a>, and other members of the React team.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–present Facebook Inc.<br>Licensed under the Creative Commons Attribution 4.0 International Public License.<br>
+    <a href="https://reactjs.org/docs/hooks-faq.html" class="_attribution-link" target="_blank">https://reactjs.org/docs/hooks-faq.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

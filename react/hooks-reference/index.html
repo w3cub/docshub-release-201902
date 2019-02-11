@@ -1,0 +1,222 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Hooks API Reference - React - W3cubDocs</title>
+  
+  <meta name="description" content="Hooks are a new feature proposal that lets you use state and other React features without writing a class. They’re currently in React v16.7.0-alpha &hellip;">
+  <meta name="keywords" content="hooks, api, reference, -, react">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/react/hooks-reference/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/react.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/react/" class="_nav-link" title="" style="margin-left:0;">React</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="css-1a9m1x6">Hooks API Reference</h1>
+<p><em>Hooks</em> are a new feature proposal that lets you use state and other React features without writing a class. They’re currently in React v16.7.0-alpha and being discussed in <a href="https://github.com/reactjs/rfcs/pull/68" target="_blank">an open RFC</a>.</p> <p>This page describes the APIs for the built-in Hooks in React.</p> <p>If you’re new to Hooks, you might want to check out <a href="../hooks-overview/">the overview</a> first. You may also find useful information in the <a href="../hooks-faq/">frequently asked questions</a> section.</p> <ul> <li> <p><a href="#basic-hooks">Basic Hooks</a></p> <ul> <li><a href="#usestate"><code class="gatsby-code-text">useState</code></a></li> <li><a href="#useeffect"><code class="gatsby-code-text">useEffect</code></a></li> <li><a href="#usecontext"><code class="gatsby-code-text">useContext</code></a></li> </ul> </li> <li> <p><a href="#additional-hooks">Additional Hooks</a></p> <ul> <li><a href="#usereducer"><code class="gatsby-code-text">useReducer</code></a></li> <li><a href="#usecallback"><code class="gatsby-code-text">useCallback</code></a></li> <li><a href="#usememo"><code class="gatsby-code-text">useMemo</code></a></li> <li><a href="#useref"><code class="gatsby-code-text">useRef</code></a></li> <li><a href="#useimperativemethods"><code class="gatsby-code-text">useImperativeMethods</code></a></li> <li><a href="#usemutationeffect"><code class="gatsby-code-text">useMutationEffect</code></a></li> <li><a href="#uselayouteffect"><code class="gatsby-code-text">useLayoutEffect</code></a></li> </ul> </li> </ul> <h2 id="basic-hooks">Basic Hooks</h2> <h3 id="usestate"><code class="gatsby-code-text">useState</code></h3> <pre data-language="jsx">const [state, setState] = useState(initialState);</pre> <p>Returns a stateful value, and a function to update it.</p> <p>During the initial render, the returned state (<code class="gatsby-code-text">state</code>) is the same as the value passed as the first argument (<code class="gatsby-code-text">initialState</code>).</p> <p>The <code class="gatsby-code-text">setState</code> function is used to update the state. It accepts a new state value and enqueues a re-render of the component.</p> <pre data-language="jsx">setState(newState);</pre> <p>During subsequent re-renders, the first value returned by <code class="gatsby-code-text">useState</code> will always be the most recent state after applying updates.</p> <h4 id="functional-updates">Functional updates</h4> <p>If the new state is computed using the previous state, you can pass a function to <code class="gatsby-code-text">setState</code>. The function will receive the previous value, and return an updated value. Here’s an example of a counter component that uses both forms of <code class="gatsby-code-text">setState</code>:</p> <pre data-language="jsx">function Counter({initialCount}) {
+  const [count, setCount] = useState(initialCount);
+  return (
+    &lt;&gt;
+      Count: {count}
+      &lt;button onClick={() =&gt; setCount(0)}&gt;Reset&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(prevCount =&gt; prevCount + 1)}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(prevCount =&gt; prevCount - 1)}&gt;-&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</pre> <p>The ”+” and ”-” buttons use the functional form, because the updated value is based on the previous value. But the “Reset” button uses the normal form, because it always sets the count back to 0.</p> <blockquote> <p>Note</p> <p>Unlike the <code class="gatsby-code-text">setState</code> method found in class components, <code class="gatsby-code-text">useState</code> does not automatically merge update objects. You can replicate this behavior by combining the function updater form with object spread syntax:</p> <pre data-language="jsx">setState(prevState =&gt; {
+  // Object.assign would also work
+  return {...prevState, ...updatedValues};
+});</pre> <p>Another option is <code class="gatsby-code-text">useReducer</code>, which is more suited for managing state objects that contain multiple sub-values.</p> </blockquote> <h4 id="lazy-initialization">Lazy initialization</h4> <p>The <code class="gatsby-code-text">initialState</code> argument is the state used during the initial render. In subsequent renders, it is disregarded. If the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render:</p> <pre data-language="jsx">const [state, setState] = useState(() =&gt; {
+  const initialState = someExpensiveComputation(props);
+  return initialState;
+});</pre> <h3 id="useeffect"><code class="gatsby-code-text">useEffect</code></h3> <pre data-language="jsx">useEffect(didUpdate);</pre> <p>Accepts a function that contains imperative, possibly effectful code.</p> <p>Mutations, subscriptions, timers, logging, and other side effects are not allowed inside the main body of a function component (referred to as React’s <em>render phase</em>). Doing so will lead to confusing bugs and inconsistencies in the UI.</p> <p>Instead, use <code class="gatsby-code-text">useEffect</code>. The function passed to <code class="gatsby-code-text">useEffect</code> will run after the render is committed to the screen. Think of effects as an escape hatch from React’s purely functional world into the imperative world.</p> <p>By default, effects run after every completed render, but you can choose to fire it <a href="#conditionally-firing-an-effect">only when certain values have changed</a>.</p> <h4 id="cleaning-up-an-effect">Cleaning up an effect</h4> <p>Often, effects create resources that need to be cleaned up before the component leaves the screen, such as a subscription or timer ID. To do this, the function passed to <code class="gatsby-code-text">useEffect</code> may return a clean-up function. For example, to create a subscription:</p> <pre data-language="jsx">useEffect(() =&gt; {
+  const subscription = props.source.subscribe();
+  return () =&gt; {
+    // Clean up the subscription
+    subscription.unsubscribe();
+  };
+});</pre> <p>The clean-up function runs before the component is removed from the UI to prevent memory leaks. Additionally, if a component renders multiple times (as they typically do), the <strong>previous effect is cleaned up before executing the next effect</strong>. In our example, this means a new subscription is created on every update. To avoid firing an effect on every update, refer to the next section.</p> <h4 id="timing-of-effects">Timing of effects</h4> <p>Unlike <code class="gatsby-code-text">componentDidMount</code> and <code class="gatsby-code-text">componentDidUpdate</code>, the function passed to <code class="gatsby-code-text">useEffect</code> fires <strong>after</strong> layout and paint, during a deferred event. This makes it suitable for the many common side effects, like setting up subscriptions and event handlers, because most types of work shouldn’t block the browser from updating the screen.</p> <p>However, not all effects can be deferred. For example, a DOM mutation that is visible to the user must fire synchronously before the next paint so that the user does not perceive a visual inconsistency. (The distinction is conceptually similar to passive versus active event listeners.) For these types of effects, React provides two additional Hooks: <a href="#usemutationeffect"><code class="gatsby-code-text">useMutationEffect</code></a> and <a href="#uselayouteffect"><code class="gatsby-code-text">useLayoutEffect</code></a>. These Hooks have the same signature as <code class="gatsby-code-text">useEffect</code>, and only differ in when they are fired.</p> <p>Although <code class="gatsby-code-text">useEffect</code> is deferred until after the browser has painted, it’s guaranteed to fire before any new renders. React will always flush a previous render’s effects before starting a new update.</p> <h4 id="conditionally-firing-an-effect">Conditionally firing an effect</h4> <p>The default behavior for effects is to fire the effect after every completed render. That way an effect is always recreated if one of its inputs changes.</p> <p>However, this may be overkill in some cases, like the subscription example from the previous section. We don’t need to create a new subscription on every update, only if the <code class="gatsby-code-text">source</code> props has changed.</p> <p>To implement this, pass a second argument to <code class="gatsby-code-text">useEffect</code> that is the array of values that the effect depends on. Our updated example now looks like this:</p> <pre data-language="jsx">useEffect(
+  () =&gt; {
+    const subscription = props.source.subscribe();
+    return () =&gt; {
+      subscription.unsubscribe();
+    };
+  },
+  [props.source],
+);</pre> <p>Now the subscription will only be recreated when <code class="gatsby-code-text">props.source</code> changes.</p> <p>Passing in an empty array <code class="gatsby-code-text">[]</code> of inputs tells React that your effect doesn’t depend on any values from the component, so that effect would run only on mount and clean up on unmount; it won’t run on updates.</p> <blockquote> <p>Note</p> <p>The array of inputs is not passed as arguments to the effect function. Conceptually, though, that’s what they represent: every value referenced inside the effect function should also appear in the inputs array. In the future, a sufficiently advanced compiler could create this array automatically.</p> </blockquote> <h3 id="usecontext"><code class="gatsby-code-text">useContext</code></h3> <pre data-language="jsx">const context = useContext(Context);</pre> <p>Accepts a context object (the value returned from <code class="gatsby-code-text">React.createContext</code>) and returns the current context value, as given by the nearest context provider for the given context.</p> <p>When the provider updates, this Hook will trigger a rerender with the latest context value.</p> <h2 id="additional-hooks">Additional Hooks</h2> <p>The following Hooks are either variants of the basic ones from the previous section, or only needed for specific edge cases. Don’t stress about learning them up front.</p> <h3 id="usereducer"><code class="gatsby-code-text">useReducer</code></h3> <pre data-language="jsx">const [state, dispatch] = useReducer(reducer, initialState);</pre> <p>An alternative to <a href="#usestate"><code class="gatsby-code-text">useState</code></a>. Accepts a reducer of type <code class="gatsby-code-text">(state, action) =&gt; newState</code>, and returns the current state paired with a <code class="gatsby-code-text">dispatch</code> method. (If you’re familiar with Redux, you already know how this works.)</p> <p>Here’s the counter example from the <a href="#usestate"><code class="gatsby-code-text">useState</code></a> section, rewritten to use a reducer:</p> <pre data-language="jsx">const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'reset':
+      return initialState;
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+  }
+}
+
+function Counter({initialCount}) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    &lt;&gt;
+      Count: {state.count}
+      &lt;button onClick={() =&gt; dispatch({type: 'reset'})}&gt;
+        Reset
+      &lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({type: 'increment'})}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({type: 'decrement'})}&gt;-&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</pre> <h4 id="lazy-initialization-1">Lazy initialization</h4> <p><code class="gatsby-code-text">useReducer</code> accepts an optional third argument, <code class="gatsby-code-text">initialAction</code>. If provided, the initial action is applied during the initial render. This is useful for computing an initial state that includes values passed via props:</p> <pre data-language="jsx">const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'reset':
+      return {count: action.payload};
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+  }
+}
+
+function Counter({initialCount}) {
+  const [state, dispatch] = useReducer(
+    reducer,
+    initialState,
+    {type: 'reset', payload: initialCount},
+  );
+
+  return (
+    &lt;&gt;
+      Count: {state.count}
+      &lt;button
+        onClick={() =&gt; dispatch({type: 'reset', payload: initialCount})}&gt;
+        Reset
+      &lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({type: 'increment'})}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({type: 'decrement'})}&gt;-&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</pre> <p><code class="gatsby-code-text">useReducer</code> is usually preferable to <code class="gatsby-code-text">useState</code> when you have complex state logic that involves multiple sub-values. It also lets you optimize performance for components that trigger deep updates because <a href="../hooks-faq/#how-to-avoid-passing-callbacks-down">you can pass <code class="gatsby-code-text">dispatch</code> down instead of callbacks</a>.</p> <h3 id="usecallback"><code class="gatsby-code-text">useCallback</code></h3> <pre data-language="jsx">const memoizedCallback = useCallback(
+  () =&gt; {
+    doSomething(a, b);
+  },
+  [a, b],
+);</pre> <p>Returns a <a href="https://en.wikipedia.org/wiki/Memoization" target="_blank">memoized</a> callback.</p> <p>Pass an inline callback and an array of inputs. <code class="gatsby-code-text">useCallback</code> will return a memoized version of the callback that only changes if one of the inputs has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. <code class="gatsby-code-text">shouldComponentUpdate</code>).</p> <p><code class="gatsby-code-text">useCallback(fn, inputs)</code> is equivalent to <code class="gatsby-code-text">useMemo(() =&gt; fn, inputs)</code>.</p> <blockquote> <p>Note</p> <p>The array of inputs is not passed as arguments to the callback. Conceptually, though, that’s what they represent: every value referenced inside the callback should also appear in the inputs array. In the future, a sufficiently advanced compiler could create this array automatically.</p> </blockquote> <h3 id="usememo"><code class="gatsby-code-text">useMemo</code></h3> <pre data-language="jsx">const memoizedValue = useMemo(() =&gt; computeExpensiveValue(a, b), [a, b]);</pre> <p>Returns a <a href="https://en.wikipedia.org/wiki/Memoization" target="_blank">memoized</a> value.</p> <p>Pass a “create” function and an array of inputs. <code class="gatsby-code-text">useMemo</code> will only recompute the memoized value when one of the inputs has changed. This optimization helps to avoid expensive calculations on every render.</p> <p>If no array is provided, a new value will be computed whenever a new function instance is passed as the first argument. (With an inline function, on every render.)</p> <blockquote> <p>Note</p> <p>The array of inputs is not passed as arguments to the function. Conceptually, though, that’s what they represent: every value referenced inside the function should also appear in the inputs array. In the future, a sufficiently advanced compiler could create this array automatically.</p> </blockquote> <h3 id="useref"><code class="gatsby-code-text">useRef</code></h3> <pre data-language="jsx">const refContainer = useRef(initialValue);</pre> <p><code class="gatsby-code-text">useRef</code> returns a mutable ref object whose <code class="gatsby-code-text">.current</code> property is initialized to the passed argument (<code class="gatsby-code-text">initialValue</code>). The returned object will persist for the full lifetime of the component.</p> <p>A common use case is to access a child imperatively:</p> <pre data-language="jsx">function TextInputWithFocusButton() {
+  const inputEl = useRef(null);
+  const onButtonClick = () =&gt; {
+    // `current` points to the mounted text input element
+    inputEl.current.focus();
+  };
+  return (
+    &lt;&gt;
+      &lt;input ref={inputEl} type="text" /&gt;
+      &lt;button onClick={onButtonClick}&gt;Focus the input&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</pre> <p>Note that <code class="gatsby-code-text">useRef()</code> is useful for more than the <code class="gatsby-code-text">ref</code> attribute. It’s <a href="../hooks-faq/#is-there-something-like-instance-variables">handy for keeping any mutable value around</a> similar to how you’d use instance fields in classes.</p> <h3 id="useimperativemethods"><code class="gatsby-code-text">useImperativeMethods</code></h3> <pre data-language="jsx">useImperativeMethods(ref, createInstance, [inputs])</pre> <p><code class="gatsby-code-text">useImperativeMethods</code> customizes the instance value that is exposed to parent components when using <code class="gatsby-code-text">ref</code>. As always, imperative code using refs should be avoided in most cases. <code class="gatsby-code-text">useImperativeMethods</code> should be used with <code class="gatsby-code-text">forwardRef</code>:</p> <pre data-language="jsx">function FancyInput(props, ref) {
+  const inputRef = useRef();
+  useImperativeMethods(ref, () =&gt; ({
+    focus: () =&gt; {
+      inputRef.current.focus();
+    }
+  }));
+  return &lt;input ref={inputRef} ... /&gt;;
+}
+FancyInput = forwardRef(FancyInput);</pre> <p>In this example, a parent component that renders <code class="gatsby-code-text">&lt;FancyInput ref={fancyInputRef} /&gt;</code> would be able to call <code class="gatsby-code-text">fancyInputRef.current.focus()</code>.</p> <h3 id="usemutationeffect"><code class="gatsby-code-text">useMutationEffect</code></h3> <p>The signature is identical to <code class="gatsby-code-text">useEffect</code>, but it fires synchronously during the same phase that React performs its DOM mutations, before sibling components have been updated. Use this to perform custom DOM mutations.</p> <p>Prefer the standard <code class="gatsby-code-text">useEffect</code> when possible to avoid blocking visual updates.</p> <blockquote> <p>Note</p> <p>Avoid reading from the DOM in <code class="gatsby-code-text">useMutationEffect</code>. If you do, you can cause performance problems by introducing <a href="https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing" target="_blank">layout thrash</a>. When reading computed styles or layout information, <code class="gatsby-code-text">useLayoutEffect</code> is more appropriate.</p> </blockquote> <h3 id="uselayouteffect"><code class="gatsby-code-text">useLayoutEffect</code></h3> <p>The signature is identical to <code class="gatsby-code-text">useEffect</code>, but it fires synchronously <em>after</em> all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside <code class="gatsby-code-text">useLayoutEffect</code> will be flushed synchronously, before the browser has a chance to paint.</p> <p>Prefer the standard <code class="gatsby-code-text">useEffect</code> when possible to avoid blocking visual updates.</p> <blockquote> <p>Tip</p> <p>If you’re migrating code from a class component, <code class="gatsby-code-text">useLayoutEffect</code> fires in the same phase as <code class="gatsby-code-text">componentDidMount</code> and <code class="gatsby-code-text">componentDidUpdate</code>, so if you’re unsure of which effect Hook to use, it’s probably the least risky.</p> </blockquote>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–present Facebook Inc.<br>Licensed under the Creative Commons Attribution 4.0 International Public License.<br>
+    <a href="https://reactjs.org/docs/hooks-reference.html" class="_attribution-link" target="_blank">https://reactjs.org/docs/hooks-reference.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

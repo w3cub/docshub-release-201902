@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Test Utilities - React - W3cubDocs</title>
+  
+  <meta name="description" content=" Importing ">
+  <meta name="keywords" content="test, utilities, -, react">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/react/test-utils/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/react.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/react/" class="_nav-link" title="" style="margin-left:0;">React</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="css-1a9m1x6">Test Utilities</h1>
+<p><strong>Importing</strong></p> <pre data-language="jsx">import ReactTestUtils from 'react-dom/test-utils'; // ES6
+var ReactTestUtils = require('react-dom/test-utils'); // ES5 with npm</pre> <h2 id="overview">Overview</h2> <p><code class="gatsby-code-text">ReactTestUtils</code> makes it easy to test React components in the testing framework of your choice. At Facebook we use <a href="https://facebook.github.io/jest/" target="_blank">Jest</a> for painless JavaScript testing. Learn how to get started with Jest through the Jest website’s <a href="http://facebook.github.io/jest/docs/en/tutorial-react.html#content" target="_blank">React Tutorial</a>.</p> <blockquote> <p>Note:</p> <p>Airbnb has released a testing utility called Enzyme, which makes it easy to assert, manipulate, and traverse your React Components’ output. If you’re deciding on a unit testing utility to use together with Jest, or any other test runner, it’s worth checking out: <a href="http://airbnb.io/enzyme/" target="_blank">http://airbnb.io/enzyme/</a></p> <p>Alternatively, there is another testing utility called react-testing-library designed to enable and encourage writing tests that use your components as the end users use them. It also works with any test runner: <a href="https://git.io/react-testing-library" target="_blank">https://git.io/react-testing-library</a></p> </blockquote> <ul> <li><a href="#simulate"><code class="gatsby-code-text">Simulate</code></a></li> <li><a href="#renderintodocument"><code class="gatsby-code-text">renderIntoDocument()</code></a></li> <li><a href="#mockcomponent"><code class="gatsby-code-text">mockComponent()</code></a></li> <li><a href="#iselement"><code class="gatsby-code-text">isElement()</code></a></li> <li><a href="#iselementoftype"><code class="gatsby-code-text">isElementOfType()</code></a></li> <li><a href="#isdomcomponent"><code class="gatsby-code-text">isDOMComponent()</code></a></li> <li><a href="#iscompositecomponent"><code class="gatsby-code-text">isCompositeComponent()</code></a></li> <li><a href="#iscompositecomponentwithtype"><code class="gatsby-code-text">isCompositeComponentWithType()</code></a></li> <li><a href="#findallinrenderedtree"><code class="gatsby-code-text">findAllInRenderedTree()</code></a></li> <li><a href="#scryrendereddomcomponentswithclass"><code class="gatsby-code-text">scryRenderedDOMComponentsWithClass()</code></a></li> <li><a href="#findrendereddomcomponentwithclass"><code class="gatsby-code-text">findRenderedDOMComponentWithClass()</code></a></li> <li><a href="#scryrendereddomcomponentswithtag"><code class="gatsby-code-text">scryRenderedDOMComponentsWithTag()</code></a></li> <li><a href="#findrendereddomcomponentwithtag"><code class="gatsby-code-text">findRenderedDOMComponentWithTag()</code></a></li> <li><a href="#scryrenderedcomponentswithtype"><code class="gatsby-code-text">scryRenderedComponentsWithType()</code></a></li> <li><a href="#findrenderedcomponentwithtype"><code class="gatsby-code-text">findRenderedComponentWithType()</code></a></li> </ul> <h2 id="reference">Reference</h2> <h2 id="shallow-rendering">Shallow Rendering</h2> <p>When writing unit tests for React, shallow rendering can be helpful. Shallow rendering lets you render a component “one level deep” and assert facts about what its render method returns, without worrying about the behavior of child components, which are not instantiated or rendered. This does not require a DOM.</p> <blockquote> <p>Note:</p> <p>The shallow renderer has moved to <code class="gatsby-code-text">react-test-renderer/shallow</code>.<br> <a href="../shallow-renderer/">Learn more about shallow rendering on its reference page.</a></p> </blockquote> <h2 id="other-utilities">Other Utilities</h2> <h3 id="simulate"><code class="gatsby-code-text">Simulate</code></h3> <pre data-language="jsx">Simulate.{eventName}(
+  element,
+  [eventData]
+)</pre> <p>Simulate an event dispatch on a DOM node with optional <code class="gatsby-code-text">eventData</code> event data.</p> <p><code class="gatsby-code-text">Simulate</code> has a method for <a href="../events/#supported-events">every event that React understands</a>.</p> <p><strong>Clicking an element</strong></p> <pre data-language="jsx">// &lt;button ref={(node) =&gt; this.button = node}&gt;...&lt;/button&gt;
+const node = this.button;
+ReactTestUtils.Simulate.click(node);</pre> <p><strong>Changing the value of an input field and then pressing ENTER.</strong></p> <pre data-language="jsx">// &lt;input ref={(node) =&gt; this.textInput = node} /&gt;
+const node = this.textInput;
+node.value = 'giraffe';
+ReactTestUtils.Simulate.change(node);
+ReactTestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});</pre> <blockquote> <p>Note</p> <p>You will have to provide any event property that you’re using in your component (e.g. keyCode, which, etc…) as React is not creating any of these for you.</p> </blockquote>  <h3 id="renderintodocument"><code class="gatsby-code-text">renderIntoDocument()</code></h3> <pre data-language="jsx">renderIntoDocument(element)</pre> <p>Render a React element into a detached DOM node in the document. <strong>This function requires a DOM.</strong></p> <blockquote> <p>Note:</p> <p>You will need to have <code class="gatsby-code-text">window</code>, <code class="gatsby-code-text">window.document</code> and <code class="gatsby-code-text">window.document.createElement</code> globally available <strong>before</strong> you import <code class="gatsby-code-text">React</code>. Otherwise React will think it can’t access the DOM and methods like <code class="gatsby-code-text">setState</code> won’t work.</p> </blockquote>  <h3 id="mockcomponent"><code class="gatsby-code-text">mockComponent()</code></h3> <pre data-language="jsx">mockComponent(
+  componentClass,
+  [mockTagName]
+)</pre> <p>Pass a mocked component module to this method to augment it with useful methods that allow it to be used as a dummy React component. Instead of rendering as usual, the component will become a simple <code class="gatsby-code-text">&lt;div&gt;</code> (or other tag if <code class="gatsby-code-text">mockTagName</code> is provided) containing any provided children.</p> <blockquote> <p>Note:</p> <p><code class="gatsby-code-text">mockComponent()</code> is a legacy API. We recommend using <a href="../test-utils/#shallow-rendering">shallow rendering</a> or <a href="https://facebook.github.io/jest/docs/en/tutorial-react-native.html#mock-native-modules-using-jestmock" target="_blank"><code class="gatsby-code-text">jest.mock()</code></a> instead.</p> </blockquote>  <h3 id="iselement"><code class="gatsby-code-text">isElement()</code></h3> <pre data-language="jsx">isElement(element)</pre> <p>Returns <code class="gatsby-code-text">true</code> if <code class="gatsby-code-text">element</code> is any React element.</p>  <h3 id="iselementoftype"><code class="gatsby-code-text">isElementOfType()</code></h3> <pre data-language="jsx">isElementOfType(
+  element,
+  componentClass
+)</pre> <p>Returns <code class="gatsby-code-text">true</code> if <code class="gatsby-code-text">element</code> is a React element whose type is of a React <code class="gatsby-code-text">componentClass</code>.</p>  <h3 id="isdomcomponent"><code class="gatsby-code-text">isDOMComponent()</code></h3> <pre data-language="jsx">isDOMComponent(instance)</pre> <p>Returns <code class="gatsby-code-text">true</code> if <code class="gatsby-code-text">instance</code> is a DOM component (such as a <code class="gatsby-code-text">&lt;div&gt;</code> or <code class="gatsby-code-text">&lt;span&gt;</code>).</p>  <h3 id="iscompositecomponent"><code class="gatsby-code-text">isCompositeComponent()</code></h3> <pre data-language="jsx">isCompositeComponent(instance)</pre> <p>Returns <code class="gatsby-code-text">true</code> if <code class="gatsby-code-text">instance</code> is a user-defined component, such as a class or a function.</p>  <h3 id="iscompositecomponentwithtype"><code class="gatsby-code-text">isCompositeComponentWithType()</code></h3> <pre data-language="jsx">isCompositeComponentWithType(
+  instance,
+  componentClass
+)</pre> <p>Returns <code class="gatsby-code-text">true</code> if <code class="gatsby-code-text">instance</code> is a component whose type is of a React <code class="gatsby-code-text">componentClass</code>.</p>  <h3 id="findallinrenderedtree"><code class="gatsby-code-text">findAllInRenderedTree()</code></h3> <pre data-language="jsx">findAllInRenderedTree(
+  tree,
+  test
+)</pre> <p>Traverse all components in <code class="gatsby-code-text">tree</code> and accumulate all components where <code class="gatsby-code-text">test(component)</code> is <code class="gatsby-code-text">true</code>. This is not that useful on its own, but it’s used as a primitive for other test utils.</p>  <h3 id="scryrendereddomcomponentswithclass"><code class="gatsby-code-text">scryRenderedDOMComponentsWithClass()</code></h3> <pre data-language="jsx">scryRenderedDOMComponentsWithClass(
+  tree,
+  className
+)</pre> <p>Finds all DOM elements of components in the rendered tree that are DOM components with the class name matching <code class="gatsby-code-text">className</code>.</p>  <h3 id="findrendereddomcomponentwithclass"><code class="gatsby-code-text">findRenderedDOMComponentWithClass()</code></h3> <pre data-language="jsx">findRenderedDOMComponentWithClass(
+  tree,
+  className
+)</pre> <p>Like <a href="#scryrendereddomcomponentswithclass"><code class="gatsby-code-text">scryRenderedDOMComponentsWithClass()</code></a> but expects there to be one result, and returns that one result, or throws exception if there is any other number of matches besides one.</p>  <h3 id="scryrendereddomcomponentswithtag"><code class="gatsby-code-text">scryRenderedDOMComponentsWithTag()</code></h3> <pre data-language="jsx">scryRenderedDOMComponentsWithTag(
+  tree,
+  tagName
+)</pre> <p>Finds all DOM elements of components in the rendered tree that are DOM components with the tag name matching <code class="gatsby-code-text">tagName</code>.</p>  <h3 id="findrendereddomcomponentwithtag"><code class="gatsby-code-text">findRenderedDOMComponentWithTag()</code></h3> <pre data-language="jsx">findRenderedDOMComponentWithTag(
+  tree,
+  tagName
+)</pre> <p>Like <a href="#scryrendereddomcomponentswithtag"><code class="gatsby-code-text">scryRenderedDOMComponentsWithTag()</code></a> but expects there to be one result, and returns that one result, or throws exception if there is any other number of matches besides one.</p>  <h3 id="scryrenderedcomponentswithtype"><code class="gatsby-code-text">scryRenderedComponentsWithType()</code></h3> <pre data-language="jsx">scryRenderedComponentsWithType(
+  tree,
+  componentClass
+)</pre> <p>Finds all instances of components with type equal to <code class="gatsby-code-text">componentClass</code>.</p>  <h3 id="findrenderedcomponentwithtype"><code class="gatsby-code-text">findRenderedComponentWithType()</code></h3> <pre data-language="jsx">findRenderedComponentWithType(
+  tree,
+  componentClass
+)</pre> <p>Same as <a href="#scryrenderedcomponentswithtype"><code class="gatsby-code-text">scryRenderedComponentsWithType()</code></a> but expects there to be one result and returns that one result, or throws exception if there is any other number of matches besides one.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–present Facebook Inc.<br>Licensed under the Creative Commons Attribution 4.0 International Public License.<br>
+    <a href="https://reactjs.org/docs/test-utils.html" class="_attribution-link" target="_blank">https://reactjs.org/docs/test-utils.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
