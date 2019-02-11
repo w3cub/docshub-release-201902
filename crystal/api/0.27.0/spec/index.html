@@ -1,0 +1,144 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spec - Crystal - W3cubDocs</title>
+  
+  <meta name="description" content="Crystal&#39;s built-in testing library. It provides a structure for writing executable examples of how your code should behave. A domain specific &hellip;">
+  <meta name="keywords" content="module, spec, -, crystal">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/crystal/api/0.27.0/spec/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/crystal.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/crystal/" class="_nav-link" title="" style="margin-left:0;">Crystal</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _crystal">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="type-name"> module Spec </h1> <h2>Overview</h2> <p>Crystal's built-in testing library. It provides a structure for writing executable examples of how your code should behave. A domain specific language allows you to write them in a way similar to natural language.</p> <p>The Crystal compiler has a <code>spec</code> command with tools to constrain which examples get run and tailor the output.</p> <p>A basic spec looks something like this:</p> <pre data-language="crystal">require "spec"
+
+describe Array do
+  describe "#size" do
+    it "correctly reports the number of elements in the Array" do
+      [1, 2, 3].size.should eq 3
+    end
+  end
+
+  describe "#empty?" do
+    it "is empty when no elements are in the array" do
+      ([] of Int32).empty?.should be_true
+    end
+
+    it "is not empty if there are elements in the array" do
+      [1].empty?.should be_false
+    end
+  end
+
+  # lots more specs
+
+end</pre> <p>Test files are structured by use of the <code>describe</code> or <code>context</code> methods. Typically a top level <code>describe</code> defines the <code>outer</code> unit (such as a class) that is to be tested by the spec. Further <code>describe</code> calls can be nested within the outer unit to specify smaller units under test (such as individual methods). <code>describe</code> can also be used to set up a certain context - think empty <code><a href="../array/">Array</a></code> versus <code><a href="../array/">Array</a></code> with elements. The <code>context</code> method behaves just like the <code>describe</code> method and may be used instead, to emphasize context to the reader.</p> <p>Within a <code>describe</code> block, concrete test cases are defined with <code>it</code> . A descriptive string is supplied to <code>it</code> describing what the test case tests specifically.</p> <p>Specs then use the <code>should</code> method to verify that the expected value is returned. See the example above for details.</p> <p>By convention, specs live in the <code>spec</code> directory of a project. You can compile and run the specs of a project by running <code>crystal spec</code>.</p> <pre data-language="crystal"># Run  all specs in files matching spec/**/*_spec.cr
+crystal spec
+
+# Run all specs in files matching spec/my/test/**/*_spec.cr
+crystal spec spec/my/test/
+
+# Run all specs in spec/my/test/file_spec.cr
+crystal spec spec/my/test/file_spec.cr
+
+# Run the spec or group defined in line 14 of spec/my/test/file_spec.cr
+crystal spec spec/my/test/file_spec.cr:14</pre> <h2>Defined in:</h2> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/dsl.cr#L4" target="_blank"> spec/dsl.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/context.cr#L1" target="_blank"> spec/context.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/expectations.cr#L1" target="_blank"> spec/expectations.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/formatter.cr#L1" target="_blank"> spec/formatter.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/junit_formatter.cr#L3" target="_blank"> spec/junit_formatter.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/source.cr#L1" target="_blank"> spec/source.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec.cr#L66" target="_blank"> spec.cr </a> <br> <h2>Class Method Summary</h2> <ul class="list-summary"> <li class="entry-summary"> <a href="#add_formatter%28formatter%29-class-method" class="signature"><strong>.add_formatter</strong>(formatter)</a> </li> <li class="entry-summary"> <a href="#after_each%28%26block%29-class-method" class="signature"><strong>.after_each</strong>(&amp;block)</a> <div class="summary"><p>Instructs the spec runner to execute the given block after each spec, regardless of where this method is invoked.</p></div> </li> <li class="entry-summary"> <a href="#before_each%28%26block%29-class-method" class="signature"><strong>.before_each</strong>(&amp;block)</a> <div class="summary"><p>Instructs the spec runner to execute the given block before each spec, regardless of where this method is invoked.</p></div> </li> <li class="entry-summary"> <a href="#override_default_formatter%28formatter%29-class-method" class="signature"><strong>.override_default_formatter</strong>(formatter)</a> </li> </ul>  <h2>Class Method Detail</h2> <div class="entry-detail" id="add_formatter(formatter)-class-method"> <h3 class="signature">def self.<strong>add_formatter</strong>(formatter)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/formatter.cr#L109" target="_blank" class="view-source">Source</a>
+</h3>   </div> <div class="entry-detail" id="after_each(&amp;block)-class-method"> <h3 class="signature">def self.<strong>after_each</strong>(&amp;block)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/dsl.cr#L152" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Instructs the spec runner to execute the given block after each spec, regardless of where this method is invoked.</p></div>   </div> <div class="entry-detail" id="before_each(&amp;block)-class-method"> <h3 class="signature">def self.<strong>before_each</strong>(&amp;block)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/dsl.cr#L145" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Instructs the spec runner to execute the given block before each spec, regardless of where this method is invoked.</p></div>   </div> <div class="entry-detail" id="override_default_formatter(formatter)-class-method"> <h3 class="signature">def self.<strong>override_default_formatter</strong>(formatter)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/spec/formatter.cr#L105" target="_blank" class="view-source">Source</a>
+</h3>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Manas Technology Solutions.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://crystal-lang.org/api/0.27.0/Spec.html" class="_attribution-link" target="_blank">https://crystal-lang.org/api/0.27.0/Spec.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

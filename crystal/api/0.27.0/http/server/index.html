@@ -1,0 +1,232 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>HTTP&#58;&#58;Server - Crystal - W3cubDocs</title>
+  
+  <meta name="description" content=" An HTTP server. ">
+  <meta name="keywords" content="class, http, server, -, crystal">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/crystal/api/0.27.0/http/server/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/crystal.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/crystal/" class="_nav-link" title="" style="margin-left:0;">Crystal</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _crystal">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="type-name"> class HTTP::Server </h1> <ul class="superclass-hierarchy">
+<li class="superclass"><a href="../server/">HTTP::Server</a></li>
+<li class="superclass"><a href="../../reference/">Reference</a></li>
+<li class="superclass"><a href="../../object/">Object</a></li>
+</ul> <h2>Overview</h2> <p>An HTTP server.</p> <p>A server is given a handler that receives an <code><a href="../server/context/">HTTP::Server::Context</a></code> that holds the <code><a href="../request/">HTTP::Request</a></code> to process and must in turn configure and write to an <code><a href="../server/response/">HTTP::Server::Response</a></code>.</p> <p>The <code><a href="../server/response/">HTTP::Server::Response</a></code> object has <code>status</code> and <code>headers</code> properties that can be configured before writing the response body. Once response output is written, changing the <code>status</code> and <code>headers</code> properties has no effect.</p> <p>The <code><a href="../server/response/">HTTP::Server::Response</a></code> is also a write-only <code><a href="../../io/">IO</a></code>, so all <code><a href="../../io/">IO</a></code> methods are available in it.</p> <p>The handler given to a server can simply be a block that receives an <code><a href="../server/context/">HTTP::Server::Context</a></code>, or it can be an <code><a href="../handler/">HTTP::Handler</a></code>. An <code><a href="../handler/">HTTP::Handler</a></code> has an optional <code>next</code> handler, so handlers can be chained. For example, an initial handler may handle exceptions in a subsequent handler and return a 500 status code (see <code><a href="../errorhandler/">HTTP::ErrorHandler</a></code>), the next handler might log the incoming request (see <code><a href="../loghandler/">HTTP::LogHandler</a></code>), and the final handler deals with routing and application logic.</p> <h3>Simple Setup</h3> <p>A handler is given with a block.</p> <pre data-language="crystal">require "http/server"
+
+server = HTTP::Server.new do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world!"
+end
+
+server.bind_tcp 8080
+puts "Listening on http://127.0.0.1:8080"
+server.listen</pre> <h3>With non-localhost bind address</h3> <pre data-language="crystal">require "http/server"
+
+server = HTTP::Server.new do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world!"
+end
+
+server.bind_tcp "0.0.0.0", 8080
+puts "Listening on http://0.0.0.0:8080"
+server.listen</pre> <h3>Add handlers</h3> <p>A series of handlers are chained.</p> <pre data-language="crystal">require "http/server"
+
+server = HTTP::Server.new([
+  HTTP::ErrorHandler.new,
+  HTTP::LogHandler.new,
+  HTTP::CompressHandler.new,
+  HTTP::StaticFileHandler.new("."),
+])
+
+server.bind_tcp "127.0.0.1", 8080
+server.listen</pre> <h3>Add handlers and block</h3> <p>A series of handlers is chained, the last one being the given block.</p> <pre data-language="crystal">require "http/server"
+
+server = HTTP::Server.new([
+  HTTP::ErrorHandler.new,
+  HTTP::LogHandler.new,
+]) do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world!"
+end
+
+server.bind_tcp "0.0.0.0", 8080
+server.listen</pre> <h2>Defined in:</h2> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server/context.cr#L1" target="_blank"> http/server/context.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server/response.cr#L1" target="_blank"> http/server/response.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L98" target="_blank"> http/server.cr </a> <br> <h2>Constructors</h2> <ul class="list-summary"> <li class="entry-summary"> <a href="#new%28handlers%3AArray%28HTTP%3A%3AHandler%29%2C%26handler%3AHTTP%3A%3AHandler%3A%3AHandlerProc%29%3Aself-class-method" class="signature"><strong>.new</strong>(handlers : Array(HTTP::Handler), &amp;handler : HTTP::Handler::HandlerProc) : self</a> <div class="summary"><p>Creates a new HTTP server with a handler chain constructed from the <em>handlers</em> array and the given block.</p></div> </li> <li class="entry-summary"> <a href="#new%28%26handler%3AHTTP%3A%3AHandler%3A%3AHandlerProc%29%3Aself-class-method" class="signature"><strong>.new</strong>(&amp;handler : HTTP::Handler::HandlerProc) : self</a> <div class="summary"><p>Creates a new HTTP server with the given block as handler.</p></div> </li> <li class="entry-summary"> <a href="#new%28handlers%3AArray%28HTTP%3A%3AHandler%29%29%3Aself-class-method" class="signature"><strong>.new</strong>(handlers : Array(HTTP::Handler)) : self</a> <div class="summary"><p>Creates a new HTTP server with the <em>handlers</em> array as handler chain.</p></div> </li> <li class="entry-summary"> <a href="#new%28handler%3AHTTP%3A%3AHandler%7CHTTP%3A%3AHandler%3A%3AHandlerProc%29-class-method" class="signature"><strong>.new</strong>(handler : HTTP::Handler | HTTP::Handler::HandlerProc)</a> <div class="summary"><p>Creates a new HTTP server with the given <em>handler</em>.</p></div> </li> </ul> <h2>Class Method Summary</h2> <ul class="list-summary"> <li class="entry-summary"> <a href="#build_middleware%28handlers%2Clast_handler%3AContext-%3E%3F%3Dnil%29-class-method" class="signature"><strong>.build_middleware</strong>(handlers, last_handler : Context -&gt; ? = nil)</a> <div class="summary"><p>Builds all handlers as the middleware for <code><a href="../server/">HTTP::Server</a></code>.</p></div> </li> </ul> <h2>Instance Method Summary</h2> <ul class="list-summary"> <li class="entry-summary"> <a href="#addresses%3AArray%28Socket%3A%3AAddress%29-instance-method" class="signature"><strong>#addresses</strong> : Array(Socket::Address)</a> </li> <li class="entry-summary"> <a href="#bind%28socket%3ASocket%3A%3AServer%29%3ANil-instance-method" class="signature"><strong>#bind</strong>(socket : Socket::Server) : Nil</a> <div class="summary"><p>Adds a <code><a href="../../socket/server/">Socket::Server</a></code> <em>socket</em> to this server.</p></div> </li> <li class="entry-summary"> <a href="#bind%28uri%3AString%29%3ASocket%3A%3AAddress-instance-method" class="signature"><strong>#bind</strong>(uri : String) : Socket::Address</a> <div class="summary"><p>Parses a socket configuration from <em>uri</em> and adds it to this server.</p></div> </li> <li class="entry-summary"> <a href="#bind%28uri%3AURI%29%3ASocket%3A%3AAddress-instance-method" class="signature"><strong>#bind</strong>(uri : URI) : Socket::Address</a> <div class="summary"><p>Parses a socket configuration from <em>uri</em> and adds it to this server.</p></div> </li> <li class="entry-summary"> <a href="#bind_tcp%28host%3AString%2Cport%3AInt32%2Creuse_port%3ABool%3Dfalse%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_tcp</strong>(host : String, port : Int32, reuse_port : Bool = false) : Socket::IPAddress</a> <div class="summary"><p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>host:port</code> and adds it as a socket, returning the local address and port the server listens on.</p></div> </li> <li class="entry-summary"> <a href="#bind_tcp%28port%3AInt32%2Creuse_port%3ABool%3Dfalse%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_tcp</strong>(port : Int32, reuse_port : Bool = false) : Socket::IPAddress</a> <div class="summary"><p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>127.0.0.1:port</code> and adds it as a socket, returning the local address and port the server listens on.</p></div> </li> <li class="entry-summary"> <a href="#bind_tcp%28address%3ASocket%3A%3AIPAddress%2Creuse_port%3ABool%3Dfalse%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_tcp</strong>(address : Socket::IPAddress, reuse_port : Bool = false) : Socket::IPAddress</a> <div class="summary"><p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <em>address</em> and adds it as a socket, returning the local address and port the server listens on.</p></div> </li> <li class="entry-summary"> <a href="#bind_tls%28address%3ASocket%3A%3AIPAddress%2Ccontext%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AServer%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_tls</strong>(address : Socket::IPAddress, context : OpenSSL::SSL::Context::Server) : Socket::IPAddress</a> <div class="summary"><p>Creates an <code><a href="../../openssl/ssl/server/">OpenSSL::SSL::Server</a></code> and adds it as a socket.</p></div> </li> <li class="entry-summary"> <a href="#bind_tls%28host%3AString%2Cport%3AInt32%2Ccontext%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AServer%2Creuse_port%3ABool%3Dfalse%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_tls</strong>(host : String, port : Int32, context : OpenSSL::SSL::Context::Server, reuse_port : Bool = false) : Socket::IPAddress</a> <div class="summary"><p>Creates an <code><a href="../../openssl/ssl/server/">OpenSSL::SSL::Server</a></code> and adds it as a socket.</p></div> </li> <li class="entry-summary"> <a href="#bind_tls%28host%3AString%2Ccontext%3AOpenSSL%3A%3ASSL%3A%3AContext%3A%3AServer%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_tls</strong>(host : String, context : OpenSSL::SSL::Context::Server) : Socket::IPAddress</a> <div class="summary"><p>Creates an <code><a href="../../openssl/ssl/server/">OpenSSL::SSL::Server</a></code> and adds it as a socket.</p></div> </li> <li class="entry-summary"> <a href="#bind_unix%28path%3AString%29%3ASocket%3A%3AUNIXAddress-instance-method" class="signature"><strong>#bind_unix</strong>(path : String) : Socket::UNIXAddress</a> <div class="summary"><p>Creates a <code><a href="../../unixserver/">UNIXServer</a></code> bound to <em>path</em> and adds it as a socket.</p></div> </li> <li class="entry-summary"> <a href="#bind_unix%28address%3ASocket%3A%3AUNIXAddress%29%3ASocket%3A%3AUNIXAddress-instance-method" class="signature"><strong>#bind_unix</strong>(address : Socket::UNIXAddress) : Socket::UNIXAddress</a> <div class="summary"><p>Creates a <code><a href="../../unixserver/">UNIXServer</a></code> bound to <em>address</em> and adds it as a socket.</p></div> </li> <li class="entry-summary"> <a href="#bind_unused_port%28host%3AString%3DSocket%3A%3AIPAddress%3A%3ALOOPBACK%2Creuse_port%3ABool%3Dfalse%29%3ASocket%3A%3AIPAddress-instance-method" class="signature"><strong>#bind_unused_port</strong>(host : String = Socket::IPAddress::LOOPBACK, reuse_port : Bool = false) : Socket::IPAddress</a> <div class="summary"><p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listening on an unused port and adds it as a socket.</p></div> </li> <li class="entry-summary"> <a href="#close-instance-method" class="signature"><strong>#close</strong></a> <div class="summary"><p>Gracefully terminates the server.</p></div> </li> <li class="entry-summary"> <a href="#closed%3F%3ABool-instance-method" class="signature"><strong>#closed?</strong> : Bool</a> <div class="summary"><p>Returns <code>true</code> if this server is closed.</p></div> </li> <li class="entry-summary"> <a href="#each_address%28%26block%3ASocket%3A%3AAddress-%3E%29-instance-method" class="signature"><strong>#each_address</strong>(&amp;block : Socket::Address -&gt; )</a> <div class="summary"><p>Enumerates all addresses this server is bound to.</p></div> </li> <li class="entry-summary"> <a href="#listen%28port%3AInt32%2Creuse_port%3ABool%3Dfalse%29-instance-method" class="signature"><strong>#listen</strong>(port : Int32, reuse_port : Bool = false)</a> <div class="summary"><p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>127.0.0.1:port</code>, adds it as a socket and starts the server.</p></div> </li> <li class="entry-summary"> <a href="#listen%28host%3AString%2Cport%3AInt32%2Creuse_port%3ABool%3Dfalse%29-instance-method" class="signature"><strong>#listen</strong>(host : String, port : Int32, reuse_port : Bool = false)</a> <div class="summary"><p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>host:port</code>, adds it as a socket and starts the server.</p></div> </li> <li class="entry-summary"> <a href="#listen-instance-method" class="signature"><strong>#listen</strong></a> <div class="summary"><p>Starts the server.</p></div> </li> <li class="entry-summary"> <a href="#listening%3F%3ABool-instance-method" class="signature"><strong>#listening?</strong> : Bool</a> <div class="summary"><p>Returns <code>true</code> if this server is listening on it's sockets.</p></div> </li> </ul> <div class="methods-inherited"> <h3>Instance methods inherited from class <code><a href="../../reference/">Reference</a></code>
+</h3> <a href="../../reference/#%3D%3D%28other%3Aself%29-instance-method" class="tooltip"> ==(other : self)<br>==(other : JSON::Any)<br>==(other : YAML::Any)<br>==(other) ==</a>, <a href="../../reference/#dup-instance-method" class="tooltip"> dup dup</a>, <a href="../../reference/#hash%28hasher%29-instance-method" class="tooltip"> hash(hasher) hash</a>, <a href="../../reference/#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip"> inspect(io : IO) : Nil inspect</a>, <a href="../../reference/#object_id%3AUInt64-instance-method" class="tooltip"> object_id : UInt64 object_id</a>, <a href="../../reference/#pretty_print%28pp%29%3ANil-instance-method" class="tooltip"> pretty_print(pp) : Nil pretty_print</a>, <a href="../../reference/#same%3F%28other%3AReference%29-instance-method" class="tooltip"> same?(other : Reference)<br>same?(other : Nil) same?</a>, <a href="../../reference/#to_s%28io%3AIO%29%3ANil-instance-method" class="tooltip"> to_s(io : IO) : Nil to_s</a> <h3>Constructor methods inherited from class <code><a href="../../reference/">Reference</a></code>
+</h3> <a href="../../reference/#new-class-method" class="tooltip"> new new</a> <h3>Instance methods inherited from class <code><a href="../../object/">Object</a></code>
+</h3> <a href="../../object/#%21%3D%28other%29-instance-method" class="tooltip"> !=(other) !=</a>, <a href="../../object/#%21~%28other%29-instance-method" class="tooltip"> !~(other) !~</a>, <a href="../../object/#%3D%3D%28other%29-instance-method" class="tooltip"> ==(other) ==</a>, <a href="../../object/#%3D%3D%3D%28other%3AJSON%3A%3AAny%29-instance-method" class="tooltip"> ===(other : JSON::Any)<br>===(other : YAML::Any)<br>===(other) ===</a>, <a href="../../object/#%3D~%28other%29-instance-method" class="tooltip"> =~(other) =~</a>, <a href="../../object/#class-instance-method" class="tooltip"> class class</a>, <a href="../../object/#dup-instance-method" class="tooltip"> dup dup</a>, <a href="../../object/#hash%28hasher%29-instance-method" class="tooltip"> hash(hasher)<br>hash hash</a>, <a href="../../object/#inspect%28io%3AIO%29-instance-method" class="tooltip"> inspect(io : IO)<br>inspect inspect</a>, <a href="../../object/#itself-instance-method" class="tooltip"> itself itself</a>, <a href="../../object/#not_nil%21-instance-method" class="tooltip"> not_nil! not_nil!</a>, <a href="../../object/#pretty_inspect%28width%3D79%2Cnewline%3D%26quot%3B%5Cn%26quot%3B%2Cindent%3D0%29%3AString-instance-method" class="tooltip"> pretty_inspect(width = 79, newline = "\n", indent = 0) : String pretty_inspect</a>, <a href="../../object/#pretty_print%28pp%3APrettyPrint%29%3ANil-instance-method" class="tooltip"> pretty_print(pp : PrettyPrint) : Nil pretty_print</a>, <a href="../../object/#tap%28%26block%29-instance-method" class="tooltip"> tap(&amp;block) tap</a>, <a href="../../object/#to_json%28io%3AIO%29-instance-method" class="tooltip"> to_json(io : IO)<br>to_json to_json</a>, <a href="../../object/#to_pretty_json%28indent%3AString%3D%26quot%3B%26quot%3B%29-instance-method" class="tooltip"> to_pretty_json(indent : String = " ")<br>to_pretty_json(io : IO, indent : String = " ") to_pretty_json</a>, <a href="../../object/#to_s-instance-method" class="tooltip"> to_s<br>to_s(io : IO) to_s</a>, <a href="../../object/#to_yaml%28io%3AIO%29-instance-method" class="tooltip"> to_yaml(io : IO)<br>to_yaml to_yaml</a>, <a href="../../object/#try%28%26block%29-instance-method" class="tooltip"> try(&amp;block) try</a>, <a href="../../object/#unsafe_as%28type%3AT.class%29forallT-instance-method" class="tooltip"> unsafe_as(type : T.class) forall T unsafe_as</a> <h3>Constructor methods inherited from class <code><a href="../../object/">Object</a></code>
+</h3> <a href="../../object/#from_json%28string_or_io%2Croot%3AString%29%3Aself-class-method" class="tooltip"> from_json(string_or_io, root : String) : self<br>from_json(string_or_io) : self from_json</a>, <a href="../../object/#from_yaml%28string_or_io%3AString%7CIO%29%3Aself-class-method" class="tooltip"> from_yaml(string_or_io : String | IO) : self from_yaml</a> </div> <h2>Constructor Detail</h2> <div class="entry-detail" id="new(handlers:Array(HTTP::Handler),&amp;handler:HTTP::Handler::HandlerProc):self-class-method"> <h3 class="signature">def self.<strong>new</strong>(handlers : <a href="../../array/">Array</a>(<a href="../handler/">HTTP::Handler</a>), &amp;handler : <a href="../handler/handlerproc/">HTTP::Handler::HandlerProc</a>) : self<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L114" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Creates a new HTTP server with a handler chain constructed from the <em>handlers</em> array and the given block.</p></div>   </div> <div class="entry-detail" id="new(&amp;handler:HTTP::Handler::HandlerProc):self-class-method"> <h3 class="signature">def self.<strong>new</strong>(&amp;handler : <a href="../handler/handlerproc/">HTTP::Handler::HandlerProc</a>) : self<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L108" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Creates a new HTTP server with the given block as handler.</p></div>   </div> <div class="entry-detail" id="new(handlers:Array(HTTP::Handler)):self-class-method"> <h3 class="signature">def self.<strong>new</strong>(handlers : <a href="../../array/">Array</a>(<a href="../handler/">HTTP::Handler</a>)) : self<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L119" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Creates a new HTTP server with the <em>handlers</em> array as handler chain.</p></div>   </div> <div class="entry-detail" id="new(handler:HTTP::Handler|HTTP::Handler::HandlerProc)-class-method"> <h3 class="signature">def self.<strong>new</strong>(handler : <a href="../handler/">HTTP::Handler</a> | <a href="../handler/handlerproc/">HTTP::Handler::HandlerProc</a>)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L124" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Creates a new HTTP server with the given <em>handler</em>.</p></div>   </div> <h2>Class Method Detail</h2> <div class="entry-detail" id="build_middleware(handlers,last_handler:Context-&gt;?=nil)-class-method"> <h3 class="signature">def self.<strong>build_middleware</strong>(handlers, last_handler : <a href="../server/context/">Context</a> -&gt; ? = nil)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L405" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Builds all handlers as the middleware for <code><a href="../server/">HTTP::Server</a></code>.</p></div>   </div> <h2>Instance Method Detail</h2> <div class="entry-detail" id="addresses:Array(Socket::Address)-instance-method"> <h3 class="signature">def <strong>addresses</strong> : <a href="../../array/">Array</a>(<a href="../../socket/address/">Socket::Address</a>)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L312" target="_blank" class="view-source">Source</a>
+</h3>   </div> <div class="entry-detail" id="bind(socket:Socket::Server):Nil-instance-method"> <h3 class="signature">def <strong>bind</strong>(socket : <a href="../../socket/server/">Socket::Server</a>) : <a href="../../nil/">Nil</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L298" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Adds a <code><a href="../../socket/server/">Socket::Server</a></code> <em>socket</em> to this server.</p></div>   </div> <div class="entry-detail" id="bind(uri:String):Socket::Address-instance-method"> <h3 class="signature">def <strong>bind</strong>(uri : <a href="../../string/">String</a>) : <a href="../../socket/address/">Socket::Address</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L272" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Parses a socket configuration from <em>uri</em> and adds it to this server. Returns the effective address it is bound to.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind("tcp://localhost:80")  # =&gt; Socket::IPAddress.new("127.0.0.1", 8080)
+server.bind("unix:///tmp/server.sock")  # =&gt; Socket::UNIXAddress.new("/tmp/server.sock")
+server.bind("tls://127.0.0.1:443?key=private.key&amp;cert=certificate.cert&amp;ca=ca.crt)  # =&gt; Socket::IPAddress.new("127.0.0.1", 443)</pre>
+</div>   </div> <div class="entry-detail" id="bind(uri:URI):Socket::Address-instance-method"> <h3 class="signature">def <strong>bind</strong>(uri : <a href="../../uri/">URI</a>) : <a href="../../socket/address/">Socket::Address</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L277" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Parses a socket configuration from <em>uri</em> and adds it to this server. Returns the effective address it is bound to.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind("tcp://localhost:80")  # =&gt; Socket::IPAddress.new("127.0.0.1", 8080)
+server.bind("unix:///tmp/server.sock")  # =&gt; Socket::UNIXAddress.new("/tmp/server.sock")
+server.bind("tls://127.0.0.1:443?key=private.key&amp;cert=certificate.cert&amp;ca=ca.crt)  # =&gt; Socket::IPAddress.new("127.0.0.1", 443)</pre>
+</div>   </div> <div class="entry-detail" id="bind_tcp(host:String,port:Int32,reuse_port:Bool=false):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_tcp</strong>(host : <a href="../../string/">String</a>, port : <a href="../../int32/">Int32</a>, reuse_port : <a href="../../bool/">Bool</a> = false) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L138" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>host:port</code> and adds it as a socket, returning the local address and port the server listens on.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind_tcp("127.0.0.100", 8080) # =&gt; Socket::IPAddress.new("127.0.0.100", 8080)</pre> <p>If <em>reuse_port</em> is <code>true</code>, it enables the <code>SO_REUSEPORT</code> socket option, which allows multiple processes to bind to the same port.</p>
+</div>   </div> <div class="entry-detail" id="bind_tcp(port:Int32,reuse_port:Bool=false):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_tcp</strong>(port : <a href="../../int32/">Int32</a>, reuse_port : <a href="../../bool/">Bool</a> = false) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L156" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>127.0.0.1:port</code> and adds it as a socket, returning the local address and port the server listens on.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind_tcp(8080) # =&gt; Socket::IPAddress.new("127.0.0.1", 8080)</pre> <p>If <em>reuse_port</em> is <code>true</code>, it enables the <code>SO_REUSEPORT</code> socket option, which allows multiple processes to bind to the same port.</p>
+</div>   </div> <div class="entry-detail" id="bind_tcp(address:Socket::IPAddress,reuse_port:Bool=false):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_tcp</strong>(address : <a href="../../socket/ipaddress/">Socket::IPAddress</a>, reuse_port : <a href="../../bool/">Bool</a> = false) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L171" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <em>address</em> and adds it as a socket, returning the local address and port the server listens on.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind_tcp(Socket::IPAddress.new("127.0.0.100", 8080)) # =&gt; Socket::IPAddress.new("127.0.0.100", 8080)
+server.bind_tcp(Socket::IPAddress.new("127.0.0.100", 0))    # =&gt; Socket::IPAddress.new("127.0.0.100", 35487)</pre> <p>If <em>reuse_port</em> is <code>true</code>, it enables the <code>SO_REUSEPORT</code> socket option, which allows multiple processes to bind to the same port.</p>
+</div>   </div> <div class="entry-detail" id="bind_tls(address:Socket::IPAddress,context:OpenSSL::SSL::Context::Server):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_tls</strong>(address : <a href="../../socket/ipaddress/">Socket::IPAddress</a>, context : <a href="../../openssl/ssl/context/server/">OpenSSL::SSL::Context::Server</a>) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L211" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates an <code><a href="../../openssl/ssl/server/">OpenSSL::SSL::Server</a></code> and adds it as a socket.</p> <p>The SSL server wraps a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on an unused port on <em>host</em>.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+context = OpenSSL::SSL::Context::Server.new
+context.certificate_chain = "openssl.crt"
+context.private_key = "openssl.key"
+address = server.bind_tls Socket::IPAddress.new("127.0.0.1", 8000), context</pre>
+</div>   </div> <div class="entry-detail" id="bind_tls(host:String,port:Int32,context:OpenSSL::SSL::Context::Server,reuse_port:Bool=false):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_tls</strong>(host : <a href="../../string/">String</a>, port : <a href="../../int32/">Int32</a>, context : <a href="../../openssl/ssl/context/server/">OpenSSL::SSL::Context::Server</a>, reuse_port : <a href="../../bool/">Bool</a> = false) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L211" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates an <code><a href="../../openssl/ssl/server/">OpenSSL::SSL::Server</a></code> and adds it as a socket.</p> <p>The SSL server wraps a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>host:port</code>.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+context = OpenSSL::SSL::Context::Server.new
+context.certificate_chain = "openssl.crt"
+context.private_key = "openssl.key"
+server.bind_tls "127.0.0.1", 8080, context</pre>
+</div>   </div> <div class="entry-detail" id="bind_tls(host:String,context:OpenSSL::SSL::Context::Server):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_tls</strong>(host : <a href="../../string/">String</a>, context : <a href="../../openssl/ssl/context/server/">OpenSSL::SSL::Context::Server</a>) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L211" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates an <code><a href="../../openssl/ssl/server/">OpenSSL::SSL::Server</a></code> and adds it as a socket.</p> <p>The SSL server wraps a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on an unused port on <em>host</em>.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+context = OpenSSL::SSL::Context::Server.new
+context.certificate_chain = "openssl.crt"
+context.private_key = "openssl.key"
+address = server.bind_tls "127.0.0.1", context</pre>
+</div>   </div> <div class="entry-detail" id="bind_unix(path:String):Socket::UNIXAddress-instance-method"> <h3 class="signature">def <strong>bind_unix</strong>(path : <a href="../../string/">String</a>) : <a href="../../socket/unixaddress/">Socket::UNIXAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L193" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../unixserver/">UNIXServer</a></code> bound to <em>path</em> and adds it as a socket.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind_unix "/tmp/my-socket.sock"</pre>
+</div>   </div> <div class="entry-detail" id="bind_unix(address:Socket::UNIXAddress):Socket::UNIXAddress-instance-method"> <h3 class="signature">def <strong>bind_unix</strong>(address : <a href="../../socket/unixaddress/">Socket::UNIXAddress</a>) : <a href="../../socket/unixaddress/">Socket::UNIXAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L207" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../unixserver/">UNIXServer</a></code> bound to <em>address</em> and adds it as a socket.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind_unix(Socket::UNIXAddress.new("/tmp/my-socket.sock"))</pre>
+</div>   </div> <div class="entry-detail" id="bind_unused_port(host:String=Socket::IPAddress::LOOPBACK,reuse_port:Bool=false):Socket::IPAddress-instance-method"> <h3 class="signature">def <strong>bind_unused_port</strong>(host : <a href="../../string/">String</a> = Socket::IPAddress::LOOPBACK, reuse_port : <a href="../../bool/">Bool</a> = false) : <a href="../../socket/ipaddress/">Socket::IPAddress</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L183" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listening on an unused port and adds it as a socket.</p> <p>Returns the <code><a href="../../socket/ipaddress/">Socket::IPAddress</a></code> with the determined port number.</p> <pre data-language="crystal">server = HTTP::Server.new { }
+server.bind_unused_port # =&gt; Socket::IPAddress.new("127.0.0.1", 12345)</pre>
+</div>   </div> <div class="entry-detail" id="close-instance-method"> <h3 class="signature">def <strong>close</strong><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L375" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Gracefully terminates the server. It will process currently accepted requests, but it won't accept new connections.</p></div>   </div> <div class="entry-detail" id="closed?:Bool-instance-method"> <h3 class="signature">def <strong>closed?</strong> : <a href="../../bool/">Bool</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L102" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Returns <code>true</code> if this server is closed.</p></div>   </div> <div class="entry-detail" id="each_address(&amp;block:Socket::Address-&gt;)-instance-method"> <h3 class="signature">def <strong>each_address</strong>(&amp;block : <a href="../../socket/address/">Socket::Address</a> -&gt; )<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L306" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Enumerates all addresses this server is bound to.</p></div>   </div> <div class="entry-detail" id="listen(port:Int32,reuse_port:Bool=false)-instance-method"> <h3 class="signature">def <strong>listen</strong>(port : <a href="../../int32/">Int32</a>, reuse_port : <a href="../../bool/">Bool</a> = false)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L324" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>127.0.0.1:port</code>, adds it as a socket and starts the server. Blocks until the server is closed.</p> <p>See <code><a href="../server/#bind%28socket%3ASocket%3A%3AServer%29%3ANil-instance-method">#bind(port : Int32)</a></code> for details.</p>
+</div>   </div> <div class="entry-detail" id="listen(host:String,port:Int32,reuse_port:Bool=false)-instance-method"> <h3 class="signature">def <strong>listen</strong>(host : <a href="../../string/">String</a>, port : <a href="../../int32/">Int32</a>, reuse_port : <a href="../../bool/">Bool</a> = false)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L334" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Creates a <code><a href="../../tcpserver/">TCPServer</a></code> listenting on <code>host:port</code>, adds it as a socket and starts the server. Blocks until the server is closed.</p> <p>See <code>#bind(host : String, port : Int32)</code> for details.</p>
+</div>   </div> <div class="entry-detail" id="listen-instance-method"> <h3 class="signature">def <strong>listen</strong><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L341" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Starts the server. Blocks until the server is closed.</p></div>   </div> <div class="entry-detail" id="listening?:Bool-instance-method"> <h3 class="signature">def <strong>listening?</strong> : <a href="../../bool/">Bool</a><a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/server.cr#L105" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Returns <code>true</code> if this server is listening on it's sockets.</p></div>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Manas Technology Solutions.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://crystal-lang.org/api/0.27.0/HTTP/Server.html" class="_attribution-link" target="_blank">https://crystal-lang.org/api/0.27.0/HTTP/Server.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

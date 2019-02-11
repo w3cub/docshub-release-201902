@@ -1,0 +1,197 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>HTTP&#58;&#58;FormData - Crystal - W3cubDocs</title>
+  
+  <meta name="description" content=" Contains utilities for parsing multipart&#47;form-data messages, which are commonly used for encoding HTML form data. ">
+  <meta name="keywords" content="module, http, formdata, -, crystal">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/crystal/api/0.27.0/http/formdata/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/crystal.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/crystal/" class="_nav-link" title="" style="margin-left:0;">Crystal</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _crystal">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="type-name"> module HTTP::FormData </h1> <h2>Overview</h2> <p>Contains utilities for parsing <code>multipart/form-data</code> messages, which are commonly used for encoding HTML form data.</p> <h3>Examples</h3> <p>Commonly, you'll want to parse a from response from a HTTP request, and process it. An example server which performs this task is shown below.</p> <pre data-language="crystal">require "http"
+require "tempfile"
+
+server = HTTP::Server.new do |context|
+  name = nil
+  file = nil
+  HTTP::FormData.parse(context.request) do |part|
+    case part.name
+    when "name"
+      name = part.body.gets_to_end
+    when "file"
+      file = File.tempfile("upload") do |file|
+        IO.copy(part.body, file)
+      end
+    end
+  end
+
+  unless name &amp;&amp; file
+    context.response.status_code = 400
+    next
+  end
+
+  context.response &lt;&lt; file.path
+end
+
+server.bind_tcp 8085
+server.listen</pre> <p>To test the server, use the curl command below.</p> <pre data-language="crystal">$ curl http://localhost:8085/ -F name=foo -F file=@/path/to/test.file
+/tmp/upload.Yxn7cc</pre> <p>Another common case is sending formdata to a server using HTTP::Client. Here is an example showing how to upload a file to the server above in crystal.</p> <pre data-language="crystal">require "http"
+
+IO.pipe do |reader, writer|
+  channel = Channel(String).new(1)
+
+  spawn do
+    HTTP::FormData.build(writer) do |formdata|
+      channel.send(formdata.content_type)
+
+      formdata.field("name", "foo")
+      File.open("foo.png") do |file|
+        metadata = HTTP::FormData::FileMetadata.new(filename: "foo.png")
+        headers = HTTP::Headers{"Content-Type" =&gt; "image/png"}
+        formdata.file("file", file, metadata, headers)
+      end
+    end
+
+    writer.close
+  end
+
+  headers = HTTP::Headers{"Content-Type" =&gt; channel.receive}
+  response = HTTP::Client.post("http://localhost:8085/", body: reader, headers: headers)
+
+  puts "Response code #{response.status_code}"
+  puts "File path: #{response.body}"
+end</pre> <h2>Defined in:</h2> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata/builder.cr#L1" target="_blank"> http/formdata/builder.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata/parser.cr#L1" target="_blank"> http/formdata/parser.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata/part.cr#L1" target="_blank"> http/formdata/part.cr </a> <br> <a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata.cr#L79" target="_blank"> http/formdata.cr </a> <br> <h2>Class Method Summary</h2> <ul class="list-summary"> <li class="entry-summary"> <a href="#build%28response%3AHTTP%3A%3AServer%3A%3AResponse%2Cboundary%3DMultipart.generate_boundary%2C%26block%29-class-method" class="signature"><strong>.build</strong>(response : HTTP::Server::Response, boundary = Multipart.generate_boundary, &amp;block)</a> <div class="summary"><p>Builds a multipart/form-data message, yielding a <code><a href="../formdata/builder/">FormData::Builder</a></code> object to the block which writes to <em>response</em> using *boundary.</p></div> </li> <li class="entry-summary"> <a href="#build%28io%2Cboundary%3DMultipart.generate_boundary%2C%26block%29-class-method" class="signature"><strong>.build</strong>(io, boundary = Multipart.generate_boundary, &amp;block)</a> <div class="summary"><p>Builds a multipart/form-data message, yielding a <code><a href="../formdata/builder/">FormData::Builder</a></code> object to the block which writes to <em>io</em> using <em>boundary</em>.</p></div> </li> <li class="entry-summary"> <a href="#parse%28io%2Cboundary%2C%26block%29-class-method" class="signature"><strong>.parse</strong>(io, boundary, &amp;block)</a> <div class="summary"><p>Parses a multipart/form-data message, yielding a <code><a href="../formdata/parser/">FormData::Parser</a></code>.</p></div> </li> <li class="entry-summary"> <a href="#parse%28request%3AHTTP%3A%3ARequest%2C%26block%29-class-method" class="signature"><strong>.parse</strong>(request : HTTP::Request, &amp;block)</a> <div class="summary"><p>Parses a multipart/form-data message, yielding a <code><a href="../formdata/parser/">FormData::Parser</a></code>.</p></div> </li> <li class="entry-summary"> <a href="#parse_content_disposition%28content_disposition%29%3ATuple%28String%2CFileMetadata%29-class-method" class="signature"><strong>.parse_content_disposition</strong>(content_disposition) : Tuple(String, FileMetadata)</a> <div class="summary"><p>Parses a <code>Content-Disposition</code> header string into a field name and <code><a href="../formdata/filemetadata/">FileMetadata</a></code>.</p></div> </li> </ul>  <h2>Class Method Detail</h2> <div class="entry-detail" id="build(response:HTTP::Server::Response,boundary=Multipart.generate_boundary,&amp;block)-class-method"> <h3 class="signature">def self.<strong>build</strong>(response : <a href="../server/response/">HTTP::Server::Response</a>, boundary = Multipart.generate_boundary, &amp;block)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata.cr#L205" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Builds a multipart/form-data message, yielding a <code><a href="../formdata/builder/">FormData::Builder</a></code> object to the block which writes to <em>response</em> using *boundary. Content-Type is set on <em>response</em> and <code><a href="../formdata/builder/#finish-instance-method">Builder#finish</a></code> is called on the builder when the block returns.</p> <pre data-language="crystal">io = IO::Memory.new
+response = HTTP::Server::Response.new io
+HTTP::FormData.build(response, "boundary") do |builder|
+  builder.field("foo", "bar")
+end
+response.close
+
+response.headers["Content-Type"] # =&gt; "multipart/form-data; boundary=\"boundary\""
+io.to_s                          # =&gt; "HTTP/1.1 200 OK\r\nContent-Type: multipart/form-data; boundary=\"boundary\"\r\nContent-Length: 75\r\n\r\n--boundary\r\nContent-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n--boundary--"</pre> <p>See: <code><a href="../formdata/builder/">FormData::Builder</a></code></p>
+</div>   </div> <div class="entry-detail" id="build(io,boundary=Multipart.generate_boundary,&amp;block)-class-method"> <h3 class="signature">def self.<strong>build</strong>(io, boundary = Multipart.generate_boundary, &amp;block)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata.cr#L181" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Builds a multipart/form-data message, yielding a <code><a href="../formdata/builder/">FormData::Builder</a></code> object to the block which writes to <em>io</em> using <em>boundary</em>. <code><a href="../formdata/builder/#finish-instance-method">Builder#finish</a></code> is called on the builder when the block returns.</p> <pre data-language="crystal">io = IO::Memory.new
+HTTP::FormData.build(io, "boundary") do |builder|
+  builder.field("foo", "bar")
+end
+io.to_s # =&gt; "--boundary\r\nContent-Disposition: form-data; name=\"foo\"\r\n\r\nbar\r\n--boundary--"</pre> <p>See: <code><a href="../formdata/builder/">FormData::Builder</a></code></p>
+</div>   </div> <div class="entry-detail" id="parse(io,boundary,&amp;block)-class-method"> <h3 class="signature">def self.<strong>parse</strong>(io, boundary, &amp;block)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata.cr#L91" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Parses a multipart/form-data message, yielding a <code><a href="../formdata/parser/">FormData::Parser</a></code>.</p> <pre data-language="crystal">form_data = "--aA40\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\nfield data\r\n--aA40--"
+HTTP::FormData.parse(IO::Memory.new(form_data), "aA40") do |part|
+  part.name             # =&gt; "field1"
+  part.body.gets_to_end # =&gt; "field data"
+end</pre> <p>See: <code><a href="../formdata/parser/">FormData::Parser</a></code></p>
+</div>   </div> <div class="entry-detail" id="parse(request:HTTP::Request,&amp;block)-class-method"> <h3 class="signature">def self.<strong>parse</strong>(request : <a href="../request/">HTTP::Request</a>, &amp;block)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata.cr#L112" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc">
+<p>Parses a multipart/form-data message, yielding a <code><a href="../formdata/parser/">FormData::Parser</a></code>.</p> <pre data-language="crystal">headers = HTTP::Headers{"Content-Type" =&gt; "multipart/form-data; boundary=aA40"}
+body = "--aA40\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\nfield data\r\n--aA40--"
+request = HTTP::Request.new("POST", "/", headers, body)
+
+HTTP::FormData.parse(request) do |part|
+  part.name             # =&gt; "field1"
+  part.body.gets_to_end # =&gt; "field data"
+end</pre> <p>See: <code><a href="../formdata/parser/">FormData::Parser</a></code></p>
+</div>   </div> <div class="entry-detail" id="parse_content_disposition(content_disposition):Tuple(String,FileMetadata)-class-method"> <h3 class="signature">def self.<strong>parse_content_disposition</strong>(content_disposition) : <a href="../../tuple/">Tuple</a>(<a href="../../string/">String</a>, <a href="../formdata/filemetadata/">FileMetadata</a>)<a href="https://github.com/crystal-lang/crystal/blob/c9d1eef8fde5c7a03a029d64c8483ed7b4f2fe86/src/http/formdata.cr#L127" target="_blank" class="view-source">Source</a>
+</h3> <div class="doc"><p>Parses a <code>Content-Disposition</code> header string into a field name and <code><a href="../formdata/filemetadata/">FileMetadata</a></code>. Please note that the <code>Content-Disposition</code> header for <code>multipart/form-data</code> is not compatible with the original definition in <a href="https://tools.ietf.org/html/rfc2183" target="_blank">RFC 2183</a>, but are instead specified in <a href="https://tools.ietf.org/html/rfc2388" target="_blank">RFC 2388</a>.</p></div>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Manas Technology Solutions.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://crystal-lang.org/api/0.27.0/HTTP/FormData.html" class="_attribution-link" target="_blank">https://crystal-lang.org/api/0.27.0/HTTP/FormData.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
