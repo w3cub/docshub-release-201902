@@ -1,0 +1,508 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ahead-of-Time Compilation - Angular 4 - W3cubDocs</title>
+  
+  <meta name="description" content=" This cookbook describes how to radically improve performance by compiling ahead-of-time (AOT) during a build process. ">
+  <meta name="keywords" content="ahead-of-time, compilation, -, angular, angular~4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~4/guide/aot-compiler/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ahead-of-time-compilation">Ahead-of-Time Compilation</h1> <p>This cookbook describes how to radically improve performance by compiling <em>ahead-of-time</em> (AOT) during a build process.</p>  <h2 id="overview">Overview</h2> <p>An Angular application consists largely of components and their HTML templates. Before the browser can render the application, the components and templates must be converted to executable JavaScript by the <em>Angular compiler</em>.</p> <blockquote class="l-sub-section"> <p> <a href="https://www.youtube.com/watch?v=kW9cJsvcsGo" target="_blank">Watch compiler author Tobias Bosch explain the Angular Compiler</a> at AngularConnect 2016.</p> </blockquote> <p>You can compile the app in the browser, at runtime, as the application loads, using the <strong><em>just-in-time</em> (JIT) compiler</strong>. This is the standard development approach shown throughout the documentation. It's great but it has shortcomings.</p> <p>JIT compilation incurs a runtime performance penalty. Views take longer to render because of the in-browser compilation step. The application is bigger because it includes the Angular compiler and a lot of library code that the application won't actually need. Bigger apps take longer to transmit and are slower to load.</p> <p>Compilation can uncover many component-template binding errors. JIT compilation discovers them at runtime, which is late in the process.</p> <p>The <strong><em>ahead-of-time</em> (AOT) compiler</strong> can catch template errors early and improve performance by compiling at build time.</p>  <h2 id="ahead-of-time-aot-vs-just-in-time-jit">
+<code>Ahead-of-time</code> (AOT) vs <code>just-in-time</code> (JIT)</h2> <p>There is actually only one Angular compiler. The difference between AOT and JIT is a matter of timing and tooling. With AOT, the compiler runs once at build time using one set of libraries; with JIT it runs every time for every user at runtime using a different set of libraries.</p>  <h2 id="why-do-aot-compilation">Why do AOT compilation?</h2> <p><em>Faster rendering</em></p> <p>With AOT, the browser downloads a pre-compiled version of the application. The browser loads executable code so it can render the application immediately, without waiting to compile the app first.</p> <p><em>Fewer asynchronous requests</em></p> <p>The compiler <em>inlines</em> external HTML templates and CSS style sheets within the application JavaScript, eliminating separate ajax requests for those source files.</p> <p><em>Smaller Angular framework download size</em></p> <p>There's no need to download the Angular compiler if the app is already compiled. The compiler is roughly half of Angular itself, so omitting it dramatically reduces the application payload.</p> <p><em>Detect template errors earlier</em></p> <p>The AOT compiler detects and reports template binding errors during the build step before users can see them.</p> <p><em>Better security</em></p> <p>AOT compiles HTML templates and components into JavaScript files long before they are served to the client. With no templates to read and no risky client-side HTML or JavaScript evaluation, there are fewer opportunities for injection attacks.</p>  <h2 id="compile-with-aot">Compile with AOT</h2> <p>Preparing for offline compilation takes a few simple steps. Take the <a href="../setup/">Setup</a> as a starting point. A few minor changes to the lone <code>app.component</code> lead to these two class and HTML files:</p> <code-tabs> <div class="pre-title">src/app/app.component.html</div>
+<pre data-language="html">&lt;button (click)="toggleHeading()"&gt;Toggle Heading&lt;/button&gt;
+&lt;h1 *ngIf="showHeading"&gt;Hello Angular&lt;/h1&gt;
+
+&lt;h3&gt;List of Heroes&lt;/h3&gt;
+&lt;div *ngFor="let hero of heroes"&gt;{{hero}}&lt;/div&gt;</pre> <div class="pre-title">src/app/app.component.ts</div>
+<pre data-language="typescript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  showHeading = true;
+  heroes = ['Magneta', 'Bombasto', 'Magma', 'Tornado'];
+
+  toggleHeading() {
+    this.showHeading = !this.showHeading;
+  }
+}</pre> </code-tabs> <p>Install a few new npm dependencies with the following command:</p> <pre data-language="none">npm install @angular/compiler-cli @angular/platform-server --save</pre> <p>You will run the <code>ngc</code> compiler provided in the <code>@angular/compiler-cli</code> npm package instead of the TypeScript compiler (<code>tsc</code>).</p> <p><code>ngc</code> is a drop-in replacement for <code>tsc</code> and is configured much the same way.</p> <p><code>ngc</code> requires its own <code>tsconfig.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> with AOT-oriented settings. Copy the original <code>src/tsconfig.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> to a file called <code>tsconfig-aot.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> on the project root, then modify it as follows.</p> <div class="pre-title">tsconfig-aot.json</div>
+<pre data-language="json">{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
+  },
+
+  "files": [
+    "src/app/app.module.ts",
+    "src/main.ts"
+  ],
+
+  "angularCompilerOptions": {
+   "genDir": "aot",
+   "skipMetadataEmit" : true
+ }
+}</pre> <p>The <code>compilerOptions</code> section is unchanged except for one property. <strong>Set the <code>module</code> to <code>es2015</code></strong>. This is important as explained later in the <a href="../aot-compiler/#tree-shaking">Tree Shaking</a> section.</p> <p>What's really new is the <code>ngc</code> section at the bottom called <code>angularCompilerOptions</code>. Its <code>genDir</code> property tells the compiler to store the compiled output files in a new <code>aot</code> folder.</p> <p>The <code>"skipMetadataEmit" : true</code> property prevents the compiler from generating metadata files with the compiled application. Metadata files are not necessary when targeting TypeScript files, so there is no reason to include them.</p> <p><strong><em>Component-relative template URLS</em></strong></p> <p>The AOT compiler requires that <code>@<a href="../../api/core/component/" class="code-anchor">Component</a></code> URLS for external templates and CSS files be <em>component-relative</em>. That means that the value of <code>@<a href="../../api/core/component/" class="code-anchor">Component</a>.templateUrl</code> is a URL value <em>relative</em> to the component class file. For example, an <code>'app.component.html'</code> URL means that the template file is a sibling of its companion <code>app.component.ts</code> file.</p> <p>While JIT app URLs are more flexible, stick with <em>component-relative</em> URLs for compatibility with AOT compilation.</p> <p><strong><em>Compiling the application</em></strong></p> <p>Initiate AOT compilation from the command line using the previously installed <code>ngc</code> compiler by executing:</p> <pre data-language="none">node_modules/.bin/ngc -p tsconfig-aot.json</pre> <blockquote class="l-sub-section"> <p> Windows users should surround the <code>ngc</code> command in double quotes: </p>
+<pre format=".">"node_modules/.bin/ngc" -p tsconfig-aot.json</pre> </blockquote> <p><code>ngc</code> expects the <code>-p</code> switch to point to a <code>tsconfig.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> file or a folder containing a <code>tsconfig.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> file.</p> <p>After <code>ngc</code> completes, look for a collection of <em>NgFactory</em> files in the <code>aot</code> folder. The <code>aot</code> folder is the directory specified as <code>genDir</code> in <code>tsconfig-aot.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code>.</p> <p>These factory files are essential to the compiled application. Each component factory creates an instance of the component at runtime by combining the original class file and a JavaScript representation of the component's template. Note that the original component class is still referenced internally by the generated factory.</p> <blockquote class="l-sub-section"> <p> The curious can open <code>aot/app.component.ngfactory.ts</code> to see the original Angular template syntax compiled to TypeScript, its intermediate form.</p> <p> JIT compilation generates these same <em>NgFactories</em> in memory where they are largely invisible. AOT compilation reveals them as separate, physical files.</p> </blockquote> <blockquote class="alert is-important"> <p> Do not edit the <em>NgFactories</em>! Re-compilation replaces these files and all edits will be lost.</p> </blockquote>  <h2 id="bootstrap">Bootstrap</h2> <p>The AOT approach changes application bootstrapping.</p> <p>Instead of bootstrapping <code>AppModule</code>, you bootstrap the application with the generated module factory, <code>AppModuleNgFactory</code>.</p> <p>Make a copy of <code>main.ts</code> and name it <code>main-jit.ts</code>. This is the JIT version; set it aside as you may need it <a href="../aot-compiler/#run-jit" title="Running with JIT">later</a>.</p> <p>Open <code>main.ts</code> and convert it to AOT compilation. Switch from the <code><a href="../../api/platform-browser-dynamic/platformbrowserdynamic/" class="code-anchor">platformBrowserDynamic</a>.bootstrap</code> used in JIT compilation to <code><a href="../../api/platform-browser/platformbrowser/" class="code-anchor">platformBrowser</a>().bootstrapModuleFactory</code> and pass in the AOT-generated <code>AppModuleNgFactory</code>.</p> <p>Here is AOT bootstrap in <code>main.ts</code> next to the original JIT version:</p> <code-tabs> <div class="pre-title">src/main.ts</div>
+<pre data-language="typescript">import { platformBrowser }    from '@angular/platform-browser';
+import { AppModuleNgFactory } from '../aot/src/app/app.module.ngfactory';
+
+console.log('Running AOT compiled');
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);</pre> <div class="pre-title">src/main-jit.ts</div>
+<pre data-language="typescript">import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule }              from './app/app.module';
+
+console.log('Running JIT compiled');
+platformBrowserDynamic().bootstrapModule(AppModule);</pre> </code-tabs> <p>Be sure to <a href="../aot-compiler/#compile">recompile</a> with <code>ngc</code>!</p>  <h2 id="tree-shaking">Tree shaking</h2> <p>AOT compilation sets the stage for further optimization through a process called <em>tree shaking</em>. A tree shaker walks the dependency graph, top to bottom, and <em>shakes out</em> unused code like dead leaves in a tree.</p> <p>Tree shaking can greatly reduce the downloaded size of the application by removing unused portions of both source and library code. In fact, most of the reduction in small apps comes from removing unreferenced Angular features.</p> <p>For example, this demo application doesn't use anything from the <code>@angular/forms</code> library. There is no reason to download forms-related Angular code and tree shaking ensures that you don't.</p> <p>Tree shaking and AOT compilation are separate steps. Tree shaking can only target JavaScript code. AOT compilation converts more of the application to JavaScript, which in turn makes more of the application "tree shakable".</p>  <h3 id="rollup">Rollup</h3> <p>This cookbook illustrates a tree shaking utility called <em>Rollup</em>.</p> <p>Rollup statically analyzes the application by following the trail of <code>import</code> and <code>export</code> statements. It produces a final code <em>bundle</em> that excludes code that is exported, but never imported.</p> <p>Rollup can only tree shake <code>ES2015</code> modules which have <code>import</code> and <code>export</code> statements.</p> <blockquote class="l-sub-section"> <p> Recall that <code>tsconfig-aot.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> is configured to produce <code>ES2015</code> modules. It's not important that the code itself be written with <code>ES2015</code> syntax such as <code>class</code> and <code>const</code>. What matters is that the code uses ES <code>import</code> and <code>export</code> statements rather than <code>require</code> statements.</p> </blockquote> <p>In the terminal window, install the Rollup dependencies with this command:</p> <pre data-language="none">npm install rollup rollup-plugin-node-resolve rollup-plugin-commonjs rollup-plugin-uglify --save-dev</pre> <p>Next, create a configuration file (<code>rollup-config.js</code>) in the project root directory to tell Rollup how to process the application. The cookbook configuration file looks like this.</p> <div class="pre-title">rollup-config.js</div>
+<pre data-language="js">import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs    from 'rollup-plugin-commonjs';
+import uglify      from 'rollup-plugin-uglify';
+
+export default {
+  entry: 'src/main.js',
+  dest: 'src/build.js', // output a single application bundle
+  sourceMap: false,
+  format: 'iife',
+  onwarn: function(warning) {
+    // Skip certain warnings
+
+    // should intercept ... but doesn't in some rollup versions
+    if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
+
+    // console.warn everything else
+    console.warn( warning.message );
+  },
+  plugins: [
+      nodeResolve({jsnext: true, module: true}),
+      commonjs({
+        include: 'node_modules/rxjs/**',
+      }),
+      uglify()
+  ]
+};</pre> <p>This config file tells Rollup that the app entry point is <code>src/app/main.js</code> . The <code>dest</code> attribute tells Rollup to create a bundle called <code>build.js</code> in the <code>dist</code> folder. It overrides the default <code>onwarn</code> method in order to skip annoying messages about the AOT compiler's use of the <code>this</code> keyword.</p> <p>The next section covers the plugins in more depth.</p>  <h3 id="rollup-plugins">Rollup Plugins</h3> <p>Optional plugins filter and transform the Rollup inputs and output.</p> <p><em>RxJS</em></p> <p>Rollup expects application source code to use <code>ES2015</code> modules. Not all external dependencies are published as <code>ES2015</code> modules. In fact, most are not. Many of them are published as <em>CommonJS</em> modules.</p> <p>The <em>RxJs</em> Observable library is an essential Angular dependency published as an ES5 JavaScript <em>CommonJS</em> module.</p> <p>Luckily, there is a Rollup plugin that modifies <em>RxJs</em> to use the ES <code>import</code> and <code>export</code> statements that Rollup requires. Rollup then preserves the parts of <code>RxJS</code> referenced by the application in the final bundle. Using it is straigthforward. Add the following to the <code>plugins</code> array in <code>rollup-config.js</code>:</p> <div class="pre-title">rollup-config.js (CommonJs to ES2015 Plugin)</div>
+<pre data-language="js">commonjs({
+  include: 'node_modules/rxjs/**',
+}),</pre> <p><em>Minification</em></p> <p>Rollup tree shaking reduces code size considerably. Minification makes it smaller still. This cookbook relies on the <em>uglify</em> Rollup plugin to minify and mangle the code. Add the following to the <code>plugins</code> array:</p> <div class="pre-title">rollup-config.js (CommonJs to ES2015 Plugin)</div>
+<pre data-language="js">uglify()</pre> <blockquote class="l-sub-section"> <p> In a production setting, you would also enable gzip on the web server to compress the code into an even smaller package going over the wire.</p> </blockquote>  <h3 id="run-rollup">Run Rollup</h3> <p>Execute the Rollup process with this command:</p> <pre data-language="none">node_modules/.bin/rollup -c rollup-config.js</pre> <blockquote class="l-sub-section"> <p> Windows users should surround the <code>rollup</code> command in double quotes: </p>
+<pre data-language="none">"node_modules/.bin/rollup"  -c rollup-config.js</pre> </blockquote>  <h2 id="load-the-bundle">Load the bundle</h2> <p>Loading the generated application bundle does not require a module loader like SystemJS. Remove the scripts that concern SystemJS. Instead, load the bundle file using a single <code>&lt;script&gt;</code> tag <strong><em>after</em></strong> the <code>&lt;/body&gt;</code> tag:</p> <div class="pre-title">index.html (load bundle)</div>
+<pre data-language="html">&lt;script src="build.js"&gt;&lt;/script&gt;</pre>  <h2 id="serve-the-app">Serve the app</h2> <p>You'll need a web server to host the application. Use the same <code>lite-server</code> employed elsewhere in the documentation:</p> <pre data-language="none">npm run lite</pre> <p>The server starts, launches a browser, and the app should appear.</p>  <h2 id="aot-quickstart-source-code">AOT QuickStart source code</h2> <p>Here's the pertinent source code:</p> <code-tabs> <div class="pre-title">src/app/app.component.html</div>
+<pre data-language="html">&lt;button (click)="toggleHeading()"&gt;Toggle Heading&lt;/button&gt;
+&lt;h1 *ngIf="showHeading"&gt;Hello Angular&lt;/h1&gt;
+
+&lt;h3&gt;List of Heroes&lt;/h3&gt;
+&lt;div *ngFor="let hero of heroes"&gt;{{hero}}&lt;/div&gt;</pre> <div class="pre-title">src/app/app.component.ts</div>
+<pre data-language="typescript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  showHeading = true;
+  heroes = ['Magneta', 'Bombasto', 'Magma', 'Tornado'];
+
+  toggleHeading() {
+    this.showHeading = !this.showHeading;
+  }
+}</pre> <div class="pre-title">src/main.ts</div>
+<pre data-language="typescript">import { platformBrowser }    from '@angular/platform-browser';
+import { AppModuleNgFactory } from '../aot/src/app/app.module.ngfactory';
+
+console.log('Running AOT compiled');
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);</pre> <div class="pre-title">src/index.html</div>
+<pre data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Ahead of time compilation&lt;/title&gt;
+    &lt;base href="/"&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+
+    &lt;script src="node_modules/core-js/client/shim.min.js"&gt;&lt;/script&gt;
+    &lt;script src="node_modules/zone.js/dist/zone.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;my-app&gt;Loading...&lt;/my-app&gt;
+  &lt;/body&gt;
+  &lt;script src="build.js"&gt;&lt;/script&gt;
+&lt;/html&gt;</pre> <div class="pre-title">tsconfig-aot.json</div>
+<pre data-language="json">{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
+  },
+
+  "files": [
+    "src/app/app.module.ts",
+    "src/main.ts"
+  ],
+
+  "angularCompilerOptions": {
+   "genDir": "aot",
+   "skipMetadataEmit" : true
+ }
+}</pre> <div class="pre-title">rollup-config.js</div>
+<pre data-language="js">import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs    from 'rollup-plugin-commonjs';
+import uglify      from 'rollup-plugin-uglify';
+
+export default {
+  entry: 'src/main.js',
+  dest: 'src/build.js', // output a single application bundle
+  sourceMap: false,
+  format: 'iife',
+  onwarn: function(warning) {
+    // Skip certain warnings
+
+    // should intercept ... but doesn't in some rollup versions
+    if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
+
+    // console.warn everything else
+    console.warn( warning.message );
+  },
+  plugins: [
+      nodeResolve({jsnext: true, module: true}),
+      commonjs({
+        include: 'node_modules/rxjs/**',
+      }),
+      uglify()
+  ]
+};</pre> </code-tabs>  <h2 id="workflow-and-convenience-script">Workflow and convenience script</h2> <p>You'll rebuild the AOT version of the application every time you make a change. Those <em>npm</em> commands are long and difficult to remember.</p> <p>Add the following <em>npm</em> convenience script to the <code>package.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> so you can compile and rollup in one command.</p> <pre data-language="json">"build:aot": "ngc -p tsconfig-aot.json &amp;&amp; rollup -c rollup-config.js",</pre> <p>Open a terminal window and try it.</p> <pre data-language="none">npm run build:aot</pre>  <h3 id="develop-jit-along-with-aot">Develop JIT along with AOT</h3> <p>AOT compilation and rollup together take several seconds. You may be able to develop iteratively a little faster with SystemJS and JIT. The same source code can be built both ways. Here's one way to do that.</p> <ul> <li>Make a copy of <code>index.html</code> and call it <code>index-jit.html</code>.</li> <li>Delete the script at the bottom of <code>index-jit.html</code> that loads <code>bundle.js</code>
+</li> <li>Restore the SystemJS scripts like this:</li> </ul> <div class="pre-title">src/index-jit.html (SystemJS scripts)</div>
+<pre data-language="html">&lt;script src="node_modules/systemjs/dist/system.src.js"&gt;&lt;/script&gt;
+&lt;script src="systemjs.config.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  System.import('main-jit.js').catch(function(err){ console.error(err); });
+&lt;/script&gt;</pre> <p>Notice the slight change to the <code>system.import</code> which now specifies <code>src/app/main-jit</code>. That's the JIT version of the bootstrap file that we preserved <a href="../aot-compiler/#bootstrap">above</a>.</p> <p>Open a <em>different</em> terminal window and enter <code>npm start</code>.</p> <pre data-language="none">npm start</pre> <p>That compiles the app with JIT and launches the server. The server loads <code>index.html</code> which is still the AOT version, which you can confirm in the browser console. Change the address bar to <code>index-jit.html</code> and it loads the JIT version. This is also evident in the browser console.</p> <p>Develop as usual. The server and TypeScript compiler are in "watch mode" so your changes are reflected immediately in the browser.</p> <p>To see those changes in AOT, switch to the original terminal and re-run <code>npm run build:aot</code>. When it finishes, go back to the browser and use the back button to return to the AOT version in the default <code>index.html</code>.</p> <p>Now you can develop JIT and AOT, side-by-side.</p>  <h2 id="tour-of-heroes">Tour of Heroes</h2> <p>The sample above is a trivial variation of the QuickStart application. In this section you apply what you've learned about AOT compilation and tree shaking to an app with more substance, the <a href="../../tutorial/toh-pt6/"><em>Tour of Heroes</em></a> application.</p>  <h3 id="jit-in-development-aot-in-production">JIT in development, AOT in production</h3> <p>Today AOT compilation and tree shaking take more time than is practical for development. That will change soon. For now, it's best to JIT compile in development and switch to AOT compilation before deploying to production.</p> <p>Fortunately, the source code can be compiled either way without change <em>if</em> you account for a few key differences.</p> <p><strong><em>index.html</em></strong></p> <p>The JIT and AOT apps require their own <code>index.html</code> files because they setup and launch so differently.</p> <p>Here they are for comparison:</p> <code-tabs> <div class="pre-title">aot/index.html (AOT)</div>
+<pre data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;base href="/"&gt;
+    &lt;title&gt;Angular Tour of Heroes&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+
+    &lt;script src="shim.min.js"&gt;&lt;/script&gt;
+    &lt;script src="zone.min.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;my-app&gt;Loading...&lt;/my-app&gt;
+  &lt;/body&gt;
+  &lt;script src="dist/build.js"&gt;&lt;/script&gt;
+&lt;/html&gt;</pre> <div class="pre-title">src/index.html (JIT)</div>
+<pre data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;base href="/"&gt;
+    &lt;title&gt;Angular Tour of Heroes&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+
+    &lt;!-- Polyfills --&gt;
+    &lt;script src="node_modules/core-js/client/shim.min.js"&gt;&lt;/script&gt;
+
+    &lt;script src="node_modules/zone.js/dist/zone.js"&gt;&lt;/script&gt;
+    &lt;script src="node_modules/systemjs/dist/system.src.js"&gt;&lt;/script&gt;
+
+    &lt;script src="systemjs.config.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+      System.import('main.js').catch(function(err){ console.error(err); });
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;my-app&gt;Loading...&lt;/my-app&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre> </code-tabs> <p>The JIT version relies on <code>SystemJS</code> to load individual modules. Its scripts appear in its <code>index.html</code>.</p> <p>The AOT version loads the entire application in a single script, <code>aot/dist/build.js</code>. It does not need <code>SystemJS</code>, so that script is absent from its <code>index.html</code></p> <p><strong><em>main.ts</em></strong></p> <p>JIT and AOT applications boot in much the same way but require different Angular libraries to do so. The key differences, covered in the <a href="../aot-compiler/#bootstrap">Bootstrap</a> section above, are evident in these <code>main</code> files which can and should reside in the same folder:</p> <code-tabs> <div class="pre-title">main-aot.ts (AOT)</div>
+<pre data-language="typescript">import { platformBrowser }    from '@angular/platform-browser';
+
+import { AppModuleNgFactory } from '../aot/src/app/app.module.ngfactory';
+
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);</pre> <div class="pre-title">main.ts (JIT)</div>
+<pre data-language="typescript">import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);</pre> </code-tabs> <p><strong><em>TypeScript configuration</em></strong></p> <p>JIT-compiled applications transpile to <code>commonjs</code> modules. AOT-compiled applications transpile to <em>ES2015</em>/<em>ES6</em> modules to facilitate tree shaking. AOT requires its own TypeScript configuration settings as well.</p> <p>You'll need separate TypeScript configuration files such as these:</p> <code-tabs> <div class="pre-title">tsconfig-aot.json (AOT)</div>
+<pre data-language="json">{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
+  },
+
+  "files": [
+    "src/app/app.module.ts",
+    "src/main-aot.ts"
+  ],
+
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipMetadataEmit" : true
+  }
+}</pre> <div class="pre-title">src/tsconfig.json (JIT)</div>
+<pre data-language="json">{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "dom" ],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true
+  }
+}</pre> </code-tabs> <div class="callout is-helpful"> <header> `@types` and node modules </header> <p> In the file structure of <em>this particular sample project</em>, the <code>node_modules</code> folder happens to be two levels up from the project root. Therefore, <code>"typeRoots"</code> must be set to <code>"../../node_modules/@types/"</code>.</p> <p> In a more typical project, <code>node_modules</code> would be a sibling of <code>tsconfig-aot.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> and <code>"typeRoots"</code> would be set to <code>"node_modules/@types/"</code>. Edit your <code>tsconfig-aot.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code> to fit your project's file structure.</p> </div>  <h3 id="tree-shaking-1">Tree shaking</h3> <p>Rollup does the tree shaking as before.</p> <div class="pre-title">rollup-config.js</div>
+<pre data-language="js">import rollup      from 'rollup'
+import nodeResolve from 'rollup-plugin-node-resolve'
+import commonjs    from 'rollup-plugin-commonjs';
+import uglify      from 'rollup-plugin-uglify'
+
+//paths are relative to the execution path
+export default {
+  entry: 'src/main-aot.js',
+  dest: 'aot/dist/build.js', // output a single application bundle
+  sourceMap: true,
+  sourceMapFile: 'aot/dist/build.js.map',
+  format: 'iife',
+  onwarn: function(warning) {
+    // Skip certain warnings
+
+    // should intercept ... but doesn't in some rollup versions
+    if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
+
+    // console.warn everything else
+    console.warn( warning.message );
+  },
+  plugins: [
+    nodeResolve({jsnext: true, module: true}),
+    commonjs({
+      include: ['node_modules/rxjs/**']
+    }),
+    uglify()
+  ]
+}</pre>  <h3 id="running-the-application">Running the application</h3> <blockquote class="alert is-important"> <p> The general audience instructions for running the AOT build of the Tour of Heroes app are not ready.</p> <p> The following instructions presuppose that you have downloaded the <a href="https://v4.angular.io/generated/zips/toh-pt6/toh-pt6.zip" target="_blank">Tour of Heroes' zip</a> and run <code>npm install</code> on it.</p> </blockquote> <p>Run the JIT-compiled app with <code>npm start</code> as for all other JIT examples.</p> <p>Compiling with AOT presupposes certain supporting files, most of them discussed above.</p> <code-tabs> <div class="pre-title">src/index.html</div>
+<pre data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;base href="/"&gt;
+    &lt;title&gt;Angular Tour of Heroes&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+
+    &lt;!-- Polyfills --&gt;
+    &lt;script src="node_modules/core-js/client/shim.min.js"&gt;&lt;/script&gt;
+
+    &lt;script src="node_modules/zone.js/dist/zone.js"&gt;&lt;/script&gt;
+    &lt;script src="node_modules/systemjs/dist/system.src.js"&gt;&lt;/script&gt;
+
+    &lt;script src="systemjs.config.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+      System.import('main.js').catch(function(err){ console.error(err); });
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;my-app&gt;Loading...&lt;/my-app&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre> <div class="pre-title">copy-dist-files.js</div>
+<pre data-language="js">var fs = require('fs');
+var resources = [
+  'node_modules/core-js/client/shim.min.js',
+  'node_modules/zone.js/dist/zone.min.js',
+  'src/styles.css'
+];
+resources.map(function(f) {
+  var path = f.split('/');
+  var t = 'aot/' + path[path.length-1];
+  fs.createReadStream(f).pipe(fs.createWriteStream(t));
+});</pre> <div class="pre-title">rollup-config.js</div>
+<pre data-language="js">import rollup      from 'rollup'
+import nodeResolve from 'rollup-plugin-node-resolve'
+import commonjs    from 'rollup-plugin-commonjs';
+import uglify      from 'rollup-plugin-uglify'
+
+//paths are relative to the execution path
+export default {
+  entry: 'src/main-aot.js',
+  dest: 'aot/dist/build.js', // output a single application bundle
+  sourceMap: true,
+  sourceMapFile: 'aot/dist/build.js.map',
+  format: 'iife',
+  onwarn: function(warning) {
+    // Skip certain warnings
+
+    // should intercept ... but doesn't in some rollup versions
+    if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
+
+    // console.warn everything else
+    console.warn( warning.message );
+  },
+  plugins: [
+    nodeResolve({jsnext: true, module: true}),
+    commonjs({
+      include: ['node_modules/rxjs/**']
+    }),
+    uglify()
+  ]
+}</pre> <div class="pre-title">tsconfig-aot.json</div>
+<pre data-language="json">{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
+  },
+
+  "files": [
+    "src/app/app.module.ts",
+    "src/main-aot.ts"
+  ],
+
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipMetadataEmit" : true
+  }
+}</pre> </code-tabs> <p>With the following npm script in the <code>scripts</code> section of the <code>package.<a href="../../api/common/jsonpipe/" class="code-anchor">json</a></code>, you can easily serve the AOT-compiled application:</p> <pre data-language="json">"serve:aot": "lite-server -c bs-config.aot.json",</pre> <p>Copy the AOT distribution files into the <code>/aot</code> folder with the node script:</p> <pre data-language="none">node copy-dist-files</pre> <blockquote class="l-sub-section"> <p> You won't do that again until there are updates to <code>zone.js</code> or the <code>core-js</code> shim for old browsers.</p> </blockquote> <p>Now AOT-compile the app and launch:</p> <pre data-language="none">npm run build:aot &amp;&amp; npm run serve:aot</pre>  <h3 id="inspect-the-bundle">Inspect the Bundle</h3> <p>It's fascinating to see what the generated JavaScript bundle looks like after Rollup. The code is minified, so you won't learn much from inspecting the bundle directly. But the <a href="https://github.com/danvk/source-map-explorer/blob/master/README.md" target="_blank">source-map-explorer</a> tool can be quite revealing.</p> <p>Install it:</p> <pre data-language="none">npm install source-map-explorer --save-dev</pre> <p>Run the following command to generate the map.</p> <pre data-language="none">node_modules/.bin/source-map-explorer aot/dist/build.js</pre> <p>The <code>source-map-explorer</code> analyzes the source map generated with the bundle and draws a map of all dependencies, showing exactly which application and NgModules and classes are included in the bundle.</p> <p>Here's the map for <em>Tour of Heroes</em>.</p> <a href="https://v4.angular.io/generated/images/guide/aot-compiler/toh-pt6-bundle.png" title="View larger image" target="_blank"> <figure> <img src="data:image/png;base64,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" alt="toh-pt6-bundle" width="700" height="351"> </figure> </a><div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v4.angular.io/guide/aot-compiler" class="_attribution-link" target="_blank">https://v4.angular.io/guide/aot-compiler</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

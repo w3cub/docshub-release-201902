@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Trigger - Angular 4 - W3cubDocs</title>
+  
+  <meta name="description" content=" function experimental ">
+  <meta name="keywords" content="trigger, -, angular, angular~4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~4/api/animations/trigger/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="trigger">trigger</h1> <p><code class="api-type-label function">function</code> <code class="api-status-label experimental">experimental</code></p>      <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/animations" target="_blank">@angular/animations</a></td> </tr> <tr> <th>Module</th> <td><code>import { trigger } from <a href="../../animations/">'@angular/animations'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/4.4.6/packages/animations/src/animation_metadata.ts#L243-L360" target="_blank">animations/src/animation_metadata.ts</a></td> </tr> </tbody> </table> <h3 data-language="typescript"><code>function trigger(name: string, definitions: AnimationMetadata[]): AnimationTriggerMetadata;</code></h3>  <h4 id="description">Description</h4> <p><code>trigger</code> is an animation-specific function that is designed to be used inside of Angular's animation DSL language. If this information is new, please navigate to the <a href="../../core/component/#animations">component animations metadata page</a> to gain a better understanding of how animations in Angular are used.</p> <p><code>trigger</code> Creates an animation trigger which will a list of <a href="../state/">state</a> and <a href="../transition/">transition</a> entries that will be evaluated when the expression bound to the trigger changes.</p> <p>Triggers are registered within the component annotation data under the <a href="../../core/component/#animations">animations section</a>. An animation trigger can be placed on an element within a template by referencing the name of the trigger followed by the expression value that the trigger is bound to (in the form of <code>[@triggerName]="expression"</code>.</p> <p>Animation trigger bindings strigify values and then match the previous and current values against any linked transitions. If a boolean value is provided into the trigger binding then it will both be represented as <code>1</code> or <code>true</code> and <code>0</code> or <code>false</code> for a true and false boolean values respectively.</p> <h4 id="usage">Usage</h4> <p><code>trigger</code> will create an animation trigger reference based on the provided <code>name</code> value. The provided <code><a href="../animation/" class="code-anchor">animation</a></code> value is expected to be an array consisting of <a href="../state/">state</a> and <a href="../transition/">transition</a> declarations.</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  templateUrl: 'my-component-tpl.html',
+  animations: [
+    trigger("myAnimationTrigger", [
+      state(...),
+      state(...),
+      transition(...),
+      transition(...)
+    ])
+  ]
+})
+class MyComponent {
+  myStatusExp = "something";
+}</pre> <p>The template associated with this component will make use of the <code>myAnimationTrigger</code> animation trigger by binding to an element within its template code.</p> <pre data-language="html">&lt;!-- somewhere inside of my-component-tpl.html --&gt;
+&lt;div [@myAnimationTrigger]="myStatusExp"&gt;...&lt;/div&gt;</pre> <h2 id="disable-animations">Disable Animations</h2> <p>A special animation control binding called <code>@.disabled</code> can be placed on an element which will then disable animations for any inner animation triggers situated within the element as well as any animations on the element itself.</p> <p>When true, the <code>@.disabled</code> binding will prevent all animations from rendering. The example below shows how to use this feature:</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  template: `
+    &lt;div [@.disabled]="isDisabled"&gt;
+      &lt;div [@childAnimation]="exp"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  `,
+  animations: [
+    trigger("childAnimation", [
+      // ...
+    ])
+  ]
+})
+class MyComponent {
+  isDisabled = true;
+  exp = '...';
+}</pre> <p>The <code>@childAnimation</code> trigger will not animate because <code>@.disabled</code> prevents it from happening (when true).</p> <p>Note that <code>@.disbled</code> will only disable all animations (this means any animations running on the same element will also be disabled).</p> <h4 id="disabling-animations-application-wide">Disabling Animations Application-wide</h4> <p>When an area of the template is set to have animations disabled, <strong>all</strong> inner components will also have their animations disabled as well. This means that all animations for an angular application can be disabled by placing a host binding set on <code>@.disabled</code> on the topmost Angular component.</p> <pre data-language="typescript">import {Component, HostBinding} from '@angular/core';
+
+@Component({
+  selector: 'app-component',
+  templateUrl: 'app.component.html',
+})
+class AppComponent {
+  @HostBinding('@.disabled')
+  public animationsDisabled = true;
+}</pre> <h4 id="what-about-animations-that-us-query-and-animatechild">What about animations that us <code><a href="../query/" class="code-anchor">query</a>()</code> and <code><a href="../animatechild/" class="code-anchor">animateChild</a>()</code>?</h4> <p>Despite inner animations being disabled, a parent animation can <a href="../query/">query</a> for inner elements located in disabled areas of the template and still animate them as it sees fit. This is also the case for when a sub animation is queried by a parent and then later animated using <a href="../animatechild/">animateChild</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v4.angular.io/api/animations/trigger" class="_attribution-link" target="_blank">https://v4.angular.io/api/animations/trigger</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

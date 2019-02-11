@@ -1,0 +1,386 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>HttpClient - Angular 4 - W3cubDocs</title>
+  
+  <meta name="description" content="Most front-end applications communicate with backend services over the HTTP protocol. Modern browsers support two different APIs for making HTTP &hellip;">
+  <meta name="keywords" content="httpclient, -, angular, angular~4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~4/guide/http/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="httpclient">HttpClient</h1> <p>Most front-end applications communicate with backend services over the HTTP protocol. Modern browsers support two different APIs for making HTTP requests: the <code>XMLHttpRequest</code> interface and the <code>fetch()</code> API.</p> <p>With <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code>, <code>@angular/common/http</code> provides a simplified API for HTTP functionality for use with Angular applications, building on top of the <code>XMLHttpRequest</code> interface exposed by browsers. Additional benefits of <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> include testability support, strong typing of request and response objects, request and response interceptor support, and better error handling via apis based on Observables.</p> <h2 id="setup-installing-the-module">Setup: installing the module</h2> <p>Before you can use the <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code>, you need to install the <code><a href="../../api/common/http/httpclientmodule/" class="code-anchor">HttpClientModule</a></code> which provides it. This can be done in your application module, and is only necessary once.</p> <pre data-language="javascript">// app.module.ts:
+
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+
+// Import HttpClientModule from @angular/common/http
+import {HttpClientModule} from '@angular/common/http';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    // Include it under 'imports' in your application module
+    // after BrowserModule.
+    HttpClientModule,
+  ],
+})
+export class MyAppModule {}</pre> <p>Once you import <code><a href="../../api/common/http/httpclientmodule/" class="code-anchor">HttpClientModule</a></code> into your app module, you can inject <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> into your components and services.</p> <h2 id="making-a-request-for-json-data">Making a request for JSON data</h2> <p>The most common type of request applications make to a backend is to request JSON data. For example, suppose you have an API endpoint that lists items, <code>/api/items</code>, which returns a JSON object of the form:</p> <pre data-language="json">{
+  "results": [
+    "Item 1",
+    "Item 2",
+  ]
+}</pre> <p>The <code>get()</code> method on <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> makes accessing this data straightforward.</p> <pre data-language="javascript">@Component(...)
+export class MyComponent implements OnInit {
+
+  results: string[];
+
+  // Inject HttpClient into your component or service.
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    // Make the HTTP request:
+    this.http.get('/api/items').subscribe(data =&gt; {
+      // Read the result field from the JSON response.
+      this.results = data['results'];
+    });
+  }
+}</pre> <h3 id="typechecking-the-response">Typechecking the response</h3> <p>In the above example, the <code>data['results']</code> field access stands out because you use bracket notation to access the results field. If you tried to write <code>data.results</code>, TypeScript would correctly complain that the <code>Object</code> coming back from HTTP does not have a <code>results</code> property. That's because while <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> parsed the JSON response into an <code>Object</code>, it doesn't know what shape that object is.</p> <p>You can, however, tell <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> what type the response will be, which is recommended. To do so, first you define an interface with the correct shape:</p> <pre data-language="javascript">interface ItemsResponse {
+  results: string[];
+}</pre> <p>Then, when you make the <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a>.get</code> call, pass a type parameter:</p> <pre data-language="javascript">http.get&lt;ItemsResponse&gt;('/api/items').subscribe(data =&gt; {
+  // data is now an instance of type ItemsResponse, so you can do this:
+  this.results = data.results;
+});</pre> <h3 id="reading-the-full-response">Reading the full response</h3> <p>The response body doesn't return all the data you may need. Sometimes servers return special headers or status codes to indicate certain conditions, and inspecting those can be necessary. To do this, you can tell <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> you want the full response instead of just the body with the <code>observe</code> option:</p> <pre data-language="javascript">http
+  .get&lt;MyJsonData&gt;('/data.json', {observe: 'response'})
+  .subscribe(resp =&gt; {
+    // Here, resp is of type HttpResponse&lt;MyJsonData&gt;.
+    // You can inspect its headers:
+    console.log(resp.headers.get('X-Custom-Header'));
+    // And access the body directly, which is typed as MyJsonData as requested.
+    console.log(resp.body.someField);
+  });</pre> <p>As you can see, the resulting object has a <code>body</code> property of the correct type.</p> <h3 id="error-handling">Error handling</h3> <p>What happens if the request fails on the server, or if a poor network connection prevents it from even reaching the server? <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> will return an <em>error</em> instead of a successful response.</p> <p>To handle it, add an error handler to your <code>.subscribe()</code> call:</p> <pre data-language="javascript">http
+  .get&lt;ItemsResponse&gt;('/api/items')
+  .subscribe(
+    // Successful responses call the first callback.
+    data =&gt; {...},
+    // Errors will call this callback instead:
+    err =&gt; {
+      console.log('Something went wrong!');
+    }
+  );</pre> <h4 id="getting-error-details">Getting error details</h4> <p>Detecting that an error occurred is one thing, but it's more useful to know what error actually occurred. The <code>err</code> parameter to the callback above is of type <code><a href="../../api/common/http/httperrorresponse/" class="code-anchor">HttpErrorResponse</a></code>, and contains useful information on what went wrong.</p> <p>There are two types of errors that can occur. If the backend returns an unsuccessful response code (404, 500, etc.), it gets returned as an error. Also, if something goes wrong client-side, such as an exception gets thrown in an RxJS operator, or if a network error prevents the request from completing successfully, an actual <code>Error</code> will be thrown.</p> <p>In both cases, you can look at the <code><a href="../../api/common/http/httperrorresponse/" class="code-anchor">HttpErrorResponse</a></code> to figure out what happened.</p> <pre data-language="javascript">http
+  .get&lt;ItemsResponse&gt;('/api/items')
+  .subscribe(
+    data =&gt; {...},
+    (err: HttpErrorResponse) =&gt; {
+      if (err.error instanceof Error) {
+        // A client-side or network error occurred. Handle it accordingly.
+        console.log('An error occurred:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+      }
+    }
+  );</pre> <h4 id="retry"><code>.retry()</code></h4> <p>One way to deal with errors is to simply retry the request. This strategy can be useful when the errors are transient and unlikely to repeat.</p> <p>RxJS has a useful operator called <code>.retry()</code>, which automatically resubscribes to an Observable, thus reissuing the request, upon encountering an error.</p> <p>First, import it:</p> <pre data-language="js">import 'rxjs/add/operator/retry';</pre> <p>Then, you can use it with HTTP Observables like this:</p> <pre data-language="javascript">http
+  .get&lt;ItemsResponse&gt;('/api/items')
+  // Retry this request up to 3 times.
+  .retry(3)
+  // Any errors after the 3rd retry will fall through to the app.
+  .subscribe(...);</pre> <h3 id="requesting-non-json-data">Requesting non-JSON data</h3> <p>Not all APIs return JSON data. Suppose you want to read a text file on the server. You have to tell <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> that you expect a textual response:</p> <pre data-language="javascript">http
+  .get('/textfile.txt', {responseType: 'text'})
+  // The Observable returned by get() is of type Observable&lt;string&gt;
+  // because a text response was specified. There's no need to pass
+  // a &lt;string&gt; type parameter to get().
+  .subscribe(data =&gt; console.log(data));</pre> <h2 id="sending-data-to-the-server">Sending data to the server</h2> <p>In addition to fetching data from the server, <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> supports mutating requests, that is, sending data to the server in various forms.</p> <h3 id="making-a-post-request">Making a POST request</h3> <p>One common operation is to POST data to a server; for example when submitting a form. The code for sending a POST request is very similar to the code for GET:</p> <pre data-language="javascript">const body = {name: 'Brad'};
+
+http
+  .post('/api/developers/add', body)
+  // See below - subscribe() is still necessary when using post().
+  .subscribe(...);</pre> <blockquote class="alert is-important"> <p><em>Note the <code>subscribe()</code> method.</em> All Observables returned from <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> are <em>cold</em>, which is to say that they are <em>blueprints</em> for making requests. Nothing will happen until you call <code>subscribe()</code>, and every such call will make a separate request. For example, this code sends a POST request with the same data twice:</p> <pre data-language="javascript">const req = http.post('/api/items/add', body);
+// 0 requests made - .subscribe() not called.
+req.subscribe();
+// 1 request made.
+req.subscribe();
+// 2 requests made.</pre> </blockquote> <h3 id="configuring-other-parts-of-the-request">Configuring other parts of the request</h3> <p>Besides the URL and a possible request body, there are other aspects of an outgoing request which you may wish to configure. All of these are available via an options object, which you pass to the request.</p> <h4 id="headers">Headers</h4> <p>One common task is adding an <code>Authorization</code> header to outgoing requests. Here's how you do that:</p> <pre data-language="javascript">http
+  .post('/api/items/add', body, {
+    headers: new HttpHeaders().set('Authorization', 'my-auth-token'),
+  })
+  .subscribe();</pre> <p>The <code><a href="../../api/common/http/httpheaders/" class="code-anchor">HttpHeaders</a></code> class is immutable, so every <code>set()</code> returns a new instance and applies the changes.</p> <h4 id="url-parameters">URL Parameters</h4> <p>Adding URL parameters works in the same way. To send a request with the <code>id</code> parameter set to <code>3</code>, you would do:</p> <pre data-language="javascript">http
+  .post('/api/items/add', body, {
+    params: new HttpParams().set('id', '3'),
+  })
+  .subscribe();</pre> <p>In this way, you send the POST request to the URL <code>/api/items/add?id=3</code>.</p> <h2 id="advanced-usage">Advanced usage</h2> <p>The above sections detail how to use the basic HTTP functionality in <code>@angular/common/http</code>, but sometimes you need to do more than just make requests and get data back.</p> <h3 id="intercepting-all-requests-or-responses">Intercepting all requests or responses</h3> <p>A major feature of <code>@angular/common/http</code> is <em>interception</em>, the ability to declare interceptors which sit in between your application and the backend. When your application makes a request, interceptors transform it before sending it to the server, and the interceptors can transform the response on its way back before your application sees it. This is useful for everything from authentication to logging.</p> <h4 id="writing-an-interceptor">Writing an interceptor</h4> <p>To implement an interceptor, you declare a class that implements <code><a href="../../api/common/http/httpinterceptor/" class="code-anchor">HttpInterceptor</a></code>, which has a single <code>intercept()</code> method. Here is a simple interceptor which does nothing but forward the request through without altering it:</p> <pre data-language="javascript">import {Injectable} from '@angular/core';
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
+
+@Injectable()
+export class NoopInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+    return next.handle(req);
+  }
+}</pre> <p><code>intercept</code> is a method which transforms a request into an Observable that eventually returns the response. In this sense, each interceptor is entirely responsible for handling the request by itself.</p> <p>Most of the time, though, interceptors will make some minor change to the request and forward it to the rest of the chain. That's where the <code>next</code> parameter comes in. <code>next</code> is an <code><a href="../../api/common/http/httphandler/" class="code-anchor">HttpHandler</a></code>, an interface that, similar to <code>intercept</code>, transforms a request into an Observable for the response. In an interceptor, <code>next</code> always represents the next interceptor in the chain, if any, or the final backend if there are no more interceptors. So most interceptors will end by calling <code>next</code> on the request they transformed.</p> <p>Our do-nothing handler simply calls <code>next.handle</code> on the original request, forwarding it without mutating it at all.</p> <p>This pattern is similar to those in middleware frameworks such as Express.js.</p> <h5 id="providing-your-interceptor">Providing your interceptor</h5> <p>Simply declaring the <code>NoopInterceptor</code> above doesn't cause your app to use it. You need to wire it up in your app module by providing it as an interceptor, as follows:</p> <pre data-language="javascript">import {NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+
+@NgModule({
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: NoopInterceptor,
+    multi: true,
+  }],
+})
+export class AppModule {}</pre> <p>Note the <code>multi: true</code> option. This is required and tells Angular that <code><a href="../../api/common/http/http_interceptors/" class="code-anchor">HTTP_INTERCEPTORS</a></code> is an array of values, rather than a single value.</p> <h5 id="events">Events</h5> <p>You may have also noticed that the Observable returned by <code>intercept</code> and <code><a href="../../api/common/http/httphandler/" class="code-anchor">HttpHandler</a>.handle</code> is not an <code>Observable&lt;<a href="../../api/common/http/httpresponse/" class="code-anchor">HttpResponse</a>&lt;any&gt;&gt;</code> but an <code>Observable&lt;<a href="../../api/common/http/httpevent/" class="code-anchor">HttpEvent</a>&lt;any&gt;&gt;</code>. That's because interceptors work at a lower level than the <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> interface. A single request can generate multiple events, including upload and download progress events. The <code><a href="../../api/common/http/httpresponse/" class="code-anchor">HttpResponse</a></code> class is actually an event itself, with a <code>type</code> of <code><a href="../../api/common/http/httpeventtype/" class="code-anchor">HttpEventType</a>.HttpResponseEvent</code>.</p> <p>An interceptor must pass through all events that it does not understand or intend to modify. It must not filter out events it didn't expect to process. Many interceptors are only concerned with the outgoing request, though, and will simply return the event stream from <code>next</code> without modifying it.</p> <h5 id="ordering">Ordering</h5> <p>When you provide multiple interceptors in an application, Angular applies them in the order that you provided them.</p> <h5 id="immutability">Immutability</h5> <p>Interceptors exist to examine and mutate outgoing requests and incoming responses. However, it may be surprising to learn that the <code><a href="../../api/common/http/httprequest/" class="code-anchor">HttpRequest</a></code> and <code><a href="../../api/common/http/httpresponse/" class="code-anchor">HttpResponse</a></code> classes are largely immutable.</p> <p>This is for a reason: because the app may retry requests, the interceptor chain may process an individual request multiple times. If requests were mutable, a retried request would be different than the original request. Immutability ensures the interceptors see the same request for each try.</p> <p>There is one case where type safety cannot protect you when writing interceptors—the request body. It is invalid to mutate a request body within an interceptor, but this is not checked by the type system.</p> <p>If you have a need to mutate the request body, you need to copy the request body, mutate the copy, and then use <code>clone()</code> to copy the request and set the new body.</p> <p>Since requests are immutable, they cannot be modified directly. To mutate them, use <code>clone()</code>:</p> <pre data-language="javascript">intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+  // This is a duplicate. It is exactly the same as the original.
+  const dupReq = req.clone();
+
+  // Change the URL and replace 'http://' with 'https://'
+  const secureReq = req.clone({url: req.url.replace('http://', 'https://')});
+}</pre> <p>As you can see, the hash accepted by <code>clone()</code> allows you to mutate specific properties of the request while copying the others.</p> <h4 id="setting-new-headers">Setting new headers</h4> <p>A common use of interceptors is to set default headers on outgoing responses. For example, assuming you have an injectable <code>AuthService</code> which can provide an authentication token, here is how you would write an interceptor which adds it to all outgoing requests:</p> <pre data-language="javascript">import {Injectable} from '@angular/core';
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private auth: AuthService) {}
+
+  intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+    // Get the auth header from the service.
+    const authHeader = this.auth.getAuthorizationHeader();
+    // Clone the request to add the new header.
+    const authReq = req.clone({headers: req.headers.set('Authorization', authHeader)});
+    // Pass on the cloned request instead of the original request.
+    return next.handle(authReq);
+  }
+}</pre> <p>The practice of cloning a request to set new headers is so common that there's actually a shortcut for it:</p> <pre data-language="javascript">const authReq = req.clone({setHeaders: {Authorization: authHeader}});</pre> <p>An interceptor that alters headers can be used for a number of different operations, including:</p> <ul> <li>Authentication/authorization</li> <li>Caching behavior; for example, If-Modified-Since</li> <li>XSRF protection</li> </ul> <h4 id="logging">Logging</h4> <p>Because interceptors can process the request and response <em>together</em>, they can do things like log or time requests. Consider this interceptor which uses <code>console.log</code> to show how long each request takes:</p> <pre data-language="javascript">import 'rxjs/add/operator/do';
+
+export class TimingInterceptor implements HttpInterceptor {
+  constructor(private auth: AuthService) {}
+
+  intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+  	const started = Date.now();
+    return next
+      .handle(req)
+      .do(event =&gt; {
+        if (event instanceof HttpResponse) {
+          const elapsed = Date.now() - started;
+          console.log(`Request for ${req.urlWithParams} took ${elapsed} ms.`);
+        }
+      });
+  }
+}</pre> <p>Notice the RxJS <code>do()</code> operator—it adds a side effect to an Observable without affecting the values on the stream. Here, it detects the <code><a href="../../api/common/http/httpresponse/" class="code-anchor">HttpResponse</a></code> event and logs the time the request took.</p> <h4 id="caching">Caching</h4> <p>You can also use interceptors to implement caching. For this example, assume that you've written an HTTP cache with a simple interface:</p> <pre data-language="javascript">abstract class HttpCache {
+  /**
+   * Returns a cached response, if any, or null if not present.
+   */
+  abstract get(req: HttpRequest&lt;any&gt;): HttpResponse&lt;any&gt;|null;
+
+  /**
+   * Adds or updates the response in the cache.
+   */
+  abstract put(req: HttpRequest&lt;any&gt;, resp: HttpResponse&lt;any&gt;): void;
+}</pre> <p>An interceptor can apply this cache to outgoing requests.</p> <pre data-language="javascript">@Injectable()
+export class CachingInterceptor implements HttpInterceptor {
+  constructor(private cache: HttpCache) {}
+
+  intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+  	// Before doing anything, it's important to only cache GET requests.
+    // Skip this interceptor if the request method isn't GET.
+    if (req.method !== 'GET') {
+      return next.handle(req);
+    }
+
+    // First, check the cache to see if this request exists.
+    const cachedResponse = this.cache.get(req);
+    if (cachedResponse) {
+      // A cached response exists. Serve it instead of forwarding
+      // the request to the next handler.
+      return Observable.of(cachedResponse);
+    }
+
+    // No cached response exists. Go to the network, and cache
+    // the response when it arrives.
+    return next.handle(req).do(event =&gt; {
+      // Remember, there may be other events besides just the response.
+      if (event instanceof HttpResponse) {
+      	// Update the cache.
+      	this.cache.put(req, event);
+      }
+    });
+  }
+}</pre> <p>Obviously this example glosses over request matching, cache invalidation, etc., but it's easy to see that interceptors have a lot of power beyond just transforming requests. If desired, they can be used to completely take over the request flow.</p> <p>To really demonstrate their flexibility, you can change the above example to return <em>two</em> response events if the request exists in cache—the cached response first, and an updated network response later.</p> <pre data-language="javascript">intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+  // Still skip non-GET requests.
+  if (req.method !== 'GET') {
+    return next.handle(req);
+  }
+
+  // This will be an Observable of the cached value if there is one,
+  // or an empty Observable otherwise. It starts out empty.
+  let maybeCachedResponse: Observable&lt;HttpEvent&lt;any&gt;&gt; = Observable.empty();
+
+  // Check the cache.
+  const cachedResponse = this.cache.get(req);
+  if (cachedResponse) {
+    maybeCachedResponse = Observable.of(cachedResponse);
+  }
+
+  // Create an Observable (but don't subscribe) that represents making
+  // the network request and caching the value.
+  const networkResponse = next.handle(req).do(event =&gt; {
+    // Just like before, check for the HttpResponse event and cache it.
+    if (event instanceof HttpResponse) {
+      this.cache.put(req, event);
+    }
+  });
+
+  // Now, combine the two and send the cached response first (if there is
+  // one), and the network response second.
+  return Observable.concat(maybeCachedResponse, networkResponse);
+}</pre> <p>Now anyone doing <code>http.get(url)</code> will receive <em>two</em> responses if that URL has been cached before.</p> <h3 id="listening-to-progress-events">Listening to progress events</h3> <p>Sometimes applications need to transfer large amounts of data, and those transfers can take time. It's a good user experience practice to provide feedback on the progress of such transfers; for example, uploading files—and <code>@angular/common/http</code> supports this.</p> <p>To make a request with progress events enabled, first create an instance of <code><a href="../../api/common/http/httprequest/" class="code-anchor">HttpRequest</a></code> with the special <code>reportProgress</code> option set:</p> <pre data-language="javascript">const req = new HttpRequest('POST', '/upload/file', file, {
+  reportProgress: true,
+});</pre> <p>This option enables tracking of progress events. Remember, every progress event triggers change detection, so only turn them on if you intend to actually update the UI on each event.</p> <p>Next, make the request through the <code>request()</code> method of <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code>. The result will be an Observable of events, just like with interceptors:</p> <pre data-language="javascript">http.request(req).subscribe(event =&gt; {
+  // Via this API, you get access to the raw event stream.
+  // Look for upload progress events.
+  if (event.type === HttpEventType.UploadProgress) {
+    // This is an upload progress event. Compute and show the % done:
+    const percentDone = Math.round(100 * event.loaded / event.total);
+    console.log(`File is ${percentDone}% uploaded.`);
+  } else if (event instanceof HttpResponse) {
+    console.log('File is completely uploaded!');
+  }
+});</pre> <h2 id="security-xsrf-protection">Security: XSRF Protection</h2> <p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">Cross-Site Request Forgery (XSRF)</a> is an attack technique by which the attacker can trick an authenticated user into unknowingly executing actions on your website. <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> supports a <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-Header_Token" target="_blank">common mechanism</a> used to prevent XSRF attacks. When performing HTTP requests, an interceptor reads a token from a cookie, by default <code>XSRF-TOKEN</code>, and sets it as an HTTP header, <code>X-XSRF-TOKEN</code>. Since only code that runs on your domain could read the cookie, the backend can be certain that the HTTP request came from your client application and not an attacker.</p> <p>By default, an interceptor sends this cookie on all mutating requests (POST, etc.) to relative URLs but not on GET/HEAD requests or on requests with an absolute URL.</p> <p>To take advantage of this, your server needs to set a token in a JavaScript readable session cookie called <code>XSRF-TOKEN</code> on either the page load or the first GET request. On subsequent requests the server can verify that the cookie matches the <code>X-XSRF-TOKEN</code> HTTP header, and therefore be sure that only code running on your domain could have sent the request. The token must be unique for each user and must be verifiable by the server; this prevents the client from making up its own tokens. Set the token to a digest of your site's authentication cookie with a salt for added security.</p> <p>In order to prevent collisions in environments where multiple Angular apps share the same domain or subdomain, give each application a unique cookie name.</p> <blockquote class="alert is-important"> *Note that `HttpClient`'s support is only the client half of the XSRF protection scheme.* Your backend service must be configured to set the cookie for your page, and to verify that the header is present on all eligible requests. If not, Angular's default protection will be ineffective. </blockquote> <h3 id="configuring-custom-cookieheader-names">Configuring custom cookie/header names</h3> <p>If your backend service uses different names for the XSRF token cookie or header, use <code><a href="../../api/common/http/httpclientxsrfmodule/" class="code-anchor">HttpClientXsrfModule</a>.withConfig()</code> to override the defaults.</p> <pre data-language="javascript">imports: [
+  HttpClientModule,
+  HttpClientXsrfModule.withConfig({
+    cookieName: 'My-Xsrf-Cookie',
+    headerName: 'My-Xsrf-Header',
+  }),
+]</pre> <h2 id="testing-http-requests">Testing HTTP requests</h2> <p>Like any external dependency, the HTTP backend needs to be mocked as part of good testing practice. <code>@angular/common/http</code> provides a testing library <code>@angular/common/http/testing</code> that makes setting up such mocking straightforward.</p> <h3 id="mocking-philosophy">Mocking philosophy</h3> <p>Angular's HTTP testing library is designed for a pattern of testing where the app executes code and makes requests first. After that, tests expect that certain requests have or have not been made, perform assertions against those requests, and finally provide responses by "flushing" each expected request, which may trigger more new requests, etc. At the end, tests can optionally verify that the app has made no unexpected requests.</p> <h3 id="setup">Setup</h3> <p>To begin testing requests made through <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code>, import <code><a href="../../api/common/http/testing/httpclienttestingmodule/" class="code-anchor">HttpClientTestingModule</a></code> and add it to your <code><a href="../../api/core/testing/testbed/" class="code-anchor">TestBed</a></code> setup, like so:</p> <pre data-language="javascript">import {HttpClientTestingModule} from '@angular/common/http/testing';
+
+beforeEach(() =&gt; {
+  TestBed.configureTestingModule({
+    ...,
+    imports: [
+      HttpClientTestingModule,
+    ],
+  })
+});</pre> <p>That's it. Now requests made in the course of your tests will hit the testing backend instead of the normal backend.</p> <h3 id="expecting-and-answering-requests">Expecting and answering requests</h3> <p>With the mock installed via the module, you can write a test that expects a GET Request to occur and provides a mock response. The following example does this by injecting both the <code><a href="../../api/common/http/httpclient/" class="code-anchor">HttpClient</a></code> into the test and a class called <code><a href="../../api/common/http/testing/httptestingcontroller/" class="code-anchor">HttpTestingController</a></code></p> <pre data-language="javascript">it('expects a GET request', inject([HttpClient, HttpTestingController], (http: HttpClient, httpMock: HttpTestingController) =&gt; {
+  // Make an HTTP GET request, and expect that it return an object
+  // of the form {name: 'Test Data'}.
+  http
+    .get('/data')
+    .subscribe(data =&gt; expect(data['name']).toEqual('Test Data'));
+
+  // At this point, the request is pending, and no response has been
+  // sent. The next step is to expect that the request happened.
+  const req = httpMock.expectOne('/data');
+
+  // If no request with that URL was made, or if multiple requests match,
+  // expectOne() would throw. However this test makes only one request to
+  // this URL, so it will match and return a mock request. The mock request
+  // can be used to deliver a response or make assertions against the
+  // request. In this case, the test asserts that the request is a GET.
+  expect(req.request.method).toEqual('GET');
+
+  // Next, fulfill the request by transmitting a response.
+  req.flush({name: 'Test Data'});
+
+  // Finally, assert that there are no outstanding requests.
+  httpMock.verify();
+}));</pre> <p>The last step, verifying that no requests remain outstanding, is common enough for you to move it into an <code>afterEach()</code> step:</p> <pre data-language="javascript">afterEach(inject([HttpTestingController], (httpMock: HttpTestingController) =&gt; {
+  httpMock.verify();
+}));</pre> <h4 id="custom-request-expectations">Custom request expectations</h4> <p>If matching by URL isn't sufficient, it's possible to implement your own matching function. For example, you could look for an outgoing request that has an Authorization header:</p> <pre data-language="javascript">const req = httpMock.expectOne((req) =&gt; req.headers.has('Authorization'));</pre> <p>Just as with the <code>expectOne()</code> by URL in the test above, if 0 or 2+ requests match this expectation, it will throw.</p> <h4 id="handling-more-than-one-request">Handling more than one request</h4> <p>If you need to respond to duplicate requests in your test, use the <code>match()</code> API instead of <code>expectOne()</code>, which takes the same arguments but returns an array of matching requests. Once returned, these requests are removed from future matching and are your responsibility to verify and flush.</p> <pre data-language="javascript">// Expect that 5 pings have been made and flush them.
+const reqs = httpMock.match('/ping');
+expect(reqs.length).toBe(5);
+reqs.forEach(req =&gt; req.flush());</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v4.angular.io/guide/http" class="_attribution-link" target="_blank">https://v4.angular.io/guide/http</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,325 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>2. Master&#47;Detail - Angular 4 - W3cubDocs</title>
+  
+  <meta name="description" content="In this page, you&#39;ll expand the Tour of Heroes app to display a list of heroes, and allow users to select a hero and display the hero&#39;s &hellip;">
+  <meta name="keywords" content="master, detail, -, angular, angular~4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~4/tutorial/toh-pt2/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="masterdetail">Master/Detail</h1>  <p>In this page, you'll expand the Tour of Heroes app to display a list of heroes, and allow users to select a hero and display the hero's details.</p> <p>When you're done with this page, the app should look like this live example.</p> <h2 id="where-you-left-off">Where you left off</h2> <p>Before you continue with this page of the Tour of Heroes, verify that you have the following structure after <a href="../toh-pt1/">The Hero Editor</a> page. If your structure doesn't match, go back to that page to figure out what you missed.</p> <pre>angular-tour-of-heroes
+  src
+    app
+      app.component.ts
+      app.module.ts
+    main.ts
+    index.html
+    styles.css
+    systemjs.config.js
+    tsconfig.json
+  node_modules ...
+  package.json</pre> <h2 id="keep-the-app-transpiling-and-running">Keep the app transpiling and running</h2> <p>Enter the following command in the terminal window:</p> <pre data-language="sh">npm start</pre> <p>This command runs the TypeScript compiler in "watch mode", recompiling automatically when the code changes. The command simultaneously launches the app in a browser and refreshes the browser when the code changes.</p> <p>You can keep building the Tour of Heroes without pausing to recompile or refresh the browser.</p> <h2 id="displaying-heroes">Displaying heroes</h2> <p>To display a list of heroes, you'll add heroes to the view's template.</p> <h3 id="create-heroes">Create heroes</h3> <p>Create an array of ten heroes.</p> <div class="pre-title">src/app/app.component.ts (hero array)</div>
+<pre data-language="typescript">const HEROES: Hero[] = [
+  { id: 11, name: 'Mr. Nice' },
+  { id: 12, name: 'Narco' },
+  { id: 13, name: 'Bombasto' },
+  { id: 14, name: 'Celeritas' },
+  { id: 15, name: 'Magneta' },
+  { id: 16, name: 'RubberMan' },
+  { id: 17, name: 'Dynama' },
+  { id: 18, name: 'Dr IQ' },
+  { id: 19, name: 'Magma' },
+  { id: 20, name: 'Tornado' }
+];</pre> <p>The <code>HEROES</code> array is of type <code>Hero</code>, the class defined in the previous page. Eventually this app will fetch the list of heroes from a web service, but for now you can display mock heroes.</p> <h3 id="expose-heroes">Expose heroes</h3> <p>Create a public property in <code>AppComponent</code> that exposes the heroes for binding.</p> <div class="pre-title">app.component.ts (hero array property)</div>
+<pre data-language="html">heroes = HEROES;</pre> <p>The <code>heroes</code> type isn't defined because TypeScript infers it from the <code>HEROES</code> array.</p> <blockquote class="l-sub-section"> <p>The hero data is separated from the class implementation because ultimately the hero names will come from a data service.</p> </blockquote> <h3 id="display-hero-names-in-a-template">Display hero names in a template</h3> <p>To display the hero names in an unordered list, insert the following chunk of HTML below the title and above the hero details.</p> <div class="pre-title">app.component.ts (heroes template)</div>
+<pre data-language="html">&lt;h2&gt;My Heroes&lt;/h2&gt;
+&lt;ul class="heroes"&gt;
+  &lt;li&gt;
+    &lt;!-- each hero goes here --&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</pre> <p>Now you can fill the template with hero names.</p> <h3 id="list-heroes-with-ngfor">List heroes with ngFor</h3> <p>The goal is to bind the array of heroes in the component to the template, iterate over them, and display them individually.</p> <p>Modify the <code>&lt;li&gt;</code> tag by adding the built-in directive <code>*ngFor</code>.</p> <div class="pre-title">app.component.ts (ngFor)</div>
+<pre data-language="html">&lt;li *ngFor="let hero of heroes"&gt;</pre> <blockquote class="l-sub-section"> <p>The (<code>*</code>) prefix to <code>ngFor</code> is a critical part of this syntax. It indicates that the <code>&lt;li&gt;</code> element and its children constitute a master template.</p> <p>The <code>ngFor</code> directive iterates over the component's <code>heroes</code> array and renders an instance of this template for each hero in that array.</p> <p>The <code>let hero</code> part of the expression identifies <code>hero</code> as the template input variable, which holds the current hero item for each iteration. You can reference this variable within the template to access the current hero's properties.</p> <p>Read more about <code>ngFor</code> and template input variables in the <a href="../../guide/displaying-data/#ngFor">Showing an array property with *ngFor</a> section of the <a href="../../guide/displaying-data/">Displaying Data</a> page and the <a href="../../guide/template-syntax/#ngFor">ngFor</a> section of the <a href="../../guide/template-syntax/">Template Syntax</a> page.</p> </blockquote> <p>Within the <code>&lt;li&gt;</code> tags, add content that uses the <code>hero</code> template variable to display the hero's properties.</p> <div class="pre-title">app.component.ts (ngFor template)</div>
+<pre data-language="html">&lt;li *ngFor="let hero of heroes"&gt;
+  &lt;span class="badge"&gt;{{hero.id}}&lt;/span&gt; {{hero.name}}
+&lt;/li&gt;</pre> <p>When the browser refreshes, a list of heroes appears.</p> <h3 id="style-the-heroes">Style the heroes</h3> <p>Users should get a visual cue of which hero they are hovering over and which hero is selected.</p> <p>To add styles to your component, set the <code>styles</code> property on the <code>@<a href="../../api/core/component/" class="code-anchor">Component</a></code> decorator to the following CSS classes:</p> <div class="pre-title">src/app/app.component.ts (styles)</div>
+<pre data-language="typescript">styles: [`
+  .selected {
+    background-color: #CFD8DC !important;
+    color: white;
+  }
+  .heroes {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .heroes li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+  }
+  .heroes li.selected:hover {
+    background-color: #BBD8DC !important;
+    color: white;
+  }
+  .heroes li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }
+  .heroes .text {
+    position: relative;
+    top: -3px;
+  }
+  .heroes .badge {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color: #607D8B;
+    line-height: 1em;
+    position: relative;
+    left: -1px;
+    top: -4px;
+    height: 1.8em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+  }
+`]</pre> <p>Remember to use the backtick notation for multi-line strings.</p> <p>Adding these styles makes the file much longer. In a later page you'll move the styles to a separate file.</p> <p>When you assign styles to a component, they are scoped to that specific component. These styles apply only to the <code>AppComponent</code> and don't affect the outer HTML.</p> <p>The template for displaying heroes should look like this:</p> <div class="pre-title">src/app/app.component.ts (styled heroes)</div>
+<pre data-language="html">&lt;h2&gt;My Heroes&lt;/h2&gt;
+&lt;ul class="heroes"&gt;
+  &lt;li *ngFor="let hero of heroes"&gt;
+    &lt;span class="badge"&gt;{{hero.id}}&lt;/span&gt; {{hero.name}}
+  &lt;/li&gt;
+&lt;/ul&gt;</pre> <h2 id="selecting-a-hero">Selecting a hero</h2> <p>The app now displays a list of heroes as well as a single hero in the details view. But the list and the details view are not connected. When users select a hero from the list, the selected hero should appear in the details view. This UI pattern is known as "master/detail." In this case, the <em>master</em> is the heroes list and the <em>detail</em> is the selected hero.</p> <p>Next you'll connect the master to the detail through a <code>selectedHero</code> component property, which is bound to a click event.</p> <h3 id="handle-click-events">Handle click events</h3> <p>Add a click event binding to the <code>&lt;li&gt;</code> like this:</p> <div class="pre-title">app.component.ts (template excerpt)</div>
+<pre data-language="html">&lt;li *ngFor="let hero of heroes" (click)="onSelect(hero)"&gt;
+  ...
+&lt;/li&gt;</pre> <p>The parentheses identify the <code>&lt;li&gt;</code> element's <code>click</code> event as the target. The <code>onSelect(hero)</code> expression calls the <code>AppComponent</code> method, <code>onSelect()</code>, passing the template input variable <code>hero</code>, as an argument. That's the same <code>hero</code> variable you defined previously in the <code>ngFor</code> directive.</p> <blockquote class="l-sub-section"> <p>Learn more about event binding at the <a href="../../guide/user-input/">User Input</a> page and the <a href="../../guide/template-syntax/#event-binding">Event binding</a> section of the <a href="../../guide/template-syntax/">Template Syntax</a> page.</p> </blockquote> <h3 id="add-a-click-handler-to-expose-the-selected-hero">Add a click handler to expose the selected hero</h3> <p>You no longer need the <code>hero</code> property because you're no longer displaying a single hero; you're displaying a list of heroes. But the user will be able to select one of the heroes by clicking on it. So replace the <code>hero</code> property with this simple <code>selectedHero</code> property:</p> <div class="pre-title">src/app/app.component.ts (selectedHero)</div>
+<pre data-language="typescript">selectedHero: Hero;</pre> <p>The hero names should all be unselected before the user picks a hero, so you won't initialize the <code>selectedHero</code> as you did with <code>hero</code>.</p> <p>Add an <code>onSelect()</code> method that sets the <code>selectedHero</code> property to the <code>hero</code> that the user clicks.</p> <div class="pre-title">src/app/app.component.ts (onSelect)</div>
+<pre data-language="typescript">onSelect(hero: Hero): void {
+  this.selectedHero = hero;
+}</pre> <p>The template still refers to the old <code>hero</code> property. Bind to the new <code>selectedHero</code> property instead as follows:</p> <div class="pre-title">app.component.ts (template excerpt)</div>
+<pre data-language="html">&lt;h2&gt;{{selectedHero.name}} details!&lt;/h2&gt;
+&lt;div&gt;&lt;label&gt;id: &lt;/label&gt;{{selectedHero.id}}&lt;/div&gt;
+&lt;div&gt;
+    &lt;label&gt;name: &lt;/label&gt;
+    &lt;input [(ngModel)]="selectedHero.name" placeholder="name"/&gt;
+&lt;/div&gt;</pre> <h3 id="hide-the-empty-detail-with-ngif">Hide the empty detail with ngIf</h3> <p>When the app loads, <code>selectedHero</code> is undefined. The selected hero is initialized when the user clicks a hero's name. Angular can't display properties of the undefined <code>selectedHero</code> and throws the following error, visible in the browser's console:</p> <pre format="nocode">EXCEPTION: TypeError: Cannot read property 'name' of undefined in [null]</pre> <p>Although <code>selectedHero.name</code> is displayed in the template, you must keep the hero detail out of the DOM until there is a selected hero.</p> <p>Wrap the HTML hero detail content of the template with a <code>&lt;div&gt;</code>. Then add the <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> built-in directive and set it to the <code>selectedHero</code> property of the component.</p> <div class="pre-title">src/app/app.component.ts (ngIf)</div>
+<pre data-language="html">&lt;div *ngIf="selectedHero"&gt;
+  &lt;h2&gt;{{selectedHero.name}} details!&lt;/h2&gt;
+  &lt;div&gt;&lt;label&gt;id: &lt;/label&gt;{{selectedHero.id}}&lt;/div&gt;
+  &lt;div&gt;
+    &lt;label&gt;name: &lt;/label&gt;
+    &lt;input [(ngModel)]="selectedHero.name" placeholder="name"/&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre> <blockquote class="alert is-critical"> <p>Don't forget the asterisk (<code>*</code>) in front of <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code>.</p> </blockquote> <p>The app no longer fails and the list of names displays again in the browser.</p> <p>When there is no selected hero, the <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> directive removes the hero detail HTML from the DOM. There are no hero detail elements or bindings to worry about.</p> <p>When the user picks a hero, <code>selectedHero</code> becomes defined and <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> puts the hero detail content into the DOM and evaluates the nested bindings.</p> <blockquote class="l-sub-section"> <p>Read more about <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> and <code>ngFor</code> in the <a href="../../guide/structural-directives/">Structural Directives</a> page and the <a href="../../guide/template-syntax/#directives">Built-in directives</a> section of the <a href="../../guide/template-syntax/">Template Syntax</a> page.</p> </blockquote> <h3 id="style-the-selected-hero">Style the selected hero</h3> <p>While the selected hero details appear below the list, it's difficult to identify the selected hero within the list itself.</p> <p>In the <code>styles</code> metadata that you added above, there is a custom CSS class named <code>selected</code>. To make the selected hero more visible, you'll apply this <code>selected</code> class to the <code>&lt;li&gt;</code> when the user clicks on a hero name. For example, when the user clicks "Magneta", it should render with a distinctive but subtle background color like this:</p> <figure> <img src="data:image/png;base64,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" alt="Selected hero" width="165" height="129"> </figure> <p>In the template, add the following <code>[class.selected]</code> binding to the <code>&lt;li&gt;</code>:</p> <div class="pre-title">app.component.ts (setting the CSS class)</div>
+<pre data-language="html">[class.selected]="hero === selectedHero"</pre> <p>When the expression (<code>hero === selectedHero</code>) is <code>true</code>, Angular adds the <code>selected</code> CSS class. When the expression is <code>false</code>, Angular removes the <code>selected</code> class.</p> <blockquote class="l-sub-section"> <p>Read more about the <code>[class]</code> binding in the <a href="../../guide/template-syntax/#ngClass" title="Template syntax: NgClass">Template Syntax</a> guide.</p> </blockquote> <p>The final version of the <code>&lt;li&gt;</code> looks like this:</p> <div class="pre-title">app.component.ts (styling each hero)</div>
+<pre data-language="html">&lt;li *ngFor="let hero of heroes"
+  [class.selected]="hero === selectedHero"
+  (click)="onSelect(hero)"&gt;
+  &lt;span class="badge"&gt;{{hero.id}}&lt;/span&gt; {{hero.name}}
+&lt;/li&gt;</pre> <p>After clicking "Magneta", the list should look like this:</p> <figure> <img src="data:image/png;base64,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" alt="Output of heroes list app" width="220" height="540"> </figure> <p>Here's the complete <code>app.component.ts</code> as of now:</p> <div class="pre-title">src/app/app.component.ts</div>
+<pre data-language="typescript">import { Component } from '@angular/core';
+
+export class Hero {
+  id: number;
+  name: string;
+}
+
+const HEROES: Hero[] = [
+  { id: 11, name: 'Mr. Nice' },
+  { id: 12, name: 'Narco' },
+  { id: 13, name: 'Bombasto' },
+  { id: 14, name: 'Celeritas' },
+  { id: 15, name: 'Magneta' },
+  { id: 16, name: 'RubberMan' },
+  { id: 17, name: 'Dynama' },
+  { id: 18, name: 'Dr IQ' },
+  { id: 19, name: 'Magma' },
+  { id: 20, name: 'Tornado' }
+];
+
+@Component({
+  selector: 'my-app',
+  template: `
+    &lt;h1&gt;{{title}}&lt;/h1&gt;
+    &lt;h2&gt;My Heroes&lt;/h2&gt;
+    &lt;ul class="heroes"&gt;
+      &lt;li *ngFor="let hero of heroes"
+        [class.selected]="hero === selectedHero"
+        (click)="onSelect(hero)"&gt;
+        &lt;span class="badge"&gt;{{hero.id}}&lt;/span&gt; {{hero.name}}
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div *ngIf="selectedHero"&gt;
+      &lt;h2&gt;{{selectedHero.name}} details!&lt;/h2&gt;
+      &lt;div&gt;&lt;label&gt;id: &lt;/label&gt;{{selectedHero.id}}&lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;name: &lt;/label&gt;
+        &lt;input [(ngModel)]="selectedHero.name" placeholder="name"/&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  `,
+  styles: [`
+    .selected {
+      background-color: #CFD8DC !important;
+      color: white;
+    }
+    .heroes {
+      margin: 0 0 2em 0;
+      list-style-type: none;
+      padding: 0;
+      width: 15em;
+    }
+    .heroes li {
+      cursor: pointer;
+      position: relative;
+      left: 0;
+      background-color: #EEE;
+      margin: .5em;
+      padding: .3em 0;
+      height: 1.6em;
+      border-radius: 4px;
+    }
+    .heroes li.selected:hover {
+      background-color: #BBD8DC !important;
+      color: white;
+    }
+    .heroes li:hover {
+      color: #607D8B;
+      background-color: #DDD;
+      left: .1em;
+    }
+    .heroes .text {
+      position: relative;
+      top: -3px;
+    }
+    .heroes .badge {
+      display: inline-block;
+      font-size: small;
+      color: white;
+      padding: 0.8em 0.7em 0 0.7em;
+      background-color: #607D8B;
+      line-height: 1em;
+      position: relative;
+      left: -1px;
+      top: -4px;
+      height: 1.8em;
+      margin-right: .8em;
+      border-radius: 4px 0 0 4px;
+    }
+  `]
+})
+export class AppComponent {
+  title = 'Tour of Heroes';
+  heroes = HEROES;
+  selectedHero: Hero;
+
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+  }
+}</pre> <h2 id="summary">Summary</h2> <p>Here's what you achieved in this page:</p> <ul> <li>The Tour of Heroes app displays a list of selectable heroes.</li> <li>You added the ability to select a hero and show the hero's details.</li> <li>You learned how to use the built-in directives <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> and <code>ngFor</code> in a component's template.</li> </ul> <p>Your app should look like this live example.</p> <h2 id="next-step">Next step</h2> <p>You've expanded the Tour of Heroes app, but it's far from complete. An app shouldn't be one monolithic component. In the <a href="../toh-pt3/" title="Multiple Components">next page</a>, you'll split the app into subcomponents and make them work together.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v4.angular.io/tutorial/toh-pt2" class="_attribution-link" target="_blank">https://v4.angular.io/tutorial/toh-pt2</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ControlValueAccessor - Angular 4 - W3cubDocs</title>
+  
+  <meta name="description" content=" interface ">
+  <meta name="keywords" content="controlvalueaccessor, -, angular, angular~4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~4/api/forms/controlvalueaccessor/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="controlvalueaccessor">ControlValueAccessor</h1> <p><code class="api-type-label interface">interface</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/forms" target="_blank">@angular/forms</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../controlvalueaccessor/" class="code-anchor">ControlValueAccessor</a> } from <a href="../../forms/">'@angular/forms'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/4.4.6/packages/forms/src/directives/control_value_accessor.ts#L10-L110" target="_blank">forms/src/directives/control_value_accessor.ts</a></td> </tr> </tbody> </table>  <h2 id="interface-overview">Interface Overview</h2> <pre data-language="typescript">interface ControlValueAccessor { 
+  writeValue(obj: any): void
+  registerOnChange(fn: any): void
+  registerOnTouched(fn: any): void
+  setDisabledState(isDisabled: boolean)?: void
+}</pre>   <h2 id="description">Description</h2> <p>A <code><a href="../controlvalueaccessor/" class="code-anchor">ControlValueAccessor</a></code> acts as a bridge between the Angular forms API and a native element in the DOM.</p> <p>Implement this interface if you want to create a custom form control directive that integrates with Angular forms.</p>   <h2 id="members">Members</h2>   <h3><code>writeValue(obj: any): void</code></h3> <p>Writes a new value to the element.</p> <p>This method will be called by the forms API to write to the view when programmatic (model -&gt; view) changes are requested.</p> <p>Example implementation of <code>writeValue</code>:</p> <pre data-language="typescript">writeValue(value: any): void {
+  this._renderer.setProperty(this._elementRef.nativeElement, 'value', value);
+}</pre>     <h3><code>registerOnChange(fn: any): void</code></h3> <p>Registers a callback function that should be called when the control's value changes in the UI.</p> <p>This is called by the forms API on initialization so it can update the form model when values propagate from the view (view -&gt; model).</p> <p>If you are implementing <code>registerOnChange</code> in your own value accessor, you will typically want to save the given function so your class can call it at the appropriate time.</p> <pre data-language="typescript">registerOnChange(fn: (_: any) =&gt; void): void {
+  this._onChange = fn;
+}</pre> <p>When the value changes in the UI, your class should call the registered function to allow the forms API to update itself:</p> <pre data-language="typescript">host: {
+   (change): '_onChange($event.target.value)'
+}</pre>     <h3><code>registerOnTouched(fn: any): void</code></h3> <p>Registers a callback function that should be called when the control receives a blur event.</p> <p>This is called by the forms API on initialization so it can update the form model on blur.</p> <p>If you are implementing <code>registerOnTouched</code> in your own value accessor, you will typically want to save the given function so your class can call it when the control should be considered blurred (a.k.a. "touched").</p> <pre data-language="typescript">registerOnTouched(fn: any): void {
+  this._onTouched = fn;
+}</pre> <p>On blur (or equivalent), your class should call the registered function to allow the forms API to update itself:</p> <pre data-language="typescript">host: {
+   '(blur)': '_onTouched()'
+}</pre>     <h3><code>setDisabledState(isDisabled: boolean)?: void</code></h3> <p>This function is called by the forms API when the control status changes to or from "DISABLED". Depending on the value, it should enable or disable the appropriate DOM element.</p> <p>Example implementation of <code>setDisabledState</code>:</p> <pre data-language="typescript">setDisabledState(isDisabled: boolean): void {
+  this._renderer.setProperty(this._elementRef.nativeElement, 'disabled', isDisabled);
+}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v4.angular.io/api/forms/ControlValueAccessor" class="_attribution-link" target="_blank">https://v4.angular.io/api/forms/ControlValueAccessor</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

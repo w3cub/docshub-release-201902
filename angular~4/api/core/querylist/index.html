@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>QueryList - Angular 4 - W3cubDocs</title>
+  
+  <meta name="description" content=" class ">
+  <meta name="keywords" content="querylist, -, angular, angular~4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~4/api/core/querylist/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="querylist">QueryList</h1> <p><code class="api-type-label class">class</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/core" target="_blank">@angular/core</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../querylist/" class="code-anchor">QueryList</a> } from <a href="../../core/">'@angular/core'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/4.4.6/packages/core/src/linker/query_list.ts#L13-L117" target="_blank">core/src/linker/query_list.ts</a></td> </tr> </tbody> </table>  <h2 id="overview">Overview</h2> <pre data-language="typescript">class QueryList&lt;T&gt; {
+  get changes: Observable&lt;any&gt;
+  get length: number
+  get first: T
+  get last: T
+  map&lt;U&gt;(fn: (item: T, index: number, array: T[]) =&gt; U): U[]
+  filter(fn: (item: T, index: number, array: T[]) =&gt; boolean): T[]
+  find(fn: (item: T, index: number, array: T[]) =&gt; boolean): T|undefined
+  reduce&lt;U&gt;(fn: (prevValue: U, curValue: T, curIndex: number, array: T[]) =&gt; U, init: U): U
+  forEach(fn: (item: T, index: number, array: T[]) =&gt; void): void
+  some(fn: (value: T, index: number, array: T[]) =&gt; boolean): boolean
+  toArray(): T[]
+  toString(): string
+  reset(res: Array&lt;T|any[]&gt;): void
+  notifyOnChanges(): void
+  setDirty()
+  get dirty
+  destroy(): void
+}</pre>   <h2 id="description">Description</h2> <p>An unmodifiable list of items that Angular keeps up to date when the state of the application changes.</p> <p>The type of object that <a href="../viewchildren/"><code>ViewChildren</code></a>, <a href="../contentchildren/"><code>ContentChildren</code></a>, and <a href="../querylist/"><code>QueryList</code></a> provide.</p> <p>Implements an iterable interface, therefore it can be used in both ES6 javascript <code>for (var i of items)</code> loops as well as in Angular templates with <code>*ngFor="let i of myList"</code>.</p> <p>Changes can be observed by subscribing to the changes <code>Observable</code>.</p> <p>NOTE: In the future this class will implement an <code>Observable</code> interface.</p> <h3 id="example-live-demo">Example (<a href="http://plnkr.co/edit/RX8sJnQYl9FWuSCWme5z?p=preview" target="_blank">live demo</a>)</h3> <pre data-language="typescript">@Component({...})
+class Container {
+  @ViewChildren(Item) items:QueryList&lt;Item&gt;;
+}</pre>   <h2 id="members">Members</h2>   <h3><code>get changes: Observable&lt;any&gt;</code></h3>    <h3><code>get length: number</code></h3>    <h3><code>get first: T</code></h3>    <h3><code>get last: T</code></h3>    <h3><code>map&lt;U&gt;(fn: (item: T, index: number, array: T[]) =&gt; U): U[]</code></h3> <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank">Array.map</a></p>     <h3><code>filter(fn: (item: T, index: number, array: T[]) =&gt; boolean): T[]</code></h3> <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">Array.filter</a></p>     <h3><code>find(fn: (item: T, index: number, array: T[]) =&gt; boolean): T|undefined</code></h3> <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find" target="_blank">Array.find</a></p>     <h3><code>reduce&lt;U&gt;(fn: (prevValue: U, curValue: T, curIndex: number, array: T[]) =&gt; U, init: U): U</code></h3> <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce" target="_blank">Array.reduce</a></p>     <h3><code>forEach(fn: (item: T, index: number, array: T[]) =&gt; void): void</code></h3> <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach" target="_blank">Array.forEach</a></p>     <h3><code>some(fn: (value: T, index: number, array: T[]) =&gt; boolean): boolean</code></h3> <p>See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some" target="_blank">Array.some</a></p>     <h3><code>toArray(): T[]</code></h3>    <h3><code>toString(): string</code></h3>    <h3><code>reset(res: Array&lt;T|any[]&gt;): void</code></h3>    <h3><code>notifyOnChanges(): void</code></h3>    <h3><code>setDirty()</code></h3> <p>internal</p>     <h3><code>get dirty</code></h3> <p>internal</p>     <h3><code>destroy(): void</code></h3> <p>internal</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2017 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v4.angular.io/api/core/QueryList" class="_attribution-link" target="_blank">https://v4.angular.io/api/core/QueryList</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
