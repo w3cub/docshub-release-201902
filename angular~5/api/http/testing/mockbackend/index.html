@@ -1,0 +1,212 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>MockBackend - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" class deprecated ">
+  <meta name="keywords" content="mockbackend, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/http/testing/mockbackend/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="mockbackend">MockBackend</h1> <p><code class="api-type-label class">class</code> <code class="api-status-label deprecated">deprecated</code></p>      <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/http" target="_blank">@angular/http</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../mockbackend/" class="code-anchor">MockBackend</a> } from <a href="../../testing/">'@angular/http/testing'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/http/testing/src/mock_backend.ts#L107-L292" target="_blank">http/testing/src/mock_backend.ts</a></td> </tr> </tbody> </table>  <h2 id="deprecation-notes">Deprecation Notes</h2> <p>use @angular/common/http instead</p>   <h2 id="overview">Overview</h2> <pre data-language="typescript">class MockBackend implements ConnectionBackend {
+  constructor()
+  connections: any
+  connectionsArray: MockConnection[]
+  pendingConnections: any
+  verifyNoPendingRequests()
+  resolveAllConnections()
+  createConnection(req: Request): MockConnection
+}</pre>   <h2 id="description">Description</h2> <p>A mock backend for testing the <a href="../../http/"><code>Http</code></a> service.</p> <p>This class can be injected in tests, and should be used to override providers to other backends, such as <a href="../../xhrbackend/"><code>XHRBackend</code></a>.</p> <h3 id="example">Example</h3> <pre>import {Injectable, Injector} from '@angular/core';
+import {async, fakeAsync, tick} from '@angular/core/testing';
+import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
+import {Response, ResponseOptions} from '@angular/http';
+import {MockBackend, MockConnection} from '@angular/http/testing';
+
+const HERO_ONE = 'HeroNrOne';
+const HERO_TWO = 'WillBeAlwaysTheSecond';
+
+@Injectable()
+class HeroService {
+  constructor(private http: Http) {}
+
+  getHeroes(): Promise&lt;String[]&gt; {
+    return this.http.get('myservices.de/api/heroes')
+        .toPromise()
+        .then(response =&gt; response.json().data)
+        .catch(e =&gt; this.handleError(e));
+  }
+
+  private handleError(error: any): Promise&lt;any&gt; {
+    console.error('An error occurred', error);
+    return Promise.reject(error.message || error);
+  }
+}
+
+describe('MockBackend HeroService Example', () =&gt; {
+  beforeEach(() =&gt; {
+    this.injector = Injector.create([
+      {provide: ConnectionBackend, useClass: MockBackend},
+      {provide: RequestOptions, useClass: BaseRequestOptions},
+      Http,
+      HeroService,
+    ]);
+    this.heroService = this.injector.get(HeroService);
+    this.backend = this.injector.get(ConnectionBackend) as MockBackend;
+    this.backend.connections.subscribe((connection: any) =&gt; this.lastConnection = connection);
+  });
+
+  it('getHeroes() should query current service url', () =&gt; {
+    this.heroService.getHeroes();
+    expect(this.lastConnection).toBeDefined('no http service connection at all?');
+    expect(this.lastConnection.request.url).toMatch(/api\/heroes$/, 'url invalid');
+  });
+
+  it('getHeroes() should return some heroes', fakeAsync(() =&gt; {
+       let result: String[];
+       this.heroService.getHeroes().then((heroes: String[]) =&gt; result = heroes);
+       this.lastConnection.mockRespond(new Response(new ResponseOptions({
+         body: JSON.stringify({data: [HERO_ONE, HERO_TWO]}),
+       })));
+       tick();
+       expect(result.length).toEqual(2, 'should contain given amount of heroes');
+       expect(result[0]).toEqual(HERO_ONE, ' HERO_ONE should be the first hero');
+       expect(result[1]).toEqual(HERO_TWO, ' HERO_TWO should be the second hero');
+     }));
+
+  it('getHeroes() while server is down', fakeAsync(() =&gt; {
+       let result: String[];
+       let catchedError: any;
+       this.heroService.getHeroes()
+           .then((heroes: String[]) =&gt; result = heroes)
+           .catch((error: any) =&gt; catchedError = error);
+       this.lastConnection.mockRespond(new Response(new ResponseOptions({
+         status: 404,
+         statusText: 'URL not Found',
+       })));
+       tick();
+       expect(result).toBeUndefined();
+       expect(catchedError).toBeDefined();
+     }));
+});</pre> <p>This method only exists in the mock implementation, not in real Backends.</p>   <h2 id="constructor">Constructor</h2> <div class="constructor">  <h3 data-language="typescript"><code>constructor()</code></h3>
+</div>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>connections: any</code></h3> <a href="../../../core/eventemitter/"><code>EventEmitter</code></a> <p>of <a href="../mockconnection/"><code>MockConnection</code></a> instances that have been created by this backend. Can be subscribed to in order to respond to connections.</p> <h4 id="example-1">Example</h4> <pre>import {Injector} from '@angular/core';
+import {fakeAsync, tick} from '@angular/core/testing';
+import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
+import {Response, ResponseOptions} from '@angular/http';
+import {MockBackend, MockConnection} from '@angular/http/testing';
+
+it('should get a response', fakeAsync(() =&gt; {
+     let connection:
+         MockConnection;  // this will be set when a new connection is emitted from the
+                          // backend.
+     let text: string;    // this will be set from mock response
+     let injector = Injector.create([
+       {provide: ConnectionBackend, useClass: MockBackend},
+       {provide: RequestOptions, useClass: BaseRequestOptions},
+       Http,
+     ]);
+     let backend = injector.get(ConnectionBackend);
+     let http = injector.get(Http);
+     backend.connections.subscribe((c: MockConnection) =&gt; connection = c);
+     http.request('something.json').toPromise().then((res: any) =&gt; text = res.text());
+     connection.mockRespond(new Response(new ResponseOptions({body: 'Something'})));
+     tick();
+     expect(text).toBe('Something');
+   }));</pre> <p>This property only exists in the mock implementation, not in real Backends.</p>     <h3 data-language="typescript"><code>connectionsArray: MockConnection[]</code></h3> <p>An array representation of <code>connections</code>. This array will be updated with each connection that is created by this backend.</p> <p>This property only exists in the mock implementation, not in real Backends.</p>     <h3 data-language="typescript"><code>pendingConnections: any</code></h3> <a href="../../../core/eventemitter/"><code>EventEmitter</code></a> <p> of <a href="../mockconnection/"><code>MockConnection</code></a> instances that haven't yet been resolved (i.e. with a <code>readyState</code> less than 4). Used internally to verify that no connections are pending via the <code>verifyNoPendingRequests</code> method.</p> <p>This property only exists in the mock implementation, not in real Backends.</p>     <h3 data-language="typescript"><code>verifyNoPendingRequests()</code></h3> <p>Checks all connections, and raises an exception if any connection has not received a response.</p> <p>This method only exists in the mock implementation, not in real Backends.</p>     <h3 data-language="typescript"><code>resolveAllConnections()</code></h3> <p>Can be used in conjunction with <code>verifyNoPendingRequests</code> to resolve any not-yet-resolve connections, if it's expected that there are connections that have not yet received a response.</p> <p>This method only exists in the mock implementation, not in real Backends.</p>     <h3 data-language="typescript"><code>createConnection(req: Request): MockConnection</code></h3> <p>Creates a new <a href="../mockconnection/"><code>MockConnection</code></a>. This is equivalent to calling <code>new <a href="../mockconnection/" class="code-anchor">MockConnection</a>()</code>, except that it also will emit the new <code><a href="../../connection/" class="code-anchor">Connection</a></code> to the <code>connections</code> emitter of this <code><a href="../mockbackend/" class="code-anchor">MockBackend</a></code> instance. This method will usually only be used by tests against the framework itself, not by end-users.</p>    <h2 id="annotations">Annotations</h2> <h3 data-language="typescript"><code>@Injectable()</code></h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/http/testing/MockBackend" class="_attribution-link" target="_blank">https://v5.angular.io/api/http/testing/MockBackend</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

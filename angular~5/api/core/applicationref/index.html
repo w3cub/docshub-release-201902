@@ -1,0 +1,123 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>ApplicationRef - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" interface ">
+  <meta name="keywords" content="applicationref, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/core/applicationref/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="applicationref">ApplicationRef</h1> <p><code class="api-type-label interface">interface</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/core" target="_blank">@angular/core</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../applicationref/" class="code-anchor">ApplicationRef</a> } from <a href="../../core/">'@angular/core'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/core/src/application_ref.ts#L361-L579" target="_blank">core/src/application_ref.ts</a></td> </tr> </tbody> </table>  <h2 id="interface-overview">Interface Overview</h2> <pre data-language="typescript">interface ApplicationRef { 
+  get componentTypes: Type&lt;any&gt;[]
+  get components: ComponentRef&lt;any&gt;[]
+  get isStable: Observable&lt;boolean&gt;
+  bootstrap&lt;C&gt;(componentOrFactory: ComponentFactory&lt;C&gt; | Type&lt;C&gt;, rootSelectorOrNode?: string | any): ComponentRef&lt;C&gt;
+  tick(): void
+  attachView(viewRef: ViewRef): void
+  detachView(viewRef: ViewRef): void
+  get viewCount
+}</pre>   <h2 id="description">Description</h2> <p>A reference to an Angular application running on a page.</p>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>get componentTypes: Type&lt;any&gt;[]</code></h3> <p>Get a list of component types registered to this application. This list is populated even before the component is created.</p>     <h3 data-language="typescript"><code>get components: ComponentRef&lt;any&gt;[]</code></h3> <p>Get a list of components registered to this application.</p>     <h3 data-language="typescript"><code>get isStable: Observable&lt;boolean&gt;</code></h3> <p>Returns an Observable that indicates when the application is stable or unstable.</p>     <h3 data-language="typescript"><code>bootstrap&lt;C&gt;(componentOrFactory: ComponentFactory&lt;C&gt; | Type&lt;C&gt;, rootSelectorOrNode?: string | any): ComponentRef&lt;C&gt;</code></h3> <p>Bootstrap a new component at the root level of the application.</p> <h4 id="bootstrap-process">Bootstrap process</h4> <p>When bootstrapping a new root component into an application, Angular mounts the specified application component onto DOM elements identified by the [componentType]'s selector and kicks off automatic change detection to finish initializing the component.</p> <p>Optionally, a component can be mounted onto a DOM element that does not match the [componentType]'s selector.</p> <h4 id="example">Example</h4> <pre data-language="typescript">@Component({selector: 'my-app', template: 'Hello World'})
+class MyApp {
+}
+
+const myPlatformFactory = createPlatformFactory(platformBrowserDynamic, 'myPlatform');
+myPlatformFactory().bootstrapModule(MyApp);</pre>     <h3 data-language="typescript"><code>tick(): void</code></h3> <p>Invoke this method to explicitly process change detection and its side-effects.</p> <p>In development mode, <code><a href="../testing/tick/" class="code-anchor">tick</a>()</code> also performs a second change detection cycle to ensure that no further changes are detected. If additional changes are picked up during this second cycle, bindings in the app have side-effects that cannot be resolved in a single change detection pass. In this case, Angular throws an error, since an Angular application can only have one change detection pass during which all change detection must complete.</p>     <h3 data-language="typescript"><code>attachView(viewRef: ViewRef): void</code></h3> <p>Attaches a view so that it will be dirty checked. The view will be automatically detached when it is destroyed. This will throw if the view is already attached to a ViewContainer.</p>     <h3 data-language="typescript"><code>detachView(viewRef: ViewRef): void</code></h3> <p>Detaches a view from dirty checking again.</p>     <h3 data-language="typescript"><code>get viewCount</code></h3> <p>Returns the number of attached views.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/core/ApplicationRef" class="_attribution-link" target="_blank">https://v5.angular.io/api/core/ApplicationRef</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

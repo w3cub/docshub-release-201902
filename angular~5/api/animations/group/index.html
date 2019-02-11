@@ -1,0 +1,157 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Group - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" function experimental ">
+  <meta name="keywords" content="group, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/animations/group/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="group">group</h1> <p><code class="api-type-label function">function</code> <code class="api-status-label experimental">experimental</code></p>      <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/animations" target="_blank">@angular/animations</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../group/" class="code-anchor">group</a> } from <a href="../../animations/">'@angular/animations'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/animations/src/animation_metadata.ts#L412-L447" target="_blank">animations/src/animation_metadata.ts</a></td> </tr> </tbody> </table> <h3 data-language="typescript"><code>function group(steps: AnimationMetadata[], options: AnimationOptions | null = null): AnimationGroupMetadata;</code></h3>  <h4 id="description">Description</h4> <p><code><a href="../group/" class="code-anchor">group</a></code> is an animation-specific function that is designed to be used inside of Angular's animation DSL language. If this information is new, please navigate to the <a href="../../core/component/#animations">component animations metadata page</a> to gain a better understanding of how animations in Angular are used.</p> <p><code><a href="../group/" class="code-anchor">group</a></code> specifies a list of animation steps that are all run in parallel. Grouped animations are useful when a series of styles must be animated/closed off at different starting/ending times.</p> <p>The <code><a href="../group/" class="code-anchor">group</a></code> function can either be used within a <a href="../sequence/">sequence</a> or a <a href="../transition/">transition</a> and it will only continue to the next instruction once all of the inner animation steps have completed.</p> <h4 id="usage">Usage</h4> <p>The <code>steps</code> data that is passed into the <code><a href="../group/" class="code-anchor">group</a></code> animation function can either consist of <a href="../style/">style</a> or <a href="../animate/">animate</a> function calls. Each call to <code><a href="../style/" class="code-anchor">style</a>()</code> or <code><a href="../animate/" class="code-anchor">animate</a>()</code> within a group will be executed instantly (use <a href="../keyframes/">keyframes</a> or a <a href="../animate/#usage">animate() with a delay value</a> to offset styles to be applied at a later time).</p> <pre data-language="typescript">group([
+  animate("1s", { background: "black" }))
+  animate("2s", { color: "white" }))
+])</pre> <pre>import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Component, NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+@Component({
+  selector: 'example-app',
+  styles: [`
+    .toggle-container {
+      background-color:white;
+      border:10px solid black;
+      width:200px;
+      text-align:center;
+      line-height:100px;
+      font-size:50px;
+      box-sizing:border-box;
+      overflow:hidden;
+    }
+  `],
+  animations: [trigger(
+      'openClose',
+      [
+        state('collapsed, void', style({height: '0px', color: 'maroon', borderColor: 'maroon'})),
+        state('expanded', style({height: '*', borderColor: 'green', color: 'green'})),
+        transition(
+            'collapsed &lt;=&gt; expanded', [animate(500, style({height: '250px'})), animate(500)])
+      ])],
+  template: `
+    &lt;button (click)="expand()"&gt;Open&lt;/button&gt;
+    &lt;button (click)="collapse()"&gt;Closed&lt;/button&gt;
+    &lt;hr /&gt;
+    &lt;div class="toggle-container" [@openClose]="stateExpression"&gt;
+      Look at this box
+    &lt;/div&gt;
+  `
+})
+export class MyExpandoCmp {
+  stateExpression: string;
+  constructor() { this.collapse(); }
+  expand() { this.stateExpression = 'expanded'; }
+  collapse() { this.stateExpression = 'collapsed'; }
+}
+
+@NgModule(
+    {imports: [BrowserAnimationsModule], declarations: [MyExpandoCmp], bootstrap: [MyExpandoCmp]})
+export class AppModule {
+}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/animations/group" class="_attribution-link" target="_blank">https://v5.angular.io/api/animations/group</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,210 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>NgModel - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" directive ">
+  <meta name="keywords" content="ngmodel, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/forms/ngmodel/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="ngmodel">NgModel</h1> <p><code class="api-type-label directive">directive</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/forms" target="_blank">@angular/forms</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../ngmodel/" class="code-anchor">NgModel</a> } from <a href="../../forms/">'@angular/forms'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/forms/src/directives/ng_model.ts#L47-L273" target="_blank">forms/src/directives/ng_model.ts</a></td> </tr> </tbody> </table> <div class="what-it-does info-banner"> <p>Creates a <a href="../formcontrol/"><code>FormControl</code></a> instance from a domain model and binds it to a form control element.</p> <p>The <a href="../formcontrol/"><code>FormControl</code></a> instance will track the value, user interaction, and validation status of the control and keep the view synced with the model. If used within a parent form, the directive will also register itself with the form as a child control.</p> </div>  <h2 id="overview">Overview</h2> <pre data-language="typescript">@Directive({
+    selector: '[ngModel]:not([formControlName]):not([formControl])',
+    providers: [formControlBinding],
+    exportAs: 'ngModel'
+})
+class NgModel extends NgControl implements OnChanges, OnDestroy {
+  get control: FormControl
+  viewModel: any
+  name: string
+  isDisabled: boolean
+  model: any
+  options: {...}
+  update: new EventEmitter()
+  ngOnChanges(changes: SimpleChanges)
+  ngOnDestroy(): void
+  get path: string[]
+  get formDirective: any
+  get validator: ValidatorFn | null
+  get asyncValidator: AsyncValidatorFn | null
+  viewToModelUpdate(newValue: any): void
+  // inherited from forms/NgControl
+  name: string | null
+  valueAccessor: ControlValueAccessor | null
+  get validator: ValidatorFn | null
+  get asyncValidator: AsyncValidatorFn | null
+  viewToModelUpdate(newValue: any): void
+  // inherited from forms/AbstractControlDirective
+  get control: AbstractControl | null
+  get value: any
+  get valid: boolean | null
+  get invalid: boolean | null
+  get pending: boolean | null
+  get disabled: boolean | null
+  get enabled: boolean | null
+  get errors: ValidationErrors | null
+  get pristine: boolean | null
+  get dirty: boolean | null
+  get touched: boolean | null
+  get status: string | null
+  get untouched: boolean | null
+  get statusChanges: Observable&lt;any&gt; | null
+  get valueChanges: Observable&lt;any&gt; | null
+  get path: string[] | null
+  reset(value: any = undefined): void
+  hasError(errorCode: string, path?: string[]): boolean
+  getError(errorCode: string, path?: string[]): any
+}</pre>   <h2 id="how-to-use">How To Use</h2> <p>This directive can be used by itself or as part of a larger form. All you need is the <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> selector to activate it.</p> <p>It accepts a domain model as an optional <a href="../../core/input/"><code>Input</code></a>. If you have a one-way binding to <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> with <code>[]</code> syntax, changing the value of the domain model in the component class will set the value in the view. If you have a two-way binding with <code>[()]</code> syntax (also known as 'banana-box syntax'), the value in the UI will always be synced back to the domain model in your class as well.</p> <p>If you wish to inspect the properties of the associated <a href="../formcontrol/"><code>FormControl</code></a> (like validity state), you can also export the directive into a local template variable using <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> as the key (ex: <code>#myVar="<a href="../ngmodel/" class="code-anchor">ngModel</a>"</code>). You can then access the control using the directive's <code>control</code> property, but most properties you'll need (like <code>valid</code> and <code>dirty</code>) will fall through to the control anyway, so you can access them directly. You can see a full list of properties directly available in <a href="../abstractcontroldirective/"><code>AbstractControlDirective</code></a>.</p> <p>The following is an example of a simple standalone control using <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code>:</p> <pre>import {Component} from '@angular/core';
+
+@Component({
+  selector: 'example-app',
+  template: `
+    &lt;input [(ngModel)]="name" #ctrl="ngModel" required&gt;
+
+    &lt;p&gt;Value: {{ name }}&lt;/p&gt;
+    &lt;p&gt;Valid: {{ ctrl.valid }}&lt;/p&gt;
+    
+    &lt;button (click)="setValue()"&gt;Set value&lt;/button&gt;
+  `,
+})
+export class SimpleNgModelComp {
+  name: string = '';
+
+  setValue() { this.name = 'Nancy'; }
+}</pre> <p>When using the <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> within <code>&lt;form&gt;</code> tags, you'll also need to supply a <code>name</code> attribute so that the control can be registered with the parent form under that name.</p> <p>It's worth noting that in the context of a parent form, you often can skip one-way or two-way binding because the parent form will sync the value for you. You can access its properties by exporting it into a local template variable using <code><a href="../ngform/" class="code-anchor">ngForm</a></code> (ex: <code>#f="<a href="../ngform/" class="code-anchor">ngForm</a>"</code>). Then you can pass it where it needs to go on submit.</p> <p>If you do need to populate initial values into your form, using a one-way binding for <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> tends to be sufficient as long as you use the exported form's value rather than the domain model's value on submit.</p> <p>Take a look at an example of using <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> within a form:</p> <pre>import {Component} from '@angular/core';
+import {NgForm} from '@angular/forms';
+
+@Component({
+  selector: 'example-app',
+  template: `
+    &lt;form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate&gt;
+      &lt;input name="first" ngModel required #first="ngModel"&gt;
+      &lt;input name="last" ngModel&gt;
+      &lt;button&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+    
+    &lt;p&gt;First name value: {{ first.value }}&lt;/p&gt;
+    &lt;p&gt;First name valid: {{ first.valid }}&lt;/p&gt;
+    &lt;p&gt;Form value: {{ f.value | json }}&lt;/p&gt;
+    &lt;p&gt;Form valid: {{ f.valid }}&lt;/p&gt;
+  `,
+})
+export class SimpleFormComp {
+  onSubmit(f: NgForm) {
+    console.log(f.value);  // { first: '', last: '' }
+    console.log(f.valid);  // false
+  }
+}</pre> <p>To see <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> examples with different form control types, see:</p> <ul> <li>Radio buttons: <a href="../radiocontrolvalueaccessor/"><code>RadioControlValueAccessor</code></a>
+</li> <li>Selects: <a href="../selectcontrolvalueaccessor/"><code>SelectControlValueAccessor</code></a>
+</li> </ul> <p><strong>npm package</strong>: <code>@angular/forms</code></p> <p><strong>NgModule</strong>: <code><a href="../formsmodule/" class="code-anchor">FormsModule</a></code></p>   <h2 id="selectors">Selectors</h2> <h3><code>[ngModel]:not([formControlName]):not([formControl])</code></h3>   <h4 id="inputs">Inputs</h4> <div class="input"> <code>name</code> bound to <code><a href="../ngmodel/#name" class="code-anchor">NgModel.name</a></code> </div> <div class="input"> <code>disabled</code> bound to <code><a href="../ngmodel/#isDisabled" class="code-anchor">NgModel.isDisabled</a></code> </div> <div class="input"> <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> bound to <code><a href="../ngmodel/#model" class="code-anchor">NgModel.model</a></code> </div> <div class="input"> <code>ngModelOptions</code> bound to <code><a href="../ngmodel/#options" class="code-anchor">NgModel.options</a></code> </div>   <h2 id="outputs">Outputs</h2> <div class="output"> <code>ngModelChange</code> bound to <code><a href="../ngmodel/#update" class="code-anchor">NgModel.update</a></code> </div>   <h2 id="exported-as">Exported as</h2> <div> <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> </div>   <h2 id="constructor">Constructor</h2> <div class="constructor">  <h3 data-language="typescript"><code>constructor(parent: ControlContainer, validators: Array&lt;Validator | ValidatorFn&gt;, asyncValidators: Array&lt;AsyncValidator | AsyncValidatorFn&gt;, valueAccessors: ControlValueAccessor[])</code></h3>
+</div>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>get control: FormControl</code></h3>    <h3 data-language="typescript"><code>viewModel: any</code></h3>    <h3 data-language="typescript"><code>name: string</code></h3>    <h3 data-language="typescript"><code>isDisabled: boolean</code></h3>    <h3 data-language="typescript"><code>model: any</code></h3>    <h3 data-language="typescript"><code>options: {
+    name?: string;
+    standalone?: boolean;
+    updateOn?: FormHooks;
+}</code></h3> <p>Options object for this <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> instance. You can configure the following properties:</p> <p><strong>name</strong>: An alternative to setting the name attribute on the form control element. Sometimes, especially with custom form components, the name attribute might be used as an <code>@<a href="../../core/input/" class="code-anchor">Input</a></code> property for a different purpose. In cases like these, you can configure the <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> name through this option.</p> <pre data-language="html">&lt;form&gt;
+  &lt;my-person-control name="Nancy" ngModel [ngModelOptions]="{name: 'user'}"&gt;
+  &lt;/my-person-control&gt;
+&lt;/form&gt;
+&lt;!-- form value: {user: ''} --&gt;</pre> <p><strong>standalone</strong>: Defaults to false. If this is set to true, the <code><a href="../ngmodel/" class="code-anchor">ngModel</a></code> will not register itself with its parent form, and will act as if it's not in the form. This can be handy if you have form meta-controls, a.k.a. form elements nested in the <code>&lt;form&gt;</code> tag that control the display of the form, but don't contain form data.</p> <pre data-language="html">&lt;form&gt;
+  &lt;input name="login" ngModel placeholder="Login"&gt;
+  &lt;input type="checkbox" ngModel [ngModelOptions]="{standalone: true}"&gt; Show more options?
+&lt;/form&gt;
+&lt;!-- form value: {login: ''} --&gt;</pre> <p><strong>updateOn</strong>: Defaults to <code>'change'</code>. Defines the event upon which the form control value and validity will update. Also accepts <code>'blur'</code> and <code>'submit'</code>.</p> <pre data-language="html">&lt;input [(ngModel)]="firstName" [ngModelOptions]="{updateOn: 'blur'}"&gt;</pre>     <h3 data-language="typescript"><code>update: new EventEmitter()</code></h3>    <h3 data-language="typescript"><code>ngOnChanges(changes: SimpleChanges)</code></h3>    <h3 data-language="typescript"><code>ngOnDestroy(): void</code></h3>    <h3 data-language="typescript"><code>get path: string[]</code></h3>    <h3 data-language="typescript"><code>get formDirective: any</code></h3>    <h3 data-language="typescript"><code>get validator: ValidatorFn | null</code></h3>    <h3 data-language="typescript"><code>get asyncValidator: AsyncValidatorFn | null</code></h3>    <h3 data-language="typescript"><code>viewToModelUpdate(newValue: any): void</code></h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/forms/NgModel" class="_attribution-link" target="_blank">https://v5.angular.io/api/forms/NgModel</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

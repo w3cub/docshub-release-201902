@@ -1,0 +1,174 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Router - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" class ">
+  <meta name="keywords" content="router, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/router/router/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="router">Router</h1> <p><code class="api-type-label class">class</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/router" target="_blank">@angular/router</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../router/" class="code-anchor">Router</a> } from <a href="../../router/">'@angular/router'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/router/src/router.ts#L189-L798" target="_blank">router/src/router.ts</a></td> </tr> <tr> <th>NgModule</th> <td><a href="../routermodule/"><code>RouterModule</code></a></td> </tr> </tbody> </table> <div class="what-it-does info-banner"> <p>Provides the navigation and url manipulation capabilities.</p> <p>See <a href="../routes/"><code>Routes</code></a> for more details and examples.</p> </div>  <h2 id="overview">Overview</h2> <pre data-language="typescript">class Router {
+  constructor(rootComponentType: Type&lt;any&gt; | null, urlSerializer: UrlSerializer, rootContexts: ChildrenOutletContexts, location: Location, injector: Injector, loader: NgModuleFactoryLoader, compiler: Compiler, config: Routes)
+  get events: Observable&lt;Event&gt;
+  get routerState: RouterState
+  errorHandler: ErrorHandler
+  navigated: boolean
+  urlHandlingStrategy: UrlHandlingStrategy
+  routeReuseStrategy: RouteReuseStrategy
+  onSameUrlNavigation: 'reload' | 'ignore'
+  paramsInheritanceStrategy: 'emptyOnly' | 'always'
+  config: Routes
+  initialNavigation(): void
+  setUpLocationChangeListener(): void
+  get url: string
+  resetConfig(config: Routes): void
+  ngOnDestroy(): void
+  dispose(): void
+  createUrlTree(commands: any[], navigationExtras: NavigationExtras = {}): UrlTree
+  navigateByUrl(url: string | UrlTree, extras: NavigationExtras = { skipLocationChange: false }): Promise&lt;boolean&gt;
+  navigate(commands: any[], extras: NavigationExtras = { skipLocationChange: false }): Promise&lt;boolean&gt;
+  serializeUrl(url: UrlTree): string
+  parseUrl(url: string): UrlTree
+  isActive(url: string | UrlTree, exact: boolean): boolean
+}</pre>   <h2 id="constructor">Constructor</h2> <div class="constructor">  <h3 data-language="typescript"><code>constructor(rootComponentType: Type&lt;any&gt; | null, urlSerializer: UrlSerializer, rootContexts: ChildrenOutletContexts, location: Location, injector: Injector, loader: NgModuleFactoryLoader, compiler: Compiler, config: Routes)</code></h3> <p>Creates the router service.</p> </div>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>get events: Observable&lt;Event&gt;</code></h3>    <h3 data-language="typescript"><code>get routerState: RouterState</code></h3>    <h3 data-language="typescript"><code>errorHandler: ErrorHandler</code></h3> <p>Error handler that is invoked when a navigation errors.</p> <p>See <a href="../../core/errorhandler/"><code>ErrorHandler</code></a> for more information.</p>     <h3 data-language="typescript"><code>navigated: boolean</code></h3> <p>Indicates if at least one navigation happened.</p>     <h3 data-language="typescript"><code>urlHandlingStrategy: UrlHandlingStrategy</code></h3> <p>Extracts and merges URLs. Used for AngularJS to Angular migrations.</p>     <h3 data-language="typescript"><code>routeReuseStrategy: RouteReuseStrategy</code></h3>    <h3 data-language="typescript"><code>onSameUrlNavigation: 'reload' | 'ignore'</code></h3> <p>Define what the router should do if it receives a navigation request to the current URL. By default, the router will ignore this navigation. However, this prevents features such as a "refresh" button. Use this option to configure the behavior when navigating to the current URL. Default is 'ignore'.</p>     <h3 data-language="typescript"><code>paramsInheritanceStrategy: 'emptyOnly' | 'always'</code></h3> <p>Defines how the router merges params, data and resolved data from parent to child routes. Available options are:</p> <ul> <li>
+<code>'emptyOnly'</code>, the default, only inherits parent params for path-less or component-less routes.</li> <li>
+<code>'always'</code>, enables unconditional inheritance of parent params.</li> </ul>     <h3 data-language="typescript"><code>config: Routes</code></h3>    <h3 data-language="typescript"><code>initialNavigation(): void</code></h3> <p>Sets up the location change listener and performs the initial navigation.</p>     <h3 data-language="typescript"><code>setUpLocationChangeListener(): void</code></h3> <p>Sets up the location change listener.</p>     <h3 data-language="typescript"><code>get url: string</code></h3> <p>The current url</p>     <h3 data-language="typescript"><code>resetConfig(config: Routes): void</code></h3> <p>Resets the configuration used for navigation and generating links.</p> <h4 id="usage">Usage</h4> <pre>router.resetConfig([
+ { path: 'team/:id', component: TeamCmp, children: [
+   { path: 'simple', component: SimpleCmp },
+   { path: 'user/:name', component: UserCmp }
+ ]}
+]);</pre>     <h3 data-language="typescript"><code>ngOnDestroy(): void</code></h3>    <h3 data-language="typescript"><code>dispose(): void</code></h3> <p>Disposes of the router</p>     <h3 data-language="typescript"><code>createUrlTree(commands: any[], navigationExtras: NavigationExtras = {}): UrlTree</code></h3> <p>Applies an array of commands to the current url tree and creates a new url tree.</p> <p>When given an activate route, applies the given commands starting from the route. When not given a route, applies the given command starting from the root.</p> <h4 id="usage-1">Usage</h4> <pre>// create /team/33/user/11
+router.createUrlTree(['/team', 33, 'user', 11]);
+
+// create /team/33;expand=true/user/11
+router.createUrlTree(['/team', 33, {expand: true}, 'user', 11]);
+
+// you can collapse static segments like this (this works only with the first passed-in value):
+router.createUrlTree(['/team/33/user', userId]);
+
+// If the first segment can contain slashes, and you do not want the router to split it, you
+// can do the following:
+
+router.createUrlTree([{segmentPath: '/one/two'}]);
+
+// create /team/33/(user/11//right:chat)
+router.createUrlTree(['/team', 33, {outlets: {primary: 'user/11', right: 'chat'}}]);
+
+// remove the right secondary node
+router.createUrlTree(['/team', 33, {outlets: {primary: 'user/11', right: null}}]);
+
+// assuming the current url is `/team/33/user/11` and the route points to `user/11`
+
+// navigate to /team/33/user/11/details
+router.createUrlTree(['details'], {relativeTo: route});
+
+// navigate to /team/33/user/22
+router.createUrlTree(['../22'], {relativeTo: route});
+
+// navigate to /team/44/user/22
+router.createUrlTree(['../../team/44/user/22'], {relativeTo: route});</pre>     <h3 data-language="typescript"><code>navigateByUrl(url: string | UrlTree, extras: NavigationExtras = { skipLocationChange: false }): Promise&lt;boolean&gt;</code></h3> <p>Navigate based on the provided url. This navigation is always absolute.</p> <p>Returns a promise that:</p> <ul> <li>resolves to 'true' when navigation succeeds,</li> <li>resolves to 'false' when navigation fails,</li> <li>is rejected when an error happens.</li> </ul> <h4 id="usage-2">Usage</h4> <pre>router.navigateByUrl("/team/33/user/11");
+
+// Navigate without updating the URL
+router.navigateByUrl("/team/33/user/11", { skipLocationChange: true });</pre> <p>In opposite to <code>navigate</code>, <code>navigateByUrl</code> takes a whole URL and does not apply any delta to the current one.</p>     <h3 data-language="typescript"><code>navigate(commands: any[], extras: NavigationExtras = { skipLocationChange: false }): Promise&lt;boolean&gt;</code></h3> <p>Navigate based on the provided array of commands and a starting point. If no starting route is provided, the navigation is absolute.</p> <p>Returns a promise that:</p> <ul> <li>resolves to 'true' when navigation succeeds,</li> <li>resolves to 'false' when navigation fails,</li> <li>is rejected when an error happens.</li> </ul> <h4 id="usage-3">Usage</h4> <pre>router.navigate(['team', 33, 'user', 11], {relativeTo: route});
+
+// Navigate without updating the URL
+router.navigate(['team', 33, 'user', 11], {relativeTo: route, skipLocationChange: true});</pre> <p>In opposite to <code>navigateByUrl</code>, <code>navigate</code> always takes a delta that is applied to the current URL.</p>     <h3 data-language="typescript"><code>serializeUrl(url: UrlTree): string</code></h3> <p>Serializes a <a href="../urltree/"><code>UrlTree</code></a> into a string</p>     <h3 data-language="typescript"><code>parseUrl(url: string): UrlTree</code></h3> <p>Parses a string into a <a href="../urltree/"><code>UrlTree</code></a></p>     <h3 data-language="typescript"><code>isActive(url: string | UrlTree, exact: boolean): boolean</code></h3> <p>Returns whether the url is activated</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/router/Router" class="_attribution-link" target="_blank">https://v5.angular.io/api/router/Router</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

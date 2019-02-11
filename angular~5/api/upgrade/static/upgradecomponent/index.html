@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>UpgradeComponent - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" class ">
+  <meta name="keywords" content="upgradecomponent, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/upgrade/static/upgradecomponent/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="upgradecomponent">UpgradeComponent</h1> <p><code class="api-type-label class">class</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/upgrade" target="_blank">@angular/upgrade</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../upgradecomponent/" class="code-anchor">UpgradeComponent</a> } from <a href="../../static/">'@angular/upgrade/static'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/upgrade/src/static/upgrade_component.ts#L28-L300" target="_blank">upgrade/src/static/upgrade_component.ts</a></td> </tr> </tbody> </table> <div class="what-it-does info-banner"> <p><em>Part of the <a href="../api?query=upgrade%2Fstatic/">upgrade/static</a> library for hybrid upgrade apps that support AoT compilation</em></p> <p>Allows an AngularJS component to be used from Angular.</p> </div>  <h2 id="overview">Overview</h2> <pre data-language="typescript">class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
+  constructor(name: string, elementRef: ElementRef, injector: Injector)
+  ngOnInit()
+  ngOnChanges(changes: SimpleChanges)
+  ngDoCheck()
+  ngOnDestroy()
+}</pre>   <h2 id="how-to-use">How To Use</h2> <p>Let's assume that you have an AngularJS component called <code>ng1Hero</code> that needs to be made available in Angular templates.</p> <pre>// This AngularJS component will be "upgraded" to be used in Angular
+ng1AppModule.component('ng1Hero', {
+  bindings: {hero: '&lt;', onRemove: '&amp;'},
+  transclude: true,
+  template: `&lt;div class="title" ng-transclude&gt;&lt;/div&gt;
+             &lt;h2&gt;{{ $ctrl.hero.name }}&lt;/h2&gt;
+             &lt;p&gt;{{ $ctrl.hero.description }}&lt;/p&gt;
+             &lt;button ng-click="$ctrl.onRemove()"&gt;Remove&lt;/button&gt;`
+});</pre> <p>We must create a <a href="../../../core/directive/"><code>Directive</code></a> that will make this AngularJS component available inside Angular templates.</p> <pre>// This Angular directive will act as an interface to the "upgraded" AngularJS component
+@Directive({selector: 'ng1-hero'})
+class Ng1HeroComponentWrapper extends UpgradeComponent implements OnInit, OnChanges, DoCheck,
+    OnDestroy {
+  // The names of the input and output properties here must match the names of the
+  // `&lt;` and `&amp;` bindings in the AngularJS component that is being wrapped
+  @Input() hero: Hero;
+  @Output() onRemove: EventEmitter&lt;void&gt;;
+  constructor(@Inject(ElementRef) elementRef: ElementRef, @Inject(Injector) injector: Injector) {
+    // We must pass the name of the directive as used by AngularJS to the super
+    super('ng1Hero', elementRef, injector);
+  }
+
+  // For this class to work when compiled with AoT, we must implement these lifecycle hooks
+  // because the AoT compiler will not realise that the super class implements them
+  ngOnInit() { super.ngOnInit(); }
+
+  ngOnChanges(changes: SimpleChanges) { super.ngOnChanges(changes); }
+
+  ngDoCheck() { super.ngDoCheck(); }
+
+  ngOnDestroy() { super.ngOnDestroy(); }
+}</pre> <p>In this example you can see that we must derive from the <a href="../upgradecomponent/"><code>UpgradeComponent</code></a> base class but also provide an <a href="../../../core/directive/">`@Directive`</a> decorator. This is because the AoT compiler requires that this information is statically available at compile time.</p> <p>Note that we must do the following:</p> <ul> <li>specify the directive's selector (<code>ng1-hero</code>)</li> <li>specify all inputs and outputs that the AngularJS component expects</li> <li>derive from <code><a href="../upgradecomponent/" class="code-anchor">UpgradeComponent</a></code>
+</li> <li> <p>call the base class from the constructor, passing</p> <ul> <li>the AngularJS name of the component (<code>ng1Hero</code>)</li> <li>the <a href="../../../core/elementref/"><code>ElementRef</code></a> and <a href="../../../core/injector/"><code>Injector</code></a> for the component wrapper</li> </ul> </li> </ul>   <h2 id="description">Description</h2> <p>A helper class that should be used as a base class for creating Angular directives that wrap AngularJS components that need to be "upgraded".</p>   <h2 id="constructor">Constructor</h2> <div class="constructor">  <h3 data-language="typescript"><code>constructor(name: string, elementRef: ElementRef, injector: Injector)</code></h3> <p>Create a new <code><a href="../upgradecomponent/" class="code-anchor">UpgradeComponent</a></code> instance. You should not normally need to do this. Instead you should derive a new class from this one and call the super constructor from the base class.</p> <pre>// This Angular directive will act as an interface to the "upgraded" AngularJS component
+@Directive({selector: 'ng1-hero'})
+class Ng1HeroComponentWrapper extends UpgradeComponent implements OnInit, OnChanges, DoCheck,
+    OnDestroy {
+  // The names of the input and output properties here must match the names of the
+  // `&lt;` and `&amp;` bindings in the AngularJS component that is being wrapped
+  @Input() hero: Hero;
+  @Output() onRemove: EventEmitter&lt;void&gt;;
+  constructor(@Inject(ElementRef) elementRef: ElementRef, @Inject(Injector) injector: Injector) {
+    // We must pass the name of the directive as used by AngularJS to the super
+    super('ng1Hero', elementRef, injector);
+  }
+
+  // For this class to work when compiled with AoT, we must implement these lifecycle hooks
+  // because the AoT compiler will not realise that the super class implements them
+  ngOnInit() { super.ngOnInit(); }
+
+  ngOnChanges(changes: SimpleChanges) { super.ngOnChanges(changes); }
+
+  ngDoCheck() { super.ngDoCheck(); }
+
+  ngOnDestroy() { super.ngOnDestroy(); }
+}</pre> <ul> <li>The <code>name</code> parameter should be the name of the AngularJS directive.</li> <li>The <code>elementRef</code> and <code>injector</code> parameters should be acquired from Angular by dependency injection into the base class constructor.</li> </ul> <p>Note that we must manually implement lifecycle hooks that call through to the super class. This is because, at the moment, the AoT compiler is not able to tell that the <code><a href="../upgradecomponent/" class="code-anchor">UpgradeComponent</a></code> already implements them and so does not wire up calls to them at runtime.</p> </div>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>ngOnInit()</code></h3>    <h3 data-language="typescript"><code>ngOnChanges(changes: SimpleChanges)</code></h3>    <h3 data-language="typescript"><code>ngDoCheck()</code></h3>    <h3 data-language="typescript"><code>ngOnDestroy()</code></h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/upgrade/static/UpgradeComponent" class="_attribution-link" target="_blank">https://v5.angular.io/api/upgrade/static/UpgradeComponent</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

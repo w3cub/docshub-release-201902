@@ -1,0 +1,142 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Location - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" class ">
+  <meta name="keywords" content="location, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/common/location/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="location">Location</h1> <p><code class="api-type-label class">class</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/common" target="_blank">@angular/common</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../location/" class="code-anchor">Location</a> } from <a href="../../common/">'@angular/common'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/common/src/location/location.ts#L20-L182" target="_blank">common/src/location/location.ts</a></td> </tr> </tbody> </table> <div class="what-it-does info-banner"> <p><code><a href="../location/" class="code-anchor">Location</a></code> is a service that applications can use to interact with a browser's URL.</p> </div>  <h2 id="overview">Overview</h2> <pre data-language="typescript">class Location {
+  constructor(platformStrategy: LocationStrategy)
+  static normalizeQueryParams(params: string): string
+  static joinWithSlash(start: string, end: string): string
+  static stripTrailingSlash(url: string): string
+  path(includeHash: boolean = false): string
+  isCurrentPathEqualTo(path: string, query: string = ''): boolean
+  normalize(url: string): string
+  prepareExternalUrl(url: string): string
+  go(path: string, query: string = ''): void
+  replaceState(path: string, query: string = ''): void
+  forward(): void
+  back(): void
+  subscribe(onNext: (value: PopStateEvent) =&gt; void, onThrow?: ((exception: any) =&gt; void) | null, onReturn?: (() =&gt; void) | null): ISubscription
+}</pre>   <h2 id="description">Description</h2> <p>Depending on which <a href="../locationstrategy/"><code>LocationStrategy</code></a> is used, <code><a href="../location/" class="code-anchor">Location</a></code> will either persist to the URL's path or the URL's hash segment.</p> <p>Note: it's better to use <a href="../../router/router/#navigate"><code>Router</code></a> service to trigger route changes. Use <code><a href="../location/" class="code-anchor">Location</a></code> only if you need to interact with or create normalized URLs outside of routing.</p> <p><code><a href="../location/" class="code-anchor">Location</a></code> is responsible for normalizing the URL against the application's base href. A normalized URL is absolute from the URL host, includes the application's base href, and has no trailing slash:</p> <ul> <li>
+<code>/my/app/user/123</code> is normalized</li> <li>
+<code>my/app/user/123</code> <strong>is not</strong> normalized</li> <li>
+<code>/my/app/user/123/</code> <strong>is not</strong> normalized</li> </ul> <h3 id="example">Example</h3> <pre>import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {Component} from '@angular/core';
+
+@Component({
+  selector: 'path-location',
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
+  template: `
+    &lt;h1&gt;PathLocationStrategy&lt;/h1&gt;
+    Current URL is: &lt;code&gt;{{location.path()}}&lt;/code&gt;&lt;br&gt;
+    Normalize: &lt;code&gt;/foo/bar/&lt;/code&gt; is: &lt;code&gt;{{location.normalize('foo/bar')}}&lt;/code&gt;&lt;br&gt;
+  `
+})
+export class PathLocationComponent {
+  location: Location;
+  constructor(location: Location) { this.location = location; }
+}</pre>  <h2 id="subclasses">Subclasses</h2> <ul class="descendants class"> <li> <pre>SpyLocation</pre> </li> </ul>  <h2 id="static-members">Static Members</h2> <div class="static-member">  <h3 data-language="typescript"><code>static normalizeQueryParams(params: string): string</code></h3> <p>Given a string of url parameters, prepend with '?' if needed, otherwise return parameters as is.</p> </div>  <div class="static-member">  <h3 data-language="typescript"><code>static joinWithSlash(start: string, end: string): string</code></h3> <p>Given 2 parts of a url, join them with a slash if needed.</p> </div>  <div class="static-member">  <h3 data-language="typescript"><code>static stripTrailingSlash(url: string): string</code></h3> <p>If url has a trailing slash, remove it, otherwise return url as is. This method looks for the first occurence of either #, ?, or the end of the line as <code>/</code> characters after any of these should not be replaced.</p> </div>   <h2 id="constructor">Constructor</h2> <div class="constructor">  <h3 data-language="typescript"><code>constructor(platformStrategy: LocationStrategy)</code></h3>
+</div>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>path(includeHash: boolean = false): string</code></h3> <p>Returns the normalized URL path.</p>     <h3 data-language="typescript"><code>isCurrentPathEqualTo(path: string, query: string = ''): boolean</code></h3> <p>Normalizes the given path and compares to the current normalized path.</p>     <h3 data-language="typescript"><code>normalize(url: string): string</code></h3> <p>Given a string representing a URL, returns the normalized URL path without leading or trailing slashes.</p>     <h3 data-language="typescript"><code>prepareExternalUrl(url: string): string</code></h3> <p>Given a string representing a URL, returns the platform-specific external URL path. If the given URL doesn't begin with a leading slash (<code>'/'</code>), this method adds one before normalizing. This method will also add a hash if <code><a href="../hashlocationstrategy/" class="code-anchor">HashLocationStrategy</a></code> is used, or the <code><a href="../app_base_href/" class="code-anchor">APP_BASE_HREF</a></code> if the <code><a href="../pathlocationstrategy/" class="code-anchor">PathLocationStrategy</a></code> is in use.</p>     <h3 data-language="typescript"><code>go(path: string, query: string = ''): void</code></h3> <p>Changes the browsers URL to the normalized version of the given URL, and pushes a new item onto the platform's history.</p>     <h3 data-language="typescript"><code>replaceState(path: string, query: string = ''): void</code></h3> <p>Changes the browsers URL to the normalized version of the given URL, and replaces the top item on the platform's history stack.</p>     <h3 data-language="typescript"><code>forward(): void</code></h3> <p>Navigates forward in the platform's history.</p>     <h3 data-language="typescript"><code>back(): void</code></h3> <p>Navigates back in the platform's history.</p>     <h3 data-language="typescript"><code>subscribe(onNext: (value: PopStateEvent) =&gt; void, onThrow?: ((exception: any) =&gt; void) | null, onReturn?: (() =&gt; void) | null): ISubscription</code></h3> <p>Subscribe to the platform's <code>popState</code> events.</p>    <h2 id="annotations">Annotations</h2> <h3 data-language="typescript"><code>@Injectable()</code></h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/common/Location" class="_attribution-link" target="_blank">https://v5.angular.io/api/common/Location</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

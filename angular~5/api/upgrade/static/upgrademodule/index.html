@@ -1,0 +1,145 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>UpgradeModule - Angular 5 - W3cubDocs</title>
+  
+  <meta name="description" content=" class ">
+  <meta name="keywords" content="upgrademodule, -, angular, angular~5">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~5/api/upgrade/static/upgrademodule/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/angular~5.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _angular">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="upgrademodule">UpgradeModule</h1> <p><code class="api-type-label class">class</code></p>     <table> <tbody> <tr> <th>npm Package</th> <td><a href="https://www.npmjs.com/package/@angular/upgrade" target="_blank">@angular/upgrade</a></td> </tr> <tr> <th>Module</th> <td><code>import { <a href="../upgrademodule/" class="code-anchor">UpgradeModule</a> } from <a href="../../static/">'@angular/upgrade/static'</a>;</code></td> </tr> <tr> <th>Source</th> <td><a href="https://github.com/angular/angular/tree/5.2.11/packages/upgrade/src/static/upgrade_module.ts#L17-L276" target="_blank">upgrade/src/static/upgrade_module.ts</a></td> </tr> </tbody> </table> <div class="what-it-does info-banner"> <p><em>Part of the <a href="../api?query=upgrade%2Fstatic/">upgrade/static</a> library for hybrid upgrade apps that support AoT compilation</em></p> <p>Allows AngularJS and Angular components to be used together inside a hybrid upgrade application, which supports AoT compilation.</p> <p>Specifically, the classes and functions in the <code><a href="../../static/" class="code-anchor">upgrade/static</a></code> module allow the following: 1. Creation of an Angular directive that wraps and exposes an AngularJS component so that it can be used in an Angular template. See <a href="../upgradecomponent/"><code>UpgradeComponent</code></a>. 2. Creation of an AngularJS directive that wraps and exposes an Angular component so that it can be used in an AngularJS template. See <a href="../downgradecomponent/"><code>downgradeComponent</code></a>. 3. Creation of an Angular root injector provider that wraps and exposes an AngularJS service so that it can be injected into an Angular context. See <a href="../upgrademodule/#upgrading-an-angular-1-service">Upgrading an AngularJS service</a> below. 4. Creation of an AngularJS service that wraps and exposes an Angular injectable so that it can be injected into an AngularJS context. See <a href="../downgradeinjectable/"><code>downgradeInjectable</code></a>. 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks coexisting in a single application. See the <a href="../upgrademodule/#example">example</a> below.</p> <h2 id="mental-model">Mental Model</h2> <p>When reasoning about how a hybrid application works it is useful to have a mental model which describes what is happening and explains what is happening at the lowest level.</p> <ol> <li>There are two independent frameworks running in a single application, each framework treats the other as a black box.</li> <li>Each DOM element on the page is owned exactly by one framework. Whichever framework instantiated the element is the owner. Each framework only updates/interacts with its own DOM elements and ignores others.</li> <li>AngularJS directives always execute inside the AngularJS framework codebase regardless of where they are instantiated.</li> <li>Angular components always execute inside the Angular framework codebase regardless of where they are instantiated.</li> <li>An AngularJS component can be "upgraded"" to an Angular component. This is achieved by defining an Angular directive, which bootstraps the AngularJS component at its location in the DOM. See <a href="../upgradecomponent/"><code>UpgradeComponent</code></a>.</li> <li>An Angular component can be "downgraded"" to an AngularJS component. This is achieved by defining an AngularJS directive, which bootstraps the Angular component at its location in the DOM. See <a href="../downgradecomponent/"><code>downgradeComponent</code></a>.</li> <li>Whenever an "upgraded"/"downgraded" component is instantiated the host element is owned by the framework doing the instantiation. The other framework then instantiates and owns the view for that component. a. This implies that the component bindings will always follow the semantics of the instantiation framework. b. The DOM attributes are parsed by the framework that owns the current template. So attributes in AngularJS templates must use kebab-case, while AngularJS templates must use camelCase. c. However the template binding syntax will always use the Angular style, e.g. square brackets (<code>[...]</code>) for property binding.</li> <li>Angular is bootstrapped first; AngularJS is bootstrapped second. AngularJS always owns the root component of the application.</li> <li>The new application is running in an Angular zone, and therefore it no longer needs calls to <code>$apply()</code>.</li> </ol> </div>  <h2 id="overview">Overview</h2> <pre data-language="typescript">class UpgradeModule {
+  constructor(injector: Injector, ngZone: NgZone)
+  $injector: any
+  injector: Injector
+  ngZone: NgZone
+  bootstrap(element: Element, modules: string[] = [], config?: any)
+}</pre>   <h2 id="how-to-use">How To Use</h2> <p><code>import {<a href="../upgrademodule/" class="code-anchor">UpgradeModule</a>} from '@angular/upgrade/<a href="../../static/" class="code-anchor">static</a>';</code></p> <h2 id="example">Example</h2> <p>Import the <a href="../upgrademodule/"><code>UpgradeModule</code></a> into your top level <a href="../../../core/ngmodule/">Angular `NgModule`</a>.</p> <pre>// This NgModule represents the Angular pieces of the application
+@NgModule({
+  declarations: [Ng2HeroesComponent, Ng1HeroComponentWrapper],
+  providers: [
+    HeroesService,
+    // Register an Angular provider whose value is the "upgraded" AngularJS service
+    {provide: 'titleCase', useFactory: (i: any) =&gt; i.get('titleCase'), deps: ['$injector']}
+  ],
+  // All components that are to be "downgraded" must be declared as `entryComponents`
+  entryComponents: [Ng2HeroesComponent],
+  // We must import `UpgradeModule` to get access to the AngularJS core services
+  imports: [BrowserModule, UpgradeModule]
+})
+class Ng2AppModule {
+  ngDoBootstrap() { /* this is a placeholder to stop the bootstrapper from complaining */
+  }
+}</pre> <p>Then bootstrap the hybrid upgrade app's module, get hold of the <a href="../upgrademodule/"><code>UpgradeModule</code></a> instance and use it to bootstrap the top level <a href="https://docs.angularjs.org/api/ng/type/angular.Module" target="_blank">AngularJS module</a>.</p> <pre>// First we bootstrap the Angular HybridModule
+// (We are using the dynamic browser platform as this example has not been compiled AoT)
+platformBrowserDynamic().bootstrapModule(Ng2AppModule).then(ref =&gt; {
+  // Once Angular bootstrap is complete then we bootstrap the AngularJS module
+  const upgrade = ref.injector.get(UpgradeModule) as UpgradeModule;
+  upgrade.bootstrap(document.body, [ng1AppModule.name]);
+});</pre>  <h2 id="upgrading-an-angularjs-service">Upgrading an AngularJS service</h2> <p>There is no specific API for upgrading an AngularJS service. Instead you should just follow the following recipe:</p> <p>Let's say you have an AngularJS service:</p> <pre>// This AngularJS service will be "upgraded" to be used in Angular
+ng1AppModule.factory(
+    'titleCase',
+    (() =&gt; (value: string) =&gt; value.replace(/((^|\s)[a-z])/g, (_, c) =&gt; c.toUpperCase())) as any);</pre> <p>Then you should define an Angular provider to be included in your <a href="../../../core/ngmodule/"><code>NgModule</code></a> <code>providers</code> property.</p> <pre>// Register an Angular provider whose value is the "upgraded" AngularJS service
+{provide: 'titleCase', useFactory: (i: any) =&gt; i.get('titleCase'), deps: ['$injector']}</pre> <p>Then you can use the "upgraded" AngularJS service by injecting it into an Angular component or service.</p> <pre>constructor(@Inject('titleCase') titleCase: (v: string) =&gt; string) {
+  // Change all the hero names to title case, using the "upgraded" AngularJS service
+  this.heroes.forEach((hero: Hero) =&gt; hero.name = titleCase(hero.name));
+}</pre>   <h2 id="description">Description</h2> <p>This class is an <code><a href="../../../core/ngmodule/" class="code-anchor">NgModule</a></code>, which you import to provide AngularJS core services, and has an instance method used to bootstrap the hybrid upgrade application.</p> <h2 id="core-angularjs-services">Core AngularJS services</h2> <p>Importing this <a href="../../../core/ngmodule/"><code>NgModule</code></a> will add providers for the core <a href="https://docs.angularjs.org/api/ng/service" target="_blank">AngularJS services</a> to the root injector.</p> <h2 id="bootstrap">Bootstrap</h2> <p>The runtime instance of this class contains a <a href="../upgrademodule/#bootstrap">`bootstrap()`</a> method, which you use to bootstrap the top level AngularJS module onto an element in the DOM for the hybrid upgrade app.</p> <p>It also contains properties to access the <a href="../upgrademodule/#injector">root injector</a>, the bootstrap <a href="../../../core/ngzone/"><code>NgZone</code></a> and the <a href="https://docs.angularjs.org/api/auto/service/%24injector" target="_blank">AngularJS $injector</a>.</p>   <h2 id="constructor">Constructor</h2> <div class="constructor">  <h3 data-language="typescript"><code>constructor(injector: Injector, ngZone: NgZone)</code></h3>
+</div>   <h2 id="members">Members</h2>   <h3 data-language="typescript"><code>$injector: any</code></h3> <p>The AngularJS <code>$injector</code> for the upgrade application.</p>     <h3 data-language="typescript"><code>injector: Injector</code></h3> <p>The Angular Injector *</p>     <h3 data-language="typescript"><code>ngZone: NgZone</code></h3> <p>The bootstrap zone for the upgrade application</p>     <h3 data-language="typescript"><code>bootstrap(element: Element, modules: string[] = [], config?: any)</code></h3> <p>Bootstrap an AngularJS application from this NgModule</p>    <h2 id="annotations">Annotations</h2> <h3 data-language="typescript"><code>@NgModule({ providers: [angular1Providers] })</code></h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v5.angular.io/api/upgrade/static/UpgradeModule" class="_attribution-link" target="_blank">https://v5.angular.io/api/upgrade/static/UpgradeModule</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
