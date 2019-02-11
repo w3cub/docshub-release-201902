@@ -1,0 +1,191 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Event - Pygame - W3cubDocs</title>
+  
+  <meta name="description" content="Pygame handles all its event messaging through an event queue. The routines in this module help you manage that event queue. The input queue is &hellip;">
+  <meta name="keywords" content="pygame, event, eventtype, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/pygame/ref/event/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/pygame.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/pygame/" class="_nav-link" title="" style="margin-left:0;">Pygame</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="title module" data-name="pygame.event"> <span class="pre">pygame.event</span>
+</h1> <blockquote class="line-block"> <div class="line"><span class="summaryline">pygame module for interacting with events and queues</span></div> </blockquote>  <p>Pygame handles all its event messaging through an event queue. The routines in this module help you manage that event queue. The input queue is heavily dependent on the pygame display module. If the display has not been initialized and a video mode not set, the event queue will not really work.</p> <p>The queue is a regular queue of <a class="tooltip reference internal" href="#pygame.event.EventType" title=""><code class="xref py py-class docutils literal notranslate"><span class="pre">pygame.event.EventType</span></code></a> event objects, there are a variety of ways to access the events it contains. From simply checking for the existence of events, to grabbing them directly off the stack.</p> <p>All events have a type identifier. This event type is in between the values of <code class="docutils literal notranslate"><span class="pre">NOEVENT</span></code> and <code class="docutils literal notranslate"><span class="pre">NUMEVENTS</span></code>. All user defined events can have the value of <code class="docutils literal notranslate"><span class="pre">USEREVENT</span></code> or higher. It is recommended make sure your event id's follow this system.</p> <p>To get the state of various input devices, you can forego the event queue and access the input devices directly with their appropriate modules; mouse, key, and joystick. If you use this method, remember that pygame requires some form of communication with the system window manager and other parts of the platform. To keep pygame in synch with the system, you will need to call <code class="docutils literal notranslate"><span class="pre">pygame.event.pump()</span></code> to keep everything current. You'll want to call this function usually once per game loop.</p> <p>The event queue offers some simple filtering. This can help performance slightly by blocking certain event types from the queue, use the <code class="docutils literal notranslate"><span class="pre">pygame.event.set_allowed()</span></code> and <code class="docutils literal notranslate"><span class="pre">pygame.event.set_blocked()</span></code> to work with this filtering. All events default to allowed.</p> <p>The event subsystem should be called from the main thread. If you want to post events into the queue from other threads, please use the fastevent package.</p> <p>Joysticks will not send any events until the device has been initialized.</p> <p>An <code class="docutils literal notranslate"><span class="pre">EventType</span></code> event object contains an event type identifier and a set of member data. The event object contains no method functions, just member data. EventType objects are retrieved from the pygame event queue. You can create your own new events with the <code class="docutils literal notranslate"><span class="pre">pygame.event.Event()</span></code> function.</p> <p>The SDL event queue has an upper limit on the number of events it can hold (128 for standard SDL 1.2). When the queue becomes full new events are quietly dropped. To prevent lost events, especially input events which signal a quit command, your program must regularly check for events and process them. To speed up queue processing use <a class="tooltip reference internal" href="#pygame.event.set_blocked" title=""><code class="xref py py-func docutils literal notranslate"><span class="pre">pygame.event.set_blocked()</span></code></a> to limit which events get queued.</p> <p>All EventType instances have an event type identifier, accessible as the <code class="docutils literal notranslate"><span class="pre">EventType.type</span></code> property. You may also get full access to the event object's attributes through the <code class="docutils literal notranslate"><span class="pre">EventType.__dict__</span></code> attribute. All other member lookups will be passed through to the object's dictionary values.</p> <p>While debugging and experimenting, you can print an event object for a quick display of its type and members. Events that come from the system will have a guaranteed set of member items based on the type. Here is a list of the event attributes defined with each event type.</p> <pre class="language-python" data-language="python">QUIT             none
+ACTIVEEVENT      gain, state
+KEYDOWN          unicode, key, mod
+KEYUP            key, mod
+MOUSEMOTION      pos, rel, buttons
+MOUSEBUTTONUP    pos, button
+MOUSEBUTTONDOWN  pos, button
+JOYAXISMOTION    joy, axis, value
+JOYBALLMOTION    joy, ball, rel
+JOYHATMOTION     joy, hat, value
+JOYBUTTONUP      joy, button
+JOYBUTTONDOWN    joy, button
+VIDEORESIZE      size, w, h
+VIDEOEXPOSE      none
+USEREVENT        code
+</pre> <p>Events support equality comparison. Two events are equal if they are the same type and have identical attribute values. Inequality checks also work.</p> <div class="versionadded"> <p><span class="versionmodified">New in version 1.9.2: </span>On MacOSX, USEREVENT can have <cite>code = pygame.USEREVENT_DROPFILE</cite>. That means the user is trying to open a file with your application. The filename can be found at <cite>event.filename</cite></p> </div> <dl class="definition function"> <h3 class="title" id="pygame.event.pump" data-name="pygame.event.pump()">
+<code class="signature">pygame.event.pump() -&gt; None</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">internally process pygame event handlers</span></div>  </blockquote> <p>For each frame of your game, you will need to make some sort of call to the event queue. This ensures your program can internally interact with the rest of the operating system. If you are not using other event functions in your game, you should call <code class="docutils literal notranslate"><span class="pre">pygame.event.pump()</span></code> to allow pygame to handle internal actions.</p> <p>This function is not necessary if your program is consistently processing events on the queue through the other <a class="tooltip reference internal" href="#module-pygame.event" title=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">pygame.event</span></code></a> functions.</p> <p>There are important things that must be dealt with internally in the event queue. The main window may need to be repainted or respond to the system. If you fail to make a call to the event queue for too long, the system may decide your program has locked up.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.get" data-name="pygame.event.get()">
+<code class="signature">pygame.event.get() -&gt; Eventlist</code><br><code class="signature">pygame.event.get(type) -&gt; Eventlist</code><br><code class="signature">pygame.event.get(typelist) -&gt; Eventlist</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">get events from the queue</span></div>    </blockquote> <p>This will get all the messages and remove them from the queue. If a type or sequence of types is given only those messages will be removed from the queue.</p> <p>If you are only taking specific events from the queue, be aware that the queue could eventually fill up with the events you are not interested.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.poll" data-name="pygame.event.poll()">
+<code class="signature">pygame.event.poll() -&gt; EventType instance</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">get a single event from the queue</span></div>  </blockquote> <p>Returns a single event from the queue. If the event queue is empty an event of type <code class="docutils literal notranslate"><span class="pre">pygame.NOEVENT</span></code> will be returned immediately. The returned event is removed from the queue.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.wait" data-name="pygame.event.wait()">
+<code class="signature">pygame.event.wait() -&gt; EventType instance</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">wait for a single event from the queue</span></div>  </blockquote> <p>Returns a single event from the queue. If the queue is empty this function will wait until one is created. The event is removed from the queue once it has been returned. While the program is waiting it will sleep in an idle state. This is important for programs that want to share the system with other applications.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.peek" data-name="pygame.event.peek()">
+<code class="signature">pygame.event.peek(type) -&gt; bool</code><br><code class="signature">pygame.event.peek(typelist) -&gt; bool</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">test if event types are waiting on the queue</span></div>   </blockquote> <p>Returns true if there are any events of the given type waiting on the queue. If a sequence of event types is passed, this will return True if any of those events are on the queue.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.clear" data-name="pygame.event.clear()">
+<code class="signature">pygame.event.clear() -&gt; None</code><br><code class="signature">pygame.event.clear(type) -&gt; None</code><br><code class="signature">pygame.event.clear(typelist) -&gt; None</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">remove all events from the queue</span></div>    </blockquote> <p>Remove all events or events of a specific type from the queue. This has the same effect as <code class="docutils literal notranslate"><span class="pre">pygame.event.get()</span></code> except nothing is returned. This can be slightly more efficient when clearing a full event queue.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.event_name" data-name="pygame.event.event_name()">
+<code class="signature">pygame.event.event_name(type) -&gt; string</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">get the string name from and event id</span></div>  </blockquote> <p>Pygame uses integer ids to represent the event types. If you want to report these types to the user they should be converted to strings. This will return a the simple name for an event type. The string is in the WordCap style.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.set_blocked" data-name="pygame.event.set_blocked()">
+<code class="signature">pygame.event.set_blocked(type) -&gt; None</code><br><code class="signature">pygame.event.set_blocked(typelist) -&gt; None</code><br><code class="signature">pygame.event.set_blocked(None) -&gt; None</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">control which events are allowed on the queue</span></div>    </blockquote> <p>The given event types are not allowed to appear on the event queue. By default all events can be placed on the queue. It is safe to disable an event type multiple times.</p> <p>If None is passed as the argument, this has the opposite effect and <code class="docutils literal notranslate"><span class="pre">ALL</span></code> of the event types are allowed to be placed on the queue.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.set_allowed" data-name="pygame.event.set_allowed()">
+<code class="signature">pygame.event.set_allowed(type) -&gt; None</code><br><code class="signature">pygame.event.set_allowed(typelist) -&gt; None</code><br><code class="signature">pygame.event.set_allowed(None) -&gt; None</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">control which events are allowed on the queue</span></div>    </blockquote> <p>The given event types are allowed to appear on the event queue. By default all events can be placed on the queue. It is safe to enable an event type multiple times.</p> <p>If None is passed as the argument, <code class="docutils literal notranslate"><span class="pre">NONE</span></code> of the event types are allowed to be placed on the queue.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.get_blocked" data-name="pygame.event.get_blocked()">
+<code class="signature">pygame.event.get_blocked(type) -&gt; bool</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">test if a type of event is blocked from the queue</span></div>  </blockquote> <p>Returns true if the given event type is blocked from the queue.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.set_grab" data-name="pygame.event.set_grab()">
+<code class="signature">pygame.event.set_grab(bool) -&gt; None</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">control the sharing of input devices with other applications</span></div>  </blockquote> <p>When your program runs in a windowed environment, it will share the mouse and keyboard devices with other applications that have focus. If your program sets the event grab to True, it will lock all input into your program.</p> <p>It is best to not always grab the input, since it prevents the user from doing other things on their system.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.get_grab" data-name="pygame.event.get_grab()">
+<code class="signature">pygame.event.get_grab() -&gt; bool</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">test if the program is sharing input devices</span></div>  </blockquote> <p>Returns true when the input events are grabbed for this application. Use <code class="docutils literal notranslate"><span class="pre">pygame.event.set_grab()</span></code> to control this state.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.post" data-name="pygame.event.post()">
+<code class="signature">pygame.event.post(Event) -&gt; None</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">place a new event on the queue</span></div>  </blockquote> <p>This places a new event at the end of the event queue. These Events will later be retrieved from the other queue functions.</p> <p>This is usually used for placing <code class="docutils literal notranslate"><span class="pre">pygame.USEREVENT</span></code> events on the queue. Although any type of event can be placed, if using the system event types your program should be sure to create the standard attributes with appropriate values.</p> <p>If the SDL event queue is full a <a class="tooltip reference internal" href="../pygame/#pygame.error" title=""><code class="xref py py-exc docutils literal notranslate"><span class="pre">pygame.error</span></code></a> is raised.</p> </dd>
+</dl> <dl class="definition function"> <h3 class="title" id="pygame.event.Event" data-name="pygame.event.Event()">
+<code class="signature">pygame.event.Event(type, dict) -&gt; EventType instance</code><br><code class="signature">pygame.event.Event(type, **attributes) -&gt; EventType instance</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">create a new event object</span></div>   </blockquote> <p>Creates a new event with the given type. The event is created with the given attributes and values. The attributes can come from a dictionary argument with string keys, or from keyword arguments.</p> </dd>
+</dl> <dl class="definition class"> <h1 class="title" id="pygame.event.EventType" data-name="pygame.event.EventType"> pygame.event.EventType</h1> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">pygame object for representing SDL events</span></div> </blockquote>  <p>A Python object that represents an SDL event. User event instances are created with an <cite>Event</cite> function call. The <cite>EventType</cite> type is not directly callable. <cite>EventType</cite> instances support attribute assignment and deletion.</p> <dl class="definition attribute"> <h3 class="title" id="pygame.event.EventType.type" data-name="type">
+<code class="signature">type -&gt; int</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">SDL event type identifier.</span></div>  </blockquote> <p>Read only. Predefined event identifiers are <cite>QUIT</cite> and <cite>MOUSEMOTION</cite>, for example. For user created event objects, this is the <cite>type</cite> argument passed to <a class="tooltip reference internal" href="#pygame.event.Event" title=""><code class="xref py py-func docutils literal notranslate"><span class="pre">pygame.event.Event()</span></code></a>.</p> </dd>
+</dl> <dl class="definition attribute"> <h3 class="title" id="pygame.event.EventType.__dict__" data-name="__dict__">
+<code class="signature">__dict__ -&gt; dict</code><br>
+</h3> <dd>
+<blockquote class="line-block"> <div class="line"><span class="summaryline">Event object attribute dictionary</span></div>  </blockquote> <p>Read only. The event type specific attributes of an event. As an example, this would contain the <cite>unicode</cite>, <cite>key</cite>, and <cite>mod</cite> attributes of a <cite>KEYDOWN</cite> event. The <cite>dict</cite> attribute is a synonym, for backward compatibility.</p> </dd>
+</dl> <p>Mutable attributes are new to pygame 1.9.2.</p> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © Pygame Developpers.<br>Licensed under the GNU LGPL License version 2.1.<br>
+    <a href="https://www.pygame.org/docs/ref/event.html" class="_attribution-link" target="_blank">https://www.pygame.org/docs/ref/event.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
