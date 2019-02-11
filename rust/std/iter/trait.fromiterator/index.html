@@ -1,0 +1,301 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;iter&#58;&#58;FromIterator - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Conversion from an Iterator. ">
+  <meta name="keywords" content="trait, std, iter, fromiterator, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/iter/trait.fromiterator/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::iter::FromIterator</h1>
+<pre class="rust trait" data-language="rust">pub trait FromIterator&lt;A&gt; {
+    fn from_iter&lt;T&gt;(iter: T) -&gt; Self    where        T: IntoIterator&lt;Item = A&gt;;
+}</pre>
+<p>Conversion from an <code>Iterator</code>.</p> <p>By implementing <code>FromIterator</code> for a type, you define how it will be created from an iterator. This is common for types which describe a collection of some kind.</p> <p><code>FromIterator</code>'s <a href="#tymethod.from_iter"><code>from_iter</code></a> is rarely called explicitly, and is instead used through <a href="../trait.iterator/"><code>Iterator</code></a>'s <a href="../trait.iterator/#method.collect"><code>collect</code></a> method. See <a href="../trait.iterator/#method.collect"><code>collect</code></a>'s documentation for more examples.</p> <p>See also: <a href="../trait.intoiterator/"><code>IntoIterator</code></a>.</p> <h2 id="examples" class="section-header">Examples</h2> <p>Basic usage:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::iter::FromIterator;
+
+let five_fives = std::iter::repeat(5).take(5);
+
+let v = Vec::from_iter(five_fives);
+
+assert_eq!(v, vec![5, 5, 5, 5, 5]);</pre> <p>Using <a href="../trait.iterator/#method.collect"><code>collect</code></a> to implicitly use <code>FromIterator</code>:</p> <pre class="rust rust-example-rendered" data-language="rust">
+let five_fives = std::iter::repeat(5).take(5);
+
+let v: Vec&lt;i32&gt; = five_fives.collect();
+
+assert_eq!(v, vec![5, 5, 5, 5, 5]);</pre> <p>Implementing <code>FromIterator</code> for your type:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::iter::FromIterator;
+
+// A sample collection, that's just a wrapper over Vec&lt;T&gt;
+#[derive(Debug)]
+struct MyCollection(Vec&lt;i32&gt;);
+
+// Let's give it some methods so we can create one and add things
+// to it.
+impl MyCollection {
+    fn new() -&gt; MyCollection {
+        MyCollection(Vec::new())
+    }
+
+    fn add(&amp;mut self, elem: i32) {
+        self.0.push(elem);
+    }
+}
+
+// and we'll implement FromIterator
+impl FromIterator&lt;i32&gt; for MyCollection {
+    fn from_iter&lt;I: IntoIterator&lt;Item=i32&gt;&gt;(iter: I) -&gt; Self {
+        let mut c = MyCollection::new();
+
+        for i in iter {
+            c.add(i);
+        }
+
+        c
+    }
+}
+
+// Now we can make a new iterator...
+let iter = (0..5).into_iter();
+
+// ... and make a MyCollection out of it
+let c = MyCollection::from_iter(iter);
+
+assert_eq!(c.0, vec![0, 1, 2, 3, 4]);
+
+// collect works too!
+
+let iter = (0..5).into_iter();
+let c: MyCollection = iter.collect();
+
+assert_eq!(c.0, vec![0, 1, 2, 3, 4]);</pre>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.from_iter" class="method"><span id="from_iter.v" class="invisible"><code>fn <a href="#tymethod.from_iter" class="fnname">from_iter</a>&lt;T&gt;(iter: T) -&gt; Self <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = A&gt;, </span></code></span></h3>
+<div class="docblock">
+<p>Creates a value from an iterator.</p> <p>See the <a href="../">module-level documentation</a> for more.</p> <h2 id="examples-1" class="section-header">Examples</h2> <p>Basic usage:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::iter::FromIterator;
+
+let five_fives = std::iter::repeat(5).take(5);
+
+let v = Vec::from_iter(five_fives);
+
+assert_eq!(v, vec![5, 5, 5, 5, 5]);</pre> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-FromIterator%3Cchar%3E" class="impl"><span class="in-band"><code>impl FromIterator&lt;<a class="primitive" href="../../primitive.char/">char</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1696-1702" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter" class="method"><span id="from_iter.v-1" class="invisible"><code>fn <a href="#method.from_iter" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a> <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="../../primitive.char/">char</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1697-1701" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3C()%3E" class="impl"><span class="in-band"><code>impl FromIterator&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt; for <a class="primitive" href="../../primitive.unit/">()</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/unit.rs.html#27-31" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>Collapses all unit items from an iterator into one.</p> <p>This is more useful when combined with higher-level abstractions, like collecting to a <code>Result&lt;(), E&gt;</code> where you only care about errors:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::io::*;
+let data = vec![1, 2, 3, 4, 5];
+let res: Result&lt;()&gt; = data.iter()
+    .map(|x| writeln!(stdout(), "{}", x))
+    .collect();
+assert!(res.is_ok());</pre> </div>
+<div class="impl-items"><h4 id="method.from_iter-1" class="method"><span id="from_iter.v-2" class="invisible"><code>fn <a href="#method.from_iter-1" class="fnname">from_iter</a>&lt;I&gt;(iter: I) <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="../../primitive.unit/">()</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/unit.rs.html#28-30" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CString%3E" class="impl"><span class="in-band"><code>impl FromIterator&lt;<a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1723-1729" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-2" class="method"><span id="from_iter.v-3" class="invisible"><code>fn <a href="#method.from_iter-2" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a> <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1724-1728" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3C%26%27a%20char%3E" class="impl"><span class="in-band"><code>impl&lt;'a&gt; FromIterator&lt;&amp;'a <a class="primitive" href="../../primitive.char/">char</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1705-1711" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-3" class="method"><span id="from_iter.v-4" class="invisible"><code>fn <a href="#method.from_iter-3" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a> <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = &amp;'a <a class="primitive" href="../../primitive.char/">char</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1706-1710" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3C%26%27a%20str%3E" class="impl"><span class="in-band"><code>impl&lt;'a&gt; FromIterator&lt;&amp;'a <a class="primitive" href="../../primitive.str/">str</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1714-1720" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-4" class="method"><span id="from_iter.v-5" class="invisible"><code>fn <a href="#method.from_iter-4" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a> <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = &amp;'a <a class="primitive" href="../../primitive.str/">str</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1715-1719" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CCow%3C%27a%2C%20str%3E%3E" class="impl"><span class="in-band"><code>impl&lt;'a&gt; FromIterator&lt;<a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt;&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1732-1738" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-5" class="method"><span id="from_iter.v-6" class="invisible"><code>fn <a href="#method.from_iter-5" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a> <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt;&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1733-1737" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3Cchar%3E-1" class="impl"><span class="in-band"><code>impl&lt;'a&gt; FromIterator&lt;<a class="primitive" href="../../primitive.char/">char</a>&gt; for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2252-2256" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-6" class="method"><span id="from_iter.v-7" class="invisible"><code>fn <a href="#method.from_iter-6" class="fnname">from_iter</a>&lt;I&gt;(it: I) -&gt; <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="../../primitive.char/">char</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2253-2255" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CString%3E-1" class="impl"><span class="in-band"><code>impl&lt;'a&gt; FromIterator&lt;<a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a>&gt; for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2266-2270" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-7" class="method"><span id="from_iter.v-8" class="invisible"><code>fn <a href="#method.from_iter-7" class="fnname">from_iter</a>&lt;I&gt;(it: I) -&gt; <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2267-2269" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3C%26%27b%20str%3E" class="impl"><span class="in-band"><code>impl&lt;'a, 'b&gt; FromIterator&lt;&amp;'b <a class="primitive" href="../../primitive.str/">str</a>&gt; for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2259-2263" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-8" class="method"><span id="from_iter.v-9" class="invisible"><code>fn <a href="#method.from_iter-8" class="fnname">from_iter</a>&lt;I&gt;(it: I) -&gt; <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.str/">str</a>&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = &amp;'b <a class="primitive" href="../../primitive.str/">str</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2260-2262" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CT%3E" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; FromIterator&lt;T&gt; for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../clone/trait.clone/" title="trait std::clone::Clone">Clone</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2317-2321" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-9" class="method"><span id="from_iter.v-10" class="invisible"><code>fn <a href="#method.from_iter-9" class="fnname">from_iter</a>&lt;I&gt;(it: I) -&gt; <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2318-2320" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CA%3E" class="impl"><span class="in-band"><code>impl&lt;A&gt; FromIterator&lt;A&gt; for <a class="struct" href="../../collections/vec_deque/struct.vecdeque/" title="struct std::collections::vec_deque::VecDeque">VecDeque</a>&lt;A&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#2452-2460" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-10" class="method"><span id="from_iter.v-11" class="invisible"><code>fn <a href="#method.from_iter-10" class="fnname">from_iter</a>&lt;T&gt;(iter: T) -&gt; <a class="struct" href="../../collections/vec_deque/struct.vecdeque/" title="struct std::collections::vec_deque::VecDeque">VecDeque</a>&lt;A&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = A&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#2453-2459" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CResult%3CA%2C%20E%3E%3E" class="impl"><span class="in-band"><code>impl&lt;A, E, V&gt; FromIterator&lt;<a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;A, E&gt;&gt; for <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;V, E&gt; <span class="where fmt-newline">where<br>    V: <a class="trait" href="../trait.fromiterator/" title="trait std::iter::FromIterator">FromIterator</a>&lt;A&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/result.rs.html#1202-1256" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.from_iter-11" class="method"><span id="from_iter.v-12" class="invisible"><code>fn <a href="#method.from_iter-11" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;V, E&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;A, E&gt;&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/result.rs.html#1218-1255" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Takes each element in the <code>Iterator</code>: if it is an <code>Err</code>, no further elements are taken, and the <code>Err</code> is returned. Should no <code>Err</code> occur, a container with the values of each <code>Result</code> is returned.</p> <p>Here is an example which increments every integer in a vector, checking for overflow:</p> <pre class="rust rust-example-rendered" data-language="rust">
+let v = vec![1, 2];
+let res: Result&lt;Vec&lt;u32&gt;, &amp;'static str&gt; = v.iter().map(|x: &amp;u32|
+    x.checked_add(1).ok_or("Overflow!")
+).collect();
+assert!(res == Ok(vec![2, 3]));</pre> </div>
+</div>
+<h3 id="impl-FromIterator%3COption%3CA%3E%3E" class="impl"><span class="in-band"><code>impl&lt;A, V&gt; FromIterator&lt;<a class="enum" href="../../option/enum.option/" title="enum std::option::Option">Option</a>&lt;A&gt;&gt; for <a class="enum" href="../../option/enum.option/" title="enum std::option::Option">Option</a>&lt;V&gt; <span class="where fmt-newline">where<br>    V: <a class="trait" href="../trait.fromiterator/" title="trait std::iter::FromIterator">FromIterator</a>&lt;A&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/option.rs.html#1242-1308" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.from_iter-12" class="method"><span id="from_iter.v-13" class="invisible"><code>fn <a href="#method.from_iter-12" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="enum" href="../../option/enum.option/" title="enum std::option::Option">Option</a>&lt;V&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="enum" href="../../option/enum.option/" title="enum std::option::Option">Option</a>&lt;A&gt;&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/option.rs.html#1264-1307" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Takes each element in the <a href="../trait.iterator/"><code>Iterator</code></a>: if it is <a href="../../option/enum.option/#None.v" title="Option::None"><code>None</code></a>, no further elements are taken, and the <a href="../../option/enum.option/#None.v" title="Option::None"><code>None</code></a> is returned. Should no <a href="../../option/enum.option/#None.v" title="Option::None"><code>None</code></a> occur, a container with the values of each <a href="../../option/enum.option/" title="`Option`"><code>Option</code></a> is returned.</p> <p>Here is an example which increments every integer in a vector, checking for overflow:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::u16;
+
+let v = vec![1, 2];
+let res: Option&lt;Vec&lt;u16&gt;&gt; = v.iter().map(|&amp;x: &amp;u16|
+    if x == u16::MAX { None }
+    else { Some(x + 1) }
+).collect();
+assert!(res == Some(vec![2, 3]));</pre> </div>
+</div>
+<h3 id="impl-FromIterator%3C(K%2C%20V)%3E" class="impl"><span class="in-band"><code>impl&lt;K, V&gt; FromIterator&lt;<a class="primitive" href="../../primitive.tuple/">(</a>K, V<a class="primitive" href="../../primitive.tuple/">)</a>&gt; for <a class="struct" href="../../collections/btree_map/struct.btreemap/" title="struct std::collections::btree_map::BTreeMap">BTreeMap</a>&lt;K, V&gt; <span class="where fmt-newline">where<br>    K: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#1722-1728" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-13" class="method"><span id="from_iter.v-14" class="invisible"><code>fn <a href="#method.from_iter-13" class="fnname">from_iter</a>&lt;T&gt;(iter: T) -&gt; <a class="struct" href="../../collections/btree_map/struct.btreemap/" title="struct std::collections::btree_map::BTreeMap">BTreeMap</a>&lt;K, V&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="../../primitive.tuple/">(</a>K, V<a class="primitive" href="../../primitive.tuple/">)</a>&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#1723-1727" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3C(K%2C%20V)%3E-1" class="impl"><span class="in-band"><code>impl&lt;K, V, S&gt; FromIterator&lt;<a class="primitive" href="../../primitive.tuple/">(</a>K, V<a class="primitive" href="../../primitive.tuple/">)</a>&gt; for <a class="struct" href="../../collections/struct.hashmap/" title="struct std::collections::HashMap">HashMap</a>&lt;K, V, S&gt; <span class="where fmt-newline">where<br>    K: <a class="trait" href="../../cmp/trait.eq/" title="trait std::cmp::Eq">Eq</a> + <a class="trait" href="../../hash/trait.hash/" title="trait std::hash::Hash">Hash</a>,<br>    S: <a class="trait" href="../../hash/trait.buildhasher/" title="trait std::hash::BuildHasher">BuildHasher</a> + <a class="trait" href="../../default/trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#2512-2521" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-14" class="method"><span id="from_iter.v-15" class="invisible"><code>fn <a href="#method.from_iter-14" class="fnname">from_iter</a>&lt;T: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="../../primitive.tuple/">(</a>K, V<a class="primitive" href="../../primitive.tuple/">)</a>&gt;&gt;(iter: T) -&gt; <a class="struct" href="../../collections/struct.hashmap/" title="struct std::collections::HashMap">HashMap</a>&lt;K, V, S&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#2516-2520" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CP%3E" class="impl"><span class="in-band"><code>impl&lt;P: <a class="trait" href="../../convert/trait.asref/" title="trait std::convert::AsRef">AsRef</a>&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt;&gt; FromIterator&lt;P&gt; for <a class="struct" href="../../path/struct.pathbuf/" title="struct std::path::PathBuf">PathBuf</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1447-1453" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-15" class="method"><span id="from_iter.v-16" class="invisible"><code>fn <a href="#method.from_iter-15" class="fnname">from_iter</a>&lt;I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = P&gt;&gt;(iter: I) -&gt; <a class="struct" href="../../path/struct.pathbuf/" title="struct std::path::PathBuf">PathBuf</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1448-1452" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CT%3E-1" class="impl"><span class="in-band"><code>impl&lt;T&gt; FromIterator&lt;T&gt; for <a class="struct" href="../../collections/binary_heap/struct.binaryheap/" title="struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/binary_heap.rs.html#1112-1116" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-16" class="method"><span id="from_iter.v-17" class="invisible"><code>fn <a href="#method.from_iter-16" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../collections/binary_heap/struct.binaryheap/" title="struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/binary_heap.rs.html#1113-1115" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CT%3E-2" class="impl"><span class="in-band"><code>impl&lt;T&gt; FromIterator&lt;T&gt; for <a class="struct" href="../../collections/btree_set/struct.btreeset/" title="struct std::collections::btree_set::BTreeSet">BTreeSet</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/set.rs.html#756-762" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-17" class="method"><span id="from_iter.v-18" class="invisible"><code>fn <a href="#method.from_iter-17" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../collections/btree_set/struct.btreeset/" title="struct std::collections::btree_set::BTreeSet">BTreeSet</a>&lt;T&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/set.rs.html#757-761" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CT%3E-3" class="impl"><span class="in-band"><code>impl&lt;T&gt; FromIterator&lt;T&gt; for <a class="struct" href="../../collections/linked_list/struct.linkedlist/" title="struct std::collections::linked_list::LinkedList">LinkedList</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#1067-1073" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-18" class="method"><span id="from_iter.v-19" class="invisible"><code>fn <a href="#method.from_iter-18" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../collections/linked_list/struct.linkedlist/" title="struct std::collections::linked_list::LinkedList">LinkedList</a>&lt;T&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#1068-1072" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-FromIterator%3CT%3E-4" class="impl"><span class="in-band"><code>impl&lt;T&gt; FromIterator&lt;T&gt; for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#1769-1774" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.from_iter-19" class="method"><span id="from_iter.v-20" class="invisible"><code>fn <a href="#method.from_iter-19" class="fnname">from_iter</a>&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#1771-1773" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;<pre class="content">impl Write for Vec&lt;u8&gt;
+</pre>
+</div>
+</div>
+<h3 id="impl-FromIterator%3CT%3E-5" class="impl"><span class="in-band"><code>impl&lt;T, S&gt; FromIterator&lt;T&gt; for <a class="struct" href="../../collections/struct.hashset/" title="struct std::collections::HashSet">HashSet</a>&lt;T, S&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.eq/" title="trait std::cmp::Eq">Eq</a> + <a class="trait" href="../../hash/trait.hash/" title="trait std::hash::Hash">Hash</a>,<br>    S: <a class="trait" href="../../hash/trait.buildhasher/" title="trait std::hash::BuildHasher">BuildHasher</a> + <a class="trait" href="../../default/trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/set.rs.html#799-808" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.from_iter-20" class="method"><span id="from_iter.v-21" class="invisible"><code>fn <a href="#method.from_iter-20" class="fnname">from_iter</a>&lt;I: <a class="trait" href="../trait.intoiterator/" title="trait std::iter::IntoIterator">IntoIterator</a>&lt;Item = T&gt;&gt;(iter: I) -&gt; <a class="struct" href="../../collections/struct.hashset/" title="struct std::collections::HashSet">HashSet</a>&lt;T, S&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/set.rs.html#803-807" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/iter/trait.FromIterator.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/iter/trait.FromIterator.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

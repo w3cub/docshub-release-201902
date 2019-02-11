@@ -1,0 +1,169 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>6.1.12. Implementations - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="An implementation is an item that associates items with an implementing type. Implementations are defined with the keyword impl and contain &hellip;">
+  <meta name="keywords" content="implementations, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/items/implementations/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="implementations">Implementations</h1> <p>An <em>implementation</em> is an item that associates items with an <em>implementing type</em>. Implementations are defined with the keyword <code>impl</code> and contain functions that belong to an instance of the type that is being implemented or to the type statically.</p> <p>There are two types of implementations:</p> <ul> <li>inherent implementations</li> <li>
+<a href="../traits/">trait</a> implementations</li> </ul> <h2 id="inherent-implementations">Inherent Implementations</h2> <p>An inherent implementation is defined as the sequence of the <code>impl</code> keyword, generic type declarations, a path to a nominal type, a where clause, and a bracketed set of associable items.</p> <p>The nominal type is called the <em>implementing type</em> and the associable items are the <em>associated items</em> to the implementing type.</p> <p>Inherent implementations associate the contained items to the implementing type. The associated item has a path of a path to the implementing type followed by the associate item's path component. Inherent implementations cannot contain associated type aliases.</p> <p>A type can also have multiple inherent implementations. An implementing type must be defined within the same crate as the original type definition.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+struct Point {x: i32, y: i32}
+
+impl Point {
+    fn log(&amp;self) {
+        println!("Point is at ({}, {})", self.x, self.y);
+    }
+}
+
+let my_point = Point {x: 10, y:11};
+my_point.log();
+#}</pre> <h2 id="trait-implementations">Trait Implementations</h2> <p>A <em>trait implementation</em> is defined like an inherent implementation except that the optional generic type declarations is followed by a <a href="../traits/">trait</a> followed by the keyword <code>for</code>. Followed by a path to a nominal type.</p>  <p>The trait is known as the <em>implemented trait</em>. The implementing type implements the implemented trait.</p> <p>A trait implementation must define all non-default associated items declared by the implemented trait, may redefine default associated items defined by the implemented trait, and cannot define any other items.</p> <p>The path to the associated items is <code>&lt;</code> followed by a path to the implementing type followed by <code>as</code> followed by a path to the trait followed by <code>&gt;</code> as a path component followed by the associated item's path component.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# #[derive(Copy, Clone)]
+# struct Point {x: f64, y: f64};
+# type Surface = i32;
+# struct BoundingBox {x: f64, y: f64, width: f64, height: f64};
+# trait Shape { fn draw(&amp;self, Surface); fn bounding_box(&amp;self) -&gt; BoundingBox; }
+# fn do_draw_circle(s: Surface, c: Circle) { }
+struct Circle {
+    radius: f64,
+    center: Point,
+}
+
+impl Copy for Circle {}
+
+impl Clone for Circle {
+    fn clone(&amp;self) -&gt; Circle { *self }
+}
+
+impl Shape for Circle {
+    fn draw(&amp;self, s: Surface) { do_draw_circle(s, *self); }
+    fn bounding_box(&amp;self) -&gt; BoundingBox {
+        let r = self.radius;
+        BoundingBox {
+            x: self.center.x - r,
+            y: self.center.y - r,
+            width: 2.0 * r,
+            height: 2.0 * r,
+        }
+    }
+}
+#}</pre> <h3 id="trait-implementation-coherence">Trait Implementation Coherence</h3> <p>A trait implementation is considered incoherent if either the orphan check fails or there are overlapping implementation instances.</p> <p>Two trait implementations overlap when there is a non-empty intersection of the traits the implementation is for, the implementations can be instantiated with the same type. </p> <p>The <code>Orphan Check</code> states that every trait implementation must meet either of the following conditions:</p> <ol> <li> <p>The trait being implemented is defined in the same crate.</p> </li> <li> <p>At least one of either <code>Self</code> or a generic type parameter of the trait must meet the following grammar, where <code>C</code> is a nominal type defined within the containing crate:</p> <pre> T = C
+   | &amp;C
+   | &amp;mut C
+   | Box&lt;C&gt;
+</pre> </li> </ol> <h2 id="generic-implementations">Generic Implementations</h2> <p>An implementation can take type and lifetime parameters, which can be used in the rest of the implementation. Type parameters declared for an implementation must be used at least once in either the trait or the implementing type of an implementation. Implementation parameters are written directly after the <code>impl</code> keyword.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# trait Seq&lt;T&gt; { fn dummy(&amp;self, _: T) { } }
+impl&lt;T&gt; Seq&lt;T&gt; for Vec&lt;T&gt; {
+    /* ... */
+}
+impl Seq&lt;bool&gt; for u32 {
+    /* Treat the integer as a sequence of bits */
+}
+#}</pre> <h2 id="attributes-on-implementations">Attributes on Implementations</h2> <p>Implementations may contain outer <a href="../../attributes/">attributes</a> before the <code>impl</code> keyword and inner <a href="../../attributes/">attributes</a> inside the brackets that contain the associated items. Inner attributes must come before any associated items. That attributes that have meaning here are <a href="../../conditional-compilation/"><code>cfg</code></a>, <a href="../../attributes/#deprecation"><code>deprecated</code></a>, <a href="../../attributes/#documentation"><code>doc</code></a>, and <a href="../../attributes/#lint-check-attributes">the lint check attributes</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/items/implementations.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/items/implementations.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

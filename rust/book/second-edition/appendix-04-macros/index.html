@@ -1,0 +1,221 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>21.4. D - Macros - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="We’ve used macros like println! throughout this book but haven’t fully explored what a macro is and how it works. This appendix explains macros as &hellip;">
+  <meta name="keywords" content="appendix, d, macros, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/book/second-edition/appendix-04-macros/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="appendix-d-macros">Appendix D: Macros</h1> <p>We’ve used macros like <code>println!</code> throughout this book but haven’t fully explored what a macro is and how it works. This appendix explains macros as follows:</p> <ul> <li>What macros are and how they differ from functions</li> <li>How to define a declarative macro to do metaprogramming</li> <li>How to define a procedural macro to create custom <code>derive</code> traits</li> </ul> <p>We’re covering the details of macros in an appendix because they’re still evolving in Rust. Macros have changed and, in the near future, will change at a quicker rate than the rest of the language and standard library since Rust 1.0, so this section is more likely to become out-of-date than the rest of the book. Due to Rust’s stability guarantees, the code shown here will continue to work with future versions, but there may be additional capabilities or easier ways to write macros that weren’t available at the time of this publication. Bear that in mind when you try to implement anything from this appendix.</p> <h3 id="the-difference-between-macros-and-functions">The Difference Between Macros and Functions</h3> <p>Fundamentally, macros are a way of writing code that writes other code, which is known as <em>metaprogramming</em>. In Appendix C, we discussed the <code>derive</code> attribute, which generates an implementation of various traits for you. We’ve also used the <code>println!</code> and <code>vec!</code> macros throughout the book. All of these macros <em>expand</em> to produce more code than the code you’ve written manually.</p> <p>Metaprogramming is useful for reducing the amount of code you have to write and maintain, which is also one of the roles of functions. However, macros have some additional powers that functions don’t have.</p> <p>A function signature must declare the number and type of parameters the function has. Macros, on the other hand, can take a variable number of parameters: we can call <code>println!("hello")</code> with one argument or <code>println!("hello {}", name)</code> with two arguments. Also, macros are expanded before the compiler interprets the meaning of the code, so a macro can, for example, implement a trait on a given type. A function can’t, because it gets called at runtime and a trait needs to be implemented at compile time.</p> <p>The downside to implementing a macro instead of a function is that macro definitions are more complex than function definitions because you’re writing Rust code that writes Rust code. Due to this indirection, macro definitions are generally more difficult to read, understand, and maintain than function definitions.</p> <p>Another difference between macros and functions is that macro definitions aren’t namespaced within modules like function definitions are. To prevent unexpected name clashes when using external crates, you have to explicitly bring the macros into the scope of your project at the same time as you bring the external crate into scope, using the <code>#[macro_use]</code> annotation. The following example would bring all the macros defined in the <code>serde</code> crate into the scope of the current crate:</p> <pre data-language="rust">#[macro_use]
+extern crate serde;
+</pre> <p>If <code>extern crate</code> was able to bring macros into scope by default without this explicit annotation, you would be prevented from using two crates that happened to define macros with the same name. In practice, this conflict doesn’t occur often, but the more crates you use, the more likely it is.</p> <p>There is one last important difference between macros and functions: you must define or bring macros into scope <em>before</em> you call them in a file, whereas you can define functions anywhere and call them anywhere.</p> <h3 id="declarative-macros-with-macro_rules-for-general-metaprogramming">Declarative Macros with <code>macro_rules!</code> for General Metaprogramming</h3> <p>The most widely used form of macros in Rust are <em>declarative macros</em>. These are also sometimes referred to as <em>macros by example</em>, <em><code>macro_rules!</code> macros</em>, or just plain <em>macros</em>. At their core, declarative macros allow you to write something similar to a Rust <code>match</code> expression. As discussed in Chapter 6, <code>match</code> expressions are control structures that take an expression, compare the resulting value of the expression to patterns, and then run the code associated with the matching pattern. Macros also compare a value to patterns that have code associated with them; in this situation, the value is the literal Rust source code passed to the macro, the patterns are compared with the structure of that source code, and the code associated with each pattern is the code that replaces the code passed to the macro. This all happens during compilation.</p> <p>To define a macro, you use the <code>macro_rules!</code> construct. Let’s explore how to use <code>macro_rules!</code> by looking at how the <code>vec!</code> macro is defined. Chapter 8 covered how we can use the <code>vec!</code> macro to create a new vector with particular values. For example, the following macro creates a new vector with three integers inside:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+let v: Vec&lt;u32&gt; = vec![1, 2, 3];
+#}</pre> <p>We could also use the <code>vec!</code> macro to make a vector of two integers or a vector of five string slices. We wouldn’t be able to use a function to do the same because we wouldn’t know the number or type of values up front.</p> <p>Let’s look at a slightly simplified definition of the <code>vec!</code> macro in Listing D-1.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[macro_export]
+macro_rules! vec {
+    ( $( $x:expr ),* ) =&gt; {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
+}
+#}</pre> <p><span class="caption">Listing D-1: A simplified version of the <code>vec!</code> macro definition</span></p> <blockquote> <p>Note: The actual definition of the <code>vec!</code> macro in the standard library includes code to preallocate the correct amount of memory up front. That code is an optimization that we don’t include here to make the example simpler.</p> </blockquote> <p>The <code>#[macro_export]</code> annotation indicates that this macro should be made available whenever the crate in which we’re defining the macro is imported. Without this annotation, even if someone depending on this crate uses the <code>#[macro_use]</code> annotation, the macro wouldn’t be brought into scope.</p> <p>We then start the macro definition with <code>macro_rules!</code> and the name of the macro we’re defining <em>without</em> the exclamation mark. The name, in this case <code>vec</code>, is followed by curly brackets denoting the body of the macro definition.</p> <p>The structure in the <code>vec!</code> body is similar to the structure of a <code>match</code> expression. Here we have one arm with the pattern <code>( $( $x:expr ),* )</code>, followed by <code>=&gt;</code> and the block of code associated with this pattern. If the pattern matches, the associated block of code will be emitted. Given that this is the only pattern in this macro, there is only one valid way to match; any other will be an error. More complex macros will have more than one arm.</p> <p>Valid pattern syntax in macro definitions is different than the pattern syntax covered in Chapter 18 because macro patterns are matched against Rust code structure rather than values. Let’s walk through what the pieces of the pattern in Listing D-1 mean; for the full macro pattern syntax, see <a href="../../../reference/macros/">the reference</a>.</p> <p>First, a set of parentheses encompasses the whole pattern. Next comes a dollar sign (<code>$</code>) followed by a set of parentheses, which captures values that match the pattern within the parentheses for use in the replacement code. Within <code>$()</code> is <code>$x:expr</code>, which matches any Rust expression and gives the expression the name <code>$x</code>.</p> <p>The comma following <code>$()</code> indicates that a literal comma separator character could optionally appear after the code that matches the code captured in <code>$()</code>. The <code>*</code> following the comma specifies that the pattern matches zero or more of whatever precedes the <code>*</code>.</p> <p>When we call this macro with <code>vec![1, 2, 3];</code>, the <code>$x</code> pattern matches three times with the three expressions <code>1</code>, <code>2</code>, and <code>3</code>.</p> <p>Now let’s look at the pattern in the body of the code associated with this arm: the <code>temp_vec.push()</code> code within the <code>$()*</code> part is generated for each part that matches <code>$()</code> in the pattern, zero or more times depending on how many times the pattern matches. The <code>$x</code> is replaced with each expression matched. When we call this macro with <code>vec![1, 2, 3];</code>, the code generated that replaces this macro call will be the following:</p> <pre data-language="rust">let mut temp_vec = Vec::new();
+temp_vec.push(1);
+temp_vec.push(2);
+temp_vec.push(3);
+temp_vec
+</pre> <p>We’ve defined a macro that can take any number of arguments of any type and can generate code to create a vector containing the specified elements.</p> <p>Given that most Rust programmers will <em>use</em> macros more than <em>write</em> macros, we won’t discuss <code>macro_rules!</code> any further. To learn more about how to write macros, consult the online documentation or other resources, such as <a href="https://danielkeep.github.io/tlborm/book/index.html" target="_blank">“The Little Book of Rust Macros”</a>.</p> <h3 id="procedural-macros-for-custom-derive">Procedural Macros for Custom <code>derive</code>
+</h3> <p>The second form of macros is called <em>procedural macros</em> because they’re more like functions (which are a type of procedure). Procedural macros accept some Rust code as an input, operate on that code, and produce some Rust code as an output rather than matching against patterns and replacing the code with other code as declarative macros do. At the time of this writing, you can only define procedural macros to allow your traits to be implemented on a type by specifying the trait name in a <code>derive</code> annotation.</p> <p>We’ll create a crate named <code>hello_macro</code> that defines a trait named <code>HelloMacro</code> with one associated function named <code>hello_macro</code>. Rather than making our crate users implement the <code>HelloMacro</code> trait for each of their types, we’ll provide a procedural macro so users can annotate their type with <code>#[derive(HelloMacro)]</code> to get a default implementation of the <code>hello_macro</code> function. The default implementation will print <code>Hello, Macro! My name is TypeName!</code> where <code>TypeName</code> is the name of the type on which this trait has been defined. In other words, we’ll write a crate that enables another programmer to write code like Listing D-2 using our crate.</p> <p><span class="filename">Filename: src/main.rs</span></p> <pre data-language="rust">extern crate hello_macro;
+#[macro_use]
+extern crate hello_macro_derive;
+
+use hello_macro::HelloMacro;
+
+#[derive(HelloMacro)]
+struct Pancakes;
+
+fn main() {
+    Pancakes::hello_macro();
+}
+</pre> <p><span class="caption">Listing D-2: The code a user of our crate will be able to write when using our procedural macro</span></p> <p>This code will print <code>Hello, Macro! My name is Pancakes!</code> when we’re done. The first step is to make a new library crate, like this:</p> <pre>$ cargo new hello_macro --lib
+</pre> <p>Next, we’ll define the <code>HelloMacro</code> trait and its associated function:</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub trait HelloMacro {
+    fn hello_macro();
+}
+#}</pre> <p>We have a trait and its function. At this point, our crate user could implement the trait to achieve the desired functionality, like so:</p> <pre data-language="rust">extern crate hello_macro;
+
+use hello_macro::HelloMacro;
+
+struct Pancakes;
+
+impl HelloMacro for Pancakes {
+    fn hello_macro() {
+        println!("Hello, Macro! My name is Pancakes!");
+    }
+}
+
+fn main() {
+    Pancakes::hello_macro();
+}
+</pre> <p>However, they would need to write the implementation block for each type they wanted to use with <code>hello_macro</code>; we want to spare them from having to do this work.</p> <p>Additionally, we can’t yet provide a default implementation for the <code>hello_macro</code> function that will print the name of the type the trait is implemented on: Rust doesn’t have reflection capabilities, so it can’t look up the type’s name at runtime. We need a macro to generate code at compile time.</p> <p>The next step is to define the procedural macro. At the time of this writing, procedural macros need to be in their own crate. Eventually, this restriction might be lifted. The convention for structuring crates and macro crates is as follows: for a crate named <code>foo</code>, a custom derive procedural macro crate is called <code>foo_derive</code>. Let’s start a new crate called <code>hello_macro_derive</code> inside our <code>hello_macro</code> project:</p> <pre>$ cargo new hello_macro_derive --lib
+</pre> <p>Our two crates are tightly related, so we create the procedural macro crate within the directory of our <code>hello_macro</code> crate. If we change the trait definition in <code>hello_macro</code>, we’ll have to change the implementation of the procedural macro in <code>hello_macro_derive</code> as well. The two crates will need to be published separately, and programmers using these crates will need to add both as dependencies and bring them both into scope. We could instead have the <code>hello_macro</code> crate use <code>hello_macro_derive</code> as a dependency and reexport the procedural macro code. But the way we’ve structured the project makes it possible for programmers to use <code>hello_macro</code> even if they don’t want the <code>derive</code> functionality.</p> <p>We need to declare the <code>hello_macro_derive</code> crate as a procedural macro crate. We’ll also need functionality from the <code>syn</code> and <code>quote</code> crates, as you’ll see in a moment, so we need to add them as dependencies. Add the following to the <em>Cargo.toml</em> file for <code>hello_macro_derive</code>:</p> <p><span class="filename">Filename: hello_macro_derive/Cargo.toml</span></p> <pre>[lib]
+proc-macro = true
+
+[dependencies]
+syn = "0.11.11"
+quote = "0.3.15"
+</pre> <p>To start defining the procedural macro, place the code in Listing D-3 into your <em>src/lib.rs</em> file for the <code>hello_macro_derive</code> crate. Note that this code won’t compile until we add a definition for the <code>impl_hello_macro</code> function.</p> <p><span class="filename">Filename: hello_macro_derive/src/lib.rs</span></p> <pre data-language="rust">extern crate proc_macro;
+extern crate syn;
+#[macro_use]
+extern crate quote;
+
+use proc_macro::TokenStream;
+
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
+    // Construct a string representation of the type definition
+    let s = input.to_string();
+
+    // Parse the string representation
+    let ast = syn::parse_derive_input(&amp;s).unwrap();
+
+    // Build the impl
+    let gen = impl_hello_macro(&amp;ast);
+
+    // Return the generated impl
+    gen.parse().unwrap()
+}
+</pre> <p><span class="caption">Listing D-3: Code that most procedural macro crates will need to have for processing Rust code</span></p> <p>Notice the way we’ve split the functions in D-3; this will be the same for almost every procedural macro crate you see or create, because it makes writing a procedural macro more convenient. What you choose to do in the place where the <code>impl_hello_macro</code> function is called will be different depending on your procedural macro’s purpose.</p> <p>We’ve introduced three new crates: <code>proc_macro</code>, <a href="https://crates.io/crates/syn" target="_blank"><code>syn</code></a>, and <a href="https://crates.io/crates/quote" target="_blank"><code>quote</code></a>. The <code>proc_macro</code> crate comes with Rust, so we didn’t need to add that to the dependencies in <em>Cargo.toml</em>. The <code>proc_macro</code> crate allows us to convert Rust code into a string containing that Rust code. The <code>syn</code> crate parses Rust code from a string into a data structure that we can perform operations on. The <code>quote</code> crate takes <code>syn</code> data structures and turns them back into Rust code. These crates make it much simpler to parse any sort of Rust code we might want to handle: writing a full parser for Rust code is no simple task.</p> <p>The <code>hello_macro_derive</code> function will get called when a user of our library specifies <code>#[derive(HelloMacro)]</code> on a type. The reason is that we’ve annotated the <code>hello_macro_derive</code> function here with <code>proc_macro_derive</code> and specified the name, <code>HelloMacro</code>, which matches our trait name; that’s the convention most procedural macros follow.</p> <p>This function first converts the <code>input</code> from a <code>TokenStream</code> to a <code>String</code> by calling <code>to_string</code>. This <code>String</code> is a string representation of the Rust code for which we are deriving <code>HelloMacro</code>. In the example in Listing D-2, <code>s</code> will have the <code>String</code> value <code>struct Pancakes;</code> because that is the Rust code we added the <code>#[derive(HelloMacro)]</code> annotation to.</p> <blockquote> <p>Note: At the time of this writing, you can only convert a <code>TokenStream</code> to a string. A richer API will exist in the future.</p> </blockquote> <p>Now we need to parse the Rust code <code>String</code> into a data structure that we can then interpret and perform operations on. This is where <code>syn</code> comes into play. The <code>parse_derive_input</code> function in <code>syn</code> takes a <code>String</code> and returns a <code>DeriveInput</code> struct representing the parsed Rust code. The following code shows the relevant parts of the <code>DeriveInput</code> struct we get from parsing the string <code>struct Pancakes;</code>:</p> <pre data-language="rust">DeriveInput {
+    // --snip--
+
+    ident: Ident(
+        "Pancakes"
+    ),
+    body: Struct(
+        Unit
+    )
+}
+</pre> <p>The fields of this struct show that the Rust code we’ve parsed is a unit struct with the <code>ident</code> (identifier, meaning the name) of <code>Pancakes</code>. There are more fields on this struct for describing all sorts of Rust code; check the <a href="https://docs.rs/syn/0.11.11/syn/struct.DeriveInput.html" target="_blank"><code>syn</code> documentation for <code>DeriveInput</code></a> for more information.</p> <p>At this point, we haven’t defined the <code>impl_hello_macro</code> function, which is where we’ll build the new Rust code we want to include. But before we do, note that the last part of this <code>hello_macro_derive</code> function uses the <code>parse</code> function from the <code>quote</code> crate to turn the output of the <code>impl_hello_macro</code> function back into a <code>TokenStream</code>. The returned <code>TokenStream</code> is added to the code that our crate users write, so when they compile their crate, they’ll get extra functionality that we provide.</p> <p>You might have noticed that we’re calling <code>unwrap</code> to panic if the calls to the <code>parse_derive_input</code> or <code>parse</code> functions fail here. Panicking on errors is necessary in procedural macro code because <code>proc_macro_derive</code> functions must return <code>TokenStream</code> rather than <code>Result</code> to conform to the procedural macro API. We’ve chosen to simplify this example by using <code>unwrap</code>; in production code, you should provide more specific error messages about what went wrong by using <code>panic!</code> or <code>expect</code>.</p> <p>Now that we have the code to turn the annotated Rust code from a <code>TokenStream</code> into a <code>String</code> and a <code>DeriveInput</code> instance, let’s generate the code that implements the <code>HelloMacro</code> trait on the annotated type:</p> <p><span class="filename">Filename: hello_macro_derive/src/lib.rs</span></p> <pre data-language="rust">fn impl_hello_macro(ast: &amp;syn::DeriveInput) -&gt; quote::Tokens {
+    let name = &amp;ast.ident;
+    quote! {
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!("Hello, Macro! My name is {}", stringify!(#name));
+            }
+        }
+    }
+}
+</pre> <p>We get an <code>Ident</code> struct instance containing the name (identifier) of the annotated type using <code>ast.ident</code>. The code in Listing D-2 specifies that the <code>name</code> will be <code>Ident("Pancakes")</code>.</p> <p>The <code>quote!</code> macro lets us write the Rust code that we want to return and convert it into <code>quote::Tokens</code>. This macro also provides some very cool templating mechanics; we can write <code>#name</code>, and <code>quote!</code> will replace it with the value in the variable named <code>name</code>. You can even do some repetition similar to the way regular macros work. Check out <a href="https://docs.rs/quote" target="_blank">the <code>quote</code> crate’s docs</a> for a thorough introduction.</p> <p>We want our procedural macro to generate an implementation of our <code>HelloMacro</code> trait for the type the user annotated, which we can get by using <code>#name</code>. The trait implementation has one function, <code>hello_macro</code>, whose body contains the functionality we want to provide: printing <code>Hello, Macro! My name is</code> and then the name of the annotated type.</p> <p>The <code>stringify!</code> macro used here is built into Rust. It takes a Rust expression, such as <code>1 + 2</code>, and at compile time turns the expression into a string literal, such as <code>"1 + 2"</code>. This is different than <code>format!</code> or <code>println!</code>, which evaluate the expression and then turn the result into a <code>String</code>. There is a possibility that the <code>#name</code> input might be an expression to print literally, so we use <code>stringify!</code>. Using <code>stringify!</code> also saves an allocation by converting <code>#name</code> to a string literal at compile time.</p> <p>At this point, <code>cargo build</code> should complete successfully in both <code>hello_macro</code> and <code>hello_macro_derive</code>. Let’s hook up these crates to the code in Listing D-2 to see the procedural macro in action! Create a new binary project in your <em>projects</em> directory using <code>cargo new --bin pancakes</code>. We need to add <code>hello_macro</code> and <code>hello_macro_derive</code> as dependencies in the <code>pancakes</code> crate’s <em>Cargo.toml</em>. If you’re publishing your versions of <code>hello_macro</code> and <code>hello_macro_derive</code> to <em>https://crates.io/</em>, they would be regular dependencies; if not, you can specify them as <code>path</code> dependencies as follows:</p> <pre>[dependencies]
+hello_macro = { path = "../hello_macro" }
+hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
+</pre> <p>Put the code from Listing D-2 into <em>src/main.rs</em>, and run <code>cargo run</code>: it should print <code>Hello, Macro! My name is Pancakes!</code> The implementation of the <code>HelloMacro</code> trait from the procedural macro was included without the <code>pancakes</code> crate needing to implement it; the <code>#[derive(HelloMacro)]</code> added the trait implementation.</p> <h3 id="the-future-of-macros">The Future of Macros</h3> <p>In the future, Rust will expand declarative and procedural macros. Rust will use a better declarative macro system with the <code>macro</code> keyword and will add more types of procedural macros for more powerful tasks than just <code>derive</code>. These systems are still under development at the time of this publication; please consult the online Rust documentation for the latest information.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/book/second-edition/appendix-04-macros.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/book/second-edition/appendix-04-macros.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

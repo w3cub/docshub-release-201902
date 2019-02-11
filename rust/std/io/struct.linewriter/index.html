@@ -1,0 +1,372 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;io&#58;&#58;LineWriter - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Wraps a writer and buffers output to it, flushing whenever a newline (0x0a, &#39;&#92;n&#39;) is detected. ">
+  <meta name="keywords" content="struct, std, io, linewriter, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/io/struct.linewriter/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Struct std::io::LineWriter</h1>
+<pre class="rust struct" data-language="rust">pub struct LineWriter&lt;W: Write&gt; { /* fields omitted */ }</pre>
+<p>Wraps a writer and buffers output to it, flushing whenever a newline (<code>0x0a</code>, <code>'\n'</code>) is detected.</p> <p>The <a href="../struct.bufwriter/"><code>BufWriter</code></a> struct wraps a writer and buffers its output. But it only does this batched write when it goes out of scope, or when the internal buffer is full. Sometimes, you'd prefer to write each line as it's completed, rather than the entire buffer at once. Enter <code>LineWriter</code>. It does exactly that.</p> <p>Like <a href="../struct.bufwriter/" title="`BufWriter`"><code>BufWriter</code></a>, a <code>LineWriter</code>’s buffer will also be flushed when the <code>LineWriter</code> goes out of scope or when its internal buffer is full.</p> <p>If there's still a partial line in the buffer when the <code>LineWriter</code> is dropped, it will flush those contents.</p> <h2 id="examples" class="section-header">Examples</h2> <p>We can use <code>LineWriter</code> to write one line at a time, significantly reducing the number of actual writes to the file.</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::fs::{self, File};
+use std::io::prelude::*;
+use std::io::LineWriter;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let road_not_taken = b"I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I -
+I took the one less traveled by,
+And that has made all the difference.";
+
+    let file = File::create("poem.txt")?;
+    let mut file = LineWriter::new(file);
+
+    file.write_all(b"I shall be telling this with a sigh")?;
+
+    // No bytes are written until a newline is encountered (or
+    // the internal buffer is filled).
+    assert_eq!(fs::read_to_string("poem.txt")?, "");
+    file.write_all(b"\n")?;
+    assert_eq!(
+        fs::read_to_string("poem.txt")?,
+        "I shall be telling this with a sigh\n",
+    );
+
+    // Write the rest of the poem.
+    file.write_all(b"Somewhere ages and ages hence:
+Two roads diverged in a wood, and I -
+I took the one less traveled by,
+And that has made all the difference.")?;
+
+    // The last line of the poem doesn't end in a newline, so
+    // we have to flush or drop the `LineWriter` to finish
+    // writing.
+    file.flush()?;
+
+    // Confirm the whole poem was written.
+    assert_eq!(fs::read("poem.txt")?, &amp;road_not_taken[..]);
+    Ok(())
+}</pre> <h2 id="methods" class="small-section-header">Methods</h2>
+<h3 id="impl" class="impl"><span class="in-band"><code>impl&lt;W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#761-879" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<h4 id="method.new" class="method"><span id="new.v" class="invisible"><code>pub fn <a href="#method.new" class="fnname">new</a>(inner: W) -&gt; <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#777-780" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;<pre class="content">impl&lt;W: Write&gt; Write for LineWriter&lt;W&gt;
+</pre>
+</div>
+<div class="docblock">
+<p>Creates a new <code>LineWriter</code>.</p> <h2 id="examples-1" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::fs::File;
+use std::io::LineWriter;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let file = File::create("poem.txt")?;
+    let file = LineWriter::new(file);
+    Ok(())
+}</pre> </div>
+<h4 id="method.with_capacity" class="method"><span id="with_capacity.v" class="invisible"><code>pub fn <a href="#method.with_capacity" class="fnname">with_capacity</a>(cap: <a class="primitive" href="../../primitive.usize/">usize</a>, inner: W) -&gt; <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#798-803" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;<pre class="content">impl&lt;W: Write&gt; Write for LineWriter&lt;W&gt;
+</pre>
+</div>
+<div class="docblock">
+<p>Creates a new <code>LineWriter</code> with a specified capacity for the internal buffer.</p> <h2 id="examples-2" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::fs::File;
+use std::io::LineWriter;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let file = File::create("poem.txt")?;
+    let file = LineWriter::with_capacity(100, file);
+    Ok(())
+}</pre> </div>
+<h4 id="method.get_ref" class="method"><span id="get_ref.v" class="invisible"><code>pub fn <a href="#method.get_ref" class="fnname">get_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>W</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#822" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Gets a reference to the underlying writer.</p> <h2 id="examples-3" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::fs::File;
+use std::io::LineWriter;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let file = File::create("poem.txt")?;
+    let file = LineWriter::new(file);
+
+    let reference = file.get_ref();
+    Ok(())
+}</pre> </div>
+<h4 id="method.get_mut" class="method"><span id="get_mut.v" class="invisible"><code>pub fn <a href="#method.get_mut" class="fnname">get_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;mut </a>W</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#845" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Gets a mutable reference to the underlying writer.</p> <p>Caution must be taken when calling methods on the mutable reference returned as extra writes could corrupt the output stream.</p> <h2 id="examples-4" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::fs::File;
+use std::io::LineWriter;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let file = File::create("poem.txt")?;
+    let mut file = LineWriter::new(file);
+
+    // we can use reference just like file
+    let reference = file.get_mut();
+    Ok(())
+}</pre> </div>
+<h4 id="method.into_inner" class="method"><span id="into_inner.v" class="invisible"><code>pub fn <a href="#method.into_inner" class="fnname">into_inner</a>(self) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;W, <a class="struct" href="../struct.intoinnererror/" title="struct std::io::IntoInnerError">IntoInnerError</a>&lt;<a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;&gt;&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#871-878" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Unwraps this <code>LineWriter</code>, returning the underlying writer.</p> <p>The internal buffer is written out before returning the writer.</p> <h2 id="errors" class="section-header">Errors</h2> <p>An <code>Err</code> will be returned if an error occurs while flushing the buffer.</p> <h2 id="examples-5" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::fs::File;
+use std::io::LineWriter;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let file = File::create("poem.txt")?;
+
+    let writer: LineWriter&lt;File&gt; = LineWriter::new(file);
+
+    let file: File = writer.into_inner()?;
+    Ok(())
+}</pre> </div>
+<h2 id="implementations" class="small-section-header">Trait Implementations</h2>
+<div id="implementations-list">
+<h3 id="impl-Write" class="impl"><span class="in-band"><code>impl&lt;W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a>&gt; <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a> for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#882-924" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.write" class="method"><span id="write.v" class="invisible"><code>fn <a href="../trait.write/#tymethod.write" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#883-917" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Write a buffer into this object, returning how many bytes were written. <a href="../trait.write/#tymethod.write">Read more</a></p> </div>
+<h4 id="method.flush" class="method"><span id="flush.v" class="invisible"><code>fn <a href="../trait.write/#tymethod.flush" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#919-923" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Flush this output stream, ensuring that all intermediately buffered contents reach their destination. <a href="../trait.write/#tymethod.flush">Read more</a></p> </div>
+<h4 id="method.write_all" class="method"><span id="write_all.v" class="invisible"><code>fn <a href="../trait.write/#method.write_all" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/mod.rs.html#1066-1077" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Attempts to write an entire buffer into this write. <a href="../trait.write/#method.write_all">Read more</a></p> </div>
+<h4 id="method.write_fmt" class="method"><span id="write_fmt.v" class="invisible"><code>fn <a href="../trait.write/#method.write_fmt" class="fnname">write_fmt</a>(&amp;mut self, fmt: <a class="struct" href="../../fmt/struct.arguments/" title="struct std::fmt::Arguments">Arguments</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/mod.rs.html#1118-1150" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Writes a formatted string into this writer, returning any error encountered. <a href="../trait.write/#method.write_fmt">Read more</a></p> </div>
+<h4 id="method.by_ref" class="method"><span id="by_ref.v" class="invisible"><code>fn <a href="../trait.write/#method.by_ref" class="fnname">by_ref</a>(&amp;mut self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;mut </a>Self <span class="where fmt-newline">where<br>    Self: <a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/mod.rs.html#1174" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Creates a "by reference" adaptor for this instance of <code>Write</code>. <a href="../trait.write/#method.by_ref">Read more</a></p> </div>
+</div>
+<h3 id="impl-Debug" class="impl"><span class="in-band"><code>impl&lt;W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a>&gt; <a class="trait" href="../../fmt/trait.debug/" title="trait std::fmt::Debug">Debug</a> for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt; <span class="where fmt-newline">where<br>    W: <a class="trait" href="../../fmt/trait.debug/" title="trait std::fmt::Debug">Debug</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#927-935" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.fmt" class="method"><span id="fmt.v" class="invisible"><code>fn <a href="../../fmt/trait.debug/#tymethod.fmt" class="fnname">fmt</a>(&amp;self, fmt: &amp;mut <a class="struct" href="../../fmt/struct.formatter/" title="struct std::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="../../fmt/type.result/" title="type std::fmt::Result">Result</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#928-934" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Formats the value using the given formatter. <a href="../../fmt/trait.debug/#tymethod.fmt">Read more</a></p> </div>
+</div>
+</div>
+<h2 id="synthetic-implementations" class="small-section-header">Auto Trait Implementations</h2>
+<div id="synthetic-implementations-list">
+<h3 id="impl-Send" class="impl"><span class="in-band"><code>impl&lt;W&gt; <a class="trait" href="../../marker/trait.send/" title="trait std::marker::Send">Send</a> for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt; <span class="where fmt-newline">where<br>    W: <a class="trait" href="../../marker/trait.send/" title="trait std::marker::Send">Send</a>, </span></code></span></h3>
+
+<h3 id="impl-Sync" class="impl"><span class="in-band"><code>impl&lt;W&gt; <a class="trait" href="../../marker/trait.sync/" title="trait std::marker::Sync">Sync</a> for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt; <span class="where fmt-newline">where<br>    W: <a class="trait" href="../../marker/trait.sync/" title="trait std::marker::Sync">Sync</a>, </span></code></span></h3>
+
+</div>
+<h2 id="blanket-implementations" class="small-section-header">Blanket Implementations</h2>
+<div id="blanket-implementations-list">
+<h3 id="impl-TryFrom" class="impl"><span class="in-band"><code>impl&lt;T, U&gt; <a class="trait" href="../../convert/trait.tryfrom/" title="trait std::convert::TryFrom">TryFrom</a> for T <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../convert/trait.from/" title="trait std::convert::From">From</a>&lt;U&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#481-487" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="associatedtype.Error" class="type"><span id="Error.t" class="invisible"><code>type <a href="../../convert/trait.tryfrom/#associatedtype.Error" class="type">Error</a> = <a class="primitive" href="../../primitive.never/">!</a></code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (try_from #33417)</span></div>
+<div class="docblock">
+<p>The type returned in the event of a conversion error.</p> </div>
+<h4 id="method.try_from" class="method"><span id="try_from.v" class="invisible"><code>fn <a href="../../convert/trait.tryfrom/#tymethod.try_from" class="fnname">try_from</a>(value: U) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;T, &lt;T as <a class="trait" href="../../convert/trait.tryfrom/" title="trait std::convert::TryFrom">TryFrom</a>&lt;U&gt;&gt;::<a class="type" href="../../convert/trait.tryfrom/#associatedtype.Error" title="type std::convert::TryFrom::Error">Error</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#484-486" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (try_from #33417)</span></div>
+<div class="docblock">
+<p>Performs the conversion.</p> </div>
+</div>
+<h3 id="impl-From" class="impl"><span class="in-band"><code>impl&lt;T&gt; <a class="trait" href="../../convert/trait.from/" title="trait std::convert::From">From</a> for T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#462-464" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.from" class="method"><span id="from.v" class="invisible"><code>fn <a href="../../convert/trait.from/#tymethod.from" class="fnname">from</a>(t: T) -&gt; T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#463" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Performs the conversion.</p> </div>
+</div>
+<h3 id="impl-TryInto" class="impl"><span class="in-band"><code>impl&lt;T, U&gt; <a class="trait" href="../../convert/trait.tryinto/" title="trait std::convert::TryInto">TryInto</a> for T <span class="where fmt-newline">where<br>    U: <a class="trait" href="../../convert/trait.tryfrom/" title="trait std::convert::TryFrom">TryFrom</a>&lt;T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#469-476" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="associatedtype.Error-1" class="type"><span id="Error.t-1" class="invisible"><code>type <a href="../../convert/trait.tryinto/#associatedtype.Error" class="type">Error</a> = &lt;U as <a class="trait" href="../../convert/trait.tryfrom/" title="trait std::convert::TryFrom">TryFrom</a>&lt;T&gt;&gt;::<a class="type" href="../../convert/trait.tryfrom/#associatedtype.Error" title="type std::convert::TryFrom::Error">Error</a></code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (try_from #33417)</span></div>
+<div class="docblock">
+<p>The type returned in the event of a conversion error.</p> </div>
+<h4 id="method.try_into" class="method"><span id="try_into.v" class="invisible"><code>fn <a href="../../convert/trait.tryinto/#tymethod.try_into" class="fnname">try_into</a>(self) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;U, &lt;U as <a class="trait" href="../../convert/trait.tryfrom/" title="trait std::convert::TryFrom">TryFrom</a>&lt;T&gt;&gt;::<a class="type" href="../../convert/trait.tryfrom/#associatedtype.Error" title="type std::convert::TryFrom::Error">Error</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#473-475" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (try_from #33417)</span></div>
+<div class="docblock">
+<p>Performs the conversion.</p> </div>
+</div>
+<h3 id="impl-Into" class="impl"><span class="in-band"><code>impl&lt;T, U&gt; <a class="trait" href="../../convert/trait.into/" title="trait std::convert::Into">Into</a> for T <span class="where fmt-newline">where<br>    U: <a class="trait" href="../../convert/trait.from/" title="trait std::convert::From">From</a>&lt;T&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#453-458" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.into" class="method"><span id="into.v" class="invisible"><code>fn <a href="../../convert/trait.into/#tymethod.into" class="fnname">into</a>(self) -&gt; U</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#455-457" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Performs the conversion.</p> </div>
+</div>
+<h3 id="impl-Borrow" class="impl"><span class="in-band"><code>impl&lt;T&gt; <a class="trait" href="../../borrow/trait.borrow/" title="trait std::borrow::Borrow">Borrow</a> for T <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#219-221" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow" class="method"><span id="borrow.v" class="invisible"><code>fn <a href="../../borrow/trait.borrow/#tymethod.borrow" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#220" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Immutably borrows from an owned value. <a href="../../borrow/trait.borrow/#tymethod.borrow">Read more</a></p> </div>
+</div>
+<h3 id="impl-BorrowMut" class="impl"><span class="in-band"><code>impl&lt;T&gt; <a class="trait" href="../../borrow/trait.borrowmut/" title="trait std::borrow::BorrowMut">BorrowMut</a> for T <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#224-226" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow_mut" class="method"><span id="borrow_mut.v" class="invisible"><code>fn <a href="../../borrow/trait.borrowmut/#tymethod.borrow_mut" class="fnname">borrow_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;mut </a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#225" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Mutably borrows from an owned value. <a href="../../borrow/trait.borrowmut/#tymethod.borrow_mut">Read more</a></p> </div>
+</div>
+<h3 id="impl-Any" class="impl"><span class="in-band"><code>impl&lt;T&gt; <a class="trait" href="../../any/trait.any/" title="trait std::any::Any">Any</a> for T <span class="where fmt-newline">where<br>    T: 'static + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/any.rs.html#114-116" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.get_type_id" class="method"><span id="get_type_id.v" class="invisible"><code>fn <a href="../../any/trait.any/#tymethod.get_type_id" class="fnname">get_type_id</a>(&amp;self) -&gt; <a class="struct" href="../../any/struct.typeid/" title="struct std::any::TypeId">TypeId</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/any.rs.html#115" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (get_type_id #27745)this method will likely be replaced by an associated static </span></div>
+<div class="docblock">
+<p>Gets the <code>TypeId</code> of <code>self</code>. <a href="../../any/trait.any/#tymethod.get_type_id">Read more</a></p> </div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/io/struct.LineWriter.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/io/struct.LineWriter.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

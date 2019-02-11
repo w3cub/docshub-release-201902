@@ -1,0 +1,138 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;ops&#58;&#58;Fn - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" The version of the call operator that takes an immutable receiver. ">
+  <meta name="keywords" content="trait, std, ops, fn, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/ops/trait.fn/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::ops::Fn</h1>
+<pre class="rust trait" data-language="rust">#[lang = "fn"]
+pub trait Fn&lt;Args&gt;: FnMut&lt;Args&gt; {
+    extern "rust-call" fn call(&amp;self, args: Args) -&gt; Self::Output;
+}</pre>
+<p>The version of the call operator that takes an immutable receiver.</p> <p>Instances of <code>Fn</code> can be called repeatedly without mutating state.</p> <p><em>This trait (<code>Fn</code>) is not to be confused with <a href="../../primitive.fn/">function pointers</a> (<code>fn</code>).</em></p> <p><code>Fn</code> is implemented automatically by closures which only take immutable references to captured variables or don't capture anything at all, as well as (safe) <a href="../../primitive.fn/">function pointers</a> (with some caveats, see their documentation for more details). Additionally, for any type <code>F</code> that implements <code>Fn</code>, <code>&amp;F</code> implements <code>Fn</code>, too.</p> <p>Since both <a href="../trait.fnmut/"><code>FnMut</code></a> and <a href="../trait.fnonce/"><code>FnOnce</code></a> are supertraits of <code>Fn</code>, any instance of <code>Fn</code> can be used as a parameter where a <a href="../trait.fnmut/"><code>FnMut</code></a> or <a href="../trait.fnonce/"><code>FnOnce</code></a> is expected.</p> <p>Use <code>Fn</code> as a bound when you want to accept a parameter of function-like type and need to call it repeatedly and without mutating state (e.g. when calling it concurrently). If you do not need such strict requirements, use <a href="../trait.fnmut/"><code>FnMut</code></a> or <a href="../trait.fnonce/"><code>FnOnce</code></a> as bounds.</p> <p>See the <a href="../../../book/second-edition/ch13-01-closures/">chapter on closures in <em>The Rust Programming Language</em></a> for some more information on this topic.</p> <p>Also of note is the special syntax for <code>Fn</code> traits (e.g. <code>Fn(usize, bool) -&gt; usize</code>). Those interested in the technical details of this can refer to <a href="https://doc.rust-lang.org/nomicon/hrtb.html" target="_blank">the relevant section in the <em>Rustonomicon</em></a>.</p> <h2 id="examples" class="section-header">Examples</h2>
+<h3 id="calling-a-closure" class="section-header">Calling a closure</h3> <pre class="rust rust-example-rendered" data-language="rust">
+let square = |x| x * x;
+assert_eq!(square(5), 25);</pre> <h3 id="using-a-fn-parameter" class="section-header">Using a <code>Fn</code> parameter</h3> <pre class="rust rust-example-rendered" data-language="rust">
+fn call_with_one&lt;F&gt;(func: F) -&gt; usize
+    where F: Fn(usize) -&gt; usize {
+    func(1)
+}
+
+let double = |x| x * 2;
+assert_eq!(call_with_one(double), 2);</pre>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.call" class="method"><span id="call.v" class="invisible"><code>extern "rust-call" fn <a href="#tymethod.call" class="fnname">call</a>(&amp;self, args: Args) -&gt; Self::<a class="type" href="../trait.fnonce/#associatedtype.Output" title="type std::ops::FnOnce::Output">Output</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fn_traits #29625)</span></div>
+<div class="docblock">
+<p>Performs the call operation.</p> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Fn%3CA%3E" class="impl"><span class="in-band"><code>impl&lt;'a, A, F&gt; Fn&lt;A&gt; for <a class="primitive" href="../../primitive.reference/">&amp;'a </a>F <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.fn/" title="trait std::ops::Fn">Fn</a>&lt;A&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/function.rs.html#243-249" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.call" class="method"><span id="call.v-1" class="invisible"><code>extern "rust-call" fn <a href="#method.call" class="fnname">call</a>(&amp;self, args: A) -&gt; &lt;F as <a class="trait" href="../trait.fnonce/" title="trait std::ops::FnOnce">FnOnce</a>&lt;A&gt;&gt;::<a class="type" href="../trait.fnonce/#associatedtype.Output" title="type std::ops::FnOnce::Output">Output</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/function.rs.html#246-248" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fn_traits #29625)</span></div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/ops/trait.Fn.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

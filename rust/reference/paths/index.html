@@ -1,0 +1,197 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>2.7. Paths - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="A path is a sequence of one or more path components logically separated by a namespace qualifier (&#58;&#58;). If a path consists of only one &hellip;">
+  <meta name="keywords" content="paths, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/paths/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="paths">Paths</h1> <p>A <em>path</em> is a sequence of one or more path components <em>logically</em> separated by a namespace <span class="parenthetical">qualifier (<code>::</code>)</span>. If a path consists of only one component, it refers to either an <a href="../items/">item</a> or a <a href="../variables/">variable</a> in a local control scope. If a path has multiple components, it always refers to an item.</p> <p>Two examples of simple paths consisting of only identifier components:</p> <pre data-language="rust">x;
+x::y::z;
+</pre> <p>Path components are usually <a href="../identifiers/">identifiers</a>, but they may also include angle-bracket-enclosed lists of type arguments. In <a href="../expressions/">expression</a> context, the type argument list is given after a <code>::</code> namespace qualifier in order to disambiguate it from a relational expression involving the less-than <span class="parenthetical">symbol (<code>&lt;</code>)</span>. In type expression context, the final namespace qualifier is omitted.</p> <p>Two examples of paths with type arguments:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# struct HashMap&lt;K, V&gt;(K,V);
+# fn f() {
+# fn id&lt;T&gt;(t: T) -&gt; T { t }
+type T = HashMap&lt;i32,String&gt;; // Type arguments used in a type expression
+let x  = id::&lt;i32&gt;(10);       // Type arguments used in a call expression
+# }
+#}</pre> <p>Paths can be denoted with various leading qualifiers to change the meaning of how it is resolved:</p> <ul> <li>Paths starting with <code>::</code> are considered to be global paths where the components of the path start being resolved from the crate root. Each identifier in the path must resolve to an item.</li> </ul> <pre data-language="rust">mod a {
+    pub fn foo() {}
+}
+mod b {
+    pub fn foo() {
+        ::a::foo(); // call a's foo function
+    }
+}
+# fn main() {}
+</pre> <ul> <li>Paths starting with the keyword <code>super</code> begin resolution relative to the parent module. Each further identifier must resolve to an item.</li> </ul> <pre data-language="rust">mod a {
+    pub fn foo() {}
+}
+mod b {
+    pub fn foo() {
+        super::a::foo(); // call a's foo function
+    }
+}
+# fn main() {}
+</pre> <ul> <li>Paths starting with the keyword <code>self</code> begin resolution relative to the current module. Each further identifier must resolve to an item.</li> </ul> <pre data-language="rust">fn foo() {}
+fn bar() {
+    self::foo();
+}
+# fn main() {}
+</pre> <p>Additionally keyword <code>super</code> may be repeated several times after the first <code>super</code> or <code>self</code> to refer to ancestor modules.</p> <pre data-language="rust">mod a {
+    fn foo() {}
+
+    mod b {
+        mod c {
+            fn foo() {
+                super::super::foo(); // call a's foo function
+                self::super::super::foo(); // call a's foo function
+            }
+        }
+    }
+}
+# fn main() {}
+</pre> <h2 id="canonical-paths">Canonical paths</h2> <p>Items defined in a module or implementation have a <em>canonical path</em> that corresponds to where within its crate it is defined. All other paths to these items are aliases. The canonical path is defined as a <em>path prefix</em> appended by the path component the item itself defines.</p> <p><a href="../items/implementations/">Implementations</a> and <a href="../items/use-declarations/">use declarations</a> do not have canonical paths, although the items that implementations define do have them. Items defined in block expressions do not have canonical paths. Items defined in a module that does not have a canonical path do not have a canonical path. Associated items defined in an implementation that refers to an item without a canonical path, e.g. as the implementing type, the trait being implemented, a type parameter or bound on a type parameter, do not have canonical paths.</p> <p>The path prefix for modules is the canonical path to that module. For bare implementations, it is the canonical path of the item being implemented surrounded by <span class="parenthetical">angle (<code>&lt;&gt;</code>)</span> brackets. For trait implementations, it is the canonical path of the item being implemented followed by <code>as</code> followed by the canonical path to the trait all surrounded in <span class="parenthetical">angle (<code>&lt;&gt;</code>)</span> brackets.</p> <p>The canonical path is only meaningful within a given crate. There is no global namespace across crates; an item's canonical path merely identifies it within the crate.</p> <pre data-language="rust">// Comments show the canonical path of the item.
+
+mod a { // ::a
+    pub struct Struct; // ::a::Struct
+
+    pub trait Trait { // ::a::Trait
+        fn f(&amp;self); // a::Trait::f
+    }
+
+    impl Trait for Struct {
+        fn f(&amp;self) {} // &lt;::a::Struct as ::a::Trait&gt;::f
+    }
+
+    impl Struct {
+        fn g(&amp;self) {} // &lt;::a::Struct&gt;::g
+    }
+}
+
+mod without { // ::without
+    fn canonicals() { // ::without::canonicals
+        struct OtherStruct; // None
+
+        trait OtherTrait { // None
+            fn g(&amp;self); // None
+        }
+
+        impl OtherTrait for OtherStruct {
+            fn g(&amp;self) {} // None
+        }
+
+        impl OtherTrait for ::a::Struct {
+            fn g(&amp;self) {} // None
+        }
+
+        impl ::a::Trait for OtherStruct {
+            fn f(&amp;self) {} // None
+        }
+    }
+}
+
+# fn main() {}
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/paths.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/paths.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

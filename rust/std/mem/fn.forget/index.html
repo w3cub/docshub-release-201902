@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Std&#58;&#58;mem&#58;&#58;forget - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Takes ownership and &#34;forgets&#34; about the value without running its destructor. ">
+  <meta name="keywords" content="function, std, mem, forget, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/mem/fn.forget/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Function std::mem::forget</h1>
+<pre class="rust fn" data-language="rust">pub fn forget&lt;T&gt;(t: T)</pre>
+<p>Takes ownership and "forgets" about the value <strong>without running its destructor</strong>.</p> <p>Any resources the value manages, such as heap memory or a file handle, will linger forever in an unreachable state. However, it does not guarantee that pointers to this memory will remain valid.</p> <ul> <li>If you want to leak memory, see <a href="../../boxed/struct.box/#method.leak"><code>Box::leak</code></a>.</li> <li>If you want to obtain a raw pointer to the memory, see <a href="../../boxed/struct.box/#method.into_raw"><code>Box::into_raw</code></a>.</li> <li>If you want to dispose of a value properly, running its destructor, see <a href="../fn.drop/"><code>mem::drop</code></a>.</li> </ul> <h2 id="safety" class="section-header">Safety</h2> <p><code>forget</code> is not marked as <code>unsafe</code>, because Rust's safety guarantees do not include a guarantee that destructors will always run. For example, a program can create a reference cycle using <a href="../../rc/struct.rc/"><code>Rc</code></a>, or call <a href="../../process/fn.exit/"><code>process::exit</code></a> to exit without running destructors. Thus, allowing <code>mem::forget</code> from safe code does not fundamentally change Rust's safety guarantees.</p> <p>That said, leaking resources such as memory or I/O objects is usually undesirable, so <code>forget</code> is only recommended for specialized use cases like those shown below.</p> <p>Because forgetting a value is allowed, any <code>unsafe</code> code you write must allow for this possibility. You cannot return a value and expect that the caller will necessarily run the value's destructor.</p> <h2 id="examples" class="section-header">Examples</h2> <p>Leak an I/O object, never closing the file:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::mem;
+use std::fs::File;
+
+let file = File::open("foo.txt").unwrap();
+mem::forget(file);</pre> <p>The practical use cases for <code>forget</code> are rather specialized and mainly come up in unsafe or FFI code.</p> <h3 id="use-case-1" class="section-header">Use case 1</h3> <p>You have created an uninitialized value using <a href="../fn.uninitialized/"><code>mem::uninitialized</code></a>. You must either initialize or <code>forget</code> it on every computation path before Rust drops it automatically, like at the end of a scope or after a panic. Running the destructor on an uninitialized value would be <a href="../../../reference/behavior-considered-undefined/">undefined behavior</a>.</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::mem;
+use std::ptr;
+
+unsafe {
+    let mut uninit_vec: Vec&lt;u32&gt; = mem::uninitialized();
+
+    if some_condition {
+        // Initialize the variable.
+        ptr::write(&amp;mut uninit_vec, Vec::new());
+    } else {
+        // Forget the uninitialized value so its destructor doesn't run.
+        mem::forget(uninit_vec);
+    }
+}</pre> <h3 id="use-case-2" class="section-header">Use case 2</h3> <p>You have duplicated the bytes making up a value, without doing a proper <a href="../../clone/trait.clone/"><code>Clone</code></a>. You need the value's destructor to run only once, because a double <code>free</code> is undefined behavior.</p> <p>An example is a possible implementation of <a href="../fn.swap/"><code>mem::swap</code></a>:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::mem;
+use std::ptr;
+
+fn swap&lt;T&gt;(x: &amp;mut T, y: &amp;mut T) {
+    unsafe {
+        // Give ourselves some scratch space to work with
+        let mut t: T = mem::uninitialized();
+
+        // Perform the swap, `&amp;mut` pointers never alias
+        ptr::copy_nonoverlapping(&amp;*x, &amp;mut t, 1);
+        ptr::copy_nonoverlapping(&amp;*y, x, 1);
+        ptr::copy_nonoverlapping(&amp;t, y, 1);
+
+        // y and t now point to the same thing, but we need to completely
+        // forget `t` because we do not want to run the destructor for `T`
+        // on its value, which is still owned somewhere outside this function.
+        mem::forget(t);
+    }
+}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/mem/fn.forget.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/mem/fn.forget.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

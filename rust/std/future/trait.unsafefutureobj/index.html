@@ -1,0 +1,183 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;future&#58;&#58;UnsafeFutureObj - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" A custom implementation of a future trait object for FutureObj, providing a hand-rolled vtable. ">
+  <meta name="keywords" content="trait, std, future, unsafefutureobj, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/future/trait.unsafefutureobj/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::future::UnsafeFutureObj</h1>
+<pre class="rust trait" data-language="rust">pub unsafe trait UnsafeFutureObj&lt;'a, T&gt;: 'a {
+    fn into_raw(self) -&gt; *mut ();
+    unsafe fn poll(ptr: *mut (), cx: &amp;mut Context) -&gt; Poll&lt;T&gt;;
+    unsafe fn drop(ptr: *mut ());
+}</pre>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<p>A custom implementation of a future trait object for <code>FutureObj</code>, providing a hand-rolled vtable.</p> <p>This custom representation is typically used only in <code>no_std</code> contexts, where the default <code>Box</code>-based implementation is not available.</p> <p>The implementor must guarantee that it is safe to call <code>poll</code> repeatedly (in a non-concurrent fashion) with the result of <code>into_raw</code> until <code>drop</code> is called.</p>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.into_raw" class="method"><span id="into_raw.v" class="invisible"><code>fn <a href="#tymethod.into_raw" class="fnname">into_raw</a>(self) -&gt; <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<div class="docblock">
+<p>Convert an owned instance into a (conceptually owned) void pointer.</p> </div>
+<h3 id="tymethod.poll" class="method"><span id="poll.v" class="invisible"><code>unsafe fn <a href="#tymethod.poll" class="fnname">poll</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>, cx: &amp;mut <a class="struct" href="../../task/struct.context/" title="struct std::task::Context">Context</a>) -&gt; <a class="enum" href="../../task/enum.poll/" title="enum std::task::Poll">Poll</a>&lt;T&gt;</code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<div class="docblock">
+<p>Poll the future represented by the given void pointer.</p> <h2 id="safety" class="section-header">Safety</h2> <p>The trait implementor must guarantee that it is safe to repeatedly call <code>poll</code> with the result of <code>into_raw</code> until <code>drop</code> is called; such calls are not, however, allowed to race with each other or with calls to <code>drop</code>.</p> </div>
+<h3 id="tymethod.drop" class="method"><span id="drop.v" class="invisible"><code>unsafe fn <a href="#tymethod.drop" class="fnname">drop</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>)</code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<div class="docblock">
+<p>Drops the future represented by the given void pointer.</p> <h2 id="safety-1" class="section-header">Safety</h2> <p>The trait implementor must guarantee that it is safe to call this function once per <code>into_raw</code> invocation; that call cannot race with other calls to <code>drop</code> or <code>poll</code>.</p> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-UnsafeFutureObj%3C%27a%2C%20T%3E" class="impl"><span class="in-band"><code>impl&lt;'a, T, F&gt; UnsafeFutureObj&lt;'a, T&gt; for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>F <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.future/" title="trait std::future::Future">Future</a>&lt;Output = T&gt; + <a class="trait" href="../../pin/trait.unpin/" title="trait std::pin::Unpin">Unpin</a> + 'a, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/future/future_obj.rs.html#170-182" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.into_raw" class="method"><span id="into_raw.v-1" class="invisible"><code>fn <a href="#method.into_raw" class="fnname">into_raw</a>(self) -&gt; <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/future/future_obj.rs.html#173-175" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.poll" class="method"><span id="poll.v-1" class="invisible"><code>unsafe fn <a href="#method.poll" class="fnname">poll</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>, cx: &amp;mut <a class="struct" href="../../task/struct.context/" title="struct std::task::Context">Context</a>) -&gt; <a class="enum" href="../../task/enum.poll/" title="enum std::task::Poll">Poll</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/future/future_obj.rs.html#177-179" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.drop" class="method"><span id="drop.v-1" class="invisible"><code>unsafe fn <a href="#method.drop" class="fnname">drop</a>(_ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>)</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/future/future_obj.rs.html#181" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+</div>
+<h3 id="impl-UnsafeFutureObj%3C%27a%2C%20T%3E-1" class="impl"><span class="in-band"><code>impl&lt;'a, T, F&gt; UnsafeFutureObj&lt;'a, T&gt; for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;F&gt; <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.future/" title="trait std::future::Future">Future</a>&lt;Output = T&gt; + 'a, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#798-814" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.into_raw-1" class="method"><span id="into_raw.v-2" class="invisible"><code>fn <a href="#method.into_raw-1" class="fnname">into_raw</a>(self) -&gt; <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#801-803" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.poll-1" class="method"><span id="poll.v-2" class="invisible"><code>unsafe fn <a href="#method.poll-1" class="fnname">poll</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>, cx: &amp;mut <a class="struct" href="../../task/struct.context/" title="struct std::task::Context">Context</a>) -&gt; <a class="enum" href="../../task/enum.poll/" title="enum std::task::Poll">Poll</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#805-809" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.drop-1" class="method"><span id="drop.v-2" class="invisible"><code>unsafe fn <a href="#method.drop-1" class="fnname">drop</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>)</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#811-813" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+</div>
+<h3 id="impl-UnsafeFutureObj%3C%27a%2C%20T%3E-2" class="impl"><span class="in-band"><code>impl&lt;'a, T, F&gt; UnsafeFutureObj&lt;'a, T&gt; for <a class="struct" href="../../pin/struct.pinbox/" title="struct std::pin::PinBox">PinBox</a>&lt;F&gt; <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.future/" title="trait std::future::Future">Future</a>&lt;Output = T&gt; + 'a, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/pin.rs.html#272-288" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.into_raw-2" class="method"><span id="into_raw.v-3" class="invisible"><code>fn <a href="#method.into_raw-2" class="fnname">into_raw</a>(self) -&gt; <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/pin.rs.html#275-277" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.poll-2" class="method"><span id="poll.v-3" class="invisible"><code>unsafe fn <a href="#method.poll-2" class="fnname">poll</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>, cx: &amp;mut <a class="struct" href="../../task/struct.context/" title="struct std::task::Context">Context</a>) -&gt; <a class="enum" href="../../task/enum.poll/" title="enum std::task::Poll">Poll</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/pin.rs.html#279-283" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.drop-2" class="method"><span id="drop.v-3" class="invisible"><code>unsafe fn <a href="#method.drop-2" class="fnname">drop</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>)</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/pin.rs.html#285-287" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+</div>
+<h3 id="impl-UnsafeFutureObj%3C%27a%2C%20T%3E-3" class="impl"><span class="in-band"><code>impl&lt;'a, T, F&gt; UnsafeFutureObj&lt;'a, T&gt; for <a class="struct" href="../../pin/struct.pinmut/" title="struct std::pin::PinMut">PinMut</a>&lt;'a, F&gt; <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.future/" title="trait std::future::Future">Future</a>&lt;Output = T&gt; + 'a, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/pin.rs.html#148-160" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.into_raw-3" class="method"><span id="into_raw.v-4" class="invisible"><code>fn <a href="#method.into_raw-3" class="fnname">into_raw</a>(self) -&gt; <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/pin.rs.html#151-153" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.poll-3" class="method"><span id="poll.v-4" class="invisible"><code>unsafe fn <a href="#method.poll-3" class="fnname">poll</a>(ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>, cx: &amp;mut <a class="struct" href="../../task/struct.context/" title="struct std::task::Context">Context</a>) -&gt; <a class="enum" href="../../task/enum.poll/" title="enum std::task::Poll">Poll</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/pin.rs.html#155-157" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<h4 id="method.drop-3" class="method"><span id="drop.v-4" class="invisible"><code>unsafe fn <a href="#method.drop-3" class="fnname">drop</a>(_ptr: <a class="primitive" href="../../primitive.pointer/">*mut </a><a class="primitive" href="../../primitive.unit/">()</a>)</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/pin.rs.html#159" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/future/trait.UnsafeFutureObj.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/future/trait.UnsafeFutureObj.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

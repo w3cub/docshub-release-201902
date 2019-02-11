@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>3.1. Macros by Example - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="macro_rules allows users to define syntax extension in a declarative way. We call such extensions &#34;macros by example&#34; or simply &#34;macros &hellip;">
+  <meta name="keywords" content="macros, example, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/macros-by-example/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="macros-by-example">Macros By Example</h1> <p><code>macro_rules</code> allows users to define syntax extension in a declarative way. We call such extensions "macros by example" or simply "macros".</p> <p>Currently, macros can expand to expressions, statements, items, or patterns.</p> <p>(A <code>sep_token</code> is any token other than <code>*</code> and <code>+</code>. A <code>non_special_token</code> is any token other than a delimiter or <code>$</code>.)</p> <p>The macro expander looks up macro invocations by name, and tries each macro rule in turn. It transcribes the first successful match. Matching and transcription are closely related to each other, and we will describe them together.</p> <p>The macro expander matches and transcribes every token that does not begin with a <code>$</code> literally, including delimiters. For parsing reasons, delimiters must be balanced, but they are otherwise not special.</p> <p>In the matcher, <code>$</code> <em>name</em> <code>:</code> <em>designator</em> matches the nonterminal in the Rust syntax named by <em>designator</em>. Valid designators are:</p> <ul> <li>
+<code>item</code>: an <a href="../items/">item</a>
+</li> <li>
+<code>block</code>: a <a href="../expressions/block-expr/">block</a>
+</li> <li>
+<code>stmt</code>: a <a href="../statements/">statement</a>
+</li> <li>
+<code>pat</code>: a <a href="../expressions/match-expr/">pattern</a>
+</li> <li>
+<code>expr</code>: an <a href="../expressions/">expression</a>
+</li> <li>
+<code>ty</code>: a <a href="../types/">type</a>
+</li> <li>
+<code>ident</code>: an <a href="../identifiers/">identifier</a> or <a href="../keywords/">keyword</a>
+</li> <li>
+<code>path</code>: a <a href="../paths/">path</a>
+</li> <li>
+<code>tt</code>: a token tree (a single <a href="../tokens/">token</a> by matching <code>()</code>, <code>[]</code>, or <code>{}</code>)</li> <li>
+<code>meta</code>: the contents of an <a href="../attributes/">attribute</a>
+</li> <li>
+<code>lifetime</code>: a lifetime. Examples: <code>'static</code>, <code>'a</code>.</li> <li>
+<code>vis</code>: a (visibility qualifier)<a href="../visibility-and-privacy/">visibility-and-privacy</a>
+</li> </ul> <p>In the transcriber, the designator is already known, and so only the name of a matched nonterminal comes after the dollar sign.</p> <p>In both the matcher and transcriber, the Kleene star-like operator indicates repetition. The Kleene star operator consists of <code>$</code> and parentheses, optionally followed by a separator token, followed by <code>*</code> or <code>+</code>. <code>*</code> means zero or more repetitions, <code>+</code> means at least one repetition. The parentheses are not matched or transcribed. On the matcher side, a name is bound to <em>all</em> of the names it matches, in a structure that mimics the structure of the repetition encountered on a successful match. The job of the transcriber is to sort that structure out.</p> <p>The rules for transcription of these repetitions are called "Macro By Example". Essentially, one "layer" of repetition is discharged at a time, and all of them must be discharged by the time a name is transcribed. Therefore, <code>( $( $i:ident ),* ) =&gt; ( $i )</code> is an invalid macro, but <code>( $( $i:ident ),* ) =&gt; ( $( $i:ident ),* )</code> is acceptable (if trivial).</p> <p>When Macro By Example encounters a repetition, it examines all of the <code>$</code> <em>name</em> s that occur in its body. At the "current layer", they all must repeat the same number of times, so <code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt; ( $( ($i,$j) ),* )</code> is valid if given the argument <code>(a,b,c ; d,e,f)</code>, but not <code>(a,b,c ; d,e)</code>. The repetition walks through the choices at that layer in lockstep, so the former input transcribes to <code>(a,d), (b,e), (c,f)</code>.</p> <p>Nested repetitions are allowed.</p> <h3 id="parsing-limitations">Parsing limitations</h3> <p>The parser used by the macro system is reasonably powerful, but the parsing of Rust syntax is restricted in two ways:</p> <ol> <li>Macro definitions are required to include suitable separators after parsing expressions and other bits of the Rust grammar. This implies that a macro definition like <code>$i:expr [ , ]</code> is not legal, because <code>[</code> could be part of an expression. A macro definition like <code>$i:expr,</code> or <code>$i:expr;</code> would be legal, however, because <code>,</code> and <code>;</code> are legal separators. See <a href="https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md" target="_blank">RFC 550</a> for more information.</li> <li>The parser must have eliminated all ambiguity by the time it reaches a <code>$</code> <em>name</em> <code>:</code> <em>designator</em>. This requirement most often affects name-designator pairs when they occur at the beginning of, or immediately after, a <code>$(...)*</code>; requiring a distinctive token in front can solve the problem.</li> </ol>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/macros-by-example.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/macros-by-example.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

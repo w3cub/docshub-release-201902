@@ -1,0 +1,294 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;ops&#58;&#58;RangeBounds - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" RangeBounds is implemented by Rust&#39;s built-in range types, produced by range syntax like .., a.., ..b or c..d. ">
+  <meta name="keywords" content="trait, std, ops, rangebounds, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/ops/trait.rangebounds/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::ops::RangeBounds</h1>
+<pre class="rust trait" data-language="rust">pub trait RangeBounds&lt;T&gt; where    T: ?Sized, {
+    fn start_bound(&amp;self) -&gt; Bound&lt;&amp;T&gt;;
+    fn end_bound(&amp;self) -&gt; Bound&lt;&amp;T&gt;;
+
+    fn contains&lt;U&gt;(&amp;self, item: &amp;U) -&gt; bool    where        T: PartialOrd&lt;U&gt;,        U: PartialOrd&lt;T&gt; + ?Sized,
+    { ... }
+}</pre>
+<p><code>RangeBounds</code> is implemented by Rust's built-in range types, produced by range syntax like <code>..</code>, <code>a..</code>, <code>..b</code> or <code>c..d</code>.</p>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.start_bound" class="method"><span id="start_bound.v" class="invisible"><code>fn <a href="#tymethod.start_bound" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code></span></h3>
+<div class="docblock">
+<p>Start index bound.</p> <p>Returns the start value as a <code>Bound</code>.</p> <h2 id="examples" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::ops::Bound::*;
+use std::ops::RangeBounds;
+
+assert_eq!((..10).start_bound(), Unbounded);
+assert_eq!((3..10).start_bound(), Included(&amp;3));</pre> </div>
+<h3 id="tymethod.end_bound" class="method"><span id="end_bound.v" class="invisible"><code>fn <a href="#tymethod.end_bound" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code></span></h3>
+<div class="docblock">
+<p>End index bound.</p> <p>Returns the end value as a <code>Bound</code>.</p> <h2 id="examples-1" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::ops::Bound::*;
+use std::ops::RangeBounds;
+
+assert_eq!((3..).end_bound(), Unbounded);
+assert_eq!((3..10).end_bound(), Excluded(&amp;10));</pre> </div>
+</div> <h2 id="provided-methods" class="small-section-header"> Provided Methods </h2> <div class="methods"> <h3 id="method.contains" class="method"><span id="contains.v" class="invisible"><code>fn <a href="#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+<div class="docblock">
+<p>Returns <code>true</code> if <code>item</code> is contained in the range.</p> <h2 id="examples-2" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+#![feature(range_contains)]
+
+use std::f32;
+
+assert!( (3..5).contains(&amp;4));
+assert!(!(3..5).contains(&amp;2));
+
+assert!( (0.0..1.0).contains(&amp;0.5));
+assert!(!(0.0..1.0).contains(&amp;f32::NAN));
+assert!(!(0.0..f32::NAN).contains(&amp;0.5));
+assert!(!(f32::NAN..1.0).contains(&amp;0.5));</pre> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-RangeBounds%3CT%3E" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; RangeBounds&lt;T&gt; for <a class="primitive" href="../../primitive.tuple/">(</a><a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;, <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    T: 'a + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#843-851" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound" class="method"><span id="start_bound.v-1" class="invisible"><code>fn <a href="#method.start_bound" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#844-846" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound" class="method"><span id="end_bound.v-1" class="invisible"><code>fn <a href="#method.end_bound" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#848-850" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-1" class="method"><span id="contains.v-1" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-1" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.range/" title="struct std::ops::Range">Range</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#874-881" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-1" class="method"><span id="start_bound.v-2" class="invisible"><code>fn <a href="#method.start_bound-1" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#875-877" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-1" class="method"><span id="end_bound.v-2" class="invisible"><code>fn <a href="#method.end_bound-1" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#878-880" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-2" class="method"><span id="contains.v-2" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-2" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangefrom/" title="struct std::ops::RangeFrom">RangeFrom</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#854-861" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-2" class="method"><span id="start_bound.v-3" class="invisible"><code>fn <a href="#method.start_bound-2" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#855-857" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-2" class="method"><span id="end_bound.v-3" class="invisible"><code>fn <a href="#method.end_bound-2" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#858-860" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-3" class="method"><span id="contains.v-3" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-3" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangeinclusive/" title="struct std::ops::RangeInclusive">RangeInclusive</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#884-891" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-3" class="method"><span id="start_bound.v-4" class="invisible"><code>fn <a href="#method.start_bound-3" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#885-887" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-3" class="method"><span id="end_bound.v-4" class="invisible"><code>fn <a href="#method.end_bound-3" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#888-890" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-4" class="method"><span id="contains.v-4" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-4" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangeto/" title="struct std::ops::RangeTo">RangeTo</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#864-871" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-4" class="method"><span id="start_bound.v-5" class="invisible"><code>fn <a href="#method.start_bound-4" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#865-867" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-4" class="method"><span id="end_bound.v-5" class="invisible"><code>fn <a href="#method.end_bound-4" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#868-870" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-5" class="method"><span id="contains.v-5" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-5" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangetoinclusive/" title="struct std::ops::RangeToInclusive">RangeToInclusive</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;'a </a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#894-901" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-5" class="method"><span id="start_bound.v-6" class="invisible"><code>fn <a href="#method.start_bound-5" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#895-897" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-5" class="method"><span id="end_bound.v-6" class="invisible"><code>fn <a href="#method.end_bound-5" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#898-900" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-6" class="method"><span id="contains.v-6" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-6" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="primitive" href="../../primitive.tuple/">(</a><a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;T&gt;, <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;T&gt;<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#824-840" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-6" class="method"><span id="start_bound.v-7" class="invisible"><code>fn <a href="#method.start_bound-6" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#825-831" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-6" class="method"><span id="end_bound.v-7" class="invisible"><code>fn <a href="#method.end_bound-6" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#833-839" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-7" class="method"><span id="contains.v-7" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-7" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.range/" title="struct std::ops::Range">Range</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#794-801" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-7" class="method"><span id="start_bound.v-8" class="invisible"><code>fn <a href="#method.start_bound-7" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#795-797" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-7" class="method"><span id="end_bound.v-8" class="invisible"><code>fn <a href="#method.end_bound-7" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#798-800" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-8" class="method"><span id="contains.v-8" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-8" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangefrom/" title="struct std::ops::RangeFrom">RangeFrom</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#774-781" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-8" class="method"><span id="start_bound.v-9" class="invisible"><code>fn <a href="#method.start_bound-8" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#775-777" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-8" class="method"><span id="end_bound.v-9" class="invisible"><code>fn <a href="#method.end_bound-8" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#778-780" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-9" class="method"><span id="contains.v-9" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-9" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangefull/" title="struct std::ops::RangeFull">RangeFull</a> <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#764-771" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-9" class="method"><span id="start_bound.v-10" class="invisible"><code>fn <a href="#method.start_bound-9" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#765-767" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-9" class="method"><span id="end_bound.v-10" class="invisible"><code>fn <a href="#method.end_bound-9" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#768-770" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-10" class="method"><span id="contains.v-10" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-10" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangeinclusive/" title="struct std::ops::RangeInclusive">RangeInclusive</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#804-811" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-10" class="method"><span id="start_bound.v-11" class="invisible"><code>fn <a href="#method.start_bound-10" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#805-807" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-10" class="method"><span id="end_bound.v-11" class="invisible"><code>fn <a href="#method.end_bound-10" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#808-810" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-11" class="method"><span id="contains.v-11" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-11" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangeto/" title="struct std::ops::RangeTo">RangeTo</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#784-791" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-11" class="method"><span id="start_bound.v-12" class="invisible"><code>fn <a href="#method.start_bound-11" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#785-787" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-11" class="method"><span id="end_bound.v-12" class="invisible"><code>fn <a href="#method.end_bound-11" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#788-790" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-12" class="method"><span id="contains.v-12" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+<h3 id="impl-RangeBounds%3CT%3E-12" class="impl"><span class="in-band"><code>impl&lt;T&gt; RangeBounds&lt;T&gt; for <a class="struct" href="../struct.rangetoinclusive/" title="struct std::ops::RangeToInclusive">RangeToInclusive</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#814-821" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.start_bound-12" class="method"><span id="start_bound.v-13" class="invisible"><code>fn <a href="#method.start_bound-12" class="fnname">start_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#815-817" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.end_bound-12" class="method"><span id="end_bound.v-13" class="invisible"><code>fn <a href="#method.end_bound-12" class="fnname">end_bound</a>(&amp;self) -&gt; <a class="enum" href="../enum.bound/" title="enum std::ops::Bound">Bound</a>&lt;<a class="primitive" href="../../primitive.reference/">&amp;</a>T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#818-820" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<h4 id="method.contains-13" class="method"><span id="contains.v-13" class="invisible"><code>fn <a href="../trait.rangebounds/#method.contains" class="fnname">contains</a>&lt;U&gt;(&amp;self, item: <a class="primitive" href="../../primitive.reference/">&amp;</a>U) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;U&gt;,<br>    U: <a class="trait" href="../../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;T&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/ops/range.rs.html#742-758" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (range_contains #32311)recently added as per RFC </span></div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/ops/trait.RangeBounds.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/ops/trait.RangeBounds.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,193 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>6.1.8. Unions - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Syntax Union &#58; union IDENTIFIER Generics? WhereClause? {StructFields } ">
+  <meta name="keywords" content="unions, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/items/unions/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="unions">Unions</h1> <blockquote> <p><strong><sup>Syntax</sup></strong><br> <em>Union</em> :<br> <code>union</code> <a href="../../identifiers/">IDENTIFIER</a> <a href="../generics/"><em>Generics</em></a><sup>?</sup> <a href="../generics/#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><a href="../structs/"><em>StructFields</em></a> <code>}</code></p> </blockquote> <p>A union declaration uses the same syntax as a struct declaration, except with <code>union</code> in place of <code>struct</code>.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[repr(C)]
+union MyUnion {
+    f1: u32,
+    f2: f32,
+}
+#}</pre> <p>The key property of unions is that all fields of a union share common storage. As a result writes to one field of a union can overwrite its other fields, and size of a union is determined by the size of its largest field.</p> <p>A value of a union type can be created using the same syntax that is used for struct types, except that it must specify exactly one field:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# union MyUnion { f1: u32, f2: f32 }
+#
+let u = MyUnion { f1: 1 };
+#}</pre> <p>The expression above creates a value of type <code>MyUnion</code> with active field <code>f1</code>. Active field of a union can be accessed using the same syntax as struct fields:</p> <pre data-language="rust">let f = u.f1;
+</pre> <p>Inactive fields can be accessed as well (using the same syntax) if they are sufficiently layout compatible with the current value kept by the union. Reading incompatible fields results in undefined behavior. However, the active field is not generally known statically, so all reads of union fields have to be placed in <code>unsafe</code> blocks.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# union MyUnion { f1: u32, f2: f32 }
+# let u = MyUnion { f1: 1 };
+#
+unsafe {
+    let f = u.f1;
+}
+#}</pre> <p>Writes to <code>Copy</code> union fields do not require reads for running destructors, so these writes don't have to be placed in <code>unsafe</code> blocks</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# union MyUnion { f1: u32, f2: f32 }
+# let mut u = MyUnion { f1: 1 };
+#
+u.f1 = 2;
+#}</pre> <p>Commonly, code using unions will provide safe wrappers around unsafe union field accesses.</p> <p>Another way to access union fields is to use pattern matching. Pattern matching on union fields uses the same syntax as struct patterns, except that the pattern must specify exactly one field. Since pattern matching accesses potentially inactive fields it has to be placed in <code>unsafe</code> blocks as well.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# union MyUnion { f1: u32, f2: f32 }
+#
+fn f(u: MyUnion) {
+    unsafe {
+        match u {
+            MyUnion { f1: 10 } =&gt; { println!("ten"); }
+            MyUnion { f2 } =&gt; { println!("{}", f2); }
+        }
+    }
+}
+#}</pre> <p>Pattern matching may match a union as a field of a larger structure. In particular, when using a Rust union to implement a C tagged union via FFI, this allows matching on the tag and the corresponding field simultaneously:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[repr(u32)]
+enum Tag { I, F }
+
+#[repr(C)]
+union U {
+    i: i32,
+    f: f32,
+}
+
+#[repr(C)]
+struct Value {
+    tag: Tag,
+    u: U,
+}
+
+fn is_zero(v: Value) -&gt; bool {
+    unsafe {
+        match v {
+            Value { tag: I, u: U { i: 0 } } =&gt; true,
+            Value { tag: F, u: U { f: 0.0 } } =&gt; true,
+            _ =&gt; false,
+        }
+    }
+}
+#}</pre> <p>Since union fields share common storage, gaining write access to one field of a union can give write access to all its remaining fields. Borrow checking rules have to be adjusted to account for this fact. As a result, if one field of a union is borrowed, all its remaining fields are borrowed as well for the same lifetime.</p> <pre data-language="rust">// ERROR: cannot borrow `u` (via `u.f2`) as mutable more than once at a time
+fn test() {
+    let mut u = MyUnion { f1: 1 };
+    unsafe {
+        let b1 = &amp;mut u.f1;
+                      ---- first mutable borrow occurs here (via `u.f1`)
+        let b2 = &amp;mut u.f2;
+                      ^^^^ second mutable borrow occurs here (via `u.f2`)
+        *b1 = 5;
+    }
+    - first borrow ends here
+    assert_eq!(unsafe { u.f1 }, 5);
+}
+</pre> <p>As you could see, in many aspects (except for layouts, safety and ownership) unions behave exactly like structs, largely as a consequence of inheriting their syntactic shape from structs. This is also true for many unmentioned aspects of Rust language (such as privacy, name resolution, type inference, generics, trait implementations, inherent implementations, coherence, pattern checking, etc etc etc).</p> <p>More detailed specification for unions, including unstable bits, can be found in <a href="https://github.com/rust-lang/rfcs/pull/1897" target="_blank">RFC 1897 "Unions v1.2"</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/items/unions.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/items/unions.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

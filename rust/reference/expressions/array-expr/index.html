@@ -1,0 +1,135 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>7.2.6. Array and Index Expressions - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Syntax ArrayExpression &#58; [ ] | [ Expression ( , Expression )&#42; ,? ] | [ Expression ; Expression ] ">
+  <meta name="keywords" content="array, and, index, expressions, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/expressions/array-expr/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="array-and-array-index-expressions">Array and array index expressions</h1> <h2 id="array-expressions">Array expressions</h2> <blockquote> <p><strong><sup>Syntax</sup></strong><br> <em>ArrayExpression</em> :<br> <code>[</code> <code>]</code><br> | <code>[</code> <a href="../../expressions/"><em>Expression</em></a> ( <code>,</code> <a href="../../expressions/"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup> <code>]</code><br> | <code>[</code> <a href="../../expressions/"><em>Expression</em></a> <code>;</code> <a href="../../expressions/"><em>Expression</em></a> <code>]</code></p> </blockquote> <p>An <em><a href="../../types/#array-and-slice-types">array</a> expression</em> can be written by enclosing zero or more comma-separated expressions of uniform type in square brackets. This produces and array containing each of these values in the order they are written.</p> <p>Alternatively there can be exactly two expressions inside the brackets, separated by a semi-colon. The expression after the <code>;</code> must be a have type <code>usize</code> and be a <a href="../../expressions/#constant-expressions">constant expression</a>, such as a <a href="../../tokens/#literals">literal</a> or a <a href="../../items/constant-items/">constant item</a>. <code>[a; b]</code> creates an array containing <code>b</code> copies of the value of <code>a</code>. If the expression after the semi-colon has a value greater than 1 then this requires that the type of <code>a</code> is <a href="../../special-types-and-traits/#copy"><code>Copy</code></a>.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+[1, 2, 3, 4];
+["a", "b", "c", "d"];
+[0; 128];              // array with 128 zeros
+[0u8, 0u8, 0u8, 0u8,];
+[[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // 2D array
+#}</pre> <h2 id="array-and-slice-indexing-expressions">Array and slice indexing expressions</h2> <blockquote> <p><strong><sup>Syntax</sup></strong><br> <em>IndexExpression</em> :<br> <a href="../../expressions/"><em>Expression</em></a> <code>[</code> <a href="../../expressions/"><em>Expression</em></a> <code>]</code></p> </blockquote> <p><a href="../../types/#array-and-slice-types">Array and slice</a>-typed expressions can be indexed by writing a square-bracket-enclosed expression of type <code>usize</code> (the index) after them. When the array is mutable, the resulting <a href="../../expressions/#place-expressions-and-value-expressions">memory location</a> can be assigned to.</p> <p>For other types an index expression <code>a[b]</code> is equivalent to <code>*std::ops::Index::index(&amp;a, b)</code>, or <code>*std::ops::IndexMut::index_mut(&amp;mut a, b)</code> in a mutable place expression context. Just as with methods, Rust will also insert dereference operations on <code>a</code> repeatedly to find an implementation.</p> <p>Indices are zero-based for arrays and slices. Array access is a <a href="../../expressions/#constant-expressions">constant expression</a>, so bounds can be checked at compile-time with a constant index value. Otherwise a check will be performed at run-time that will put the thread in a <em>panicked state</em> if it fails.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+// lint is deny by default.
+#![warn(const_err)]
+
+([1, 2, 3, 4])[2];        // Evaluates to 3
+
+let b = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+b[1][2];                  // multidimensional array indexing
+
+let x = (["a", "b"])[10]; // warning: index out of bounds
+
+let n = 10;
+let y = (["a", "b"])[n];  // panics
+
+let arr = ["a", "b"];
+arr[10];                  // warning: index out of bounds
+#}</pre> <p>The array index expression can be implemented for types other than arrays and slices by implementing the <a href="../../../std/ops/trait.index/">Index</a> and <a href="../../../std/ops/trait.indexmut/">IndexMut</a> traits.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/expressions/array-expr.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/expressions/array-expr.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

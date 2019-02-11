@@ -1,0 +1,172 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>9.1. Unrecoverable Errors With Panic! - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="Sometimes, bad things happen in your code, and there’s nothing you can do about it. In these cases, Rust has the panic! macro. When the panic! macro &hellip;">
+  <meta name="keywords" content="unrecoverable, errors, with, panic!, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/book/second-edition/ch09-01-unrecoverable-errors-with-panic/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="unrecoverable-errors-with-panic">Unrecoverable Errors with <code>panic!</code>
+</h1> <p>Sometimes, bad things happen in your code, and there’s nothing you can do about it. In these cases, Rust has the <code>panic!</code> macro. When the <code>panic!</code> macro executes, your program will print a failure message, unwind and clean up the stack, and then quit. This most commonly occurs when a bug of some kind has been detected and it’s not clear to the programmer how to handle the error.</p> <blockquote> <h3 id="unwinding-the-stack-or-aborting-in-response-to-a-panic">Unwinding the Stack or Aborting in Response to a Panic</h3> <p>By default, when a panic occurs, the program starts <em>unwinding</em>, which means Rust walks back up the stack and cleans up the data from each function it encounters. But this walking back and cleanup is a lot of work. The alternative is to immediately <em>abort</em>, which ends the program without cleaning up. Memory that the program was using will then need to be cleaned up by the operating system. If in your project you need to make the resulting binary as small as possible, you can switch from unwinding to aborting upon a panic by adding <code>panic = 'abort'</code> to the appropriate <code>[profile]</code> sections in your <em>Cargo.toml</em> file. For example, if you want to abort on panic in release mode, add this:</p> <pre>[profile.release]
+panic = 'abort'
+</pre> </blockquote> <p>Let’s try calling <code>panic!</code> in a simple program:</p> <p><span class="filename">Filename: src/main.rs</span></p> <pre data-language="rust">fn main() {
+    panic!("crash and burn");
+}
+</pre> <p>When you run the program, you’ll see something like this:</p> <pre>$ cargo run
+   Compiling panic v0.1.0 (file:///projects/panic)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.25 secs
+     Running `target/debug/panic`
+thread 'main' panicked at 'crash and burn', src/main.rs:2:4
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+</pre> <p>The call to <code>panic!</code> causes the error message contained in the last two lines. The first line shows our panic message and the place in our source code where the panic occurred: <em>src/main.rs:2:4</em> indicates that it’s the second line, fourth character of our <em>src/main.rs</em> file.</p> <p>In this case, the line indicated is part of our code, and if we go to that line, we see the <code>panic!</code> macro call. In other cases, the <code>panic!</code> call might be in code that our code calls, and the filename and line number reported by the error message will be someone else’s code where the <code>panic!</code> macro is called, not the line of our code that eventually led to the <code>panic!</code> call. We can use the backtrace of the functions the <code>panic!</code> call came from to figure out the part of our code that is causing the problem. We’ll discuss what a backtrace is in more detail next.</p> <h3 id="using-a-panic-backtrace">Using a <code>panic!</code> Backtrace</h3> <p>Let’s look at another example to see what it’s like when a <code>panic!</code> call comes from a library because of a bug in our code instead of from our code calling the macro directly. Listing 9-1 has some code that attempts to access an element by index in a vector.</p> <p><span class="filename">Filename: src/main.rs</span></p> <pre data-language="rust">fn main() {
+    let v = vec![1, 2, 3];
+
+    v[99];
+}
+</pre> <p><span class="caption">Listing 9-1: Attempting to access an element beyond the end of a vector, which will cause a call to <code>panic!</code></span></p> <p>Here, we’re attempting to access the 100th element of our vector (which is at index 99 because indexing starts at zero), but it has only 3 elements. In this situation, Rust will panic. Using <code>[]</code> is supposed to return an element, but if you pass an invalid index, there’s no element that Rust could return here that would be correct.</p> <p>Other languages, like C, will attempt to give you exactly what you asked for in this situation, even though it isn’t what you want: you’ll get whatever is at the location in memory that would correspond to that element in the vector, even though the memory doesn’t belong to the vector. This is called a <em>buffer overread</em> and can lead to security vulnerabilities if an attacker is able to manipulate the index in such a way as to read data they shouldn’t be allowed to that is stored after the array.</p> <p>To protect your program from this sort of vulnerability, if you try to read an element at an index that doesn’t exist, Rust will stop execution and refuse to continue. Let’s try it and see:</p> <pre>$ cargo run
+   Compiling panic v0.1.0 (file:///projects/panic)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.27 secs
+     Running `target/debug/panic`
+thread 'main' panicked at 'index out of bounds: the len is 3 but the index is
+99', /checkout/src/liballoc/vec.rs:1555:10
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+</pre> <p>This error points at a file we didn’t write, <em>vec.rs</em>. That’s the implementation of <code>Vec&lt;T&gt;</code> in the standard library. The code that gets run when we use <code>[]</code> on our vector <code>v</code> is in <em>vec.rs</em>, and that is where the <code>panic!</code> is actually happening.</p> <p>The next note line tells us that we can set the <code>RUST_BACKTRACE</code> environment variable to get a backtrace of exactly what happened to cause the error. A <em>backtrace</em> is a list of all the functions that have been called to get to this point. Backtraces in Rust work as they do in other languages: the key to reading the backtrace is to start from the top and read until you see files you wrote. That’s the spot where the problem originated. The lines above the lines mentioning your files are code that your code called; the lines below are code that called your code. These lines might include core Rust code, standard library code, or crates that you’re using. Let’s try getting a backtrace by setting the <code>RUST_BACKTRACE</code> environment variable to any value except 0. Listing 9-2 shows output similar to what you’ll see.</p> <pre>$ RUST_BACKTRACE=1 cargo run
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/panic`
+thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', /checkout/src/liballoc/vec.rs:1555:10
+stack backtrace:
+   0: std::sys::imp::backtrace::tracing::imp::unwind_backtrace
+             at /checkout/src/libstd/sys/unix/backtrace/tracing/gcc_s.rs:49
+   1: std::sys_common::backtrace::_print
+             at /checkout/src/libstd/sys_common/backtrace.rs:71
+   2: std::panicking::default_hook::{{closure}}
+             at /checkout/src/libstd/sys_common/backtrace.rs:60
+             at /checkout/src/libstd/panicking.rs:381
+   3: std::panicking::default_hook
+             at /checkout/src/libstd/panicking.rs:397
+   4: std::panicking::rust_panic_with_hook
+             at /checkout/src/libstd/panicking.rs:611
+   5: std::panicking::begin_panic
+             at /checkout/src/libstd/panicking.rs:572
+   6: std::panicking::begin_panic_fmt
+             at /checkout/src/libstd/panicking.rs:522
+   7: rust_begin_unwind
+             at /checkout/src/libstd/panicking.rs:498
+   8: core::panicking::panic_fmt
+             at /checkout/src/libcore/panicking.rs:71
+   9: core::panicking::panic_bounds_check
+             at /checkout/src/libcore/panicking.rs:58
+  10: &lt;alloc::vec::Vec&lt;T&gt; as core::ops::index::Index&lt;usize&gt;&gt;::index
+             at /checkout/src/liballoc/vec.rs:1555
+  11: panic::main
+             at src/main.rs:4
+  12: __rust_maybe_catch_panic
+             at /checkout/src/libpanic_unwind/lib.rs:99
+  13: std::rt::lang_start
+             at /checkout/src/libstd/panicking.rs:459
+             at /checkout/src/libstd/panic.rs:361
+             at /checkout/src/libstd/rt.rs:61
+  14: main
+  15: __libc_start_main
+  16: &lt;unknown&gt;
+</pre> <p><span class="caption">Listing 9-2: The backtrace generated by a call to <code>panic!</code> displayed when the environment variable <code>RUST_BACKTRACE</code> is set</span></p> <p>That’s a lot of output! The exact output you see might be different depending on your operating system and Rust version. In order to get backtraces with this information, debug symbols must be enabled. Debug symbols are enabled by default when using <code>cargo build</code> or <code>cargo run</code> without the <code>--release</code> flag, as we have here.</p> <p>In the output in Listing 9-2, line 11 of the backtrace points to the line in our project that’s causing the problem: line 4 of <em>src/main.rs</em>. If we don’t want our program to panic, the location pointed to by the first line mentioning a file we wrote is where we should start investigating. In Listing 9-1, where we deliberately wrote code that would panic in order to demonstrate how to use backtraces, the way to fix the panic is to not request an element at index 99 from a vector that only contains 3 items. When your code panics in the future, you’ll need to figure out what action the code is taking with what values to cause the panic and what the code should do instead.</p> <p>We’ll come back to <code>panic!</code> and when we should and should not use <code>panic!</code> to handle error conditions in the “To <code>panic!</code> or Not to <code>panic!</code>” section later in this chapter. Next, we’ll look at how to recover from an error using <code>Result</code>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/book/second-edition/ch09-01-unrecoverable-errors-with-panic.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/book/second-edition/ch09-01-unrecoverable-errors-with-panic.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

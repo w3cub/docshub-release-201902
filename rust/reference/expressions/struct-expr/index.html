@@ -1,0 +1,138 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>7.2.8. Struct Expressions - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="There are several forms of struct expressions. A struct expression consists of the path of a struct item, followed by a brace-enclosed list of zero &hellip;">
+  <meta name="keywords" content="struct, expressions, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/expressions/struct-expr/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="struct-expressions">Struct expressions</h1> <p>There are several forms of struct expressions. A <em>struct expression</em> consists of the <a href="../../paths/">path</a> of a <a href="../../items/structs/">struct item</a>, followed by a brace-enclosed list of zero or more comma-separated name-value pairs, providing the field values of a new instance of the struct. A field name can be any <a href="../../identifiers/">identifier</a>, and is separated from its value expression by a colon. In the case of a tuple struct the field names are numbers corresponding to the position of the field. The numbers must be written in decimal, containing no underscores and with no leading zeros or integer suffix. A value of a <a href="../../items/unions/">union</a> type can also be created using this syntax, except that it must specify exactly one field.</p> <p>Struct expressions can't be used directly in the head of a <a href="../loop-expr/">loop</a> or an <a href="../if-expr/#if-expressions">if</a>, <a href="../if-expr/#if-let-expressions">if let</a> or <a href="../match-expr/">match</a> expression. But struct expressions can still be in used inside parentheses, for example.</p> <p>A <em>tuple struct expression</em> consists of the path of a struct item, followed by a parenthesized list of one or more comma-separated expressions (in other words, the path of a struct item followed by a tuple expression). The struct item must be a tuple struct item.</p> <p>A <em>unit-like struct expression</em> consists only of the path of a struct item.</p> <p>The following are examples of struct expressions:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# struct Point { x: f64, y: f64 }
+# struct NothingInMe { }
+# struct TuplePoint(f64, f64);
+# mod game { pub struct User&lt;'a&gt; { pub name: &amp;'a str, pub age: u32, pub score: usize } }
+# struct Cookie; fn some_fn&lt;T&gt;(t: T) {}
+Point {x: 10.0, y: 20.0};
+NothingInMe {};
+TuplePoint(10.0, 20.0);
+TuplePoint { 0: 10.0, 1: 20.0 }; // Results in the same value as the above line
+let u = game::User {name: "Joe", age: 35, score: 100_000};
+some_fn::&lt;Cookie&gt;(Cookie);
+#}</pre> <p>A struct expression forms a new value of the named struct type. Note that for a given <em>unit-like</em> struct type, this will always be the same value.</p> <p>A struct expression can terminate with the syntax <code>..</code> followed by an expression to denote a functional update. The expression following <code>..</code> (the base) must have the same struct type as the new struct type being formed. The entire expression denotes the result of constructing a new struct (with the same type as the base expression) with the given values for the fields that were explicitly specified and the values in the base expression for all other fields. Just as with all struct expressions, all of the fields of the struct must be <a href="../../visibility-and-privacy/">visible</a>, even those not explicitly named.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# struct Point3d { x: i32, y: i32, z: i32 }
+let base = Point3d {x: 1, y: 2, z: 3};
+Point3d {y: 0, z: 10, .. base};
+#}</pre> <h2 id="struct-field-init-shorthand">Struct field init shorthand</h2> <p>When initializing a data structure (struct, enum, union) with named (but not numbered) fields, it is allowed to write <code>fieldname</code> as a shorthand for <code>fieldname: fieldname</code>. This allows a compact syntax with less duplication.</p> <p>Example:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# struct Point3d { x: i32, y: i32, z: i32 }
+# let x = 0;
+# let y_value = 0;
+# let z = 0;
+Point3d { x: x, y: y_value, z: z };
+Point3d { x, y: y_value, z };
+#}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/expressions/struct-expr.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/expressions/struct-expr.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

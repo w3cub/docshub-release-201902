@@ -1,0 +1,125 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;task&#58;&#58;Wake - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" A way of waking up a specific task. ">
+  <meta name="keywords" content="trait, std, task, wake, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/task/trait.wake/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::task::Wake</h1>
+<pre class="rust trait" data-language="rust">pub trait Wake: Send + Sync {
+    fn wake(arc_self: &amp;Arc&lt;Self&gt;);
+
+    unsafe fn wake_local(arc_self: &amp;Arc&lt;Self&gt;) { ... }
+}</pre>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<p>A way of waking up a specific task.</p> <p>Any task executor must provide a way of signaling that a task it owns is ready to be <code>poll</code>ed again. Executors do so by implementing this trait.</p>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.wake" class="method"><span id="wake.v" class="invisible"><code>fn <a href="#tymethod.wake" class="fnname">wake</a>(arc_self: &amp;<a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;Self&gt;)</code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<div class="docblock">
+<p>Indicates that the associated task is ready to make progress and should be <code>poll</code>ed.</p> <p>Executors generally maintain a queue of "ready" tasks; <code>wake</code> should place the associated task onto this queue.</p> </div>
+</div> <h2 id="provided-methods" class="small-section-header"> Provided Methods </h2> <div class="methods"> <h3 id="method.wake_local" class="method"><span id="wake_local.v" class="invisible"><code>unsafe fn <a href="#method.wake_local" class="fnname">wake_local</a>(arc_self: &amp;<a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;Self&gt;)</code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (futures_api #50547)futures in libcore are unstable </span></div>
+<div class="docblock">
+<p>Indicates that the associated task is ready to make progress and should be <code>poll</code>ed. This function is like <code>wake</code>, but can only be called from the thread on which this <code>Wake</code> was created.</p> <p>Executors generally maintain a queue of "ready" tasks; <code>wake_local</code> should place the associated task onto this queue.</p> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/task/trait.Wake.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/task/trait.Wake.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

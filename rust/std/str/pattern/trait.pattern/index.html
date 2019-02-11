@@ -1,0 +1,261 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;str&#58;&#58;pattern&#58;&#58;Pattern - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" A string pattern. ">
+  <meta name="keywords" content="trait, std, str, pattern, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/str/pattern/trait.pattern/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::str::pattern::Pattern</h1>
+<pre class="rust trait" data-language="rust">pub trait Pattern&lt;'a&gt; {
+    type Searcher: Searcher&lt;'a&gt;;
+    fn into_searcher(self, haystack: &amp;'a str) -&gt; Self::Searcher;
+
+    fn is_contained_in(self, haystack: &amp;'a str) -&gt; bool { ... }
+    fn is_prefix_of(self, haystack: &amp;'a str) -&gt; bool { ... }
+    fn is_suffix_of(self, haystack: &amp;'a str) -&gt; bool    where        Self::Searcher: ReverseSearcher&lt;'a&gt;,
+    { ... }
+}</pre>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<p>A string pattern.</p> <p>A <code>Pattern&lt;'a&gt;</code> expresses that the implementing type can be used as a string pattern for searching in a <code>&amp;'a str</code>.</p> <p>For example, both <code>'a'</code> and <code>"aa"</code> are patterns that would match at index <code>1</code> in the string <code>"baaaab"</code>.</p> <p>The trait itself acts as a builder for an associated <code>Searcher</code> type, which does the actual work of finding occurrences of the pattern in a string.</p>  <h2 id="associated-types" class="small-section-header"> Associated Types </h2> <div class="methods"> <h3 id="associatedtype.Searcher" class="method"><span id="Searcher.t" class="invisible"><code>type <a href="#associatedtype.Searcher" class="type">Searcher</a>: <a class="trait" href="../trait.searcher/" title="trait std::str::pattern::Searcher">Searcher</a>&lt;'a&gt;</code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Associated searcher for this pattern</p> </div>
+</div> <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.into_searcher" class="method"><span id="into_searcher.v" class="invisible"><code>fn <a href="#tymethod.into_searcher" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; Self::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Constructs the associated searcher from <code>self</code> and the <code>haystack</code> to search in.</p> </div>
+</div> <h2 id="provided-methods" class="small-section-header"> Provided Methods </h2> <div class="methods"> <h3 id="method.is_contained_in" class="method"><span id="is_contained_in.v" class="invisible"><code>fn <a href="#method.is_contained_in" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Checks whether the pattern matches anywhere in the haystack</p> </div>
+<h3 id="method.is_prefix_of" class="method"><span id="is_prefix_of.v" class="invisible"><code>fn <a href="#method.is_prefix_of" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Checks whether the pattern matches at the front of the haystack</p> </div>
+<h3 id="method.is_suffix_of" class="method"><span id="is_suffix_of.v" class="invisible"><code>fn <a href="#method.is_suffix_of" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    Self::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a>: <a class="trait" href="../trait.reversesearcher/" title="trait std::str::pattern::ReverseSearcher">ReverseSearcher</a>&lt;'a&gt;, </span></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Checks whether the pattern matches at the back of the haystack</p> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Pattern%3C%27a%3E" class="impl"><span class="in-band"><code>impl&lt;'a&gt; Pattern&lt;'a&gt; for <a class="primitive" href="../../../primitive.char/">char</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#432-478" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>Searches for chars that are equal to a given char</p> </div>
+<div class="impl-items">
+<h4 id="associatedtype.Searcher-1" class="type"><span id="Searcher.t-1" class="invisible"><code>type <a href="#associatedtype.Searcher-1" class="type">Searcher</a> = <a class="struct" href="../struct.charsearcher/" title="struct std::str::pattern::CharSearcher">CharSearcher</a>&lt;'a&gt;</code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.into_searcher" class="method"><span id="into_searcher.v-1" class="invisible"><code>fn <a href="#method.into_searcher" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; &lt;<a class="primitive" href="../../../primitive.char/">char</a> as <a class="trait" href="../trait.pattern/" title="trait std::str::pattern::Pattern">Pattern</a>&lt;'a&gt;&gt;::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#436-448" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_contained_in-1" class="method"><span id="is_contained_in.v-1" class="invisible"><code>fn <a href="#method.is_contained_in-1" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#451-458" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_prefix_of-1" class="method"><span id="is_prefix_of.v-1" class="invisible"><code>fn <a href="#method.is_prefix_of-1" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#461-467" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_suffix_of-1" class="method"><span id="is_suffix_of.v-1" class="invisible"><code>fn <a href="#method.is_suffix_of-1" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    &lt;<a class="primitive" href="../../../primitive.char/">char</a> as <a class="trait" href="../trait.pattern/" title="trait std::str::pattern::Pattern">Pattern</a>&lt;'a&gt;&gt;::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a>: <a class="trait" href="../trait.reversesearcher/" title="trait std::str::pattern::ReverseSearcher">ReverseSearcher</a>&lt;'a&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#470-477" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+</div>
+<h3 id="impl-Pattern%3C%27a%3E-1" class="impl"><span class="in-band"><code>impl&lt;'a, 'b&gt; Pattern&lt;'a&gt; for &amp;'b <a class="primitive" href="../../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#716-738" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>Non-allocating substring search.</p> <p>Will handle the pattern <code>""</code> as returning empty matches at each character boundary.</p> </div>
+<div class="impl-items">
+<h4 id="associatedtype.Searcher-2" class="type"><span id="Searcher.t-2" class="invisible"><code>type <a href="#associatedtype.Searcher-2" class="type">Searcher</a> = <a class="struct" href="../struct.strsearcher/" title="struct std::str::pattern::StrSearcher">StrSearcher</a>&lt;'a, 'b&gt;</code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.into_searcher-1" class="method"><span id="into_searcher.v-2" class="invisible"><code>fn <a href="#method.into_searcher-1" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="struct" href="../struct.strsearcher/" title="struct std::str::pattern::StrSearcher">StrSearcher</a>&lt;'a, 'b&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#720-722" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_prefix_of-2" class="method"><span id="is_prefix_of.v-2" class="invisible"><code>fn <a href="#method.is_prefix_of-2" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#726-729" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Checks whether the pattern matches at the front of the haystack</p> </div>
+<h4 id="method.is_suffix_of-2" class="method"><span id="is_suffix_of.v-2" class="invisible"><code>fn <a href="#method.is_suffix_of-2" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#733-737" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<div class="docblock">
+<p>Checks whether the pattern matches at the back of the haystack</p> </div>
+<h4 id="method.is_contained_in-2" class="method"><span id="is_contained_in.v-2" class="invisible"><code>fn <a href="../trait.pattern/#method.is_contained_in" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#48-50" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+</div>
+<h3 id="impl-Pattern%3C%27a%3E-2" class="impl"><span class="in-band"><code>impl&lt;'a, 'b&gt; Pattern&lt;'a&gt; for &amp;'b <a class="struct" href="../../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1790-1806" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>A convenience impl that delegates to the impl for <code>&amp;str</code></p> </div>
+<div class="impl-items">
+<h4 id="associatedtype.Searcher-3" class="type"><span id="Searcher.t-3" class="invisible"><code>type <a href="#associatedtype.Searcher-3" class="type">Searcher</a> = &lt;&amp;'b <a class="primitive" href="../../../primitive.str/">str</a> as <a class="trait" href="../trait.pattern/" title="trait std::str::pattern::Pattern">Pattern</a>&lt;'a&gt;&gt;::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a></code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.into_searcher-2" class="method"><span id="into_searcher.v-3" class="invisible"><code>fn <a href="#method.into_searcher-2" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; &lt;&amp;'b <a class="primitive" href="../../../primitive.str/">str</a> as <a class="trait" href="../trait.pattern/" title="trait std::str::pattern::Pattern">Pattern</a>&lt;'a&gt;&gt;::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1793-1795" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_contained_in-3" class="method"><span id="is_contained_in.v-3" class="invisible"><code>fn <a href="#method.is_contained_in-3" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1798-1800" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_prefix_of-3" class="method"><span id="is_prefix_of.v-3" class="invisible"><code>fn <a href="#method.is_prefix_of-3" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1803-1805" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_suffix_of-3" class="method"><span id="is_suffix_of.v-3" class="invisible"><code>fn <a href="../trait.pattern/#method.is_suffix_of" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    Self::<a class="type" href="../trait.pattern/#associatedtype.Searcher" title="type std::str::pattern::Pattern::Searcher">Searcher</a>: <a class="trait" href="../trait.reversesearcher/" title="trait std::str::pattern::ReverseSearcher">ReverseSearcher</a>&lt;'a&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#63-70" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+</div>
+<h3 id="impl-Pattern%3C%27a%3E-3" class="impl"><span class="in-band"><code>impl&lt;'a, 'b&gt; Pattern&lt;'a&gt; for <a class="primitive" href="../../../primitive.slice/">&amp;'b [</a><a class="primitive" href="../../../primitive.char/">char</a><a class="primitive" href="../../../primitive.slice/">]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#656-658" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>Searches for chars that are equal to any of the chars in the array</p> </div>
+<div class="impl-items">
+<h4 id="associatedtype.Searcher-4" class="type"><span id="Searcher.t-4" class="invisible"><code>type <a href="#associatedtype.Searcher-4" class="type">Searcher</a> = <a class="struct" href="../struct.charslicesearcher/" title="struct std::str::pattern::CharSliceSearcher">CharSliceSearcher</a>&lt;'a, 'b&gt;</code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.into_searcher-3" class="method"><span id="into_searcher.v-4" class="invisible"><code>fn <a href="#method.into_searcher-3" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="struct" href="../struct.charslicesearcher/" title="struct std::str::pattern::CharSliceSearcher">CharSliceSearcher</a>&lt;'a, 'b&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#577-579" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_contained_in-4" class="method"><span id="is_contained_in.v-4" class="invisible"><code>fn <a href="#method.is_contained_in-4" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#582-584" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_prefix_of-4" class="method"><span id="is_prefix_of.v-4" class="invisible"><code>fn <a href="#method.is_prefix_of-4" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#587-589" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_suffix_of-4" class="method"><span id="is_suffix_of.v-4" class="invisible"><code>fn <a href="#method.is_suffix_of-4" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    <a class="struct" href="../struct.charslicesearcher/" title="struct std::str::pattern::CharSliceSearcher">CharSliceSearcher</a>&lt;'a, 'b&gt;: <a class="trait" href="../trait.reversesearcher/" title="trait std::str::pattern::ReverseSearcher">ReverseSearcher</a>&lt;'a&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#592-596" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+</div>
+<h3 id="impl-Pattern%3C%27a%3E-4" class="impl"><span class="in-band"><code>impl&lt;'a, 'b, 'c&gt; Pattern&lt;'a&gt; for &amp;'c &amp;'b <a class="primitive" href="../../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#704-706" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>Delegates to the <code>&amp;str</code> impl.</p> </div>
+<div class="impl-items">
+<h4 id="associatedtype.Searcher-5" class="type"><span id="Searcher.t-5" class="invisible"><code>type <a href="#associatedtype.Searcher-5" class="type">Searcher</a> = <a class="struct" href="../struct.strsearcher/" title="struct std::str::pattern::StrSearcher">StrSearcher</a>&lt;'a, 'b&gt;</code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.into_searcher-4" class="method"><span id="into_searcher.v-5" class="invisible"><code>fn <a href="#method.into_searcher-4" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="struct" href="../struct.strsearcher/" title="struct std::str::pattern::StrSearcher">StrSearcher</a>&lt;'a, 'b&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#577-579" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_contained_in-5" class="method"><span id="is_contained_in.v-5" class="invisible"><code>fn <a href="#method.is_contained_in-5" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#582-584" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_prefix_of-5" class="method"><span id="is_prefix_of.v-5" class="invisible"><code>fn <a href="#method.is_prefix_of-5" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#587-589" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_suffix_of-5" class="method"><span id="is_suffix_of.v-5" class="invisible"><code>fn <a href="#method.is_suffix_of-5" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    <a class="struct" href="../struct.strsearcher/" title="struct std::str::pattern::StrSearcher">StrSearcher</a>&lt;'a, 'b&gt;: <a class="trait" href="../trait.reversesearcher/" title="trait std::str::pattern::ReverseSearcher">ReverseSearcher</a>&lt;'a&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#592-596" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+</div>
+<h3 id="impl-Pattern%3C%27a%3E-5" class="impl"><span class="in-band"><code>impl&lt;'a, F&gt; Pattern&lt;'a&gt; for F <span class="where fmt-newline">where<br>    F: <a class="trait" href="../../../ops/trait.fnmut/" title="trait std::ops::FnMut">FnMut</a>(<a class="primitive" href="../../../primitive.char/">char</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#695-697" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="docblock">
+<p>Searches for chars that match the given predicate</p> </div>
+<div class="impl-items">
+<h4 id="associatedtype.Searcher-6" class="type"><span id="Searcher.t-6" class="invisible"><code>type <a href="#associatedtype.Searcher-6" class="type">Searcher</a> = <a class="struct" href="../struct.charpredicatesearcher/" title="struct std::str::pattern::CharPredicateSearcher">CharPredicateSearcher</a>&lt;'a, F&gt;</code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.into_searcher-5" class="method"><span id="into_searcher.v-6" class="invisible"><code>fn <a href="#method.into_searcher-5" class="fnname">into_searcher</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="struct" href="../struct.charpredicatesearcher/" title="struct std::str::pattern::CharPredicateSearcher">CharPredicateSearcher</a>&lt;'a, F&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#577-579" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_contained_in-6" class="method"><span id="is_contained_in.v-6" class="invisible"><code>fn <a href="#method.is_contained_in-6" class="fnname">is_contained_in</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#582-584" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_prefix_of-6" class="method"><span id="is_prefix_of.v-6" class="invisible"><code>fn <a href="#method.is_prefix_of-6" class="fnname">is_prefix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#587-589" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+<h4 id="method.is_suffix_of-6" class="method"><span id="is_suffix_of.v-6" class="invisible"><code>fn <a href="#method.is_suffix_of-6" class="fnname">is_suffix_of</a>(self, haystack: &amp;'a <a class="primitive" href="../../../primitive.str/">str</a>) -&gt; <a class="primitive" href="../../../primitive.bool/">bool</a> <span class="where fmt-newline">where<br>    <a class="struct" href="../struct.charpredicatesearcher/" title="struct std::str::pattern::CharPredicateSearcher">CharPredicateSearcher</a>&lt;'a, F&gt;: <a class="trait" href="../trait.reversesearcher/" title="trait std::str::pattern::ReverseSearcher">ReverseSearcher</a>&lt;'a&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/pattern.rs.html#592-596" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (pattern #27721)API not fully fleshed out and ready to be stabilized </span></div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/str/pattern/trait.Pattern.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/str/pattern/trait.Pattern.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

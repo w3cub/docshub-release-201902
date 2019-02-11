@@ -1,0 +1,210 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>7.2.17. Match Expressions - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Syntax MatchExpression &#58; match Expressionexcept struct expression { InnerAttribute&#42; MatchArms? } ">
+  <meta name="keywords" content="expressions, match, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/expressions/match-expr/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="match-expressions">
+<code>match</code> expressions</h1> <blockquote> <p><strong><sup>Syntax</sup></strong><br> <em>MatchExpression</em> :<br> <code>match</code> <a href="../../expressions/"><em>Expression</em></a><sub><em>except struct expression</em></sub> <code>{</code><br> <a href="../../attributes/"><em>InnerAttribute</em></a><sup>*</sup><br> <em>MatchArms</em><sup>?</sup><br> <code>}</code></p> <p><em>MatchArms</em> :<br> ( <em>MatchArm</em> <code>=&gt;</code> ( <a href="../block-expr/#block-expressions"><em>BlockExpression</em></a> <code>,</code><sup>?</sup> | <a href="../../expressions/"><em>Expression</em></a> <code>,</code> ) )<sup>*</sup><br> <em>MatchArm</em> <code>=&gt;</code> ( <a href="../block-expr/#block-expressions"><em>BlockExpression</em></a> | <a href="../../expressions/"><em>Expression</em></a> ) <code>,</code><sup>?</sup></p> <p><em>MatchArm</em> :<br> <a href="../../attributes/"><em>OuterAttribute</em></a><sup>*</sup> <em>MatchArmPatterns</em> <em>MatchArmGuard</em><sup>?</sup></p> <p><em>MatchArmPatterns</em> :<br> <code>|</code><sup>?</sup> <em>Pattern</em> ( <code>|</code> <em>Pattern</em> )<sup>*</sup></p> <p><em>MatchArmGuard</em> :<br> <code>if</code> <a href="../../expressions/"><em>Expression</em></a></p> </blockquote> <p>A <em><code>match</code> expression</em> branches on a pattern. The exact form of matching that occurs depends on the pattern. <em>Patterns</em> consist of some combination of literals, destructured arrays or enum constructors, structs and tuples, variable binding specifications, wildcards (<code>..</code>), and placeholders (<code>_</code>). A <code>match</code> expression has a <em>head expression</em>, which is the value to compare to the patterns. The type of the patterns must equal the type of the head expression.</p> <p>A <code>match</code> behaves differently depending on whether or not the head expression is a <a href="../../expressions/#place-expressions-and-value-expressions">place expression or value expression</a>. If the head expression is a <a href="../../expressions/#place-expressions-and-value-expressions">value expression</a>, it is first evaluated into a temporary location, and the resulting value is sequentially compared to the patterns in the arms until a match is found. The first arm with a matching pattern is chosen as the branch target of the <code>match</code>, any variables bound by the pattern are assigned to local variables in the arm's block, and control enters the block.</p> <p>When the head expression is a <a href="../../expressions/#place-expressions-and-value-expressions">place expression</a>, the match does not allocate a temporary location; however, a by-value binding may copy or move from the memory location. When possible, it is preferable to match on place expressions, as the lifetime of these matches inherits the lifetime of the place expression rather than being restricted to the inside of the match.</p> <p>An example of a <code>match</code> expression:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+let x = 1;
+
+match x {
+    1 =&gt; println!("one"),
+    2 =&gt; println!("two"),
+    3 =&gt; println!("three"),
+    4 =&gt; println!("four"),
+    5 =&gt; println!("five"),
+    _ =&gt; println!("something else"),
+}
+#}</pre> <p>Patterns that bind variables default to binding to a copy or move of the matched value (depending on the matched value's type). This can be changed to bind to a reference by using the <code>ref</code> keyword, or to a mutable reference using <code>ref mut</code>.</p> <p>Patterns can be used to <em>destructure</em> structs, enums, and tuples. Destructuring breaks a value up into its component pieces. The syntax used is the same as when creating such values. When destructing a data structure with named (but not numbered) fields, it is allowed to write <code>fieldname</code> as a shorthand for <code>fieldname: fieldname</code>. In a pattern whose head expression has a <code>struct</code>, <code>enum</code> or <code>tupl</code> type, a placeholder (<code>_</code>) stands for a <em>single</em> data field, whereas a wildcard <code>..</code> stands for <em>all</em> the fields of a particular variant.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# enum Message {
+#     Quit,
+#     WriteString(String),
+#     Move { x: i32, y: i32 },
+#     ChangeColor(u8, u8, u8),
+# }
+# let message = Message::Quit;
+match message {
+    Message::Quit =&gt; println!("Quit"),
+    Message::WriteString(write) =&gt; println!("{}", &amp;write),
+    Message::Move{ x, y: 0 } =&gt; println!("move {} horizontally", x),
+    Message::Move{ .. } =&gt; println!("other move"),
+    Message::ChangeColor { 0: red, 1: green, 2: _ } =&gt; {
+        println!("color change, red: {}, green: {}", red, green);
+    }
+};
+#}</pre> <p>Patterns can also dereference pointers by using the <code>&amp;</code>, <code>&amp;mut</code> and <code>box</code> symbols, as appropriate. For example, these two matches on <code>x: &amp;i32</code> are equivalent:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+let int_reference = &amp;3;
+
+let a = match *int_reference { 0 =&gt; "zero", _ =&gt; "some" };
+let b = match int_reference { &amp;0 =&gt; "zero", _ =&gt; "some" };
+
+assert_eq!(a, b);
+#}</pre> <p>Subpatterns can also be bound to variables by the use of the syntax <code>variable @ subpattern</code>. For example:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+let x = 1;
+
+match x {
+    e @ 1 ... 5 =&gt; println!("got a range element {}", e),
+    _ =&gt; println!("anything"),
+}
+#}</pre> <p>Multiple match patterns may be joined with the <code>|</code> operator. An inclusive range of values may be specified with <code>..=</code>. For example:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# let x = 9;
+let message = match x {
+    0 | 1  =&gt; "not many",
+    2 ..= 9 =&gt; "a few",
+    _      =&gt; "lots"
+};
+
+assert_eq!(message, "a few");
+#}</pre> <p>Other forms of <a href="../range-expr/">range</a> (e.g <code>..</code> for an exclusive range, or any range with one or both endpoints left unspecified) are not supported in matches. The syntax <code>...</code> is also accepted for inclusive ranges in patterns only, for backwards compatibility.</p> <p>Range patterns only work with <a href="../../types/#textual-types"><code>char</code></a> and <a href="../../types/#numeric-types">numeric types</a>. A range pattern may not be a sub-range of another range pattern inside the same <code>match</code>.</p> <p>Slice patterns can match both arrays of fixed size and slices of dynamic size.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+// Fixed size
+let arr = [1, 2, 3];
+match arr {
+    [1, _, _] =&gt; "starts with one",
+    [a, b, c] =&gt; "starts with something else",
+};
+#}</pre> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+// Dynamic size
+let v = vec![1, 2, 3];
+match v[..] {
+    [a, b] =&gt; { /* this arm will not apply because the length doesn't match */ }
+    [a, b, c] =&gt; { /* this arm will apply */ }
+    _ =&gt; { /* this wildcard is required, since we don't know length statically */ }
+}
+#}</pre> <p>Finally, match arms can accept <em>pattern guards</em> to further refine the criteria for matching a case. Pattern guards appear after the pattern and consist of a bool-typed expression following the <code>if</code> keyword. A pattern guard may refer to the variables bound within the pattern they follow.</p> <p>When the pattern matches successfully, the pattern guard expression is executed. If the expression is truthy, the pattern is successfully matched against. Otherwise, the next pattern, including other matches with the <code>|</code> operator in the same arm, is tested.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+# let maybe_digit = Some(0);
+# fn process_digit(i: i32) { }
+# fn process_other(i: i32) { }
+let message = match maybe_digit {
+    Some(x) if x &lt; 10 =&gt; process_digit(x),
+    Some(x) =&gt; process_other(x),
+    None =&gt; panic!(),
+};
+#}</pre> <blockquote> <p>Note: Multiple matches using the <code>|</code> operator can cause the pattern guard and and side effects it has to execute multiple times. For example:</p> <pre data-language="rust">use std::cell::Cell;
+fn main() {
+    let i : Cell&lt;i32&gt; = Cell::new(0);
+    match 1 {
+        1 | _ if { i.set(i.get() + 1); false } =&gt; {}
+        _ =&gt; {}
+    }
+    assert_eq!(i.get(), 2);
+}
+</pre> </blockquote> <h2 id="attributes-on-match-arms">Attributes on match arms</h2> <p>Outer attributes are allowed on match arms. The only attributes that have meaning on match arms are <a href="../../conditional-compilation/"><code>cfg</code></a>, <code>cold</code>, and the <a href="../../attributes/#lint-check-attributes">lint check attributes</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/expressions/match-expr.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/expressions/match-expr.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

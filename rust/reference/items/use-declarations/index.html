@@ -1,0 +1,162 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>6.1.3. Use Declarations - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Syntax&#58; UseDeclaration &#58; (Visibility)? use UseTree ; ">
+  <meta name="keywords" content="use, declarations, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/items/use-declarations/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="use-declarations">Use declarations</h1> <blockquote> <p><strong><sup>Syntax:</sup></strong><br> <em>UseDeclaration</em> :<br> (<a href="../../visibility-and-privacy/"><em>Visibility</em></a>)<sup>?</sup> <code>use</code> <em>UseTree</em> <code>;</code></p> <p><em>UseTree</em> :<br> (<a href="../../paths/"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>*</code><br> | (<a href="../../paths/"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>{</code> (<em>UseTree</em> ( <code>,</code> <em>UseTree</em> )<sup>*</sup> <code>,</code><sup>?</sup>)<sup>?</sup> <code>}</code><br> | <a href="../../paths/"><em>SimplePath</em></a> <code>as</code> <a href="../../identifiers/">IDENTIFIER</a></p> </blockquote> <p>A <em>use declaration</em> creates one or more local name bindings synonymous with some other <a href="../../paths/">path</a>. Usually a <code>use</code> declaration is used to shorten the path required to refer to a module item. These declarations may appear in <a href="../modules/">modules</a> and <a href="../../expressions/block-expr/">blocks</a>, usually at the top.</p> <blockquote> <p><strong>Note</strong>: Unlike in many languages, <code>use</code> declarations in Rust do <em>not</em> declare linkage dependency with external crates. Rather, <a href="../extern-crates/"><code>extern crate</code> declarations</a> declare linkage dependencies.</p> </blockquote> <p>Use declarations support a number of convenient shortcuts:</p> <ul> <li>Simultaneously binding a list of paths with a common prefix, using the glob-like brace syntax <code>use a::b::{c, d, e::f, g::h::i};</code>
+</li> <li>Simultaneously binding a list of paths with a common prefix and their common parent module, using the <code>self</code> keyword, such as <code>use a::b::{self, c, d::e};</code>
+</li> <li>Rebinding the target name as a new local name, using the syntax <code>use p::q::r as x;</code>. This can also be used with the last two features: <code>use a::b::{self as ab, c as abc}</code>.</li> <li>Binding all paths matching a given prefix, using the asterisk wildcard syntax <code>use a::b::*;</code>.</li> <li>Nesting groups of the previous features multiple times, such as <code>use a::b::{self as ab, c, d::{*, e::f}};</code>
+</li> </ul> <p>An example of <code>use</code> declarations:</p> <pre data-language="rust">use std::option::Option::{Some, None};
+use std::collections::hash_map::{self, HashMap};
+
+fn foo&lt;T&gt;(_: T){}
+fn bar(map1: HashMap&lt;String, usize&gt;, map2: hash_map::HashMap&lt;String, usize&gt;){}
+
+fn main() {
+    // Equivalent to 'foo(vec![std::option::Option::Some(1.0f64),
+    // std::option::Option::None]);'
+    foo(vec![Some(1.0f64), None]);
+
+    // Both `hash_map` and `HashMap` are in scope.
+    let map1 = HashMap::new();
+    let map2 = hash_map::HashMap::new();
+    bar(map1, map2);
+}
+</pre> <p>Like items, <code>use</code> declarations are private to the containing module, by default. Also like items, a <code>use</code> declaration can be public, if qualified by the <code>pub</code> keyword. Such a <code>use</code> declaration serves to <em>re-export</em> a name. A public <code>use</code> declaration can therefore <em>redirect</em> some public name to a different target definition: even a definition with a private canonical path, inside a different module. If a sequence of such redirections form a cycle or cannot be resolved unambiguously, they represent a compile-time error.</p> <p>An example of re-exporting:</p> <pre data-language="rust"># fn main() { }
+mod quux {
+    pub use quux::foo::{bar, baz};
+
+    pub mod foo {
+        pub fn bar() { }
+        pub fn baz() { }
+    }
+}
+</pre> <p>In this example, the module <code>quux</code> re-exports two public names defined in <code>foo</code>.</p> <p>Also note that the paths contained in <code>use</code> items are relative to the crate root. So, in the previous example, the <code>use</code> refers to <code>quux::foo::{bar, baz}</code>, and not simply to <code>foo::{bar, baz}</code>. This also means that top-level module declarations should be at the crate root if direct usage of the declared modules within <code>use</code> items is desired. It is also possible to use <code>self</code> and <code>super</code> at the beginning of a <code>use</code> item to refer to the current and direct parent modules respectively. All rules regarding accessing declared modules in <code>use</code> declarations apply to both module declarations and <code>extern crate</code> declarations.</p> <p>An example of what will and will not work for <code>use</code> items:</p> <pre data-language="rust"># #![allow(unused_imports)]
+use foo::baz::foobaz;    // good: foo is at the root of the crate
+
+mod foo {
+
+    mod example {
+        pub mod iter {}
+    }
+
+    use foo::example::iter; // good: foo is at crate root
+//  use example::iter;      // bad:  example is not at the crate root
+    use self::baz::foobaz;  // good: self refers to module 'foo'
+    use foo::bar::foobar;   // good: foo is at crate root
+
+    pub mod bar {
+        pub fn foobar() { }
+    }
+
+    pub mod baz {
+        use super::bar::foobar; // good: super refers to module 'foo'
+        pub fn foobaz() { }
+    }
+}
+
+fn main() {}
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/items/use-declarations.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/items/use-declarations.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

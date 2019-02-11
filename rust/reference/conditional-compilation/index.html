@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>5. Conditional Compilation - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="Sometimes one wants to have different compiler outputs from the same code, depending on build target, such as targeted operating system, or to &hellip;">
+  <meta name="keywords" content="conditional, compilation, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/conditional-compilation/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="conditional-compilation">Conditional compilation</h1> <p>Sometimes one wants to have different compiler outputs from the same code, depending on build target, such as targeted operating system, or to enable release builds.</p> <p>Configuration options are boolean (on or off) and are named either with a single identifier (e.g. <code>foo</code>) or an identifier and a string (e.g. <code>foo = "bar"</code>; the quotes are required and spaces around the <code>=</code> are unimportant). Note that similarly-named options, such as <code>foo</code>, <code>foo="bar"</code> and <code>foo="baz"</code> may each be set or unset independently.</p> <p>Configuration options are either provided by the compiler or passed in on the command line using <code>--cfg</code> (e.g. <code>rustc main.rs --cfg foo --cfg 'bar="baz"'</code>). Rust code then checks for their presence using the <code>#[cfg(...)]</code> <a href="../attributes/">attribute</a>:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+// The function is only included in the build when compiling for macOS
+#[cfg(target_os = "macos")]
+fn macos_only() {
+  // ...
+}
+
+// This function is only included when either foo or bar is defined
+#[cfg(any(foo, bar))]
+fn needs_foo_or_bar() {
+  // ...
+}
+
+// This function is only included when compiling for a unixish OS with a 32-bit
+// architecture
+#[cfg(all(unix, target_pointer_width = "32"))]
+fn on_32bit_unix() {
+  // ...
+}
+
+// This function is only included when foo is not defined
+#[cfg(not(foo))]
+fn needs_not_foo() {
+  // ...
+}
+#}</pre> <p>This illustrates some conditional compilation can be achieved using the <code>#[cfg(...)]</code> <a href="../attributes/">attribute</a>. <code>any</code>, <code>all</code> and <code>not</code> can be used to assemble arbitrarily complex configurations through nesting.</p> <p>The following configurations must be defined by the implementation:</p> <ul> <li>
+<code>target_arch = "..."</code> - Target CPU architecture, such as <code>"x86"</code>, <code>"x86_64"</code> <code>"mips"</code>, <code>"powerpc"</code>, <code>"powerpc64"</code>, <code>"arm"</code>, or <code>"aarch64"</code>. This value is closely related to the first element of the platform target triple, though it is not identical.</li> <li>
+<code>target_os = "..."</code> - Operating system of the target, examples include <code>"windows"</code>, <code>"macos"</code>, <code>"ios"</code>, <code>"linux"</code>, <code>"android"</code>, <code>"freebsd"</code>, <code>"dragonfly"</code>, <code>"bitrig"</code> , <code>"openbsd"</code> or <code>"netbsd"</code>. This value is closely related to the second and third element of the platform target triple, though it is not identical.</li> <li>
+<code>target_family = "..."</code> - Operating system family of the target, e. g. <code>"unix"</code> or <code>"windows"</code>. The value of this configuration option is defined as a configuration itself, like <code>unix</code> or <code>windows</code>.</li> <li>
+<code>unix</code> - See <code>target_family</code>.</li> <li>
+<code>windows</code> - See <code>target_family</code>.</li> <li>
+<code>target_env = ".."</code> - Further disambiguates the target platform with information about the ABI/libc. Presently this value is either <code>"gnu"</code>, <code>"msvc"</code>, <code>"musl"</code>, or the empty string. For historical reasons this value has only been defined as non-empty when needed for disambiguation. Thus on many GNU platforms this value will be empty. This value is closely related to the fourth element of the platform target triple, though it is not identical. For example, embedded ABIs such as <code>gnueabihf</code> will simply define <code>target_env</code> as <code>"gnu"</code>.</li> <li>
+<code>target_endian = "..."</code> - Endianness of the target CPU, either <code>"little"</code> or <code>"big"</code>.</li> <li>
+<code>target_pointer_width = "..."</code> - Target pointer width in bits. This is set to <code>"32"</code> for targets with 32-bit pointers, and likewise set to <code>"64"</code> for 64-bit pointers.</li> <li>
+<code>target_has_atomic = "..."</code> - Set of integer sizes on which the target can perform atomic operations. Values are <code>"8"</code>, <code>"16"</code>, <code>"32"</code>, <code>"64"</code> and <code>"ptr"</code>.</li> <li>
+<code>target_vendor = "..."</code> - Vendor of the target, for example <code>apple</code>, <code>pc</code>, or simply <code>"unknown"</code>.</li> <li>
+<code>test</code> - Enabled when compiling the test harness (using the <code>--test</code> flag).</li> <li>
+<code>debug_assertions</code> - Enabled by default when compiling without optimizations. This can be used to enable extra debugging code in development but not in production. For example, it controls the behavior of the standard library's <code>debug_assert!</code> macro.</li> <li>
+<code>proc_macro</code> - Set when the crate being compiled is being compiled with the <code>proc_macro</code> <a href="../linkage/">crate type</a>.</li> </ul> <p>You can also set another <a href="../attributes/">attribute</a> based on a <code>cfg</code> variable with <code>cfg_attr</code>:</p> <pre data-language="rust">#[cfg_attr(a, b)]
+</pre> <p>This is the same as <code>#[b]</code> if <code>a</code> is set by <code>cfg</code>, and nothing otherwise.</p> <p>Lastly, configuration options can be used in expressions by invoking the <code>cfg!</code> macro: <code>cfg!(a)</code> evaluates to <code>true</code> if <code>a</code> is set, and <code>false</code> otherwise.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/conditional-compilation.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/conditional-compilation.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

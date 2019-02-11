@@ -1,0 +1,227 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>7.3. Referring to Names in Different Modules - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="We’ve covered how to call functions defined within a module using the module name as part of the call, as in the call to the nested_modules function &hellip;">
+  <meta name="keywords" content="referring, names, different, modules, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/book/second-edition/ch07-03-importing-names-with-use/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="referring-to-names-in-different-modules">Referring to Names in Different Modules</h1> <p>We’ve covered how to call functions defined within a module using the module name as part of the call, as in the call to the <code>nested_modules</code> function shown here in Listing 7-7.</p> <p><span class="filename">Filename: src/main.rs</span></p> <pre data-language="rust">pub mod a {
+    pub mod series {
+        pub mod of {
+            pub fn nested_modules() {}
+        }
+    }
+}
+
+fn main() {
+    a::series::of::nested_modules();
+}
+</pre> <p><span class="caption">Listing 7-7: Calling a function by fully specifying its enclosing module’s path</span></p> <p>As you can see, referring to the fully qualified name can get quite lengthy. Fortunately, Rust has a keyword to make these calls more concise.</p> <h3 id="bringing-names-into-scope-with-the-use-keyword">Bringing Names into Scope with the <code>use</code> Keyword</h3> <p>Rust’s <code>use</code> keyword shortens lengthy function calls by bringing the modules of the function you want to call into scope. Here’s an example of bringing the <code>a::series::of</code> module into a binary crate’s root scope:</p> <p><span class="filename">Filename: src/main.rs</span></p> <pre data-language="rust">pub mod a {
+    pub mod series {
+        pub mod of {
+            pub fn nested_modules() {}
+        }
+    }
+}
+
+use a::series::of;
+
+fn main() {
+    of::nested_modules();
+}
+</pre> <p>The line <code>use a::series::of;</code> means that rather than using the full <code>a::series::of</code> path wherever we want to refer to the <code>of</code> module, we can use <code>of</code>.</p> <p>The <code>use</code> keyword brings only what we’ve specified into scope: it does not bring children of modules into scope. That’s why we still have to use <code>of::nested_modules</code> when we want to call the <code>nested_modules</code> function.</p> <p>We could have chosen to bring the function into scope by instead specifying the function in the <code>use</code> as follows:</p> <pre data-language="rust">pub mod a {
+    pub mod series {
+        pub mod of {
+            pub fn nested_modules() {}
+        }
+    }
+}
+
+use a::series::of::nested_modules;
+
+fn main() {
+    nested_modules();
+}
+</pre> <p>Doing so allows us to exclude all the modules and reference the function directly.</p> <p>Because enums also form a sort of namespace like modules, we can bring an enum’s variants into scope with <code>use</code> as well. For any kind of <code>use</code> statement, if you’re bringing multiple items from one namespace into scope, you can list them using curly brackets and commas in the last position, like so:</p> <pre data-language="rust">enum TrafficLight {
+    Red,
+    Yellow,
+    Green,
+}
+
+use TrafficLight::{Red, Yellow};
+
+fn main() {
+    let red = Red;
+    let yellow = Yellow;
+    let green = TrafficLight::Green;
+}
+</pre> <p>We’re still specifying the <code>TrafficLight</code> namespace for the <code>Green</code> variant because we didn’t include <code>Green</code> in the <code>use</code> statement.</p> <h3 id="bringing-all-names-into-scope-with-a-glob">Bringing All Names into Scope with a Glob</h3> <p>To bring all the items in a namespace into scope at once, we can use the <code>*</code> syntax, which is called the <em>glob operator</em>. This example brings all the variants of an enum into scope without having to list each specifically:</p> <pre data-language="rust">enum TrafficLight {
+    Red,
+    Yellow,
+    Green,
+}
+
+use TrafficLight::*;
+
+fn main() {
+    let red = Red;
+    let yellow = Yellow;
+    let green = Green;
+}
+</pre> <p>The <code>*</code> operator will bring into scope all the visible items in the <code>TrafficLight</code> namespace. You should use globs sparingly: they are convenient, but a glob might also pull in more items than you expected and cause naming conflicts.</p> <h3 id="using-super-to-access-a-parent-module">Using <code>super</code> to Access a Parent Module</h3> <p>As you saw at the beginning of this chapter, when you create a library crate, Cargo makes a <code>tests</code> module for you. Let’s go into more detail about that now. In your <code>communicator</code> project, open <em>src/lib.rs</em>:</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">pub mod client;
+
+pub mod network;
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}
+</pre> <p>Chapter 11 explains more about testing, but parts of this example should make sense now: we have a module named <code>tests</code> that lives next to our other modules and contains one function named <code>it_works</code>. Even though there are special annotations, the <code>tests</code> module is just another module! So our module hierarchy looks like this:</p> <pre>communicator
+ ├── client
+ ├── network
+ |   └── client
+ └── tests
+</pre> <p>Tests are for exercising the code within our library, so let’s try to call our <code>client::connect</code> function from this <code>it_works</code> function, even though we won’t be checking any functionality right now. This won’t work yet:</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        client::connect();
+    }
+}
+#}</pre> <p>Run the tests by invoking the <code>cargo test</code> command:</p> <pre>$ cargo test
+   Compiling communicator v0.1.0 (file:///projects/communicator)
+error[E0433]: failed to resolve. Use of undeclared type or module `client`
+ --&gt; src/lib.rs:9:9
+  |
+9 |         client::connect();
+  |         ^^^^^^ Use of undeclared type or module `client`
+</pre> <p>The compilation failed, but why? We don’t need to place <code>communicator::</code> in front of the function, as we did in <em>src/main.rs</em>, because we are definitely within the <code>communicator</code> library crate here. The reason is that paths are always relative to the current module, which here is <code>tests</code>. The only exception is in a <code>use</code> statement, where paths are relative to the crate root by default. Our <code>tests</code> module needs the <code>client</code> module in its scope!</p> <p>So how do we get back up one module in the module hierarchy to call the <code>client::connect</code> function in the <code>tests</code> module? In the <code>tests</code> module, we can either use leading colons to let Rust know that we want to start from the root and list the whole path, like this:</p> <pre data-language="rust">::client::connect();
+</pre> <p>Or, we can use <code>super</code> to move up one module in the hierarchy from our current module, like this:</p> <pre data-language="rust">super::client::connect();
+</pre> <p>These two options don’t look that different in this example, but if you’re deeper in a module hierarchy, starting from the root every time would make your code lengthy. In those cases, using <code>super</code> to get from the current module to sibling modules is a good shortcut. Plus, if you’ve specified the path from the root in many places in your code and then rearrange your modules by moving a subtree to another place, you’ll end up needing to update the path in several places, which would be tedious.</p> <p>It would also be annoying to have to type <code>super::</code> in each test, but you’ve already seen the tool for that solution: <code>use</code>! The <code>super::</code> functionality changes the path you give to <code>use</code> so it is relative to the parent module instead of to the root module.</p> <p>For these reasons, in the <code>tests</code> module especially, <code>use super::something</code> is usually the best solution. So now our test looks like this:</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[cfg(test)]
+mod tests {
+    use super::client;
+
+    #[test]
+    fn it_works() {
+        client::connect();
+    }
+}
+#}</pre> <p>When we run <code>cargo test</code> again, the test will pass, and the first part of the test result output will be the following:</p> <pre>$ cargo test
+   Compiling communicator v0.1.0 (file:///projects/communicator)
+     Running target/debug/communicator-92007ddb5330fa5a
+
+running 1 test
+test tests::it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</pre> <h2 id="summary">Summary</h2> <p>Now you know some new techniques for organizing your code! Use these techniques to group related functionality together, keep files from becoming too long, and present a tidy public API to your library users.</p> <p>Next, we’ll look at some collection data structures in the standard library that you can use in your nice, neat code.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/book/second-edition/ch07-03-importing-names-with-use.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/book/second-edition/ch07-03-importing-names-with-use.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

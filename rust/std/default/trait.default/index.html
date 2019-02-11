@@ -1,0 +1,921 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;default&#58;&#58;Default - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" A trait for giving a type a useful default value. ">
+  <meta name="keywords" content="trait, std, default, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/default/trait.default/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::default::Default</h1>
+<pre class="rust trait" data-language="rust">pub trait Default {
+    fn default() -&gt; Self;
+}</pre>
+<p>A trait for giving a type a useful default value.</p> <p>Sometimes, you want to fall back to some kind of default value, and don't particularly care what it is. This comes up often with <code>struct</code>s that define a set of options:</p> <pre class="rust rust-example-rendered" data-language="rust">
+struct SomeOptions {
+    foo: i32,
+    bar: f32,
+}</pre> <p>How can we define some default values? You can use <code>Default</code>:</p> <pre class="rust rust-example-rendered" data-language="rust">
+#[derive(Default)]
+struct SomeOptions {
+    foo: i32,
+    bar: f32,
+}
+
+fn main() {
+    let options: SomeOptions = Default::default();
+}</pre> <p>Now, you get all of the default values. Rust implements <code>Default</code> for various primitives types.</p> <p>If you want to override a particular option, but still retain the other defaults:</p> <pre class="rust rust-example-rendered" data-language="rust">
+fn main() {
+    let options = SomeOptions { foo: 42, ..Default::default() };
+}</pre> <h3 id="derivable" class="section-header">Derivable</h3> <p>This trait can be used with <code>#[derive]</code> if all of the type's fields implement <code>Default</code>. When <code>derive</code>d, it will use the default value for each field's type.</p> <h3 id="how-can-i-implement-default" class="section-header">How can I implement <code>Default</code>?</h3> <p>Provide an implementation for the <code>default()</code> method that returns the value of your type that should be the default:</p> <pre class="rust rust-example-rendered" data-language="rust">
+enum Kind {
+    A,
+    B,
+    C,
+}
+
+impl Default for Kind {
+    fn default() -&gt; Kind { Kind::A }
+}</pre> <h2 id="examples" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+#[derive(Default)]
+struct SomeOptions {
+    foo: i32,
+    bar: f32,
+}</pre>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.default" class="method"><span id="default.v" class="invisible"><code>fn <a href="#tymethod.default" class="fnname">default</a>() -&gt; Self</code></span></h3>
+<div class="docblock">
+<p>Returns the "default value" for a type.</p> <p>Default values are often some kind of initial value, identity value, or anything else that may make sense as a default.</p> <h2 id="examples-1" class="section-header">Examples</h2> <p>Using built-in default values:</p> <pre class="rust rust-example-rendered" data-language="rust">
+let i: i8 = Default::default();
+let (x, y): (Option&lt;String&gt;, f64) = Default::default();
+let (a, b, (c, d)): (i32, u32, (bool, bool)) = Default::default();</pre> <p>Making your own:</p> <pre class="rust rust-example-rendered" data-language="rust">
+enum Kind {
+    A,
+    B,
+    C,
+}
+
+impl Default for Kind {
+    fn default() -&gt; Kind { Kind::A }
+}</pre> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Default" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default" class="method"><span id="default.v-1" class="invisible"><code>fn <a href="#method.default" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.bool/">bool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>false</code></p> </div>
+</div>
+<h3 id="impl-Default-1" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.char/">char</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-1" class="method"><span id="default.v-2" class="invisible"><code>fn <a href="#method.default-1" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.char/">char</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>\x00</code></p> </div>
+</div>
+<h3 id="impl-Default-2" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.f32/">f32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-2" class="method"><span id="default.v-3" class="invisible"><code>fn <a href="#method.default-2" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.f32/">f32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0.0</code></p> </div>
+</div>
+<h3 id="impl-Default-3" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.f64/">f64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-3" class="method"><span id="default.v-4" class="invisible"><code>fn <a href="#method.default-3" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.f64/">f64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0.0</code></p> </div>
+</div>
+<h3 id="impl-Default-4" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.i128/">i128</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-4" class="method"><span id="default.v-5" class="invisible"><code>fn <a href="#method.default-4" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.i128/">i128</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-5" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.i16/">i16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-5" class="method"><span id="default.v-6" class="invisible"><code>fn <a href="#method.default-5" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.i16/">i16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-6" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.i32/">i32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-6" class="method"><span id="default.v-7" class="invisible"><code>fn <a href="#method.default-6" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.i32/">i32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-7" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.i64/">i64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-7" class="method"><span id="default.v-8" class="invisible"><code>fn <a href="#method.default-7" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.i64/">i64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-8" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.i8/">i8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-8" class="method"><span id="default.v-9" class="invisible"><code>fn <a href="#method.default-8" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.i8/">i8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-9" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.isize/">isize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-9" class="method"><span id="default.v-10" class="invisible"><code>fn <a href="#method.default-9" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.isize/">isize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-10" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.u128/">u128</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-10" class="method"><span id="default.v-11" class="invisible"><code>fn <a href="#method.default-10" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.u128/">u128</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-11" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.u16/">u16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-11" class="method"><span id="default.v-12" class="invisible"><code>fn <a href="#method.default-11" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.u16/">u16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-12" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.u32/">u32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-12" class="method"><span id="default.v-13" class="invisible"><code>fn <a href="#method.default-12" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.u32/">u32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-13" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.u64/">u64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-13" class="method"><span id="default.v-14" class="invisible"><code>fn <a href="#method.default-13" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.u64/">u64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-14" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.u8/">u8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-14" class="method"><span id="default.v-15" class="invisible"><code>fn <a href="#method.default-14" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.u8/">u8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-15" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.unit/">()</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-15" class="method"><span id="default.v-16" class="invisible"><code>fn <a href="#method.default-15" class="fnname">default</a>()</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>()</code></p> </div>
+</div>
+<h3 id="impl-Default-16" class="impl"><span class="in-band"><code>impl Default for <a class="primitive" href="../../primitive.usize/">usize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#131-135" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-16" class="method"><span id="default.v-17" class="invisible"><code>fn <a href="#method.default-16" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.usize/">usize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#134" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns the default value of <code>0</code></p> </div>
+</div>
+<h3 id="impl-Default-17" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../alloc/struct.global/" title="struct std::alloc::Global">Global</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#44" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-17" class="method"><span id="default.v-18" class="invisible"><code>fn <a href="#method.default-17" class="fnname">default</a>() -&gt; <a class="struct" href="../../alloc/struct.global/" title="struct std::alloc::Global">Global</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#44" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-18" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="primitive" href="../../primitive.str/">str</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#274-278" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-18" class="method"><span id="default.v-19" class="invisible"><code>fn <a href="#method.default-18" class="fnname">default</a>() -&gt; <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="primitive" href="../../primitive.str/">str</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#275-277" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;I&gt;<pre class="content">impl&lt;I&gt; Iterator for Box&lt;I&gt; where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;R: Read + ?Sized&gt; Read for Box&lt;R&gt;
+impl&lt;W: Write + ?Sized&gt; Write for Box&lt;W&gt;
+</pre>
+</div>
+</div>
+<h3 id="impl-Default-19" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#811-816" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-19" class="method"><span id="default.v-20" class="invisible"><code>fn <a href="#method.default-19" class="fnname">default</a>() -&gt; <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#812-815" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;I&gt;<pre class="content">impl&lt;I&gt; Iterator for Box&lt;I&gt; where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;R: Read + ?Sized&gt; Read for Box&lt;R&gt;
+impl&lt;W: Write + ?Sized&gt; Write for Box&lt;W&gt;
+</pre>
+</div>
+</div>
+<h3 id="impl-Default-20" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#743-748" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-20" class="method"><span id="default.v-21" class="invisible"><code>fn <a href="#method.default-20" class="fnname">default</a>() -&gt; <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#744-747" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;I&gt;<pre class="content">impl&lt;I&gt; Iterator for Box&lt;I&gt; where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;R: Read + ?Sized&gt; Read for Box&lt;R&gt;
+impl&lt;W: Write + ?Sized&gt; Write for Box&lt;W&gt;
+</pre>
+</div>
+</div>
+<h3 id="impl-Default-21" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../collections/hash_map/struct.defaulthasher/" title="struct std::collections::hash_map::DefaultHasher">DefaultHasher</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#2657-2663" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-21" class="method"><span id="default.v-22" class="invisible"><code>fn <a href="#method.default-21" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/hash_map/struct.defaulthasher/" title="struct std::collections::hash_map::DefaultHasher">DefaultHasher</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#2660-2662" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a new <code>DefaultHasher</code> using <a href="../../collections/hash_map/struct.defaulthasher/#method.new" title="DefaultHasher::new"><code>new</code></a>. See its documentation for more.</p> </div>
+</div>
+<h3 id="impl-Default-22" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../collections/hash_map/struct.randomstate/" title="struct std::collections::hash_map::RandomState">RandomState</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#2679-2685" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-22" class="method"><span id="default.v-23" class="invisible"><code>fn <a href="#method.default-22" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/hash_map/struct.randomstate/" title="struct std::collections::hash_map::RandomState">RandomState</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#2682-2684" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Constructs a new <code>RandomState</code>.</p> </div>
+</div>
+<h3 id="impl-Default-23" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../ffi/struct.cstring/" title="struct std::ffi::CString">CString</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#680-686" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-23" class="method"><span id="default.v-24" class="invisible"><code>fn <a href="#method.default-23" class="fnname">default</a>() -&gt; <a class="struct" href="../../ffi/struct.cstring/" title="struct std::ffi::CString">CString</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#682-685" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>CString</code>.</p> </div>
+</div>
+<h3 id="impl-Default-24" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../ffi/struct.osstring/" title="struct std::ffi::OsString">OsString</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#387-393" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-24" class="method"><span id="default.v-25" class="invisible"><code>fn <a href="#method.default-24" class="fnname">default</a>() -&gt; <a class="struct" href="../../ffi/struct.osstring/" title="struct std::ffi::OsString">OsString</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#390-392" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Constructs an empty <code>OsString</code>.</p> </div>
+</div>
+<h3 id="impl-Default-25" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../fmt/struct.error/" title="struct std::fmt::Error">Error</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/fmt/mod.rs.html#105" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-25" class="method"><span id="default.v-26" class="invisible"><code>fn <a href="#method.default-25" class="fnname">default</a>() -&gt; <a class="struct" href="../../fmt/struct.error/" title="struct std::fmt::Error">Error</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/fmt/mod.rs.html#105" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-26" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../hash/struct.siphasher/" title="struct std::hash::SipHasher">SipHasher</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/hash/sip.rs.html#61" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-26" class="method"><span id="default.v-27" class="invisible"><code>fn <a href="#method.default-26" class="fnname">default</a>() -&gt; <a class="struct" href="../../hash/struct.siphasher/" title="struct std::hash::SipHasher">SipHasher</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/hash/sip.rs.html#61" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-27" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../path/struct.pathbuf/" title="struct std::path::PathBuf">PathBuf</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1488-1492" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-27" class="method"><span id="default.v-28" class="invisible"><code>fn <a href="#method.default-27" class="fnname">default</a>() -&gt; Self</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1489-1491" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-28" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1848-1854" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-28" class="method"><span id="default.v-29" class="invisible"><code>fn <a href="#method.default-28" class="fnname">default</a>() -&gt; <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#1851-1853" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>String</code>.</p> </div>
+</div>
+<h3 id="impl-Default-29" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicbool/" title="struct std::sync::atomic::AtomicBool">AtomicBool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#133-138" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-29" class="method"><span id="default.v-30" class="invisible"><code>fn <a href="#method.default-29" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicbool/" title="struct std::sync::atomic::AtomicBool">AtomicBool</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#135-137" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an <code>AtomicBool</code> initialized to <code>false</code>.</p> </div>
+</div>
+<h3 id="impl-Default-30" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomici16/" title="struct std::sync::atomic::AtomicI16">AtomicI16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-30" class="method"><span id="default.v-31" class="invisible"><code>fn <a href="#method.default-30" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomici16/" title="struct std::sync::atomic::AtomicI16">AtomicI16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-31" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomici32/" title="struct std::sync::atomic::AtomicI32">AtomicI32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-31" class="method"><span id="default.v-32" class="invisible"><code>fn <a href="#method.default-31" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomici32/" title="struct std::sync::atomic::AtomicI32">AtomicI32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-32" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomici64/" title="struct std::sync::atomic::AtomicI64">AtomicI64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-32" class="method"><span id="default.v-33" class="invisible"><code>fn <a href="#method.default-32" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomici64/" title="struct std::sync::atomic::AtomicI64">AtomicI64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-33" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomici8/" title="struct std::sync::atomic::AtomicI8">AtomicI8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-33" class="method"><span id="default.v-34" class="invisible"><code>fn <a href="#method.default-33" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomici8/" title="struct std::sync::atomic::AtomicI8">AtomicI8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-34" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicisize/" title="struct std::sync::atomic::AtomicIsize">AtomicIsize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-34" class="method"><span id="default.v-35" class="invisible"><code>fn <a href="#method.default-34" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicisize/" title="struct std::sync::atomic::AtomicIsize">AtomicIsize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-35" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicu16/" title="struct std::sync::atomic::AtomicU16">AtomicU16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-35" class="method"><span id="default.v-36" class="invisible"><code>fn <a href="#method.default-35" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicu16/" title="struct std::sync::atomic::AtomicU16">AtomicU16</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-36" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicu32/" title="struct std::sync::atomic::AtomicU32">AtomicU32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-36" class="method"><span id="default.v-37" class="invisible"><code>fn <a href="#method.default-36" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicu32/" title="struct std::sync::atomic::AtomicU32">AtomicU32</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-37" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicu64/" title="struct std::sync::atomic::AtomicU64">AtomicU64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-37" class="method"><span id="default.v-38" class="invisible"><code>fn <a href="#method.default-37" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicu64/" title="struct std::sync::atomic::AtomicU64">AtomicU64</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-38" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicu8/" title="struct std::sync::atomic::AtomicU8">AtomicU8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-38" class="method"><span id="default.v-39" class="invisible"><code>fn <a href="#method.default-38" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicu8/" title="struct std::sync::atomic::AtomicU8">AtomicU8</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-39" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/atomic/struct.atomicusize/" title="struct std::sync::atomic::AtomicUsize">AtomicUsize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1111-1115" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-39" class="method"><span id="default.v-40" class="invisible"><code>fn <a href="#method.default-39" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicusize/" title="struct std::sync::atomic::AtomicUsize">AtomicUsize</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#1112-1114" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-40" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../sync/struct.condvar/" title="struct std::sync::Condvar">Condvar</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/sync/condvar.rs.html#608-613" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-40" class="method"><span id="default.v-41" class="invisible"><code>fn <a href="#method.default-40" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/struct.condvar/" title="struct std::sync::Condvar">Condvar</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/sync/condvar.rs.html#610-612" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a <code>Condvar</code> which is ready to be waited on and notified.</p> </div>
+</div>
+<h3 id="impl-Default-41" class="impl"><span class="in-band"><code>impl Default for <a class="struct" href="../../time/struct.duration/" title="struct std::time::Duration">Duration</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/time.rs.html#63" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-41" class="method"><span id="default.v-42" class="invisible"><code>fn <a href="#method.default-41" class="fnname">default</a>() -&gt; <a class="struct" href="../../time/struct.duration/" title="struct std::time::Duration">Duration</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/time.rs.html#63" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-42" class="impl"><span class="in-band"><code>impl&lt;'a&gt; Default for &amp;'a <a class="primitive" href="../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#4036-4039" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-42" class="method"><span id="default.v-43" class="invisible"><code>fn <a href="#method.default-42" class="fnname">default</a>() -&gt; &amp;'a <a class="primitive" href="../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#4038" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty str</p> </div>
+</div>
+<h3 id="impl-Default-43" class="impl"><span class="in-band"><code>impl&lt;'a&gt; Default for &amp;'a <a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#672-677" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-43" class="method"><span id="default.v-44" class="invisible"><code>fn <a href="#method.default-43" class="fnname">default</a>() -&gt; &amp;'a <a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#673-676" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-44" class="impl"><span class="in-band"><code>impl&lt;'a&gt; Default for &amp;'a <a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#751-757" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-44" class="method"><span id="default.v-45" class="invisible"><code>fn <a href="#method.default-44" class="fnname">default</a>() -&gt; &amp;'a <a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#754-756" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>OsStr</code>.</p> </div>
+</div>
+<h3 id="impl-Default-45" class="impl"><span class="in-band"><code>impl&lt;'a&gt; Default for &amp;'a mut <a class="primitive" href="../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#4042-4045" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-45" class="method"><span id="default.v-46" class="invisible"><code>fn <a href="#method.default-45" class="fnname">default</a>() -&gt; &amp;'a mut <a class="primitive" href="../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#4044" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty mutable str</p> </div>
+</div>
+<h3 id="impl-Default-46" class="impl"><span class="in-band"><code>impl&lt;'a, B&gt; Default for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, B&gt; <span class="where fmt-newline">where<br>    B: <a class="trait" href="../../borrow/trait.toowned/" title="trait std::borrow::ToOwned">ToOwned</a> + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>,<br>    &lt;B as <a class="trait" href="../../borrow/trait.toowned/" title="trait std::borrow::ToOwned">ToOwned</a>&gt;::<a class="type" href="../../borrow/trait.toowned/#associatedtype.Owned" title="type std::borrow::ToOwned::Owned">Owned</a>: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/borrow.rs.html#372-380" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-46" class="method"><span id="default.v-47" class="invisible"><code>fn <a href="#method.default-46" class="fnname">default</a>() -&gt; <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, B&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/borrow.rs.html#377-379" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an owned Cow&lt;'a, B&gt; with the default value for the contained owned value.</p> </div>
+</div>
+<h3 id="impl-Default-47" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; Default for <a class="primitive" href="../../primitive.slice/">&amp;'a [T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#2302-2305" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-47" class="method"><span id="default.v-48" class="invisible"><code>fn <a href="#method.default-47" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.slice/">&amp;'a [T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#2304" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+<div class="docblock">
+<p>Creates an empty slice.</p> </div>
+</div>
+<h3 id="impl-Default-48" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; Default for <a class="primitive" href="../../primitive.slice/">&amp;'a mut [T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#2308-2311" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-48" class="method"><span id="default.v-49" class="invisible"><code>fn <a href="#method.default-48" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.slice/">&amp;'a mut [T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#2310" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+<div class="docblock">
+<p>Creates a mutable empty slice.</p> </div>
+</div>
+<h3 id="impl-Default-49" class="impl"><span class="in-band"><code>impl&lt;A&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A<a class="primitive" href="../../primitive.tuple/">,)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-49" class="method"><span id="default.v-50" class="invisible"><code>fn <a href="#method.default-49" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A<a class="primitive" href="../../primitive.tuple/">,)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-50" class="impl"><span class="in-band"><code>impl&lt;A, B&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-50" class="method"><span id="default.v-51" class="invisible"><code>fn <a href="#method.default-50" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-51" class="impl"><span class="in-band"><code>impl&lt;A, B, C&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-51" class="method"><span id="default.v-52" class="invisible"><code>fn <a href="#method.default-51" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-52" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-52" class="method"><span id="default.v-53" class="invisible"><code>fn <a href="#method.default-52" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-53" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-53" class="method"><span id="default.v-54" class="invisible"><code>fn <a href="#method.default-53" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-54" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-54" class="method"><span id="default.v-55" class="invisible"><code>fn <a href="#method.default-54" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-55" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F, G&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    G: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-55" class="method"><span id="default.v-56" class="invisible"><code>fn <a href="#method.default-55" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-56" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F, G, H&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    G: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    H: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-56" class="method"><span id="default.v-57" class="invisible"><code>fn <a href="#method.default-56" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-57" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F, G, H, I&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    G: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    H: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    I: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-57" class="method"><span id="default.v-58" class="invisible"><code>fn <a href="#method.default-57" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-58" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F, G, H, I, J&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I, J<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    G: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    H: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    I: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    J: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-58" class="method"><span id="default.v-59" class="invisible"><code>fn <a href="#method.default-58" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I, J<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-59" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F, G, H, I, J, K&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I, J, K<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    G: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    H: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    I: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    J: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    K: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-59" class="method"><span id="default.v-60" class="invisible"><code>fn <a href="#method.default-59" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I, J, K<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-60" class="impl"><span class="in-band"><code>impl&lt;A, B, C, D, E, F, G, H, I, J, K, L&gt; Default for <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I, J, K, L<a class="primitive" href="../../primitive.tuple/">)</a> <span class="where fmt-newline">where<br>    A: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    B: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    C: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    D: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    E: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    F: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    G: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    H: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    I: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    J: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    K: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>,<br>    L: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#73-78" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-60" class="method"><span id="default.v-61" class="invisible"><code>fn <a href="#method.default-60" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.tuple/">(</a>A, B, C, D, E, F, G, H, I, J, K, L<a class="primitive" href="../../primitive.tuple/">)</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/tuple.rs.html#75-77" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-61" class="impl"><span class="in-band"><code>impl&lt;H&gt; Default for <a class="struct" href="../../hash/struct.buildhasherdefault/" title="struct std::hash::BuildHasherDefault">BuildHasherDefault</a>&lt;H&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/hash/mod.rs.html#539-543" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-61" class="method"><span id="default.v-62" class="invisible"><code>fn <a href="#method.default-61" class="fnname">default</a>() -&gt; <a class="struct" href="../../hash/struct.buildhasherdefault/" title="struct std::hash::BuildHasherDefault">BuildHasherDefault</a>&lt;H&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/hash/mod.rs.html#540-542" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-62" class="impl"><span class="in-band"><code>impl&lt;K, V&gt; Default for <a class="struct" href="../../collections/btree_map/struct.btreemap/" title="struct std::collections::btree_map::BTreeMap">BTreeMap</a>&lt;K, V&gt; <span class="where fmt-newline">where<br>    K: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#1757-1762" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-62" class="method"><span id="default.v-63" class="invisible"><code>fn <a href="#method.default-62" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/btree_map/struct.btreemap/" title="struct std::collections::btree_map::BTreeMap">BTreeMap</a>&lt;K, V&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#1759-1761" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>BTreeMap&lt;K, V&gt;</code>.</p> </div>
+</div>
+<h3 id="impl-Default-63" class="impl"><span class="in-band"><code>impl&lt;K, V, S&gt; Default for <a class="struct" href="../../collections/struct.hashmap/" title="struct std::collections::HashMap">HashMap</a>&lt;K, V, S&gt; <span class="where fmt-newline">where<br>    K: <a class="trait" href="../../cmp/trait.eq/" title="trait std::cmp::Eq">Eq</a> + <a class="trait" href="../../hash/trait.hash/" title="trait std::hash::Hash">Hash</a>,<br>    S: <a class="trait" href="../../hash/trait.buildhasher/" title="trait std::hash::BuildHasher">BuildHasher</a> + <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#1522-1530" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-63" class="method"><span id="default.v-64" class="invisible"><code>fn <a href="#method.default-63" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/struct.hashmap/" title="struct std::collections::HashMap">HashMap</a>&lt;K, V, S&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/map.rs.html#1527-1529" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>HashMap&lt;K, V, S&gt;</code>, with the <code>Default</code> value for the hasher.</p> </div>
+</div>
+<h3 id="impl-Default-64" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="enum" href="../../option/enum.option/" title="enum std::option::Option">Option</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/option.rs.html#1008-1012" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-64" class="method"><span id="default.v-65" class="invisible"><code>fn <a href="#method.default-64" class="fnname">default</a>() -&gt; <a class="enum" href="../../option/enum.option/" title="enum std::option::Option">Option</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/option.rs.html#1011" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Returns <a href="../../option/enum.option/#None.v" title="Option::None"><code>None</code></a>.</p> </div>
+</div>
+<h3 id="impl-Default-65" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 0]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#281-283" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-65" class="method"><span id="default.v-66" class="invisible"><code>fn <a href="#method.default-65" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 0]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#282" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-66" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 1]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-66" class="method"><span id="default.v-67" class="invisible"><code>fn <a href="#method.default-66" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 1]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-67" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 2]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-67" class="method"><span id="default.v-68" class="invisible"><code>fn <a href="#method.default-67" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 2]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-68" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 3]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-68" class="method"><span id="default.v-69" class="invisible"><code>fn <a href="#method.default-68" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 3]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-69" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 4]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-69" class="method"><span id="default.v-70" class="invisible"><code>fn <a href="#method.default-69" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 4]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-70" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 5]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-70" class="method"><span id="default.v-71" class="invisible"><code>fn <a href="#method.default-70" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 5]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-71" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 6]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-71" class="method"><span id="default.v-72" class="invisible"><code>fn <a href="#method.default-71" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 6]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-72" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 7]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-72" class="method"><span id="default.v-73" class="invisible"><code>fn <a href="#method.default-72" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 7]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-73" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 8]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-73" class="method"><span id="default.v-74" class="invisible"><code>fn <a href="#method.default-73" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 8]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-74" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 9]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-74" class="method"><span id="default.v-75" class="invisible"><code>fn <a href="#method.default-74" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 9]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-75" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 10]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-75" class="method"><span id="default.v-76" class="invisible"><code>fn <a href="#method.default-75" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 10]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-76" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 11]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-76" class="method"><span id="default.v-77" class="invisible"><code>fn <a href="#method.default-76" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 11]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-77" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 12]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-77" class="method"><span id="default.v-78" class="invisible"><code>fn <a href="#method.default-77" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 12]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-78" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 13]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-78" class="method"><span id="default.v-79" class="invisible"><code>fn <a href="#method.default-78" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 13]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-79" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 14]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-79" class="method"><span id="default.v-80" class="invisible"><code>fn <a href="#method.default-79" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 14]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-80" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 15]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-80" class="method"><span id="default.v-81" class="invisible"><code>fn <a href="#method.default-80" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 15]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-81" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 16]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-81" class="method"><span id="default.v-82" class="invisible"><code>fn <a href="#method.default-81" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 16]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-82" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 17]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-82" class="method"><span id="default.v-83" class="invisible"><code>fn <a href="#method.default-82" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 17]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-83" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 18]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-83" class="method"><span id="default.v-84" class="invisible"><code>fn <a href="#method.default-83" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 18]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-84" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 19]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-84" class="method"><span id="default.v-85" class="invisible"><code>fn <a href="#method.default-84" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 19]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-85" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 20]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-85" class="method"><span id="default.v-86" class="invisible"><code>fn <a href="#method.default-85" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 20]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-86" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 21]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-86" class="method"><span id="default.v-87" class="invisible"><code>fn <a href="#method.default-86" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 21]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-87" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 22]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-87" class="method"><span id="default.v-88" class="invisible"><code>fn <a href="#method.default-87" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 22]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-88" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 23]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-88" class="method"><span id="default.v-89" class="invisible"><code>fn <a href="#method.default-88" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 23]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-89" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 24]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-89" class="method"><span id="default.v-90" class="invisible"><code>fn <a href="#method.default-89" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 24]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-90" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 25]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-90" class="method"><span id="default.v-91" class="invisible"><code>fn <a href="#method.default-90" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 25]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-91" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 26]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-91" class="method"><span id="default.v-92" class="invisible"><code>fn <a href="#method.default-91" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 26]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-92" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 27]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-92" class="method"><span id="default.v-93" class="invisible"><code>fn <a href="#method.default-92" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 27]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-93" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 28]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-93" class="method"><span id="default.v-94" class="invisible"><code>fn <a href="#method.default-93" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 28]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-94" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 29]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-94" class="method"><span id="default.v-95" class="invisible"><code>fn <a href="#method.default-94" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 29]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-95" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 30]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-95" class="method"><span id="default.v-96" class="invisible"><code>fn <a href="#method.default-95" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 30]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-96" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 31]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-96" class="method"><span id="default.v-97" class="invisible"><code>fn <a href="#method.default-96" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 31]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-97" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 32]</a> <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#272-276" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-97" class="method"><span id="default.v-98" class="invisible"><code>fn <a href="#method.default-97" class="fnname">default</a>() -&gt; <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 32]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#273-275" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-98" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#267-271" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-98" class="method"><span id="default.v-99" class="invisible"><code>fn <a href="#method.default-98" class="fnname">default</a>() -&gt; <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#268-270" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;I&gt;<pre class="content">impl&lt;I&gt; Iterator for Box&lt;I&gt; where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;R: Read + ?Sized&gt; Read for Box&lt;R&gt;
+impl&lt;W: Write + ?Sized&gt; Write for Box&lt;W&gt;
+</pre>
+</div>
+</div>
+<h3 id="impl-Default-99" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#259-264" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-99" class="method"><span id="default.v-100" class="invisible"><code>fn <a href="#method.default-99" class="fnname">default</a>() -&gt; <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#261-263" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;I&gt;<pre class="content">impl&lt;I&gt; Iterator for Box&lt;I&gt; where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;R: Read + ?Sized&gt; Read for Box&lt;R&gt;
+impl&lt;W: Write + ?Sized&gt; Write for Box&lt;W&gt;
+</pre>
+</div>
+<div class="docblock">
+<p>Creates a <code>Box&lt;T&gt;</code>, with the <code>Default</code> value for T.</p> </div>
+</div>
+<h3 id="impl-Default-100" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../cell/struct.cell/" title="struct std::cell::Cell">Cell</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cell.rs.html#304-310" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-100" class="method"><span id="default.v-101" class="invisible"><code>fn <a href="#method.default-100" class="fnname">default</a>() -&gt; <a class="struct" href="../../cell/struct.cell/" title="struct std::cell::Cell">Cell</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cell.rs.html#307-309" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a <code>Cell&lt;T&gt;</code>, with the <code>Default</code> value for T.</p> </div>
+</div>
+<h3 id="impl-Default-101" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../cell/struct.refcell/" title="struct std::cell::RefCell">RefCell</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cell.rs.html#990-996" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-101" class="method"><span id="default.v-102" class="invisible"><code>fn <a href="#method.default-101" class="fnname">default</a>() -&gt; <a class="struct" href="../../cell/struct.refcell/" title="struct std::cell::RefCell">RefCell</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cell.rs.html#993-995" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a <code>RefCell&lt;T&gt;</code>, with the <code>Default</code> value for T.</p> </div>
+</div>
+<h3 id="impl-Default-102" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../cell/struct.unsafecell/" title="struct std::cell::UnsafeCell">UnsafeCell</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cell.rs.html#1516-1521" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-102" class="method"><span id="default.v-103" class="invisible"><code>fn <a href="#method.default-102" class="fnname">default</a>() -&gt; <a class="struct" href="../../cell/struct.unsafecell/" title="struct std::cell::UnsafeCell">UnsafeCell</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cell.rs.html#1518-1520" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an <code>UnsafeCell</code>, with the <code>Default</code> value for T.</p> </div>
+</div>
+<h3 id="impl-Default-103" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../cmp/struct.reverse/" title="struct std::cmp::Reverse">Reverse</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#436" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-103" class="method"><span id="default.v-104" class="invisible"><code>fn <a href="#method.default-103" class="fnname">default</a>() -&gt; <a class="struct" href="../../cmp/struct.reverse/" title="struct std::cmp::Reverse">Reverse</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#436" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-104" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../collections/binary_heap/struct.binaryheap/" title="struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/binary_heap.rs.html#294-300" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-104" class="method"><span id="default.v-105" class="invisible"><code>fn <a href="#method.default-104" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/binary_heap/struct.binaryheap/" title="struct std::collections::binary_heap::BinaryHeap">BinaryHeap</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/binary_heap.rs.html#297-299" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>BinaryHeap&lt;T&gt;</code>.</p> </div>
+</div>
+<h3 id="impl-Default-105" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../collections/btree_set/struct.btreeset/" title="struct std::collections::btree_set::BTreeSet">BTreeSet</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/set.rs.html#814-819" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-105" class="method"><span id="default.v-106" class="invisible"><code>fn <a href="#method.default-105" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/btree_set/struct.btreeset/" title="struct std::collections::btree_set::BTreeSet">BTreeSet</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/set.rs.html#816-818" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Makes an empty <code>BTreeSet&lt;T&gt;</code> with a reasonable choice of B.</p> </div>
+</div>
+<h3 id="impl-Default-106" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../collections/linked_list/struct.linkedlist/" title="struct std::collections::linked_list::LinkedList">LinkedList</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#247-253" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-106" class="method"><span id="default.v-107" class="invisible"><code>fn <a href="#method.default-106" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/linked_list/struct.linkedlist/" title="struct std::collections::linked_list::LinkedList">LinkedList</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#250-252" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>LinkedList&lt;T&gt;</code>.</p> </div>
+</div>
+<h3 id="impl-Default-107" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../collections/vec_deque/struct.vecdeque/" title="struct std::collections::vec_deque::VecDeque">VecDeque</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#88-94" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-107" class="method"><span id="default.v-108" class="invisible"><code>fn <a href="#method.default-107" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/vec_deque/struct.vecdeque/" title="struct std::collections::vec_deque::VecDeque">VecDeque</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#91-93" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>VecDeque&lt;T&gt;</code>.</p> </div>
+</div>
+<h3 id="impl-Default-108" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../iter/struct.empty/" title="struct std::iter::Empty">Empty</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/iter/sources.rs.html#265-269" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-108" class="method"><span id="default.v-109" class="invisible"><code>fn <a href="#method.default-108" class="fnname">default</a>() -&gt; <a class="struct" href="../../iter/struct.empty/" title="struct std::iter::Empty">Empty</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/iter/sources.rs.html#266-268" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../iter/struct.empty/" title="struct std::iter::Empty">Empty</a>&lt;T&gt;<pre class="content">impl&lt;T&gt; Iterator for Empty&lt;T&gt;
+    type Item = T;
+</pre>
+</div>
+</div>
+<h3 id="impl-Default-109" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../marker/struct.phantomdata/" title="struct std::marker::PhantomData">PhantomData</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/marker.rs.html#438-442" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-109" class="method"><span id="default.v-110" class="invisible"><code>fn <a href="#method.default-109" class="fnname">default</a>() -&gt; <a class="struct" href="../../marker/struct.phantomdata/" title="struct std::marker::PhantomData">PhantomData</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/marker.rs.html#439-441" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-110" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../mem/struct.manuallydrop/" title="struct std::mem::ManuallyDrop">ManuallyDrop</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a> + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/mem.rs.html#952" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-110" class="method"><span id="default.v-111" class="invisible"><code>fn <a href="#method.default-110" class="fnname">default</a>() -&gt; <a class="struct" href="../../mem/struct.manuallydrop/" title="struct std::mem::ManuallyDrop">ManuallyDrop</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/mem.rs.html#952" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-111" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../num/struct.wrapping/" title="struct std::num::Wrapping">Wrapping</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/num/mod.rs.html#139" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.default-111" class="method"><span id="default.v-112" class="invisible"><code>fn <a href="#method.default-111" class="fnname">default</a>() -&gt; <a class="struct" href="../../num/struct.wrapping/" title="struct std::num::Wrapping">Wrapping</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/num/mod.rs.html#139" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Default-112" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../rc/struct.rc/" title="struct std::rc::Rc">Rc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#873-888" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-112" class="method"><span id="default.v-113" class="invisible"><code>fn <a href="#method.default-112" class="fnname">default</a>() -&gt; <a class="struct" href="../../rc/struct.rc/" title="struct std::rc::Rc">Rc</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#885-887" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a new <code>Rc&lt;T&gt;</code>, with the <code>Default</code> value for <code>T</code>.</p> <h2 id="examples-2" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::rc::Rc;
+
+let x: Rc&lt;i32&gt; = Default::default();
+assert_eq!(*x, 0);</pre> </div>
+</div>
+<h3 id="impl-Default-113" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for std::rc::<a class="struct" href="../../rc/struct.weak/" title="struct std::rc::Weak">Weak</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#1319-1336" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-113" class="method"><span id="default.v-114" class="invisible"><code>fn <a href="#method.default-113" class="fnname">default</a>() -&gt; <a class="struct" href="../../rc/struct.weak/" title="struct std::rc::Weak">Weak</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#1333-1335" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Constructs a new <code>Weak&lt;T&gt;</code>, allocating memory for <code>T</code> without initializing it. Calling [<code>upgrade</code>][Weak::upgrade] on the return value always gives <a href="../../option/enum.option/"><code>None</code></a>.</p> <h2 id="examples-3" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::rc::Weak;
+
+let empty: Weak&lt;i64&gt; = Default::default();
+assert!(empty.upgrade().is_none());</pre> </div>
+</div>
+<h3 id="impl-Default-114" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../sync/atomic/struct.atomicptr/" title="struct std::sync::atomic::AtomicPtr">AtomicPtr</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#156-161" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-114" class="method"><span id="default.v-115" class="invisible"><code>fn <a href="#method.default-114" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/atomic/struct.atomicptr/" title="struct std::sync::atomic::AtomicPtr">AtomicPtr</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/sync/atomic.rs.html#158-160" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a null <code>AtomicPtr&lt;T&gt;</code>.</p> </div>
+</div>
+<h3 id="impl-Default-115" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1397-1411" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-115" class="method"><span id="default.v-116" class="invisible"><code>fn <a href="#method.default-115" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1408-1410" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a new <code>Arc&lt;T&gt;</code>, with the <code>Default</code> value for <code>T</code>.</p> <h2 id="examples-4" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::sync::Arc;
+
+let x: Arc&lt;i32&gt; = Default::default();
+assert_eq!(*x, 0);</pre> </div>
+</div>
+<h3 id="impl-Default-116" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for std::sync::<a class="struct" href="../../sync/struct.weak/" title="struct std::sync::Weak">Weak</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1158-1176" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-116" class="method"><span id="default.v-117" class="invisible"><code>fn <a href="#method.default-116" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/struct.weak/" title="struct std::sync::Weak">Weak</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1173-1175" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Constructs a new <code>Weak&lt;T&gt;</code>, without allocating memory. Calling [<code>upgrade</code>][Weak::upgrade] on the return value always gives <a href="../../option/enum.option/#variant.None"><code>None</code></a>.</p> <h2 id="examples-5" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::sync::Weak;
+
+let empty: Weak&lt;i64&gt; = Default::default();
+assert!(empty.upgrade().is_none());</pre> </div>
+</div>
+<h3 id="impl-Default-117" class="impl"><span class="in-band"><code>impl&lt;T&gt; Default for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2193-2198" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-117" class="method"><span id="default.v-118" class="invisible"><code>fn <a href="#method.default-117" class="fnname">default</a>() -&gt; <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2195-2197" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;<pre class="content">impl Write for Vec&lt;u8&gt;
+</pre>
+</div>
+<div class="docblock">
+<p>Creates an empty <code>Vec&lt;T&gt;</code>.</p> </div>
+</div>
+<h3 id="impl-Default-118" class="impl"><span class="in-band"><code>impl&lt;T, S&gt; Default for <a class="struct" href="../../collections/struct.hashset/" title="struct std::collections::HashSet">HashSet</a>&lt;T, S&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.eq/" title="trait std::cmp::Eq">Eq</a> + <a class="trait" href="../../hash/trait.hash/" title="trait std::hash::Hash">Hash</a>,<br>    S: <a class="trait" href="../../hash/trait.buildhasher/" title="trait std::hash::BuildHasher">BuildHasher</a> + <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/set.rs.html#831-839" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-118" class="method"><span id="default.v-119" class="invisible"><code>fn <a href="#method.default-118" class="fnname">default</a>() -&gt; <a class="struct" href="../../collections/struct.hashset/" title="struct std::collections::HashSet">HashSet</a>&lt;T, S&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/collections/hash/set.rs.html#836-838" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates an empty <code>HashSet&lt;T, S&gt;</code> with the <code>Default</code> value for the hasher.</p> </div>
+</div>
+<h3 id="impl-Default-119" class="impl"><span class="in-band"><code>impl&lt;T: <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>&gt; Default for <a class="struct" href="../../sync/struct.rwlock/" title="struct std::sync::RwLock">RwLock</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#453-458" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-119" class="method"><span id="default.v-120" class="invisible"><code>fn <a href="#method.default-119" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/struct.rwlock/" title="struct std::sync::RwLock">RwLock</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#455-457" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a new <code>RwLock&lt;T&gt;</code>, with the <code>Default</code> value for T.</p> </div>
+</div>
+<h3 id="impl-Default-120" class="impl"><span class="in-band"><code>impl&lt;T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a> + <a class="trait" href="../trait.default/" title="trait std::default::Default">Default</a>&gt; Default for <a class="struct" href="../../sync/struct.mutex/" title="struct std::sync::Mutex">Mutex</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mutex.rs.html#395-400" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.default-120" class="method"><span id="default.v-121" class="invisible"><code>fn <a href="#method.default-120" class="fnname">default</a>() -&gt; <a class="struct" href="../../sync/struct.mutex/" title="struct std::sync::Mutex">Mutex</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mutex.rs.html#397-399" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="docblock">
+<p>Creates a <code>Mutex&lt;T&gt;</code>, with the <code>Default</code> value for T.</p> </div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/default/trait.Default.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/default/trait.Default.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

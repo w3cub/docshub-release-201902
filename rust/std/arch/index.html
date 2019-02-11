@@ -1,0 +1,268 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Std&#58;&#58;arch - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" SIMD and vendor intrinsics module. ">
+  <meta name="keywords" content="module, std, arch, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/arch/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Module std::arch</h1>
+<p>SIMD and vendor intrinsics module.</p> <p>This module is intended to be the gateway to architecture-specific intrinsic functions, typically related to SIMD (but not always!). Each architecture that Rust compiles to may contain a submodule here, which means that this is not a portable module! If you're writing a portable library take care when using these APIs!</p> <p>Under this module you'll find an architecture-named module, such as <code>x86_64</code>. Each <code>#[cfg(target_arch)]</code> that Rust can compile to may have a module entry here, only present on that particular target. For example the <code>i686-pc-windows-msvc</code> target will have an <code>x86</code> module here, whereas <code>x86_64-pc-windows-msvc</code> has <code>x86_64</code>.</p> <h2 id="overview" class="section-header">Overview</h2> <p>This module exposes vendor-specific intrinsics that typically correspond to a single machine instruction. These intrinsics are not portable: their availability is architecture-dependent, and not all machines of that architecture might provide the intrinsic.</p> <p>The <code>arch</code> module is intended to be a low-level implementation detail for higher-level APIs. Using it correctly can be quite tricky as you need to ensure at least a few guarantees are upheld:</p> <ul> <li>The correct architecture's module is used. For example the <code>arm</code> module isn't available on the <code>x86_64-unknown-linux-gnu</code> target. This is typically done by ensuring that <code>#[cfg]</code> is used appropriately when using this module.</li> <li>The CPU the program is currently running on supports the function being called. For example it is unsafe to call an AVX2 function on a CPU that doesn't actually support AVX2.</li> </ul> <p>As a result of the latter of these guarantees all intrinsics in this module are <code>unsafe</code> and extra care needs to be taken when calling them!</p> <h2 id="cpu-feature-detection" class="section-header">CPU Feature Detection</h2> <p>In order to call these APIs in a safe fashion there's a number of mechanisms available to ensure that the correct CPU feature is available to call an intrinsic. Let's consider, for example, the <code>_mm256_add_epi64</code> intrinsics on the <code>x86</code> and <code>x86_64</code> architectures. This function requires the AVX2 feature as <a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_mm256_add_epi64&amp;expand=100" target="_blank">documented by Intel</a> so to correctly call this function we need to (a) guarantee we only call it on <code>x86</code>/<code>x86_64</code> and (b) ensure that the CPU feature is available</p> <h3 id="static-cpu-feature-detection" class="section-header">Static CPU Feature Detection</h3> <p>The first option available to us is to conditionally compile code via the <code>#[cfg]</code> attribute. CPU features correspond to the <code>target_feature</code> cfg available, and can be used like so:</p> <div class="information">ⓘThis example is not tested</div>
+<pre class="rust rust-example-rendered ignore" data-language="rust">
+#[cfg(all(any(target_arch = "x86", target_arch = "x86_64"),
+      target_feature = "avx2"))]
+fn foo() {
+    #[cfg(target_arch = "x86")]
+    use std::arch::x86::_mm256_add_epi64;
+    #[cfg(target_arch = "x86_64")]
+    use std::arch::x86_64::_mm256_add_epi64;
+
+    unsafe {
+        _mm256_add_epi64(...);
+    }
+}</pre> <p>Here we're using <code>#[cfg(target_feature = "avx2")]</code> to conditionally compile this function into our module. This means that if the <code>avx2</code> feature is <em>enabled statically</em> then we'll use the <code>_mm256_add_epi64</code> function at runtime. The <code>unsafe</code> block here can be justified through the usage of <code>#[cfg]</code> to only compile the code in situations where the safety guarantees are upheld.</p> <p>Statically enabling a feature is typically done with the <code>-C target-feature</code> or <code>-C target-cpu</code> flags to the compiler. For example if your local CPU supports AVX2 then you can compile the above function with:</p> <pre>$ RUSTFLAGS='-C target-cpu=native' cargo build
+</pre> <p>Or otherwise you can specifically enable just the AVX2 feature:</p> <pre>$ RUSTFLAGS='-C target-feature=+avx2' cargo build
+</pre> <p>Note that when you compile a binary with a particular feature enabled it's important to ensure that you only run the binary on systems which satisfy the required feature set.</p> <h3 id="dynamic-cpu-feature-detection" class="section-header">Dynamic CPU Feature Detection</h3> <p>Sometimes statically dispatching isn't quite what you want. Instead you might want to build a portable binary that runs across a variety of CPUs, but at runtime it selects the most optimized implementation available. This allows you to build a "least common denominator" binary which has certain sections more optimized for different CPUs.</p> <p>Taking our previous example from before, we're going to compile our binary <em>without</em> AVX2 support, but we'd like to enable it for just one function. We can do that in a manner like:</p> <div class="information">ⓘThis example is not tested</div>
+<pre class="rust rust-example-rendered ignore" data-language="rust">
+fn foo() {
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+    {
+        if is_x86_feature_detected!("avx2") {
+            return unsafe { foo_avx2() };
+        }
+    }
+
+    // fallback implementation without using AVX2
+}
+
+#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+#[target_feature(enable = "avx2")]
+unsafe fn foo_avx2() {
+    #[cfg(target_arch = "x86")]
+    use std::arch::x86::_mm256_add_epi64;
+    #[cfg(target_arch = "x86_64")]
+    use std::arch::x86_64::_mm256_add_epi64;
+
+    _mm256_add_epi64(...);
+}</pre> <p>There's a couple of components in play here, so let's go through them in detail!</p> <ul> <li> <p>First up we notice the <code>is_x86_feature_detected!</code> macro. Provided by the standard library, this macro will perform necessary runtime detection to determine whether the CPU the program is running on supports the specified feature. In this case the macro will expand to a boolean expression evaluating to whether the local CPU has the AVX2 feature or not.</p> <p>Note that this macro, like the <code>arch</code> module, is platform-specific. For example calling <code>is_x86_feature_detected!("avx2")</code> on ARM will be a compile time error. To ensure we don't hit this error a statement level <code>#[cfg]</code> is used to only compile usage of the macro on <code>x86</code>/<code>x86_64</code>.</p> </li> <li> <p>Next up we see our AVX2-enabled function, <code>foo_avx2</code>. This function is decorated with the <code>#[target_feature]</code> attribute which enables a CPU feature for just this one function. Using a compiler flag like <code>-C target-feature=+avx2</code> will enable AVX2 for the entire program, but using an attribute will only enable it for the one function. Usage of the <code>#[target_feature]</code> attribute currently requires the function to also be <code>unsafe</code>, as we see here. This is because the function can only be correctly called on systems which have the AVX2 (like the intrinsics themselves).</p> </li> </ul> <p>And with all that we should have a working program! This program will run across all machines and it'll use the optimized AVX2 implementation on machines where support is detected.</p> <h2 id="ergonomics" class="section-header">Ergonomics</h2> <p>It's important to note that using the <code>arch</code> module is not the easiest thing in the world, so if you're curious to try it out you may want to brace yourself for some wordiness!</p> <p>The primary purpose of this module is to enable stable crates on crates.io to build up much more ergonomic abstractions which end up using SIMD under the hood. Over time these abstractions may also move into the standard library itself, but for now this module is tasked with providing the bare minimum necessary to use vendor intrinsics on stable Rust.</p> <h2 id="other-architectures" class="section-header">Other architectures</h2> <p>This documentation is only for one particular architecture, you can find others at:</p> <ul> <li><a href="x86/"><code>x86</code></a></li> <li><a href="x86_64/"><code>x86_64</code></a></li> <li><a href="arm/"><code>arm</code></a></li> <li><a href="aarch64/"><code>aarch64</code></a></li> <li><a href="mips/"><code>mips</code></a></li> <li><a href="mips64/"><code>mips64</code></a></li> <li><a href="powerpc/"><code>powerpc</code></a></li> <li><a href="powerpc64/"><code>powerpc64</code></a></li> </ul> <h2 id="examples" class="section-header">Examples</h2> <p>First let's take a look at not actually using any intrinsics but instead using LLVM's auto-vectorization to produce optimized vectorized code for AVX2 and also for the default platform.</p> <pre class="rust rust-example-rendered" data-language="rust">
+
+
+fn main() {
+    let mut dst = [0];
+    add_quickly(&amp;[1], &amp;[2], &amp;mut dst);
+    assert_eq!(dst[0], 3);
+}
+
+fn add_quickly(a: &amp;[u8], b: &amp;[u8], c: &amp;mut [u8]) {
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+    {
+        // Note that this `unsafe` block is safe because we're testing
+        // that the `avx2` feature is indeed available on our CPU.
+        if is_x86_feature_detected!("avx2") {
+            return unsafe { add_quickly_avx2(a, b, c) }
+        }
+    }
+
+    add_quickly_fallback(a, b, c)
+}
+
+#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+#[target_feature(enable = "avx2")]
+unsafe fn add_quickly_avx2(a: &amp;[u8], b: &amp;[u8], c: &amp;mut [u8]) {
+    add_quickly_fallback(a, b, c) // the function below is inlined here
+}
+
+fn add_quickly_fallback(a: &amp;[u8], b: &amp;[u8], c: &amp;mut [u8]) {
+    for ((a, b), c) in a.iter().zip(b).zip(c) {
+        *c = *a + *b;
+    }
+}</pre> <p>Next up let's take a look at an example of manually using intrinsics. Here we'll be using SSE4.1 features to implement hex encoding.</p> <pre class="rust rust-example-rendered" data-language="rust">
+
+fn main() {
+    let mut dst = [0; 32];
+    hex_encode(b"\x01\x02\x03", &amp;mut dst);
+    assert_eq!(&amp;dst[..6], b"010203");
+
+    let mut src = [0; 16];
+    for i in 0..16 {
+        src[i] = (i + 1) as u8;
+    }
+    hex_encode(&amp;src, &amp;mut dst);
+    assert_eq!(&amp;dst, b"0102030405060708090a0b0c0d0e0f10");
+}
+
+pub fn hex_encode(src: &amp;[u8], dst: &amp;mut [u8]) {
+    let len = src.len().checked_mul(2).unwrap();
+    assert!(dst.len() &gt;= len);
+
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+    {
+        if is_x86_feature_detected!("sse4.1") {
+            return unsafe { hex_encode_sse41(src, dst) };
+        }
+    }
+
+    hex_encode_fallback(src, dst)
+}
+
+// translated from https://github.com/Matherunner/bin2hex-sse/blob/master/base16_sse4.cpp
+#[target_feature(enable = "sse4.1")]
+#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
+unsafe fn hex_encode_sse41(mut src: &amp;[u8], dst: &amp;mut [u8]) {
+    #[cfg(target_arch = "x86")]
+    use std::arch::x86::*;
+    #[cfg(target_arch = "x86_64")]
+    use std::arch::x86_64::*;
+
+    let ascii_zero = _mm_set1_epi8(b'0' as i8);
+    let nines = _mm_set1_epi8(9);
+    let ascii_a = _mm_set1_epi8((b'a' - 9 - 1) as i8);
+    let and4bits = _mm_set1_epi8(0xf);
+
+    let mut i = 0_isize;
+    while src.len() &gt;= 16 {
+        let invec = _mm_loadu_si128(src.as_ptr() as *const _);
+
+        let masked1 = _mm_and_si128(invec, and4bits);
+        let masked2 = _mm_and_si128(_mm_srli_epi64(invec, 4), and4bits);
+
+        // return 0xff corresponding to the elements &gt; 9, or 0x00 otherwise
+        let cmpmask1 = _mm_cmpgt_epi8(masked1, nines);
+        let cmpmask2 = _mm_cmpgt_epi8(masked2, nines);
+
+        // add '0' or the offset depending on the masks
+        let masked1 = _mm_add_epi8(
+            masked1,
+            _mm_blendv_epi8(ascii_zero, ascii_a, cmpmask1),
+        );
+        let masked2 = _mm_add_epi8(
+            masked2,
+            _mm_blendv_epi8(ascii_zero, ascii_a, cmpmask2),
+        );
+
+        // interleave masked1 and masked2 bytes
+        let res1 = _mm_unpacklo_epi8(masked2, masked1);
+        let res2 = _mm_unpackhi_epi8(masked2, masked1);
+
+        _mm_storeu_si128(dst.as_mut_ptr().offset(i * 2) as *mut _, res1);
+_mm_storeu_si128(dst.as_mut_ptr().offset(i * 2 + 16) as *mut _,
+res2);         src = &amp;src[16..];
+        i += 16;
+    }
+
+    let i = i as usize;
+    hex_encode_fallback(src, &amp;mut dst[i * 2..]);
+}
+
+fn hex_encode_fallback(src: &amp;[u8], dst: &amp;mut [u8]) {
+    fn hex(byte: u8) -&gt; u8 {
+        static TABLE: &amp;[u8] = b"0123456789abcdef";
+        TABLE[byte as usize]
+    }
+
+    for (byte, slots) in src.iter().zip(dst.chunks_mut(2)) {
+        slots[0] = hex((*byte &gt;&gt; 4) &amp; 0xf);
+        slots[1] = hex(*byte &amp; 0xf);
+    }
+}</pre> <h3 id="modules" class="section-header">Modules</h3> <table> <tr class=" module-item"> <td><a class="mod" href="x86/" title="mod std::arch::x86">x86</a></td> <td class="docblock-short"> [<div class="stab portability">x86</div>] <p>Platform-specific intrinsics for the <code>x86</code> platform.</p> </td> </tr> <tr class=" module-item"> <td><a class="mod" href="x86_64/" title="mod std::arch::x86_64">x86_64</a></td> <td class="docblock-short"> [<div class="stab portability">x86-64</div>] <p>Platform-specific intrinsics for the <code>x86_64</code> platform.</p> </td> </tr> <tr class="unstable module-item"> <td><a class="mod" href="aarch64/" title="mod std::arch::aarch64">aarch64</a></td> <td class="docblock-short"> [<div class="stab unstable">Experimental</div>] [<div class="stab portability">AArch64</div>] <p>Platform-specific intrinsics for the <code>aarch64</code> platform.</p> </td> </tr> <tr class="unstable module-item"> <td><a class="mod" href="arm/" title="mod std::arch::arm">arm</a></td> <td class="docblock-short"> [<div class="stab unstable">Experimental</div>] [<div class="stab portability">ARM</div>] <p>Platform-specific intrinsics for the <code>arm</code> platform.</p> </td> </tr> <tr class="unstable module-item"> <td><a class="mod" href="mips/" title="mod std::arch::mips">mips</a></td> <td class="docblock-short"> [<div class="stab unstable">Experimental</div>] [<div class="stab portability">MIPS</div>] <p>Platform-specific intrinsics for the <code>mips</code> platform.</p> </td> </tr> <tr class="unstable module-item"> <td><a class="mod" href="mips64/" title="mod std::arch::mips64">mips64</a></td> <td class="docblock-short"> [<div class="stab unstable">Experimental</div>] [<div class="stab portability">MIPS-64</div>] <p>Platform-specific intrinsics for the <code>mips64</code> platform.</p> </td> </tr> <tr class="unstable module-item"> <td><a class="mod" href="powerpc/" title="mod std::arch::powerpc">powerpc</a></td> <td class="docblock-short"> [<div class="stab unstable">Experimental</div>] [<div class="stab portability">PowerPC</div>] <p>Platform-specific intrinsics for the <code>powerpc</code> platform.</p> </td> </tr> <tr class="unstable module-item"> <td><a class="mod" href="powerpc64/" title="mod std::arch::powerpc64">powerpc64</a></td> <td class="docblock-short"> [<div class="stab unstable">Experimental</div>] [<div class="stab portability">PowerPC-64</div>] <p>Platform-specific intrinsics for the <code>powerpc64</code> platform.</p> </td> </tr>
+</table>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/arch/index.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/arch/index.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

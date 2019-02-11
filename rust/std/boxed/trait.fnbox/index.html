@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;boxed&#58;&#58;FnBox - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="FnBox is a version of the FnOnce intended for use with boxed closure objects. The idea is that where one would normally store a Box&#60;FnOnce()&#62 &hellip;">
+  <meta name="keywords" content="trait, std, boxed, fnbox, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/boxed/trait.fnbox/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::boxed::FnBox</h1>
+<pre class="rust trait" data-language="rust">pub trait FnBox&lt;A&gt; {
+    type Output;
+    fn call_box(self: Box&lt;Self&gt;, args: A) -&gt; Self::Output;
+}</pre>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fnbox #28796)will be deprecated if and when Box&lt;FnOnce&gt; becomes usable </span></div>
+<p><code>FnBox</code> is a version of the <code>FnOnce</code> intended for use with boxed closure objects. The idea is that where one would normally store a <code>Box&lt;FnOnce()&gt;</code> in a data structure, you should use <code>Box&lt;FnBox()&gt;</code>. The two traits behave essentially the same, except that a <code>FnBox</code> closure can only be called if it is boxed. (Note that <code>FnBox</code> may be deprecated in the future if <code>Box&lt;FnOnce()&gt;</code> closures become directly usable.)</p> <h2 id="examples" class="section-header">Examples</h2> <p>Here is a snippet of code which creates a hashmap full of boxed once closures and then removes them one by one, calling each closure as it is removed. Note that the type of the closures stored in the map is <code>Box&lt;FnBox() -&gt; i32&gt;</code> and not <code>Box&lt;FnOnce() -&gt; i32&gt;</code>.</p> <pre class="rust rust-example-rendered" data-language="rust">
+#![feature(fnbox)]
+
+use std::boxed::FnBox;
+use std::collections::HashMap;
+
+fn make_map() -&gt; HashMap&lt;i32, Box&lt;FnBox() -&gt; i32&gt;&gt; {
+    let mut map: HashMap&lt;i32, Box&lt;FnBox() -&gt; i32&gt;&gt; = HashMap::new();
+    map.insert(1, Box::new(|| 22));
+    map.insert(2, Box::new(|| 44));
+    map
+}
+
+fn main() {
+    let mut map = make_map();
+    for i in &amp;[1, 2] {
+        let f = map.remove(&amp;i).unwrap();
+        assert_eq!(f(), i * 22);
+    }
+}</pre>  <h2 id="associated-types" class="small-section-header"> Associated Types </h2> <div class="methods"> <h3 id="associatedtype.Output" class="method"><span id="Output.t" class="invisible"><code>type <a href="#associatedtype.Output" class="type">Output</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fnbox #28796)will be deprecated if and when Box&lt;FnOnce&gt; becomes usable </span></div>
+</div> <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <h3 id="tymethod.call_box" class="method"><span id="call_box.v" class="invisible"><code>fn <a href="#tymethod.call_box" class="fnname">call_box</a>(self: <a class="struct" href="../struct.box/" title="struct std::boxed::Box">Box</a>&lt;Self&gt;, args: A) -&gt; Self::<a class="type" href="../trait.fnbox/#associatedtype.Output" title="type std::boxed::FnBox::Output">Output</a></code></span></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fnbox #28796)will be deprecated if and when Box&lt;FnOnce&gt; becomes usable </span></div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-FnBox%3CA%3E" class="impl"><span class="in-band"><code>impl&lt;A, F&gt; FnBox&lt;A&gt; for F <span class="where fmt-newline">where<br>    F: <a class="trait" href="../../ops/trait.fnonce/" title="trait std::ops::FnOnce">FnOnce</a>&lt;A&gt;, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#640-648" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-1" class="type"><span id="Output.t-1" class="invisible"><code>type <a href="#associatedtype.Output-1" class="type">Output</a> = &lt;F as <a class="trait" href="../../ops/trait.fnonce/" title="trait std::ops::FnOnce">FnOnce</a>&lt;A&gt;&gt;::<a class="type" href="../../ops/trait.fnonce/#associatedtype.Output" title="type std::ops::FnOnce::Output">Output</a></code></span></h4> <div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fnbox #28796)will be deprecated if and when Box&lt;FnOnce&gt; becomes usable </span></div>
+<h4 id="method.call_box" class="method"><span id="call_box.v-1" class="invisible"><code>fn <a href="#method.call_box" class="fnname">call_box</a>(self: <a class="struct" href="../struct.box/" title="struct std::boxed::Box">Box</a>&lt;F&gt;, args: A) -&gt; &lt;F as <a class="trait" href="../../ops/trait.fnonce/" title="trait std::ops::FnOnce">FnOnce</a>&lt;A&gt;&gt;::<a class="type" href="../../ops/trait.fnonce/#associatedtype.Output" title="type std::ops::FnOnce::Output">Output</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#645-647" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (fnbox #28796)will be deprecated if and when Box&lt;FnOnce&gt; becomes usable </span></div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/boxed/trait.FnBox.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/boxed/trait.FnBox.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

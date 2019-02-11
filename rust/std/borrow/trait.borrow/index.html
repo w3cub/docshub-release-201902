@@ -1,0 +1,624 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;borrow&#58;&#58;Borrow - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" A trait for borrowing data. ">
+  <meta name="keywords" content="trait, std, borrow, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/borrow/trait.borrow/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 class="fqn">Trait std::borrow::Borrow</h1>
+<pre class="rust trait" data-language="rust">pub trait Borrow&lt;Borrowed&gt; where    Borrowed: ?Sized, {
+    fn borrow(&amp;self) -&gt; &amp;Borrowed;
+}</pre>
+<p>A trait for borrowing data.</p> <p>In Rust, it is common to provide different representations of a type for different use cases. For instance, storage location and management for a value can be specifically chosen as appropriate for a particular use via pointer types such as <a href="../../boxed/struct.box/"><code>Box&lt;T&gt;</code></a> or <a href="../../rc/struct.rc/"><code>Rc&lt;T&gt;</code></a>. Beyond these generic wrappers that can be used with any type, some types provide optional facets providing potentially costly functionality. An example for such a type is <a href="../../string/struct.string/"><code>String</code></a> which adds the ability to extend a string to the basic <a href="../../primitive.str/"><code>str</code></a>. This requires keeping additional information unnecessary for a simple, immutable string.</p> <p>These types provide access to the underlying data through references to the type of that data. They are said to be ‘borrowed as’ that type. For instance, a <a href="../../boxed/struct.box/"><code>Box&lt;T&gt;</code></a> can be borrowed as <code>T</code> while a <a href="../../string/struct.string/"><code>String</code></a> can be borrowed as <code>str</code>.</p> <p>Types express that they can be borrowed as some type <code>T</code> by implementing <code>Borrow&lt;T&gt;</code>, providing a reference to a <code>T</code> in the trait’s <a href="#tymethod.borrow"><code>borrow</code></a> method. A type is free to borrow as several different types. If it wishes to mutably borrow as the type – allowing the underlying data to be modified, it can additionally implement <a href="../trait.borrowmut/"><code>BorrowMut&lt;T&gt;</code></a>.</p> <p>Further, when providing implementations for additional traits, it needs to be considered whether they should behave identical to those of the underlying type as a consequence of acting as a representation of that underlying type. Generic code typically uses <code>Borrow&lt;T&gt;</code> when it relies on the identical behavior of these additional trait implementations. These traits will likely appear as additional trait bounds.</p> <p>If generic code merely needs to work for all types that can provide a reference to related type <code>T</code>, it is often better to use <a href="../../convert/trait.asref/"><code>AsRef&lt;T&gt;</code></a> as more types can safely implement it.</p> <h2 id="examples" class="section-header">Examples</h2> <p>As a data collection, <a href="../../collections/struct.hashmap/"><code>HashMap&lt;K, V&gt;</code></a> owns both keys and values. If the key’s actual data is wrapped in a managing type of some kind, it should, however, still be possible to search for a value using a reference to the key’s data. For instance, if the key is a string, then it is likely stored with the hash map as a <a href="../../string/struct.string/"><code>String</code></a>, while it should be possible to search using a <a href="../../primitive.str/"><code>&amp;str</code></a>. Thus, <code>insert</code> needs to operate on a <code>String</code> while <code>get</code> needs to be able to use a <code>&amp;str</code>.</p> <p>Slightly simplified, the relevant parts of <code>HashMap&lt;K, V&gt;</code> look like this:</p> <pre class="rust rust-example-rendered" data-language="rust">
+use std::borrow::Borrow;
+use std::hash::Hash;
+
+pub struct HashMap&lt;K, V&gt; {
+    // fields omitted
+}
+
+impl&lt;K, V&gt; HashMap&lt;K, V&gt; {
+    pub fn insert(&amp;self, key: K, value: V) -&gt; Option&lt;V&gt;
+    where K: Hash + Eq
+    {
+        // ...
+    }
+
+    pub fn get&lt;Q&gt;(&amp;self, k: &amp;Q) -&gt; Option&lt;&amp;V&gt;
+    where
+        K: Borrow&lt;Q&gt;,
+        Q: Hash + Eq + ?Sized
+    {
+        // ...
+    }
+}</pre> <p>The entire hash map is generic over a key type <code>K</code>. Because these keys are stored with the hash map, this type has to own the key’s data. When inserting a key-value pair, the map is given such a <code>K</code> and needs to find the correct hash bucket and check if the key is already present based on that <code>K</code>. It therefore requires <code>K: Hash + Eq</code>.</p> <p>When searching for a value in the map, however, having to provide a reference to a <code>K</code> as the key to search for would require to always create such an owned value. For string keys, this would mean a <code>String</code> value needs to be created just for the search for cases where only a <code>str</code> is available.</p> <p>Instead, the <code>get</code> method is generic over the type of the underlying key data, called <code>Q</code> in the method signature above. It states that <code>K</code> borrows as a <code>Q</code> by requiring that <code>K: Borrow&lt;Q&gt;</code>. By additionally requiring <code>Q: Hash + Eq</code>, it signals the requirement that <code>K</code> and <code>Q</code> have implementations of the <code>Hash</code> and <code>Eq</code> traits that produce identical results.</p> <p>The implementation of <code>get</code> relies in particular on identical implementations of <code>Hash</code> by determining the key’s hash bucket by calling <code>Hash::hash</code> on the <code>Q</code> value even though it inserted the key based on the hash value calculated from the <code>K</code> value.</p> <p>As a consequence, the hash map breaks if a <code>K</code> wrapping a <code>Q</code> value produces a different hash than <code>Q</code>. For instance, imagine you have a type that wraps a string but compares ASCII letters ignoring their case:</p> <pre class="rust rust-example-rendered" data-language="rust">
+pub struct CaseInsensitiveString(String);
+
+impl PartialEq for CaseInsensitiveString {
+    fn eq(&amp;self, other: &amp;Self) -&gt; bool {
+        self.0.eq_ignore_ascii_case(&amp;other.0)
+    }
+}
+
+impl Eq for CaseInsensitiveString { }</pre> <p>Because two equal values need to produce the same hash value, the implementation of <code>Hash</code> needs to ignore ASCII case, too:</p> <pre class="rust rust-example-rendered" data-language="rust">
+impl Hash for CaseInsensitiveString {
+    fn hash&lt;H: Hasher&gt;(&amp;self, state: &amp;mut H) {
+        for c in self.0.as_bytes() {
+            c.to_ascii_lowercase().hash(state)
+        }
+    }
+}</pre> <p>Can <code>CaseInsensitiveString</code> implement <code>Borrow&lt;str&gt;</code>? It certainly can provide a reference to a string slice via its contained owned string. But because its <code>Hash</code> implementation differs, it behaves differently from <code>str</code> and therefore must not, in fact, implement <code>Borrow&lt;str&gt;</code>. If it wants to allow others access to the underlying <code>str</code>, it can do that via <code>AsRef&lt;str&gt;</code> which doesn’t carry any extra requirements.</p>  <h2 id="required-methods" class="small-section-header"> Required Methods </h2> <div class="methods"> <div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+<h3 id="tymethod.borrow" class="method"><span id="borrow.v" class="invisible"><code>fn <a href="#tymethod.borrow" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>Borrowed</code></span></h3>
+<div class="docblock">
+<p>Immutably borrows from an owned value.</p> <h2 id="examples-1" class="section-header">Examples</h2> <pre class="rust rust-example-rendered" data-language="rust">
+use std::borrow::Borrow;
+
+fn check&lt;T: Borrow&lt;str&gt;&gt;(s: T) {
+    assert_eq!("Hello", s.borrow());
+}
+
+let s = "Hello".to_string();
+
+check(s);
+
+let s = "Hello";
+
+check(s);</pre> </div>
+</div>
+<h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Borrow%3Cstr%3E" class="impl"><span class="in-band"><code>impl Borrow&lt;<a class="primitive" href="../../primitive.str/">str</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/str.rs.html#196-201" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.borrow" class="method"><span id="borrow.v-1" class="invisible"><code>fn <a href="#method.borrow" class="fnname">borrow</a>(&amp;self) -&gt; &amp;<a class="primitive" href="../../primitive.str/">str</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/str.rs.html#198-200" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Borrow%3CCStr%3E" class="impl"><span class="in-band"><code>impl Borrow&lt;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a>&gt; for <a class="struct" href="../../ffi/struct.cstring/" title="struct std::ffi::CString">CString</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#689-692" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.borrow-1" class="method"><span id="borrow.v-2" class="invisible"><code>fn <a href="#method.borrow-1" class="fnname">borrow</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#691" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Borrow%3COsStr%3E" class="impl"><span class="in-band"><code>impl Borrow&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../ffi/struct.osstring/" title="struct std::ffi::OsString">OsString</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#876-878" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.borrow-2" class="method"><span id="borrow.v-3" class="invisible"><code>fn <a href="#method.borrow-2" class="fnname">borrow</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#877" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Borrow%3CPath%3E" class="impl"><span class="in-band"><code>impl Borrow&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../path/struct.pathbuf/" title="struct std::path::PathBuf">PathBuf</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1481-1485" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items"><h4 id="method.borrow-3" class="method"><span id="borrow.v-4" class="invisible"><code>fn <a href="#method.borrow-3" class="fnname">borrow</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1482-1484" title="goto source code" target="_blank">[src]</a></span></span></h4></div>
+<h3 id="impl-Borrow%3CB%3E" class="impl"><span class="in-band"><code>impl&lt;'a, B&gt; Borrow&lt;B&gt; for <a class="enum" href="../enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'a, B&gt; <span class="where fmt-newline">where<br>    B: <a class="trait" href="../trait.toowned/" title="trait std::borrow::ToOwned">ToOwned</a> + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>,<br>    &lt;B as <a class="trait" href="../trait.toowned/" title="trait std::borrow::ToOwned">ToOwned</a>&gt;::<a class="type" href="../trait.toowned/#associatedtype.Owned" title="type std::borrow::ToOwned::Owned">Owned</a>: 'a, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/borrow.rs.html#28-35" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-4" class="method"><span id="borrow.v-5" class="invisible"><code>fn <a href="#method.borrow-4" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>B</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/borrow.rs.html#32-34" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3CT%3E" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; Borrow&lt;T&gt; for <a class="primitive" href="../../primitive.reference/">&amp;'a </a>T <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#229-231" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-5" class="method"><span id="borrow.v-6" class="invisible"><code>fn <a href="#method.borrow-5" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#230" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3CT%3E-1" class="impl"><span class="in-band"><code>impl&lt;'a, T&gt; Borrow&lt;T&gt; for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>T <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#234-236" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-6" class="method"><span id="borrow.v-7" class="invisible"><code>fn <a href="#method.borrow-6" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#235" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 0]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-7" class="method"><span id="borrow.v-8" class="invisible"><code>fn <a href="#method.borrow-7" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-1" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 1]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-8" class="method"><span id="borrow.v-9" class="invisible"><code>fn <a href="#method.borrow-8" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-2" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 2]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-9" class="method"><span id="borrow.v-10" class="invisible"><code>fn <a href="#method.borrow-9" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-3" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 3]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-10" class="method"><span id="borrow.v-11" class="invisible"><code>fn <a href="#method.borrow-10" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-4" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 4]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-11" class="method"><span id="borrow.v-12" class="invisible"><code>fn <a href="#method.borrow-11" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-5" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 5]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-12" class="method"><span id="borrow.v-13" class="invisible"><code>fn <a href="#method.borrow-12" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-6" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 6]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-13" class="method"><span id="borrow.v-14" class="invisible"><code>fn <a href="#method.borrow-13" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-7" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 7]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-14" class="method"><span id="borrow.v-15" class="invisible"><code>fn <a href="#method.borrow-14" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-8" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 8]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-15" class="method"><span id="borrow.v-16" class="invisible"><code>fn <a href="#method.borrow-15" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-9" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 9]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-16" class="method"><span id="borrow.v-17" class="invisible"><code>fn <a href="#method.borrow-16" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-10" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 10]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-17" class="method"><span id="borrow.v-18" class="invisible"><code>fn <a href="#method.borrow-17" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-11" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 11]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-18" class="method"><span id="borrow.v-19" class="invisible"><code>fn <a href="#method.borrow-18" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-12" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 12]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-19" class="method"><span id="borrow.v-20" class="invisible"><code>fn <a href="#method.borrow-19" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-13" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 13]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-20" class="method"><span id="borrow.v-21" class="invisible"><code>fn <a href="#method.borrow-20" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-14" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 14]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-21" class="method"><span id="borrow.v-22" class="invisible"><code>fn <a href="#method.borrow-21" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-15" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 15]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-22" class="method"><span id="borrow.v-23" class="invisible"><code>fn <a href="#method.borrow-22" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-16" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 16]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-23" class="method"><span id="borrow.v-24" class="invisible"><code>fn <a href="#method.borrow-23" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-17" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 17]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-24" class="method"><span id="borrow.v-25" class="invisible"><code>fn <a href="#method.borrow-24" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-18" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 18]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-25" class="method"><span id="borrow.v-26" class="invisible"><code>fn <a href="#method.borrow-25" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-19" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 19]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-26" class="method"><span id="borrow.v-27" class="invisible"><code>fn <a href="#method.borrow-26" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-20" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 20]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-27" class="method"><span id="borrow.v-28" class="invisible"><code>fn <a href="#method.borrow-27" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-21" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 21]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-28" class="method"><span id="borrow.v-29" class="invisible"><code>fn <a href="#method.borrow-28" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-22" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 22]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-29" class="method"><span id="borrow.v-30" class="invisible"><code>fn <a href="#method.borrow-29" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-23" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 23]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-30" class="method"><span id="borrow.v-31" class="invisible"><code>fn <a href="#method.borrow-30" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-24" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 24]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-31" class="method"><span id="borrow.v-32" class="invisible"><code>fn <a href="#method.borrow-31" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-25" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 25]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-32" class="method"><span id="borrow.v-33" class="invisible"><code>fn <a href="#method.borrow-32" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-26" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 26]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-33" class="method"><span id="borrow.v-34" class="invisible"><code>fn <a href="#method.borrow-33" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-27" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 27]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-34" class="method"><span id="borrow.v-35" class="invisible"><code>fn <a href="#method.borrow-34" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-28" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 28]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-35" class="method"><span id="borrow.v-36" class="invisible"><code>fn <a href="#method.borrow-35" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-29" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 29]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-36" class="method"><span id="borrow.v-37" class="invisible"><code>fn <a href="#method.borrow-36" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-30" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 30]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-37" class="method"><span id="borrow.v-38" class="invisible"><code>fn <a href="#method.borrow-37" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-31" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 31]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-38" class="method"><span id="borrow.v-39" class="invisible"><code>fn <a href="#method.borrow-38" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-32" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 32]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#138-142" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-39" class="method"><span id="borrow.v-40" class="invisible"><code>fn <a href="#method.borrow-39" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#139-141" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3C%5BT%5D%3E-33" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/slice.rs.html#609-613" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-40" class="method"><span id="borrow.v-41" class="invisible"><code>fn <a href="#method.borrow-40" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/slice.rs.html#610-612" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'a [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'a&gt; Read for &amp;'a [u8]
+impl&lt;'a&gt; Write for &amp;'a mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3CT%3E-2" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;T&gt; for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#725-729" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-41" class="method"><span id="borrow.v-42" class="invisible"><code>fn <a href="#method.borrow-41" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#726-728" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3CT%3E-3" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;T&gt; for <a class="struct" href="../../rc/struct.rc/" title="struct std::rc::Rc">Rc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#1817-1821" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-42" class="method"><span id="borrow.v-43" class="invisible"><code>fn <a href="#method.borrow-42" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#1818-1820" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3CT%3E-4" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;T&gt; for <a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1932-1936" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-43" class="method"><span id="borrow.v-44" class="invisible"><code>fn <a href="#method.borrow-43" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1933-1935" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-Borrow%3CT%3E-5" class="impl"><span class="in-band"><code>impl&lt;T&gt; Borrow&lt;T&gt; for T <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#219-221" title="goto source code" target="_blank">[src]</a></span></span></h3>
+<div class="impl-items">
+<h4 id="method.borrow-44" class="method"><span id="borrow.v-45" class="invisible"><code>fn <a href="#method.borrow-44" class="fnname">borrow</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><span class="out-of-band">
+<a class="srclink" href="https://doc.rust-lang.org/src/core/borrow.rs.html#220" title="goto source code" target="_blank">[src]</a></span></span></h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'a mut </a>I<pre class="content">impl&lt;'a, I&gt; Iterator for &amp;'a mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'a, R: Read + ?Sized&gt; Read for &amp;'a mut R
+impl&lt;'a, W: Write + ?Sized&gt; Write for &amp;'a mut W
+</pre>
+</div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/borrow/trait.Borrow.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/borrow/trait.Borrow.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

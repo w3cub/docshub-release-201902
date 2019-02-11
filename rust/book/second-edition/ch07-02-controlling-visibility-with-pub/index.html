@@ -1,0 +1,196 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>7.2. Controlling Visibility With Pub - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="We resolved the error messages shown in Listing 7-5 by moving the network and network&#58;&#58;server code into the src&#47;network&#47;mod.rs and &hellip;">
+  <meta name="keywords" content="controlling, visibility, with, pub, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/book/second-edition/ch07-02-controlling-visibility-with-pub/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _rust">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="controlling-visibility-with-pub">Controlling Visibility with <code>pub</code>
+</h1> <p>We resolved the error messages shown in Listing 7-5 by moving the <code>network</code> and <code>network::server</code> code into the <em>src/network/mod.rs</em> and <em>src/network/server.rs</em> files, respectively. At that point, <code>cargo build</code> was able to build our project, but we still get warning messages saying that the <code>client::connect</code>, <code>network::connect</code>, and <code>network::server::connect</code> functions are not being used.</p> <p>So why are we receiving these warnings? After all, we’re building a library with functions that are intended to be used by our <em>users</em>, not necessarily by us within our own project, so it shouldn’t matter that these <code>connect</code> functions go unused. The point of creating them is that they will be used by another project, not our own.</p> <p>To understand why this program invokes these warnings, let’s try using the <code>communicator</code> library from another project, calling it externally. To do that, we’ll create a binary crate in the same directory as our library crate by making a <em>src/main.rs</em> file containing this code:</p> <p><span class="filename">Filename: src/main.rs</span></p> <pre data-language="rust">extern crate communicator;
+
+fn main() {
+    communicator::client::connect();
+}
+</pre> <p>We use the <code>extern crate</code> command to bring the <code>communicator</code> library crate into scope. Our package now contains <em>two</em> crates. Cargo treats <em>src/main.rs</em> as the root file of a binary crate, which is separate from the existing library crate whose root file is <em>src/lib.rs</em>. This pattern is quite common for executable projects: most functionality is in a library crate, and the binary crate uses that library crate. As a result, other programs can also use the library crate, and it’s a nice separation of concerns.</p> <p>From the point of view of a crate outside the <code>communicator</code> library looking in, all the modules we’ve been creating are within a module that has the same name as the crate, <code>communicator</code>. We call the top-level module of a crate the <em>root module</em>.</p> <p>Also note that even if we’re using an external crate within a submodule of our project, the <code>extern crate</code> should go in our root module (so in <em>src/main.rs</em> or <em>src/lib.rs</em>). Then, in our submodules, we can refer to items from external crates as if the items are top-level modules.</p> <p>Right now, our binary crate just calls our library’s <code>connect</code> function from the <code>client</code> module. However, invoking <code>cargo build</code> will now give us an error after the warnings:</p> <pre>error[E0603]: module `client` is private
+ --&gt; src/main.rs:4:5
+  |
+4 |     communicator::client::connect();
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</pre> <p>Ah ha! This error tells us that the <code>client</code> module is private, which is the crux of the warnings. It’s also the first time we’ve run into the concepts of <em>public</em> and <em>private</em> in the context of Rust. The default state of all code in Rust is private: no one else is allowed to use the code. If you don’t use a private function within your program, because your program is the only code allowed to use that function, Rust will warn you that the function has gone unused.</p> <p>After you specify that a function such as <code>client::connect</code> is public, not only will your call to that function from your binary crate be allowed, but also the warning that the function is unused will go away. Marking a function as public lets Rust know that the function will be used by code outside of your program. Rust considers the theoretical external usage that’s now possible as the function “being used.” Thus, when a function is marked public, Rust will not require that it be used in your program and will stop warning that the function is unused.</p> <h3 id="making-a-function-public">Making a Function Public</h3> <p>To tell Rust to make a function public, we add the <code>pub</code> keyword to the start of the declaration. We’ll focus on fixing the warning that indicates <code>client::connect</code> has gone unused for now, as well as the <code>module `client` is private</code> error from our binary crate. Modify <em>src/lib.rs</em> to make the <code>client</code> module public, like so:</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">pub mod client;
+
+mod network;
+</pre> <p>The <code>pub</code> keyword is placed right before <code>mod</code>. Let’s try building again:</p> <pre>error[E0603]: function `connect` is private
+ --&gt; src/main.rs:4:5
+  |
+4 |     communicator::client::connect();
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</pre> <p>Hooray! We have a different error! Yes, different error messages are a cause for celebration. The new error shows <code>function `connect` is private</code>, so let’s edit <em>src/client.rs</em> to make <code>client::connect</code> public too:</p> <p><span class="filename">Filename: src/client.rs</span></p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn connect() {
+}
+#}</pre> <p>Now run <code>cargo build</code> again:</p> <pre>warning: function is never used: `connect`
+ --&gt; src/network/mod.rs:1:1
+  |
+1 | / fn connect() {
+2 | | }
+  | |_^
+  |
+  = note: #[warn(dead_code)] on by default
+
+warning: function is never used: `connect`
+ --&gt; src/network/server.rs:1:1
+  |
+1 | / fn connect() {
+2 | | }
+  | |_^
+</pre> <p>The code compiled, and the warning that <code>client::connect</code> is not being used is gone!</p> <p>Unused code warnings don’t always indicate that an item in your code needs to be made public: if you <em>didn’t</em> want these functions to be part of your public API, unused code warnings could be alerting you to code you no longer need that you can safely delete. They could also be alerting you to a bug if you had just accidentally removed all places within your library where this function is called.</p> <p>But in this case, we <em>do</em> want the other two functions to be part of our crate’s public API, so let’s mark them as <code>pub</code> as well to get rid of the remaining warnings. Modify <em>src/network/mod.rs</em> to look like the following:</p> <p><span class="filename">Filename: src/network/mod.rs</span></p> <pre data-language="rust">pub fn connect() {
+}
+
+mod server;
+</pre> <p>Then compile the code:</p> <pre>warning: function is never used: `connect`
+ --&gt; src/network/mod.rs:1:1
+  |
+1 | / pub fn connect() {
+2 | | }
+  | |_^
+  |
+  = note: #[warn(dead_code)] on by default
+
+warning: function is never used: `connect`
+ --&gt; src/network/server.rs:1:1
+  |
+1 | / fn connect() {
+2 | | }
+  | |_^
+</pre> <p>Hmmm, we’re still getting an unused function warning, even though <code>network::connect</code> is set to <code>pub</code>. The reason is that the function is public within the module, but the <code>network</code> module that the function resides in is not public. We’re working from the interior of the library out this time, whereas with <code>client::connect</code> we worked from the outside in. We need to change <em>src/lib.rs</em> to make <code>network</code> public too, like so:</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">pub mod client;
+
+pub mod network;
+</pre> <p>Now when we compile, that warning is gone:</p> <pre>warning: function is never used: `connect`
+ --&gt; src/network/server.rs:1:1
+  |
+1 | / fn connect() {
+2 | | }
+  | |_^
+  |
+  = note: #[warn(dead_code)] on by default
+</pre> <p>Only one warning is left—try to fix this one on your own!</p> <h3 id="privacy-rules">Privacy Rules</h3> <p>Overall, these are the rules for item visibility:</p> <ul> <li>If an item is public, it can be accessed through any of its parent modules.</li> <li>If an item is private, it can be accessed only by its immediate parent module and any of the parent’s child modules.</li> </ul> <h3 id="privacy-examples">Privacy Examples</h3> <p>Let’s look at a few more privacy examples to get some practice. Create a new library project and enter the code in Listing 7-6 into your new project’s <em>src/lib.rs</em>.</p> <p><span class="filename">Filename: src/lib.rs</span></p> <pre data-language="rust">mod outermost {
+    pub fn middle_function() {}
+
+    fn middle_secret_function() {}
+
+    mod inside {
+        pub fn inner_function() {}
+
+        fn secret_function() {}
+    }
+}
+
+fn try_me() {
+    outermost::middle_function();
+    outermost::middle_secret_function();
+    outermost::inside::inner_function();
+    outermost::inside::secret_function();
+}
+</pre> <p><span class="caption">Listing 7-6: Examples of private and public functions, some of which are incorrect</span></p> <p>Before you try to compile this code, make a guess about which lines in the <code>try_me</code> function will have errors. Then, try compiling the code to see whether you were right—and read on for the discussion of the errors!</p> <h4 id="looking-at-the-errors">Looking at the Errors</h4> <p>The <code>try_me</code> function is in the root module of our project. The module named <code>outermost</code> is private, but the second privacy rule states that the <code>try_me</code> function is allowed to access the <code>outermost</code> module because <code>outermost</code> is in the current (root) module, as is <code>try_me</code>.</p> <p>The call to <code>outermost::middle_function</code> will work because <code>middle_function</code> is public and <code>try_me</code> is accessing <code>middle_function</code> through its parent module <code>outermost</code>. We already determined that this module is accessible.</p> <p>The call to <code>outermost::middle_secret_function</code> will cause a compilation error. Because <code>middle_secret_function</code> is private, the second rule applies. The root module is neither the current module of <code>middle_secret_function</code> (<code>outermost</code> is), nor is it a child module of the current module of <code>middle_secret_function</code>.</p> <p>The module named <code>inside</code> is private and has no child modules, so it can be accessed only by its current module <code>outermost</code>. That means the <code>try_me</code> function is not allowed to call <code>outermost::inside::inner_function</code> or <code>outermost::inside::secret_function</code>.</p> <h4 id="fixing-the-errors">Fixing the Errors</h4> <p>Here are some suggestions for changing the code in an attempt to fix the errors. Make a guess as to whether it will fix the errors before you try each one. Then compile the code to see whether or not you’re right, using the privacy rules to understand why. Feel free to design more experiments and try them out!</p> <ul> <li>What if the <code>inside</code> module were public?</li> <li>What if <code>outermost</code> were public and <code>inside</code> were private?</li> <li>What if, in the body of <code>inner_function</code>, you called <code>::outermost::middle_secret_function()</code>? (The two colons at the beginning mean that we want to refer to the modules starting from the root module.)</li> </ul> <p>Next, let’s talk about bringing items into scope with the <code>use</code> keyword.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/book/second-edition/ch07-02-controlling-visibility-with-pub.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/book/second-edition/ch07-02-controlling-visibility-with-pub.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
