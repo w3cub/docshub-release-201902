@@ -1,0 +1,144 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>CPackFreeBSD - CMake 3.12 - W3cubDocs</title>
+  
+  <meta name="description" content=" The built in (binary) CPack FreeBSD (pkg) generator (Unix only) ">
+  <meta name="keywords" content="cpackfreebsd, -, cmake, cmake~3.12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cmake~3.12/module/cpackfreebsd/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/cmake~3.12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cmake~3.12/" class="_nav-link" title="" style="margin-left:0;">CMake 3.12</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx_simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="module:CPackFreeBSD">CPackFreeBSD</h1> <p id="cpackfreebsd">The built in (binary) CPack FreeBSD (pkg) generator (Unix only)</p>  <h2 id="variables-specific-to-cpack-freebsd-pkg-generator">Variables specific to CPack FreeBSD (pkg) generator</h2> <p>CPackFreeBSD may be used to create pkg(8) packages – these may be used on FreeBSD, DragonflyBSD, NetBSD, OpenBSD, but also on Linux or OSX, depending on the installed package-management tools – using <a class="reference internal" href="../cpack/#module:CPack" title="CPack" id="index-0-module:CPack"><code>CPack</code></a>.</p> <p>CPackFreeBSD is a <a class="reference internal" href="../cpack/#module:CPack" title="CPack" id="index-1-module:CPack"><code>CPack</code></a> generator and uses the <code>CPACK_XXX</code> variables used by <a class="reference internal" href="../cpack/#module:CPack" title="CPack" id="index-2-module:CPack"><code>CPack</code></a>. It tries to re-use packaging information that may already be specified for Debian packages for the <a class="reference internal" href="../cpackdeb/#module:CPackDeb" title="CPackDeb" id="index-0-module:CPackDeb"><code>CPackDeb</code></a> generator. it also tries to re-use RPM packaging information when Debian does not specify.</p> <p>CPackFreeBSD generator should work on any host with libpkg installed. The packages it produces are specific to the host architecture and ABI.</p> <p>CPackFreeBSD sets package-metadata through <code>CPACK_FREEBSD_XXX</code> variables. CPackFreeBSD, unlike CPackDeb, does not specially support componentized packages; a single package is created from all the software artifacts created through CMake.</p> <p>All of the variables can be set specifically for FreeBSD packaging in the CPackConfig file or in CMakeLists.txt, but most of them have defaults that use general settings (e.g. CMAKE_PROJECT_NAME) or Debian-specific variables when those make sense (e.g. the homepage of an upstream project is usually unchanged by the flavor of packaging). When there is no Debian information to fall back on, but the RPM packaging has it, fall back to the RPM information (e.g. package license).</p> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_NAME">
+<code>CPACK_FREEBSD_PACKAGE_NAME</code> </dt> <dd>
+<p>Sets the package name (in the package manifest, but also affects the output filename).</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default:<ul> <li>
+<a class="reference internal" href="../cpack/#variable:CPACK_PACKAGE_NAME" title="CPACK_PACKAGE_NAME" id="index-0-variable:CPACK_PACKAGE_NAME"><code>CPACK_PACKAGE_NAME</code></a> (this is always set by CPack itself, based on CMAKE_PROJECT_NAME).</li> </ul> </li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_COMMENT">
+<code>CPACK_FREEBSD_PACKAGE_COMMENT</code> </dt> <dd>
+<p>Sets the package comment. This is the short description displayed by pkg(8) in standard “pkg info” output.</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default:<ul> <li>
+<a class="reference internal" href="../cpack/#variable:CPACK_PACKAGE_DESCRIPTION_SUMMARY" title="CPACK_PACKAGE_DESCRIPTION_SUMMARY" id="index-0-variable:CPACK_PACKAGE_DESCRIPTION_SUMMARY"><code>CPACK_PACKAGE_DESCRIPTION_SUMMARY</code></a> (this is always set by CPack itself, if nothing else sets it explicitly).</li> <li>
+<a class="reference internal" href="../../variable/project_description/#variable:PROJECT_DESCRIPTION" title="PROJECT_DESCRIPTION" id="index-0-variable:PROJECT_DESCRIPTION"><code>PROJECT_DESCRIPTION</code></a> (this can be set with the DESCRIPTION parameter for <a class="reference internal" href="../../command/project/#command:project" title="project" id="index-0-command:project"><code>project()</code></a>).</li> </ul> </li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_DESCRIPTION">
+<code>CPACK_FREEBSD_PACKAGE_DESCRIPTION</code> </dt> <dd>
+<p>Sets the package description. This is the long description of the package, given by “pkg info” with a specific package as argument.</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default:<ul> <li>
+<a class="reference internal" href="../cpackdeb/#variable:CPACK_DEBIAN_PACKAGE_DESCRIPTION" title="CPACK_DEBIAN_PACKAGE_DESCRIPTION" id="index-0-variable:CPACK_DEBIAN_PACKAGE_DESCRIPTION"><code>CPACK_DEBIAN_PACKAGE_DESCRIPTION</code></a> (this may be set already for Debian packaging, so we may as well re-use it).</li> </ul> </li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_WWW">
+<code>CPACK_FREEBSD_PACKAGE_WWW</code> </dt> <dd>
+<p>The URL of the web site for this package, preferably (when applicable) the site from which the original source can be obtained and any additional upstream documentation or information may be found.</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default:</li> </ul>  <ul class="simple"> <li>
+<a class="reference internal" href="../../variable/cmake_project_homepage_url/#variable:CMAKE_PROJECT_HOMEPAGE_URL" title="CMAKE_PROJECT_HOMEPAGE_URL" id="index-0-variable:CMAKE_PROJECT_HOMEPAGE_URL"><code>CMAKE_PROJECT_HOMEPAGE_URL</code></a>, or if that is not set, <a class="reference internal" href="../cpackdeb/#variable:CPACK_DEBIAN_PACKAGE_HOMEPAGE" title="CPACK_DEBIAN_PACKAGE_HOMEPAGE" id="index-0-variable:CPACK_DEBIAN_PACKAGE_HOMEPAGE"><code>CPACK_DEBIAN_PACKAGE_HOMEPAGE</code></a> (this may be set already for Debian packaging, so we may as well re-use it).</li> </ul>  </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_LICENSE">
+<code>CPACK_FREEBSD_PACKAGE_LICENSE</code> </dt> <dd>
+<p>The license, or licenses, which apply to this software package. This must be one or more license-identifiers that pkg recognizes as acceptable license identifiers (e.g. “GPLv2”).</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default:<ul> <li><a class="reference internal" href="../cpackrpm/#variable:CPACK_RPM_PACKAGE_LICENSE" title="CPACK_RPM_PACKAGE_LICENSE" id="index-0-variable:CPACK_RPM_PACKAGE_LICENSE"><code>CPACK_RPM_PACKAGE_LICENSE</code></a></li> </ul> </li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_LICENSE_LOGIC">
+<code>CPACK_FREEBSD_PACKAGE_LICENSE_LOGIC</code> </dt> <dd>
+<p>This variable is only of importance if there is more than one license. The default is “single”, which is only applicable to a single license. Other acceptable values are determined by pkg – those are “dual” or “multi” – meaning choice (OR) or simultaneous (AND) application of the licenses.</p> <ul class="simple"> <li>Mandatory: NO</li> <li>Default: single</li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_MAINTAINER">
+<code>CPACK_FREEBSD_PACKAGE_MAINTAINER</code> </dt> <dd>
+<p>The FreeBSD maintainer (e.g. <a class="reference external" href="../mailto:kde%40freebsd.org/">kde<span>@</span>freebsd<span>.</span>org</a>) of this package.</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default: none</li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_ORIGIN">
+<code>CPACK_FREEBSD_PACKAGE_ORIGIN</code> </dt> <dd>
+<p>The origin (ports label) of this package; for packages built by CPack outside of the ports system this is of less importance. The default puts the package somewhere under misc/, as a stopgap.</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default: misc/&lt;package name&gt;</li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_CATEGORIES">
+<code>CPACK_FREEBSD_PACKAGE_CATEGORIES</code> </dt> <dd>
+<p>The ports categories where this package lives (if it were to be built from ports). If none is set a single category is determined based on the package origin.</p> <ul class="simple"> <li>Mandatory: YES</li> <li>Default: derived from ORIGIN</li> </ul> </dd>
+</dl> <dl class="variable"> <dt id="variable:CPACK_FREEBSD_PACKAGE_DEPS">
+<code>CPACK_FREEBSD_PACKAGE_DEPS</code> </dt> <dd>
+<p>A list of package origins that should be added as package dependencies. These are in the form &lt;category&gt;/&lt;packagename&gt;, e.g. x11/libkonq. No version information needs to be provided (this is not included in the manifest).</p> <ul class="simple"> <li>Mandatory: NO</li> <li>Default: empty</li> </ul> </dd>
+</dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2000–2018 Kitware, Inc. and Contributors<br>Licensed under the BSD 3-clause License.<br>
+    <a href="https://cmake.org/cmake/help/v3.12/module/CPackFreeBSD.html" class="_attribution-link" target="_blank">https://cmake.org/cmake/help/v3.12/module/CPackFreeBSD.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

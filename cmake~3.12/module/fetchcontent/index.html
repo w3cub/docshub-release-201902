@@ -1,0 +1,242 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>FetchContent - CMake 3.12 - W3cubDocs</title>
+  
+  <meta name="description" content="This module enables populating content at configure time via any method supported by the ExternalProject module. Whereas ExternalProject_Add() &hellip;">
+  <meta name="keywords" content="fetchcontent, -, cmake, cmake~3.12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cmake~3.12/module/fetchcontent/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
+  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <script src="/json/cmake~3.12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cmake~3.12/" class="_nav-link" title="" style="margin-left:0;">CMake 3.12</a></span>
+  
+  <nav class="_nav">
+    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<div class="_page _sphinx_simple">
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档开头内嵌 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="8852552735"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+				
+<h1 id="module:FetchContent">FetchContent</h1>   <ul id="fetchcontent"> <li><a class="reference internal" href="#overview" id="id2">Overview</a></li> <li><a class="reference internal" href="#declaring-content-details" id="id3">Declaring Content Details</a></li> <li><a class="reference internal" href="#populating-the-content" id="id4">Populating The Content</a></li> <li><a class="reference internal" href="#retrieve-population-properties" id="id5">Retrieve Population Properties</a></li> <li><a class="reference internal" href="#examples" id="id6">Examples</a></li> </ul>
+   <h2 id="overview">Overview</h2> <p>This module enables populating content at configure time via any method supported by the <a class="reference internal" href="../externalproject/#module:ExternalProject" title="ExternalProject" id="index-0-module:ExternalProject"><code>ExternalProject</code></a> module. Whereas <a class="reference internal" href="../externalproject/#command:externalproject_add" title="externalproject_add" id="index-0-command:externalproject_add"><code>ExternalProject_Add()</code></a> downloads at build time, the <code>FetchContent</code> module makes content available immediately, allowing the configure step to use the content in commands like <a class="reference internal" href="../../command/add_subdirectory/#command:add_subdirectory" title="add_subdirectory" id="index-0-command:add_subdirectory"><code>add_subdirectory()</code></a>, <a class="reference internal" href="../../command/include/#command:include" title="include" id="index-0-command:include"><code>include()</code></a> or <a class="reference internal" href="../../command/file/#command:file" title="file" id="index-0-command:file"><code>file()</code></a> operations.</p> <p>Content population details would normally be defined separately from the command that performs the actual population. Projects should also check whether the content has already been populated somewhere else in the project hierarchy. Typical usage would look something like this:</p> <pre data-language="cmake">FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        release-1.8.0
+)
+
+FetchContent_GetProperties(googletest)
+if(NOT googletest_POPULATED)
+  FetchContent_Populate(googletest)
+  add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+endif()
+</pre> <p>When using the above pattern with a hierarchical project arrangement, projects at higher levels in the hierarchy are able to define or override the population details of content specified anywhere lower in the project hierarchy. The ability to detect whether content has already been populated ensures that even if multiple child projects want certain content to be available, the first one to populate it wins. The other child project can simply make use of the already available content instead of repeating the population for itself. See the <a class="reference internal" href="#fetch-content-examples"><span class="std std-ref">Examples</span></a> section which demonstrates this scenario.</p> <p>The <code>FetchContent</code> module also supports defining and populating content in a single call, with no check for whether the content has been populated elsewhere in the project already. This is a more low level operation and would not normally be the way the module is used, but it is sometimes useful as part of implementing some higher level feature or to populate some content in CMake’s script mode.</p>   <h2 id="declaring-content-details">Declaring Content Details</h2> <dl class="command"> <dt id="command:fetchcontent_declare">
+<code>FetchContent_Declare</code> </dt> <dd>
+<pre data-language="cmake">FetchContent_Declare(&lt;name&gt; &lt;contentOptions&gt;...)
+</pre> <p>The <code>FetchContent_Declare()</code> function records the options that describe how to populate the specified content, but if such details have already been recorded earlier in this project (regardless of where in the project hierarchy), this and all later calls for the same content <code>&lt;name&gt;</code> are ignored. This “first to record, wins” approach is what allows hierarchical projects to have parent projects override content details of child projects.</p> <p>The content <code>&lt;name&gt;</code> can be any string without spaces, but good practice would be to use only letters, numbers and underscores. The name will be treated case-insensitively and it should be obvious for the content it represents, often being the name of the child project or the value given to its top level <a class="reference internal" href="../../command/project/#command:project" title="project" id="index-0-command:project"><code>project()</code></a> command (if it is a CMake project). For well-known public projects, the name should generally be the official name of the project. Choosing an unusual name makes it unlikely that other projects needing that same content will use the same name, leading to the content being populated multiple times.</p> <p>The <code>&lt;contentOptions&gt;</code> can be any of the download or update/patch options that the <a class="reference internal" href="../externalproject/#command:externalproject_add" title="externalproject_add" id="index-1-command:externalproject_add"><code>ExternalProject_Add()</code></a> command understands. The configure, build, install and test steps are explicitly disabled and therefore options related to them will be ignored. In most cases, <code>&lt;contentOptions&gt;</code> will just be a couple of options defining the download method and method-specific details like a commit tag or archive hash. For example:</p> <pre data-language="cmake">FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        release-1.8.0
+)
+
+FetchContent_Declare(
+  myCompanyIcons
+  URL      https://intranet.mycompany.com/assets/iconset_1.12.tar.gz
+  URL_HASH 5588a7b18261c20068beabfb4f530b87
+)
+
+FetchContent_Declare(
+  myCompanyCertificates
+  SVN_REPOSITORY svn+ssh://svn.mycompany.com/srv/svn/trunk/certs
+  SVN_REVISION   -r12345
+)
+</pre> </dd>
+</dl>   <h2 id="populating-the-content">Populating The Content</h2> <dl class="command"> <dt id="command:fetchcontent_populate">
+<code>FetchContent_Populate</code> </dt> <dd>
+<pre data-language="cmake">FetchContent_Populate( &lt;name&gt; )
+</pre> <p>In most cases, the only argument given to <code>FetchContent_Populate()</code> is the <code>&lt;name&gt;</code>. When used this way, the command assumes the content details have been recorded by an earlier call to <a class="reference internal" href="#command:fetchcontent_declare" title="fetchcontent_declare" id="index-0-command:fetchcontent_declare"><code>FetchContent_Declare()</code></a>. The details are stored in a global property, so they are unaffected by things like variable or directory scope. Therefore, it doesn’t matter where in the project the details were previously declared, as long as they have been declared before the call to <code>FetchContent_Populate()</code>. Those saved details are then used to construct a call to <a class="reference internal" href="../externalproject/#command:externalproject_add" title="externalproject_add" id="index-2-command:externalproject_add"><code>ExternalProject_Add()</code></a> in a private sub-build to perform the content population immediately. The implementation of <code>ExternalProject_Add()</code> ensures that if the content has already been populated in a previous CMake run, that content will be reused rather than repopulating them again. For the common case where population involves downloading content, the cost of the download is only paid once.</p> <p>An internal global property records when a particular content population request has been processed. If <code>FetchContent_Populate()</code> is called more than once for the same content name within a configure run, the second call will halt with an error. Projects can and should check whether content population has already been processed with the <a class="reference internal" href="#command:fetchcontent_getproperties" title="fetchcontent_getproperties" id="index-0-command:fetchcontent_getproperties"><code>FetchContent_GetProperties()</code></a> command before calling <code>FetchContent_Populate()</code>.</p> <p><code>FetchContent_Populate()</code> will set three variables in the scope of the caller; <code>&lt;lcName&gt;_POPULATED</code>, <code>&lt;lcName&gt;_SOURCE_DIR</code> and <code>&lt;lcName&gt;_BINARY_DIR</code>, where <code>&lt;lcName&gt;</code> is the lowercased <code>&lt;name&gt;</code>. <code>&lt;lcName&gt;_POPULATED</code> will always be set to <code>True</code> by the call. <code>&lt;lcName&gt;_SOURCE_DIR</code> is the location where the content can be found upon return (it will have already been populated), while <code>&lt;lcName&gt;_BINARY_DIR</code> is a directory intended for use as a corresponding build directory. The main use case for the two directory variables is to call <a class="reference internal" href="../../command/add_subdirectory/#command:add_subdirectory" title="add_subdirectory" id="index-1-command:add_subdirectory"><code>add_subdirectory()</code></a> immediately after population, i.e.:</p> <pre data-language="cmake">FetchContent_Populate(FooBar ...)
+add_subdirectory(${foobar_SOURCE_DIR} ${foobar_BINARY_DIR})
+</pre> <p>The values of the three variables can also be retrieved from anywhere in the project hierarchy using the <a class="reference internal" href="#command:fetchcontent_getproperties" title="fetchcontent_getproperties" id="index-1-command:fetchcontent_getproperties"><code>FetchContent_GetProperties()</code></a> command.</p> <p>A number of cache variables influence the behavior of all content population performed using details saved from a <a class="reference internal" href="#command:fetchcontent_declare" title="fetchcontent_declare" id="index-1-command:fetchcontent_declare"><code>FetchContent_Declare()</code></a> call:</p> <dl class="docutils"> <dt>
+<code>FETCHCONTENT_BASE_DIR</code> </dt> <dd>In most cases, the saved details do not specify any options relating to the directories to use for the internal sub-build, final source and build areas. It is generally best to leave these decisions up to the <code>FetchContent</code> module to handle on the project’s behalf. The <code>FETCHCONTENT_BASE_DIR</code> cache variable controls the point under which all content population directories are collected, but in most cases developers would not need to change this. The default location is <code>${CMAKE_BINARY_DIR}/_deps</code>, but if developers change this value, they should aim to keep the path short and just below the top level of the build tree to avoid running into path length problems on Windows.</dd> <dt>
+<code>FETCHCONTENT_QUIET</code> </dt> <dd>The logging output during population can be quite verbose, making the configure stage quite noisy. This cache option (<code>ON</code> by default) hides all population output unless an error is encountered. If experiencing problems with hung downloads, temporarily switching this option off may help diagnose which content population is causing the issue.</dd> <dt>
+<code>FETCHCONTENT_FULLY_DISCONNECTED</code> </dt> <dd>When this option is enabled, no attempt is made to download or update any content. It is assumed that all content has already been populated in a previous run or the source directories have been pointed at existing contents the developer has provided manually (using options described further below). When the developer knows that no changes have been made to any content details, turning this option <code>ON</code> can significantly speed up the configure stage. It is <code>OFF</code> by default.</dd> <dt>
+<code>FETCHCONTENT_UPDATES_DISCONNECTED</code> </dt> <dd>This is a less severe download/update control compared to <code>FETCHCONTENT_FULLY_DISCONNECTED</code>. Instead of bypassing all download and update logic, the <code>FETCHCONTENT_UPDATES_DISCONNECTED</code> only disables the update stage. Therefore, if content has not been downloaded previously, it will still be downloaded when this option is enabled. This can speed up the configure stage, but not as much as <code>FETCHCONTENT_FULLY_DISCONNECTED</code>. It is <code>OFF</code> by default.</dd> </dl> <p>In addition to the above cache variables, the following cache variables are also defined for each content name (<code>&lt;ucName&gt;</code> is the uppercased value of <code>&lt;name&gt;</code>):</p> <dl class="docutils"> <dt>
+<code>FETCHCONTENT_SOURCE_DIR_&lt;ucName&gt;</code> </dt> <dd>If this is set, no download or update steps are performed for the specified content and the <code>&lt;lcName&gt;_SOURCE_DIR</code> variable returned to the caller is pointed at this location. This gives developers a way to have a separate checkout of the content that they can modify freely without interference from the build. The build simply uses that existing source, but it still defines <code>&lt;lcName&gt;_BINARY_DIR</code> to point inside its own build area. Developers are strongly encouraged to use this mechanism rather than editing the sources populated in the default location, as changes to sources in the default location can be lost when content population details are changed by the project.</dd> <dt>
+<code>FETCHCONTENT_UPDATES_DISCONNECTED_&lt;ucName&gt;</code> </dt> <dd>This is the per-content equivalent of <code>FETCHCONTENT_UPDATES_DISCONNECTED</code>. If the global option or this option is <code>ON</code>, then updates will be disabled for the named content. Disabling updates for individual content can be useful for content whose details rarely change, while still leaving other frequently changing content with updates enabled.</dd> </dl> <p>The <code>FetchContent_Populate()</code> command also supports a syntax allowing the content details to be specified directly rather than using any saved details. This is more low-level and use of this form is generally to be avoided in favour of using saved content details as outlined above. Nevertheless, in certain situations it can be useful to invoke the content population as an isolated operation (typically as part of implementing some other higher level feature or when using CMake in script mode):</p> <pre data-language="cmake">FetchContent_Populate( &lt;name&gt;
+  [QUIET]
+  [SUBBUILD_DIR &lt;subBuildDir&gt;]
+  [SOURCE_DIR &lt;srcDir&gt;]
+  [BINARY_DIR &lt;binDir&gt;]
+  ...
+)
+</pre> <p>This form has a number of key differences to that where only <code>&lt;name&gt;</code> is provided:</p> <ul class="simple"> <li>All required population details are assumed to have been provided directly in the call to <code>FetchContent_Populate()</code>. Any saved details for <code>&lt;name&gt;</code> are ignored.</li> <li>No check is made for whether content for <code>&lt;name&gt;</code> has already been populated.</li> <li>No global property is set to record that the population has occurred.</li> <li>No global properties record the source or binary directories used for the populated content.</li> <li>The <code>FETCHCONTENT_FULLY_DISCONNECTED</code> and <code>FETCHCONTENT_UPDATES_DISCONNECTED</code> cache variables are ignored.</li> </ul> <p>The <code>&lt;lcName&gt;_SOURCE_DIR</code> and <code>&lt;lcName&gt;_BINARY_DIR</code> variables are still returned to the caller, but since these locations are not stored as global properties when this form is used, they are only available to the calling scope and below rather than the entire project hierarchy. No <code>&lt;lcName&gt;_POPULATED</code> variable is set in the caller’s scope with this form.</p> <p>The supported options for <code>FetchContent_Populate()</code> are the same as those for <a class="reference internal" href="#command:fetchcontent_declare" title="fetchcontent_declare" id="index-2-command:fetchcontent_declare"><code>FetchContent_Declare()</code></a>. Those few options shown just above are either specific to <code>FetchContent_Populate()</code> or their behavior is slightly modified from how <a class="reference internal" href="../externalproject/#command:externalproject_add" title="externalproject_add" id="index-3-command:externalproject_add"><code>ExternalProject_Add()</code></a> treats them.</p> <dl class="docutils"> <dt>
+<code>QUIET</code> </dt> <dd>The <code>QUIET</code> option can be given to hide the output associated with populating the specified content. If the population fails, the output will be shown regardless of whether this option was given or not so that the cause of the failure can be diagnosed. The global <code>FETCHCONTENT_QUIET</code> cache variable has no effect on <code>FetchContent_Populate()</code> calls where the content details are provided directly.</dd> <dt>
+<code>SUBBUILD_DIR</code> </dt> <dd>The <code>SUBBUILD_DIR</code> argument can be provided to change the location of the sub-build created to perform the population. The default value is <code>${CMAKE_CURRENT_BINARY_DIR}/&lt;lcName&gt;-subbuild</code> and it would be unusual to need to override this default. If a relative path is specified, it will be interpreted as relative to <a class="reference internal" href="../../variable/cmake_current_binary_dir/#variable:CMAKE_CURRENT_BINARY_DIR" title="CMAKE_CURRENT_BINARY_DIR" id="index-0-variable:CMAKE_CURRENT_BINARY_DIR"><code>CMAKE_CURRENT_BINARY_DIR</code></a>.</dd> <dt>
+<code>SOURCE_DIR, BINARY_DIR</code> </dt> <dd>The <code>SOURCE_DIR</code> and <code>BINARY_DIR</code> arguments are supported by <a class="reference internal" href="../externalproject/#command:externalproject_add" title="externalproject_add" id="index-4-command:externalproject_add"><code>ExternalProject_Add()</code></a>, but different default values are used by <code>FetchContent_Populate()</code>. <code>SOURCE_DIR</code> defaults to <code>${CMAKE_CURRENT_BINARY_DIR}/&lt;lcName&gt;-src</code> and <code>BINARY_DIR</code> defaults to <code>${CMAKE_CURRENT_BINARY_DIR}/&lt;lcName&gt;-build</code>. If a relative path is specified, it will be interpreted as relative to <a class="reference internal" href="../../variable/cmake_current_binary_dir/#variable:CMAKE_CURRENT_BINARY_DIR" title="CMAKE_CURRENT_BINARY_DIR" id="index-1-variable:CMAKE_CURRENT_BINARY_DIR"><code>CMAKE_CURRENT_BINARY_DIR</code></a>.</dd> </dl> <p>In addition to the above explicit options, any other unrecognized options are passed through unmodified to <a class="reference internal" href="../externalproject/#command:externalproject_add" title="externalproject_add" id="index-5-command:externalproject_add"><code>ExternalProject_Add()</code></a> to perform the download, patch and update steps. The following options are explicitly prohibited (they are disabled by the <code>FetchContent_Populate()</code> command):</p> <ul class="simple"> <li><code>CONFIGURE_COMMAND</code></li> <li><code>BUILD_COMMAND</code></li> <li><code>INSTALL_COMMAND</code></li> <li><code>TEST_COMMAND</code></li> </ul> <p>If using <code>FetchContent_Populate()</code> within CMake’s script mode, be aware that the implementation sets up a sub-build which therefore requires a CMake generator and build tool to be available. If these cannot be found by default, then the <a class="reference internal" href="../../variable/cmake_generator/#variable:CMAKE_GENERATOR" title="CMAKE_GENERATOR" id="index-0-variable:CMAKE_GENERATOR"><code>CMAKE_GENERATOR</code></a> and/or <a class="reference internal" href="../../variable/cmake_make_program/#variable:CMAKE_MAKE_PROGRAM" title="CMAKE_MAKE_PROGRAM" id="index-0-variable:CMAKE_MAKE_PROGRAM"><code>CMAKE_MAKE_PROGRAM</code></a> variables will need to be set appropriately on the command line invoking the script.</p> </dd>
+</dl>   <h2 id="retrieve-population-properties">Retrieve Population Properties</h2> <dl class="command"> <dt id="command:fetchcontent_getproperties">
+<code>FetchContent_GetProperties</code> </dt> <dd>
+<p>When using saved content details, a call to <a class="reference internal" href="#command:fetchcontent_populate" title="fetchcontent_populate" id="index-0-command:fetchcontent_populate"><code>FetchContent_Populate()</code></a> records information in global properties which can be queried at any time. This information includes the source and binary directories associated with the content and also whether or not the content population has been processed during the current configure run.</p> <pre data-language="cmake">FetchContent_GetProperties( &lt;name&gt;
+  [SOURCE_DIR &lt;srcDirVar&gt;]
+  [BINARY_DIR &lt;binDirVar&gt;]
+  [POPULATED &lt;doneVar&gt;]
+)
+</pre> <p>The <code>SOURCE_DIR</code>, <code>BINARY_DIR</code> and <code>POPULATED</code> options can be used to specify which properties should be retrieved. Each option accepts a value which is the name of the variable in which to store that property. Most of the time though, only <code>&lt;name&gt;</code> is given, in which case the call will then set the same variables as a call to <a class="reference internal" href="#command:fetchcontent_populate" title="fetchcontent_populate" id="index-1-command:fetchcontent_populate"><code>FetchContent_Populate(name)</code></a>. This allows the following canonical pattern to be used, which ensures that the relevant variables will always be defined regardless of whether or not the population has been performed elsewhere in the project already:</p> <pre data-language="cmake">FetchContent_GetProperties(foobar)
+if(NOT foobar_POPULATED)
+  FetchContent_Populate(foobar)
+
+  # Set any custom variables, etc. here, then
+  # populate the content as part of this build
+
+  add_subdirectory(${foobar_SOURCE_DIR} ${foobar_BINARY_DIR})
+endif()
+</pre> <p>The above pattern allows other parts of the overall project hierarchy to re-use the same content and ensure that it is only populated once.</p> </dd>
+</dl>   <h2 id="fetch-content-examples">Examples</h2> <p id="examples">Consider a project hierarchy where <code>projA</code> is the top level project and it depends on projects <code>projB</code> and <code>projC</code>. Both <code>projB</code> and <code>projC</code> can be built standalone and they also both depend on another project <code>projD</code>. For simplicity, this example will assume that all four projects are available on a company git server. The <code>CMakeLists.txt</code> of each project might have sections like the following:</p> <p><em>projA</em>:</p> <pre data-language="cmake">include(FetchContent)
+FetchContent_Declare(
+  projB
+  GIT_REPOSITORY git@mycompany.com/git/projB.git
+  GIT_TAG        4a89dc7e24ff212a7b5167bef7ab079d
+)
+FetchContent_Declare(
+  projC
+  GIT_REPOSITORY git@mycompany.com/git/projC.git
+  GIT_TAG        4ad4016bd1d8d5412d135cf8ceea1bb9
+)
+FetchContent_Declare(
+  projD
+  GIT_REPOSITORY git@mycompany.com/git/projD.git
+  GIT_TAG        origin/integrationBranch
+)
+
+FetchContent_GetProperties(projB)
+if(NOT projb_POPULATED)
+  FetchContent_Populate(projB)
+  add_subdirectory(${projb_SOURCE_DIR} ${projb_BINARY_DIR})
+endif()
+
+FetchContent_GetProperties(projC)
+if(NOT projc_POPULATED)
+  FetchContent_Populate(projC)
+  add_subdirectory(${projc_SOURCE_DIR} ${projc_BINARY_DIR})
+endif()
+</pre> <p><em>projB</em>:</p> <pre data-language="cmake">include(FetchContent)
+FetchContent_Declare(
+  projD
+  GIT_REPOSITORY git@mycompany.com/git/projD.git
+  GIT_TAG        20b415f9034bbd2a2e8216e9a5c9e632
+)
+
+FetchContent_GetProperties(projD)
+if(NOT projd_POPULATED)
+  FetchContent_Populate(projD)
+  add_subdirectory(${projd_SOURCE_DIR} ${projd_BINARY_DIR})
+endif()
+</pre> <p><em>projC</em>:</p> <pre data-language="cmake">include(FetchContent)
+FetchContent_Declare(
+  projD
+  GIT_REPOSITORY git@mycompany.com/git/projD.git
+  GIT_TAG        7d9a17ad2c962aa13e2fbb8043fb6b8a
+)
+
+FetchContent_GetProperties(projD)
+if(NOT projd_POPULATED)
+  FetchContent_Populate(projD)
+  add_subdirectory(${projd_SOURCE_DIR} ${projd_BINARY_DIR})
+endif()
+</pre> <p>A few key points should be noted in the above:</p> <ul class="simple"> <li>
+<code>projB</code> and <code>projC</code> define different content details for <code>projD</code>, but <code>projA</code> also defines a set of content details for <code>projD</code> and because <code>projA</code> will define them first, the details from <code>projB</code> and <code>projC</code> will not be used. The override details defined by <code>projA</code> are not required to match either of those from <code>projB</code> or <code>projC</code>, but it is up to the higher level project to ensure that the details it does define still make sense for the child projects.</li> <li>While <code>projA</code> defined content details for <code>projD</code>, it did not need to explicitly call <code>FetchContent_Populate(projD)</code> itself. Instead, it leaves that to a child project to do (in this case it will be <code>projB</code> since it is added to the build ahead of <code>projC</code>). If <code>projA</code> needed to customize how the <code>projD</code> content was brought into the build as well (e.g. define some CMake variables before calling <a class="reference internal" href="../../command/add_subdirectory/#command:add_subdirectory" title="add_subdirectory" id="index-2-command:add_subdirectory"><code>add_subdirectory()</code></a> after populating), it would do the call to <code>FetchContent_Populate()</code>, etc. just as it did for the <code>projB</code> and <code>projC</code> content. For higher level projects, it is usually enough to just define the override content details and leave the actual population to the child projects. This saves repeating the same thing at each level of the project hierarchy unnecessarily.</li> <li>Even though <code>projA</code> is the top level project in this example, it still checks whether <code>projB</code> and <code>projC</code> have already been populated before going ahead to do those populations. This makes <code>projA</code> able to be more easily incorporated as a child of some other higher level project in the future if required. Always protect a call to <a class="reference internal" href="#command:fetchcontent_populate" title="fetchcontent_populate" id="index-2-command:fetchcontent_populate"><code>FetchContent_Populate()</code></a> with a check to <a class="reference internal" href="#command:fetchcontent_getproperties" title="fetchcontent_getproperties" id="index-2-command:fetchcontent_getproperties"><code>FetchContent_GetProperties()</code></a>, even in what may be considered a top level project at the time.</li> </ul> <p>The following example demonstrates how one might download and unpack a firmware tarball using CMake’s <a class="reference internal" href="../../manual/cmake.1/#manual:cmake(1)" title="cmake(1)" id="index-0-manual:cmake(1)"><code>script mode</code></a>. The call to <a class="reference internal" href="#command:fetchcontent_populate" title="fetchcontent_populate" id="index-3-command:fetchcontent_populate"><code>FetchContent_Populate()</code></a> specifies all the content details and the unpacked firmware will be placed in a <code>firmware</code> directory below the current working directory.</p> <p><em>getFirmware.cmake</em>:</p> <pre data-language="cmake"># NOTE: Intended to be run in script mode with cmake -P
+include(FetchContent)
+FetchContent_Populate(
+  firmware
+  URL        https://mycompany.com/assets/firmware-1.23-arm.tar.gz
+  URL_HASH   MD5=68247684da89b608d466253762b0ff11
+  SOURCE_DIR firmware
+)
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2000–2018 Kitware, Inc. and Contributors<br>Licensed under the BSD 3-clause License.<br>
+    <a href="https://cmake.org/cmake/help/v3.12/module/FetchContent.html" class="_attribution-link" target="_blank">https://cmake.org/cmake/help/v3.12/module/FetchContent.html</a>
+  </p>
+</div>
+
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 文档结尾内嵌 -->
+<ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-2572770204602497"
+    data-ad-slot="5446239318"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
