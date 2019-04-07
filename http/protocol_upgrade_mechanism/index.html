@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/http/" class="_nav-link" title="" style="margin-left:0;">HTTP</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Protocol upgrade mechanism</h1> <p>The <a href="https://developer.mozilla.org/en/HTTP" target="_blank">HTTP protocol</a> provides a special mechanism allowing an already established connection to upgrade to a new, incompatible, protocol. This guide covers how this works and offers examples of scenarios in which it's used.</p> <p>This mechanism is always client initiated (with one exception: it's possible for the server to <a href="#Server-initiated_upgrade_to_TLS">require an upgrade to TLS</a>), and the server may accept or refuse the switch to the new protocol. This makes it possible to start a connection using a commonly-used protocol, such as HTTP/1.1, then request that the connection switch to HTTP/2 or even to WebSockets.</p> <h2 id="Handshake">Handshake</h2> <p>Protocol upgrades are always requested by the client; there is no mechanism provided for the server to request a protocol change. When the client wishes to upgrade to a new protocol, it does so by sending a normal request of any type to the server (<a href="../methods/get/"><code>GET</code></a>, <a href="../methods/post/"><code>POST</code></a>, etc.). The request needs to be configured specially to include the upgrade request, however.</p> <p>In particular, the request <em>requires</em> these two additional headers:</p> <dl> <dt><code><a href="../headers/connection/">Connection: Upgrade</a></code></dt> <dd>The <code>Connection</code> header is set to <code>"Upgrade"</code> to indicate that an upgrade is requested.</dd> <dt><code><a href="../headers/upgrade/">Upgrade: <em>protocols</em></a></code></dt> <dd>The <code>Upgrade</code> header specifies one or more comma-separated protocol names, in order of preference.</dd> </dl> <p>Other headers may be required depending on the requested protocol; for example, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank">WebSocket</a> upgrades allow additional headers to configure details about the WebSocket connection as well as to offer a degree of security in opening the connection. See <a href="#Upgrading_to_a_WebSocket_connection">Upgrading to a WebSocket connection</a> for more details.</p> <p>The server may either refuse the upgrade — in this case it merely ignores the <code>"Upgrade"</code> header and sends back a regular response (<code>"200 OK"</code> if it can serve the requested resource, a <code>30x</code> status code if it wants to perform a redirect, a <code>40x</code> or <code>50x</code> one if it can't serve the requested resource) — or accept the upgrade. In this case, it sends back a <code>"101 Switching Protocols"</code> with an Upgrade header that specifies the protocol chosen.</p> <p>Right after sending the <code>101</code> status code, an eventual handshake for the new protocol happens, if the new protocol requires it, then the server sends the answer requested for the original request (the one that included the <code>"Upgrade"</code> header), following the new protocol rules.</p> <h2 id="The_101_status_code">The 101 status code</h2> <p>The <a href="../status/101/"><code>101</code></a> status code is sent as a response to a request including the <code>"Upgrade"</code> header to signal that the recipient of the request is willing to upgrade to one of the desired protocols. If the <code>"101 Switching Protocols"</code> status code is returned, the header must also include the <code>Connection</code> and <code>Upgrade</code> headers to describe the chosen protocol. See the examples in <a href="#Common_uses_for_this_mechanism">Common uses for this mechanism</a> to learn more about how this works.</p> <p>While you can use the protocol upgrade mechanism to upgrade an HTTP/1.1 connection to HTTP/2, you can't go the other way. In fact, the 101 status code is no longer supported at all in HTTP/2, since HTTP/2 doesn't have an upgrade mechanism.</p> <h2 id="Common_uses_for_this_mechanism">Common uses for this mechanism</h2> <p>Here we look at the most common use cases for the <code>Upgrade</code> header.</p> <h3 id="Upgrading_to_an_HTTP2_connection">Upgrading to an HTTP/2 connection</h3> <p>It's standard procedure to start a connection using HTTP/1.1, due to its broad support, then request an upgrade to HTTP/2. This way, you have a functioning connection still even if HTTP/2 isn't supported by the server. However, you can only upgrade to an insecure (cleartext) HTTP/2 connection. This is done using the target protocol name <code>h2c</code>, which stands for "HTTP/2 Cleartext". This also <em>requires</em> the specification of the <code>HTTP2-Settings</code> header field.</p> <pre>GET / HTTP/1.1
 Host: destination.server.ext
@@ -125,17 +125,9 @@ Connection: Upgrade
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

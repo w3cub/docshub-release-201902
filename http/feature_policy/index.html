@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/http/" class="_nav-link" title="" style="margin-left:0;">HTTP</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Feature Policy</h1>
 <div class="blockIndicator experimental indicator-warning"> <p> <strong>This is an <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental" target="_blank">experimental technology</a></strong><br>Check the <a href="#Browser_compatibility">Browser compatibility table</a> carefully before using this in production.</p> </div> <p class="summary">Feature Policy allows web developers to selectively enable, disable, and modify the behavior of certain features and APIs in the browser. It is similar to <a href="https://developer.mozilla.org/en-US/docs/Glossary/CSP" target="_blank">Content Security Policy</a> but controls features instead of security behavior.</p> <h2 id="In_a_nutshell">In a nutshell</h2> <p>Feature Policy provides a mechanism to explicitly declare what functionality is used (or not used), throughout your website. This allows you to lock in best practices, even as the codebase evolves over time — as well as to more safely compose third-party content — by limiting which features are available.</p> <p>With Feature Policy, you opt-in to a set of "policies" for the browser to enforce on specific features used throughout a website. These policies restrict what APIs the site can access or modify the browser's default behavior for certain features.</p> <p>Examples of what you can do with Feature Policy:</p> <ul> <li>Change the default behavior of autoplay on mobile and third party videos.</li> <li>Restrict a site from using sensitive APIs like camera or microphone.</li> <li>Allow iframes to use the fullscreen API.</li> <li>Block the use of outdated APIs like <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest" target="_blank">synchronous XHR</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/write" target="_blank"><code>document.write()</code></a>.</li> <li>Ensure images are sized properly and are not too big for the viewport.</li> </ul> <h2 id="Concepts_and_usage">Concepts and usage</h2> <p>Feature Policy allows you to control which origins can use which features, both in the top-level page and in embedded frames. Essentially, you write a policy, which is an allowed list of origins for each feature. For every feature controlled by Feature Policy, the feature is only enabled in the current document or frame if its origin matches the allowed list of origins.</p> <p>For each policy-controlled feature, the browser maintains a list of origins for which the feature is enabled, known as an allowlist. If you do not specify a policy for a feature, then a default allowlist will be used. The default allowlist is specific to each feature.</p> <h3 id="Writing_a_policy">Writing a policy</h3> <p>A policy is described using a set of individual policy directives. A policy directive is a combination of a defined feature name, and an allowlist of origins that can use the feature.</p> <h3 id="Specifying_your_policy">Specifying your policy</h3> <p>Feature Policy provides two ways to specify policies to control features:</p> <ul> <li>The <a href="../headers/feature-policy/"><code>Feature-Policy</code></a> HTTP header.</li> <li>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#Attributes" target="_blank"><code>allow</code></a> attribute on iframes.</li> </ul> <p>The primary difference between the HTTP header and the <code>allow</code> attribute is that the allow attribute only controls features within an iframe. The header controls features in the response and any embedded content within the page.</p> <p>For more details see <a href="../feature_policy/using_feature_policy/">Using Feature Policy</a>.</p> <h2 id="Types_of_policy-controlled_features">Types of policy-controlled features</h2> <p>Though Feature Policy provides control of multiple features using a consistent syntax, the behavior of policy controlled features varies and depends on several factors.</p> <p>The general principle is that there should be an intuitive or non-breaking way for web developers to detect or handle the case when the feature is disabled. Newly introduced features may have an explicit API to signal the state. Existing features that later integrate with Feature Policy will typically use existing mechanisms. Some approaches include:</p> <ul> <li>Return "permission denied" for JavaScript APIs that require user permission grants.</li> <li>Return <code>false</code> or error from an existing JavaScript API that provides access to feature.</li> <li>Change the default values or options that control the feature behavior.</li> </ul> <p>The current set of policy-controlled features fall into two broad categories:</p> <ul> <li>Enforcing best practices for good user experiences.</li> <li>Providing granular control over sensitive or powerful features.</li> </ul> <h3 id="Best_practices_for_good_user_experiences">Best practices for good user experiences</h3> <p>There are several policy-controlled features to help enforce best practices for providing good performance and user experiences.</p> <p>In most cases, the policy-controlled features represent functionality that when used will negatively impact the user experience. To avoid breaking existing web content, the default for such policy-controlled features is to allow the functionality to be used by all origins. Best practices are then enforced by using policies that disable the policy-controlled features. For more details see "Enforcing best practices for good user experiences".</p> <p>The features include:</p> <ul> <li>Layout-inducing animations</li> <li>Legacy image formats</li> <li>Oversized images</li> <li>Synchronous scripts</li> <li>Synchronous XMLHTTPRequest</li> <li>Unoptimized images</li> <li>Unsized media</li> </ul> <h3 id="Granular_control_over_certain_features">Granular control over certain features</h3> <p>The web provides functionality and APIs that may have privacy or security risks if abused. In some cases, you may wish to strictly limit how such functionality is used on a website. There are policy-controlled features to allow functionality to be enabled/disabled for specific origins or frames within a website. Where available, the feature integrates with the Permissions API, or feature-specific mechanisms to check if the feature is available.</p> <p>The features include:</p> <ul> <li>Accelerometer</li> <li>Ambient light sensor</li> <li>Autoplay</li> <li>Camera</li> <li>Encrypted media</li> <li>Fullscreen</li> <li>Geolocation</li> <li>Gyroscope</li> <li>Lazyload</li> <li>Microphone</li> <li>Midi</li> <li>PaymentRequest</li> <li>Picture-in-picture</li> <li>Speaker</li> <li>USB</li> <li>VR / XR</li> </ul> <h2 id="Examples">Examples</h2> <ul> <li>See <a href="http://feature-policy-demos.appspot.com/" target="_blank">Feature Policy Demos</a> for example usage of many policies.</li> </ul> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://wicg.github.io/feature-policy/#feature-policy-http-header-field" hreflang="en" target="_blank">Feature Policy<br><small>The definition of 'Feature-Policy' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td>Initial definition. Defines the <a href="../headers/feature-policy/"><code>Feature-Policy</code></a> header. Directives are defined in the specs for the features they control. See individual directive pages for details.</td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
@@ -904,17 +904,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
