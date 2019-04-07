@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/redis/" class="_nav-link" title="" style="margin-left:0;">Redis</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _redis">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="command">XCLAIM</h1>
 <pre>XCLAIM key group consumer min-idle-time ID [ID ...] [IDLE ms] [TIME ms-unix-time] [RETRYCOUNT count] [FORCE] [JUSTID]</pre>   <div class="metadata"> <p><strong>Available since 5.0.0.</strong></p> <p><strong>Time complexity:</strong> O(log N) with N being the number of messages in the PEL of the consumer group.</p> </div> <p>In the context of a stream consumer group, this command changes the ownership of a pending message, so that the new owner is the consumer specified as the command argument. Normally this is what happens:</p> <ol> <li>There is a stream with an associated consumer group.</li> <li>Some consumer A reads a message via <a href="../xreadgroup/">XREADGROUP</a> from a stream, in the context of that consumer group.</li> <li>As a side effect a pending message entry is created in the pending entries list (PEL) of the consumer group: it means the message was delivered to a given consumer, but it was not yet acknowledged via <a href="../xack/">XACK</a>.</li> <li>Then suddenly that consumer fails forever.</li> <li>Other consumers may inspect the list of pending messages, that are stale for quite some time, using the <a href="../xpending/">XPENDING</a> command. In order to continue processing such messages, they use <a href="../xclaim/">XCLAIM</a> to acquire the ownership of the message and continue.</li> </ol> <p>This dynamic is clearly explained in the <a href="https://redis.io/topics/streams-intro" target="_blank">Stream intro documentation</a>.</p> <p>Note that the message is claimed only if its idle time is greater the minimum idle time we specify when calling <a href="../xclaim/">XCLAIM</a>. Because as a side effect <a href="../xclaim/">XCLAIM</a> will also reset the idle time (since this is a new attempt at processing the message), two consumers trying to claim a message at the same time will never both succeed: only one will successfully claim the message. This avoids that we process a given message multiple times in a trivial way (yet multiple processing is possible and unavoidable in the general case).</p> <p>Moreover, as a side effect, <a href="../xclaim/">XCLAIM</a> will increment the count of attempted deliveries of the message. In this way messages that cannot be processed for some reason, for instance because the consumers crash attempting to process them, will start to have a larger counter and can be detected inside the system.</p> <h2>Command options</h2> <p>The command has multiple options, however most are mainly for internal use in order to transfer the effects of <a href="../xclaim/">XCLAIM</a> or other commands to the AOF file and to propagate the same effects to the slaves, and are unlikely to be useful to normal users:</p> <ol> <li>
@@ -95,17 +95,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
