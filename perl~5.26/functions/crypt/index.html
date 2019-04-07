@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/perl~5.26/" class="_nav-link" title="" style="margin-left:0;">Perl 5.26</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _perl">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>crypt</h1>   <h2 id="crypt-PLAINTEXT%2cSALT">crypt PLAINTEXT,SALT</h2>  <p>Creates a digest string exactly like the crypt(3) function in the C library (assuming that you actually have a version there that has not been extirpated as a potential munition).</p> <p>crypt() is a one-way hash function. The PLAINTEXT and SALT are turned into a short string, called a digest, which is returned. The same PLAINTEXT and SALT will always return the same string, but there is no (known) way to get the original PLAINTEXT from the hash. Small changes in the PLAINTEXT or SALT will result in large changes in the digest.</p> <p>There is no decrypt function. This function isn't all that useful for cryptography (for that, look for <i>Crypt</i> modules on your nearby CPAN mirror) and the name "crypt" is a bit of a misnomer. Instead it is primarily used to check if two pieces of text are the same without having to transmit or store the text itself. An example is checking if a correct password is given. The digest of the password is stored, not the password itself. The user types in a password that is crypt()'d with the same salt as the stored digest. If the two digests match, the password is correct.</p> <p>When verifying an existing digest string you should use the digest as the salt (like <code class="inline"><a class="l_k" href="../crypt/">crypt</a><span class="s">(</span><span class="i">$plain</span><span class="cm">,</span> <span class="i">$digest</span><span class="s">)</span> eq <span class="i">$digest</span></code> ). The SALT used to create the digest is visible as part of the digest. This ensures crypt() will hash the new string with the same salt as the digest. This allows your code to work with the standard <a href="../crypt/">crypt</a> and with more exotic implementations. In other words, assume nothing about the returned string itself nor about how many bytes of SALT may matter.</p> <p>Traditionally the result is a string of 13 bytes: two first bytes of the salt, followed by 11 bytes from the set <code class="inline">[./0-9A-Za-z]</code>, and only the first eight bytes of PLAINTEXT mattered. But alternative hashing schemes (like MD5), higher level security schemes (like C2), and implementations on non-Unix platforms may produce different strings.</p> <p>When choosing a new salt create a random two character string whose characters come from the set <code class="inline">[./0-9A-Za-z]</code> (like <code class="inline"><a class="l_k" href="../join/">join</a> <span class="q">''</span><span class="cm">,</span> <span class="s">(</span><span class="q">'.'</span><span class="cm">,</span>
 <span class="q">'/'</span><span class="cm">,</span> <span class="n">0</span>..<span class="n">9</span><span class="cm">,</span> <span class="q">'A'</span>..<span class="q">'Z'</span><span class="cm">,</span> <span class="q">'a'</span>..<span class="q">'z'</span><span class="s">)</span>[<a class="l_k" href="../rand/">rand</a> <span class="n">64</span><span class="cm">,</span> <a class="l_k" href="../rand/">rand</a> <span class="n">64</span>]</code> ). This set of characters is just a recommendation; the characters allowed in the salt depend solely on your system's crypt library, and Perl can't restrict what salts <code class="inline"><a class="l_k" href="../crypt/">crypt()</a></code> accepts.</p> <p>Here's an example that makes sure that whoever runs this program knows their password:</p> <pre class="verbatim" data-language="perl">$pwd = (getpwuid($&lt;))[1];
@@ -100,17 +100,9 @@ if (crypt($word, $pwd) ne $pwd) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

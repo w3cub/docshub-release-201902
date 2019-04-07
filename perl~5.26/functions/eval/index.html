@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/perl~5.26/" class="_nav-link" title="" style="margin-left:0;">Perl 5.26</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _perl">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>eval</h1>   <h2 id="eval-EXPR">eval EXPR</h2>   <h2 id="eval-BLOCK">eval BLOCK</h2> <h2 id="eval">eval</h2> <p>In the first form, often referred to as a "string eval", the return value of EXPR is parsed and executed as if it were a little Perl program. The value of the expression (which is itself determined within scalar context) is first parsed, and if there were no errors, executed as a block within the lexical context of the current Perl program. This means, that in particular, any outer lexical variables are visible to it, and any package variable settings or subroutine and format definitions remain afterwards.</p> <p>Note that the value is parsed every time the <code class="inline"><a class="l_k" href="../eval/">eval</a></code> executes. If EXPR is omitted, evaluates <code class="inline"><span class="i">$_</span></code> . This form is typically used to delay parsing and subsequent execution of the text of EXPR until run time.</p> <p>If the <code class="inline"><span class="w">unicode_eval</span></code> feature is enabled (which is the default under a <code class="inline"><a class="l_k" href="../use/">use</a> <span class="n">5.16</span></code> or higher declaration), EXPR or <code class="inline"><span class="i">$_</span></code> is treated as a string of characters, so <code class="inline"><a class="l_k" href="../use/">use</a> <span class="w">utf8</span></code> declarations have no effect, and source filters are forbidden. In the absence of the <code class="inline"><span class="w">unicode_eval</span></code> feature, the string will sometimes be treated as characters and sometimes as bytes, depending on the internal encoding, and source filters activated within the <code class="inline"><a class="l_k" href="../eval/">eval</a></code> exhibit the erratic, but historical, behaviour of affecting some outer file scope that is still compiling. See also the <a href="../evalbytes/">evalbytes</a> keyword, which always treats its input as a byte stream and works properly with source filters, and the <a href="../../feature/">feature</a> pragma.</p> <p>Problems can arise if the string expands a scalar containing a floating point number. That scalar can expand to letters, such as <code class="inline"><span class="q">"NaN"</span></code> or <code class="inline"><span class="q">"Infinity"</span></code> ; or, within the scope of a <code class="inline"><a class="l_k" href="../use/">use</a> <span class="w">locale</span></code> , the decimal point character may be something other than a dot (such as a comma). None of these are likely to parse as you are likely expecting.</p> <p>In the second form, the code within the BLOCK is parsed only once--at the same time the code surrounding the <code class="inline"><a class="l_k" href="../eval/">eval</a></code> itself was parsed--and executed within the context of the current Perl program. This form is typically used to trap exceptions more efficiently than the first (see below), while also providing the benefit of checking the code within BLOCK at compile time.</p> <p>The final semicolon, if any, may be omitted from the value of EXPR or within the BLOCK.</p> <p>In both forms, the value returned is the value of the last expression evaluated inside the mini-program; a return statement may be also used, just as with subroutines. The expression providing the return value is evaluated in void, scalar, or list context, depending on the context of the <code class="inline"><a class="l_k" href="../eval/">eval</a></code> itself. See <a href="../wantarray/">wantarray</a> for more on how the evaluation context can be determined.</p> <p>If there is a syntax error or runtime error, or a <code class="inline"><a class="l_k" href="../die/">die</a></code> statement is executed, <code class="inline"><a class="l_k" href="../eval/">eval</a></code> returns <code class="inline"><a class="l_k" href="../undef/">undef</a></code> in scalar context or an empty list in list context, and <code class="inline"><span class="i">$@</span></code> is set to the error message. (Prior to 5.16, a bug caused <code class="inline"><a class="l_k" href="../undef/">undef</a></code> to be returned in list context for syntax errors, but not for runtime errors.) If there was no error, <code class="inline"><span class="i">$@</span></code> is set to the empty string. A control flow operator like <code class="inline"><a class="l_k" href="../last/">last</a></code> or <code class="inline"><a class="l_k" href="../goto/">goto</a></code> can bypass the setting of <code class="inline"><span class="i">$@</span></code> . Beware that using <code class="inline"><a class="l_k" href="../eval/">eval</a></code> neither silences Perl from printing warnings to STDERR, nor does it stuff the text of warning messages into <code class="inline"><span class="i">$@</span></code> . To do either of those, you have to use the <code class="inline"><span class="i">$SIG</span>{<span class="w">__WARN__</span>}</code> facility, or turn off warnings inside the BLOCK or EXPR using <code class="inline"><a class="l_k" href="../no/">no</a> <span class="w">warnings</span> <span class="q">'all'</span></code> . See <a href="../warn/">warn</a>, <a href="../../perlvar/">perlvar</a>, and <a href="../../warnings/">warnings</a>.</p> <p>Note that, because <code class="inline"><a class="l_k" href="../eval/">eval</a></code> traps otherwise-fatal errors, it is useful for determining whether a particular feature (such as <code class="inline"><a class="l_k" href="../socket/">socket</a></code> or <code class="inline"><a class="l_k" href="../symlink/">symlink</a></code>) is implemented. It is also Perl's exception-trapping mechanism, where the die operator is used to raise exceptions.</p> <p>If you want to trap errors when loading an XS module, some problems with the binary interface (such as Perl version skew) may be fatal even with <code class="inline"><a class="l_k" href="../eval/">eval</a></code> unless <code class="inline"><span class="i">$ENV</span>{<span class="w">PERL_DL_NONLAZY</span>}</code> is set. See <a href="../../perlrun/">perlrun</a>.</p> <p>If the code to be executed doesn't vary, you may use the eval-BLOCK form to trap run-time errors without incurring the penalty of recompiling each time. The error, if any, is still returned in <code class="inline"><span class="i">$@</span></code> . Examples:</p> <pre class="verbatim" data-language="perl"># make divide-by-zero nonfatal
 eval { $answer = $a / $b; }; warn $@ if $@;
@@ -130,17 +130,9 @@ $$x++;          # CASE 6
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
