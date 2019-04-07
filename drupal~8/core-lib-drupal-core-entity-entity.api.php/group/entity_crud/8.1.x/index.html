@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/drupal~8/" class="_nav-link" title="" style="margin-left:0;">Drupal 8</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _drupal">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="page-subtitle">Entity CRUD, editing, and view hooks</h1>      <p>Hooks used in various entity operations.</p> <p>Entity create, read, update, and delete (CRUD) operations are performed by entity storage classes; see the <a href="../../entity_api/8.1.x/" title="Describes how to define and manipulate content and configuration entities." class="local">Entity API topic</a> for more information. Most entities use or extend the default classes: <a href="../../../../core-lib-drupal-core-entity-sql-sqlcontententitystorage.php/class/sqlcontententitystorage/8.1.x/" title="A content entity database storage implementation." class="local">\Drupal\Core\Entity\Sql\SqlContentEntityStorage</a> for content entities, and <a href="../../../../core-lib-drupal-core-config-entity-configentitystorage.php/class/configentitystorage/8.1.x/" title="Defines the storage class for configuration entities." class="local">\Drupal\Core\Config\Entity\ConfigEntityStorage</a> for configuration entities. For these entities, there is a set of hooks that is invoked for each CRUD operation, which module developers can implement to affect these operations; these hooks are actually invoked from methods on <a href="../../../../core-lib-drupal-core-entity-entitystoragebase.php/class/entitystoragebase/8.1.x/" title="A base entity storage class." class="local">\Drupal\Core\Entity\EntityStorageBase</a>.</p> <p>For content entities, viewing and rendering are handled by a view builder class; see the <a href="../../entity_api/8.1.x/" title="Describes how to define and manipulate content and configuration entities." class="local">Entity API topic</a> for more information. Most view builders extend or use the default class <a href="../../../../core-lib-drupal-core-entity-entityviewbuilder.php/class/entityviewbuilder/8.1.x/" title="Base class for entity view builders." class="local">\Drupal\Core\Entity\EntityViewBuilder</a>.</p> <p>Entity editing (including adding new entities) is handled by entity form classes; see the <a href="../../entity_api/8.1.x/" title="Describes how to define and manipulate content and configuration entities." class="local">Entity API topic</a> for more information. Most entity editing forms extend base classes <a href="../../../../core-lib-drupal-core-entity-entityform.php/class/entityform/8.1.x/" title="Base class for entity forms." class="local">\Drupal\Core\Entity\EntityForm</a> or <a href="../../../../core-lib-drupal-core-entity-contententityform.php/class/contententityform/8.1.x/" title="Entity form variant for content entity types." class="local">\Drupal\Core\Entity\ContentEntityForm</a>. Note that many other operations, such as confirming deletion of entities, also use entity form classes.</p> <p>This topic lists all of the entity CRUD and view operations, and the hooks and other operations that are invoked (in order) for each operation. Some notes:</p> <ul> <li>Whenever an entity hook is invoked, there is both a type-specific entity hook, and a generic entity hook. For instance, during a create operation on a node, first hook_node_create() and then <a href="../../../function/hook_entity_create/8.1.x/" title="Acts when creating a new entity." class="local">hook_entity_create</a>() would be invoked.</li> <li>The entity-type-specific hooks are represented in the list below as hook_ENTITY_TYPE_... (<a href="../../../function/hook_entity_type_create/8.1.x/" title="Acts when creating a new entity of a specific type." class="local">hook_ENTITY_TYPE_create</a>() in this example). To implement one of these hooks for an entity whose machine name is "foo", define a function called mymodule_foo_create(), for instance. Also note that the entity or array of entities that are passed into a specific-type hook are of the specific entity class, not the generic Entity class, so in your implementation, you can make the $entity argument something like $node and give it a specific type hint (which should normally be to the specific interface, such as \Drupal\Node\NodeInterface for nodes).</li> <li>$storage in the code examples is assumed to be an entity storage class. See the <a href="../../entity_api/8.1.x/" title="Describes how to define and manipulate content and configuration entities." class="local">Entity API topic</a> for information on how to instantiate the correct storage class for an entity type.</li> <li>$view_builder in the code examples is assumed to be an entity view builder class. See the <a href="../../entity_api/8.1.x/" title="Describes how to define and manipulate content and configuration entities." class="local">Entity API topic</a> for information on how to instantiate the correct view builder class for an entity type.</li> <li>During many operations, static methods are called on the entity class, which implements \Drupal\Entity\EntityInterface.</li> </ul> <h3 id="create">Create operations</h3> <p>To create an entity:</p> <pre class="php" data-language="php">$entity = $storage-&gt;create();
 
@@ -147,17 +147,9 @@ $build = $view_builder-&gt;view($entity, 'view_mode_name', $language-&gt;getId()
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

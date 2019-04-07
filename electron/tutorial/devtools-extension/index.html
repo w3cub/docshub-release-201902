@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="devtools-extension">DevTools Extension</h1> <p>Electron supports the <a href="https://developer.chrome.com/extensions/devtools" target="_blank">Chrome DevTools Extension</a>, which can be used to extend the ability of devtools for debugging popular web frameworks.</p>   <h2 id="how-to-load-a-devtools-extension">How to load a DevTools Extension</h2> <p>This document outlines the process for manually loading an extension. You may also try <a href="https://github.com/GPMDP/electron-devtools-installer" target="_blank">electron-devtools-installer</a>, a third-party tool that downloads extensions directly from the Chrome WebStore.</p> <p>To load an extension in Electron, you need to download it in Chrome browser, locate its filesystem path, and then load it by calling the <code>BrowserWindow.addDevToolsExtension(extension)</code> API.</p> <p>Using the <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank">React Developer Tools</a> as example:</p> <ol> <li>Install it in Chrome browser.</li> <li>Navigate to <code>chrome://extensions</code>, and find its extension ID, which is a hash string like <code>fmkadmapgofadopljbjfkapdkoienihi</code>.</li> <li> <p>Find out filesystem location used by Chrome for storing extensions:</p> <ul> <li>on Windows it is <code>%LOCALAPPDATA%\Google\Chrome\User Data\Default\Extensions</code>;</li> <li> <p>on Linux it could be:</p> <ul> <li><code>~/.config/google-chrome/Default/Extensions/</code></li> <li><code>~/.config/google-chrome-beta/Default/Extensions/</code></li> <li><code>~/.config/google-chrome-canary/Default/Extensions/</code></li> <li><code>~/.config/chromium/Default/Extensions/</code></li> </ul> </li> <li>on macOS it is <code>~/Library/Application Support/Google/Chrome/Default/Extensions</code>.</li> </ul> </li> <li>Pass the location of the extension to <code>BrowserWindow.addDevToolsExtension</code> API, for the React Developer Tools, it is something like: <code>~/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.0_0</code>
 </li> </ol> <p><strong>Note:</strong> The <code>BrowserWindow.addDevToolsExtension</code> API cannot be called before the ready event of the app module is emitted.</p> <p>The name of the extension is returned by <code>BrowserWindow.addDevToolsExtension</code>, and you can pass the name of the extension to the <code>BrowserWindow.removeDevToolsExtension</code> API to unload it.</p>   <h2 id="supported-devtools-extensions">Supported DevTools Extensions</h2> <p>Electron only supports a limited set of <code>chrome.*</code> APIs, so some extensions using unsupported <code>chrome.*</code> APIs for chrome extension features may not work. Following Devtools Extensions are tested and guaranteed to work in Electron:</p> <ul> <li><a href="https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi" target="_blank">Ember Inspector</a></li> <li><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank">React Developer Tools</a></li> <li><a href="https://chrome.google.com/webstore/detail/backbone-debugger/bhljhndlimiafopmmhjlgfpnnchjjbhd" target="_blank">Backbone Debugger</a></li> <li><a href="https://chrome.google.com/webstore/detail/jquery-debugger/dbhhnnnpaeobfddmlalhnehgclcmjimi" target="_blank">jQuery Debugger</a></li> <li><a href="https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk" target="_blank">AngularJS Batarang</a></li> <li><a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd" target="_blank">Vue.js devtools</a></li> <li><a href="https://cerebraljs.com/docs/introduction/debugger.html" target="_blank">Cerebral Debugger</a></li> <li><a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd" target="_blank">Redux DevTools Extension</a></li> <li><a href="https://chrome.google.com/webstore/detail/mobx-developer-tools/pfgnfdagidkfgccljigdamigbcnndkod" target="_blank">MobX Developer Tools</a></li> </ul>   <h3 id="what-should-i-do-if-a-devtools-extension-is-not-working">What should I do if a DevTools Extension is not working?</h3> <p>First please make sure the extension is still being maintained, some extensions can not even work for recent versions of Chrome browser, and we are not able to do anything for them.</p> <p>Then file a bug at Electron's issues list, and describe which part of the extension is not working as expected.</p>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
