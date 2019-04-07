@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/homebrew/" class="_nav-link" title="" style="margin-left:0;">Homebrew</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="external-commands">External Commands</h1> <p>Homebrew, like Git, supports <em>external commands</em>. This lets you create new commands that can be run like:</p> <pre data-language="sh">brew mycommand --option1 --option3 &lt;formula&gt;</pre> <p>without modifying Homebrew’s internals.</p> <h2 id="command-types">Command types</h2> <p>External commands come in two flavours: Ruby commands and shell scripts.</p> <p>In both cases, the command file should be executable (<code class="highlighter-rouge">chmod +x</code>) and live somewhere in <code class="highlighter-rouge">PATH</code>.</p> <h3 id="ruby-commands">Ruby commands</h3> <p>An external command <code class="highlighter-rouge">extcmd</code> implemented as a Ruby command should be named <code class="highlighter-rouge">brew-extcmd.rb</code>. The command is executed by doing a <code class="highlighter-rouge">require</code> on the full pathname. As the command is <code class="highlighter-rouge">require</code>d, it has full access to the Homebrew “environment”, i.e. all global variables and modules that any internal command has access to. Be wary of using Homebrew internals; they may change at any time without warning.</p> <p>The command may <code class="highlighter-rouge">Kernel.exit</code> with a status code if it needs to; if it doesn’t explicitly exit then Homebrew will return <code class="highlighter-rouge">0</code>.</p> <h3 id="shell-scripts">Shell scripts</h3> <p>A shell script for a command named <code class="highlighter-rouge">extcmd</code> should be named <code class="highlighter-rouge">brew-extcmd</code>. This file will be run via <code class="highlighter-rouge">exec</code> with some Homebrew variables set as environment variables, and passed any additional command-line arguments.</p> <table> <thead> <tr> <th>Variable</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code class="highlighter-rouge">HOMEBREW_CACHE</code></td> <td>Where Homebrew caches downloaded tarballs to, by default <code class="highlighter-rouge">~/Library/Caches/Homebrew</code>.</td> </tr> <tr> <td><code class="highlighter-rouge">HOMEBREW_CELLAR</code></td> <td>The location of the Homebrew Cellar, where software is staged. This will be <code class="highlighter-rouge">HOMEBREW_PREFIX/Cellar</code> if that directory exists, or <code class="highlighter-rouge">HOMEBREW_REPOSITORY/Cellar</code> otherwise.</td> </tr> <tr> <td><code class="highlighter-rouge">HOMEBREW_LIBRARY_PATH</code></td> <td>The directory containing Homebrew’s own application code.</td> </tr> <tr> <td><code class="highlighter-rouge">HOMEBREW_PREFIX</code></td> <td>Where Homebrew installs software. This is always the grandparent directory of the <code class="highlighter-rouge">brew</code> executable, <code class="highlighter-rouge">/usr/local</code> by default.</td> </tr> <tr> <td><code class="highlighter-rouge">HOMEBREW_REPOSITORY</code></td> <td>If installed from a Git clone, the repository directory (i.e. where Homebrew’s <code class="highlighter-rouge">.git</code> directory lives).</td> </tr> </tbody> </table> <p>Note that the script itself can use any suitable shebang (<code class="highlighter-rouge">#!</code>) line, so an external “shell script” can be written for sh, bash, Ruby, or anything else.</p> <h2 id="providing---help">Providing <code class="highlighter-rouge">--help</code>
 </h2> <p>All internal and external Homebrew commands can provide styled <code class="highlighter-rouge">--help</code> output by using lines starting with <code class="highlighter-rouge">#:</code> (a comment then <code class="highlighter-rouge">:</code> character in both Bash and Ruby) which are then output by <code class="highlighter-rouge">--help</code>.</p> <p>For example, see the <a href="https://github.com/Homebrew/homebrew-services/blob/a58a1fe9145de4e50e1cbfb5b0e8a30087826393/cmd/brew-services.rb#L1-L23" target="_blank">header of <code class="highlighter-rouge">brew-services.rb</code></a> which is output with <code class="highlighter-rouge">brew services --help</code>.</p> <h2 id="homebrew-organisation-external-commands">Homebrew organisation external commands</h2> <h3 id="homebrew-livecheck">homebrew-livecheck</h3> <p>Check if there is a new upstream version of a formula. See the <a href="https://github.com/Homebrew/homebrew-livecheck/blob/master/README.md" target="_blank"><code class="highlighter-rouge">README</code></a> for more info and usage.</p> <p>Install using:</p> <pre data-language="sh">brew tap homebrew/livecheck</pre> <h3 id="homebrew-command-not-found">homebrew-command-not-found</h3> <p>Ubuntu’s <code class="highlighter-rouge">command-not-found equivalent</code> for Homebrew. See the <a href="https://github.com/Homebrew/homebrew-command-not-found/blob/master/README.md" target="_blank"><code class="highlighter-rouge">README</code></a> for more info and usage.</p> <p>Install using:</p> <pre data-language="sh">brew tap homebrew/command-not-found</pre> <h3 id="homebrew-aliases">homebrew-aliases</h3> <p>Allows you to alias your Homebrew commands. See the <a href="https://github.com/Homebrew/homebrew-aliases/blob/master/README.md" target="_blank"><code class="highlighter-rouge">README</code></a> for more info and usage.</p> <p>Install using:</p> <pre data-language="sh">brew tap homebrew/aliases</pre> <h2 id="unofficial-external-commands">Unofficial external commands</h2> <p>These commands have been contributed by Homebrew users but are not included in the main Homebrew organisation, nor are they installed by the installer script. You can install them manually, as outlined above.</p> <p>Note they are largely untested, and as always, be careful about running untested code on your machine.</p> <h3 id="brew-gem">brew-gem</h3> <p>Install any <code class="highlighter-rouge">gem</code> package into a self-contained Homebrew Cellar location: <a href="https://github.com/sportngin/brew-gem" target="_blank">https://github.com/sportngin/brew-gem</a></p> <p>Note this can also be installed with <code class="highlighter-rouge">brew install brew-gem</code>.</p>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

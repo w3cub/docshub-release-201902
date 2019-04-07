@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/homebrew/" class="_nav-link" title="" style="margin-left:0;">Homebrew</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="faq">FAQ</h1> <h2 id="how-do-i-update-my-local-packages">How do I update my local packages?</h2> <p>First update the formulae and Homebrew itself:</p> <pre>brew update</pre> <p>You can now find out what is outdated with:</p> <pre>brew outdated</pre> <p>Upgrade everything with:</p> <pre>brew upgrade</pre> <p>Or upgrade a specific formula with:</p> <pre>brew upgrade &lt;formula&gt;</pre> <h2 id="how-do-i-stop-certain-formulae-from-being-updated">How do I stop certain formulae from being updated?</h2> <p>To stop something from being updated/upgraded:</p> <pre>brew pin &lt;formula&gt;</pre> <p>To allow that formulae to update again:</p> <pre>brew unpin &lt;formula&gt;</pre> <p>Note that pinned, outdated formulae that another formula depends on need to be upgraded when required as we do not allow formulae to be built against non-latest versions.</p> <h2 id="how-do-i-uninstall-old-versions-of-a-formula">How do I uninstall old versions of a formula?</h2> <p>By default, Homebrew does not uninstall old versions of a formula, so over time you will accumulate old versions. To remove them, simply use:</p> <pre>brew cleanup &lt;formula&gt;</pre> <p>or clean up everything at once:</p> <pre>brew cleanup</pre> <p>or to see what would be cleaned up:</p> <pre>brew cleanup -n</pre> <h2 id="how-do-i-uninstall-homebrew">How do I uninstall Homebrew?</h2> <p>To uninstall Homebrew, paste the command below in a terminal prompt.</p> <pre data-language="sh">ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"</pre> <p>Download the <a href="https://raw.githubusercontent.com/Homebrew/install/master/uninstall" target="_blank">uninstall script</a> and run <code class="highlighter-rouge">./uninstall --help</code> to view more uninstall options.</p> <h2 id="how-do-i-uninstall-a-formula">How do I uninstall a formula?</h2> <p>If you do not uninstall all of the versions that Homebrew has installed, Homebrew will continue to attempt to install the newest version it knows about when you run <code class="highlighter-rouge">brew upgrade</code>. This can be surprising.</p> <p>To remove a formula entirely, you may run <code class="highlighter-rouge">brew uninstall --force &lt;formula&gt;</code>.</p> <p>Be careful as this is a destructive operation.</p> <h2 id="where-does-stuff-get-downloaded">Where does stuff get downloaded?</h2> <pre>brew --cache</pre> <p>Which is usually: <code class="highlighter-rouge">~/Library/Caches/Homebrew</code></p> <h2 id="my-mac-apps-dont-find-usrlocalbin-utilities">My Mac <code class="highlighter-rouge">.app</code>s don’t find <code class="highlighter-rouge">/usr/local/bin</code> utilities!</h2> <p>GUI apps on macOS don’t have <code class="highlighter-rouge">/usr/local/bin</code> in their <code class="highlighter-rouge">PATH</code> by default. If you’re on Mountain Lion or later, you can fix this by running <code class="highlighter-rouge">sudo launchctl config user path "/usr/local/bin:$PATH"</code> and then rebooting, as documented in <code class="highlighter-rouge">man launchctl</code>. Note that this sets the launchctl PATH for <em>all users</em>. For earlier versions of macOS, see <a href="https://developer.apple.com/legacy/library/qa/qa1067/_index.html" target="_blank">this page</a>.</p> <h2 id="how-do-i-contribute-to-homebrew">How do I contribute to Homebrew?</h2> <p>Read our <a href="https://github.com/Homebrew/brew/blob/master/CONTRIBUTING.md#contributing-to-homebrew" target="_blank">contribution guidelines</a>.</p> <h2 id="why-do-you-compile-everything">Why do you compile everything?</h2> <p>Homebrew provides pre-compiled versions for many formulae. These pre-compiled versions are referred to as <a href="../bottles/">bottles</a> and are available at <a href="https://bintray.com/homebrew/bottles" target="_blank">https://bintray.com/homebrew/bottles</a>.</p> <p>If available, bottled binaries will be used by default except under the following conditions:</p> <ul> <li>Options were passed to the install command, i.e. <code class="highlighter-rouge">brew install &lt;formula&gt;</code> will use a bottled version of the formula, but <code class="highlighter-rouge">brew install --enable-bar &lt;formula&gt;</code> will trigger a source build.</li> <li>The <code class="highlighter-rouge">--build-from-source</code> option is invoked.</li> <li>The environment variable <code class="highlighter-rouge">HOMEBREW_BUILD_FROM_SOURCE</code> is set (intended for developers only).</li> <li>The machine is not running a supported version of macOS as all bottled builds are generated only for supported macOS versions.</li> <li>Homebrew is installed to a prefix other than the standard <code class="highlighter-rouge">/usr/local</code> (although some bottles support this).</li> </ul> <p>We aim to bottle everything.</p> <h2 id="how-do-i-get-a-formula-from-someone-elses-branch">How do I get a formula from someone else’s branch?</h2> <pre data-language="sh">brew install hub
 brew update
@@ -100,17 +100,9 @@ Linking /usr/local/Cellar/foo/0.1… 17 symlinks created</pre> <h2 id="why-was-a
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

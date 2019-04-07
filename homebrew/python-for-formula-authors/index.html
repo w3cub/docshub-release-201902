@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/homebrew/" class="_nav-link" title="" style="margin-left:0;">Homebrew</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="python-for-formula-authors">Python for Formula Authors</h1> <p>This document explains how to successfully use Python in a Homebrew formula.</p> <p>Homebrew draws a distinction between Python <strong>applications</strong> and Python <strong>libraries</strong>. The difference is that users generally do not care that applications are written in Python; it is unusual that a user would expect to be able to <code class="highlighter-rouge">import foo</code> after installing an application. Examples of applications are <a href="https://github.com/Homebrew/homebrew-core/blob/master/Formula/ansible.rb" target="_blank"><code class="highlighter-rouge">ansible</code></a> and <a href="https://github.com/Homebrew/homebrew-core/blob/master/Formula/jrnl.rb" target="_blank"><code class="highlighter-rouge">jrnl</code></a>.</p> <p>Python libraries exist to be imported by other Python modules; they are often dependencies of Python applications. They are usually no more than incidentally useful in a terminal. Examples of libraries are <a href="https://github.com/Homebrew/homebrew-core/blob/master/Formula/py2cairo.rb" target="_blank"><code class="highlighter-rouge">py2cairo</code></a> and the bindings that are installed by <a href="https://github.com/Homebrew/homebrew-core/blob/master/Formula/protobuf.rb" target="_blank"><code class="highlighter-rouge">protobuf --with-python</code></a>.</p> <p>Bindings are a special case of libraries that allow Python code to interact with a library or application implemented in another language.</p> <p>Homebrew is happy to accept applications that are built in Python, whether the apps are available from PyPI or not. Homebrew generally won’t accept libraries that can be installed correctly with <code class="highlighter-rouge">pip install foo</code>. Bindings may be installed for packages that provide them, especially if equivalent functionality isn’t available through pip.</p> <p>Applications should unconditionally bundle all of their Python-language dependencies and libraries and should install any unsatisfied dependencies; these strategies are discussed in depth in the following sections.</p> <h2 id="applications">Applications</h2> <h3 id="python-declarations">Python declarations</h3> <p>Formulae for apps that require Python 3 <strong>should</strong> declare an unconditional dependency on <code class="highlighter-rouge">"python"</code>. These apps <strong>must</strong> work with the current Homebrew Python 3.x formula.</p> <p>Applications that are compatible with Python 2 <strong>should</strong> use the Apple-provided system Python in <code class="highlighter-rouge">/usr/bin</code> on systems that provide Python 2.7. To do this, declare:</p> <pre data-language="ruby">depends_on "python@2" if MacOS.version &lt;= :snow_leopard</pre> <p>No explicit Python dependency is needed on recent OS versions since <code class="highlighter-rouge">/usr/bin</code> is always in <code class="highlighter-rouge">PATH</code> for Homebrew formulae; on Leopard and older, the <code class="highlighter-rouge">python</code> in <code class="highlighter-rouge">PATH</code> is used if it’s at least version 2.7, or else Homebrew’s Python 2.7.x is installed.</p> <h3 id="installing">Installing</h3> <p>Applications should be installed into a Python <a href="https://virtualenv.pypa.io/en/stable/" target="_blank">virtualenv</a> environment rooted in <code class="highlighter-rouge">libexec</code>. This prevents the app’s Python modules from contaminating the system site-packages and vice versa.</p> <p>All of the Python module dependencies of the application (and their dependencies, recursively) should be declared as <code class="highlighter-rouge">resource</code>s in the formula and installed into the virtualenv, as well. Each dependency should be explicitly specified; please do not rely on <code class="highlighter-rouge">setup.py</code> or <code class="highlighter-rouge">pip</code> to perform automatic dependency resolution, for the <a href="../acceptable-formulae/#we-dont-like-install-scripts-that-download-unversioned-things">reasons described here</a>.</p> <p>You can use <a href="https://pypi.python.org/pypi/homebrew-pypi-poet" target="_blank">homebrew-pypi-poet</a> to help you write resource stanzas. To use it, set up a virtualenv and install your package and all its dependencies. Then, <code class="highlighter-rouge">pip install homebrew-pypi-poet</code> into the same virtualenv. Running <code class="highlighter-rouge">poet some_package</code> will generate the necessary resource stanzas. You can do this like:</p> <pre data-language="sh"># Install virtualenvwrapper
 brew install python
@@ -145,17 +145,9 @@ end</pre> <p>If the configure script takes a <code class="highlighter-rouge">--w
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

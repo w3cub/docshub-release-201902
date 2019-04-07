@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/homebrew/" class="_nav-link" title="" style="margin-left:0;">Homebrew</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="querying-brew">Querying <code class="highlighter-rouge">brew</code>
 </h1> <p><em>In this document we will be using <a href="https://stedolan.github.io/jq/" target="_blank">jq</a> to parse JSON, available from Homebrew using <code class="highlighter-rouge">brew install jq</code>.</em></p> <h2 id="overview">Overview</h2> <p><code class="highlighter-rouge">brew</code> provides commands for getting common types of information out of the system. <code class="highlighter-rouge">brew list</code> shows installed formulae. <code class="highlighter-rouge">brew deps foo</code> shows the dependencies that <code class="highlighter-rouge">foo</code> needs.</p> <p>Additional commands, including external commands, can of course be written to provide more detailed information. There are a couple of disadvantages here. First, it means writing Ruby against a possibly changing Homebrew codebase. There will be more code to touch during refactors, and Homebrew can’t guarantee that external commands will continue to work. Second, it means designing the commands themselves, specifying input parameters and output formats.</p> <p>To enable users to do rich queries without the problems above, Homebrew provides the <code class="highlighter-rouge">brew info</code> command.</p> <h2 id="brew-info---json"><code class="highlighter-rouge">brew info --json</code></h2> <p><code class="highlighter-rouge">brew info</code> outputs JSON-formatted information about formulae. This JSON can then be parsed using your tools of choice.</p> <p>From the manpage:</p> <ul> <li> <p><code class="highlighter-rouge">info --json=&lt;version&gt; (--all|--installed|&lt;formulae&gt;)</code>: Print a JSON representation of <code class="highlighter-rouge">&lt;formulae&gt;</code>. Currently the only accepted value for <code class="highlighter-rouge">&lt;version&gt;</code> is <code class="highlighter-rouge">v1</code>.</p> <p>Pass <code class="highlighter-rouge">--all</code> to get information on all formulae, or <code class="highlighter-rouge">--installed</code> to get information on all installed formulae.</p> </li> </ul> <p>The current schema version is <code class="highlighter-rouge">v1</code>. Note that fields may be added to the schema as needed without incrementing the schema. Any significant breaking changes will cause a change to the schema version.</p> <p>The schema itself is not currently documented outside of the code in <a href="https://github.com/Homebrew/brew/blob/e9b9ea49a16b7879731d01ff2842460d33257a06/Library/Homebrew/formula.rb#L1594-L1680" target="_blank"><code class="highlighter-rouge">formula.rb</code></a> that generates it.</p> <h2 id="examples">Examples</h2> <p><em>The top-level element of the JSON output is always an array, so the <code class="highlighter-rouge">map</code> operator is used to act on the data.</em></p> <h3 id="pretty-print-a-single-formulas-info">Pretty-print a single formula’s info</h3> <pre data-language="sh">brew info --json=v1 tig | jq .</pre> <h3 id="installed-formulae">Installed formulae</h3> <p>To show full JSON information about all installed formulae:</p> <pre data-language="sh">brew info --json=v1 --all | jq "map(select(.installed != []))"</pre> <p>You’ll note that processing all formulae can be slow; it’s quicker to let <code class="highlighter-rouge">brew</code> do this:</p> <pre data-language="sh">brew info --json=v1 --installed</pre> <h3 id="linked-keg-only-formulae">Linked keg-only formulae</h3> <p>Some formulae are marked as “keg-only”, meaning that installed files are not linked to the shared <code class="highlighter-rouge">bin</code>, <code class="highlighter-rouge">lib</code>, etc. directories, as doing so can cause conflicts. Such formulae can be forced to link to the shared directories, but doing so is not recommended (and will cause <code class="highlighter-rouge">brew doctor</code> to complain.)</p> <p>To find the names of linked keg-only formulae:</p> <pre data-language="sh">brew info --json=v1 --installed | jq "map(select(.keg_only == true and .linked_keg != null) | .name)"</pre> <h3 id="unlinked-normal-formulae">Unlinked normal formulae</h3> <p>To find the names of normal (not keg-only) formulae that are installed, but not linked to the shared directories:</p> <pre data-language="sh">brew info --json=v1 --installed | jq "map(select(.keg_only == false and .linked_keg == null) | .name)"</pre> <h2 id="formulaebrewsh">formulae.brew.sh</h2> <p><a href="https://formulae.brew.sh" target="_blank">formulae.brew.sh</a> has a <a href="https://formulae.brew.sh/docs/api/" target="_blank">documented JSON API</a> which provides access to the <code class="highlighter-rouge">brew info --json=v1</code> output without needing access to Homebrew.</p> <h2 id="concluding-remarks">Concluding remarks</h2> <p>Using the JSON output, queries can be made against Homebrew with less risk of being broken due to Homebrew code changes, and without needing to understand Homebrew’s Ruby internals.</p> <p>If the JSON output does not provide some information that it ought to, please submit a request, preferably with a patch to add the desired information.</p>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
