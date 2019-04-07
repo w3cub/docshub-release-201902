@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _rust">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="fqn">Module std::ffi</h1>
 <p>Utilities related to FFI bindings.</p> <p>This module provides utilities to handle data across non-Rust interfaces, like other programming languages and the underlying operating system. It is mainly of use for FFI (Foreign Function Interface) bindings and code that needs to exchange C-like strings with other languages.</p> <h2 id="overview" class="section-header">Overview</h2> <p>Rust represents owned strings with the <a href="../string/struct.string/"><code>String</code></a> type, and borrowed slices of strings with the <a href="../primitive.str/"><code>str</code></a> primitive. Both are always in UTF-8 encoding, and may contain nul bytes in the middle, i.e. if you look at the bytes that make up the string, there may be a <code>\0</code> among them. Both <code>String</code> and <code>str</code> store their length explicitly; there are no nul terminators at the end of strings like in C.</p> <p>C strings are different from Rust strings:</p> <ul> <li> <p><strong>Encodings</strong> - Rust strings are UTF-8, but C strings may use other encodings. If you are using a string from C, you should check its encoding explicitly, rather than just assuming that it is UTF-8 like you can do in Rust.</p> </li> <li> <p><strong>Character size</strong> - C strings may use <code>char</code> or <code>wchar_t</code>-sized characters; please <strong>note</strong> that C's <code>char</code> is different from Rust's. The C standard leaves the actual sizes of those types open to interpretation, but defines different APIs for strings made up of each character type. Rust strings are always UTF-8, so different Unicode characters will be encoded in a variable number of bytes each. The Rust type <a href="../primitive.char/"><code>char</code></a> represents a '<a href="http://www.unicode.org/glossary/#unicode_scalar_value" target="_blank">Unicode scalar value</a>', which is similar to, but not the same as, a '<a href="http://www.unicode.org/glossary/#code_point" target="_blank">Unicode code point</a>'.</p> </li> <li> <p><strong>Nul terminators and implicit string lengths</strong> - Often, C strings are nul-terminated, i.e. they have a <code>\0</code> character at the end. The length of a string buffer is not stored, but has to be calculated; to compute the length of a string, C code must manually call a function like <code>strlen()</code> for <code>char</code>-based strings, or <code>wcslen()</code> for <code>wchar_t</code>-based ones. Those functions return the number of characters in the string excluding the nul terminator, so the buffer length is really <code>len+1</code> characters. Rust strings don't have a nul terminator; their length is always stored and does not need to be calculated. While in Rust accessing a string's length is a O(1) operation (because the length is stored); in C it is an O(length) operation because the length needs to be computed by scanning the string for the nul terminator.</p> </li> <li> <p><strong>Internal nul characters</strong> - When C strings have a nul terminator character, this usually means that they cannot have nul characters in the middle — a nul character would essentially truncate the string. Rust strings <em>can</em> have nul characters in the middle, because nul does not have to mark the end of the string in Rust.</p> </li> </ul> <h2 id="representations-of-non-rust-strings" class="section-header">Representations of non-Rust strings</h2> <p><a href="struct.cstring/"><code>CString</code></a> and <a href="struct.cstr/"><code>CStr</code></a> are useful when you need to transfer UTF-8 strings to and from languages with a C ABI, like Python.</p> <ul> <li> <p><strong>From Rust to C:</strong> <a href="struct.cstring/"><code>CString</code></a> represents an owned, C-friendly string: it is nul-terminated, and has no internal nul characters. Rust code can create a <code>CString</code> out of a normal string (provided that the string doesn't have nul characters in the middle), and then use a variety of methods to obtain a raw <code>*mut u8</code> that can then be passed as an argument to functions which use the C conventions for strings.</p> </li> <li> <p><strong>From C to Rust:</strong> <a href="struct.cstr/"><code>CStr</code></a> represents a borrowed C string; it is what you would use to wrap a raw <code>*const u8</code> that you got from a C function. A <code>CStr</code> is guaranteed to be a nul-terminated array of bytes. Once you have a <code>CStr</code>, you can convert it to a Rust <code>&amp;str</code> if it's valid UTF-8, or lossily convert it by adding replacement characters.</p> </li> </ul> <p><a href="struct.osstring/"><code>OsString</code></a> and <a href="struct.osstr/"><code>OsStr</code></a> are useful when you need to transfer strings to and from the operating system itself, or when capturing the output of external commands. Conversions between <code>OsString</code>, <code>OsStr</code> and Rust strings work similarly to those for <a href="struct.cstring/"><code>CString</code></a> and <a href="struct.cstr/"><code>CStr</code></a>.</p> <ul> <li> <p><a href="struct.osstring/"><code>OsString</code></a> represents an owned string in whatever representation the operating system prefers. In the Rust standard library, various APIs that transfer strings to/from the operating system use <code>OsString</code> instead of plain strings. For example, <a href="../env/fn.var_os/"><code>env::var_os()</code></a> is used to query environment variables; it returns an <code>Option&lt;OsString&gt;</code>. If the environment variable exists you will get a <code>Some(os_string)</code>, which you can <em>then</em> try to convert to a Rust string. This yields a <a href="../result/enum.result/"><code>Result&lt;&gt;</code></a>, so that your code can detect errors in case the environment variable did not in fact contain valid Unicode data.</p> </li> <li> <p><a href="struct.osstr/"><code>OsStr</code></a> represents a borrowed reference to a string in a format that can be passed to the operating system. It can be converted into an UTF-8 Rust string slice in a similar way to <code>OsString</code>.</p> </li> </ul> <h2 id="conversions" class="section-header">Conversions</h2>
@@ -91,17 +91,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

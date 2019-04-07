@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _rust">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="fqn">Module std::arch</h1>
 <p>SIMD and vendor intrinsics module.</p> <p>This module is intended to be the gateway to architecture-specific intrinsic functions, typically related to SIMD (but not always!). Each architecture that Rust compiles to may contain a submodule here, which means that this is not a portable module! If you're writing a portable library take care when using these APIs!</p> <p>Under this module you'll find an architecture-named module, such as <code>x86_64</code>. Each <code>#[cfg(target_arch)]</code> that Rust can compile to may have a module entry here, only present on that particular target. For example the <code>i686-pc-windows-msvc</code> target will have an <code>x86</code> module here, whereas <code>x86_64-pc-windows-msvc</code> has <code>x86_64</code>.</p> <h2 id="overview" class="section-header">Overview</h2> <p>This module exposes vendor-specific intrinsics that typically correspond to a single machine instruction. These intrinsics are not portable: their availability is architecture-dependent, and not all machines of that architecture might provide the intrinsic.</p> <p>The <code>arch</code> module is intended to be a low-level implementation detail for higher-level APIs. Using it correctly can be quite tricky as you need to ensure at least a few guarantees are upheld:</p> <ul> <li>The correct architecture's module is used. For example the <code>arm</code> module isn't available on the <code>x86_64-unknown-linux-gnu</code> target. This is typically done by ensuring that <code>#[cfg]</code> is used appropriately when using this module.</li> <li>The CPU the program is currently running on supports the function being called. For example it is unsafe to call an AVX2 function on a CPU that doesn't actually support AVX2.</li> </ul> <p>As a result of the latter of these guarantees all intrinsics in this module are <code>unsafe</code> and extra care needs to be taken when calling them!</p> <h2 id="cpu-feature-detection" class="section-header">CPU Feature Detection</h2> <p>In order to call these APIs in a safe fashion there's a number of mechanisms available to ensure that the correct CPU feature is available to call an intrinsic. Let's consider, for example, the <code>_mm256_add_epi64</code> intrinsics on the <code>x86</code> and <code>x86_64</code> architectures. This function requires the AVX2 feature as <a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_mm256_add_epi64&amp;expand=100" target="_blank">documented by Intel</a> so to correctly call this function we need to (a) guarantee we only call it on <code>x86</code>/<code>x86_64</code> and (b) ensure that the CPU feature is available</p> <h3 id="static-cpu-feature-detection" class="section-header">Static CPU Feature Detection</h3> <p>The first option available to us is to conditionally compile code via the <code>#[cfg]</code> attribute. CPU features correspond to the <code>target_feature</code> cfg available, and can be used like so:</p> <div class="information">ⓘThis example is not tested</div>
@@ -245,17 +245,9 @@ fn hex_encode_fallback(src: &amp;[u8], dst: &amp;mut [u8]) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

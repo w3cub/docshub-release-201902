@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _rust">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="fqn">Crate std</h1>
 <h2 id="the-rust-standard-library" class="section-header">The Rust Standard Library</h2> <p>The Rust Standard Library is the foundation of portable Rust software, a set of minimal and battle-tested shared abstractions for the <a href="https://crates.io" target="_blank">broader Rust ecosystem</a>. It offers core types, like <a href="vec/"><code>Vec&lt;T&gt;</code></a> and <a href="option/enum.option/"><code>Option&lt;T&gt;</code></a>, library-defined <a href="#primitives">operations on language primitives</a>, <a href="#macros">standard macros</a>, <a href="io/">I/O</a> and <a href="thread/">multithreading</a>, among <a href="#what-is-in-the-standard-library-documentation">many other things</a>.</p> <p><code>std</code> is available to all Rust crates by default, just as if each one contained an <code>extern crate std;</code> import at the <a href="https://doc.rust-lang.org/book/first-edition/crates-and-modules.html#basic-terminology-crates-and-modules" target="_blank">crate root</a>. Therefore the standard library can be accessed in <a href="https://doc.rust-lang.org/book/first-edition/crates-and-modules.html#importing-modules-with-use" target="_blank"><code>use</code></a> statements through the path <code>std</code>, as in <a href="env/"><code>use std::env</code></a>, or in expressions through the absolute path <code>::std</code>, as in <a href="env/fn.args/"><code>::std::env::args</code></a>.</p> <h2 id="how-to-read-this-documentation" class="section-header">How to read this documentation</h2> <p>If you already know the name of what you are looking for, the fastest way to find it is to use the <a href="#" onclick="focusSearchBar();">search bar</a> at the top of the page.</p> <p>Otherwise, you may want to jump to one of these useful sections:</p> <ul> <li><a href="#modules"><code>std::*</code> modules</a></li> <li><a href="#primitives">Primitive types</a></li> <li><a href="#macros">Standard macros</a></li> <li><a href="prelude/">The Rust Prelude</a></li> </ul> <p>If this is your first time, the documentation for the standard library is written to be casually perused. Clicking on interesting things should generally lead you to interesting places. Still, there are important bits you don't want to miss, so read on for a tour of the standard library and its documentation!</p> <p>Once you are familiar with the contents of the standard library you may begin to find the verbosity of the prose distracting. At this stage in your development you may want to press the <code>[-]</code> button near the top of the page to collapse it into a more skimmable view.</p> <p>While you are looking at that <code>[-]</code> button also notice the <code>[src]</code> button. Rust's API documentation comes with the source code and you are encouraged to read it. The standard library source is generally high quality and a peek behind the curtains is often enlightening.</p> <h2 id="what-is-in-the-standard-library-documentation" class="section-header">What is in the standard library documentation?</h2> <p>First of all, The Rust Standard Library is divided into a number of focused modules, <a href="#modules">all listed further down this page</a>. These modules are the bedrock upon which all of Rust is forged, and they have mighty names like <a href="slice/"><code>std::slice</code></a> and <a href="cmp/"><code>std::cmp</code></a>. Modules' documentation typically includes an overview of the module along with examples, and are a smart place to start familiarizing yourself with the library.</p> <p>Second, implicit methods on <a href="https://doc.rust-lang.org/book/first-edition/primitive-types.html" target="_blank">primitive types</a> are documented here. This can be a source of confusion for two reasons:</p> <ol> <li>While primitives are implemented by the compiler, the standard library implements methods directly on the primitive types (and it is the only library that does so), which are <a href="#primitives">documented in the section on primitives</a>.</li> <li>The standard library exports many modules <em>with the same name as primitive types</em>. These define additional items related to the primitive type, but not the all-important methods.</li> </ol> <p>So for example there is a <a href="primitive.i32/">page for the primitive type <code>i32</code></a> that lists all the methods that can be called on 32-bit integers (very useful), and there is a <a href="i32/">page for the module <code>std::i32</code></a> that documents the constant values <a href="i32/constant.min/"><code>MIN</code></a> and <a href="i32/constant.max/"><code>MAX</code></a> (rarely useful).</p> <p>Note the documentation for the primitives <a href="primitive.str/"><code>str</code></a> and <a href="primitive.slice/"><code>[T]</code></a> (also called 'slice'). Many method calls on <a href="string/struct.string/"><code>String</code></a> and <a href="vec/"><code>Vec&lt;T&gt;</code></a> are actually calls to methods on <a href="primitive.str/"><code>str</code></a> and <a href="primitive.slice/"><code>[T]</code></a> respectively, via <a href="../book/second-edition/ch15-02-deref/#implicit-deref-coercions-with-functions-and-methods">deref coercions</a>.</p> <p>Third, the standard library defines <a href="prelude/">The Rust Prelude</a>, a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive, making the prelude documentation a good entry point to learning about the library.</p> <p>And finally, the standard library exports a number of standard macros, and <a href="#macros">lists them on this page</a> (technically, not all of the standard macros are defined by the standard library - some are defined by the compiler - but they are documented here the same). Like the prelude, the standard macros are imported by default into all crates.</p> <h2 id="contributing-changes-to-the-documentation" class="section-header">Contributing changes to the documentation</h2> <p>Check out the rust contribution guidelines <a href="https://github.com/rust-lang/rust/blob/master/CONTRIBUTING.md" target="_blank">here</a>. The source for this documentation can be found on <a href="https://github.com/rust-lang" target="_blank">Github</a>. To contribute changes, make sure you read the guidelines first, then submit pull-requests for your suggested changes.</p> <p>Contributions are appreciated! If you see a part of the docs that can be improved, submit a PR, or chat with us first on irc.mozilla.org #rust-docs.</p> <h2 id="a-tour-of-the-rust-standard-library" class="section-header">A Tour of The Rust Standard Library</h2> <p>The rest of this crate documentation is dedicated to pointing out notable features of The Rust Standard Library.</p> <h3 id="containers-and-collections" class="section-header">Containers and collections</h3> <p>The <a href="option/"><code>option</code></a> and <a href="result/"><code>result</code></a> modules define optional and error-handling types, <a href="option/enum.option/"><code>Option&lt;T&gt;</code></a> and <a href="result/enum.result/"><code>Result&lt;T, E&gt;</code></a>. The <a href="iter/"><code>iter</code></a> module defines Rust's iterator trait, <a href="iter/trait.iterator/"><code>Iterator</code></a>, which works with the <a href="https://doc.rust-lang.org/book/first-edition/loops.html#for" target="_blank"><code>for</code></a> loop to access collections.</p> <p>The standard library exposes three common ways to deal with contiguous regions of memory:</p> <ul> <li>
@@ -103,17 +103,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
