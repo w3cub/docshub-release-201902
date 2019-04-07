@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/meteor~1.5/" class="_nav-link" title="" style="margin-left:0;">Meteor 1.5</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _meteor">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title-page">HTTP</h1> <div class="subtitle-page">Documentation of Meteor's HTTP API.</div>    <p><code>HTTP</code> provides an HTTP request API on the client and server. To use these functions, add the HTTP package to your project by running in your terminal:</p> <pre class="highlight bash" data-language="bash">meteor add http</pre>  <h2 class="api-heading" id="HTTP-call"> <div class="locus"> Anywhere </div> <code>HTTP.call(method, url, [options], [asyncCallback])</code> <div class="subtext-api"> <code>import { HTTP } from 'meteor/http'</code> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/http/httpcall_client.js#L19" target="_blank"> (http/httpcall_client.js, line 19) </a> </div> </h2>   <p>Perform an outbound HTTP request.</p>  <h4 class="subheading">Arguments</h4> <dl class="args"> <dt> <code>method</code> <span class="type">String</span> </dt> <dd> <p>The <a href="http://en.wikipedia.org/wiki/HTTP_method" target="_blank" rel="external">HTTP method</a> to use, such as "<code>GET</code>", "<code>POST</code>", or "<code>HEAD</code>".</p> </dd> <dt> <code>url</code> <span class="type">String</span> </dt> <dd> <p>The URL to retrieve.</p> </dd> <dt> <code>asyncCallback</code> <span class="type">Function</span> </dt> <dd> <p>Optional callback. If passed, the method runs asynchronously, instead of synchronously, and calls asyncCallback. On the client, this callback is required.</p> </dd> </dl> <h4 class="subheading">Options</h4> <dl class="args"> <dt> <code>content</code> <span class="type">String</span> </dt> <dd> <p>String to use as the HTTP request body.</p> </dd> <dt> <code>data</code> <span class="type">Object</span> </dt> <dd> <p>JSON-able object to stringify and use as the HTTP request body. Overwrites <code>content</code>.</p> </dd> <dt> <code>query</code> <span class="type">String</span> </dt> <dd> <p>Query string to go in the URL. Overwrites any query string in <code>url</code>.</p> </dd> <dt> <code>params</code> <span class="type">Object</span> </dt> <dd> <p>Dictionary of request parameters to be encoded and placed in the URL (for GETs) or request body (for POSTs). If <code>content</code> or <code>data</code> is specified, <code>params</code> will always be placed in the URL.</p> </dd> <dt> <code>auth</code> <span class="type">String</span> </dt> <dd> <p>HTTP basic authentication string of the form <code>"username:password"</code></p> </dd> <dt> <code>headers</code> <span class="type">Object</span> </dt> <dd> <p>Dictionary of strings, headers to add to the HTTP request.</p> </dd> <dt> <code>timeout</code> <span class="type">Number</span> </dt> <dd> <p>Maximum time in milliseconds to wait for the request before failing. There is no timeout by default.</p> </dd> <dt> <code>followRedirects</code> <span class="type">Boolean</span> </dt> <dd> <p>If <code>true</code>, transparently follow HTTP redirects. Cannot be set to <code>false</code> on the client. Default <code>true</code>.</p> </dd> <dt> <code>npmRequestOptions</code> <span class="type">Object</span> </dt> <dd> <p>On the server, <code>HTTP.call</code> is implemented by using the <a href="https://www.npmjs.com/package/request" target="_blank" rel="external">npm <code>request</code> module</a>. Any options in this object will be passed directly to the <code>request</code> invocation.</p> </dd> <dt> <code>beforeSend</code> <span class="type">Function</span> </dt> <dd> <p>On the client, this will be called before the request is sent to allow for more direct manipulation of the underlying XMLHttpRequest object, which will be passed as the first argument. If the callback returns <code>false</code>, the request will be not be send.</p> </dd> </dl>   <p>This function initiates an HTTP request to a remote server.</p> <p>On the server, this function can be run either synchronously or asynchronously. If the callback is omitted, it runs synchronously and the results are returned once the request completes successfully. If the request was not successful, an error is thrown. This is useful when making server-to-server HTTP API calls from within Meteor methods, as the method can succeed or fail based on the results of the synchronous HTTP call. In this case, consider using <a href="#method_unblock"><code>this.unblock()</code></a> to allow other methods on the same connection to run in the mean time. </p> <p>On the client, this function must be used asynchronously by passing a callback. Note that some browsers first send an <code>OPTIONS</code> request before sending your request (in order to <a href="http://stackoverflow.com/a/21783145/627729" target="_blank" rel="external">determine CORS headers</a>).</p> <p>Both HTTP and HTTPS protocols are supported. The <code>url</code> argument must be an absolute URL including protocol and host name on the server, but may be relative to the current host on the client. The <code>query</code> option replaces the query string of <code>url</code>. Parameters specified in <code>params</code> that are put in the URL are appended to any query string. For example, with a <code>url</code> of <code>'/path?query'</code> and <code>params</code> of <code>{ foo: 'bar' }</code>, the final URL will be <code>'/path?query&amp;foo=bar'</code>.</p> <p>The <code>params</code> are put in the URL or the request body, depending on the type of request. In the case of request with no bodies, like GET and HEAD, the parameters will always go in the URL. For a POST or other type of request, the parameters will be encoded into the body with a standard <code>x-www-form-urlencoded</code> content type, unless the <code>content</code> or <code>data</code> option is used to specify a body, in which case the parameters will be appended to the URL instead.</p> <p>When run in asynchronous mode, the callback receives two arguments, <code>error</code> and <code>result</code>. The <code>error</code> argument will contain an Error if the request fails in any way, including a network error, time-out, or an HTTP status code in the 400 or 500 range. In case of a 4xx/5xx HTTP status code, the <code>response</code> property on <code>error</code> matches the contents of the result object. When run in synchronous mode, either <code>result</code> is returned from the function, or <code>error</code> is thrown.</p> <p>Contents of the result object:</p> <dl class="objdesc"> <dt>
 <span class="name">statusCode</span> <span class="type">Number</span>
@@ -117,17 +117,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/meteor~1.5/" class="_nav-link" title="" style="margin-left:0;">Meteor 1.5</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _meteor">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title-page">Accounts (multi-server)</h1> <div class="subtitle-page">Documentation of how to use the Accounts client to connect to other servers.</div>    <p>The <code>accounts-base</code> package exports two constructors, called <code>AccountsClient</code> and <code>AccountsServer</code>, which are used to create the <code>Accounts</code> object that is available on the client and the server, respectively.</p> <p>This predefined <code>Accounts</code> object (along with similar convenience methods of <code>Meteor</code>, such as <a href="#meteor_logout"><code>Meteor.logout</code></a>) is sufficient to implement most accounts-related logic in Meteor apps. Nevertheless, these two constructors can be instantiated more than once, to create multiple independent connections between different accounts servers and their clients, in more complicated authentication situations.</p>  <h2 class="api-heading" id="AccountsCommon"> <div class="locus"> Anywhere </div> <code>new AccountsCommon(options)</code> <div class="subtext-api"> <code>import { AccountsCommon } from 'meteor/accounts-base'</code> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L1" target="_blank"> (accounts-base/accounts_common.js, line 1) </a> </div> </h2>   <p>Super-constructor for AccountsClient and AccountsServer.</p>    <p>The <code>AccountsClient</code> and <code>AccountsServer</code> classes share a common superclass, <code>AccountsCommon</code>. Methods defined on <code>AccountsCommon.prototype</code> will be available on both the client and the server, via the predefined <code>Accounts</code> object (most common) or any custom <code>accountsClientOrServer</code> object created using the <code>AccountsClient</code> or <code>AccountsServer</code> constructors (less common).</p> <p>Here are a few of those methods:</p>  <h3 class="api-heading" id="AccountsCommon-userId"> <div class="locus"> Anywhere </div> <code>AccountsCommon#userId()</code> <div class="subtext-api"> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L49" target="_blank"> (accounts-base/accounts_common.js, line 49) </a> </div> </h3>   <p>Get the current user id, or <code>null</code> if no user is logged in. A reactive data source.</p>     <h3 class="api-heading" id="AccountsCommon-user"> <div class="locus"> Anywhere </div> <code>AccountsCommon#user()</code> <div class="subtext-api"> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L57" target="_blank"> (accounts-base/accounts_common.js, line 57) </a> </div> </h3>   <p>Get the current user record, or <code>null</code> if no user is logged in. A reactive data source.</p>     <h3 class="api-heading" id="AccountsCommon-config"> <div class="locus"> Anywhere </div> <code>AccountsCommon#config(options)</code> <div class="subtext-api"> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L106" target="_blank"> (accounts-base/accounts_common.js, line 106) </a> </div> </h3>   <p>Set global accounts options.</p>  <h4 class="subheading">Options</h4> <dl class="args"> <dt> <code>sendVerificationEmail</code> <span class="type">Boolean</span> </dt> <dd> <p>New users with an email address will receive an address verification email.</p> </dd> <dt> <code>forbidClientAccountCreation</code> <span class="type">Boolean</span> </dt> <dd> <p>Calls to <a href="#accounts_createuser"><code>createUser</code></a> from the client will be rejected. In addition, if you are using <a href="#accountsui">accounts-ui</a>, the "Create account" link will not be available.</p> </dd> <dt> <code>restrictCreationByEmailDomain</code> <span class="type">String or Function</span> </dt> <dd> <p>If set to a string, only allows new users if the domain part of their email address matches the string. If set to a function, only allows new users if the function returns true. The function is passed the full email address of the proposed new user. Works with password-based sign-in and external services that expose email addresses (Google, Facebook, GitHub). All existing users still can log in after enabling this option. Example: <code>Accounts.config({ restrictCreationByEmailDomain: 'school.edu' })</code>.</p> </dd> <dt> <code>loginExpirationInDays</code> <span class="type">Number</span> </dt> <dd> <p>The number of days from when a user logs in until their token expires and they are logged out. Defaults to 90. Set to <code>null</code> to disable login expiration.</p> </dd> <dt> <code>oauthSecretKey</code> <span class="type">String</span> </dt> <dd> <p>When using the <code>oauth-encryption</code> package, the 16 byte key using to encrypt sensitive account credentials in the database, encoded in base64. This option may only be specifed on the server. See packages/oauth-encryption/README.md for details.</p> </dd> <dt> <code>passwordResetTokenExpirationInDays</code> <span class="type">Number</span> </dt> <dd> <p>The number of days from when a link to reset password is sent until token expires and user can't reset password with the link anymore. Defaults to 3.</p> </dd> <dt> <code>passwordEnrollTokenExpirationInDays</code> <span class="type">Number</span> </dt> <dd> <p>The number of days from when a link to set inital password is sent until token expires and user can't set password with the link anymore. Defaults to 30.</p> </dd> <dt> <code>ambiguousErrorMessages</code> <span class="type">Boolean</span> </dt> <dd> <p>Return ambiguous error messages from login failures to prevent user enumeration. Defaults to false.</p> </dd> </dl>    <h3 class="api-heading" id="AccountsCommon-onLogin"> <div class="locus"> Anywhere </div> <code>AccountsCommon#onLogin(func)</code> <div class="subtext-api"> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L161" target="_blank"> (accounts-base/accounts_common.js, line 161) </a> </div> </h3>   <p>Register a callback to be called after a login attempt succeeds.</p>  <h4 class="subheading">Arguments</h4> <dl class="args"> <dt> <code>func</code> <span class="type">Function</span> </dt> <dd> <p>The callback to be called when login is successful.</p> </dd> </dl>   <p>See description of <a href="#accounts_onloginfailure">AccountsCommon#onLoginFailure</a> for details.</p>  <h3 class="api-heading" id="AccountsCommon-onLoginFailure"> <div class="locus"> Anywhere </div> <code>AccountsCommon#onLoginFailure(func)</code> <div class="subtext-api"> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L170" target="_blank"> (accounts-base/accounts_common.js, line 170) </a> </div> </h3>   <p>Register a callback to be called after a login attempt fails.</p>  <h4 class="subheading">Arguments</h4> <dl class="args"> <dt> <code>func</code> <span class="type">Function</span> </dt> <dd> <p>The callback to be called after the login has failed.</p> </dd> </dl>   <p>Either the <code>onLogin</code> or the <code>onLoginFailure</code> callbacks will be called for each login attempt. The <code>onLogin</code> callbacks are called after the user has been successfully logged in. The <code>onLoginFailure</code> callbacks are called after a login attempt is denied.</p> <p>These functions return an object with a single method, <code>stop</code>. Calling <code>stop()</code> unregisters the callback.</p> <p>On the server, the callbacks get a single argument, the same attempt info object as <a href="#accounts_validateloginattempt"><code>validateLoginAttempt</code></a>. On the client, the callback argument is an object containing a single <code>error</code> property set to the <code>Error</code>-object which was received from the failed login attempt.</p>  <h3 class="api-heading" id="AccountsCommon-onLogout"> <div class="locus"> Anywhere </div> <code>AccountsCommon#onLogout(func)</code> <div class="subtext-api"> <a class="src-code link secondary" href="https://github.com/meteor/meteor/blob/master/packages/accounts-base/accounts_common.js#L179" target="_blank"> (accounts-base/accounts_common.js, line 179) </a> </div> </h3>   <p>Register a callback to be called after a logout attempt succeeds.</p>  <h4 class="subheading">Arguments</h4> <dl class="args"> <dt> <code>func</code> <span class="type">Function</span> </dt> <dd> <p>The callback to be called when logout is successful.</p> </dd> </dl>   <p>On the server, the <code>func</code> callback receives a single argument with the object below. On the client, no arguments are passed.</p> <dl class="objdesc"> <dt>
 <span class="name">user</span><span class="type">Object</span>
@@ -150,17 +150,9 @@ if (!attempt.allowed) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

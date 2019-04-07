@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/meteor~1.5/" class="_nav-link" title="" style="margin-left:0;">Meteor 1.5</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _meteor">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title-page">Mobile</h1> <div class="subtitle-page">How to build mobile apps using Meteor's Cordova integration.</div>    <p>After reading this guide, you’ll know:</p> <ol> <li>What Cordova is, and how Meteor integrates with it to build mobile apps from a single codebase</li> <li>How to set up your local machine for mobile development</li> <li>How to run and debug your app on a mobile device or simulator/emulator</li> <li>How hot code push allows you to update your mobile app’s code without reinstalling the app on your device or submitting a new version to the store</li> <li>How to use Cordova plugins to take advantage of native device features</li> <li>How to access local files and remote resources from your app</li> <li>What you can do to create a good mobile user experience for your app</li> <li>How to configure your app to use your own app icon, launch screen, and set other preferences</li> <li>How to build your project and submit your mobile app to the store</li> </ol> <h2 id="introduction">Meteor Cordova integration</h2> <p>Meteor integrates with <a href="https://cordova.apache.org" target="_blank" rel="external">Cordova</a>, a well-known Apache open source project, to build mobile apps from the same codebase you use to create regular web apps. With the Cordova integration in Meteor, you can take your existing app and run it on an iOS or Android device with a few simple commands.</p> <p>A Cordova app is a web app written using HTML, CSS, and JavaScript as usual, but it runs in a <a href="#what-environment">web view</a> embedded in a native app instead of in a stand-alone mobile browser. An important benefit of packaging up your web app as a Cordova app is that all your assets are bundled with the app. This ensures your app will load faster than a web app running on a remote server could, which can make a huge difference for users on slow mobile connections. Another feature of the Cordova integration in Meteor is support for <a href="#hot-code-push">hot code push</a>, which allows you to update your app on users’ devices without going through the usual app store review process.</p> <p>Cordova also opens up access to certain native device features through a <a href="#cordova-plugins">plugin architecture</a>. Plugins allow you to use features not usually available to web apps, such as accessing the device camera or the local file system, interact with barcode or NFC readers, etc.</p> <p>Because a Cordova app is a web app, this means you use standard web elements to create your user interface instead of relying on platform-specific native UI components. Creating a good mobile user experience is an art in itself, but is fortunately helped by the availability of various frameworks and libraries.</p> <blockquote> <h4 id="what-about-phonegap">What about PhoneGap?</h4> <p>You may have heard of PhoneGap, and wonder how it relates to Cordova. PhoneGap is a product name used by Adobe since 2011, when they acquired a company called Nitobi, the original creators of what is now the Cordova project. When Adobe donated the code to Apache in 2012 to ensure a more open governance model, the open source project was rebranded as Cordova. PhoneGap is now one of the distributions of Cordova, on a par with other distributions like Ionic, Telerik, Monaca, or Intel XDK. These distributions mainly differ in tooling and integration with cloud services, but they share the underlying platform and plugins. Meteor could also be considered a Cordova distribution.</p> </blockquote> <h3 id="cordova-integration-in-meteor">How does it work?</h3> <p>With Meteor, there is no need to install Cordova yourself, or use the <code>cordova</code> command directly. Cordova project creation happens as part of the Meteor run and build commands, and the project itself is considered a build artifact (stored in <code>.meteor/local/cordova-build</code> in your app directory) that can be deleted and recreated at any time. Instead of having you modify Cordova’s <code>config.xml</code> file, Meteor reads a <a href="http://docs.meteor.com/api/mobile-config.html" target="_blank" rel="external"><code>mobile-config.js</code></a> file in the root of your app directory and uses the settings specified there to configure the generated project.</p> <p>Cordova apps don’t load web content over the network, but rely on locally stored HTML, CSS, JavaScript code and other assets. While Cordova by default uses <code>file://</code> URLs to load the app, Meteor includes an integrated file serving mechanism on the device to support both bundling the initial assets and incrementally updating your app through <a href="#hot-code-push">hot code push</a>. This means your app will be served from <code>http://localhost:&lt;port&gt;</code>, which also has the benefit that web views consider it a <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features" target="_blank" rel="external">secure origin</a> and won’t block any sensitive features (which they increasingly do for <code>file://</code> URLs).</p> <blockquote> <h4 id="what-port">What port will your app be served from?</h4> <p>While Meteor uses a built-in request interception mechanism on Android, supporting <code>WKWebView</code> on iOS requires running a real embedded web server instead. That means the local web server needs a port to bind to, and we can’t simply use a fixed port because that might lead to conflicts when running multiple Meteor Cordova apps on the same device. The easiest solution may seem to use a randomized port, but this has a serious drawback: if the port changes each time you run the app, web features that depend on the origin (like caching, localStorage, IndexedDB) won’t persist between runs, and you also wouldn’t be able to specify a stable OAuth redirect URL. So instead we now pick a port from a predetermined range (12000-13000), calculated based on the <code>appId</code>, a unique identifier that is part of every Meteor project. That ensures the same app will always use the same port, but it hopefully avoids collisions betweens apps as much as possible. (There is still a theoretical possibility of the selected port being in use. Currently, starting the local server will fail in that case.)</p> </blockquote> <h3 id="what-environment">The runtime environment</h3> <p>Cordova apps run in a web view. A web view is basically a browser without the browser UI. Browser engines differ in their underlying implementation and in what web standards they support. As a result, what web view your app runs on can have a huge impact on your app’s performance and on the features you get to use. (If you want to know what features are supported on what browsers and versions, <a href="http://caniuse.com" target="_blank" rel="external">caniuse.com</a> is a great resource.)</p> <h4 id="what-environment-ios">iOS</h4> <p>The browser on iOS is Safari, which is based on the open source WebKit project, but tends to be somewhat slow in enabling new features. Because they use the same underlying framework, the features available to a web view match the features supported by Safari on the iOS release you’re running on.</p> <p>Meteor uses WKWebView by default, on both iOS 8 and iOS 9. WKWebView is part of the modern WebKit API introduced in iOS 8, and replaces UIWebView, which has been in iOS from the beginning. Its main benefit is that it runs in a separate process, allowing for much higher JavaScript performance (3–4x in some benchmarks!) because it can take advantage of Just-In-Time compilation (which UIWebView, running in the same process as your app, cannot do for security reasons).</p> <blockquote> <p>You may be aware that WKWebView on iOS 8 doesn’t allow files to be loaded from the local filesystem. This is problematic for standard Cordova apps, because these use <code>file://</code> URLs to load the app. But because the Meteor integration serves assets from <code>localhost</code>, WKWebView works fine on both iOS 8 and iOS 9.</p> </blockquote> <h4 id="what-environment-android">Android</h4> <p>The web view situation on Android is a little more complicated. On older Android versions, the included web view is known to be rather slow and buggy. That improved somewhat with Android 4.4, which includes a web view based on Chromium, the open source project behind the Chrome browser.</p> <p>Android 5.0 also comes with a web view based on Chromium known as the <a href="https://play.google.com/store/apps/details?id=com.google.android.webview&amp;hl=en" target="_blank" rel="external">Android System Web View</a>, but a big improvement is that it can be automatically updated through the Play Store. This means updates to the web view happen more regularly and are independent of OS updates.</p> <p>This threatens to leave many older Android devices behind however, because they would be stuck on the web view included with the OS and are often unable to update to newer OS versions. Fortunately, the <a href="https://crosswalk-project.org/documentation/cordova.html" target="_blank" rel="external">Crosswalk plugin</a> allows you to embed Chromium in your app and use it instead of the web view that comes with the OS on any of the Android versions supported by Cordova (currently Android 4.0 or higher). Embedding Chromium means the size of your APK will grow by about 20MB, but the benefit is that you can rely on a consistent web view with considerably better performance and enhanced standards support.</p> <p>You can add the Crosswalk plugin to your app with <code>meteor add crosswalk</code>.</p> <blockquote> <p>If you receive an error message trying to run the app on your device after adding or removing the Crosswalk plugin, you may have to remove the existing app from your device first.</p> </blockquote> <p>Important: The Crosswalk project is not maintained anymore. The last Crosswalk release was Crosswalk 23. Read more in this <a href="https://crosswalk-project.org/blog/crosswalk-final-release.html" target="_blank" rel="external">announcement</a></p> <h3 id="adding-platforms">Adding Cordova platforms</h3> <p>Every Meteor project targets a set of platforms. Platforms can be added to a Meteor project with <code>meteor add-platform</code>.</p> <ul> <li>
 <code>meteor add-platform ios</code> adds the iOS platform to a project.</li> <li>
@@ -197,17 +197,9 @@ $ANDROID_HOME/build-tools/&lt;build-tools-version&gt;/zipalign 4 release-unsigne
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
