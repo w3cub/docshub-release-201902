@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/angular~4/guide/security/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/angular~4.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="security">Security</h1> <p>This page describes Angular's built-in protections against common web-application vulnerabilities and attacks such as cross-site scripting attacks. It doesn't cover application-level security, such as authentication (<em>Who is this user?</em>) and authorization (<em>What can this user do?</em>).</p> <p>For more information about the attacks and mitigations described below, see <a href="https://www.owasp.org/index.php/Category:OWASP_Guide_Project" target="_blank">OWASP Guide Project</a>.</p> <p>You can run the live example in Plunker and download the code from there.</p> <h2 id="report-issues"> Reporting vulnerabilities </h2> <p>To report vulnerabilities in Angular itself, email us at <a href="../mailto:security@angular.io/">security@angular.io</a>.</p> <p>For more information about how Google handles security issues, see <a href="https://www.google.com/about/appsecurity/" target="_blank">Google's security philosophy</a>.</p> <h2 id="best-practices"> Best practices </h2> <ul> <li> <p><strong>Keep current with the latest Angular library releases.</strong> We regularly update the Angular libraries, and these updates may fix security defects discovered in previous versions. Check the Angular <a href="https://github.com/angular/angular/blob/master/CHANGELOG.md" target="_blank">change log</a> for security-related updates.</p> </li> <li> <p><strong>Don't modify your copy of Angular.</strong> Private, customized versions of Angular tend to fall behind the current version and may not include important security fixes and enhancements. Instead, share your Angular improvements with the community and make a pull request.</p> </li> <li> <p><strong>Avoid Angular APIs marked in the documentation as “<em>Security Risk</em>.”</strong> For more information, see the <a href="../security/#bypass-security-apis">Trusting safe values</a> section of this page.</p> </li> </ul> <h2 id="xss"> Preventing cross-site scripting (XSS) </h2> <p><a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">Cross-site scripting (XSS)</a> enables attackers to inject malicious code into web pages. Such code can then, for example, steal user data (in particular, login data) or perform actions to impersonate the user. This is one of the most common attacks on the web.</p> <p>To block XSS attacks, you must prevent malicious code from entering the DOM (Document Object Model). For example, if attackers can trick you into inserting a <code>&lt;script&gt;</code> tag in the DOM, they can run arbitrary code on your website. The attack isn't limited to <code>&lt;script&gt;</code> tags—many elements and properties in the DOM allow code execution, for example, <code>&lt;img onerror="..."&gt;</code> and <code>&lt;a href="javascript:..."&gt;</code>. If attacker-controlled data enters the DOM, expect security vulnerabilities.</p> <h3 id="angulars-cross-site-scripting-security-model">Angular’s cross-site scripting security model</h3> <p>To systematically block XSS bugs, Angular treats all values as untrusted by default. When a value is inserted into the DOM from a template, via property, attribute, style, class binding, or interpolation, Angular sanitizes and escapes untrusted values.</p> <p><em>Angular templates are the same as executable code</em>: HTML, attributes, and binding expressions (but not the values bound) in templates are trusted to be safe. This means that applications must prevent values that an attacker can control from ever making it into the source code of a template. Never generate template source code by concatenating user input and templates. To prevent these vulnerabilities, use the <a href="../security/#offline-template-compiler">offline template compiler</a>, also known as <em>template injection</em>.</p> <h3 id="sanitization-and-security-contexts">Sanitization and security contexts</h3> <p><em>Sanitization</em> is the inspection of an untrusted value, turning it into a value that's safe to insert into the DOM. In many cases, sanitization doesn't change a value at all. Sanitization depends on context: a value that's harmless in CSS is potentially dangerous in a URL.</p> <p>Angular defines the following security contexts:</p> <ul> <li>
 <strong>HTML</strong> is used when interpreting a value as HTML, for example, when binding to <code>innerHtml</code>.</li> <li>
@@ -124,17 +124,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

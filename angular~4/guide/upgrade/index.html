@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/angular~4/guide/upgrade/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/angular~4.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="upgrading-from-angularjs">Upgrading from AngularJS</h1> <p><em>Angular</em> is the name for the Angular of today and tomorrow. <em>AngularJS</em> is the name for all v1.x versions of Angular.</p> <p>AngularJS apps are great. Always consider the business case before moving to Angular. An important part of that case is the time and effort to get there. This guide describes the built-in tools for efficiently migrating AngularJS projects over to the Angular platform, a piece at a time.</p> <p>Some applications will be easier to upgrade than others, and there are many ways to make it easier for yourself. It is possible to prepare and align AngularJS applications with Angular even before beginning the upgrade process. These preparation steps are all about making the code more decoupled, more maintainable, and better aligned with modern development tools. That means in addition to making the upgrade easier, you will also improve the existing AngularJS applications.</p> <p>One of the keys to a successful upgrade is to do it incrementally, by running the two frameworks side by side in the same application, and porting AngularJS components to Angular one by one. This makes it possible to upgrade even large and complex applications without disrupting other business, because the work can be done collaboratively and spread over a period of time. The <code>upgrade</code> module in Angular has been designed to make incremental upgrading seamless.</p> <h2 id="preparation">Preparation</h2> <p>There are many ways to structure AngularJS applications. When you begin to upgrade these applications to Angular, some will turn out to be much more easy to work with than others. There are a few key techniques and patterns that you can apply to future proof apps even before you begin the migration.</p>  <h3 id="follow-the-angularjs-style-guide">Follow the AngularJS Style Guide</h3> <p>The <a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md" target="_blank">AngularJS Style Guide</a> collects patterns and practices that have been proven to result in cleaner and more maintainable AngularJS applications. It contains a wealth of information about how to write and organize AngularJS code - and equally importantly - how <strong>not</strong> to write and organize AngularJS code.</p> <p>Angular is a reimagined version of the best parts of AngularJS. In that sense, its goals are the same as the AngularJS Style Guide's: To preserve the good parts of AngularJS, and to avoid the bad parts. There's a lot more to Angular than just that of course, but this does mean that <em>following the style guide helps make your AngularJS app more closely aligned with Angular</em>.</p> <p>There are a few rules in particular that will make it much easier to do <em>an incremental upgrade</em> using the Angular <code><a href="../../api/upgrade/static/" class="code-anchor">upgrade/static</a></code> module:</p> <ul> <li> <p>The <a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#single-responsibility" target="_blank">Rule of 1</a> states that there should be one component per file. This not only makes components easy to navigate and find, but will also allow us to migrate them between languages and frameworks one at a time. In this example application, each controller, component, service, and filter is in its own source file.</p> </li> <li> <p>The <a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#folders-by-feature-structure" target="_blank">Folders-by-Feature Structure</a> and <a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#modularity" target="_blank">Modularity</a> rules define similar principles on a higher level of abstraction: Different parts of the application should reside in different directories and NgModules.</p> </li> </ul> <p>When an application is laid out feature per feature in this way, it can also be migrated one feature at a time. For applications that don't already look like this, applying the rules in the AngularJS style guide is a highly recommended preparation step. And this is not just for the sake of the upgrade - it is just solid advice in general!</p> <h3 id="using-a-module-loader">Using a Module Loader</h3> <p>When you break application code down into one component per file, you often end up with a project structure with a large number of relatively small files. This is a much neater way to organize things than a small number of large files, but it doesn't work that well if you have to load all those files to the HTML page with &lt;script&gt; tags. Especially when you also have to maintain those tags in the correct order. That's why it's a good idea to start using a <em>module loader</em>.</p> <p>Using a module loader such as <a href="https://github.com/systemjs/systemjs" target="_blank">SystemJS</a>, <a href="http://webpack.github.io/" target="_blank">Webpack</a>, or <a href="http://browserify.org/" target="_blank">Browserify</a> allows us to use the built-in module systems of TypeScript or ES2015. You can use the <code>import</code> and <code>export</code> features that explicitly specify what code can and will be shared between different parts of the application. For ES5 applications you can use CommonJS style <code>require</code> and <code>module.exports</code> features. In both cases, the module loader will then take care of loading all the code the application needs in the correct order.</p> <p>When moving applications into production, module loaders also make it easier to package them all up into production bundles with batteries included.</p> <h3 id="migrating-to-typescript">Migrating to TypeScript</h3> <p>If part of the Angular upgrade plan is to also take TypeScript into use, it makes sense to bring in the TypeScript compiler even before the upgrade itself begins. This means there's one less thing to learn and think about during the actual upgrade. It also means you can start using TypeScript features in your AngularJS code.</p> <p>Since TypeScript is a superset of ECMAScript 2015, which in turn is a superset of ECMAScript 5, "switching" to TypeScript doesn't necessarily require anything more than installing the TypeScript compiler and renaming files from <code>*.js</code> to <code>*.ts</code>. But just doing that is not hugely useful or exciting, of course. Additional steps like the following can give us much more bang for the buck:</p> <ul> <li> <p>For applications that use a module loader, TypeScript imports and exports (which are really ECMAScript 2015 imports and exports) can be used to organize code into modules.</p> </li> <li> <p>Type annotations can be gradually added to existing functions and variables to pin down their types and get benefits like build-time error checking, great autocompletion support and inline documentation.</p> </li> <li> <p>JavaScript features new to ES2015, like arrow functions, <code>let</code>s and <code>const</code>s, default function parameters, and destructuring assignments can also be gradually added to make the code more expressive.</p> </li> <li> <p>Services and controllers can be turned into <em>classes</em>. That way they'll be a step closer to becoming Angular service and component classes, which will make life easier after the upgrade.</p> </li> </ul> <h3 id="using-component-directives">Using Component Directives</h3> <p>In Angular, components are the main primitive from which user interfaces are built. You define the different portions of the UI as components and compose them into a full user experience.</p> <p>You can also do this in AngularJS, using <em>component directives</em>. These are directives that define their own templates, controllers, and input/output bindings - the same things that Angular components define. Applications built with component directives are much easier to migrate to Angular than applications built with lower-level features like <code>ng-controller</code>, <code>ng-include</code>, and scope inheritance.</p> <p>To be Angular compatible, an AngularJS component directive should configure these attributes:</p> <ul> <li>
 <code>restrict: 'E'</code>. Components are usually used as elements.</li> <li>
@@ -1774,17 +1774,9 @@ import { Phone, PhoneData } from '../core/phone/phone.service';
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

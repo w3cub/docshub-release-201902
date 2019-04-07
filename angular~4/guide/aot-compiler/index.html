@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/angular~4/guide/aot-compiler/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/angular~4.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="ahead-of-time-compilation">Ahead-of-Time Compilation</h1> <p>This cookbook describes how to radically improve performance by compiling <em>ahead-of-time</em> (AOT) during a build process.</p>  <h2 id="overview">Overview</h2> <p>An Angular application consists largely of components and their HTML templates. Before the browser can render the application, the components and templates must be converted to executable JavaScript by the <em>Angular compiler</em>.</p> <blockquote class="l-sub-section"> <p> <a href="https://www.youtube.com/watch?v=kW9cJsvcsGo" target="_blank">Watch compiler author Tobias Bosch explain the Angular Compiler</a> at AngularConnect 2016.</p> </blockquote> <p>You can compile the app in the browser, at runtime, as the application loads, using the <strong><em>just-in-time</em> (JIT) compiler</strong>. This is the standard development approach shown throughout the documentation. It's great but it has shortcomings.</p> <p>JIT compilation incurs a runtime performance penalty. Views take longer to render because of the in-browser compilation step. The application is bigger because it includes the Angular compiler and a lot of library code that the application won't actually need. Bigger apps take longer to transmit and are slower to load.</p> <p>Compilation can uncover many component-template binding errors. JIT compilation discovers them at runtime, which is late in the process.</p> <p>The <strong><em>ahead-of-time</em> (AOT) compiler</strong> can catch template errors early and improve performance by compiling at build time.</p>  <h2 id="ahead-of-time-aot-vs-just-in-time-jit">
 <code>Ahead-of-time</code> (AOT) vs <code>just-in-time</code> (JIT)</h2> <p>There is actually only one Angular compiler. The difference between AOT and JIT is a matter of timing and tooling. With AOT, the compiler runs once at build time using one set of libraries; with JIT it runs every time for every user at runtime using a different set of libraries.</p>  <h2 id="why-do-aot-compilation">Why do AOT compilation?</h2> <p><em>Faster rendering</em></p> <p>With AOT, the browser downloads a pre-compiled version of the application. The browser loads executable code so it can render the application immediately, without waiting to compile the app first.</p> <p><em>Fewer asynchronous requests</em></p> <p>The compiler <em>inlines</em> external HTML templates and CSS style sheets within the application JavaScript, eliminating separate ajax requests for those source files.</p> <p><em>Smaller Angular framework download size</em></p> <p>There's no need to download the Angular compiler if the app is already compiled. The compiler is roughly half of Angular itself, so omitting it dramatically reduces the application payload.</p> <p><em>Detect template errors earlier</em></p> <p>The AOT compiler detects and reports template binding errors during the build step before users can see them.</p> <p><em>Better security</em></p> <p>AOT compiles HTML templates and components into JavaScript files long before they are served to the client. With no templates to read and no risky client-side HTML or JavaScript evaluation, there are fewer opportunities for injection attacks.</p>  <h2 id="compile-with-aot">Compile with AOT</h2> <p>Preparing for offline compilation takes a few simple steps. Take the <a href="../setup/">Setup</a> as a starting point. A few minor changes to the lone <code>app.component</code> lead to these two class and HTML files:</p> <code-tabs> <div class="pre-title">src/app/app.component.html</div>
@@ -485,17 +485,9 @@ export default {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

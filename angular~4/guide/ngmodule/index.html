@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/angular~4/guide/ngmodule/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/angular~4.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~4/" class="_nav-link" title="" style="margin-left:0;">Angular 4</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="ngmodules">NgModules</h1> <p><strong>NgModules</strong> help organize an application into cohesive blocks of functionality.</p>  <p>An NgModule is a class adorned with the <em>@NgModule</em> decorator function. <code>@<a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code> takes a metadata object that tells Angular how to compile and run module code. It identifies the module's own components, directives, and pipes, making some of them public so external components can use them. <code>@<a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code> may add service providers to the application dependency injectors. And there are many more options covered here.</p> <p>Before reading this page, read the <a href="../bootstrapping/">The Root Module</a> page, which introduces NgModules and the essentials of creating and maintaining a single root <code>AppModule</code> for the entire application.</p> <p>This page covers NgModules in greater depth.</p>  <h4 id="live-examples">Live examples</h4> <p>This page explains NgModules through a progression of improvements to a sample with a "Tour of Heroes" theme. Here's an index to live examples at key moments in the evolution of the sample:</p> <ul> <li><span plnkr="minimal.0">A minimal NgModule app</span></li> <li><span plnkr="contact.1b">The first contact module</span></li> <li><span plnkr="contact.2">The revised contact module</span></li> <li><span plnkr="pre-shared.3">Just before adding SharedModule</span></li> <li><span>The final version</span></li> </ul> <h4 id="frequently-asked-questions-faqs">Frequently asked questions (FAQs)</h4> <p>This page covers NgModule concepts in a tutorial fashion.</p> <p>The companion <a href="../ngmodule-faq/" title="NgModule FAQs">NgModule FAQs</a> guide offers answers to specific design and implementation questions. Read this page before reading those FAQs.</p>   <h2 id="angular-modularity">Angular modularity</h2> <p>Modules are a great way to organize an application and extend it with capabilities from external libraries.</p> <p>Many Angular libraries are modules (such as <code><a href="../../api/forms/formsmodule/" class="code-anchor">FormsModule</a></code>, <code><a href="../../api/http/httpmodule/" class="code-anchor">HttpModule</a></code>, and <code><a href="../../api/router/routermodule/" class="code-anchor">RouterModule</a></code>). Many third-party libraries are available as NgModules (such as <a href="https://material.angular.io/" target="_blank">Material Design</a>, <a href="http://ionicframework.com/" target="_blank">Ionic</a>, <a href="https://github.com/angular/angularfire2" target="_blank">AngularFire2</a>).</p> <p>NgModules consolidate components, directives, and pipes into cohesive blocks of functionality, each focused on a feature area, application business domain, workflow, or common collection of utilities.</p> <p>Modules can also add services to the application. Such services might be internally developed, such as the application logger. Services can come from outside sources, such as the Angular router and Http client.</p> <p>Modules can be loaded eagerly when the application starts. They can also be <em>lazy loaded</em> asynchronously by the router.</p> <p>An NgModule is a class decorated with <code>@<a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code> metadata. The metadata do the following:</p> <ul> <li>Declare which components, directives, and pipes belong to the module.</li> <li>Make some of those classes public so that other component templates can use them.</li> <li>Import other modules with the components, directives, and pipes needed by the components in <em>this</em> module.</li> <li>Provide services at the application level that any application component can use.</li> </ul> <p>Every Angular app has at least one module class, the <em>root module</em>. You bootstrap that module to launch the application.</p> <p>The root module is all you need in a simple application with a few components. As the app grows, you refactor the root module into <em>feature modules</em> that represent collections of related functionality. You then import these modules into the root module.</p> <p>Later in this page, you'll read about this process. For now, you'll start with the root module.</p>  <h2 id="the-root-appmodule">The root <code>AppModule</code>
 </h2> <p>Every Angular app has a <em>root module</em> class. By convention, the <em>root module</em> class is called <code>AppModule</code> and it exists in a file named <code>app.module.ts</code>.</p> <p>The <code>AppModule</code> from the QuickStart seed on the <a href="../setup/">Setup</a> page is as minimal as possible:</p> <div class="pre-title">src/app/app.module.ts (minimal)</div>
@@ -705,17 +705,9 @@ export class ContactModule { }</pre> </code-tabs> <p>Notice the following:</p> <
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
