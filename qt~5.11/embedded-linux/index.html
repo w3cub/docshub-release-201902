@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.11/" class="_nav-link" title="" style="margin-left:0;">Qt 5.11</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _qt">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title">Qt for Embedded Linux</h1>     <p>Since the Qt 5.0 release, Qt no longer contains its own window system (QWS) implementation. For single-process use cases, the <a href="../qpa/">Qt Platform Abstraction</a> is a superior solution. Multiple graphical processes can be supported through Wayland.</p> <p>There are multiple platform plugins that are potentially usable on Embedded Linux systems: EGLFS, <a href="../embedded-linux/#linuxfb">LinuxFB</a>, DirectFB, Wayland. The availability of these depend on the configuration of Qt. On many boards <i>eglfs</i> is chosen as the default one. If the default is not suitable, the <code>QT_QPA_PLATFORM</code> environment variable parameter can be used to request another plugin. Alternatively, for quick tests, the <code>-platform</code> command-line can be used with the same syntax.</p>  <h2 id="configuring-a-specific-device">Configuring a Specific Device
 </h2> <p>Building Qt for a given device requires a toolchain and a sysroot. Additionally, some devices require vendor-specific adaptation code for EGL and OpenGL ES 2.0 support. This is not relevant for non-accelerated platforms, for example the ones using the <a href="../embedded-linux/#linuxfb">LinuxFB</a> plugin, which is meant for software-based rendering only.</p> <p>The directory <i>qtbase/mkspecs/devices</i> contains configuration and graphics adaptation code for a number of devices. For example, the <code>linux-rasp-pi2-g++</code> mkspec contains build settings such as the optimal compiler and linker flags for the <a href="http://www.raspberrypi.org" target="_blank">Raspberry Pi 2</a> device. The mkspec also contains information about either an implementation of the <i>eglfs</i> hooks (vendor-specific adaptation code), or a reference to the suitable <i>eglfs</i> device integration plugin. The device is selected through the <a href="../configure-options/">configure</a> tool's <code>-device</code> parameter. The name that follows after this argument must, at least partially, match one of the subdirectories under <i>devices</i>.</p> <p>The following is an example configuration for the Raspberry Pi 2. For most Embedded Linux boards, the configure command looks similar:</p> <pre data-language="cpp">./configure -release -opengl es2 -device linux-rasp-pi2-g++ -device-option CROSS_COMPILE=$TOOLCHAIN/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- -sysroot $ROOTFS -prefix /usr/local/qt5</pre> <p>The most important parameters are <code>-device</code> and <code>-sysroot</code>. By specifying <code>-sysroot</code>, the include files and libraries used by <code>configure</code>'s feature detection tests, as well as Qt itself, is taken from the specified location, instead of the host PC's standard locations. This means that installing development packages on the host machine has no relevance. For example, to get <code>libinput</code> support it is not sufficient or necessary to have the <code>libinput</code> development headers and libraries installed on the host environment. Instead, the headers and the libraries for the target architecture (e.g. ARM) must be present in the <code>sysroot</code>.</p> <p><code>pkg-config</code> is supported also when performing cross-compilation. <code>configure</code> automatically sets <code>PKG_CONFIG_LIBDIR</code> to make <code>pkg-config</code> report compiler and linker settings based on the <code>sysroot</code> instead of the host machine. This usually functions well without any further adjustments. However, environment variables such as <code>PKG_CONFIG_PATH</code> must be unset for the host machine before running <code>configure</code>. Otherwise, the Qt build may attempt to use inappropriate headers and libraries from the host system.</p> <p>Specifying <code>-sysroot</code> results in automatically setting the <code>--sysroot</code> argument when invoking the compiler. In some cases this is not desirable and can be disabled by passing <code>-no-gcc-sysroot</code> to <code>configure</code>.</p> <p><code>-prefix</code>, <code>-extprefix</code> and <code>-hostprefix</code> control the intended destination directory of the Qt build. In the above example the ARM build of Qt is expected to be placed in <code>/usr/local/qt5</code> on the target device. Note that running <code>make install</code> does not deploy anything to the device. Instead, the <code>install</code> step targets the directory specified by <code>extprefix</code> which defaults to <code>sysroot</code> + <code>prefix</code> and is therefore optional. However, in many cases "polluting" the sysroot is not desirable and thus specifying <code>-extprefix</code> becomes important. Finally, <code>-hostprefix</code> allows separating host tools like qmake, rcc, uic from the binaries for the target. When given, such tools will be installed under the specified directory instead of <code>extprefix</code>.</p> <p>See <a href="../configure-options/">Qt Configure Options</a> for more information.</p>  <h2 id="platform-plugins-for-embedded-linux-devices">Platform Plugins for Embedded Linux Devices
@@ -281,17 +281,9 @@ ctx.doneCurrent();</pre>  <h3>eglfs with eglfs_kms_egldevice backend
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
