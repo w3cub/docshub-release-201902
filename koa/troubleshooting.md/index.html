@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/koa/" class="_nav-link" title="" style="margin-left:0;">Koa</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _github">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="troubleshooting-koa">Troubleshooting Koa</h1> <ul> <li><a href="#whenever-i-try-to-access-my-route-it-sends-back-a-404">Whenever I try to access my route, it sends back a 404</a></li> <li><a href="#my-response-or-context-changes-have-no-effect">My response or context changes have no effect</a></li> <li><a href="#my-middleware-is-not-called">My middleware is not called</a></li> </ul> <p>See also <a href="../guide.md/#debugging-koa">debugging Koa</a>.</p> <p>If you encounter a problem and later learn how to fix it, and think others might also encounter that problem, please consider contributing to this documentation.</p> <h2 id="whenever-i-try-to-access-my-route-it-sends-back-a-404">Whenever I try to access my route, it sends back a 404</h2> <p>This is a common but troublesome problem when working with Koa middleware. First, it is critical to understand when Koa generates a 404. Koa does not care which or how much middleware was run, in many cases a 200 and 404 trigger the same number of middleware. Instead, the default status for any response is 404. The most obvious way this is changed is through <code>ctx.status</code>. However, if <code>ctx.body</code> is set when the status has not been explicitly defined (through <code>ctx.status</code>), the status is set to 200. This explains why simply setting the body results in a 200. Once the middleware is done (when the middleware and any returned promises are complete), Koa sends out the response. After that, nothing can alter the response. If it was a 404 at the time, it will be a 404 at the end, even if <code>ctx.status</code> or <code>ctx.body</code> are set afterwords.</p> <p>Even though we now understand the basis of a 404, it might not be as clear why a 404 is generated in a specific case. This can be especially troublesome when it seems that <code>ctx.status</code> or <code>ctx.body</code> are set.</p> <p>The unexpected 404 is a specific symptom of one of these more general problems:</p> <ul> <li><a href="#my-response-or-context-changes-have-no-effect">My response or context changes have no effect</a></li> <li><a href="#my-middleware-is-not-called">My middleware is not called</a></li> </ul> <h2 id="my-response-or-context-changes-have-no-effect">My response or context changes have no effect</h2> <p>This can be caused when the response is sent before the code making the change is executed. If the change is to the <code>ctx.body</code> or <code>ctx.status</code> setter, this can cause a 404 and is by far the most common cause of these problems.</p> <h3 id="problematic-code">Problematic code</h3> <pre data-language="js">router.get('/fetch', function (ctx, next) {
   models.Book.findById(parseInt(ctx.query.id)).then(function (book) {
@@ -149,17 +149,9 @@ router.get('/fetch', function (ctx, next) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
