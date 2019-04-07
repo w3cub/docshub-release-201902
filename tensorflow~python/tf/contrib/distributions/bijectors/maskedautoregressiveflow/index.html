@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~python/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Python</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> tf.contrib.distributions.bijectors.MaskedAutoregressiveFlow </h1>     <div itemscope itemtype="http://developers.google.com/ReferenceObject"> <meta itemprop="name" content="tf.contrib.distributions.bijectors.MaskedAutoregressiveFlow"> <meta itemprop="path" content="r1.8"> <meta itemprop="property" content="dtype"> <meta itemprop="property" content="event_ndims"> <meta itemprop="property" content="graph_parents"> <meta itemprop="property" content="is_constant_jacobian"> <meta itemprop="property" content="name"> <meta itemprop="property" content="validate_args"> <meta itemprop="property" content="__init__"> <meta itemprop="property" content="forward"> <meta itemprop="property" content="forward_event_shape"> <meta itemprop="property" content="forward_event_shape_tensor"> <meta itemprop="property" content="forward_log_det_jacobian"> <meta itemprop="property" content="inverse"> <meta itemprop="property" content="inverse_event_shape"> <meta itemprop="property" content="inverse_event_shape_tensor"> <meta itemprop="property" content="inverse_log_det_jacobian"> </div> <h2 id="class_maskedautoregressiveflow">Class <code>MaskedAutoregressiveFlow</code>
 </h2> <p>Inherits From: <a href="../../../../distributions/bijectors/bijector/"><code>Bijector</code></a></p> <p>Defined in <a href="https://www.github.com/tensorflow/tensorflow/blob/r1.8/tensorflow/contrib/distributions/python/ops/bijectors/masked_autoregressive.py" target="_blank"><code>tensorflow/contrib/distributions/python/ops/bijectors/masked_autoregressive.py</code></a>.</p> <p>Affine MaskedAutoregressiveFlow bijector for vector-valued events.</p> <p>The affine autoregressive flow [(Papamakarios et al., 2016)][3] provides a relatively simple framework for user-specified (deep) architectures to learn a distribution over vector-valued events. Regarding terminology,</p> <p>"Autoregressive models decompose the joint density as a product of conditionals, and model each conditional in turn. Normalizing flows transform a base density (e.g. a standard Gaussian) into the target density by an invertible transformation with tractable Jacobian." [(Papamakarios et al., 2016)][3]</p> <p>In other words, the "autoregressive property" is equivalent to the decomposition, <code>p(x) = prod{ p(x[i] | x[0:i]) : i=0, ..., d }</code>. The provided <code>shift_and_log_scale_fn</code>, <code>masked_autoregressive_default_template</code>, achieves this property by zeroing out weights in its <code>masked_dense</code> layers.</p> <p>In the <a href="../../../../distributions/"><code>tf.distributions</code></a> framework, a "normalizing flow" is implemented as a <a href="../../../../distributions/bijectors/bijector/"><code>tf.distributions.bijectors.Bijector</code></a>. The <code>forward</code> "autoregression" is implemented using a <a href="../../../../while_loop/"><code>tf.while_loop</code></a> and a deep neural network (DNN) with masked weights such that the autoregressive property is automatically met in the <code>inverse</code>.</p> <p>A <code>TransformedDistribution</code> using <code>MaskedAutoregressiveFlow(...)</code> uses the (expensive) forward-mode calculation to draw samples and the (cheap) reverse-mode calculation to compute log-probabilities. Conversely, a <code>TransformedDistribution</code> using <code>Invert(MaskedAutoregressiveFlow(...))</code> uses the (expensive) forward-mode calculation to compute log-probabilities and the (cheap) reverse-mode calculation to compute samples. See "Example Use" [below] for more details.</p> <p>Given a <code>shift_and_log_scale_fn</code>, the forward and inverse transformations are (a sequence of) affine transformations. A "valid" <code>shift_and_log_scale_fn</code> must compute each <code>shift</code> (aka <code>loc</code> or "mu" in [Germain et al. (2015)][1]) and <code>log(scale)</code> (aka "alpha" in [Germain et al. (2015)][1]) such that each are broadcastable with the arguments to <code>forward</code> and <code>inverse</code>, i.e., such that the calculations in <code>forward</code>, <code>inverse</code> [below] are possible.</p> <p>For convenience, <code>masked_autoregressive_default_template</code> is offered as a possible <code>shift_and_log_scale_fn</code> function. It implements the MADE architecture [(Germain et al., 2015)][1]. MADE is a feed-forward network that computes a <code>shift</code> and <code>log(scale)</code> using <code>masked_dense</code> layers in a deep neural network. Weights are masked to ensure the autoregressive property. It is possible that this architecture is suboptimal for your task. To build alternative networks, either change the arguments to <code>masked_autoregressive_default_template</code>, use the <code>masked_dense</code> function to roll-out your own, or use some other architecture, e.g., using <a href="../../../../layers/"><code>tf.layers</code></a>.</p> <aside class="warning"><strong>Warning:</strong><span> no attempt is made to validate that the <code>shift_and_log_scale_fn</code> enforces the "autoregressive property".</span></aside> <p>Assuming <code>shift_and_log_scale_fn</code> has valid shape and autoregressive semantics, the forward transformation is</p> <pre class="prettyprint lang-python" data-language="python">def forward(x):
@@ -207,17 +207,9 @@ maf_no_scale_hidden2 = tfd.TransformedDistribution(
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

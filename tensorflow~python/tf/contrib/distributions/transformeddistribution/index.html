@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~python/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Python</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> tf.contrib.distributions.TransformedDistribution </h1>     <div itemscope itemtype="http://developers.google.com/ReferenceObject"> <meta itemprop="name" content="tf.contrib.distributions.TransformedDistribution"> <meta itemprop="path" content="r1.8"> <meta itemprop="property" content="allow_nan_stats"> <meta itemprop="property" content="batch_shape"> <meta itemprop="property" content="bijector"> <meta itemprop="property" content="distribution"> <meta itemprop="property" content="dtype"> <meta itemprop="property" content="event_shape"> <meta itemprop="property" content="name"> <meta itemprop="property" content="parameters"> <meta itemprop="property" content="reparameterization_type"> <meta itemprop="property" content="validate_args"> <meta itemprop="property" content="__init__"> <meta itemprop="property" content="batch_shape_tensor"> <meta itemprop="property" content="cdf"> <meta itemprop="property" content="copy"> <meta itemprop="property" content="covariance"> <meta itemprop="property" content="cross_entropy"> <meta itemprop="property" content="entropy"> <meta itemprop="property" content="event_shape_tensor"> <meta itemprop="property" content="is_scalar_batch"> <meta itemprop="property" content="is_scalar_event"> <meta itemprop="property" content="kl_divergence"> <meta itemprop="property" content="log_cdf"> <meta itemprop="property" content="log_prob"> <meta itemprop="property" content="log_survival_function"> <meta itemprop="property" content="mean"> <meta itemprop="property" content="mode"> <meta itemprop="property" content="param_shapes"> <meta itemprop="property" content="param_static_shapes"> <meta itemprop="property" content="prob"> <meta itemprop="property" content="quantile"> <meta itemprop="property" content="sample"> <meta itemprop="property" content="stddev"> <meta itemprop="property" content="survival_function"> <meta itemprop="property" content="variance"> </div> <h2 id="class_transformeddistribution">Class <code>TransformedDistribution</code>
 </h2> <p>Inherits From: <a href="../../../distributions/distribution/"><code>Distribution</code></a></p> <p>Defined in <a href="https://www.github.com/tensorflow/tensorflow/blob/r1.8/tensorflow/python/ops/distributions/transformed_distribution.py" target="_blank"><code>tensorflow/python/ops/distributions/transformed_distribution.py</code></a>.</p> <p>See the guide: <a href="https://www.tensorflow.org/api_guides/python/contrib.distributions#Transformed_distributions" target="_blank">Statistical Distributions (contrib) &gt; Transformed distributions</a></p> <p>A Transformed Distribution.</p> <p>A <code>TransformedDistribution</code> models <code>p(y)</code> given a base distribution <code>p(x)</code>, and a deterministic, invertible, differentiable transform, <code>Y = g(X)</code>. The transform is typically an instance of the <code>Bijector</code> class and the base distribution is typically an instance of the <code>Distribution</code> class.</p> <p>A <code>Bijector</code> is expected to implement the following functions: - <code>forward</code>, - <code>inverse</code>, - <code>inverse_log_det_jacobian</code>. The semantics of these functions are outlined in the <code>Bijector</code> documentation.</p> <p>We now describe how a <code>TransformedDistribution</code> alters the input/outputs of a <code>Distribution</code> associated with a random variable (rv) <code>X</code>.</p> <p>Write <code>cdf(Y=y)</code> for an absolutely continuous cumulative distribution function of random variable <code>Y</code>; write the probability density function <code>pdf(Y=y) := d^k / (dy_1,...,dy_k) cdf(Y=y)</code> for its derivative wrt to <code>Y</code> evaluated at <code>y</code>. Assume that <code>Y = g(X)</code> where <code>g</code> is a deterministic diffeomorphism, i.e., a non-random, continuous, differentiable, and invertible function. Write the inverse of <code>g</code> as <code>X = g^{-1}(Y)</code> and <code>(J o g)(x)</code> for the Jacobian of <code>g</code> evaluated at <code>x</code>.</p> <p>A <code>TransformedDistribution</code> implements the following operations:</p> <ul> <li> <p><code>sample</code> Mathematically: <code>Y = g(X)</code> Programmatically: <code>bijector.forward(distribution.sample(...))</code></p> </li> <li> <p><code>log_prob</code> Mathematically: <code>(log o pdf)(Y=y) = (log o pdf o g^{-1})(y) + (log o abs o det o J o g^{-1})(y)</code> Programmatically: <code>(distribution.log_prob(bijector.inverse(y)) + bijector.inverse_log_det_jacobian(y))</code></p> </li> <li> <p><code>log_cdf</code> Mathematically: <code>(log o cdf)(Y=y) = (log o cdf o g^{-1})(y)</code> Programmatically: <code>distribution.log_cdf(bijector.inverse(x))</code></p> </li> <li> <p>and similarly for: <code>cdf</code>, <code>prob</code>, <code>log_survival_function</code>, <code>survival_function</code>.</p> </li> </ul> <p>A simple example constructing a Log-Normal distribution from a Normal distribution:</p> <pre class="prettyprint lang-python" data-language="python">ds = tf.contrib.distributions
@@ -270,17 +270,9 @@ mvn2 = ds.MultivariateNormalTriL(loc=mean, scale_tril=chol_cov)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

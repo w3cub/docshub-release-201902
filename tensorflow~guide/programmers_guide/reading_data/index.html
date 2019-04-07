@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~guide/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Guide</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> Importing Data </h1>     <p>The <a href="https://www.tensorflow.org/api_docs/python/tf/data" target="_blank"><code>tf.data</code></a> API enables you to build complex input pipelines from simple, reusable pieces. For example, the pipeline for an image model might aggregate data from files in a distributed file system, apply random perturbations to each image, and merge randomly selected images into a batch for training. The pipeline for a text model might involve extracting symbols from raw text data, converting them to embedding identifiers with a lookup table, and batching together sequences of different lengths. The <a href="https://www.tensorflow.org/api_docs/python/tf/data" target="_blank"><code>tf.data</code></a> API makes it easy to deal with large amounts of data, different data formats, and complicated transformations.</p> <p>The <a href="https://www.tensorflow.org/api_docs/python/tf/data" target="_blank"><code>tf.data</code></a> API introduces two new abstractions to TensorFlow:</p> <ul> <li> <p>A <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset" target="_blank"><code>tf.data.Dataset</code></a> represents a sequence of elements, in which each element contains one or more <code>Tensor</code> objects. For example, in an image pipeline, an element might be a single training example, with a pair of tensors representing the image data and a label. There are two distinct ways to create a dataset:</p> <ul> <li> <p>Creating a <strong>source</strong> (e.g. <code>Dataset.from_tensor_slices()</code>) constructs a dataset from one or more <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> objects.</p> </li> <li> <p>Applying a <strong>transformation</strong> (e.g. <code>Dataset.batch()</code>) constructs a dataset from one or more <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset" target="_blank"><code>tf.data.Dataset</code></a> objects.</p> </li> </ul> </li> <li> <p>A <a href="https://www.tensorflow.org/api_docs/python/tf/data/Iterator" target="_blank"><code>tf.data.Iterator</code></a> provides the main way to extract elements from a dataset. The operation returned by <code>Iterator.get_next()</code> yields the next element of a <code>Dataset</code> when executed, and typically acts as the interface between input pipeline code and your model. The simplest iterator is a "one-shot iterator", which is associated with a particular <code>Dataset</code> and iterates through it once. For more sophisticated uses, the <code>Iterator.initializer</code> operation enables you to reinitialize and parameterize an iterator with different datasets, so that you can, for example, iterate over training and validation data multiple times in the same program.</p> </li> </ul> <h2 id="basic_mechanics">Basic mechanics</h2> <p>This section of the guide describes the fundamentals of creating different kinds of <code>Dataset</code> and <code>Iterator</code> objects, and how to extract data from them.</p> <p>To start an input pipeline, you must define a <em>source</em>. For example, to construct a <code>Dataset</code> from some tensors in memory, you can use <code>tf.data.Dataset.from_tensors()</code> or <code>tf.data.Dataset.from_tensor_slices()</code>. Alternatively, if your input data are on disk in the recommended TFRecord format, you can construct a <a href="https://www.tensorflow.org/api_docs/python/tf/data/TFRecordDataset" target="_blank"><code>tf.data.TFRecordDataset</code></a>.</p> <p>Once you have a <code>Dataset</code> object, you can <em>transform</em> it into a new <code>Dataset</code> by chaining method calls on the <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset" target="_blank"><code>tf.data.Dataset</code></a> object. For example, you can apply per-element transformations such as <code>Dataset.map()</code> (to apply a function to each element), and multi-element transformations such as <code>Dataset.batch()</code>. See the documentation for <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset" target="_blank"><code>tf.data.Dataset</code></a> for a complete list of transformations.</p> <p>The most common way to consume values from a <code>Dataset</code> is to make an <strong>iterator</strong> object that provides access to one element of the dataset at a time (for example, by calling <code>Dataset.make_one_shot_iterator()</code>). A <a href="https://www.tensorflow.org/api_docs/python/tf/data/Iterator" target="_blank"><code>tf.data.Iterator</code></a> provides two operations: <code>Iterator.initializer</code>, which enables you to (re)initialize the iterator's state; and <code>Iterator.get_next()</code>, which returns <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> objects that correspond to the symbolic next element. Depending on your use case, you might choose a different type of iterator, and the options are outlined below.</p> <h3 id="dataset_structure">Dataset structure</h3> <p>A dataset comprises elements that each have the same structure. An element contains one or more <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> objects, called <em>components</em>. Each component has a <a href="https://www.tensorflow.org/api_docs/python/tf/DType" target="_blank"><code>tf.DType</code></a> representing the type of elements in the tensor, and a <a href="https://www.tensorflow.org/api_docs/python/tf/TensorShape" target="_blank"><code>tf.TensorShape</code></a> representing the (possibly partially specified) static shape of each element. The <code>Dataset.output_types</code> and <code>Dataset.output_shapes</code> properties allow you to inspect the inferred types and shapes of each component of a dataset element. The <em>nested structure</em> of these properties map to the structure of an element, which may be a single tensor, a tuple of tensors, or a nested tuple of tensors. For example:</p> <pre class="prettyprint lang-python" data-language="python">dataset1 = tf.data.Dataset.from_tensor_slices(tf.random_uniform([4, 10]))
 print(dataset1.output_types)  # ==&gt; "tf.float32"
@@ -465,17 +465,9 @@ with tf.train.MonitoredTrainingSession(...) as sess:
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~python/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Python</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> tf.train.SyncReplicasOptimizer </h1>     <div itemscope itemtype="http://developers.google.com/ReferenceObject"> <meta itemprop="name" content="tf.train.SyncReplicasOptimizer"> <meta itemprop="path" content="r1.8"> <meta itemprop="property" content="__init__"> <meta itemprop="property" content="apply_gradients"> <meta itemprop="property" content="compute_gradients"> <meta itemprop="property" content="get_chief_queue_runner"> <meta itemprop="property" content="get_init_tokens_op"> <meta itemprop="property" content="get_name"> <meta itemprop="property" content="get_slot"> <meta itemprop="property" content="get_slot_names"> <meta itemprop="property" content="make_session_run_hook"> <meta itemprop="property" content="minimize"> <meta itemprop="property" content="variables"> <meta itemprop="property" content="GATE_GRAPH"> <meta itemprop="property" content="GATE_NONE"> <meta itemprop="property" content="GATE_OP"> </div> <h2 id="class_syncreplicasoptimizer">Class <code>SyncReplicasOptimizer</code>
 </h2> <p>Inherits From: <a href="../optimizer/"><code>Optimizer</code></a></p> <p>Defined in <a href="https://www.github.com/tensorflow/tensorflow/blob/r1.8/tensorflow/python/training/sync_replicas_optimizer.py" target="_blank"><code>tensorflow/python/training/sync_replicas_optimizer.py</code></a>.</p> <p>Class to synchronize, aggregate gradients and pass them to the optimizer.</p> <p>In a typical asynchronous training environment, it's common to have some stale gradients. For example, with a N-replica asynchronous training, gradients will be applied to the variables N times independently. Depending on each replica's training speed, some gradients might be calculated from copies of the variable from several steps back (N-1 steps on average). This optimizer avoids stale gradients by collecting gradients from all replicas, averaging them, then applying them to the variables in one shot, after which replicas can fetch the new variables and continue.</p> <p>The following accumulators/queue are created: <empty line> <em> N <code>gradient accumulators</code>, one per variable to train. Gradients are pushed to them and the chief worker will wait until enough gradients are collected and then average them before applying to variables. The accumulator will drop all stale gradients (more details in the accumulator op). </em> 1 <code>token</code> queue where the optimizer pushes the new global_step value after all variables are updated.</empty></p> <p>The following local variable is created: * <code>sync_rep_local_step</code>, one per replica. Compared against the global_step in each accumulator to check for staleness of the gradients.</p> <p>The optimizer adds nodes to the graph to collect gradients and pause the trainers until variables are updated. For the Parameter Server job: <empty line> 1. An accumulator is created for each variable, and each replica pushes the gradients into the accumulators instead of directly applying them to the variables. 2. Each accumulator averages once enough gradients (replicas_to_aggregate) have been accumulated. 3. Apply the averaged gradients to the variables. 4. Only after all variables have been updated, increment the global step. 5. Only after step 4, pushes <code>global_step</code> in the <code>token_queue</code>, once for each worker replica. The workers can now fetch the global step, use it to update its local_step variable and start the next batch.</empty></p> <p>For the replicas: <empty line> 1. Start a step: fetch variables and compute gradients. 2. Once the gradients have been computed, push them into gradient accumulators. Each accumulator will check the staleness and drop the stale. 3. After pushing all the gradients, dequeue an updated value of global_step from the token queue and record that step to its local_step variable. Note that this is effectively a barrier. 4. Start the next batch.</empty></p> <h3 id="usage">Usage</h3> <pre class="prettyprint lang-python" data-language="python"># Create any optimizer to update the variables, say a simple SGD:
@@ -190,17 +190,9 @@ my_estimator.fit(..., hooks=[sync_replicas_hook])
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

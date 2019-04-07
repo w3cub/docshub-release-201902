@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~python/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Python</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> tf.contrib.distributions.RelaxedBernoulli </h1>     <div itemscope itemtype="http://developers.google.com/ReferenceObject"> <meta itemprop="name" content="tf.contrib.distributions.RelaxedBernoulli"> <meta itemprop="path" content="r1.8"> <meta itemprop="property" content="allow_nan_stats"> <meta itemprop="property" content="batch_shape"> <meta itemprop="property" content="bijector"> <meta itemprop="property" content="distribution"> <meta itemprop="property" content="dtype"> <meta itemprop="property" content="event_shape"> <meta itemprop="property" content="logits"> <meta itemprop="property" content="name"> <meta itemprop="property" content="parameters"> <meta itemprop="property" content="probs"> <meta itemprop="property" content="reparameterization_type"> <meta itemprop="property" content="temperature"> <meta itemprop="property" content="validate_args"> <meta itemprop="property" content="__init__"> <meta itemprop="property" content="batch_shape_tensor"> <meta itemprop="property" content="cdf"> <meta itemprop="property" content="copy"> <meta itemprop="property" content="covariance"> <meta itemprop="property" content="cross_entropy"> <meta itemprop="property" content="entropy"> <meta itemprop="property" content="event_shape_tensor"> <meta itemprop="property" content="is_scalar_batch"> <meta itemprop="property" content="is_scalar_event"> <meta itemprop="property" content="kl_divergence"> <meta itemprop="property" content="log_cdf"> <meta itemprop="property" content="log_prob"> <meta itemprop="property" content="log_survival_function"> <meta itemprop="property" content="mean"> <meta itemprop="property" content="mode"> <meta itemprop="property" content="param_shapes"> <meta itemprop="property" content="param_static_shapes"> <meta itemprop="property" content="prob"> <meta itemprop="property" content="quantile"> <meta itemprop="property" content="sample"> <meta itemprop="property" content="stddev"> <meta itemprop="property" content="survival_function"> <meta itemprop="property" content="variance"> </div> <h2 id="class_relaxedbernoulli">Class <code>RelaxedBernoulli</code>
 </h2> <p>Inherits From: <a href="../transformeddistribution/"><code>TransformedDistribution</code></a></p> <p>Defined in <a href="https://www.github.com/tensorflow/tensorflow/blob/r1.8/tensorflow/contrib/distributions/python/ops/relaxed_bernoulli.py" target="_blank"><code>tensorflow/contrib/distributions/python/ops/relaxed_bernoulli.py</code></a>.</p> <p>RelaxedBernoulli distribution with temperature and logits parameters.</p> <p>The RelaxedBernoulli is a distribution over the unit interval (0,1), which continuously approximates a Bernoulli. The degree of approximation is controlled by a temperature: as the temperature goes to 0 the RelaxedBernoulli becomes discrete with a distribution described by the <code>logits</code> or <code>probs</code> parameters, as the temperature goes to infinity the RelaxedBernoulli becomes the constant distribution that is identically 0.5.</p> <p>The RelaxedBernoulli distribution is a reparameterized continuous distribution that is the binary special case of the RelaxedOneHotCategorical distribution (Maddison et al., 2016; Jang et al., 2016). For details on the binary special case see the appendix of Maddison et al. (2016) where it is referred to as BinConcrete. If you use this distribution, please cite both papers.</p> <p>Some care needs to be taken for loss functions that depend on the log-probability of RelaxedBernoullis, because computing log-probabilities of the RelaxedBernoulli can suffer from underflow issues. In many case loss functions such as these are invariant under invertible transformations of the random variables. The KL divergence, found in the variational autoencoder loss, is an example. Because RelaxedBernoullis are sampled by a Logistic random variable followed by a <a href="../../../sigmoid/"><code>tf.sigmoid</code></a> op, one solution is to treat the Logistic as the random variable and <a href="../../../sigmoid/"><code>tf.sigmoid</code></a> as downstream. The KL divergences of two Logistics, which are always followed by a <a href="../../../sigmoid/"><code>tf.sigmoid</code></a> op, is equivalent to evaluating KL divergences of RelaxedBernoulli samples. See Maddison et al., 2016 for more details where this distribution is called the BinConcrete.</p> <p>An alternative approach is to evaluate Bernoulli log probability or KL directly on relaxed samples, as done in Jang et al., 2016. In this case, guarantees on the loss are usually violated. For instance, using a Bernoulli KL in a relaxed ELBO is no longer a lower bound on the log marginal probability of the observation. Thus care and early stopping are important.</p> <h4 id="examples">Examples</h4> <p>Creates three continuous distributions, which approximate 3 Bernoullis with probabilities (0.1, 0.5, 0.4). Samples from these distributions will be in the unit interval (0,1).</p> <pre class="prettyprint lang-python" data-language="python">temperature = 0.5
@@ -253,17 +253,9 @@ dist = RelaxedBernoulli(temperature, logits=logits)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

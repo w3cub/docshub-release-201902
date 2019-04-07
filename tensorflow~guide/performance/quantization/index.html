@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~guide/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Guide</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> Fixed Point Quantization </h1>     <p>Quantization techniques store and calculate numbers in more compact formats. <a href="https://www.tensorflow.org/mobile/tflite/" target="_blank">TensorFlow Lite</a> adds quantization that uses an 8-bit fixed point representation.</p> <p>Since a challenge for modern neural networks is optimizing for high accuracy, the priority has been improving accuracy and speed during training. Using floating point arithmetic is an easy way to preserve accuracy and GPUs are designed to accelerate these calculations.</p> <p>However, as more machine learning models are deployed to mobile devices, inference efficiency has become a critical issue. Where the computational demand for <em>training</em> grows with the amount of models trained on different architectures, the computational demand for <em>inference</em> grows in proportion to the amount of users.</p> <h2 id="quantization_benefits">Quantization benefits</h2> <p>Using 8-bit calculations help your models run faster and use less power. This is especially important for mobile devices and embedded applications that can't run floating point code efficiently, for example, Internet of Things (IoT) and robotics devices. There are additional opportunities to extend this support to more backends and research lower precision networks.</p> <h3 class="hide-from-toc" id="smaller_file_sizes_hide-from-toc">Smaller file sizes</h3> <p>Neural network models require a lot of space on disk. For example, the original AlexNet requires over 200 MB for the float format—almost all of that for the model's millions of weights. Because the weights are slightly different floating point numbers, simple compression formats perform poorly (like zip).</p> <p>Weights fall in large layers of numerical values. For each layer, weights tend to be normally distributed within a range. Quantization can shrink file sizes by storing the minimum and maximum weight for each layer, then compress each weight's float value to an 8-bit integer representing the closest real number in a linear set of 256 within the range.</p> <h3 class="hide-from-toc" id="faster_inference_hide-from-toc">Faster inference</h3> <p>Since calculations are run entirely on 8-bit inputs and outputs, quantization reduces the computational resources needed for inference calculations. This is more involved, requiring changes to all floating point calculations, but results in a large speed-up for inference time.</p> <h3 class="hide-from-toc" id="memory_efficiency_hide-from-toc">Memory efficiency</h3> <p>Since fetching 8-bit values only requires 25% of the memory bandwidth of floats, more efficient caches avoid bottlenecks for RAM access. In many cases, the power consumption for running a neural network is dominated by memory access. The savings from using fixed-point 8-bit weights and activations are significant. </p> <p>Typically, SIMD operations are available that run more operations per clock cycle. In some cases, a DSP chip is available that accelerates 8-bit calculations resulting in a massive speedup.</p> <h2 id="fixed_point_quantization_techniques">Fixed point quantization techniques</h2> <p>The goal is to use the same precision for weights and activations during both training and inference. But an important difference is that training consists of a forward pass and a backward pass, while inference only uses a forward pass. When we train the model with quantization in the loop, we ensure that the forward pass matches precision for both training and inference.</p> <p>To minimize the loss in accuracy for fully fixed point models (weights and activations), train the model with quantization in the loop. This simulates quantization in the forward pass of a model so weights tend towards values that perform better during quantized inference. The backward pass uses quantized weights and activations and models quantization as a straight through estimator. (See Bengio et al., <a href="https://arxiv.org/abs/1308.3432" target="_blank">2013</a>)</p> <p>Additionally, the minimum and maximum values for activations are determined during training. This allows a model trained with quantization in the loop to be converted to a fixed point inference model with little effort, eliminating the need for a separate calibration step.</p> <h2 id="quantization_training_with_tensorflow">Quantization training with TensorFlow</h2> <p>TensorFlow can train models with quantization in the loop. Because training requires small gradient adjustments, floating point values are still used. To keep models as floating point while adding the quantization error in the training loop, <a href="https://www.tensorflow.org/api_guides/python/array_ops#Fake_quantization" target="_blank">fake quantization</a> nodes simulate the effect of quantization in the forward and backward passes.</p> <p>Since it's difficult to add these fake quantization operations to all the required locations in the model, there's a function available that rewrites the training graph. To create a fake quantized training graph:</p> <pre class="prettyprint" data-language="cpp"># Build forward pass of model.
 loss = tf.losses.get_total_loss()
@@ -220,17 +220,9 @@ saver.save(sess, checkpoint_name)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

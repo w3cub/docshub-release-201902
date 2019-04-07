@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~guide/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Guide</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> High-Performance Models </h1>     <p>This document and accompanying <a href="https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks" target="_blank">scripts</a> detail how to build highly scalable models that target a variety of system types and network topologies. The techniques in this document utilize some low-level TensorFlow Python primitives. In the future, many of these techniques will be incorporated into high-level APIs.</p> <h2 id="input_pipeline">Input Pipeline</h2> <p>The <a href="../performance_guide/">Performance Guide</a> explains how to identify possible input pipeline issues and best practices. We found that using <a href="https://www.tensorflow.org/api_docs/python/tf/FIFOQueue" target="_blank"><code>tf.FIFOQueue</code></a> and <a href="https://www.tensorflow.org/api_docs/python/tf/train/queue_runner" target="_blank"><code>tf.train.queue_runner</code></a> could not saturate multiple current generation GPUs when using large inputs and processing with higher samples per second, such as training ImageNet with <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank">AlexNet</a>. This is due to the use of Python threads as its underlying implementation. The overhead of Python threads is too large.</p> <p>Another approach, which we have implemented in the <a href="https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks" target="_blank">scripts</a>, is to build an input pipeline using the native parallelism in TensorFlow. Our implementation is made up of 3 stages:</p> <ul> <li>I/O reads: Choose and read image files from disk.</li> <li>Image Processing: Decode image records into images, preprocess, and organize into mini-batches.</li> <li>CPU-to-GPU Data Transfer: Transfer images from CPU to GPU.</li> </ul> <p>The dominant part of each stage is executed in parallel with the other stages using <code>data_flow_ops.StagingArea</code>. <code>StagingArea</code> is a queue-like operator similar to <a href="https://www.tensorflow.org/api_docs/python/tf/FIFOQueue" target="_blank"><code>tf.FIFOQueue</code></a>. The difference is that <code>StagingArea</code> does not guarantee FIFO ordering, but offers simpler functionality and can be executed on both CPU and GPU in parallel with other stages. Breaking the input pipeline into 3 stages that operate independently in parallel is scalable and takes full advantage of large multi-core environments. The rest of this section details the stages followed by details about using <code>data_flow_ops.StagingArea</code>.</p> <h3 id="parallelize_io_reads">Parallelize I/O Reads</h3> <p><code>data_flow_ops.RecordInput</code> is used to parallelize reading from disk. Given a list of input files representing TFRecords, <code>RecordInput</code> continuously reads records using background threads. The records are placed into its own large internal pool and when it has loaded at least half of its capacity, it produces output tensors.</p> <p>This op has its own internal threads that are dominated by I/O time that consume minimal CPU, which allows it to run smoothly in parallel with the rest of the model.</p> <h3 id="parallelize_image_processing">Parallelize Image Processing</h3> <p>After images are read from <code>RecordInput</code> they are passed as tensors to the image processing pipeline. To make the image processing pipeline easier to explain, assume that the input pipeline is targeting 8 GPUs with a batch size of 256 (32 per GPU).</p> <p>256 records are read and processed individually in parallel. This starts with 256 independent <code>RecordInput</code> read ops in the graph. Each read op is followed by an identical set of ops for image preprocessing that are considered independent and executed in parallel. The image preprocessing ops include operations such as image decoding, distortion, and resizing.</p> <p>Once the images are through preprocessing, they are concatenated together into 8 tensors each with a batch-size of 32. Rather than using <a href="https://www.tensorflow.org/api_docs/python/tf/concat" target="_blank"><code>tf.concat</code></a> for this purpose, which is implemented as a single op that waits for all the inputs to be ready before concatenating them together, <a href="https://www.tensorflow.org/api_docs/python/tf/parallel_stack" target="_blank"><code>tf.parallel_stack</code></a> is used. <a href="https://www.tensorflow.org/api_docs/python/tf/parallel_stack" target="_blank"><code>tf.parallel_stack</code></a> allocates an uninitialized tensor as an output, and each input tensor is written to its designated portion of the output tensor as soon as the input is available.</p> <p>When all the input tensors are finished, the output tensor is passed along in the graph. This effectively hides all the memory latency with the long tail of producing all the input tensors.</p> <h3 id="parallelize_cpu-to-gpu_data_transfer">Parallelize CPU-to-GPU Data Transfer</h3> <p>Continuing with the assumption that the target is 8 GPUs with a batch size of 256 (32 per GPU). Once the input images are processed and concatenated together by the CPU, we have 8 tensors each with a batch-size of 32.</p> <p>TensorFlow enables tensors from one device to be used on any other device directly. TensorFlow inserts implicit copies to make the tensors available on any devices where they are used. The runtime schedules the copy between devices to run before the tensors are actually used. However, if the copy cannot finish in time, the computation that needs those tensors will stall and result in decreased performance.</p> <p>In this implementation, <code>data_flow_ops.StagingArea</code> is used to explicitly schedule the copy in parallel. The end result is that when computation starts on the GPU, all the tensors are already available.</p> <h3 id="software_pipelining">Software Pipelining</h3> <p>With all the stages capable of being driven by different processors, <code>data_flow_ops.StagingArea</code> is used between them so they run in parallel. <code>StagingArea</code> is a queue-like operator similar to <a href="https://www.tensorflow.org/api_docs/python/tf/FIFOQueue" target="_blank"><code>tf.FIFOQueue</code></a> that offers simpler functionalities that can be executed on both CPU and GPU.</p> <p>Before the model starts running all the stages, the input pipeline stages are warmed up to prime the staging buffers in between with one set of data. During each run step, one set of data is read from the staging buffers at the beginning of each stage, and one set is pushed at the end.</p> <p>For example: if there are three stages: A, B and C. There are two staging areas in between: S1 and S2. During the warm up, we run:</p> <pre class="prettyprint" data-language="cpp">Warm up:
 Step 1: A0
@@ -155,17 +155,9 @@ python tf_cnn_benchmarks.py --local_parameter_device=gpu --num_gpus=8 \
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

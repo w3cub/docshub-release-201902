@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~guide/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Guide</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> A Tool Developer's Guide to TensorFlow Model Files </h1>     <p>Most users shouldn't need to care about the internal details of how TensorFlow stores data on disk, but you might if you're a tool developer. For example, you may want to analyze models, or convert back and forth between TensorFlow and other formats. This guide tries to explain some of the details of how you can work with the main files that hold model data, to make it easier to develop those kind of tools.</p> <h2 id="protocol_buffers">Protocol Buffers</h2> <p>All of TensorFlow's file formats are based on <a href="https://developers.google.com/protocol-buffers/?hl=en" target="_blank">Protocol Buffers</a>, so to start it's worth getting familiar with how they work. The summary is that you define data structures in text files, and the protobuf tools generate classes in C, Python, and other languages that can load, save, and access the data in a friendly way. We often refer to Protocol Buffers as protobufs, and I'll use that convention in this guide.</p> <h2 id="graphdef">GraphDef</h2> <p>The foundation of computation in TensorFlow is the <code>Graph</code> object. This holds a network of nodes, each representing one operation, connected to each other as inputs and outputs. After you've created a <code>Graph</code> object, you can save it out by calling <code>as_graph_def()</code>, which returns a <code>GraphDef</code> object.</p> <p>The GraphDef class is an object created by the ProtoBuf library from the definition in <a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/framework/graph.proto" target="_blank">tensorflow/core/framework/graph.proto</a>. The protobuf tools parse this text file, and generate the code to load, store, and manipulate graph definitions. If you see a standalone TensorFlow file representing a model, it's likely to contain a serialized version of one of these <code>GraphDef</code> objects saved out by the protobuf code.</p> <p>This generated code is used to save and load the GraphDef files from disk. The code that actually loads the model looks like this:</p> <pre class="prettyprint lang-python" data-language="python">graph_def = graph_pb2.GraphDef()
 </pre> <p>This line creates an empty <code>GraphDef</code> object, the class that's been created from the textual definition in graph.proto. This is the object we're going to populate with the data from our file.</p> <pre class="prettyprint lang-python" data-language="python">with open(FLAGS.graph, "rb") as f:
@@ -93,17 +93,9 @@ else:
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

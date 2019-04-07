@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~guide/" class="_nav-link" title="" style="margin-left:0;">TensorFlow Guide</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _tensorflow">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 itemprop="name" class="devsite-page-title"> Graphs and Sessions </h1>     <p>TensorFlow uses a <strong>dataflow graph</strong> to represent your computation in terms of the dependencies between individual operations. This leads to a low-level programming model in which you first define the dataflow graph, then create a TensorFlow <strong>session</strong> to run parts of the graph across a set of local and remote devices.</p> <p>This guide will be most useful if you intend to use the low-level programming model directly. Higher-level APIs such as <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator" target="_blank"><code>tf.estimator.Estimator</code></a> and Keras hide the details of graphs and sessions from the end user, but this guide may also be useful if you want to understand how these APIs are implemented.</p> <h2 id="why_dataflow_graphs">Why dataflow graphs?</h2> <p><img alt="" src="https://www.tensorflow.org/images/tensors_flowing.gif"></p> <p><a href="https://en.wikipedia.org/wiki/Dataflow_programming" target="_blank">Dataflow</a> is a common programming model for parallel computing. In a dataflow graph, the nodes represent units of computation, and the edges represent the data consumed or produced by a computation. For example, in a TensorFlow graph, the <a href="https://www.tensorflow.org/api_docs/python/tf/matmul" target="_blank"><code>tf.matmul</code></a> operation would correspond to a single node with two incoming edges (the matrices to be multiplied) and one outgoing edge (the result of the multiplication).</p>  <p>Dataflow has several advantages that TensorFlow leverages when executing your programs:</p> <ul> <li> <p><strong>Parallelism.</strong> By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.</p> </li> <li> <p><strong>Distributed execution.</strong> By using explicit edges to represent the values that flow between operations, it is possible for TensorFlow to partition your program across multiple devices (CPUs, GPUs, and TPUs) attached to different machines. TensorFlow inserts the necessary communication and coordination between devices.</p> </li> <li> <p><strong>Compilation.</strong> TensorFlow's <a href="../../performance/xla/">XLA compiler</a> can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.</p> </li> <li> <p><strong>Portability.</strong> The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a <a href="../saved_model/">SavedModel</a>, and restore it in a C++ program for low-latency inference.</p> </li> </ul> <h2 id="what_is_a_wzxhzdk22wzxhzdk23tfgraphwzxhzdk24wzxhzdk25">What is a <a href="https://www.tensorflow.org/api_docs/python/tf/Graph" target="_blank"><code>tf.Graph</code></a>?</h2> <p>A <a href="https://www.tensorflow.org/api_docs/python/tf/Graph" target="_blank"><code>tf.Graph</code></a> contains two relevant kinds of information:</p> <ul> <li> <p><strong>Graph structure.</strong> The nodes and edges of the graph, indicating how individual operations are composed together, but not prescribing how they should be used. The graph structure is like assembly code: inspecting it can convey some useful information, but it does not contain all of the useful context that source code conveys.</p> </li> <li> <p><strong>Graph collections.</strong> TensorFlow provides a general mechanism for storing collections of metadata in a <a href="https://www.tensorflow.org/api_docs/python/tf/Graph" target="_blank"><code>tf.Graph</code></a>. The <a href="https://www.tensorflow.org/api_docs/python/tf/add_to_collection" target="_blank"><code>tf.add_to_collection</code></a> function enables you to associate a list of objects with a key (where <a href="https://www.tensorflow.org/api_docs/python/tf/GraphKeys" target="_blank"><code>tf.GraphKeys</code></a> defines some of the standard keys), and <a href="https://www.tensorflow.org/api_docs/python/tf/get_collection" target="_blank"><code>tf.get_collection</code></a> enables you to look up all objects associated with a key. Many parts of the TensorFlow library use this facility: for example, when you create a <a href="https://www.tensorflow.org/api_docs/python/tf/Variable" target="_blank"><code>tf.Variable</code></a>, it is added by default to collections representing "global variables" and "trainable variables". When you later come to create a <a href="https://www.tensorflow.org/api_docs/python/tf/train/Saver" target="_blank"><code>tf.train.Saver</code></a> or <a href="https://www.tensorflow.org/api_docs/python/tf/train/Optimizer" target="_blank"><code>tf.train.Optimizer</code></a>, the variables in these collections are used as the default arguments.</p> </li> </ul> <h2 id="building_a_wzxhzdk30wzxhzdk31tfgraphwzxhzdk32wzxhzdk33">Building a <a href="https://www.tensorflow.org/api_docs/python/tf/Graph" target="_blank"><code>tf.Graph</code></a>
 </h2> <p>Most TensorFlow programs start with a dataflow graph construction phase. In this phase, you invoke TensorFlow API functions that construct new <a href="https://www.tensorflow.org/api_docs/python/tf/Operation" target="_blank"><code>tf.Operation</code></a> (node) and <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> (edge) objects and add them to a <a href="https://www.tensorflow.org/api_docs/python/tf/Graph" target="_blank"><code>tf.Graph</code></a> instance. TensorFlow provides a <strong>default graph</strong> that is an implicit argument to all API functions in the same context. For example:</p> <ul> <li> <p>Calling <code>tf.constant(42.0)</code> creates a single <a href="https://www.tensorflow.org/api_docs/python/tf/Operation" target="_blank"><code>tf.Operation</code></a> that produces the value <code>42.0</code>, adds it to the default graph, and returns a <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> that represents the value of the constant.</p> </li> <li> <p>Calling <code>tf.matmul(x, y)</code> creates a single <a href="https://www.tensorflow.org/api_docs/python/tf/Operation" target="_blank"><code>tf.Operation</code></a> that multiplies the values of <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> objects <code>x</code> and <code>y</code>, adds it to the default graph, and returns a <a href="https://www.tensorflow.org/api_docs/python/tf/Tensor" target="_blank"><code>tf.Tensor</code></a> that represents the result of the multiplication.</p> </li> <li> <p>Executing <code>v = tf.Variable(0)</code> adds to the graph a <a href="https://www.tensorflow.org/api_docs/python/tf/Operation" target="_blank"><code>tf.Operation</code></a> that will store a writeable tensor value that persists between <a href="https://www.tensorflow.org/api_docs/python/tf/InteractiveSession#run" target="_blank"><code>tf.Session.run</code></a> calls. The <a href="https://www.tensorflow.org/api_docs/python/tf/Variable" target="_blank"><code>tf.Variable</code></a> object wraps this operation, and can be used <a href="#tensor-like_objects">like a tensor</a>, which will read the current value of the stored value. The <a href="https://www.tensorflow.org/api_docs/python/tf/Variable" target="_blank"><code>tf.Variable</code></a> object also has methods such as <a href="https://www.tensorflow.org/api_docs/python/tf/Variable#assign" target="_blank"><code>assign</code></a> and <a href="https://www.tensorflow.org/api_docs/python/tf/Variable#assign_add" target="_blank"><code>assign_add</code></a> that create <a href="https://www.tensorflow.org/api_docs/python/tf/Operation" target="_blank"><code>tf.Operation</code></a> objects that, when executed, update the stored value. (See <a href="../variables/">Variables</a> for more information about variables.)</p> </li> <li> <p>Calling <a href="https://www.tensorflow.org/api_docs/python/tf/train/AdadeltaOptimizer#minimize" target="_blank"><code>tf.train.Optimizer.minimize</code></a> will add operations and tensors to the default graph that calculate gradients, and return a <a href="https://www.tensorflow.org/api_docs/python/tf/Operation" target="_blank"><code>tf.Operation</code></a> that, when run, will apply those gradients to a set of variables.</p> </li> </ul> <p>Most programs rely solely on the default graph. However, see <a href="#programming_with_multiple_graphs">Dealing with multiple graphs</a> for more advanced use cases. High-level APIs such as the <a href="https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator" target="_blank"><code>tf.estimator.Estimator</code></a> API manage the default graph on your behalf, and--for example--may create different graphs for training and evaluation.</p> <blockquote class="note">
@@ -264,17 +264,9 @@ print(g.get_operations())
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
