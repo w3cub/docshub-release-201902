@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/chef~12/12-13/knife_data_bag/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/chef~12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/chef~12/" class="_nav-link" title="" style="margin-left:0;">Chef 12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="knife-data-bag">knife data bag</h1> <p>A data bag is a global variable that is stored as JSON data and is accessible from a Chef server. A data bag is indexed for searching and can be loaded by a recipe or accessed during a search.</p> <p>A data bag item may be encrypted using <a class="reference external" href="https://en.wikipedia.org/wiki/Symmetric-key_algorithm" target="_blank">shared secret encryption</a>. This allows each data bag item to store confidential information (such as a database password) or to be managed in a source control system (without plain-text data appearing in revision history). Each data bag item may be encrypted individually; if a data bag contains multiple encrypted data bag items, these data bag items are not required to share the same encryption keys.</p> <p>The <code class="docutils literal">knife data bag</code> subcommand is used to manage arbitrary stores of globally available JSON data.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Review the list of <a class="reference internal" href="../knife_common_options/">common options</a> available to this (and all) knife subcommands and plugins.</p> </div>  <h2 id="create">create</h2> <p>Use the <code class="docutils literal">create</code> argument to add a data bag to the Chef server.</p>  <h3 id="syntax">Syntax</h3> <p>This argument has the following syntax:</p> <pre class="highlight-bash" data-language="bash">$ knife data bag create DATA_BAG_NAME [DATA_BAG_ITEM] (options)</pre>   <h3 id="options">Options</h3> <p>This argument has the following options:</p> <dl class="docutils"> <dt><code class="docutils literal">DATA_BAG_ITEM</code></dt> <dd>The name of a specific item within a data bag.</dd> <dt><code class="docutils literal">--secret SECRET</code></dt> <dd>The encryption key that is used for values contained within a data bag item. If <code class="docutils literal">secret</code> is not specified, the chef-client looks for a secret at the path specified by the <code class="docutils literal">encrypted_data_bag_secret</code> setting in the client.rb file.</dd> <dt><code class="docutils literal">--secret-file FILE</code></dt> <dd>The path to the file that contains the encryption key.</dd> </dl> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">For encrypted data bag items, use either <code class="docutils literal">--secret</code> or <code class="docutils literal">--secret-file</code>, not both.</p> </div> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">See <a class="reference internal" href="../config_rb_knife_optional_settings/">knife.rb</a> for more information about how to add certain knife options as settings in the knife.rb file.</p> </div>   <h3 id="examples">Examples</h3> <p>The following examples show how to use this knife subcommand:</p> <p><strong>Create a data bag</strong></p> <p>To create a data bag named “admins”, enter:</p> <pre class="highlight-bash" data-language="bash">$ knife data bag create admins</pre> <p>to return:</p> <pre class="highlight-none" data-language="none">Created data_bag[admins]</pre>    <h2 id="delete">delete</h2> <p>Use the <code class="docutils literal">delete</code> argument to delete a data bag or a data bag item from a Chef server.</p>  <h3 id="id1">Syntax</h3> <p>This argument has the following syntax:</p> <pre class="highlight-bash" data-language="bash">$ knife data bag delete DATA_BAG_NAME [DATA_BAG_ITEM] (options)</pre>   <h3 id="id2">Options</h3> <p>This argument has the following options:</p> <dl class="docutils"> <dt><code class="docutils literal">DATA_BAG_ITEM</code></dt> <dd>The name of a specific item within a data bag.</dd> </dl>   <h3 id="id3">Examples</h3> <p>The following examples show how to use this knife subcommand:</p> <p><strong>Delete a data bag</strong></p> <pre class="highlight-bash" data-language="bash">$ knife data bag delete data_bag_name</pre> <p><strong>Delete a data bag item</strong></p> <p>To delete an item named “charlie”, enter:</p> <pre class="highlight-bash" data-language="bash">$ knife data bag delete admins charlie</pre> <p>Type <code class="docutils literal">Y</code> to confirm a deletion.</p>    <h2 id="edit">edit</h2> <p>Use the <code class="docutils literal">edit</code> argument to edit the data contained in a data bag. If encryption is being used, the data bag will be decrypted, the data will be made available in the $EDITOR, and then encrypted again before saving it to the Chef server.</p>  <h3 id="id4">Syntax</h3> <p>This argument has the following syntax:</p> <pre class="highlight-bash" data-language="bash">$ knife data bag edit DATA_BAG_NAME [DATA_BAG_ITEM] (options)</pre>   <h3 id="id5">Options</h3> <p>This argument has the following options:</p> <dl class="docutils"> <dt><code class="docutils literal">DATA_BAG_ITEM</code></dt> <dd>The name of a specific item within a data bag.</dd> <dt><code class="docutils literal">--secret SECRET</code></dt> <dd>The encryption key that is used for values contained within a data bag item. If <code class="docutils literal">secret</code> is not specified, the chef-client looks for a secret at the path specified by the <code class="docutils literal">encrypted_data_bag_secret</code> setting in the client.rb file.</dd> <dt><code class="docutils literal">--secret-file FILE</code></dt> <dd>The path to the file that contains the encryption key.</dd> </dl> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">For encrypted data bag items, use either <code class="docutils literal">--secret</code> or <code class="docutils literal">--secret-file</code>, not both.</p> </div> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">See <a class="reference internal" href="../config_rb_knife_optional_settings/">knife.rb</a> for more information about how to add certain knife options as settings in the knife.rb file.</p> </div>   <h3 id="id6">Examples</h3> <p>The following examples show how to use this knife subcommand:</p> <p><strong>Edit a data bag</strong></p> <p>To edit the contents of a data bag, enter:</p> <pre class="highlight-bash" data-language="bash">$ knife data bag edit dogs tibetanspaniel</pre> <p>where <code class="docutils literal">dogs</code> is the name of the data bag and <code class="docutils literal">tibetanspaniel</code> is the name of the data bag item. This will return something similar to the following in the knife editor:</p> <pre class="highlight-javascript" data-language="javascript">{
   "name":"data_bag_item_dogs_tibetanspaniel",
@@ -120,17 +120,9 @@ uid:      1005</pre> <p><strong>Show a data bag, encrypted</strong></p> <p>To sh
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

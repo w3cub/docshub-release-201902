@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/chef~12/server_12-8/config_rb_server_optional_settings/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/chef~12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/chef~12/" class="_nav-link" title="" style="margin-left:0;">Chef 12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="chef-server-rb-optional-settings">chef-server.rb Optional Settings</h1> <p>The chef-server.rb file contains all of the non-default configuration settings used by the Chef server. (The default settings are built-in to the Chef server configuration and should only be added to the chef-server.rb file to apply non-default values.) These configuration settings are processed when the <code class="docutils literal">chef-server-ctl reconfigure</code> command is run, such as immediately after setting up the Chef server or after making a change to the underlying configuration settings after the server has been deployed. The chef-server.rb file is a Ruby file, which means that conditional statements can be used in the configuration file.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">The chef-server.rb file does not exist by default. To modify the settings for the Chef server, create a file named <code class="docutils literal">chef-server.rb</code> in the <code class="docutils literal">/etc/opscode/</code> directory.</p> </div> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">This file was named private-chef.rb in previous versions of Enterprise Chef. After an upgrade to Chef server 12 from Enterprise Chef, the private-chef.rb file is symlinked to chef-server.rb. The private-chef.rb file is deprecated, starting with Chef server 12.</p> </div>  <h2 id="settings">Settings</h2> <p>The following sections describe the various settings that are available in the chef-server.rb file.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p>When changes are made to the chef-server.rb file the Chef server must be reconfigured by running the following command:</p> <pre class="last highlight-bash" data-language="bash">$ chef-server-ctl reconfigure</pre> </div>  <h3 id="general">General</h3> <p>This configuration file has the following general settings:</p> <dl class="docutils"> <dt><code class="docutils literal">addons['install']</code></dt> <dd>Default value: <code class="docutils literal">false</code>.</dd> <dt><code class="docutils literal">addons['path']</code></dt> <dd>Default value: <code class="docutils literal">nil</code>.</dd> <dt><code class="docutils literal">addons['packages']</code></dt> <dd>
 <p class="first">Default value:</p> <pre class="last highlight-ruby" data-language="ruby">%w{opscode-reporting chef-manage opscode-analytics opscode-push-jobs-server}</pre> </dd> <dt><code class="docutils literal">api_version</code></dt> <dd>The version of the Chef server. Default value: <code class="docutils literal">'12.0.0'</code>.</dd> <dt><code class="docutils literal">default_orgname</code></dt> <dd>The Chef server API used by the Open Source Chef server does not have an <code class="docutils literal">/organizations/ORG_NAME</code> endpoint. Use this setting to ensure that migrated Open Source Chef servers are able to connect to the Chef server API. This value should be the same as the name of the organization that was created during the upgrade from Open Source Chef version 11 to Chef server version 12, which means it will be identical to the <code class="docutils literal">ORG_NAME</code> part of the <code class="docutils literal">/organizations</code> endpoint in Chef server version 12. Default value: the name of the organization specified during the upgrade process from Open Source Chef 11 to Chef server 12.</dd> <dt><code class="docutils literal">flavor</code></dt> <dd>Default value: <code class="docutils literal">'cs'</code>.</dd> <dt><code class="docutils literal">install_path</code></dt> <dd>The directory in which the Chef server is installed. Default value: <code class="docutils literal">'/opt/opscode'</code>.</dd> <dt><code class="docutils literal">from_email</code></dt> <dd>The email address from which invitations to the Chef management console are sent. Default value: <code class="docutils literal">'"Opscode" &lt;donotreply@opscode.com&gt;'</code>.</dd> <dt><code class="docutils literal">license['nodes']</code></dt> <dd>The number of licensed nodes. Default value: <code class="docutils literal">25</code>.</dd> <dt><code class="docutils literal">license['upgrade_url']</code></dt> <dd>The URL to visit for more information about how to update the number of nodes licensed for an organization. Default value: <code class="docutils literal">'http://www.chef.io/contact/on-premises-simple'</code>.</dd> <dt><code class="docutils literal">notification_email</code></dt> <dd>The email addressed to which email notifications are sent. Default value: <code class="docutils literal">'pc-default@opscode.com'</code>.</dd> <dt><code class="docutils literal">role</code></dt> <dd>The configuration type of the Chef server. Possible values: <code class="docutils literal">backend</code>, <code class="docutils literal">frontend</code>, or <code class="docutils literal">standalone</code>. Default value: <code class="docutils literal">'standalone'</code>.</dd> <dt><code class="docutils literal">topology</code></dt> <dd>The topology of the Chef server. Possible values: <code class="docutils literal">ha</code>, <code class="docutils literal">manual</code>, <code class="docutils literal">standalone</code>, and <code class="docutils literal">tier</code>. Default value: <code class="docutils literal">'standalone'</code>.</dd> </dl>   <h3 id="bookshelf">bookshelf</h3> <p>The <strong>bookshelf</strong> service is an Amazon Simple Storage Service (S3)-compatible service that is used to store cookbooks, including all of the files—recipes, templates, and so on—that are associated with each cookbook.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">To <a class="reference internal" href="../server_components/#server-components-aws-settings">configure the server for external cookbook storage</a>, updates are made to settings for both the <strong>bookshelf</strong> and <strong>opscode-erchef</strong> services.</p> </div> <p>This configuration file has the following settings for <code class="docutils literal">bookshelf</code>:</p> <dl class="docutils"> <dt><code class="docutils literal">bookshelf['access_key_id']</code></dt> <dd>The access key identifier. (This is configurable and may be pointed at external storage locations, such as Amazon EC2. Four settings require configuration when pointing at an external cookbook storage location: <code class="docutils literal">bookshelf['vip']</code>, for the endpoint used by the chef-client; <code class="docutils literal">bookshelf['external_url']</code>, for the endpoint used by the Chef server; <code class="docutils literal">bookshelf['access_key_id']</code>, for user access key; <code class="docutils literal">bookshelf['secret_access_key']</code>, for secret key; and <code class="docutils literal">opscode_erchef['s3_bucket']</code>, for the bucket name. Reconfigure the Chef server after changing these settings. Default value: generated by default.</dd> <dt><code class="docutils literal">bookshelf['data_dir']</code></dt> <dd>The directory in which on-disk data is stored. The default value is the recommended value. Default value: <code class="docutils literal">/var/opt/opscode/bookshelf/data</code>.</dd> <dt><code class="docutils literal">bookshelf['dir']</code></dt> <dd>The working directory. The default value is the recommended value. Default value: <code class="docutils literal">/var/opt/opscode/bookshelf</code>.</dd> <dt><code class="docutils literal">bookshelf['enable']</code></dt> <dd>Enable a service. Default value: <code class="docutils literal">true</code>.</dd> <dt><code class="docutils literal">bookshelf['external_url']</code></dt> <dd>The base URL to which the service is to return links to API resources. Use <code class="docutils literal">:host_header</code> to ensure the URL is derived from the host header of the incoming HTTP request. Default value: <code class="docutils literal">:host_header</code>.</dd> <dt><code class="docutils literal">bookshelf['ha']</code></dt> <dd>Run the Chef server in a high availability topology. When <code class="docutils literal">topology</code> is set to <code class="docutils literal">ha</code>, this setting defaults to <code class="docutils literal">true</code>. Default value: <code class="docutils literal">false</code>.</dd> <dt><code class="docutils literal">bookshelf['listen']</code></dt> <dd>The IP address on which the service is to listen. Default value: <code class="docutils literal">127.0.0.1</code>.</dd> <dt><code class="docutils literal">bookshelf['log_directory']</code></dt> <dd>The directory in which log data is stored. The default value is the recommended value. Default value: <code class="docutils literal">/var/log/opscode/bookshelf</code>.</dd> <dt><code class="docutils literal">bookshelf['log_rotation']</code></dt> <dd>
@@ -149,17 +149,9 @@ oc_id['applications']['analytics'] = {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

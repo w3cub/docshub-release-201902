@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/chef~12/server_12-8/manage/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/chef~12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/chef~12/" class="_nav-link" title="" style="margin-left:0;">Chef 12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="chef-manage">Chef Manage</h1> <a class="reference internal image-reference" href="../_images/chef_automate_full.png/"><img alt="_images/chef_automate_full.png" src="https://docs-archive.chef.io/release/server_12-8/_images/chef_automate_full.png" style="width: 40px; height: 17px;"></a> <p>The Chef management console enables the management of nodes, data bags, roles, environments, and cookbooks by using a web user interface. In addition, access to nodes, data bags, roles, environments, and cookbooks is configurable using role-based access control (RBAC).</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">This feature is included as part of the Chef Automate license agreement and is <a class="reference external" href="https://www.chef.io/pricing/" target="_blank">available via subscription</a>.</p> </div>  <h2 id="nodes">Nodes</h2> <p>A node is any machine—physical, virtual, cloud, network device, etc.—that is under management by Chef.</p> <p>The Chef management console provides ways for users to <a class="reference internal" href="../server_manage_nodes/#server-manage-nodes-manage">delete nodes and reset their private keys</a>, <a class="reference internal" href="../server_manage_nodes/#server-manage-nodes-node-attributes">edit node attributes</a>, <a class="reference internal" href="../server_manage_nodes/#server-manage-nodes-run-lists">manage the run-lists</a>, <a class="reference internal" href="../server_manage_nodes/#server-manage-nodes-permissions">configure user and group permissions</a>, and <a class="reference internal" href="../server_manage_nodes/#server-manage-nodes-manage-tags">manage tags</a>.</p> <img alt="_images/step_manage_webui_nodes.png" src="https://docs-archive.chef.io/release/server_12-8/_images/step_manage_webui_nodes.png">  <h3 id="search">Search</h3> <p>Search indexes allow queries to be made for any type of data that is indexed by the Chef server, including data bags (and data bag items), environments, nodes, and roles. A defined query syntax is used to support search patterns like exact, wildcard, range, and fuzzy. A search is a full-text query that can be done from several locations, including from within a recipe, by using the <code class="docutils literal">search</code> subcommand in knife, the <code class="docutils literal">search</code> method in the Recipe DSL, the search box in the Chef management console, and by using the <code class="docutils literal">/search</code> or <code class="docutils literal">/search/INDEX</code> endpoints in the Chef server API. The search engine is based on Apache Solr and is run from the Chef server.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">The syntax for search queries in the Chef management console is identical to the syntax for search queries used with knife, the command line tool used to manage objects on the Chef server.</p> </div>  <h4 id="query-syntax">Query Syntax</h4> <p>A search query is comprised of two parts: the key and the search pattern. A search query has the following syntax:</p> <pre class="highlight-ruby" data-language="ruby">key:search_pattern</pre> <p>where <code class="docutils literal">key</code> is a field name that is found in the JSON description of an indexable object on the Chef server (a role, node, client, environment, or data bag) and <code class="docutils literal">search_pattern</code> defines what will be searched for, using one of the following search patterns: exact, wildcard, range, or fuzzy matching. Both <code class="docutils literal">key</code> and <code class="docutils literal">search_pattern</code> are case-sensitive; <code class="docutils literal">key</code> has limited support for multiple character wildcard matching using an asterisk (“*”) (and as long as it is not the first character).</p>   <h4 id="keys">Keys</h4> <p>A field name/description pair is available in the JSON object. Use the field name when searching for this information in the JSON object. Any field that exists in any JSON description for any role, node, chef-client, environment, or data bag can be searched.</p>  <h5 id="nested-fields">Nested Fields</h5> <p>A nested field appears deeper in the JSON data structure. For example, information about a network interface might be several layers deep: <code class="docutils literal">node[:network][:interfaces][:en1]</code>. When nested fields are present in a JSON structure, the chef-client will extract those nested fields to the top-level, flattening them into compound fields that support wildcard search patterns.</p> <p>By combining wildcards with range-matching patterns and wildcard queries, it is possible to perform very powerful searches, such as using the vendor part of the MAC address to find every node that has a network card made by the specified vendor.</p> <p>Consider the following snippet of JSON data:</p> <pre class="highlight-javascript" data-language="javascript">{"network":
   [
@@ -152,17 +152,9 @@ Parse error at offset: 38 Reason: Expected one of \ at line 1, column 42 (byte 4
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

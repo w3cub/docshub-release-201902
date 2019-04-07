@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/chef~12/server_12-8/auth/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/chef~12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/chef~12/" class="_nav-link" title="" style="margin-left:0;">Chef 12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="authentication-authorization">Authentication, Authorization</h1> <p>All communication with the Chef server must be authenticated using the Chef server API, which is a REST API that allows requests to be made to the Chef server. Only authenticated requests will be authorized. Most of the time, and especially when using knife, the chef-client, or the Chef server web interface, the use of the Chef server API is transparent. In some cases, the use of the Chef server API requires more detail, such as when making the request in Ruby code, with a knife plugin, or when using cURL.</p>  <h2 id="authentication">Authentication</h2> <p>The authentication process ensures the Chef server responds only to requests made by trusted users. Public key encryption is used by the Chef server. When a node and/or a workstation is configured to run the chef-client, both public and private keys are created. The public key is stored on the Chef server, while the private key is returned to the user for safe keeping. (The private key is a .pem file located in the <code class="docutils literal">.chef</code> directory or in <code class="docutils literal">/etc/chef</code>.)</p> <p>Both the chef-client and knife use the Chef server API when communicating with the Chef server. The chef-validator uses the Chef server API, but only during the first chef-client run on a node.</p> <p>Each request to the Chef server from those executables sign a special group of HTTP headers with the private key. The Chef server then uses the public key to verify the headers and verify the contents.</p>  <h3 id="chef-validator">chef-validator</h3> <p>Every request made by the chef-client to the Chef server must be an authenticated request using the Chef server API and a private key. When the chef-client makes a request to the Chef server, the chef-client authenticates each request using a private key located in <code class="docutils literal">/etc/chef/client.pem</code>.</p> <p>However, during the first chef-client run, this private key does not exist. Instead, the chef-client will attempt to use the private key assigned to the chef-validator, located in <code class="docutils literal">/etc/chef/validation.pem</code>. (If, for any reason, the chef-validator is unable to make an authenticated request to the Chef server, the initial chef-client run will fail.)</p> <p>During the initial chef-client run, the chef-client will register with the Chef server using the private key assigned to the chef-validator, after which the chef-client will obtain a <code class="docutils literal">client.pem</code> private key for all future authentication requests to the Chef server.</p> <p>After the initial chef-client run has completed successfully, the chef-validator is no longer required and may be deleted from the node. Use the <code class="docutils literal">delete_validation</code> recipe found in the <code class="docutils literal">chef-client</code> cookbook (<a class="reference external" href="https://github.com/chef-cookbooks/chef-client" target="_blank">https://github.com/chef-cookbooks/chef-client</a>) to remove the chef-validator.</p>   <h3 id="during-a-chef-client-run">During a chef-client Run</h3> <p>RSA public key-pairs are used to authenticate the chef-client with the Chef server every time a chef-client needs access to data that is stored on the Chef server. This prevents any node from accessing data that it shouldn’t and it ensures that only nodes that are properly registered with the Chef server can be managed.</p>   <h3 id="knife">Knife</h3> <p>RSA public key-pairs are used to authenticate knife with the Chef server every time knife attempts to access the Chef server. This ensures that each instance of knife is properly registered with the Chef server and that only trusted users can make changes to the data.</p> <p>knife can also use the <code class="docutils literal">knife exec</code> subcommand to make specific, authenticated requests to the Chef server. knife plugins can also make authenticated requests to the Chef server by leveraging the <code class="docutils literal">knife exec</code> subcommand.</p>  <h4 id="api-requests">API Requests</h4> <p>A knife plugin is a set of one (or more) subcommands that can be added to knife to support additional functionality that is not built-in to the base set of knife subcommands. Many of the knife plugins are built by members of the Chef community and several of them are built and maintained by Chef. A knife plugin is installed to the <code class="docutils literal">~/.chef/plugins/knife/</code> directory, from where it can be run just like any other knife subcommand.</p> <p>A knife plugin can be used to make authenticated API requests to the Chef server using the following methods:</p> <table class="docutils"> <colgroup> <col width="13%"> <col width="88%"> </colgroup> <thead valign="bottom"> <tr class="row-odd">
 <th class="head">Method</th> <th class="head">Description</th> </tr> </thead> <tbody valign="top"> <tr class="row-even">
@@ -379,17 +379,9 @@ X-Ops-UserId:USERID</pre> <p>where:</p> <ul class="simple"> <li>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

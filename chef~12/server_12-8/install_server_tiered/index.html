@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/chef~12/server_12-8/install_server_tiered/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/chef~12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/chef~12/" class="_nav-link" title="" style="margin-left:0;">Chef 12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="tiered-installation-deprecated">Tiered Installation (DEPRECATED)</h1> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">This topic is deprecated as of the 12.9 release of the Chef servver. For the latest information on high availability and how to set up a highly-available server cluster, see High Availability: Backend Cluster .</p> </div> <p>This topic describes how to set up the Chef server with a single back end and multiple load-balanced frontend servers.</p> <img alt="_images/chef_server_tiered.png" src="https://docs-archive.chef.io/release/server_12-8/_images/chef_server_tiered.png">  <h2 id="prerequisites">Prerequisites</h2> <p>Before installing the Chef server software, perform the following steps:</p> <ul class="simple"> <li>The backend server must be accessible from each frontend server. A virtual IP address is created and managed by the Chef server, but will also need to be added to the DNS so that all machines in the tiered configuration may access it.</li> <li>Persistent data on the backend Chef server is primarily composed of cookbook files and directories. Separate disks should be dedicated entirely to storing this data prior to installing the Chef server.</li> <li>Load-balancing should be used with frontend servers, along with a DNS entry for the virtual IP address used for load balancing. This virtual IP address is added to the chef-server.rb file as the <code class="docutils literal">api_fqdn</code>.</li> <li>All required ports must be open. See the Firewalls section (below) for the list of ports. All connections to and from the Chef server are accomplished via TCP. Refer to the operating system’s manual or your systems administrators for instructions on how to configure to ports, if necessary.</li> <li>The hostname for the Chef server must be an FQDN, including the domain suffix, and must be resolvable by the backend and frontend servers. See <a class="reference internal" href="../install_server_pre/#install-server-pre-hostnames">Hostnames, FQDNs</a> for more information.</li> <li>
 <code class="docutils literal">chef-server-ctl reconfigure</code> will not bind the <code class="docutils literal">backend_vip</code> to the backend server. The easiest thing to do is just define <code class="docutils literal">backend_vip</code> as the already configured main IP address of the backend system. If you need to use an additional address, it will need to be configured and bound on the system before <code class="docutils literal">chef-server-ctl reconfigure</code> is run.</li> </ul>   <h2 id="disk-configuration">Disk Configuration</h2> <p>Persistent data on the backend server of the Chef server is primarily composed of cookbook files and directories. Separate disks should be dedicated entirely to storing this data prior to installing the Chef server. These disks should:</p> <ul class="simple"> <li>Utilize hardware RAID</li> <li>Be configured in either RAID1</li> </ul> <p>This assumes that:</p> <ul class="simple"> <li>~300GB of raw, unpartitioned disk space is available</li> <li>The disk space presents as a single device. For example: <code class="docutils literal">/dev/sdb</code>.</li> <li>The storage is added to a volume group named <code class="docutils literal">opscode</code> and is presented to the Chef server by mounting on <code class="docutils literal">/var/opt/opscode</code> before a reconfiguration</li> </ul> <p>The following commands properly set up disk configuration on the backend server:</p> <pre class="highlight-bash" data-language="bash">$ pvcreate /dev/sdb</pre> <p>and:</p> <pre class="highlight-bash" data-language="bash">$ vgcreate opscode /dev/sdb</pre> <p>and:</p> <pre class="highlight-bash" data-language="bash">$ lvcreate -l 80%VG -n tiered opscode</pre>  <h3 id="mount-storage-device">Mount Storage Device</h3> <p>To build and mount the storage device on the backend server, do the following:</p> <ol class="arabic"> <li>
@@ -180,17 +180,9 @@ api_fqdn "chef.example.com"</pre>   <h3 id="firewalls">Firewalls</h3> <p>All of 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
