@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/redux/" class="_nav-link" title="" style="margin-left:0;">Redux</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="redux-faq-code-structure">Redux FAQ: Code Structure</h1> <h2 id="table-of-contents">Table of Contents</h2> <ul> <li><a href="#structure-file-structure">What should my file structure look like? How should I group my action creators and reducers in my project? Where should my selectors go?</a></li> <li><a href="#structure-business-logic">How should I split my logic between reducers and action creators? Where should my “business logic” go?</a></li> </ul> <h2 id="code-structure">Code Structure</h2>  <h3 id="structure-file-structure">What should my file structure look like? How should I group my action creators and reducers in my project? Where should my selectors go?</h3> <p>Since Redux is just a data store library, it has no direct opinion on how your project should be structured. However, there are a few common patterns that most Redux developers tend to use:</p> <ul> <li>Rails-style: separate folders for “actions”, “constants”, “reducers”, “containers”, and “components”</li> <li>Domain-style: separate folders per feature or domain, possibly with sub-folders per file type</li> <li>“Ducks”: similar to domain style, but explicitly tying together actions and reducers, often by defining them in the same file</li> </ul> <p>It's generally suggested that selectors are defined alongside reducers and exported, and then reused elsewhere (such as in <code>mapStateToProps</code> functions, in async action creators, or sagas) to colocate all the code that knows about the actual shape of the state tree in the reducer files.</p> <p>While it ultimately doesn't matter how you lay out your code on disk, it's important to remember that actions and reducers shouldn't be considered in isolation. It's entirely possible (and encouraged) for a reducer defined in one folder to respond to an action defined in another folder.</p> <h4 id="further-information">Further information</h4> <p><strong>Documentation</strong></p> <ul> <li><a href="../actions/#actions-reducer-mappings">FAQ: Actions - "1:1 mapping between reducers and actions?"</a></li> </ul> <p><strong>Articles</strong></p> <ul> <li>
 <a href="https://www.smashingmagazine.com/2016/09/how-to-scale-react-applications/" target="_blank">How to Scale React Applications</a> (accompanying talk: <a href="https://vimeo.com/168648012" target="_blank">Scaling React Applications</a>)</li> <li><a href="https://medium.com/lexical-labs-engineering/redux-best-practices-64d59775802e" target="_blank">Redux Best Practices</a></li> <li><a href="http://jaysoo.ca/2016/02/28/organizing-redux-application/" target="_blank">Rules For Structuring (Redux) Applications </a></li> <li><a href="http://marmelab.com/blog/2015/12/17/react-directory-structure.html" target="_blank">A Better File Structure for React/Redux Applications</a></li> <li><a href="http://engineering.kapost.com/2016/01/organizing-large-react-applications/" target="_blank">Organizing Large React Applications</a></li> <li><a href="https://medium.com/@msandin/strategies-for-organizing-code-2c9d690b6f33" target="_blank">Four Strategies for Organizing Code</a></li> <li><a href="http://randycoulman.com/blog/2016/09/13/encapsulating-the-redux-state-tree/" target="_blank">Encapsulating the Redux State Tree</a></li> <li><a href="http://randycoulman.com/blog/2016/09/20/redux-reducer-selector-asymmetry/" target="_blank">Redux Reducer/Selector Asymmetry</a></li> <li><a href="http://randycoulman.com/blog/2016/09/27/modular-reducers-and-selectors/" target="_blank">Modular Reducers and Selectors</a></li> <li><a href="https://medium.com/@mmazzarolo/my-journey-toward-a-maintainable-project-structure-for-react-redux-b05dfd999b5" target="_blank">My journey towards a maintainable project structure for React/Redux</a></li> <li><a href="https://github.com/markerikson/react-redux-links/blob/master/react-redux-architecture.md#project-file-structure" target="_blank">React/Redux Links: Architecture - Project File Structure</a></li> </ul> <p><strong>Discussions</strong></p> <ul> <li><a href="https://github.com/reactjs/redux/issues/839" target="_blank">#839: Emphasize defining selectors alongside reducers</a></li> <li><a href="https://github.com/reactjs/redux/issues/943" target="_blank">#943: Reducer querying</a></li> <li><a href="https://github.com/mxstbr/react-boilerplate/issues/27" target="_blank">React Boilerplate #27: Application Structure</a></li> <li><a href="http://stackoverflow.com/questions/32634320/how-to-structure-redux-components-containers/32921576" target="_blank">Stack Overflow: How to structure Redux components/containers</a></li> <li><a href="https://twitter.com/dan_abramov/status/783428282666614784" target="_blank">Twitter: There is no ultimate file structure for Redux</a></li> </ul>  <h3 id="structure-business-logic">How should I split my logic between reducers and action creators? Where should my “business logic” go?</h3> <p>There's no single clear answer to exactly what pieces of logic should go in a reducer or an action creator. Some developers prefer to have “fat” action creators, with “thin” reducers that simply take the data in an action and blindly merge it into the corresponding state. Others try to emphasize keeping actions as small as possible, and minimize the usage of <code>getState()</code> in an action creator. (For purposes of this question, other async approaches such as sagas and observables fall in the "action creator" category.)</p> <p>This comment sums up the dichotomy nicely:</p> <blockquote> <p>Now, the problem is what to put in the action creator and what in the reducer, the choice between fat and thin action objects. If you put all the logic in the action creator, you end up with fat action objects that basically declare the updates to the state. Reducers become pure, dumb, add-this, remove that, update these functions. They will be easy to compose. But not much of your business logic will be there. If you put more logic in the reducer, you end up with nice, thin action objects, most of your data logic in one place, but your reducers are harder to compose since you might need info from other branches. You end up with large reducers or reducers that take additional arguments from higher up in the state.</p> </blockquote> <p>Find the balance between these two extremes, and you will master Redux.</p> <h4 id="further-information">Further information</h4> <p><strong>Articles</strong></p> <ul> <li><a href="https://medium.com/@jeffbski/where-do-i-put-my-business-logic-in-a-react-redux-application-9253ef91ce1" target="_blank">Where do I put my business logic in a React/Redux application?</a></li> <li><a href="https://www.smashingmagazine.com/2016/09/how-to-scale-react-applications/" target="_blank">How to Scale React Applications</a></li> <li><a href="http://blog.isquaredsoftware.com/2017/05/idiomatic-redux-tao-of-redux-part-2/#thick-and-thin-reducers" target="_blank">The Tao of Redux, Part 2 - Practice and Philosophy. Thick and thin reducers.</a></li> </ul> <p><strong>Discussions</strong></p> <ul> <li><a href="https://github.com/reactjs/redux/issues/384#issuecomment-127393209" target="_blank">How putting too much logic in action creators could affect debugging</a></li> <li><a href="https://github.com/reactjs/redux/issues/1165" target="_blank">#1165: Where to put business logic / validation?</a></li> <li><a href="https://github.com/reactjs/redux/issues/1171" target="_blank">#1171: Recommendations for best practices regarding action-creators, reducers, and selectors</a></li> <li><a href="http://stackoverflow.com/questions/35667249/accessing-redux-state-in-an-action-creator/35674575" target="_blank">Stack Overflow: Accessing Redux state in an action creator?</a></li> </ul>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

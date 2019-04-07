@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/redux/" class="_nav-link" title="" style="margin-left:0;">Redux</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="redux-faq-immutable-data">Redux FAQ: Immutable Data</h1> <h2 id="table-of-contents">Table of Contents</h2> <ul> <li><a href="#benefits-of-immutability">What are the benefits of immutability?</a></li> <li><a href="#why-is-immutability-required">Why is immutability required by Redux?</a></li> <li>
 <a href="#redux-shallow-checking-requires-immutability">Why does Redux’s use of shallow equality checking require immutability?</a><ul> <li><a href="#shallow-and-deep-equality-checking">How do Shallow and Deep Equality Checking differ?</a></li> <li><a href="#how-redux-uses-shallow-checking">How does Redux use shallow equality checking?</a></li> <li><a href="#how-combine-reducers-uses-shallow-checking">How does <code>combineReducers</code> use shallow equality checking?</a></li> <li><a href="#how-react-redux-uses-shallow-checking">How does React-Redux use shallow equality checking?</a></li> <li><a href="#how-react-redux-determines-need-for-re-rendering">How does React-Redux use shallow equality checking to determine whether a component needs re-rendering?</a></li> <li><a href="#no-shallow-equality-checking-with-mutable-objects">Why will shallow equality checking not work with mutable objects?</a></li> <li><a href="#shallow-checking-problems-with-redux">Does shallow equality checking with a mutable object cause problems with Redux?</a></li> <li><a href="#shallow-checking-problems-with-react-redux">Why does a reducer mutating the state prevent React-Redux from re-rendering a wrapped component?</a></li> <li><a href="#shallow-checking-stops-component-re-rendering">Why does a selector mutating and returning a persistent object to <code>mapStateToProps</code> prevent React-Redux from re-rendering a wrapped component?</a></li> <li><a href="#immutability-enables-shallow-checking">How does immutability enable a shallow check to detect object mutations?</a></li> </ul> </li> <li><a href="#immutability-issues-with-redux">How can immutability in your reducers cause components to render unnecessarily?</a></li> <li><a href="#immutability-issues-with-react-redux">How can immutability in mapStateToProps cause components to render unnecessarily?</a></li> <li><a href="#do-i-have-to-use-immutable-js">What approaches are there for handling data immutably? Do I have to use Immutable.JS?</a></li> <li><a href="#issues-with-es6-for-immutable-ops">What are the issues with using JavaScript for immutable operations?</a></li> </ul>  <h2 id="benefits-of-immutability">What are the benefits of immutability?</h2> <p>Immutability can bring increased performance to your app, and leads to simpler programming and debugging, as data that never changes is easier to reason about than data that is free to be changed arbitrarily throughout your app.</p> <p>In particular, immutability in the context of a Web app enables sophisticated change detection techniques to be implemented simply and cheaply, ensuring the computationally expensive process of updating the DOM occurs only when it absolutely has to (a cornerstone of React’s performance improvements over other libraries).</p> <h4 id="further-information">Further information</h4> <p><strong>Articles</strong></p> <ul> <li><a href="https://auth0.com/blog/intro-to-immutable-js/" target="_blank">Introduction to Immutable.js and Functional Programming Concepts</a></li> <li><a href="https://www.jfokus.se/jfokus16/preso/JavaScript-Immutability--Dont-Go-Changing.pdf" target="_blank">JavaScript Immutability presentation (PDF - see slide 12 for benefits)</a></li> <li><a href="https://facebook.github.io/immutable-js/#the-case-for-immutability" target="_blank">Immutable.js - Immutable Collections for JavaScript</a></li> <li><a href="https://facebook.github.io/react/docs/optimizing-performance.html" target="_blank">React: Optimizing Performance</a></li> <li><a href="https://medium.com/google-developers/javascript-application-architecture-on-the-road-to-2015-d8125811101b#.djje0rfys" target="_blank">JavaScript Application Architecture On The Road To 2015</a></li> </ul>  <h2 id="why-is-immutability-required">Why is immutability required by Redux?</h2> <ul> <li>Both Redux and React-Redux employ <a href="#shallow-and-deep-equality-checking">shallow equality checking</a>. In particular:<ul> <li>Redux's <code>combineReducers</code> utility <a href="#how-redux-uses-shallow-checking">shallowly checks for reference changes</a> caused by the reducers that it calls.</li> <li>React-Redux's <code>connect</code> method generates components that <a href="#how-react-redux-uses-shallow-checking">shallowly check reference changes to the root state</a>, and the return values from the <code>mapStateToProps</code> function to see if the wrapped components actually need to re-render. Such <a href="#redux-shallow-checking-requires-immutability">shallow checking requires immutability</a> to function correctly.</li> </ul> </li> <li>Immutable data management ultimately makes data handling safer.</li> <li>Time-travel debugging requires that reducers be pure functions with no side effects, so that you can correctly jump between different states.</li> </ul> <h4 id="further-information">Further Information</h4> <p><strong>Documentation</strong></p> <ul> <li><a href="../../recipes/reducers/prerequisiteconcepts/" target="_blank">Recipes: Prerequisite Reducer Concepts</a></li> </ul> <p><strong>Discussions</strong></p> <ul> <li><a href="https://www.reddit.com/r/reactjs/comments/5ecqqv/why_redux_need_reducers_to_be_pure_functions/dacmmjh/?context=3" target="_blank">Reddit: Why Redux Needs Reducers To Be Pure Functions</a></li> </ul>  <h2 id="redux-shallow-checking-requires-immutability">Why does Redux’s use of shallow equality checking require immutability?</h2> <p>Redux's use of shallow equality checking requires immutability if any connected components are to be updated correctly. To see why, we need to understand the difference between shallow and deep equality checking in JavaScript.</p>  <h3 id="shallow-and-deep-equality-checking">How do shallow and deep equality checking differ?</h3> <p>Shallow equality checking (or <em>reference equality</em>) simply checks that two different <em>variables</em> reference the same object; in contrast, deep equality checking (or <em>value equality</em>) must check every <em>value</em> of two objects' properties.</p> <p>A shallow equality check is therefore as simple (and as fast) as <code>a === b</code>, whereas a deep equality check involves a recursive traversal through the properties of two objects, comparing the value of each property at each step.</p> <p>It's for this improvement in performance that Redux uses shallow equality checking.</p> <h4 id="further-information">Further Information</h4> <p><strong>Articles</strong></p> <ul> <li><a href="http://reactkungfu.com/2015/08/pros-and-cons-of-using-immutability-with-react-js/" target="_blank">Pros and Cons of using immutability with React.js</a></li> </ul>  <h3 id="how-redux-uses-shallow-checking">How does Redux use shallow equality checking?</h3> <p>Redux uses shallow equality checking in its <code>combineReducers</code> function to return either a new mutated copy of the root state object, or, if no mutations have been made, the current root state object. </p> <h4 id="further-information">Further Information</h4> <p><strong>Documentation</strong></p> <ul> <li><a href="../../api/combinereducers/" target="_blank">API: combineReducers</a></li> </ul>  <h4 id="how-combine-reducers-uses-shallow-checking">How does <code>combineReducers</code> use shallow equality checking?</h4> <p>The <a href="../reducers/#reducers-share-state" target="_blank">suggested structure</a> for a Redux store is to split the state object into multiple "slices" or "domains" by key, and provide a separate reducer function to manage each individual data slice.</p> <p><code>combineReducers</code> makes working with this style of structure easier by taking a <code>reducers</code> argument that’s defined as a hash table comprising a set of key/value pairs, where each key is the name of a state slice, and the corresponding value is the reducer function that will act on it.</p> <p>So, for example, if your state shape is <code>{ todos, counter }</code>, the call to <code>combineReducers</code> would be:</p> <pre class="language-" data-language="js">combineReducers({ todos: myTodosReducer, counter: myCounterReducer })
@@ -191,17 +191,9 @@ a.visibleToDos === b.visibleToDos
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

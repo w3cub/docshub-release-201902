@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/redux/" class="_nav-link" title="" style="margin-left:0;">Redux</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="redux-faq-react-redux">Redux FAQ: React Redux</h1> <h2 id="table-of-contents">Table of Contents</h2> <ul> <li><a href="#react-not-rerendering">Why isn't my component re-rendering, or my mapStateToProps running?</a></li> <li><a href="#react-rendering-too-often">Why is my component re-rendering too often?</a></li> <li><a href="#react-mapstate-speed">How can I speed up my mapStateToProps?</a></li> <li><a href="#react-props-dispatch">Why don't I have this.props.dispatch available in my connected component?</a></li> <li><a href="#react-multiple-components">Should I only connect my top component, or can I connect multiple components in my tree?</a></li> </ul> <h2 id="react-redux">React Redux</h2>  <h3 id="react-not-rerendering">Why isn't my component re-rendering, or my mapStateToProps running?</h3> <p>Accidentally mutating or modifying your state directly is by far the most common reason why components do not re-render after an action has been dispatched. Redux expects that your reducers will update their state “immutably”, which effectively means always making copies of your data, and applying your changes to the copies. If you return the same object from a reducer, Redux assumes that nothing has been changed, even if you made changes to its contents. Similarly, React Redux tries to improve performance by doing shallow equality reference checks on incoming props in <code>shouldComponentUpdate</code>, and if all references are the same, returns <code>false</code> to skip actually updating your original component.</p> <p>It's important to remember that whenever you update a nested value, you must also return new copies of anything above it in your state tree. If you have <code>state.a.b.c.d</code>, and you want to make an update to <code>d</code>, you would also need to return new copies of <code>c</code>, <code>b</code>, <code>a</code>, and <code>state</code>. This <a href="http://arqex.com/wp-content/uploads/2015/02/trees.png" target="_blank">state tree mutation diagram</a> demonstrates how a change deep in a tree requires changes all the way up.</p> <p>Note that “updating data immutably” does <em>not</em> mean that you must use <a href="https://facebook.github.io/immutable-js/" target="_blank">Immutable.js</a>, although that is certainly an option. You can do immutable updates to plain JS objects and arrays using several different approaches:</p> <ul> <li>Copying objects using functions like <code>Object.assign()</code> or <code>_.extend()</code>, and array functions such as <code>slice()</code> and <code>concat()</code>
 </li> <li>The array spread operator in ES6, and the similar object spread operator that is proposed for a future version of JavaScript</li> <li>Utility libraries that wrap immutable update logic into simpler functions</li> </ul> <h4 id="further-information">Further information</h4> <p><strong>Documentation</strong></p> <ul> <li><a href="../../troubleshooting/">Troubleshooting</a></li> <li><a href="https://github.com/reactjs/react-redux/blob/master/docs/troubleshooting.md" target="_blank">React Redux: Troubleshooting</a></li> <li><a href="../../recipes/usingobjectspreadoperator/">Recipes: Using the Object Spread Operator</a></li> <li><a href="../../recipes/reducers/prerequisiteconcepts/">Recipes: Structuring Reducers - Prerequisite Concepts</a></li> <li><a href="../../recipes/reducers/immutableupdatepatterns/">Recipes: Structuring Reducers - Immutable Update Patterns</a></li> </ul> <p><strong>Articles</strong></p> <ul> <li><a href="http://reactkungfu.com/2015/08/pros-and-cons-of-using-immutability-with-react-js/" target="_blank">Pros and Cons of Using Immutability with React</a></li> <li><a href="https://github.com/markerikson/react-redux-links/blob/master/immutable-data.md" target="_blank">React/Redux Links: Immutable Data</a></li> </ul> <p><strong>Discussions</strong></p> <ul> <li><a href="https://github.com/reactjs/redux/issues/1262" target="_blank">#1262: Immutable data + bad performance</a></li> <li><a href="https://github.com/reactjs/react-redux/issues/235" target="_blank">React Redux #235: Predicate function for updating component</a></li> <li><a href="https://github.com/reactjs/react-redux/issues/291" target="_blank">React Redux #291: Should mapStateToProps be called every time an action is dispatched?</a></li> <li><a href="http://stackoverflow.com/questions/35592078/cleaner-shorter-way-to-update-nested-state-in-redux" target="_blank">Stack Overflow: Cleaner/shorter way to update nested state in Redux?</a></li> <li><a href="https://gist.github.com/amcdnl/7d93c0c67a9a44fe5761#gistcomment-1706579" target="_blank">Gist: state mutations</a></li> </ul>  <h3 id="react-rendering-too-often">Why is my component re-rendering too often?</h3> <p>React Redux implements several optimizations to ensure your actual component only re-renders when actually necessary. One of those is a shallow equality check on the combined props object generated by the <code>mapStateToProps</code> and <code>mapDispatchToProps</code> arguments passed to <code>connect</code>. Unfortunately, shallow equality does not help in cases where new array or object instances are created each time <code>mapStateToProps</code> is called. A typical example might be mapping over an array of IDs and returning the matching object references, such as:</p> <pre class="language-" data-language="js">const mapStateToProps = state =&gt; {
@@ -92,17 +92,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
