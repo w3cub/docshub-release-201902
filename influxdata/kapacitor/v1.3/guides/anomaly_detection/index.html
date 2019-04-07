@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/influxdata/" class="_nav-link" title="" style="margin-left:0;">InfluxData</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Custom Anomaly Detection</h1>     <p>Everyone has their own anomaly detection algorithm, so we have built Kapacitor to integrate easily with which ever algorithm fits your domain. Kapacitor calls these custom algorithms UDFs for User Defined Functions. This guide will walk through the necessary steps for writing and using your own UDFs within Kapacitor.</p> <p>If you haven’t already, we recommend following the <a href="../../introduction/getting_started/">getting started guide</a> for Kapacitor prior to continuing.</p> <h2 id="3d-printing">3D Printing</h2> <p>If you own or have recently purchased a 3D printer, you may know that 3D printing requires the environment to be at certain temperatures in order to ensure quality prints. Prints can also take a long time (some can take more than 24 hours), so you can’t just watch the temperature graphs the whole time to make sure the print is going well. Also, if a print goes bad early, you want to make sure and stop it so that you can restart it, and not waste materials on continuing a bad print.</p> <p>Due to the physical limitations of 3D printing, the printer software is typically designed to keep the temperatures within certain tolerances. For the sake of argument, let’s say that you don’t trust the software to do it’s job (or want to create your own), and want to be alerted when the temperature reaches an abnormal level.</p> <p>There are three temperatures when it comes to 3D printing:</p> <ol> <li>The temperature of the hot end (where the plastic is melted before being printed).</li> <li>The temperature of the bed (where the part is being printed).</li> <li>The temperature of the ambient air (the air around the printer).</li> </ol> <p>All three of these temperatures affect the quality of the print (some being more important than others), but we want to make sure and track all of them.</p> <p>To keep our anomaly detection algorithm simple, let’s compute a <code>p-value</code> for each window of data we receive, and then emit a single data point with that <code>p-value</code>. To compute the <code>p-value</code>, we will use <a href="https://en.wikipedia.org/wiki/Welch%27s_t_test" target="_blank">Welch’s t-test</a>. For a null hypothesis, we will state that a new window is from the same population as the historical windows. If the <code>p-value</code> drops low enough, we can reject the null hypothesis and conclude that the window must be from something different than the historical data population, or <em>an anomaly</em>. This is an oversimplified approach, but we are learning how to write UDFs, not statistics.</p> <h2 id="writing-a-udf">Writing a UDF</h2> <p>Now that we have an idea of what we want to do, let’s understand how Kapacitor wants to communicate with our process. From the <a href="https://github.com/influxdata/kapacitor/tree/master/udf/agent" target="_blank">UDF README</a> we learn that Kapacitor will spawn a process called an <code>agent</code>. The <code>agent</code> is responsible for describing what options it has, and then initializing itself with a set of options. As data is received by the UDF, the <code>agent</code> performs its computation and then returns the resulting data to Kapacitor. All of this communication occurs over STDIN and STDOUT using protocol buffers. As of this writing, Kapacitor has agents implemented in Go and Python that take care of the communication details and expose an interface for doing the actual work. For this guide, we will be using the Python agent.</p> <h3 id="the-handler-interface">The Handler Interface</h3> <p>Here is the Python handler interface for the agent:</p> <pre data-language="python"># The Agent calls the appropriate methods on the Handler as requests are read off STDIN.
 #
@@ -532,17 +532,9 @@ ID                                      Type    Status    Size      Date
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/influxdata/" class="_nav-link" title="" style="margin-left:0;">InfluxData</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Storage Engine</h1>     <h1 id="the-influxdb-storage-engine-and-the-time-structured-merge-tree-tsm">The InfluxDB Storage Engine and the Time-Structured Merge Tree (TSM)</h1> <p>The new InfluxDB storage engine looks very similar to a LSM Tree. It has a write ahead log and a collection of read-only data files which are similar in concept to SSTables in an LSM Tree. TSM files contain sorted, compressed series data.</p> <p>InfluxDB will create a <a href="../glossary/#shard">shard</a> for each block of time. For example, if you have a <a href="../glossary/#retention-policy">retention policy</a> with an unlimited duration, shards will be created for each 7 day block of time. Each of these shards maps to an underlying storage engine database. Each of these databases has its own <a href="../glossary/#wal-write-ahead-log">WAL</a> and TSM files.</p> <p>We’ll dig into each of these parts of the storage engine.</p> <h2 id="storage-engine">Storage Engine</h2> <p>The storage engine ties a number of components together and provides the external interface for storing and querying series data. It is composed of a number of components that each serve a particular role:</p> <ul> <li>In-Memory Index - The in-memory index is a shared index across shards that provides the quick access to <a href="../glossary/#measurement">measurements</a>, <a href="../glossary/#tags">tags</a>, and <a href="../glossary/#series">series</a>. The index is used by the engine, but is not specific to the storage engine itself.</li> <li>WAL - The WAL is a write-optimized storage format that allows for writes to be durable, but not easily queryable. Writes to the WAL are appended to segments of a fixed size.</li> <li>Cache - The Cache is an in-memory representation of the data stored in the WAL. It is queried at runtime and merged with the data stored in TSM files.</li> <li>TSM Files - TSM files store compressed series data in a columnar format.</li> <li>FileStore - The FileStore mediates access to all TSM files on disk. It ensures that TSM files are installed atomically when existing ones are replaced as well as removing TSM files that are no longer used.</li> <li>Compactor - The Compactor is responsible for converting less optimized Cache and TSM data into more read-optimized formats. It does this by compressing series, removing deleted data, optimizing indices and combining smaller files into larger ones.</li> <li>Compaction Planner - The Compaction Planner determines which TSM files are ready for a compaction and ensures that multiple concurrent compactions do not interfere with each other.</li> <li>Compression - Compression is handled by various Encoders and Decoders for specific data types. Some encoders are fairly static and always encode the same type the same way; others switch their compression strategy based on the shape of the data.</li> <li>Writers/Readers - Each file type (WAL segment, TSM files, tombstones, etc..) has Writers and Readers for working with the formats.</li> </ul> <h3 id="write-ahead-log-wal">Write Ahead Log (WAL)</h3> <p>The WAL is organized as a bunch of files that look like <code>_000001.wal</code>. The file numbers are monotonically increasing and referred to as WAL segments. When a segment reaches 10MB in size, it is closed and a new one is opened. Each WAL segment stores multiple compressed blocks of writes and deletes.</p> <p>When a write comes in the new points are serialized, compressed using Snappy, and written to a WAL file. The file is <code>fsync</code>’d and the data is added to an in-memory index before a success is returned. This means that batching points together is required to achieve high throughput performance. (Optimal batch size seems to be 5,000-10,000 points per batch for many use cases.)</p> <p>Each entry in the WAL follows a <a href="https://en.wikipedia.org/wiki/Type-length-value" target="_blank">TLV standard</a> with a single byte representing the type of entry (write or delete), a 4 byte <code>uint32</code> for the length of the compressed block, and then the compressed block.</p> <h3 id="cache">Cache</h3> <p>The Cache is an in-memory copy of all data points current stored in the WAL. The points are organized by the key, which is the measurement, <a href="../glossary/#tag-set">tag set</a>, and unique <a href="../glossary/#field">field</a>. Each field is kept as its own time-ordered range. The Cache data is not compressed while in memory.</p> <p>Queries to the storage engine will merge data from the Cache with data from the TSM files. Queries execute on a copy of the data that is made from the cache at query processing time. This way writes that come in while a query is running won’t affect the result.</p> <p>Deletes sent to the Cache will clear out the given key or the specific time range for the given key.</p> <p>The Cache exposes a few controls for snapshotting behavior. The two most important controls are the memory limits. There is a lower bound, <a href="../../administration/config/#cache-snapshot-memory-size-26214400"><code>cache-snapshot-memory-size</code></a>, which when exceeded will trigger a snapshot to TSM files and remove the corresponding WAL segments. There is also an upper bound, <a href="../../administration/config/#cache-max-memory-size-524288000"><code>cache-max-memory-size</code></a>, which when exceeded will cause the Cache to reject new writes. These configurations are useful to prevent out of memory situations and to apply back pressure to clients writing data faster than the instance can persist it. The checks for memory thresholds occur on every write.</p> <p>The other snapshot controls are time based. The idle threshold, <a href="../../administration/config/#cache-snapshot-write-cold-duration-1h0m0s"><code>cache-snapshot-write-cold-duration</code></a>, forces the Cache to snapshot to TSM files if it hasn’t received a write within the specified interval.</p> <p>The in-memory Cache is recreated on restart by re-reading the WAL files on disk.</p> <h3 id="tsm-files">TSM Files</h3> <p>TSM files are a collection of read-only files that are memory mapped. The structure of these files looks very similar to an SSTable in LevelDB or other LSM Tree variants.</p> <p>A TSM file is composed of four sections: header, blocks, index, and footer.</p> <pre>┌────────┬────────────────────────────────────┬─────────────┬──────────────┐
 │ Header │               Blocks               │    Index    │    Footer    │
@@ -120,17 +120,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

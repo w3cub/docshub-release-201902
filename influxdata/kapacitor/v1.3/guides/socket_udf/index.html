@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/influxdata/" class="_nav-link" title="" style="margin-left:0;">InfluxData</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Writing a socket based UDF</h1>     <p>In <a href="../anomaly_detection/">another example</a> we saw how to write a process based UDF for custom anomaly detection workloads. In this example we are going to learn how to write a simple socket based UDF.</p> <h2 id="what-is-a-udf">What is a UDF?</h2> <p>A UDF is a user defined function that can communicate with Kapacitor to process data. Kapacitor will send it data and the UDF can respond with new or modified data. A UDF can be written in any language that has <a href="https://developers.google.com/protocol-buffers/" target="_blank">protocol buffer</a> support.</p> <h2 id="what-is-the-difference-between-a-socket-udf-and-a-process-udf">What is the difference between a socket UDF and a process UDF?</h2> <ul> <li>A process UDF, is a child process of Kapacitor that communicates over STDIN/STDOUT with Kapacitor and is completely managed by Kapacitor.</li> <li>A socket UDF is process external to Kapacitor that communicates over a configured unix domain socket. The process itself is not managed by Kapacitor.</li> </ul> <p>Using a process UDF can be simpler than a socket UDF because Kapacitor will spawn the process and manage everything for you. On the other hand you may want more control over the UDF process itself and rather expose only a socket to Kapacitor. One use case that is common is running Kapacitor in a Docker container and the UDF in another container that exposes the socket via a Docker volume.</p> <p>In both cases the protocol is the same the only difference is the transport mechanism. Also note that since multiple Kapacitor tasks can use the same UDF, for a process based UDF a new child process will be spawned for each use of the UDF. In contrast for a socket based UDF, a new connection will be made to the socket for each use of the UDF. If you have many uses of the same UDF it may be better to use a socket UDF to keep the number of running processes low.</p> <h2 id="writing-a-udf">Writing a UDF</h2> <p>A UDF communicates with Kapacitor via a protocol buffer request/response system. We provide implementations of that communication layer in both Go and Python. Since the other example used Python we will use the Go version here.</p> <p>Our example is going to implement a <code>mirror</code> UDF which simply reflects all data it receives back to the Kapacitor server. This example is actually part of the test suite and a Python and Go implementation can be found <a href="https://github.com/influxdata/kapacitor/tree/master/udf/agent/examples/mirror" target="_blank">here</a>.</p> <h3 id="lifecycle">Lifecycle</h3> <p>Before we write any code lets look at the lifecycle of a socket UDF:</p> <ol> <li>The UDF process is started, independently from Kapacitor.</li> <li>The process listens on a unix domain socket.</li> <li>Kapacitor connects to the socket and queries basic information about the UDFs options.</li> <li>A Kapacitor task is enabled that uses the UDF and Kapacitor makes a new connection to the socket.</li> <li>The task reads and writes data over the socket connection.</li> <li>If the task is stopped for any reason the socket connection is closed.</li> </ol> <h3 id="the-main-method">The Main method</h3> <p>We need to write a program that starts up and listens on a socket. The following code is a main function that listens on a socket at a default path, or on a custom path specified as the <code>-socket</code> flag.</p> <pre data-language="go">package main
 
@@ -499,17 +499,9 @@ func (h *mirrorHandler) Init(r *agent.InitRequest) (*agent.InitResponse, error) 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
