@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="post-title">Triple-Slash Directives</h1>     <p>Triple-slash directives are single-line comments containing a single XML tag. The contents of the comment are used as compiler directives.</p> <p>Triple-slash directives are <strong>only</strong> valid at the top of their containing file. A triple-slash directive can only be preceded by single or multi-line comments, including other triple-slash directives. If they are encountered following a statement or a declaration they are treated as regular single-line comments, and hold no special meaning.</p> <h2 id="-reference-path-"><code>/// &lt;reference path="..." /&gt;</code></h2> <p>The <code>/// &lt;reference path="..." /&gt;</code> directive is the most common of this group. It serves as a declaration of <em>dependency</em> between files.</p> <p>Triple-slash references instruct the compiler to include additional files in the compilation process.</p> <p>They also serve as a method to order the output when using <code>--out</code> or <code>--outFile</code>. Files are emitted to the output file location in the same order as the input after preprocessing pass.</p> <h3 id="preprocessing-input-files">Preprocessing input files</h3> <p>The compiler performs a preprocessing pass on input files to resolve all triple-slash reference directives. During this process, additional files are added to the compilation.</p> <p>The process starts with a set of <em>root files</em>; these are the file names specified on the command-line or in the <code>"files"</code> list in the <code>tsconfig.json</code> file. These root files are preprocessed in the same order they are specified. Before a file is added to the list, all triple-slash references in it are processed, and their targets included. Triple-slash references are resolved in a depth first manner, in the order they have been seen in the file.</p> <p>A triple-slash reference path is resolved relative to the containing file, if unrooted.</p> <h3 id="errors">Errors</h3> <p>It is an error to reference a file that does not exist. It is an error for a file to have a triple-slash reference to itself.</p> <h3 id="using---noresolve">Using <code>--noResolve</code>
 </h3> <p>If the compiler flag <code>--noResolve</code> is specified, triple-slash references are ignored; they neither result in adding new files, nor change the order of the files provided.</p> <h2 id="-reference-types-"><code>/// &lt;reference types="..." /&gt;</code></h2> <p>Similar to a <code>/// &lt;reference path="..." /&gt;</code> directive, this directive serves as a declaration of <em>dependency</em>; a <code>/// &lt;reference types="..." /&gt;</code> directive, however, declares a dependency on a package.</p> <p>The process of resolving these package names is similar to the process of resolving module names in an <code>import</code> statement. An easy way to think of triple-slash-reference-types directives are as an <code>import</code> for declaration packages.</p> <p>For example, including <code>/// &lt;reference types="node" /&gt;</code> in a declaration file declares that this file uses names declared in <code>@types/node/index.d.ts</code>; and thus, this package needs to be included in the compilation along with the declaration file.</p> <p>Use these directives only when you’re authoring a <code>d.ts</code> file by hand.</p> <p>For declaration files generated during compilation, the compiler will automatically add <code>/// &lt;reference types="..." /&gt;</code> for you; A <code>/// &lt;reference types="..." /&gt;</code> in a generated declaration file is added <em>if and only if</em> the resulting file uses any declarations from the referenced package.</p> <p>For declaring a dependency on an <code>@types</code> package in a <code>.ts</code> file, use <code>--types</code> on the command line or in your <code>tsconfig.json</code> instead. See <a href="../tsconfig-json/#types-typeroots-and-types">using <code>@types</code>, <code>typeRoots</code> and <code>types</code> in <code>tsconfig.json</code> files</a> for more details.</p> <h2 id="-reference-lib-"><code>/// &lt;reference lib="..." /&gt;</code></h2> <p>This directive allows a file to explicitly include an existing built-in <em>lib</em> file.</p> <p>Built-in <em>lib</em> files are referenced in the same fashion as the <code>"lib"</code> compiler option in <em>tsconfig.json</em> (e.g. use <code>lib="es2015"</code> and not <code>lib="lib.es2015.d.ts"</code>, etc.).</p> <p>For declaration file authors who relay on built-in types, e.g. DOM APIs or built-in JS run-time constructors like <code>Symbol</code> or <code>Iterable</code>, triple-slash-reference lib directives are the recommended. Previously these .d.ts files had to add forward/duplicate declarations of such types.</p> <p>For example, adding <code>/// &lt;reference lib="es2017.string" /&gt;</code> to one of the files in a compilation is equivalent to compiling with <code>--lib es2017.string</code>.</p> <pre data-language="typescript">/// &lt;reference lib="es2017.string" /&gt;
@@ -107,17 +107,9 @@ moduleA.callStuff()
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

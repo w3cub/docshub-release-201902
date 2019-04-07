@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="post-title">Module Resolution</h1>     <blockquote> <p>This section assumes some basic knowledge about modules. Please see the <a href="../modules/">Modules</a> documentation for more information.</p> </blockquote> <p><em>Module resolution</em> is the process the compiler uses to figure out what an import refers to. Consider an import statement like <code>import { a } from "moduleA"</code>; in order to check any use of <code>a</code>, the compiler needs to know exactly what it represents, and will need to check its definition <code>moduleA</code>.</p> <p>At this point, the compiler will ask “what’s the shape of <code>moduleA</code>?” While this sounds straightforward, <code>moduleA</code> could be defined in one of your own <code>.ts</code>/<code>.tsx</code> files, or in a <code>.d.ts</code> that your code depends on.</p> <p>First, the compiler will try to locate a file that represents the imported module. To do so the compiler follows one of two different strategies: <a href="#classic">Classic</a> or <a href="#node">Node</a>. These strategies tell the compiler <em>where</em> to look for <code>moduleA</code>.</p> <p>If that didn’t work and if the module name is non-relative (and in the case of <code>"moduleA"</code>, it is), then the compiler will attempt to locate an <a href="../modules/#ambient-modules">ambient module declaration</a>. We’ll cover non-relative imports next.</p> <p>Finally, if the compiler could not resolve the module, it will log an error. In this case, the error would be something like <code>error TS2307: Cannot find module 'moduleA'.</code></p> <h2 id="relative-vs-non-relative-module-imports">Relative vs. Non-relative module imports</h2> <p>Module imports are resolved differently based on whether the module reference is relative or non-relative.</p> <p>A <em>relative import</em> is one that starts with <code>/</code>, <code>./</code> or <code>../</code>. Some examples include:</p> <ul> <li><code>import Entry from "./components/Entry";</code></li> <li><code>import { DefaultHeaders } from "../constants/http";</code></li> <li><code>import "/mod";</code></li> </ul> <p>Any other import is considered <strong>non-relative</strong>. Some examples include:</p> <ul> <li><code>import * as $ from "jquery";</code></li> <li><code>import { Component } from "@angular/core";</code></li> </ul> <p>A relative import is resolved relative to the importing file and <em>cannot</em> resolve to an ambient module declaration. You should use relative imports for your own modules that are guaranteed to maintain their relative location at runtime.</p> <p>A non-relative import can be resolved relative to <code>baseUrl</code>, or through path mapping, which we’ll cover below. They can also resolve to <a href="../modules/#ambient-modules">ambient module declarations</a>. Use non-relative paths when importing any of your external dependencies.</p> <h2 id="module-resolution-strategies">Module Resolution Strategies</h2> <p>There are two possible module resolution strategies: <a href="#node">Node</a> and <a href="#classic">Classic</a>. You can use the <code>--moduleResolution</code> flag to specify the module resolution strategy. If not specified, the default is <a href="#classic">Classic</a> for <code>--module AMD | System | ES2015</code> or <a href="#node">Node</a> otherwise.</p> <h3 id="classic">Classic</h3> <p>This used to be TypeScript’s default resolution strategy. Nowadays, this strategy is mainly present for backward compatibility.</p> <p>A relative import will be resolved relative to the importing file. So <code>import { b } from "./moduleB"</code> in source file <code>/root/src/folder/A.ts</code> would result in the following lookups:</p> <ol> <li><code>/root/src/folder/moduleB.ts</code></li> <li><code>/root/src/folder/moduleB.d.ts</code></li> </ol> <p>For non-relative module imports, however, the compiler walks up the directory tree starting with the directory containing the importing file, trying to locate a matching definition file.</p> <p>For example:</p> <p>A non-relative import to <code>moduleB</code> such as <code>import { b } from "moduleB"</code>, in a source file <code>/root/src/folder/A.ts</code>, would result in attempting the following locations for locating <code>"moduleB"</code>:</p> <ol> <li><code>/root/src/folder/moduleB.ts</code></li> <li><code>/root/src/folder/moduleB.d.ts</code></li> <li><code>/root/src/moduleB.ts</code></li> <li><code>/root/src/moduleB.d.ts</code></li> <li><code>/root/moduleB.ts</code></li> <li><code>/root/moduleB.d.ts</code></li> <li><code>/moduleB.ts</code></li> <li><code>/moduleB.d.ts</code></li> </ol> <h3 id="node">Node</h3> <p>This resolution strategy attempts to mimic the <a href="https://nodejs.org/" target="_blank">Node.js</a> module resolution mechanism at runtime. The full Node.js resolution algorithm is outlined in <a href="https://nodejs.org/api/modules.html#modules_all_together" target="_blank">Node.js module documentation</a>.</p> <h4 id="how-nodejs-resolves-modules">How Node.js resolves modules</h4> <p>To understand what steps the TS compiler will follow, it is important to shed some light on Node.js modules. Traditionally, imports in Node.js are performed by calling a function named <code>require</code>. The behavior Node.js takes will differ depending on if <code>require</code> is given a relative path or a non-relative path.</p> <p>Relative paths are fairly straightforward. As an example, let’s consider a file located at <code>/root/src/moduleA.js</code>, which contains the import <code>var x = require("./moduleB");</code> Node.js resolves that import in the following order:</p> <ol> <li> <p>Ask the file named <code>/root/src/moduleB.js</code>, if it exists.</p> </li> <li> <p>Ask the folder <code>/root/src/moduleB</code> if it contains a file named <code>package.json</code> that specifies a <code>"main"</code> module. In our example, if Node.js found the file <code>/root/src/moduleB/package.json</code> containing <code>{ "main": "lib/mainModule.js" }</code>, then Node.js will refer to <code>/root/src/moduleB/lib/mainModule.js</code>.</p> </li> <li> <p>Ask the folder <code>/root/src/moduleB</code> if it contains a file named <code>index.js</code>. That file is implicitly considered that folder’s “main” module.</p> </li> </ol> <p>You can read more about this in Node.js documentation on <a href="https://nodejs.org/api/modules.html#modules_file_modules" target="_blank">file modules</a> and <a href="https://nodejs.org/api/modules.html#modules_folders_as_modules" target="_blank">folder modules</a>.</p> <p>However, resolution for a <a href="#relative-vs-non-relative-module-imports">non-relative module name</a> is performed differently. Node will look for your modules in special folders named <code>node_modules</code>. A <code>node_modules</code> folder can be on the same level as the current file, or higher up in the directory chain. Node will walk up the directory chain, looking through each <code>node_modules</code> until it finds the module you tried to load.</p> <p>Following up our example above, consider if <code>/root/src/moduleA.js</code> instead used a non-relative path and had the import <code>var x = require("moduleB");</code>. Node would then try to resolve <code>moduleB</code> to each of the locations until one worked.</p> <ol> <li><code>/root/src/node_modules/moduleB.js</code></li> <li>
 <code>/root/src/node_modules/moduleB/package.json</code> (if it specifies a <code>"main"</code> property)</li> <li>
@@ -193,17 +193,9 @@ import * as B from "moduleB" // Error TS2307: Cannot find module 'moduleB'.
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
