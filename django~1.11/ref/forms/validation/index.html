@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~1.11/" class="_nav-link" title="" style="margin-left:0;">Django 1.11</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="form-and-field-validation">Form and field validation</h1> <p id="s-form-and-field-validation">Form validation happens when the data is cleaned. If you want to customize this process, there are various places to make changes, each one serving a different purpose. Three types of cleaning methods are run during form processing. These are normally executed when you call the <code>is_valid()</code> method on a form. There are other things that can also trigger cleaning and validation (accessing the <code>errors</code> attribute or calling <code>full_clean()</code> directly), but normally they won’t be needed.</p> <p>In general, any cleaning method can raise <code>ValidationError</code> if there is a problem with the data it is processing, passing the relevant information to the <code>ValidationError</code> constructor. <a class="reference internal" href="#raising-validation-error"><span class="std std-ref">See below</span></a> for the best practice in raising <code>ValidationError</code>. If no <code>ValidationError</code> is raised, the method should return the cleaned (normalized) data as a Python object.</p> <p>Most validation can be done using <a class="reference internal" href="#validators">validators</a> - simple helpers that can be reused easily. Validators are simple functions (or callables) that take a single argument and raise <code>ValidationError</code> on invalid input. Validators are run after the field’s <code>to_python</code> and <code>validate</code> methods have been called.</p> <p>Validation of a form is split into several steps, which can be customized or overridden:</p> <ul> <li>The <code>to_python()</code> method on a <code>Field</code> is the first step in every validation. It coerces the value to a correct datatype and raises <code>ValidationError</code> if that is not possible. This method accepts the raw value from the widget and returns the converted value. For example, a <code>FloatField</code> will turn the data into a Python <code>float</code> or raise a <code>ValidationError</code>. </li> <li>The <code>validate()</code> method on a <code>Field</code> handles field-specific validation that is not suitable for a validator. It takes a value that has been coerced to a correct datatype and raises <code>ValidationError</code> on any error. This method does not return anything and shouldn’t alter the value. You should override it to handle validation logic that you can’t or don’t want to put in a validator. </li> <li>The <code>run_validators()</code> method on a <code>Field</code> runs all of the field’s validators and aggregates all the errors into a single <code>ValidationError</code>. You shouldn’t need to override this method. </li> <li>The <code>clean()</code> method on a <code>Field</code> subclass is responsible for running <code>to_python()</code>, <code>validate()</code>, and <code>run_validators()</code> in the correct order and propagating their errors. If, at any time, any of the methods raise <code>ValidationError</code>, the validation stops and that error is raised. This method returns the clean data, which is then inserted into the <code>cleaned_data</code> dictionary of the form. </li> <li>
 <p class="first">The <code>clean_&lt;fieldname&gt;()</code> method is called on a form subclass – where <code>&lt;fieldname&gt;</code> is replaced with the name of the form field attribute. This method does any cleaning that is specific to that particular attribute, unrelated to the type of field that it is. This method is not passed any parameters. You will need to look up the value of the field in <code>self.cleaned_data</code> and remember that it will be a Python object at this point, not the original string submitted in the form (it will be in <code>cleaned_data</code> because the general field <code>clean()</code> method, above, has already cleaned the data once).</p> <p>For example, if you wanted to validate that the contents of a <code>CharField</code> called <code>serialnumber</code> was unique, <code>clean_serialnumber()</code> would be the right place to do this. You don’t need a specific field (it’s just a <code>CharField</code>), but you want a formfield-specific piece of validation and, possibly, cleaning/normalizing the data.</p> <p>The return value of this method replaces the existing value in <code>cleaned_data</code>, so it must be the field’s value from <code>cleaned_data</code> (even if this method didn’t change it) or a new cleaned value.</p> </li> <li>
@@ -220,17 +220,9 @@ class ContactForm(forms.Form):
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

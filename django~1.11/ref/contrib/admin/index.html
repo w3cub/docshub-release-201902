@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~1.11/" class="_nav-link" title="" style="margin-left:0;">Django 1.11</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="the-django-admin-site">The Django admin site</h1> <p id="s-module-django.contrib.admin">One of the most powerful parts of Django is the automatic admin interface. It reads metadata from your models to provide a quick, model-centric interface where trusted users can manage content on your site. The admin’s recommended use is limited to an organization’s internal management tool. It’s not intended for building your entire front end around.</p> <p>The admin has many hooks for customization, but beware of trying to use those hooks exclusively. If you need to provide a more process-centric interface that abstracts away the implementation details of database tables and fields, then it’s probably time to write your own views.</p> <p>In this document we discuss how to activate, use, and customize Django’s admin interface.</p>  <h2 id="overview">Overview</h2> <p id="s-overview">The admin is enabled in the default project template used by <a class="reference internal" href="../../django-admin/#django-admin-startproject"><code>startproject</code></a>.</p> <p>For reference, here are the requirements:</p> <ol class="arabic simple"> <li>Add <code>'django.contrib.admin'</code> to your <a class="reference internal" href="../../settings/#std:setting-INSTALLED_APPS"><code>INSTALLED_APPS</code></a> setting.</li> <li>The admin has four dependencies - <a class="reference internal" href="../../../topics/auth/#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code>django.contrib.auth</code></a>, <a class="reference internal" href="../contenttypes/#module-django.contrib.contenttypes" title="django.contrib.contenttypes: Provides generic interface to installed models."><code>django.contrib.contenttypes</code></a>, <a class="reference internal" href="../messages/#module-django.contrib.messages" title="django.contrib.messages: Provides cookie- and session-based temporary message storage."><code>django.contrib.messages</code></a> and <a class="reference internal" href="../../../topics/http/sessions/#module-django.contrib.sessions" title="django.contrib.sessions: Provides session management for Django projects."><code>django.contrib.sessions</code></a>. If these applications are not in your <a class="reference internal" href="../../settings/#std:setting-INSTALLED_APPS"><code>INSTALLED_APPS</code></a> list, add them.</li> <li>Add <code>django.contrib.auth.context_processors.auth</code> and <code>django.contrib.messages.context_processors.messages</code> to the <code>'context_processors'</code> option of the <code>DjangoTemplates</code> backend defined in your <a class="reference internal" href="../../settings/#std:setting-TEMPLATES"><code>TEMPLATES</code></a> as well as <a class="reference internal" href="../../middleware/#django.contrib.auth.middleware.AuthenticationMiddleware" title="django.contrib.auth.middleware.AuthenticationMiddleware"><code>django.contrib.auth.middleware.AuthenticationMiddleware</code></a> and <a class="reference internal" href="../../middleware/#django.contrib.messages.middleware.MessageMiddleware" title="django.contrib.messages.middleware.MessageMiddleware"><code>django.contrib.messages.middleware.MessageMiddleware</code></a> to <a class="reference internal" href="../../settings/#std:setting-MIDDLEWARE"><code>MIDDLEWARE</code></a>. These are all active by default, so you only need to do this if you’ve manually tweaked the settings.</li> <li>Determine which of your application’s models should be editable in the admin interface.</li> <li>For each of those models, optionally create a <code>ModelAdmin</code> class that encapsulates the customized admin functionality and options for that particular model.</li> <li>Instantiate an <code>AdminSite</code> and tell it about each of your models and <code>ModelAdmin</code> classes.</li> <li>Hook the <code>AdminSite</code> instance into your URLconf.</li> </ol> <p>After you’ve taken these steps, you’ll be able to use your Django admin site by visiting the URL you hooked it into (<code>/admin/</code>, by default). If you need to create a user to login with, you can use the <a class="reference internal" href="../../django-admin/#django-admin-createsuperuser"><code>createsuperuser</code></a> command.</p>  <h3 id="other-topics">Other topics</h3>  <ul id="s-other-topics"> <li class="toctree-l1"><a class="reference internal" href="actions/">Admin actions</a></li> <li class="toctree-l1"><a class="reference internal" href="admindocs/">The Django admin documentation generator</a></li> <li class="toctree-l1"><a class="reference internal" href="javascript/">JavaScript customizations in the admin</a></li> </ul>  <div class="admonition seealso"> <p class="first admonition-title">See also</p> <p>For information about serving the static files (images, JavaScript, and CSS) associated with the admin in production, see <a class="reference internal" href="../../../howto/deployment/wsgi/modwsgi/#serving-files"><span class="std std-ref">Serving files</span></a>.</p> <p class="last">Having problems? Try <a class="reference internal" href="https://docs.djangoproject.com/en/1.11/faq/admin/" target="_blank"><span class="doc">FAQ: The admin</span></a>.</p> </div>    <h2 id="modeladmin-objects">
 <code>ModelAdmin</code> objects</h2> <dl class="class" id="s-modeladmin-objects"> <dt id="django.contrib.admin.ModelAdmin">
@@ -1325,17 +1325,9 @@ def my_view(request):
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

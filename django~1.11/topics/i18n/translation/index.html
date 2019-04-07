@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~1.11/" class="_nav-link" title="" style="margin-left:0;">Django 1.11</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="translation">Translation</h1>  <h2 id="overview">Overview</h2> <p id="s-module-django.utils.translation">In order to make a Django project translatable, you have to add a minimal number of hooks to your Python code and templates. These hooks are called <a class="reference internal" href="../#term-translation-string"><span class="xref std std-term">translation strings</span></a>. They tell Django: “This text should be translated into the end user’s language, if a translation for this text is available in that language.” It’s your responsibility to mark translatable strings; the system can only translate strings it knows about.</p> <p>Django then provides utilities to extract the translation strings into a <a class="reference internal" href="../#term-message-file"><span class="xref std std-term">message file</span></a>. This file is a convenient way for translators to provide the equivalent of the translation strings in the target language. Once the translators have filled in the message file, it must be compiled. This process relies on the GNU gettext toolset.</p> <p>Once this is done, Django takes care of translating Web apps on the fly in each available language, according to users’ language preferences.</p> <p>Django’s internationalization hooks are on by default, and that means there’s a bit of i18n-related overhead in certain places of the framework. If you don’t use internationalization, you should take the two seconds to set <a class="reference internal" href="../../../ref/settings/#std:setting-USE_I18N"><code>USE_I18N = False</code></a> in your settings file. Then Django will make some optimizations so as not to load the internationalization machinery.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">There is also an independent but related <a class="reference internal" href="../../../ref/settings/#std:setting-USE_L10N"><code>USE_L10N</code></a> setting that controls if Django should implement format localization. See <a class="reference internal" href="../formatting/"><span class="doc">Format localization</span></a> for more details.</p> </div> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Make sure you’ve activated translation for your project (the fastest way is to check if <a class="reference internal" href="../../../ref/settings/#std:setting-MIDDLEWARE"><code>MIDDLEWARE</code></a> includes <a class="reference internal" href="../../../ref/middleware/#django.middleware.locale.LocaleMiddleware" title="django.middleware.locale.LocaleMiddleware"><code>django.middleware.locale.LocaleMiddleware</code></a>). If you haven’t yet, see <a class="reference internal" href="#how-django-discovers-language-preference"><span class="std std-ref">How Django discovers language preference</span></a>.</p> </div>   <h2 id="internationalization-in-python-code">Internationalization: in Python code</h2>  <h3 id="standard-translation">Standard translation</h3> <p id="s-internationalization-in-python-code">Specify a translation string by using the function <a class="reference internal" href="../../../ref/utils/#django.utils.translation.ugettext" title="django.utils.translation.ugettext"><code>ugettext()</code></a>. It’s convention to import this as a shorter alias, <code>_</code>, to save typing.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p>Python’s standard library <code>gettext</code> module installs <code>_()</code> into the global namespace, as an alias for <code>gettext()</code>. In Django, we have chosen not to follow this practice, for a couple of reasons:</p> <ol class="last arabic simple"> <li>For international character set (Unicode) support, <a class="reference internal" href="../../../ref/utils/#django.utils.translation.ugettext" title="django.utils.translation.ugettext"><code>ugettext()</code></a> is more useful than <code>gettext()</code>. Sometimes, you should be using <a class="reference internal" href="../../../ref/utils/#django.utils.translation.ugettext_lazy" title="django.utils.translation.ugettext_lazy"><code>ugettext_lazy()</code></a> as the default translation method for a particular file. Without <code>_()</code> in the global namespace, the developer has to think about which is the most appropriate translation function.</li> <li>The underscore character (<code>_</code>) is used to represent “the previous result” in Python’s interactive shell and doctest tests. Installing a global <code>_()</code> function causes interference. Explicitly importing <code>ugettext()</code> as <code>_()</code> avoids this problem.</li> </ol> </div> <div class="admonition-what-functions-may-be-aliased-as admonition"> <p class="first admonition-title">What functions may be aliased as <code>_</code>?</p> <p>Because of how <code>xgettext</code> (used by <a class="reference internal" href="../../../ref/django-admin/#django-admin-makemessages"><code>makemessages</code></a>) works, only functions that take a single string argument can be imported as <code>_</code>:</p> <ul class="last simple"> <li><a class="reference internal" href="../../../ref/utils/#django.utils.translation.gettext" title="django.utils.translation.gettext"><code>gettext()</code></a></li> <li><a class="reference internal" href="../../../ref/utils/#django.utils.translation.gettext_lazy" title="django.utils.translation.gettext_lazy"><code>gettext_lazy()</code></a></li> <li><a class="reference internal" href="../../../ref/utils/#django.utils.translation.ugettext" title="django.utils.translation.ugettext"><code>ugettext()</code></a></li> <li><a class="reference internal" href="../../../ref/utils/#django.utils.translation.ugettext_lazy" title="django.utils.translation.ugettext_lazy"><code>ugettext_lazy()</code></a></li> </ul> </div> <p>In this example, the text <code>"Welcome to my site."</code> is marked as a translation string:</p> <pre data-language="python">from django.utils.translation import ugettext as _
 from django.http import HttpResponse
@@ -731,17 +731,9 @@ def hello_world(request, count):
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

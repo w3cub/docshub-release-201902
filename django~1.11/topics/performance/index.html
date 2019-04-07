@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~1.11/" class="_nav-link" title="" style="margin-left:0;">Django 1.11</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="performance-and-optimization">Performance and optimization</h1> <p id="s-performance-and-optimization">This document provides an overview of techniques and tools that can help get your Django code running more efficiently - faster, and using fewer system resources.</p>  <h2 id="introduction">Introduction</h2> <p id="s-introduction">Generally one’s first concern is to write code that <em>works</em>, whose logic functions as required to produce the expected output. Sometimes, however, this will not be enough to make the code work as <em>efficiently</em> as one would like.</p> <p>In this case, what’s needed is something - and in practice, often a collection of things - to improve the code’s performance without, or only minimally, affecting its behavior.</p>   <h2 id="general-approaches">General approaches</h2>  <h3 id="what-are-you-optimizing-for">What are you optimizing <em>for</em>?</h3> <p id="s-general-approaches">It’s important to have a clear idea what you mean by ‘performance’. There is not just one metric of it.</p> <p>Improved speed might be the most obvious aim for a program, but sometimes other performance improvements might be sought, such as lower memory consumption or fewer demands on the database or network.</p> <p>Improvements in one area will often bring about improved performance in another, but not always; sometimes one can even be at the expense of another. For example, an improvement in a program’s speed might cause it to use more memory. Even worse, it can be self-defeating - if the speed improvement is so memory-hungry that the system starts to run out of memory, you’ll have done more harm than good.</p> <p>There are other trade-offs to bear in mind. Your own time is a valuable resource, more precious than CPU time. Some improvements might be too difficult to be worth implementing, or might affect the portability or maintainability of the code. Not all performance improvements are worth the effort.</p> <p>So, you need to know what performance improvements you are aiming for, and you also need to know that you have a good reason for aiming in that direction - and for that you need:</p>   <h3 id="performance-benchmarking">Performance benchmarking</h3> <p id="s-performance-benchmarking">It’s no good just guessing or assuming where the inefficiencies lie in your code.</p>  <h4 id="django-tools">Django tools</h4> <p id="s-django-tools"><a class="reference external" href="https://github.com/jazzband/django-debug-toolbar/" target="_blank">django-debug-toolbar</a> is a very handy tool that provides insights into what your code is doing and how much time it spends doing it. In particular it can show you all the SQL queries your page is generating, and how long each one has taken.</p> <p>Third-party panels are also available for the toolbar, that can (for example) report on cache performance and template rendering times.</p>   <h4 id="third-party-services">Third-party services</h4> <p id="s-third-party-services">There are a number of free services that will analyze and report on the performance of your site’s pages from the perspective of a remote HTTP client, in effect simulating the experience of an actual user.</p> <p>These can’t report on the internals of your code, but can provide a useful insight into your site’s overall performance, including aspects that can’t be adequately measured from within Django environment. Examples include:</p> <ul class="simple"> <li><a class="reference external" href="http://yslow.org/" target="_blank">Yahoo’s Yslow</a></li> <li><a class="reference external" href="https://developers.google.com/speed/pagespeed/" target="_blank">Google PageSpeed</a></li> </ul> <p>There are also several paid-for services that perform a similar analysis, including some that are Django-aware and can integrate with your codebase to profile its performance far more comprehensively.</p>    <h3 id="get-things-right-from-the-start">Get things right from the start</h3> <p id="s-get-things-right-from-the-start">Some work in optimization involves tackling performance shortcomings, but some of the work can simply be built in to what you’d do anyway, as part of the good practices you should adopt even before you start thinking about improving performance.</p> <p>In this respect Python is an excellent language to work with, because solutions that look elegant and feel right usually are the best performing ones. As with most skills, learning what “looks right” takes practice, but one of the most useful guidelines is:</p>  <h4 id="work-at-the-appropriate-level">Work at the appropriate level</h4> <p id="s-work-at-the-appropriate-level">Django offers many different ways of approaching things, but just because it’s possible to do something in a certain way doesn’t mean that it’s the most appropriate way to do it. For example, you might find that you could calculate the same thing - the number of items in a collection, perhaps - in a <code>QuerySet</code>, in Python, or in a template.</p> <p>However, it will almost always be faster to do this work at lower rather than higher levels. At higher levels the system has to deal with objects through multiple levels of abstraction and layers of machinery.</p> <p>That is, the database can typically do things faster than Python can, which can do them faster than the template language can:</p> <pre data-language="python"># QuerySet operation on the database
 # fast, because that's what databases are good at
@@ -101,17 +101,9 @@ my_bicycles.count }}</code>, which invokes the <code>QuerySet</code> <code>count
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

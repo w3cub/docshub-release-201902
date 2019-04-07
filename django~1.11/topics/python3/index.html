@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~1.11/" class="_nav-link" title="" style="margin-left:0;">Django 1.11</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="porting-to-python-3">Porting to Python 3</h1> <p id="s-porting-to-python-3">Django 1.5 is the first version of Django to support Python 3. The same code runs both on Python 2 (≥ 2.6.5) and Python 3 (≥ 3.2), thanks to the <a class="reference external" href="https://pythonhosted.org/six/" target="_blank">six</a> compatibility layer.</p> <p>This document is primarily targeted at authors of pluggable applications who want to support both Python 2 and 3. It also describes guidelines that apply to Django’s code.</p>  <h2 id="philosophy">Philosophy</h2> <p id="s-philosophy">This document assumes that you are familiar with the changes between Python 2 and Python 3. If you aren’t, read <a class="reference external" href="https://docs.python.org/3/howto/pyporting.html#pyporting-howto" title="(in Python v3.6)" target="_blank"><span class="xref std std-ref">Python’s official porting guide</span></a> first. Refreshing your knowledge of unicode handling on Python 2 and 3 will help; the <a class="reference external" href="http://nedbatchelder.com/text/unipain.html" target="_blank">Pragmatic Unicode</a> presentation is a good resource.</p> <p>Django uses the <em>Python 2/3 Compatible Source</em> strategy. Of course, you’re free to chose another strategy for your own code, especially if you don’t need to stay compatible with Python 2. But authors of pluggable applications are encouraged to use the same porting strategy as Django itself.</p> <p>Writing compatible code is much easier if you target Python ≥ 2.6. Django 1.5 introduces compatibility tools such as <a class="reference internal" href="#module-django.utils.six" title="django.utils.six"><code>django.utils.six</code></a>, which is a customized version of the <a class="reference external" href="https://pythonhosted.org/six/index.html#module-six" title="(in six v1.10)" target="_blank"><code>six module</code></a>. For convenience, forwards-compatible aliases were introduced in Django 1.4.2. If your application takes advantage of these tools, it will require Django ≥ 1.4.2.</p> <p>Obviously, writing compatible source code adds some overhead, and that can cause frustration. Django’s developers have found that attempting to write Python 3 code that’s compatible with Python 2 is much more rewarding than the opposite. Not only does that make your code more future-proof, but Python 3’s advantages (like the saner string handling) start shining quickly. Dealing with Python 2 becomes a backwards compatibility requirement, and we as developers are used to dealing with such constraints.</p> <p>Porting tools provided by Django are inspired by this philosophy, and it’s reflected throughout this guide.</p>   <h2 id="porting-tips">Porting tips</h2>  <h3 id="unicode-literals">Unicode literals</h3> <p id="s-porting-tips">This step consists in:</p> <ul class="simple"> <li>Adding <code>from __future__ import unicode_literals</code> at the top of your Python modules – it’s best to put it in each and every module, otherwise you’ll keep checking the top of your files to see which mode is in effect;</li> <li>Removing the <code>u</code> prefix before unicode strings;</li> <li>Adding a <code>b</code> prefix before bytestrings.</li> </ul> <p>Performing these changes systematically guarantees backwards compatibility.</p> <p>However, Django applications generally don’t need bytestrings, since Django only exposes unicode interfaces to the programmer. Python 3 discourages using bytestrings, except for binary data or byte-oriented interfaces. Python 2 makes bytestrings and unicode strings effectively interchangeable, as long as they only contain ASCII data. Take advantage of this to use unicode strings wherever possible and avoid the <code>b</code> prefixes.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Python 2’s <code>u</code> prefix is a syntax error in Python 3.2 but it will be allowed again in Python 3.3 thanks to <a class="pep reference external" href="https://www.python.org/dev/peps/pep-0414" id="index-0" target="_blank"><strong>PEP 414</strong></a>. Thus, this transformation is optional if you target Python ≥ 3.3. It’s still recommended, per the “write Python 3 code” philosophy.</p> </div>   <h3 id="string-handling">String handling</h3> <p id="s-string-handling">Python 2’s <a class="reference external" href="https://docs.python.org/2/library/functions.html#unicode" target="_blank">unicode</a> type was renamed <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)" target="_blank"><code>str</code></a> in Python 3, <code>str()</code> was renamed <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.6)" target="_blank"><code>bytes</code></a>, and <a class="reference external" href="https://docs.python.org/2/library/functions.html#basestring" target="_blank">basestring</a> disappeared. <a class="reference external" href="https://pythonhosted.org/six/" target="_blank">six</a> provides <a class="reference internal" href="#string-handling-with-six"><span class="std std-ref">tools</span></a> to deal with these changes.</p> <p>Django also contains several string related classes and functions in the <a class="reference internal" href="../../ref/utils/#module-django.utils.encoding" title="django.utils.encoding: A series of helper functions to manage character encoding."><code>django.utils.encoding</code></a> and <a class="reference internal" href="../../ref/utils/#module-django.utils.safestring" title="django.utils.safestring: Functions and classes for working with strings that can be displayed safely without further escaping in HTML."><code>django.utils.safestring</code></a> modules. Their names used the words <code>str</code>, which doesn’t mean the same thing in Python 2 and Python 3, and <code>unicode</code>, which doesn’t exist in Python 3. In order to avoid ambiguity and confusion these concepts were renamed <code>bytes</code> and <code>text</code>.</p> <p>Here are the name changes in <a class="reference internal" href="../../ref/utils/#module-django.utils.encoding" title="django.utils.encoding: A series of helper functions to manage character encoding."><code>django.utils.encoding</code></a>:</p> <table class="docutils">  <thead valign="bottom"> <tr>
 <th class="head">Old name</th> <th class="head">New name</th> </tr> </thead>  <tr>
@@ -152,17 +152,9 @@ isinstance(myvalue, bytes)                  # replacement for str
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
