@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/scikit_learn/" class="_nav-link" title="" style="margin-left:0;">scikit-learn</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="covariance">2.6. Covariance estimation</h1> <p id="covariance-estimation">Many statistical problems require the estimation of a population’s covariance matrix, which can be seen as an estimation of data set scatter plot shape. Most of the time, such an estimation has to be done on a sample whose properties (size, structure, homogeneity) have a large influence on the estimation’s quality. The <code>sklearn.covariance</code> package provides tools for accurately estimating a population’s covariance matrix under various settings.</p> <p>We assume that the observations are independent and identically distributed (i.i.d.).</p>  <h2 id="empirical-covariance">2.6.1. Empirical covariance</h2> <p>The covariance matrix of a data set is known to be well approximated by the classical <em>maximum likelihood estimator</em> (or “empirical covariance”), provided the number of observations is large enough compared to the number of features (the variables describing the observations). More precisely, the Maximum Likelihood Estimator of a sample is an unbiased estimator of the corresponding population’s covariance matrix.</p> <p>The empirical covariance matrix of a sample can be computed using the <a class="reference internal" href="../generated/sklearn.covariance.empirical_covariance/#sklearn.covariance.empirical_covariance" title="sklearn.covariance.empirical_covariance"><code>empirical_covariance</code></a> function of the package, or by fitting an <a class="reference internal" href="../generated/sklearn.covariance.empiricalcovariance/#sklearn.covariance.EmpiricalCovariance" title="sklearn.covariance.EmpiricalCovariance"><code>EmpiricalCovariance</code></a> object to the data sample with the <a class="reference internal" href="../generated/sklearn.covariance.empiricalcovariance/#sklearn.covariance.EmpiricalCovariance.fit" title="sklearn.covariance.EmpiricalCovariance.fit"><code>EmpiricalCovariance.fit</code></a> method. Be careful that results depend on whether the data are centered, so one may want to use the <code>assume_centered</code> parameter accurately. More precisely, if <code>assume_centered=False</code>, then the test set is supposed to have the same mean vector as the training set. If not, both should be centered by the user, and <code>assume_centered=True</code> should be used.</p> <div class="topic"> <p class="topic-title first">Examples:</p> <ul class="simple"> <li>See <a class="reference internal" href="../../auto_examples/covariance/plot_covariance_estimation/#sphx-glr-auto-examples-covariance-plot-covariance-estimation-py"><span class="std std-ref">Shrinkage covariance estimation: LedoitWolf vs OAS and max-likelihood</span></a> for an example on how to fit an <a class="reference internal" href="../generated/sklearn.covariance.empiricalcovariance/#sklearn.covariance.EmpiricalCovariance" title="sklearn.covariance.EmpiricalCovariance"><code>EmpiricalCovariance</code></a> object to data.</li> </ul> </div>   <h2 id="id1">2.6.2. Shrunk Covariance</h2>  <h3 id="shrunk-covariance">2.6.2.1. Basic shrinkage</h3> <p>Despite being an unbiased estimator of the covariance matrix, the Maximum Likelihood Estimator is not a good estimator of the eigenvalues of the covariance matrix, so the precision matrix obtained from its inversion is not accurate. Sometimes, it even occurs that the empirical covariance matrix cannot be inverted for numerical reasons. To avoid such an inversion problem, a transformation of the empirical covariance matrix has been introduced: the <code>shrinkage</code>.</p> <p>In scikit-learn, this transformation (with a user-defined shrinkage coefficient) can be directly applied to a pre-computed covariance with the <a class="reference internal" href="../generated/sklearn.covariance.shrunk_covariance/#sklearn.covariance.shrunk_covariance" title="sklearn.covariance.shrunk_covariance"><code>shrunk_covariance</code></a> method. Also, a shrunk estimator of the covariance can be fitted to data with a <a class="reference internal" href="../generated/sklearn.covariance.shrunkcovariance/#sklearn.covariance.ShrunkCovariance" title="sklearn.covariance.ShrunkCovariance"><code>ShrunkCovariance</code></a> object and its <a class="reference internal" href="../generated/sklearn.covariance.shrunkcovariance/#sklearn.covariance.ShrunkCovariance.fit" title="sklearn.covariance.ShrunkCovariance.fit"><code>ShrunkCovariance.fit</code></a> method. Again, results depend on whether the data are centered, so one may want to use the <code>assume_centered</code> parameter accurately.</p> <p>Mathematically, this shrinkage consists in reducing the ratio between the smallest and the largest eigenvalues of the empirical covariance matrix. It can be done by simply shifting every eigenvalue according to a given offset, which is equivalent of finding the l2-penalized Maximum Likelihood Estimator of the covariance matrix. In practice, shrinkage boils down to a simple a convex transformation : <span class="math">\(\Sigma_{\rm shrunk} = (1-\alpha)\hat{\Sigma} + \alpha\frac{{\rm Tr}\hat{\Sigma}}{p}\rm Id\)</span>.</p> <p>Choosing the amount of shrinkage, <span class="math">\(\alpha\)</span> amounts to setting a bias/variance trade-off, and is discussed below.</p> <div class="topic"> <p class="topic-title first">Examples:</p> <ul class="simple"> <li>See <a class="reference internal" href="../../auto_examples/covariance/plot_covariance_estimation/#sphx-glr-auto-examples-covariance-plot-covariance-estimation-py"><span class="std std-ref">Shrinkage covariance estimation: LedoitWolf vs OAS and max-likelihood</span></a> for an example on how to fit a <a class="reference internal" href="../generated/sklearn.covariance.shrunkcovariance/#sklearn.covariance.ShrunkCovariance" title="sklearn.covariance.ShrunkCovariance"><code>ShrunkCovariance</code></a> object to data.</li> </ul> </div>   <h3 id="ledoit-wolf-shrinkage">2.6.2.2. Ledoit-Wolf shrinkage</h3> <p>In their 2004 paper <a class="footnote-reference" href="#id3" id="id2">[1]</a>, O. Ledoit and M. Wolf propose a formula to compute the optimal shrinkage coefficient <span class="math">\(\alpha\)</span> that minimizes the Mean Squared Error between the estimated and the real covariance matrix.</p> <p>The Ledoit-Wolf estimator of the covariance matrix can be computed on a sample with the <a class="reference internal" href="../generated/sklearn.covariance.ledoit_wolf/#sklearn.covariance.ledoit_wolf" title="sklearn.covariance.ledoit_wolf"><code>ledoit_wolf</code></a> function of the <code>sklearn.covariance</code> package, or it can be otherwise obtained by fitting a <a class="reference internal" href="../generated/sklearn.covariance.ledoitwolf/#sklearn.covariance.LedoitWolf" title="sklearn.covariance.LedoitWolf"><code>LedoitWolf</code></a> object to the same sample.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p><strong>Case when population covariance matrix is isotropic</strong></p> <p>It is important to note that when the number of samples is much larger than the number of features, one would expect that no shrinkage would be necessary. The intuition behind this is that if the population covariance is full rank, when the number of sample grows, the sample covariance will also become positive definite. As a result, no shrinkage would necessary and the method should automatically do this.</p> <p class="last">This, however, is not the case in the Ledoit-Wolf procedure when the population covariance happens to be a multiple of the identity matrix. In this case, the Ledoit-Wolf shrinkage estimate approaches 1 as the number of samples increases. This indicates that the optimal estimate of the covariance matrix in the Ledoit-Wolf sense is multiple of the identity. Since the population covariance is already a multiple of the identity matrix, the Ledoit-Wolf solution is indeed a reasonable estimate.</p> </div> <div class="topic"> <p class="topic-title first">Examples:</p> <ul class="simple"> <li>See <a class="reference internal" href="../../auto_examples/covariance/plot_covariance_estimation/#sphx-glr-auto-examples-covariance-plot-covariance-estimation-py"><span class="std std-ref">Shrinkage covariance estimation: LedoitWolf vs OAS and max-likelihood</span></a> for an example on how to fit a <a class="reference internal" href="../generated/sklearn.covariance.ledoitwolf/#sklearn.covariance.LedoitWolf" title="sklearn.covariance.LedoitWolf"><code>LedoitWolf</code></a> object to data and for visualizing the performances of the Ledoit-Wolf estimator in terms of likelihood.</li> </ul> </div> <div class="topic"> <p class="topic-title first">References:</p> <table class="docutils footnote" frame="void" id="id3" rules="none">   <tr>
 <td class="label"><a class="fn-backref" href="#id2">[1]</a></td>
@@ -104,17 +104,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
