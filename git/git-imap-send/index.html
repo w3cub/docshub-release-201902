@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/git/" class="_nav-link" title="" style="margin-left:0;">Git</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _git">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>git-imap-send</h1>  <h2 id="_name">Name</h2> <div class="sectionbody">  <p>git-imap-send - Send a collection of patches from stdin to an IMAP folder</p>  </div>   <h2 id="_synopsis">Synopsis</h2> <div class="sectionbody"> <div class="verseblock"> <pre class="content">git imap-send [-v] [-q] [--[no-]curl]</pre> </div> </div>   <h2 id="_description">Description</h2> <div class="sectionbody">  <p>This command uploads a mailbox generated with <code>git format-patch</code> into an IMAP drafts folder. This allows patches to be sent as other email is when using mail clients that cannot read mailbox files directly. The command also works with any general mailbox in which emails have the fields "From", "Date", and "Subject" in that order.</p>   <p>Typical usage is something like:</p>   <p>git format-patch --signoff --stdout --attach origin | git imap-send</p>  </div>   <h2 id="_options">Options</h2> <div class="sectionbody"> <div class="dlist"> <dl> <dt class="hdlist1" id="git-imap-send--v"> -v </dt> <dt class="hdlist1" id="git-imap-send---verbose"> --verbose </dt> <dd> <p>Be verbose.</p> </dd> <dt class="hdlist1" id="git-imap-send--q"> -q </dt> <dt class="hdlist1" id="git-imap-send---quiet"> --quiet </dt> <dd> <p>Be quiet.</p> </dd> <dt class="hdlist1" id="git-imap-send---curl"> --curl </dt> <dd> <p>Use libcurl to communicate with the IMAP server, unless tunneling into it. Ignored if Git was built without the USE_CURL_FOR_IMAP_SEND option set.</p> </dd> <dt class="hdlist1" id="git-imap-send---no-curl"> --no-curl </dt> <dd> <p>Talk to the IMAP server using git’s own IMAP routines instead of using libcurl. Ignored if Git was built with the NO_OPENSSL option set.</p> </dd> </dl> </div> </div>   <h2 id="_configuration">Configuration</h2> <div class="sectionbody">  <p>To use the tool, imap.folder and either imap.tunnel or imap.host must be set to appropriate values.</p>  <div class="sect2"> <h3 id="_variables">
 Variables</h3> <div class="dlist"> <dl> <dt class="hdlist1" id="git-imap-send-imapfolder"> imap.folder </dt> <dd> <p>The folder to drop the mails into, which is typically the Drafts folder. For example: "INBOX.Drafts", "INBOX/Drafts" or "[Gmail]/Drafts". Required.</p> </dd> <dt class="hdlist1" id="git-imap-send-imaptunnel"> imap.tunnel </dt> <dd> <p>Command used to setup a tunnel to the IMAP server through which commands will be piped instead of using a direct network connection to the server. Required when imap.host is not set.</p> </dd> <dt class="hdlist1" id="git-imap-send-imaphost"> imap.host </dt> <dd> <p>A URL identifying the server. Use an <code>imap://</code> prefix for non-secure connections and an <code>imaps://</code> prefix for secure connections. Ignored when imap.tunnel is set, but required otherwise.</p> </dd> <dt class="hdlist1" id="git-imap-send-imapuser"> imap.user </dt> <dd> <p>The username to use when logging in to the server.</p> </dd> <dt class="hdlist1" id="git-imap-send-imappass"> imap.pass </dt> <dd> <p>The password to use when logging in to the server.</p> </dd> <dt class="hdlist1" id="git-imap-send-imapport"> imap.port </dt> <dd> <p>An integer port number to connect to on the server. Defaults to 143 for imap:// hosts and 993 for imaps:// hosts. Ignored when imap.tunnel is set.</p> </dd> <dt class="hdlist1" id="git-imap-send-imapsslverify"> imap.sslverify </dt> <dd> <p>A boolean to enable/disable verification of the server certificate used by the SSL/TLS connection. Default is <code>true</code>. Ignored when imap.tunnel is set.</p> </dd> <dt class="hdlist1" id="git-imap-send-imappreformattedHTML"> imap.preformattedHTML </dt> <dd> <p>A boolean to enable/disable the use of html encoding when sending a patch. An html encoded patch will be bracketed with &lt;pre&gt; and have a content type of text/html. Ironically, enabling this option causes Thunderbird to send the patch as a plain/text, format=fixed email. Default is <code>false</code>.</p> </dd> <dt class="hdlist1" id="git-imap-send-imapauthMethod"> imap.authMethod </dt> <dd> <p>Specify authenticate method for authentication with IMAP server. If Git was built with the NO_CURL option, or if your curl version is older than 7.34.0, or if you’re running git-imap-send with the <code>--no-curl</code> option, the only supported method is <code>CRAM-MD5</code>. If this is not set then <code>git imap-send</code> uses the basic IMAP plaintext LOGIN command.</p> </dd> </dl> </div> </div> <div class="sect2"> <h3 id="_examples">
@@ -105,17 +105,9 @@ Examples</h3>  <p>Using tunnel mode:</p>  <div class="literalblock"> <div class=
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/git/" class="_nav-link" title="" style="margin-left:0;">Git</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _git">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>git-cvsexportcommit</h1>  <h2 id="_name">Name</h2> <div class="sectionbody">  <p>git-cvsexportcommit - Export a single commit to a CVS checkout</p>  </div>   <h2 id="_synopsis">Synopsis</h2> <div class="sectionbody"> <div class="verseblock"> <pre class="content">git cvsexportcommit [-h] [-u] [-v] [-c] [-P] [-p] [-a] [-d cvsroot]
         [-w cvsworkdir] [-W] [-f] [-m msgprefix] [PARENTCOMMIT] COMMITID</pre> </div> </div>   <h2 id="_description">Description</h2> <div class="sectionbody">  <p>Exports a commit from Git to a CVS checkout, making it easier to merge patches from a Git repository into a CVS repository.</p>   <p>Specify the name of a CVS checkout using the -w switch or execute it from the root of the CVS working copy. In the latter case GIT_DIR must be defined. See examples below.</p>   <p>It does its best to do the safe thing, it will check that the files are unchanged and up to date in the CVS checkout, and it will not autocommit by default.</p>   <p>Supports file additions, removals, and commits that affect binary files.</p>   <p>If the commit is a merge commit, you must tell <code>git cvsexportcommit</code> what parent the changeset should be done against.</p>  </div>   <h2 id="_options">Options</h2> <div class="sectionbody"> <div class="dlist"> <dl> <dt class="hdlist1" id="git-cvsexportcommit--c"> -c </dt> <dd> <p>Commit automatically if the patch applied cleanly. It will not commit if any hunks fail to apply or there were other problems.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--p"> -p </dt> <dd> <p>Be pedantic (paranoid) when applying patches. Invokes patch with --fuzz=0</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--a"> -a </dt> <dd> <p>Add authorship information. Adds Author line, and Committer (if different from Author) to the message.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--d"> -d </dt> <dd> <p>Set an alternative CVSROOT to use. This corresponds to the CVS -d parameter. Usually users will not want to set this, except if using CVS in an asymmetric fashion.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--f"> -f </dt> <dd> <p>Force the merge even if the files are not up to date.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--P"> -P </dt> <dd> <p>Force the parent commit, even if it is not a direct parent.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--m"> -m </dt> <dd> <p>Prepend the commit message with the provided prefix. Useful for patch series and the like.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--u"> -u </dt> <dd> <p>Update affected files from CVS repository before attempting export.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--k"> -k </dt> <dd> <p>Reverse CVS keyword expansion (e.g. $Revision: 1.2.3.4$ becomes $Revision$) in working CVS checkout before applying patch.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--w"> -w </dt> <dd> <p>Specify the location of the CVS checkout to use for the export. This option does not require GIT_DIR to be set before execution if the current directory is within a Git repository. The default is the value of <code>cvsexportcommit.cvsdir</code>.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--W"> -W </dt> <dd> <p>Tell cvsexportcommit that the current working directory is not only a Git checkout, but also the CVS checkout. Therefore, Git will reset the working directory to the parent commit before proceeding.</p> </dd> <dt class="hdlist1" id="git-cvsexportcommit--v"> -v </dt> <dd> <p>Verbose.</p> </dd> </dl> </div> </div>   <h2 id="_configuration">Configuration</h2> <div class="sectionbody"> <div class="dlist"> <dl> <dt class="hdlist1" id="git-cvsexportcommit-cvsexportcommitcvsdir"> cvsexportcommit.cvsdir </dt> <dd> <p>The default location of the CVS checkout to use for the export.</p> </dd> </dl> </div> </div>   <h2 id="_examples">Examples</h2> <div class="sectionbody"> <div class="dlist"> <dl> <dt class="hdlist1" id="git-cvsexportcommit-MergeonepatchintoCVS"> Merge one patch into CVS </dt> <dd> <div class="listingblock"> <div class="content"> <pre>$ export GIT_DIR=~/project/.git
@@ -92,17 +92,9 @@ $ git cherry cvshead myhead | sed -n 's/^+ //p' | xargs -l1 git cvsexportcommit 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

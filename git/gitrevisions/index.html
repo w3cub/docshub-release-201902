@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/git/" class="_nav-link" title="" style="margin-left:0;">Git</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _git">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>gitrevisions</h1>  <h2 id="_name">Name</h2> <div class="sectionbody">  <p>gitrevisions - Specifying revisions and ranges for Git</p>  </div>   <h2 id="_synopsis">Synopsis</h2> <div class="sectionbody">  <p>gitrevisions</p>  </div>   <h2 id="_description">Description</h2> <div class="sectionbody">  <p>Many Git commands take revision parameters as arguments. Depending on the command, they denote a specific commit or, for commands which walk the revision graph (such as <a href="../git-log/">git-log[1]</a>), all commits which are reachable from that commit. For commands that walk the revision graph one can also specify a range of revisions explicitly.</p>   <p>In addition, some Git commands (such as <a href="../git-show/">git-show[1]</a>) also take revision parameters which denote other objects than commits, e.g. blobs ("files") or trees ("directories of files").</p>  </div>   <h2 id="_specifying_revisions">Specifying revisions</h2> <div class="sectionbody">  <p>A revision parameter <code>&lt;rev&gt;</code> typically, but not necessarily, names a commit object. It uses what is called an <code>extended SHA-1</code> syntax. Here are various ways to spell object names. The ones listed near the end of this list name trees and blobs contained in a commit.</p>  <div class="admonitionblock note"> <table> <tr> <td class="icon"> <div class="title">Note</div> </td> <td class="content"> This document shows the "raw" syntax as seen by git. The shell and other UIs might require additional quoting to protect special characters and to avoid word splitting. </td> </tr> </table> </div> <div class="dlist"> <dl> <dt class="hdlist1" id="gitrevisions-emltsha1gtemegemdae86e1950b1277e545cee180551750029cfe735ememdae86eem"> <em>&lt;sha1&gt;</em>, e.g. <em>dae86e1950b1277e545cee180551750029cfe735</em>, <em>dae86e</em> </dt> <dd> <p>The full SHA-1 object name (40-byte hexadecimal string), or a leading substring that is unique within the repository. E.g. dae86e1950b1277e545cee180551750029cfe735 and dae86e both name the same commit object if there is no other object in your repository whose object name starts with dae86e.</p> </dd> <dt class="hdlist1" id="gitrevisions-emltdescribeOutputgtemegemv1742-679-g3bee7fbem"> <em>&lt;describeOutput&gt;</em>, e.g. <em>v1.7.4.2-679-g3bee7fb</em> </dt> <dd> <p>Output from <code>git describe</code>; i.e. a closest tag, optionally followed by a dash and a number of commits, followed by a dash, a <code>g</code>, and an abbreviated object name.</p> </dd> <dt class="hdlist1" id="gitrevisions-emltrefnamegtemegemmasterememheadsmasterememrefsheadsmasterem"> <em>&lt;refname&gt;</em>, e.g. <em>master</em>, <em>heads/master</em>, <em>refs/heads/master</em> </dt> <dd> <p>A symbolic ref name. E.g. <code>master</code> typically means the commit object referenced by <code>refs/heads/master</code>. If you happen to have both <code>heads/master</code> and <code>tags/master</code>, you can explicitly say <code>heads/master</code> to tell Git which one you mean. When ambiguous, a <code>&lt;refname&gt;</code> is disambiguated by taking the first match in the following rules:</p> <div class="olist arabic"> <ol class="arabic"> <li> <p>If <code>$GIT_DIR/&lt;refname&gt;</code> exists, that is what you mean (this is usually useful only for <code>HEAD</code>, <code>FETCH_HEAD</code>, <code>ORIG_HEAD</code>, <code>MERGE_HEAD</code> and <code>CHERRY_PICK_HEAD</code>);</p> </li> <li> <p>otherwise, <code>refs/&lt;refname&gt;</code> if it exists;</p> </li> <li> <p>otherwise, <code>refs/tags/&lt;refname&gt;</code> if it exists;</p> </li> <li> <p>otherwise, <code>refs/heads/&lt;refname&gt;</code> if it exists;</p> </li> <li> <p>otherwise, <code>refs/remotes/&lt;refname&gt;</code> if it exists;</p> </li> <li> <p>otherwise, <code>refs/remotes/&lt;refname&gt;/HEAD</code> if it exists.</p>  <p><code>HEAD</code> names the commit on which you based the changes in the working tree. <code>FETCH_HEAD</code> records the branch which you fetched from a remote repository with your last <code>git fetch</code> invocation. <code>ORIG_HEAD</code> is created by commands that move your <code>HEAD</code> in a drastic way, to record the position of the <code>HEAD</code> before their operation, so that you can easily change the tip of the branch back to the state before you ran them. <code>MERGE_HEAD</code> records the commit(s) which you are merging into your branch when you run <code>git merge</code>. <code>CHERRY_PICK_HEAD</code> records the commit which you are cherry-picking when you run <code>git cherry-pick</code>.</p>   <p>Note that any of the <code>refs/*</code> cases above may come either from the <code>$GIT_DIR/refs</code> directory or from the <code>$GIT_DIR/packed-refs</code> file. While the ref name encoding is unspecified, UTF-8 is preferred as some output processing may assume ref names in UTF-8.</p>  </li> </ol> </div> </dd> <dt class="hdlist1" id="gitrevisions-emem"> <em>@</em> </dt> <dd> <p><code>@</code> alone is a shortcut for <code>HEAD</code>.</p> </dd> <dt class="hdlist1" id="gitrevisions-emltrefnamegtltdategtemegemmasteryesterdayememHEAD5minutesagoem"> <em>&lt;refname&gt;@{&lt;date&gt;}</em>, e.g. <em>master@{yesterday}</em>, <em>HEAD@{5 minutes ago}</em> </dt> <dd> <p>A ref followed by the suffix <code>@</code> with a date specification enclosed in a brace pair (e.g. <code>{yesterday}</code>, <code>{1 month 2 weeks 3 days 1 hour 1 second ago}</code> or <code>{1979-02-26 18:30:00}</code>) specifies the value of the ref at a prior point in time. This suffix may only be used immediately following a ref name and the ref must have an existing log (<code>$GIT_DIR/logs/&lt;ref&gt;</code>). Note that this looks up the state of your <strong>local</strong> ref at a given time; e.g., what was in your local <code>master</code> branch last week. If you want to look at commits made during certain times, see <code>--since</code> and <code>--until</code>.</p> </dd> <dt class="hdlist1" id="gitrevisions-emltrefnamegtltngtemegemmaster1em"> <em>&lt;refname&gt;@{&lt;n&gt;}</em>, e.g. <em>master@{1}</em> </dt> <dd> <p>A ref followed by the suffix <code>@</code> with an ordinal specification enclosed in a brace pair (e.g. <code>{1}</code>, <code>{15}</code>) specifies the n-th prior value of that ref. For example <code>master@{1}</code> is the immediate prior value of <code>master</code> while <code>master@{5}</code> is the 5th prior value of <code>master</code>. This suffix may only be used immediately following a ref name and the ref must have an existing log (<code>$GIT_DIR/logs/&lt;refname&gt;</code>).</p> </dd> <dt class="hdlist1" id="gitrevisions-emltngtemegem1em"> <em>@{&lt;n&gt;}</em>, e.g. <em>@{1}</em> </dt> <dd> <p>You can use the <code>@</code> construct with an empty ref part to get at a reflog entry of the current branch. For example, if you are on branch <code>blabla</code> then <code>@{1}</code> means the same as <code>blabla@{1}</code>.</p> </dd> <dt class="hdlist1" id="gitrevisions-em-ltngtemegem-1em"> <em>@{-&lt;n&gt;}</em>, e.g. <em>@{-1}</em> </dt> <dd> <p>The construct <code>@{-&lt;n&gt;}</code> means the &lt;n&gt;th branch/commit checked out before the current one.</p> </dd> <dt class="hdlist1" id="gitrevisions-emltbranchnamegtupstreamemegemmasterupstreamememuem"> <em>&lt;branchname&gt;@{upstream}</em>, e.g. <em>master@{upstream}</em>, <em>@{u}</em> </dt> <dd> <p>The suffix <code>@{upstream}</code> to a branchname (short form <code>&lt;branchname&gt;@{u}</code>) refers to the branch that the branch specified by branchname is set to build on top of (configured with <code>branch.&lt;name&gt;.remote</code> and <code>branch.&lt;name&gt;.merge</code>). A missing branchname defaults to the current one. These suffixes are also accepted when spelled in uppercase, and they mean the same thing no matter the case.</p> </dd> <dt class="hdlist1" id="gitrevisions-emltbranchnamegtpushemegemmasterpushemempushem"> <em>&lt;branchname&gt;@{push}</em>, e.g. <em>master@{push}</em>, <em>@{push}</em> </dt> <dd> <p>The suffix <code>@{push}</code> reports the branch "where we would push to" if <code>git push</code> were run while <code>branchname</code> was checked out (or the current <code>HEAD</code> if no branchname is specified). Since our push destination is in a remote repository, of course, we report the local tracking branch that corresponds to that branch (i.e., something in <code>refs/remotes/</code>).</p>  <p>Here’s an example to make it more clear:</p>  <div class="listingblock"> <div class="content"> <pre>$ git config push.default current
 $ git config remote.pushdefault myfork
@@ -136,17 +136,9 @@ Other &lt;rev&gt;^ Parent Shorthand Notations</h3>  <p>Three other shorthands ex
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

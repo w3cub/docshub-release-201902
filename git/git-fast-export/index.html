@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/git/" class="_nav-link" title="" style="margin-left:0;">Git</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _git">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>git-fast-export</h1>  <h2 id="_name">Name</h2> <div class="sectionbody">  <p>git-fast-export - Git data exporter</p>  </div>   <h2 id="_synopsis">Synopsis</h2> <div class="sectionbody"> <div class="verseblock"> <pre class="content">git fast-export [&lt;options&gt;] | git fast-import</pre> </div> </div>   <h2 id="_description">Description</h2> <div class="sectionbody">  <p>This program dumps the given revisions in a form suitable to be piped into <code>git fast-import</code>.</p>   <p>You can use it as a human-readable bundle replacement (see <a href="../git-bundle/">git-bundle[1]</a>), or as a kind of an interactive <code>git filter-branch</code>.</p>  </div>   <h2 id="_options">Options</h2> <div class="sectionbody"> <div class="dlist"> <dl> <dt class="hdlist1" id="git-fast-export---progressltngt"> --progress=&lt;n&gt; </dt> <dd> <p>Insert <code>progress</code> statements every &lt;n&gt; objects, to be shown by <code>git fast-import</code> during import.</p> </dd> <dt class="hdlist1" id="git-fast-export---signed-tagsverbatimwarnwarn-stripstripabort"> --signed-tags=(verbatim|warn|warn-strip|strip|abort) </dt> <dd> <p>Specify how to handle signed tags. Since any transformation after the export can change the tag names (which can also happen when excluding revisions) the signatures will not match.</p>  <p>When asking to <code>abort</code> (which is the default), this program will die when encountering a signed tag. With <code>strip</code>, the tags will silently be made unsigned, with <code>warn-strip</code> they will be made unsigned but a warning will be displayed, with <code>verbatim</code>, they will be silently exported and with <code>warn</code>, they will be exported, but you will see a warning.</p>  </dd> <dt class="hdlist1" id="git-fast-export---tag-of-filtered-objectabortdroprewrite"> --tag-of-filtered-object=(abort|drop|rewrite) </dt> <dd> <p>Specify how to handle tags whose tagged object is filtered out. Since revisions and files to export can be limited by path, tagged objects may be filtered completely.</p>  <p>When asking to <code>abort</code> (which is the default), this program will die when encountering such a tag. With <code>drop</code> it will omit such tags from the output. With <code>rewrite</code>, if the tagged object is a commit, it will rewrite the tag to tag an ancestor commit (via parent rewriting; see <a href="../git-rev-list/">git-rev-list[1]</a>)</p>  </dd> <dt class="hdlist1" id="git-fast-export--M"> -M </dt> <dt class="hdlist1" id="git-fast-export--C"> -C </dt> <dd> <p>Perform move and/or copy detection, as described in the <a href="../git-diff/">git-diff[1]</a> manual page, and use it to generate rename and copy commands in the output dump.</p>  <p>Note that earlier versions of this command did not complain and produced incorrect results if you gave these options.</p>  </dd> <dt class="hdlist1" id="git-fast-export---export-marksltfilegt"> --export-marks=&lt;file&gt; </dt> <dd> <p>Dumps the internal marks table to &lt;file&gt; when complete. Marks are written one per line as <code>:markid SHA-1</code>. Only marks for revisions are dumped; marks for blobs are ignored. Backends can use this file to validate imports after they have been completed, or to save the marks table across incremental runs. As &lt;file&gt; is only opened and truncated at completion, the same path can also be safely given to --import-marks. The file will not be written if no new object has been marked/exported.</p> </dd> <dt class="hdlist1" id="git-fast-export---import-marksltfilegt"> --import-marks=&lt;file&gt; </dt> <dd> <p>Before processing any input, load the marks specified in &lt;file&gt;. The input file must exist, must be readable, and must use the same format as produced by --export-marks.</p>  <p>Any commits that have already been marked will not be exported again. If the backend uses a similar --import-marks file, this allows for incremental bidirectional exporting of the repository by keeping the marks the same across runs.</p>  </dd> <dt class="hdlist1" id="git-fast-export---fake-missing-tagger"> --fake-missing-tagger </dt> <dd> <p>Some old repositories have tags without a tagger. The fast-import protocol was pretty strict about that, and did not allow that. So fake a tagger to be able to fast-import the output.</p> </dd> <dt class="hdlist1" id="git-fast-export---use-done-feature"> --use-done-feature </dt> <dd> <p>Start the stream with a <code>feature done</code> stanza, and terminate it with a <code>done</code> command.</p> </dd> <dt class="hdlist1" id="git-fast-export---no-data"> --no-data </dt> <dd> <p>Skip output of blob objects and instead refer to blobs via their original SHA-1 hash. This is useful when rewriting the directory structure or history of a repository without touching the contents of individual files. Note that the resulting stream can only be used by a repository which already contains the necessary objects.</p> </dd> <dt class="hdlist1" id="git-fast-export---full-tree"> --full-tree </dt> <dd> <p>This option will cause fast-export to issue a "deleteall" directive for each commit followed by a full list of all files in the commit (as opposed to just listing the files which are different from the commit’s first parent).</p> </dd> <dt class="hdlist1" id="git-fast-export---anonymize"> --anonymize </dt> <dd> <p>Anonymize the contents of the repository while still retaining the shape of the history and stored tree. See the section on <code>ANONYMIZING</code> below.</p> </dd> <dt class="hdlist1" id="git-fast-export---refspec"> --refspec </dt> <dd> <p>Apply the specified refspec to each ref exported. Multiple of them can be specified.</p> </dd> <dt class="hdlist1" id="git-fast-export-ltgit-rev-list-argsgt82308203"> [&lt;git-rev-list-args&gt;…​] </dt> <dd> <p>A list of arguments, acceptable to <code>git rev-parse</code> and <code>git rev-list</code>, that specifies the specific objects and references to export. For example, <code>master~10..master</code> causes the current master reference to be exported along with all objects added since its 10th ancestor commit.</p> </dd> </dl> </div> </div>   <h2 id="_examples">Examples</h2> <div class="sectionbody"> <div class="listingblock"> <div class="content"> <pre>$ git fast-export --all | (cd /empty/repository &amp;&amp; git fast-import)</pre> </div> </div>  <p>This will export the whole repository and import it into the existing empty repository. Except for reencoding commits that are not in UTF-8, it would be a one-to-one mirror.</p>  <div class="listingblock"> <div class="content"> <pre>$ git fast-export master~5..master |
         sed "s|refs/heads/master|refs/heads/other|" |
@@ -91,17 +91,9 @@ $ ... test your bug ...</pre> </div> </div>  <p>If the anonymized repository sho
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

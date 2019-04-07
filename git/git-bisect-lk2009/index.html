@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/git/" class="_nav-link" title="" style="margin-left:0;">Git</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _git">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>git-bisect-lk2009</h1>  <h2 id="_abstract">Abstract</h2> <div class="sectionbody">  <p>"git bisect" enables software users and developers to easily find the commit that introduced a regression. We show why it is important to have good tools to fight regressions. We describe how "git bisect" works from the outside and the algorithms it uses inside. Then we explain how to take advantage of "git bisect" to improve current practices. And we discuss how "git bisect" could improve in the future.</p>  </div>   <h2 id="_introduction_to_git_bisect">Introduction to "git bisect"</h2> <div class="sectionbody">  <p>Git is a Distributed Version Control system (DVCS) created by Linus Torvalds and maintained by Junio Hamano.</p>   <p>In Git like in many other Version Control Systems (VCS), the different states of the data that is managed by the system are called commits. And, as VCS are mostly used to manage software source code, sometimes "interesting" changes of behavior in the software are introduced in some commits.</p>   <p>In fact people are specially interested in commits that introduce a "bad" behavior, called a bug or a regression. They are interested in these commits because a commit (hopefully) contains a very small set of source code changes. And it’s much easier to understand and properly fix a problem when you only need to check a very small set of changes, than when you don’t know where look in the first place.</p>   <p>So to help people find commits that introduce a "bad" behavior, the "git bisect" set of commands was invented. And it follows of course that in "git bisect" parlance, commits where the "interesting behavior" is present are called "bad" commits, while other commits are called "good" commits. And a commit that introduce the behavior we are interested in is called a "first bad commit". Note that there could be more than one "first bad commit" in the commit space we are searching.</p>   <p>So "git bisect" is designed to help find a "first bad commit". And to be as efficient as possible, it tries to perform a binary search.</p>  </div>   <h2 id="_fighting_regressions_overview">Fighting regressions overview</h2> <div class="sectionbody"> <div class="sect2"> <h3 id="_regressions_a_big_problem">
 Regressions: a big problem</h3>  <p>Regressions are a big problem in the software industry. But it’s difficult to put some real numbers behind that claim.</p>   <p>There are some numbers about bugs in general, like a NIST study in 2002 <a href="#1">[1]</a> that said:</p>  <div class="quoteblock"> <blockquote>  <p>Software bugs, or errors, are so prevalent and so detrimental that they cost the U.S. economy an estimated $59.5 billion annually, or about 0.6 percent of the gross domestic product, according to a newly released study commissioned by the Department of Commerce’s National Institute of Standards and Technology (NIST). At the national level, over half of the costs are borne by software users and the remainder by software developers/vendors. The study also found that, although all errors cannot be removed, more than a third of these costs, or an estimated $22.2 billion, could be eliminated by an improved testing infrastructure that enables earlier and more effective identification and removal of software defects. These are the savings associated with finding an increased percentage (but not 100 percent) of errors closer to the development stages in which they are introduced. Currently, over half of all errors are not found until "downstream" in the development process or during post-sale software use.</p>  </blockquote> </div>  <p>And then:</p>  <div class="quoteblock"> <blockquote>  <p>Software developers already spend approximately 80 percent of development costs on identifying and correcting defects, and yet few products of any type other than software are shipped with such high levels of errors.</p>  </blockquote> </div>  <p>Eventually the conclusion started with:</p>  <div class="quoteblock"> <blockquote>  <p>The path to higher software quality is significantly improved software testing.</p>  </blockquote> </div>  <p>There are other estimates saying that 80% of the cost related to software is about maintenance <a href="#2">[2]</a>.</p>   <p>Though, according to Wikipedia <a href="#3">[3]</a>:</p>  <div class="quoteblock"> <blockquote>  <p>A common perception of maintenance is that it is merely fixing bugs. However, studies and surveys over the years have indicated that the majority, over 80%, of the maintenance effort is used for non-corrective actions (Pigosky 1997). This perception is perpetuated by users submitting problem reports that in reality are functionality enhancements to the system.</p>  </blockquote> </div>  <p>But we can guess that improving on existing software is very costly because you have to watch out for regressions. At least this would make the above studies consistent among themselves.</p>   <p>Of course some kind of software is developed, then used during some time without being improved on much, and then finally thrown away. In this case, of course, regressions may not be a big problem. But on the other hand, there is a lot of big software that is continually developed and maintained during years or even tens of years by a lot of people. And as there are often many people who depend (sometimes critically) on such software, regressions are a really big problem.</p>   <p>One such software is the Linux kernel. And if we look at the Linux kernel, we can see that a lot of time and effort is spent to fight regressions. The release cycle start with a 2 weeks long merge window. Then the first release candidate (rc) version is tagged. And after that about 7 or 8 more rc versions will appear with around one week between each of them, before the final release.</p>   <p>The time between the first rc release and the final release is supposed to be used to test rc versions and fight bugs and especially regressions. And this time is more than 80% of the release cycle time. But this is not the end of the fight yet, as of course it continues after the release.</p>   <p>And then this is what Ingo Molnar (a well known Linux kernel developer) says about his use of git bisect:</p>  <div class="quoteblock"> <blockquote>  <p>I most actively use it during the merge window (when a lot of trees get merged upstream and when the influx of bugs is the highest) - and yes, there have been cases that i used it multiple times a day. My average is roughly once a day.</p>  </blockquote> </div>  <p>So regressions are fought all the time by developers, and indeed it is well known that bugs should be fixed as soon as possible, so as soon as they are found. That’s why it is interesting to have good tools for this purpose.</p>  </div> <div class="sect2"> <h3 id="_other_tools_to_fight_regressions">
@@ -265,17 +265,9 @@ Bisecting sporadic bugs</h3>  <p>Another possible improvement to "git bisect" wo
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

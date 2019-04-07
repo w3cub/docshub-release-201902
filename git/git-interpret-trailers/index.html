@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/git/" class="_nav-link" title="" style="margin-left:0;">Git</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _git">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>git-interpret-trailers</h1>  <h2 id="_name">Name</h2> <div class="sectionbody">  <p>git-interpret-trailers - add or parse structured information in commit messages</p>  </div>   <h2 id="_synopsis">Synopsis</h2> <div class="sectionbody"> <div class="verseblock"> <pre class="content">git interpret-trailers [&lt;options&gt;] [(--trailer &lt;token&gt;[(=|:)&lt;value&gt;])…​] [&lt;file&gt;…​]
 git interpret-trailers [&lt;options&gt;] [--parse] [&lt;file&gt;…​]</pre> </div> </div>   <h2 id="_description">Description</h2> <div class="sectionbody">  <p>Help parsing or adding <code>trailers</code> lines, that look similar to RFC 822 e-mail headers, at the end of the otherwise free-form part of a commit message.</p>   <p>This command reads some patches or commit messages from either the &lt;file&gt; arguments or the standard input if no &lt;file&gt; is specified. If <code>--parse</code> is specified, the output consists of the parsed trailers.</p>   <p>Otherwise, this command applies the arguments passed using the <code>--trailer</code> option, if any, to the commit message part of each input file. The result is emitted on the standard output.</p>   <p>Some configuration variables control the way the <code>--trailer</code> arguments are applied to each commit message and the way any existing trailer in the commit message is changed. They also make it possible to automatically add some trailers.</p>   <p>By default, a <code>&lt;token&gt;=&lt;value&gt;</code> or <code>&lt;token&gt;:&lt;value&gt;</code> argument given using <code>--trailer</code> will be appended after the existing trailers only if the last trailer has a different (&lt;token&gt;, &lt;value&gt;) pair (or if there is no existing trailer). The &lt;token&gt; and &lt;value&gt; parts will be trimmed to remove starting and trailing whitespace, and the resulting trimmed &lt;token&gt; and &lt;value&gt; will appear in the message like this:</p>  <div class="listingblock"> <div class="content"> <pre>token: value</pre> </div> </div>  <p>This means that the trimmed &lt;token&gt; and &lt;value&gt; will be separated by <code>': '</code> (one colon followed by one space).</p>   <p>By default the new trailer will appear at the end of all the existing trailers. If there is no existing trailer, the new trailer will appear after the commit message part of the output, and, if there is no line with only spaces at the end of the commit message part, one blank line will be added before the new trailer.</p>   <p>Existing trailers are extracted from the input message by looking for a group of one or more lines that (i) is all trailers, or (ii) contains at least one Git-generated or user-configured trailer and consists of at least 25% trailers. The group must be preceded by one or more empty (or whitespace-only) lines. The group must either be at the end of the message or be the last non-whitespace lines before a line that starts with <code>---</code>. Such three minus signs start the patch part of the message.</p>   <p>When reading trailers, there can be whitespaces after the token, the separator and the value. There can also be whitespaces inside the token and the value. The value may be split over multiple lines with each subsequent line starting with whitespace, like the "folding" in RFC 822.</p>   <p>Note that <code>trailers</code> do not follow and are not intended to follow many rules for RFC 822 headers. For example they do not follow the encoding rules and probably many other rules.</p>  </div>   <h2 id="_options">Options</h2> <div class="sectionbody"> <div class="dlist"> <dl> <dt class="hdlist1" id="git-interpret-trailers---in-place"> --in-place </dt> <dd> <p>Edit the files in place.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---trim-empty"> --trim-empty </dt> <dd> <p>If the &lt;value&gt; part of any trailer contains only whitespace, the whole trailer will be removed from the resulting message. This applies to existing trailers as well as new trailers.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---trailerlttokengtltvaluegt"> --trailer &lt;token&gt;[(=|:)&lt;value&gt;] </dt> <dd> <p>Specify a (&lt;token&gt;, &lt;value&gt;) pair that should be applied as a trailer to the input messages. See the description of this command.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---whereltplacementgt"> --where &lt;placement&gt; </dt> <dt class="hdlist1" id="git-interpret-trailers---no-where"> --no-where </dt> <dd> <p>Specify where all new trailers will be added. A setting provided with <code>--where</code> overrides all configuration variables and applies to all <code>--trailer</code> options until the next occurrence of <code>--where</code> or <code>--no-where</code>. Possible values are <code>after</code>, <code>before</code>, <code>end</code> or <code>start</code>.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---if-existsltactiongt"> --if-exists &lt;action&gt; </dt> <dt class="hdlist1" id="git-interpret-trailers---no-if-exists"> --no-if-exists </dt> <dd> <p>Specify what action will be performed when there is already at least one trailer with the same &lt;token&gt; in the message. A setting provided with <code>--if-exists</code> overrides all configuration variables and applies to all <code>--trailer</code> options until the next occurrence of <code>--if-exists</code> or <code>--no-if-exists</code>. Possible actions are <code>addIfDifferent</code>, <code>addIfDifferentNeighbor</code>, <code>add</code>, <code>replace</code> and <code>doNothing</code>.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---if-missingltactiongt"> --if-missing &lt;action&gt; </dt> <dt class="hdlist1" id="git-interpret-trailers---no-if-missing"> --no-if-missing </dt> <dd> <p>Specify what action will be performed when there is no other trailer with the same &lt;token&gt; in the message. A setting provided with <code>--if-missing</code> overrides all configuration variables and applies to all <code>--trailer</code> options until the next occurrence of <code>--if-missing</code> or <code>--no-if-missing</code>. Possible actions are <code>doNothing</code> or <code>add</code>.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---only-trailers"> --only-trailers </dt> <dd> <p>Output only the trailers, not any other parts of the input.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---only-input"> --only-input </dt> <dd> <p>Output only trailers that exist in the input; do not add any from the command-line or by following configured <code>trailer.*</code> rules.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---unfold"> --unfold </dt> <dd> <p>Remove any whitespace-continuation in trailers, so that each trailer appears on a line by itself with its full content.</p> </dd> <dt class="hdlist1" id="git-interpret-trailers---parse"> --parse </dt> <dd> <p>A convenience alias for <code>--only-trailers --only-input
@@ -162,17 +162,9 @@ $ chmod +x .git/hooks/commit-msg</pre> </div> </div> </li> </ul> </div> </div>  
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
