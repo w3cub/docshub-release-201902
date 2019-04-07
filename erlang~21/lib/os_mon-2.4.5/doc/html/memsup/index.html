@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>memsup</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id67231').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id67231').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">memsup</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id67234').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id67234').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">A Memory Supervisor Process</p> <h2><span onmouseover="document.getElementById('ghlink-description-id67238').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id67238').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p><code class="code">memsup</code> is a process which supervises the memory usage for the system and for individual processes. It is part of the OS_Mon application, see <code><span>os_mon(6)</span></code>. Available for Unix, Windows and VxWorks.</p> <p>Periodically performs a memory check:</p> <ul> <li> <p>If more than a certain amount of available system memory is allocated, as reported by the underlying operating system, the alarm <code class="code">{system_memory_high_watermark, []}</code> is set.</p> </li> <li> <p>If any Erlang process <code class="code">Pid</code> in the system has allocated more than a certain amount of total system memory, the alarm <code class="code">{process_memory_high_watermark, Pid}</code> is set.</p> </li> </ul> <p>Alarms are reported to the SASL alarm handler, see <code>alarm_handler(3)</code>. To set an alarm, <code class="code">alarm_handler:set_alarm(Alarm)</code> is called where <code class="code">Alarm</code> is either of the alarms specified above.</p> <p>The alarms are cleared automatically when the alarm cause is no longer valid.</p> <p>The function <code><a href="#get_memory_data-0">get_memory_data()</a></code> can be used to retrieve the result of the latest periodic memory check.</p> <p>There is also a interface to system dependent memory data, <code><a href="#get_system_memory_data-0">get_system_memory_data()</a></code>. The result is highly dependent on the underlying operating system and the interface is targeted primarily for systems without virtual memory (e.g. VxWorks). The output on other systems is however still valid, although sparse.</p> <p>A call to <code class="code">get_system_memory_data/0</code> is more costly than a call to <code class="code">get_memory_data/0</code> as data is collected synchronously when this function is called.</p> <p>The total system memory reported under UNIX is the number of physical pages of memory times the page size, and the available memory is the number of available physical pages times the page size. This is a reasonable measure as swapping should be avoided anyway, but the task of defining total memory and available memory is difficult because of virtual memory and swapping.</p>  <h2> <span onmouseover="document.getElementById('ghlink-configuration-id67360').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-configuration-id67360').style.visibility = 'hidden';" id="config">Configuration</span> </h2>  <p>The following configuration parameters can be used to change the default values for time intervals and thresholds:</p> <dl> <dt><strong><code class="code">memory_check_interval = int()&gt;0</code></strong></dt> <dd> <p>The time interval, in minutes, for the periodic memory check. The default is one minute.</p> </dd> <dt><strong><code class="code">system_memory_high_watermark = float()</code></strong></dt> <dd> <p>The threshold, as percentage of system memory, for how much system memory can be allocated before the corresponding alarm is set. The default is 0.80 (80%).</p> </dd> <dt><strong><code class="code">process_memory_high_watermark = float()</code></strong></dt> <dd> <p>The threshold, as percentage of system memory, for how much system memory can be allocated by one Erlang process before the corresponding alarm is set. The default is 0.05 (5%).</p> </dd> <dt><strong><code class="code">memsup_helper_timeout = int()&gt;0</code></strong></dt> <dd> <p>A timeout, in seconds, for how long the <code class="code">memsup</code> process should wait for a result from a memory check. If the timeout expires, a warning message <code class="code">"OS_MON (memsup) timeout"</code> is issued via <code class="code">error_logger</code> and any pending, synchronous client calls will return a dummy value. Normally, this situation should not occur. There have been cases on Linux, however, where the pseudo file from which system data is read is temporarily unavailable when the system is heavily loaded.</p> <p>The default is 30 seconds. </p> </dd> <dt><strong><code class="code">memsup_system_only = bool()</code></strong></dt> <dd> <p>Specifies whether the <code class="code">memsup</code> process should only check system memory usage (<code class="code">true</code>) or not. The default is <code class="code">false</code>, meaning that information regarding both system memory usage and Erlang process memory usage is collected.</p> <p>It is recommended to set this parameter to <code class="code">false</code> on systems with many concurrent processes, as each process memory check makes a traversal of the entire list of processes.</p> </dd> </dl> <p>See <code>config(4)</code> for information about how to change the value of configuration parameters.</p>  <h2><span onmouseover="document.getElementById('ghlink-exports-id67499').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exports-id67499').style.visibility = 'hidden';" id="exports">Exports</span></h2> <div class="exports-body"> 
@@ -111,17 +111,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

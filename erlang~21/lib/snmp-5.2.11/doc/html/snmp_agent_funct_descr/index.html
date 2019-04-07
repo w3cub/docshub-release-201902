@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>2 Agent Functional Description</h1> <p>The SNMP agent system consists of one Master Agent and optional Sub-agents. </p> <p>The tool makes it easy to dynamically extend an SNMP agent in run-time. MIBs can be loaded and unloaded at any time. It is also easy to change the implementation of an MIB in run-time, without having to recompile the MIB. The MIB implementation is clearly separated from the agent. </p> <p>To facilitate incremental MIB implementation, the tool can generate a prototype implementation for a whole MIB, or parts thereof. This allows different MIBs and management applications to be developed at the same time. </p> <h2><span onmouseover="document.getElementById('ghlink-features-id74169').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-features-id74169').style.visibility = 'hidden';" id="features">2.1 Features</span></h2>  <p id="features">To implement an agent, the programmer writes instrumentation functions for the variables and the tables in the MIBs that the agent is going to support. A running prototype which handles <code class="code">set</code>, <code class="code">get</code>, and <code class="code">get-next</code> can be created without any programming. </p> <p>The toolkit provides the following: </p> <ul> <li>multi-lingual multi-threaded extensible SNMP agent</li> <li>easy writing of instrumentation functions with a high-level programming language</li> <li>basic fault handling such as automatic type checking</li> <li>access control</li> <li>authentication</li> <li>privacy through encryption</li> <li>loading and unloading of MIBs in run-time</li> <li>the ability to change instrumentation functions without recompiling the MIB</li> <li>rapid prototyping environment where the MIB compiler can use generic instrumentation functions, which later can be refined by the programmer</li> <li>a simple and extensible model for transaction handling and consistency checking of set-requests</li> <li>support of the sub-agent concept via distributed Erlang</li> <li>a mechanism for sending notifications (traps and informs)</li> <li>support for implementing SNMP tables in the Mnesia DBMS.</li> </ul> <h2><span onmouseover="document.getElementById('ghlink-snmpv1,-snmpv2-and-snmpv3-id73313').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-snmpv1,-snmpv2-and-snmpv3-id73313').style.visibility = 'hidden';" id="snmpv1,-snmpv2-and-snmpv3">2.2 SNMPv1, SNMPv2 and SNMPv3</span></h2>  <p id="versions">The SNMP development toolkit works with all three versions of Standard Internet Management Framework; SNMPv1, SNMPv2 and SNMPv3. They all share the same basic structure and components. And they follow the same architecture.</p> <p>The versions are defined in following RFCs</p> <ul> <li>SNMPv1 RFC 1555, 1157 1212, 1213 and 1215</li> <li>SNMPv2 RFC 1902 - 1907</li> <li>SNMPv3 RFC 2570 - 2575</li> </ul> <p>Over time, as the Framework has evolved from SNMPv1 , through SNMPv2, to SNMPv3 the definitions of each of these architectural components have become richer and more clearly defined, but the fundamental architecture has remained consistent.</p> <p>The main features of SNMPv2 compared to SNMPv1 are: </p> <ul> <li>The <code class="code">get-bulk</code> operation for transferring large amounts of data. </li> <li>Enhanced error codes. </li> <li>A more precise language for MIB specification</li> </ul> <p>The standard documents that define SNMPv2 are incomplete, in the sense that they do not specify how an SNMPv2 message looks like. The message format and security issues are left to a special Administrative Framework. One such framework is the Community-based SNMPv2 Framework (SNMPv2c), which uses the same message format and framework as SNMPv1. Other experimental frameworks as exist, e.g. SNMPv2u and SNMPv2*. </p> <p>The SNMPv3 specifications take a modular approach to SNMP. All modules are separated from each other, and can be extended or replaced individually. Examples of modules are Message definition, Security and Access Control. The main features of SNMPv3 are: </p> <ul> <li>Encryption and authentication is added. </li> <li>MIBs for agent configuration are defined.</li> </ul> <p>All these specifications are commonly referred to as "SNMPv3", but it is actually only the Message module, which defines a new message format, and Security module, which takes care of encryption and authentication, that cannot be used with SNMPv1 or SNMPv2c. In this version of the agent toolkit, all the standard MIBs for agent configuration are used. This includes MIBs for definition of management targets for notifications. These MIBs are used regardless of which SNMP version the agent is configured to use. </p> <p>The extensible agent in this toolkit understands the SNMPv1, SNMPv2c and SNMPv3. Recall that SNMP consists of two separate parts, the MIB definition language (SMI), and the protocol. On the protocol level, the agent can be configured to speak v1, v2c, v3 or any combination of them at the same time, i.e. a v1 request gets an v1 reply, a v2c request gets a v2c reply, and a v3 request gets a v3 reply. On the MIB level, the MIB compiler can compile both SMIv1 and SMIv2 MIBs. Once compiled, any of the formats can be loaded into the agent, regardless of which protocol version the agent is configured to use. This means that the agent translates from v2 notifications to v1 traps, and vice versa. For example, v2 MIBs can be loaded into an agent that speaks v1 only. The procedures for the translation between the two protocols are described in RFC 1908 and RFC 2089. </p> <p>In order for an implementation to make full use of the enhanced SNMPv2 error codes, it is essential that the instrumentation functions always return SNMPv2 error codes, in case of error. These are translated into the corresponding SNMPv1 error codes by the agent, if necessary.</p> <div class="note"> <div class="label">Note</div> <div class="content">
 
@@ -108,17 +108,9 @@ snmpa:send_trap(Agent, Notification, Community [, Receiver, Varbinds])</pre> <p>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

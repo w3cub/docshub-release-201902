@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>reltool</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id64706').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id64706').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">reltool</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id64709').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id64709').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">Main API of the Reltool application</p> <h2><span onmouseover="document.getElementById('ghlink-description-id64713').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id64713').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>This is an interface module for the Reltool application.</p> <p><strong>Reltool</strong> is a release management tool. It analyses a given Erlang/OTP installation and determines various dependencies between applications. The <code class="code">graphical</code> frontend depicts the dependencies and enables interactive customization of a target system. The backend provides a <code class="code">batch</code> interface for generation of customized target systems.</p> <p>The tool uses an installed Erlang/OTP system as input. <code class="code">root_dir</code> is the root directory of the analysed system and it defaults to the system executing Reltool. Applications may also be located outside <code class="code">root_dir</code>. <code class="code">lib_dirs</code> defines library directories where additional applications may reside and it defaults to the directories listed by the operating system environment variable <code class="code">ERL_LIBS</code>. See the module <code class="code">code</code> for more info.</p> <p>An application directory <code class="code">AppDir</code> under a library directory is recognized by the existence of an <code class="code">AppDir/ebin</code> directory. If this does not exist, Reltool will not consider <code class="code">AppDir</code> at all when looking for applications.</p> <p>It is recommended that application directories are named as the application, possibly followed by a dash and the version number. For example <code class="code">myapp</code> or <code class="code">myapp-1.1</code>.</p> <p>Finally single modules and entire applications may be read from Escripts.</p> <p>Some configuration parameters control the behavior of Reltool on system (<code class="code">sys</code>) level. Others provide control on application (<code class="code">app</code>) level and yet others are on module (<code class="code">mod</code>) level. Module level parameters override application level parameters and application level parameters override system level parameters. Escript <code class="code">escript</code> level parameters override system level parameters.</p> <p>The following top level <code class="code">options</code> are supported:</p> <dl> <dt><strong><code class="code">config</code></strong></dt> <dd> <p>This is the main option and it controls the configuration of Reltool. It can either be a <code class="code">sys</code> tuple or a name of a <code class="code">file</code> containing a sys tuple.</p> </dd> <dt><strong><code class="code">trap_exit</code></strong></dt> <dd> <p>This option controls the error handling behavior of Reltool. By default the window processes traps exit, but this behavior can altered by setting <code class="code">trap_exit</code> to <code class="code">false</code>.</p> </dd> <dt><strong><code class="code">wx_debug</code></strong></dt> <dd> <p>This option controls the debug level of <code class="code">wx</code>. As its name indicates it is only useful for debugging. See <code class="code">wx:debug/1</code> for more info.</p> </dd> </dl> <p>Besides the already mentioned source parameters <code class="code">root_dir</code> and <code class="code">lib_dirs</code>, the following system (<code class="code">sys</code>) level options are supported:</p> <dl> <dt><strong><code class="code">erts</code></strong></dt> <dd> <p>Erts specific configuration. See application level options below.</p> </dd> <dt><strong><code class="code">escript</code></strong></dt> <dd> <p>Escript specific configuration. An escript has a mandatory file name and escript level options that are described below.</p> </dd> <dt><strong><code class="code">app</code></strong></dt> <dd> <p>Application specific configuration. An application has a mandatory name and application level options that are described below.</p> </dd> <dt><strong><code class="code">mod_cond</code></strong></dt> <dd> <p>This parameter controls the module inclusion policy. It defaults to <code class="code">all</code> which means that if an application is included (either explicitly or implicitly) all modules in that application will be included. This implies that both modules that exist in the <code class="code">ebin</code> directory of the application, as well as modules that are named in the <code class="code">app</code> file will be included. If the parameter is set to <code class="code">ebin</code>, both modules in the <code class="code">ebin</code> directory and derived modules are included. If the parameter is set to <code class="code">app</code>, both modules in the <code class="code">app</code> file and derived modules are included. <code class="code">derived</code> means that only modules that are used by other included modules are included. The <code class="code">mod_cond</code> setting on system level is used as default for all applications.</p> </dd> <dt><strong><code class="code">incl_cond</code></strong></dt> <dd> <p>This parameter controls the application and escript inclusion policy. It defaults to <code class="code">derived</code> which means that the applications that do not have any explicit <code class="code">incl_cond</code> setting, will only be included if any other (explicitly or implicitly included) application uses it. The value <code class="code">include</code> implies that all applications and escripts that do not have any explicit <code class="code">incl_cond</code> setting will be included. <code class="code">exclude</code> implies that all applications and escripts that do not have any explicit <code class="code">incl_cond</code> setting will be excluded.</p> </dd> <dt><strong><code class="code">boot_rel</code></strong></dt> <dd> <p>A target system may have several releases but the one given as <code class="code">boot_rel</code> will be used as default when the system is booting up.</p> </dd> <dt><strong><code class="code">rel</code></strong></dt> <dd> <p>Release specific configuration. Each release maps to a <code class="code">rel</code>, <code class="code">script</code> and <code class="code">boot</code> file. See the module <code class="code">systools</code> for more info about the details. Each release has a name, a version and a set of applications with a few release specific parameters such as type and included applications.</p> </dd> <dt><strong><code class="code">relocatable</code></strong></dt> <dd> <p>This parameter controls whether the <code class="code">erl</code> executable in the target system should automatically determine where it is installed or if it should use a hardcoded path to the installation. In the latter case the target system must be installed with <code class="code">reltool:install/2</code> before it can be used. If the system is relocatable, the file tree containing the target system can be moved to another location without re-installation. The default is <code class="code">true</code>.</p> </dd> <dt><strong><code class="code">profile</code></strong></dt> <dd> <p>The creation of the specification for a target system is performed in two steps. In the first step a complete specification is generated. It will likely contain much more files than you are interested in in your customized target system. In the second step the specification will be filtered according to your filters. There you have the ability to specify filters per application as well as system wide filters. You can also select a <code class="code">profile</code> for your system. Depending on the <code class="code">profile</code>, different default filters will be used. There are three different profiles to choose from: <code class="code">development</code>, <code class="code">embedded</code> and <code class="code">standalone</code>. <code class="code">development</code> is default. The parameters that are affected by the <code class="code">profile</code> are: <code class="code">incl_sys_filters</code>, <code class="code">excl_sys_filters</code>, <code class="code">incl_app_filters</code> and <code class="code">excl_app_filters</code>.</p> </dd> <dt><strong><code class="code">app_file</code></strong></dt> <dd> <p>This parameter controls the default handling of the <code class="code">app</code> files when a target system is generated. It defaults to <code class="code">keep</code> which means that <code class="code">app</code> files are copied to the target system and their contents are kept as they are. <code class="code">strip</code> means that a new <code class="code">app</code> file is generated from the contents of the original <code class="code">app</code> file where the non included modules are removed from the file. <code class="code">all</code> does also imply that a new <code class="code">app</code> file is generated from the contents of the original <code class="code">app</code> file, with the difference that all included modules are added to the file. If the application does not have any <code class="code">app</code> file a file will be created for <code class="code">all</code> but not for <code class="code">keep</code> and <code class="code">strip</code>.</p> </dd> <dt><strong><code class="code">debug_info</code></strong></dt> <dd> <p>The <code class="code">debug_info</code> parameter controls whether the debug information in the beam file should be kept (<code class="code">keep</code>) or stripped <code class="code">strip</code> when the file is copied to the target system.</p> </dd> <dt><strong><code class="code">excl_lib</code></strong></dt> <dd> <div class="warning"> <div class="label">Warning</div> <div class="content">
@@ -217,17 +217,9 @@ target_spec()       = [target_spec()]
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>6 Miscellaneous Mnesia Features</h1> <p>The previous sections describe how to get started with <code class="code">Mnesia</code> and how to build a <code class="code">Mnesia</code> database. This section describes the more advanced features available when building a distributed, fault-tolerant <code class="code">Mnesia</code> database. The following topics are included:</p> <ul> <li>Indexing</li> <li>Distribution and fault tolerance</li> <li>Table fragmentation</li> <li>Local content tables</li> <li>Disc-less nodes</li> <li>More about schema management</li> <li> <code class="code">Mnesia</code> event handling</li> <li>Debugging <code class="code">Mnesia</code> applications</li> <li>Concurrent processes in <code class="code">Mnesia</code> </li> <li>Prototyping</li> <li>Object-based programming with <code class="code">Mnesia</code> </li> </ul> <h2> <span onmouseover="document.getElementById('ghlink-indexing-id81402').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-indexing-id81402').style.visibility = 'hidden';" id="indexing">6.1 Indexing</span> </h2> <p>Data retrieval and matching can be performed efficiently if the key for the record is known. Conversely, if the key is unknown, all records in a table must be searched. The larger the table, the more time consuming it becomes. To remedy this problem, <code class="code">Mnesia</code> indexing capabilities are used to improve data retrieval and matching of records.</p> <p>The following two functions manipulate indexes on existing tables:</p> <ul> <li><code><a href="../mnesia/#add_table_index-2">mnesia:add_table_index(Tab, AttributeName) -&gt; {aborted, R} |{atomic, ok}</a></code></li> <li><code><a href="../mnesia/#del_table_index-2">mnesia:del_table_index(Tab, AttributeName) -&gt; {aborted, R} |{atomic, ok}</a></code></li> </ul> <p>These functions create or delete a table index on a field defined by <code class="code">AttributeName</code>. To illustrate this, add an index to the table definition <code class="code">(employee, {emp_no, name, salary, sex, phone, room_no})</code>, which is the example table from the <code class="code">Company</code> database. The function that adds an index on element <code class="code">salary</code> can be expressed as <code class="code">mnesia:add_table_index(employee, salary)</code>.</p> <p>The indexing capabilities of <code class="code">Mnesia</code> are used with the following three functions, which retrieve and match records based on index entries in the database:</p> <ul> <li> <code><a href="../mnesia/#index_read-3">mnesia:index_read(Tab, SecondaryKey, AttributeName) -&gt; transaction abort | RecordList</a></code> avoids an exhaustive search of the entire table, by looking up <code class="code">SecondaryKey</code> in the index to find the primary keys. </li> <li> <code><a href="../mnesia/#index_match_object-2">mnesia:index_match_object(Pattern, AttributeName) -&gt; transaction abort | RecordList</a></code> avoids an exhaustive search of the entire table, by looking up the secondary key in the index to find the primary keys. The secondary key is found in field <code class="code">AttributeName</code> of <code class="code">Pattern</code>. The secondary key must be bound. </li> <li> <code><a href="../mnesia/#match_object-1">mnesia:match_object(Pattern) -&gt; transaction abort | RecordList</a></code> uses indexes to avoid exhaustive search of the entire table. Unlike the previous functions, this function can use any index as long as the secondary key is bound.</li> </ul> <p>These functions are further described and exemplified in <code><a href="../mnesia_chap4/#matching">Pattern Matching</a></code>. </p> <h2><span onmouseover="document.getElementById('ghlink-distribution-and-fault-tolerance-id81549').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-distribution-and-fault-tolerance-id81549').style.visibility = 'hidden';" id="distribution-and-fault-tolerance">6.2 Distribution and Fault Tolerance</span></h2> <p><code class="code">Mnesia</code> is a distributed, fault-tolerant DBMS. Tables can be replicated on different Erlang nodes in various ways. The <code class="code">Mnesia</code> programmer does not need to state where the different tables reside, only the names of the different tables need to be specified in the program code. This is known as "location transparency" and is an important concept. In particular:</p> <ul> <li> <p>A program works regardless of the data location. It makes no difference whether the data resides on the local node or on a remote node.</p> <p>Notice that the program runs slower if the data is located on a remote node.</p> </li> <li>The database can be reconfigured, and tables can be moved between nodes. These operations do not affect the user programs. </li> </ul> <p>It has previously been shown that each table has a number of system attributes, such as <code class="code">index</code> and <code class="code">type</code>.</p> <p>Table attributes are specified when the table is created. For example, the following function creates a table with two RAM replicas:</p> <pre data-language="erlang">
 mnesia:create_table(foo,
@@ -290,17 +290,9 @@ manager = 114872},</pre> <p>This model has only three different tables, and the 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>11 Errors and Error Handling</h1> <h2><span onmouseover="document.getElementById('ghlink-terminology-id89214').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-terminology-id89214').style.visibility = 'hidden';" id="terminology">11.1 Terminology</span></h2> <p>Errors can roughly be divided into four different types:</p> <ul> <li>Compile-time errors</li> <li>Logical errors</li> <li>Run-time errors</li> <li>Generated errors</li> </ul> <p>A compile-time error, for example a syntax error, does not cause much trouble as it is caught by the compiler.</p> <p>A logical error is when a program does not behave as intended, but does not crash. An example is that nothing happens when a button in a graphical user interface is clicked.</p> <p>A run-time error is when a crash occurs. An example is when an operator is applied to arguments of the wrong type. The Erlang programming language has built-in features for handling of run-time errors.</p> <p>A run-time error can also be emulated by calling <code class="code">erlang:error(Reason)</code> or <code class="code">erlang:error(Reason, Args)</code>.</p> <p>A run-time error is another name for an exception of class <code class="code">error</code>. </p> <p>A generated error is when the code itself calls <code class="code">exit/1</code> or <code class="code">throw/1</code>. Notice that emulated run-time errors are not denoted as generated errors here. </p> <p>Generated errors are exceptions of classes <code class="code">exit</code> and <code class="code">throw</code>. </p> <p>When a run-time error or generated error occurs in Erlang, execution for the process that evaluated the erroneous expression is stopped. This is referred to as a <strong>failure</strong>, that execution or evaluation <strong>fails</strong>, or that the process <strong>fails</strong>, <strong>terminates</strong>, or <strong>exits</strong>. Notice that a process can terminate/exit for other reasons than a failure.</p> <p>A process that terminates emits an <strong>exit signal</strong> with an <strong>exit reason</strong> that says something about which error has occurred. Normally, some information about the error is printed to the terminal.</p> <h2><span onmouseover="document.getElementById('ghlink-exceptions-id89344').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exceptions-id89344').style.visibility = 'hidden';" id="exceptions">11.2 Exceptions</span></h2> <p>Exceptions are run-time errors or generated errors and are of three different classes, with different origins. The <code><a href="../expressions/#try">try</a></code> expression can distinguish between the different classes, whereas the <code><a href="../expressions/#catch">catch</a></code> expression cannot. They are described in <code><a href="../expressions/">Expressions</a></code>.</p> <div class="doc-table-wrapper"> <table class="doc-table"> <tr> <td><strong>Class</strong></td> <td><strong>Origin</strong></td> </tr> <tr> <td><code class="code">error</code></td> <td>Run-time error, for example, <code class="code">1+a</code>, or the process called <code class="code">erlang:error/1,2</code> </td> </tr> <tr> <td><code class="code">exit</code></td> <td>The process called <code class="code">exit/1</code> </td> </tr> <tr> <td><code class="code">throw</code></td> <td>The process called <code class="code">throw/1</code> </td> </tr> </table> <p class="doc-table-caption">Table 11.1: Exception Classes.</p> </div> <p>An exception consists of its class, an exit reason (see <code><a href="#exit_reasons">Exit Reason</a></code>), and a stack trace (which aids in finding the code location of the exception).</p> <p>The stack trace can be be bound to a variable from within a <code class="code">try</code> expression, and is returned for exceptions of class <code class="code">error</code> from a <code class="code">catch</code> expression.</p> <p>An exception of class <code class="code">error</code> is also known as a run-time error.</p> <h4><span onmouseover="document.getElementById('ghlink-the-call-stack-back-trace--stacktrace--id89517').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-the-call-stack-back-trace--stacktrace--id89517').style.visibility = 'hidden';" id="the-call-stack-back-trace--stacktrace-">The call-stack back trace (stacktrace)</span></h4> <p>The stack back-trace (<strong>stacktrace</strong>) is a list of <code class="code">{Module,Function,Arity,Location}</code> tuples. The field <code class="code">Arity</code> in the first tuple can be the argument list of that function call instead of an arity integer, depending on the exception.</p> <p><code class="code">Location</code> is a (possibly empty) list of two-tuples that can indicate the location in the source code of the function. The first element is an atom describing the type of information in the second element. The following items can occur:</p> <dl> <dt><strong><code class="code">file</code></strong></dt> <dd>The second element of the tuple is a string (list of characters) representing the filename of the source file of the function. </dd> <dt><strong><code class="code">line</code></strong></dt> <dd>The second element of the tuple is the line number (an integer &gt; 0) in the source file where the exception occurred or the function was called. </dd> </dl> <div class="warning"> <div class="label">Warning</div> <div class="content">
 
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

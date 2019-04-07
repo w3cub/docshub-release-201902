@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>disk_log</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id127724').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id127724').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">disk_log</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id127727').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id127727').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">A disk-based term logging facility.</p> <h2><span onmouseover="document.getElementById('ghlink-description-id127731').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id127731').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p><code class="code">disk_log</code> is a disk-based term logger that enables efficient logging of items on files.</p> <p>Two types of logs are supported:</p> <dl> <dt><strong>halt logs</strong></dt> <dd><p>Appends items to a single file, which size can be limited by the <code class="code">disk_log</code> module.</p></dd> <dt><strong>wrap logs</strong></dt> <dd><p>Uses a sequence of wrap log files of limited size. As a wrap log file is filled up, further items are logged on to the next file in the sequence, starting all over with the first file when the last file is filled up.</p></dd> </dl> <p>For efficiency reasons, items are always written to files as binaries.</p> <p>Two formats of the log files are supported:</p> <dl> <dt><strong>internal format</strong></dt> <dd><p>Supports automatic repair of log files that are not properly closed and enables efficient reading of logged items in <strong>chunks</strong> using a set of functions defined in this module. This is the only way to read internally formatted logs. An item logged to an internally formatted log must not occupy more than 4 GB of disk space (the size must fit in 4 bytes).</p></dd> <dt><strong>external format</strong></dt> <dd><p>Leaves it up to the user to read and interpret the logged data. The <code class="code">disk_log</code> module cannot repair externally formatted logs.</p></dd> </dl> <p>For each open disk log, one process handles requests made to the disk log. This process is created when <code><a href="#open-1"><span class="code">open/1</span></a></code> is called, provided there exists no process handling the disk log. A process that opens a disk log can be an <strong>owner</strong> or an anonymous <strong>user</strong> of the disk log. Each owner is linked to the disk log process, and an owner can close the disk log either explicitly (by calling <code class="code">close/1</code> or <code class="code">lclose/1,2</code>) or by terminating.</p> <p>Owners can subscribe to <strong>notifications</strong>, messages of the form <code class="code">{disk_log, Node, Log, Info}</code>, which are sent from the disk log process when certain events occur, see the functions and in particular the <code class="code">open/1</code> option <code><a href="#notify"><span class="code">notify</span></a></code>. A log can have many owners, but a process cannot own a log more than once. However, the same process can open the log as a user more than once.</p> <p>For a disk log process to close its file properly and terminate, it must be closed by its owners and once by some non-owner process for each time the log was used anonymously. The users are counted and there must not be any users left when the disk log process terminates. </p> <p>Items can be logged <strong>synchronously</strong> by using functions <code><a href="#log-2"><span class="code">log/2</span></a></code>, <code><a href="#blog-2"><span class="code">blog/2</span></a></code>, <code><a href="#log_terms-2"><span class="code">log_terms/2</span></a></code>, and <code><a href="#blog_terms-2"><span class="code">blog_terms/2</span></a></code>. For each of these functions, the caller is put on hold until the items are logged (but not necessarily written, use <code class="code">sync/1</code> to ensure that). By adding an <code class="code">a</code> to each of the mentioned function names, we get functions that log items <strong>asynchronously</strong>. Asynchronous functions do not wait for the disk log process to write the items to the file, but return the control to the caller more or less immediately. </p> <p>When using the internal format for logs, use functions <code><a href="#log-2"><span class="code">log/2</span></a></code>, <code><a href="#log_terms-2"><span class="code">log_terms/2</span></a></code>, <code><a href="#alog-2"><span class="code">alog/2</span></a></code>, and <code><a href="#alog_terms-2"><span class="code">alog_terms/2</span></a></code>. These functions log one or more Erlang terms. By prefixing each of the functions with a <code class="code">b</code> (for "binary"), we get the corresponding <code class="code">blog()</code> functions for the external format. These functions log one or more chunks of bytes. For example, to log the string <code class="code">"hello"</code> in ASCII format, you can use <code class="code">disk_log:blog(Log, "hello")</code>, or <code class="code">disk_log:blog(Log, list_to_binary("hello"))</code>. The two alternatives are equally efficient.</p> <p>The <code class="code">blog()</code> functions can also be used for internally formatted logs, but in this case they must be called with binaries constructed with calls to <code><span class="code">term_to_binary/1</span></code>. There is no check to ensure this, it is entirely the responsibility of the caller. If these functions are called with binaries that do not correspond to Erlang terms, the <code><a href="#chunk-2"><span class="code">chunk/2,3</span></a></code> and automatic repair functions fail. The corresponding terms (not the binaries) are returned when <code class="code">chunk/2,3</code> is called. </p> <p>A collection of open disk logs with the same name running on different nodes is said to be a <strong>distributed disk log</strong> if requests made to any of the logs are automatically made to the other logs as well. The members of such a collection are called individual distributed disk logs, or just distributed disk logs if there is no risk of confusion. There is no order between the members of such a collection. For example, logged terms are not necessarily written to the node where the request was made before written to the other nodes. However, a few functions do not make requests to all members of distributed disk logs, namely <code><a href="#info-1"><span class="code">info/1</span></a></code>, <code><a href="#chunk-2"><span class="code">chunk/2,3</span></a></code>, <code><a href="#bchunk-2"><span class="code">bchunk/2,3</span></a></code>, <code><a href="#chunk_step-3"><span class="code">chunk_step/3</span></a></code>, and <code><a href="#lclose-1"><span class="code">lclose/1,2</span></a></code>.</p> <p>An open disk log that is not a distributed disk log is said to be a <strong>local disk log</strong>. A local disk log is only accessible from the node where the disk log process runs, whereas a distributed disk log is accessible from all nodes in the Erlang system, except for those nodes where a local disk log with the same name as the distributed disk log exists. All processes on nodes that have access to a local or distributed disk log can log items or otherwise change, inspect, or close the log. </p> <p>It is not guaranteed that all log files of a distributed disk log contain the same log items. No attempt is made to synchronize the contents of the files. However, as long as at least one of the involved nodes is alive at each time, all items are logged. When logging items to a distributed log, or otherwise trying to change the log, the replies from individual logs are ignored. If all nodes are down, the disk log functions reply with a <code class="code">nonode</code> error. </p> <div class="note"> <div class="label">Note</div> <div class="content">
@@ -155,17 +155,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

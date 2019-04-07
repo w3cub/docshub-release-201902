@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>mnesia</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id60168').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id60168').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">mnesia</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id60172').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id60172').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">A distributed telecommunications DBMS</p> <h2><span onmouseover="document.getElementById('ghlink-description-id62378').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id62378').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>The following are some of the most important and attractive capabilities provided by Mnesia:</p> <ul> <li>A relational/object hybrid data model that is suitable for telecommunications applications. </li> <li>A DBMS query language, Query List Comprehension (QLC) as an add-on library. </li> <li>Persistence. Tables can be coherently kept on disc and in the main memory. </li> <li>Replication. Tables can be replicated at several nodes. </li> <li>Atomic transactions. A series of table manipulation operations can be grouped into a single atomic transaction. </li> <li>Location transparency. Programs can be written without knowledge of the actual data location. </li> <li>Extremely fast real-time data searches. </li> <li>Schema manipulation routines. The DBMS can be reconfigured at runtime without stopping the system. </li> </ul> <p>This Reference Manual describes the Mnesia API. This includes functions that define and manipulate Mnesia tables.</p> <p>All functions in this Reference Manual can be used in any combination with queries using the list comprehension notation. For information about the query notation, see the <code>qlc</code> manual page in STDLIB.</p> <p>Data in Mnesia is organized as a set of tables. Each table has a name that must be an atom. Each table is made up of Erlang records. The user is responsible for the record definitions. Each table also has a set of properties. The following are some of the properties that are associated with each table:</p> <ul> <li> <p><code class="code">type</code>. Each table can have <code class="code">set</code>, <code class="code">ordered_set</code>, or <code class="code">bag</code> semantics. Notice that currently <code class="code">ordered_set</code> is not supported for <code class="code">disc_only_copies</code>.</p> <p>If a table is of type <code class="code">set</code>, each key leads to either one or zero records.</p> <p>If a new item is inserted with the same key as an existing record, the old record is overwritten. However, if a table is of type <code class="code">bag</code>, each key can map to several records. All records in type <code class="code">bag</code> tables are unique, only the keys can be duplicated.</p> </li> <li> <p><code class="code">record_name</code>. All records stored in a table must have the same name. The records must be instances of the same record type.</p> </li> <li> <p><code class="code">ram_copies</code>. A table can be replicated on a number of Erlang nodes. Property <code class="code">ram_copies</code> specifies a list of Erlang nodes where RAM copies are kept. These copies can be dumped to disc at regular intervals. However, updates to these copies are not written to disc on a transaction basis.</p> </li> <li> <p><code class="code">disc_copies</code>. This property specifies a list of Erlang nodes where the table is kept in RAM and on disc. All updates of the table are performed in the actual table and are also logged to disc. If a table is of type <code class="code">disc_copies</code> at a certain node, the entire table is resident in RAM memory and on disc. Each transaction performed on the table is appended to a <code class="code">LOG</code> file and written into the RAM table.</p> </li> <li> <p><code class="code">disc_only_copies</code>. Some, or all, table replicas can be kept on disc only. These replicas are considerably slower than the RAM-based replicas.</p> </li> <li> <p><code class="code">index</code>. This is a list of attribute names, or integers, which specify the tuple positions on which Mnesia is to build and maintain an extra index table.</p> </li> <li> <p><code class="code">local_content</code>. When an application requires tables whose contents are local to each node, <code class="code">local_content</code> tables can be used. The table name is known to all Mnesia nodes, but its content is unique on each node. This means that access to such a table must be done locally. Set field <code class="code">local_content</code> to <code class="code">true</code> to enable the <code class="code">local_content</code> behavior. Default is <code class="code">false</code>.</p> </li> <li> <p><code class="code">majority</code>. This attribute is <code class="code">true</code> or <code class="code">false</code>; default is <code class="code">false</code>. When <code class="code">true</code>, a majority of the table replicas must be available for an update to succeed. Majority checking can be enabled on tables with mission-critical data, where it is vital to avoid inconsistencies because of network splits.</p> </li> <li> <p><code class="code">snmp</code>. Each (set-based) Mnesia table can be automatically turned into a Simple Network Management Protocol (SNMP) ordered table as well. This property specifies the types of the SNMP keys.</p> </li> <li> <p><code class="code">attributes</code>. The names of the attributes for the records that are inserted in the table.</p> </li> </ul> <p>For information about the complete set of table properties and their details, see <code class="code">mnesia:create_table/2</code>.</p> <p>This Reference Manual uses a table of persons to illustrate various examples. The following record definition is assumed:</p> <pre data-language="erlang">-record(person, {name,
@@ -359,17 +359,9 @@ oid(Rec) -&gt; {element(1, Rec), element(2, Rec)}.</pre> <p>This code adds a set
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

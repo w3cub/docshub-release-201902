@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>erl_syntax</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id76094').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id76094').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">erl_syntax</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id76098').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id76098').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">Abstract Erlang syntax trees.</p> <h2><span onmouseover="document.getElementById('ghlink-description-id76102').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id76102').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>Abstract Erlang syntax trees.</p> <p>This module defines an abstract data type for representing Erlang source code as syntax trees, in a way that is backwards compatible with the data structures created by the Erlang standard library parser module <code class="code">erl_parse</code> (often referred to as "parse trees", which is a bit of a misnomer). This means that all <code class="code">erl_parse</code> trees are valid abstract syntax trees, but the reverse is not true: abstract syntax trees can in general not be used as input to functions expecting an <code class="code">erl_parse</code> tree. However, as long as an abstract syntax tree represents a correct Erlang program, the function <code><a href="#revert-1">revert/1</a></code> should be able to transform it to the corresponding <code class="code">erl_parse</code> representation.</p> <p>A recommended starting point for the first-time user is the documentation of the <code><a href="#type-syntaxTree">syntaxTree()</a></code> data type, and the function <code><a href="#type-1">type/1</a></code>.</p> <p><strong id="NOTES:">NOTES:</strong></p> <p>This module deals with the composition and decomposition of <strong>syntactic</strong> entities (as opposed to semantic ones); its purpose is to hide all direct references to the data structures used to represent these entities. With few exceptions, the functions in this module perform no semantic interpretation of their inputs, and in general, the user is assumed to pass type-correct arguments - if this is not done, the effects are not defined.</p> <p>With the exception of the <code><a href="#type-erl_parse">erl_parse()</a></code> data structures, the internal representations of abstract syntax trees are subject to change without notice, and should not be documented outside this module. Furthermore, we do not give any guarantees on how an abstract syntax tree may or may not be represented, <strong>with the following exceptions</strong>: no syntax tree is represented by a single atom, such as <code class="code">none</code>, by a list constructor <code class="code">[X | Y]</code>, or by the empty list <code class="code">[]</code>. This can be relied on when writing functions that operate on syntax trees.</p> <h2>Data types</h2>   <dl id="types"> <dt><strong id="type-encoding">encoding() = utf8 | unicode | latin1</strong></dt>  <dt><strong>erl_parse() = <code id="type-erl_parse">erl_parse:abstract_clause()</code> | <code>erl_parse:abstract_expr()</code> | <code>erl_parse:abstract_form()</code> | <code>erl_parse:abstract_type()</code> | <code>erl_parse:form_info()</code> | {bin_element, term(), term(), term(), term()}</strong></dt>  <dt><strong>forms() = <code id="type-forms"><a href="#type-syntaxTree">syntaxTree()</a></code> | [<code><a href="#type-syntaxTree">syntaxTree()</a></code>]</strong></dt>  <dt><strong>guard() = none | <code id="type-guard"><a href="#type-syntaxTree">syntaxTree()</a></code> | [<code><a href="#type-syntaxTree">syntaxTree()</a></code>] | [[<code><a href="#type-syntaxTree">syntaxTree()</a></code>]]</strong></dt>  <dt><strong id="type-padding">padding() = none | integer()</strong></dt>  <dt><strong id="type-syntaxTree">syntaxTree()</strong></dt> <dd>  <p>An abstract syntax tree. The <code><a href="#type-erl_parse">erl_parse()</a></code> "parse tree" representation is a proper subset of the <code class="code">syntaxTree()</code> representation.</p> <p>Every abstract syntax tree node has a <strong>type</strong>, given by the function <code><a href="#type-1">type/1</a></code>. Each node also has associated <strong>attributes</strong>; see <code><a href="#get_attrs-1">get_attrs/1</a></code> for details. The functions <code><a href="#make_tree-2">make_tree/2</a></code> and <code><a href="#subtrees-1">subtrees/1</a></code> are generic constructor/decomposition functions for abstract syntax trees. The functions <code><a href="#abstract-1">abstract/1</a></code> and <code><a href="#concrete-1">concrete/1</a></code> convert between constant Erlang terms and their syntactic representations. The set of syntax tree nodes is extensible through the <code><a href="#tree-2">tree/2</a></code> function.</p> <p>A syntax tree can be transformed to the <code><a href="#type-erl_parse">erl_parse()</a></code> representation with the <code><a href="#revert-1">revert/1</a></code> function.</p> </dd> <dt><strong id="type-syntaxTreeAttributes">syntaxTreeAttributes()</strong></dt> <dd>  <p>This is an abstract representation of syntax tree node attributes; see the function <code><a href="#get_attrs-1">get_attrs/1</a></code>. </p> </dd> </dl>  <h2><span onmouseover="document.getElementById('ghlink-exports-id76453').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exports-id76453').style.visibility = 'hidden';" id="exports">Exports</span></h2> <div class="exports-body"> 
@@ -687,17 +687,9 @@ foo(X) -&gt; {bar, X}.</pre>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

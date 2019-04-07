@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>2 Building and Installing Erlang/OTP</h1> <h2> <span onmouseover="document.getElementById('ghlink-introduction-id61333').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-introduction-id61333').style.visibility = 'hidden';" id="Introduction">2.1 Introduction</span> </h2> <p> This document describes how to build and install Erlang/OTP-21. Erlang/OTP should be possible to build from source on any Unix/Linux system, including OS X. You are advised to read the whole document before attempting to build and install Erlang/OTP. </p> <p> The source code can be downloaded from the official site of Erlang/OTP or GitHub. </p> <ul> <li> <code><a href="http://www.erlang.org" target="_blank">http://www.erlang.org</a></code> </li> <li> <code><a href="https://github.com/erlang/otp" target="_blank">https://github.com/erlang/otp</a></code> </li> </ul> <h2> <span onmouseover="document.getElementById('ghlink-required-utilities-id65155').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-required-utilities-id65155').style.visibility = 'hidden';" id="Required-Utilities">2.2 Required Utilities</span> </h2> <p> These are the tools you need in order to unpack and build Erlang/OTP. </p> <h4> <span onmouseover="document.getElementById('ghlink-unpacking-id65169').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-unpacking-id65169').style.visibility = 'hidden';" id="Required-Utilities_Unpacking">Unpacking</span> </h4> <ul> <li> GNU unzip, or a modern uncompress. </li> <li> A TAR program that understands the GNU TAR format for long filenames. </li> </ul> <h4> <span onmouseover="document.getElementById('ghlink-building-id59268').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-building-id59268').style.visibility = 'hidden';" id="Required-Utilities_Building">Building</span> </h4> <ul> <li> GNU <code class="code">make</code> </li> <li> Compiler -- GNU C Compiler, <code class="code">gcc</code> or the C compiler frontend for LLVM, <code class="code">clang</code>. </li> <li> Perl 5 </li> <li> GNU <code class="code">m4</code> -- If HiPE (native code) support is enabled. HiPE can be disabled using <code class="code">--disable-hipe</code> </li> <li> <code class="code">ncurses</code>, <code class="code">termcap</code>, or <code class="code">termlib</code> -- The development headers and libraries are needed, often known as <code class="code">ncurses-devel</code>. Use <code class="code">--without-termcap</code> to build without any of these libraries. Note that in this case only the old shell (without any line editing) can be used. </li> <li> <code class="code">sed</code> -- Stream Editor for basic text transformation. </li> </ul> <h5 id="Required-Utilities_Building_Building-in-Git"> Building in Git</h5> <ul><li> GNU <code class="code">autoconf</code> of at least version 2.59. Note that <code class="code">autoconf</code> is not needed when building an unmodified version of the released source. </li></ul> <h5 id="Required-Utilities_Building_Building-on-OS-X"> Building on OS X</h5> <ul><li> Xcode -- Download and install via the Mac App Store. Read about <code><a href="#Advanced-configuration-and-build-of-ErlangOTP_Building_OS-X-Darwin">Building on a Mac</a></code> before proceeding. </li></ul> <h4> <span onmouseover="document.getElementById('ghlink-installing-id63517').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-installing-id63517').style.visibility = 'hidden';" id="Required-Utilities_Installing">Installing</span> </h4> <ul><li> An <code class="code">install</code> program that can take multiple file names. </li></ul> <h2> <span onmouseover="document.getElementById('ghlink-optional-utilities-id63541').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-optional-utilities-id63541').style.visibility = 'hidden';" id="Optional-Utilities">2.3 Optional Utilities</span> </h2> <p> Some applications are automatically skipped if the dependencies aren't met. Here is a list of utilities needed for those applications. You will also find the utilities needed for building the documentation. </p> <h4> <span onmouseover="document.getElementById('ghlink-building-id66235').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-building-id66235').style.visibility = 'hidden';" id="Optional-Utilities_Building">Building</span> </h4> <ul> <li> <p>OpenSSL -- The opensource toolkit for Secure Socket Layer and Transport Layer Security. Required for building the application <code class="code">crypto</code>. Further, <code class="code">ssl</code> and <code class="code">ssh</code> require a working crypto application and will also be skipped if OpenSSL is missing. The <code class="code">public_key</code> application is available without <code class="code">crypto</code>, but the functionality will be very limited. </p> <p>The development package of OpenSSL including the header files are needed as well as the binary command program <code class="code">openssl</code>. At least version 0.9.8 of OpenSSL is required. Read more and download from <code><a href="http://www.openssl.org" target="_blank">http://www.openssl.org</a></code>. </p> </li> <li> <p>Oracle Java SE JDK -- The Java Development Kit (Standard Edition). Required for building the application <code class="code">jinterface</code>. At least version 1.6.0 of the JDK is required. </p> <p>Download from <code><a href="http://www.oracle.com/technetwork/java/javase/downloads" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads</a></code>. We have also tested with IBM's JDK 1.6.0. </p> </li> <li> <p>X Windows -- Development headers and libraries are needed to build the Erlang/OTP application <code class="code">gs</code> on Unix/Linux. </p> </li> <li> <p><code class="code">flex</code> -- Headers and libraries are needed to build the flex scanner for the <code class="code">megaco</code> application on Unix/Linux. </p> </li> <li> <p>wxWidgets -- Toolkit for GUI applications. Required for building the <code class="code">wx</code> application. At least version 3.0 of wxWidgets is required. </p> <p>Download from <code><a href="http://sourceforge.net/projects/wxwindows/files/3.0.0/" target="_blank">http://sourceforge.net/projects/wxwindows/files/3.0.0/</a></code> or get it from GitHub: <code><a href="https://github.com/wxWidgets/wxWidgets" target="_blank">https://github.com/wxWidgets/wxWidgets</a></code> </p> <p>Further instructions on wxWidgets, read <code><a href="#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang">Building with wxErlang</a></code>. </p> </li> </ul> <h4> <span onmouseover="document.getElementById('ghlink-building-documentation-id59231').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-building-documentation-id59231').style.visibility = 'hidden';" id="Optional-Utilities_Building-Documentation">Building Documentation</span> </h4> <ul> <li> <p><code class="code">xsltproc</code> -- A command line XSLT processor. </p> <p>A tool for applying XSLT stylesheets to XML documents. Download xsltproc from <code><a href="http://xmlsoft.org/XSLT/xsltproc2.html" target="_blank">http://xmlsoft.org/XSLT/xsltproc2.html</a></code>. </p> </li> <li> <p><code class="code">fop</code> -- Apache FOP print formatter (requires Java). Can be downloaded from <code><a href="http://xmlgraphics.apache.org/fop" target="_blank">http://xmlgraphics.apache.org/fop</a></code>. </p> </li> </ul> <h2> <span onmouseover="document.getElementById('ghlink-how-to-build-and-install-erlang-otp-id66029').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-how-to-build-and-install-erlang-otp-id66029').style.visibility = 'hidden';" id="How-to-Build-and-Install-ErlangOTP">2.4 How to Build and Install Erlang/OTP</span> </h2> <p> The following instructions are for building <code><a href="http://www.erlang.org/download/otp_src_21.0.tar.gz" target="_blank">the released source tar ball</a></code>. </p> <p> The variable <code class="code">$ERL_TOP</code> will be mentioned a lot of times. It refers to the top directory in the source tree. More information about <code class="code">$ERL_TOP</code> can be found in the <code><a href="#Advanced-configuration-and-build-of-ErlangOTP_make-and-ERLTOP">make and $ERL_TOP</a></code> section below. If you are building in git you probably want to take a look at the <code><a href="#Advanced-configuration-and-build-of-ErlangOTP_Building_Within-Git">Building in Git</a></code> section below before proceeding. </p> <h4> <span onmouseover="document.getElementById('ghlink-unpacking-id66076').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-unpacking-id66076').style.visibility = 'hidden';" id="How-to-Build-and-Install-ErlangOTP_Unpacking">Unpacking</span> </h4> <p> Start by unpacking the Erlang/OTP distribution file with your GNU compatible TAR program. </p> <pre data-language="erlang">$ tar -zxf otp_src_21.0.tar.gz    # Assuming bash/sh</pre> <p> Now change directory into the base directory and set the <code class="code">$ERL_TOP</code> variable. </p> <pre data-language="erlang">$ cd otp_src_21.0
 $ export ERL_TOP=`pwd`    # Assuming bash/sh</pre> <h4> <span onmouseover="document.getElementById('ghlink-configuring-id62883').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-configuring-id62883').style.visibility = 'hidden';" id="How-to-Build-and-Install-ErlangOTP_Configuring">Configuring</span> </h4> <p> Run the following commands to configure the build: </p> <pre data-language="erlang">$ ./configure [ options ]</pre> <div class="note"> <div class="label">Note</div> <div class="content">
@@ -133,17 +133,9 @@ $ ln -s /home/me/OTP/bin/escript escript
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

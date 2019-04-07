@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>tftp</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id65203').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id65203').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">tftp</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id65207').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id65207').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">Trivial FTP.</p> <h2><span onmouseover="document.getElementById('ghlink-description-id65210').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id65210').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>Interface module for the <code class="code">tftp</code> application.</p>  <h2> data types </h2>  <p><code class="code">ServiceConfig = Options</code></p> <p><code class="code">Options = [option()]</code></p> <p>Most of the options are common for both the client and the server side, but some of them differs a little. The available <code class="code">option()</code>s are as follows:</p> <dl> <dt><strong><code class="code">{debug, Level}</code></strong></dt> <dd> <p><code class="code">Level = none | error | warning | brief | normal | verbose | all</code></p> <p>Controls the level of debug printouts. Default is <code class="code">none</code>.</p> </dd> <dt><strong><code class="code">{host, Host}</code></strong></dt> <dd> <p><code class="code">Host = hostname()</code>, see <code>inet(3)</code>.</p> <p>The name or IP address of the host where the TFTP daemon resides. This option is only used by the client.</p> </dd> <dt><strong><code class="code">{port, Port}</code></strong></dt> <dd> <p><code class="code">Port = int()</code></p> <p>The TFTP port where the daemon listens. Defaults is the standardized number 69. On the server side, it can sometimes make sense to set it to 0, meaning that the daemon just picks a free port (which one is returned by function <code class="code">info/1</code>).</p> <p>If a socket is connected already, option <code class="code">{udp, [{fd, integer()}]}</code> can be used to pass the open file descriptor to <code class="code">gen_udp</code>. This can be automated by using a command-line argument stating the prebound file descriptor number. For example, if the port is 69 and file descriptor 22 is opened by <code class="code">setuid_socket_wrap</code>, the command-line argument "-tftpd_69 22" triggers the prebound file descriptor 22 to be used instead of opening port 69. The UDP option <code class="code">{udp, [{fd, 22}]}</code> is automatically added. See <code class="code">init:get_argument/</code> about command-line arguments and <code class="code">gen_udp:open/2</code> about UDP options.</p> </dd> <dt><strong><code class="code">{port_policy, Policy}</code></strong></dt> <dd> <p><code class="code">Policy = random | Port | {range, MinPort, MaxPort}</code></p> <p><code class="code">Port = MinPort = MaxPort = int()</code></p> <p>Policy for the selection of the temporary port that is used by the server/client during the file transfer. Default is <code class="code">random</code>, which is the standardized policy. With this policy a randomized free port is used. A single port or a range of ports can be useful if the protocol passes through a firewall.</p> </dd> <dt><strong><code class="code">{udp, Options}</code></strong></dt> <dd> <p><code class="code">Options = [Opt]</code>, see <code>gen_udp:open/2</code>.</p> </dd> <dt><strong><code class="code">{use_tsize, Bool}</code></strong></dt> <dd> <p><code class="code">Bool = bool()</code></p> <p>Flag for automated use of option <code class="code">tsize</code>. With this set to <code class="code">true</code>, the <code class="code">write_file/3</code> client determines the filesize and sends it to the server as the standardized <code class="code">tsize</code> option. A <code class="code">read_file/3</code> client acquires only a filesize from the server by sending a zero <code class="code">tsize</code>.</p> </dd> <dt><strong><code class="code">{max_tsize, MaxTsize}</code></strong></dt> <dd> <p><code class="code">MaxTsize = int() | infinity</code></p> <p>Threshold for the maximal filesize in bytes. The transfer is aborted if the limit is exceeded. Default is <code class="code">infinity</code>.</p> </dd> <dt><strong><code class="code">{max_conn, MaxConn}</code></strong></dt> <dd> <p><code class="code">MaxConn = int() | infinity</code></p> <p>Threshold for the maximal number of active connections. The daemon rejects the setup of new connections if the limit is exceeded. Default is <code class="code">infinity</code>.</p> </dd> <dt><strong><code class="code">{TftpKey, TftpVal}</code></strong></dt> <dd> <p><code class="code">TftpKey = string()</code> <br> <code class="code">TftpVal = string()</code></p> <p>Name and value of a TFTP option.</p> </dd> <dt><strong><code class="code">{reject, Feature}</code></strong></dt> <dd> <p><code class="code">Feature = Mode | TftpKey</code> <br> <code class="code"> Mode = read | write</code> <br> <code class="code"> TftpKey = string()</code></p> <p>Controls which features to reject. This is mostly useful for the server as it can restrict the use of certain TFTP options or read/write access.</p> </dd> <dt><strong><code class="code">{callback, {RegExp, Module, State}}</code></strong></dt> <dd> <p><code class="code">RegExp = string()</code> <br> <code class="code">Module = atom()</code> <br> <code class="code">State = term()</code></p> <p>Registration of a callback module. When a file is to be transferred, its local filename is matched to the regular expressions of the registered callbacks. The first matching callback is used during the transfer. See <code><a href="#read_file-3">read_file/3</a></code> and <code><a href="#write_file-3">write_file/3</a></code>. </p> <p>The callback module must implement the <code class="code">tftp</code> behavior, see <code><a href="#tftp_callback">CALLBACK FUNCTIONS</a></code>.</p> </dd> <dt><strong><code class="code">{logger, Module}</code></strong></dt> <dd> <p><code class="code">Module = module()()</code></p> <p>Callback module for customized logging of errors, warnings, and info messages. The callback module must implement the <code class="code">tftp_logger</code> behavior, see <code><a href="#tftp_logger">LOGGER FUNCTIONS</a></code>. The default module is <code class="code">tftp_logger</code>.</p> </dd> <dt><strong><code class="code">{max_retries, MaxRetries}</code></strong></dt> <dd> <p><code class="code">MaxRetries = int()</code></p> <p>Threshold for the maximal number of retries. By default the server/client tries to resend a message up to five times when the time-out expires.</p> </dd> </dl>  <h2><span onmouseover="document.getElementById('ghlink-exports-id62414').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exports-id62414').style.visibility = 'hidden';" id="exports">Exports</span></h2> <div class="exports-body"> 
@@ -121,17 +121,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

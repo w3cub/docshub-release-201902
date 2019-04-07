@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>4 How to Build Erlang/OTP on Windows</h1> <p><strong>Table of Contents</strong></p> <ul> <li> <code><a href="#Introduction">Introduction</a></code> </li> <li> <code><a href="#Short-Version">Short Version</a></code> </li> <li> <code><a href="#Frequently-Asked-Questions">Frequently Asked Questions</a></code> </li> <li> <code><a href="#Tools-you-Need-and-Their-Environment">Tools you Need and Their Environment</a></code> </li> <li> <code><a href="#The-Shell-Environment">The Shell Environment</a></code> </li> <li> <code><a href="#Building-and-Installing">Building and Installing</a></code> </li> <li> <code><a href="#Development">Development</a></code> </li> <li> <code><a href="#Using-GIT">Using GIT</a></code> </li> </ul> <h2> <span onmouseover="document.getElementById('ghlink-introduction-id75469').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-introduction-id75469').style.visibility = 'hidden';" id="Introduction">4.1 Introduction</span> </h2> <p> This section describes how to build the Erlang emulator and the OTP libraries on Windows. Note that the Windows binary releases are still a preferred alternative if one does not have Microsoft’s development tools and/or don’t want to install Cygwin, MSYS or MSYS2. </p> <p> The instructions apply to versions of Windows supporting the Cygwin emulated gnuish environment or the MSYS or MSYS2 ditto. We’ve built on the following platforms: Windows 2012, Windows 7, Windows 8 and Windows 10. It’s probably possible to build on older platforms too, but you might not be able to install the appropriate Microsoft SDK, Visual Studio or OpenSSL, in which case you will need to go back to earlier compilers etc.<br> </p> <p> The procedure described uses either Cygwin, MSYS or MSYS2 as a build environment. You run the bash shell in Cygwin/MSYS/MSYS2 and use the gnu make/configure/autoconf etc to do the build. The emulator C-source code is, however, mostly compiled with Microsoft Visual C++™, producing a native Windows binary. This is the same procedure as we use to build the pre-built binaries. Why we use VC++ and not gcc is explained further in the FAQ section. </p> <p> If you are not familiar with Cygwin, MSYS, MSYS2 or a Unix environment, you’ll probably need to read up a bit on how that works. There are plenty of documentation about this online. </p> <p> These instructions apply for both 32-bit and 64-bit Windows. Note that even if you build a 64-bit version of Erlang, most of the directories and files involved are still named win32. Some occurances of the name win64 are however present. The installation file for a 64-bit Windows version of Erlang, for example, is <code class="code">otp_win64_21.exe</code>. </p> <p> If you feel comfortable with the environment and build system, and have all the necessary tools, you have a great opportunity to make the Erlang/OTP distribution for Windows better. Please submit any suggestions to our <code><a href="http://bugs.erlang.org" target="_blank">JIRA</a></code> and patches to our <code><a href="https://github.com/erlang/otp" target="_blank">git project</a></code> to let them find their way into the next version of Erlang. If making changes to the build system (like makefiles etc) please bear in mind that the same makefiles are used on Unix/VxWorks, so that your changes don't break other platforms. That of course goes for C-code too; system specific code resides in the <code class="code">$ERL_TOP/erts/emulator/sys/win32</code> and <code class="code">$ERL_TOP/erts/etc/win32</code> directories mostly. The <code class="code">$ERL_TOP/erts/emulator/beam</code> directory is for common code. </p> <p> We've used this build procedure for a couple of releases, and it has worked fine for us. Still, there might be all sorts of troubles on different machines and with different setups. We'll try to give hints wherever we've encountered difficulties, but please share your experiences by using the <code><a href="http://www.erlang.org/static/doc/mailinglist.html" target="_blank">erlang-questions</a></code> mailing list. We cannot, of course, help everyone with all their issues, so please try to solve such issues and submit solutions/workarounds. </p> <p> Lets go then! We’ll start with a short version of the setup procedure, followed by some FAQ, and then we’ll go into more details of the setup. </p> <h2> <span onmouseover="document.getElementById('ghlink-short-version-id75569').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-short-version-id75569').style.visibility = 'hidden';" id="Short-Version">4.2 Short Version</span> </h2> <p> In the following sections, we've described as much as we could about the installation of the tools needed. Once the tools are installed, building is quite easy. We have also tried to make these instructions understandable for people with limited Unix experience. Cygwin/MSYS/MSYS2 is a whole new environment to some Windows users, why careful explanation of environment variables etc seemed to be in place. </p> <p> This is the short story though, for the experienced and impatient: </p> <ul><li> <p>Get and install complete Cygwin (latest), complete MinGW with MSYS or complete MSYS2 </p> <ul> <li> <p>Install Visual Studio 12.0 (2013) </p> </li> <li> <p>Install Microsofts Windows SDK 8.1 </p> </li> <li> <p>Get and install Sun's JDK 1.6.0 or later </p> </li> <li> <p>Get and install NSIS 2.01 or later (up to 2.46 tried and working) </p> </li> <li> <p>Get, build and install OpenSSL 0.9.8r or later (up to 1.0.2d tried &amp; working) with static libs. </p> </li> <li> <p>Get the Erlang source distribution (from <code><a href="http://www.erlang.org/download.html" target="_blank">http://www.erlang.org/download.html</a></code>) and unpack with Cygwin's/MSYS's/MSYS2's <code class="code">tar</code>. </p> </li> <li> <p>Set <code class="code">ERL_TOP</code> to where you unpacked the source distribution </p> </li> <li> <p><code class="code">$ cd $ERL_TOP</code> </p> </li> <li> <p>Modify PATH and other environment variables so that all these tools are runnable from a bash shell. Still standing in <code class="code">$ERL_TOP</code>, issue the following commands (for 32-bit Windows, remove the x64 from the first row and change <code class="code">otp_win64_21</code> to <code class="code">otp_win32_21</code> on the last row): </p> <pre data-language="erlang">$ eval `./otp_build env_win32 x64`
 $ ./otp_build autoconf
@@ -296,17 +296,9 @@ end,</pre> </li> </ul> <p> That's basically all you need to get going. </p> <h2>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

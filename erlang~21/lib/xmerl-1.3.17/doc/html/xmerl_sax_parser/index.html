@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>xmerl_sax_parser</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id70990').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id70990').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">xmerl_sax_parser</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id70994').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id70994').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">XML SAX parser API</p> <h2><span onmouseover="document.getElementById('ghlink-description-id70998').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id70998').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p> A SAX parser for XML that sends the events through a callback interface. SAX is the <strong>Simple API for XML</strong>, originally a Java-only API. SAX was the first widely adopted API for XML in Java, and is a <strong>de facto</strong> standard where there are versions for several programming language environments other than Java. </p>  <h2>Data types</h2>  <dl> <dt><strong><code class="code">option()</code></strong></dt> <dd> <p> Options used to customize the behaviour of the parser. Possible options are: </p>  <dl> <dt><strong><code class="code">{continuation_fun, ContinuationFun}</code></strong></dt> <dd> <code><a href="#ContinuationFun-1">ContinuationFun</a></code> is a call back function to decide what to do if the parser runs into EOF before the document is complete. </dd> <dt><strong><code class="code">{continuation_state, term()}</code></strong></dt> <dd> State that is accessible in the continuation call back function. </dd> <dt><strong><code class="code">{event_fun, EventFun}</code></strong></dt> <dd> <code><a href="#EventFun-3">EventFun</a></code> is the call back function for parser events. </dd> <dt><strong><code class="code">{event_state, term()}</code></strong></dt> <dd> State that is accessible in the event call back function. </dd> <dt><strong><code class="code">{file_type, FileType}</code></strong></dt> <dd> Flag that tells the parser if it's parsing a DTD or a normal XML file (default normal). <ul> <li><code class="code">FileType = normal | dtd</code></li> </ul> </dd> <dt><strong><code class="code">{encoding, Encoding}</code></strong></dt> <dd> Set default character set used (default UTF-8). This character set is used only if not explicitly given by the XML document. <ul> <li><code class="code">Encoding = utf8 | {utf16,big} | {utf16,little} | latin1 | list</code></li> </ul> </dd> <dt><strong><code class="code">skip_external_dtd</code></strong></dt> <dd> Skips the external DTD during parsing. </dd> </dl> </dd>   <dt><strong><code class="code">event()</code></strong></dt> <dd> <p> The SAX events that are sent to the user via the callback. </p>  <dl> <dt><strong><code class="code">startDocument</code></strong></dt> <dd> Receive notification of the beginning of a document. The SAX parser will send this event only once before any other event callbacks. </dd> <dt><strong><code class="code">endDocument</code></strong></dt> <dd> Receive notification of the end of a document. The SAX parser will send this event only once, and it will be the last event during the parse. </dd> <dt><strong><code class="code">{startPrefixMapping, Prefix, Uri}</code></strong></dt> <dd> Begin the scope of a prefix-URI Namespace mapping. Note that start/endPrefixMapping events are not guaranteed to be properly nested relative to each other: all startPrefixMapping events will occur immediately before the corresponding startElement event, and all endPrefixMapping events will occur immediately after the corresponding endElement event, but their order is not otherwise guaranteed. There will not be start/endPrefixMapping events for the "xml" prefix, since it is predeclared and immutable. <ul> <li><code class="code">Prefix = string()</code></li> <li><code class="code">Uri = string()</code></li> </ul> </dd> <dt><strong><code class="code">{endPrefixMapping, Prefix}</code></strong></dt> <dd> End the scope of a prefix-URI mapping. <ul> <li><code class="code">Prefix = string()</code></li> </ul> </dd> <dt><strong><code class="code">{startElement, Uri, LocalName, QualifiedName, Attributes}</code></strong></dt> <dd> Receive notification of the beginning of an element. The Parser will send this event at the beginning of every element in the XML document; there will be a corresponding endElement event for every startElement event (even when the element is empty). All of the element's content will be reported, in order, before the corresponding endElement event. <ul> <li><code class="code">Uri = string()</code></li> <li><code class="code">LocalName = string()</code></li> <li><code class="code">QualifiedName = {Prefix, LocalName}</code></li> <li><code class="code">Prefix = string()</code></li> <li><code class="code">Attributes = [{Uri, Prefix, AttributeName, Value}]</code></li> <li><code class="code">AttributeName = string()</code></li> <li><code class="code">Value = string()</code></li> </ul> </dd> <dt><strong><code class="code">{endElement, Uri, LocalName, QualifiedName}</code></strong></dt> <dd> Receive notification of the end of an element. The SAX parser will send this event at the end of every element in the XML document; there will be a corresponding startElement event for every endElement event (even when the element is empty). <ul> <li><code class="code">Uri = string()</code></li> <li><code class="code">LocalName = string()</code></li> <li><code class="code">QualifiedName = {Prefix, LocalName}</code></li> <li><code class="code">Prefix = string()</code></li> </ul> </dd> <dt><strong><code class="code">{characters, string()}</code></strong></dt> <dd> Receive notification of character data. </dd> <dt><strong><code class="code">{ignorableWhitespace, string()}</code></strong></dt> <dd> Receive notification of ignorable whitespace in element content. </dd> <dt><strong><code class="code">{processingInstruction, Target, Data}</code></strong></dt> <dd> Receive notification of a processing instruction. The Parser will send this event once for each processing instruction found: note that processing instructions may occur before or after the main document element. <ul> <li><code class="code">Target = string()</code></li> <li><code class="code">Data = string()</code></li> </ul> </dd> <dt><strong><code class="code">{comment, string()}</code></strong></dt> <dd> Report an XML comment anywhere in the document (both inside and outside of the document element). </dd> <dt><strong><code class="code">startCDATA</code></strong></dt> <dd> Report the start of a CDATA section. The contents of the CDATA section will be reported through the regular characters event. </dd> <dt><strong><code class="code">endCDATA</code></strong></dt> <dd> Report the end of a CDATA section. </dd> <dt><strong><code class="code">{startDTD, Name, PublicId, SystemId}</code></strong></dt> <dd> Report the start of DTD declarations, it's reporting the start of the DOCTYPE declaration. If the document has no DOCTYPE declaration, this event will not be sent. <ul> <li><code class="code">Name = string()</code></li> <li><code class="code">PublicId = string()</code></li> <li><code class="code">SystemId = string()</code></li> </ul> </dd> <dt><strong><code class="code">endDTD</code></strong></dt> <dd> Report the end of DTD declarations, it's reporting the end of the DOCTYPE declaration. </dd> <dt><strong><code class="code">{startEntity, SysId}</code></strong></dt> <dd> Report the beginning of some internal and external XML entities. ??? </dd> <dt><strong><code class="code">{endEntity, SysId}</code></strong></dt> <dd> Report the end of an entity. ??? </dd> <dt><strong><code class="code">{elementDecl, Name, Model}</code></strong></dt> <dd> Report an element type declaration. The content model will consist of the string "EMPTY", the string "ANY", or a parenthesised group, optionally followed by an occurrence indicator. The model will be normalized so that all parameter entities are fully resolved and all whitespace is removed,and will include the enclosing parentheses. Other normalization (such as removing redundant parentheses or simplifying occurrence indicators) is at the discretion of the parser. <ul> <li><code class="code">Name = string()</code></li> <li><code class="code">Model = string()</code></li> </ul> </dd> <dt><strong><code class="code">{attributeDecl, ElementName, AttributeName, Type, Mode, Value}</code></strong></dt> <dd> Report an attribute type declaration. <ul> <li><code class="code">ElementName = string()</code></li> <li><code class="code">AttributeName = string()</code></li> <li><code class="code">Type = string()</code></li> <li><code class="code">Mode = string()</code></li> <li><code class="code">Value = string()</code></li> </ul> </dd> <dt><strong><code class="code">{internalEntityDecl, Name, Value}</code></strong></dt> <dd> Report an internal entity declaration. <ul> <li><code class="code">Name = string()</code></li> <li><code class="code">Value = string()</code></li> </ul> </dd> <dt><strong><code class="code">{externalEntityDecl, Name, PublicId, SystemId}</code></strong></dt> <dd> Report a parsed external entity declaration. <ul> <li><code class="code">Name = string()</code></li> <li><code class="code">PublicId = string()</code></li> <li><code class="code">SystemId = string()</code></li> </ul> </dd> <dt><strong><code class="code">{unparsedEntityDecl, Name, PublicId, SystemId, Ndata}</code></strong></dt> <dd> Receive notification of an unparsed entity declaration event. <ul> <li><code class="code">Name = string()</code></li> <li><code class="code">PublicId = string()</code></li> <li><code class="code">SystemId = string()</code></li> <li><code class="code">Ndata = string()</code></li> </ul> </dd> <dt><strong><code class="code">{notationDecl, Name, PublicId, SystemId}</code></strong></dt> <dd> Receive notification of a notation declaration event. <ul> <li><code class="code">Name = string()</code></li> <li><code class="code">PublicId = string()</code></li> <li><code class="code">SystemId = string()</code></li> </ul> </dd> </dl> </dd> <dt><strong><code class="code">unicode_char()</code></strong></dt> <dd> Integer representing valid unicode codepoint. </dd> <dt><strong><code class="code">unicode_binary()</code></strong></dt> <dd> Binary with characters encoded in UTF-8 or UTF-16. </dd> <dt><strong><code class="code">latin1_binary()</code></strong></dt> <dd> Binary with characters encoded in iso-latin-1. </dd> </dl>  <h2><span onmouseover="document.getElementById('ghlink-exports-id71675').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exports-id71675').style.visibility = 'hidden';" id="exports">Exports</span></h2> <div class="exports-body"> 
@@ -95,17 +95,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

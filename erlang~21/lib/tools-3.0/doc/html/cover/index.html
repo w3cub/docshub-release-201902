@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>cover</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id60113').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id60113').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">cover</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id60117').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id60117').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">A Coverage Analysis Tool for Erlang</p> <h2><span onmouseover="document.getElementById('ghlink-description-id60916').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id60916').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>The module <code class="code">cover</code> provides a set of functions for coverage analysis of Erlang programs, counting how many times each <strong>executable line</strong> of code is executed when a program is run. <br> An executable line contains an Erlang expression such as a matching or a function call. A blank line or a line containing a comment, function head or pattern in a <code class="code">case</code>- or <code class="code">receive</code> statement is not executable.</p> <p>Coverage analysis can be used to verify test cases, making sure all relevant code is covered, and may also be helpful when looking for bottlenecks in the code.</p> <p>Before any analysis can take place, the involved modules must be <strong>Cover compiled</strong>. This means that some extra information is added to the module before it is compiled into a binary which then is loaded. The source file of the module is not affected and no <code class="code">.beam</code> file is created.</p> <p>Each time a function in a Cover compiled module is called, information about the call is added to an internal database of Cover. The coverage analysis is performed by examining the contents of the Cover database. The output <code class="code">Answer</code> is determined by two parameters, <code class="code">Level</code> and <code class="code">Analysis</code>.</p> <ul> <li> <p><code class="code">Level = module</code></p> <p><code class="code">Answer = {Module,Value}</code>, where <code class="code">Module</code> is the module name.</p> </li> <li> <p><code class="code">Level = function</code></p> <p><code class="code">Answer = [{Function,Value}]</code>, one tuple for each function in the module. A function is specified by its module name <code class="code">M</code>, function name <code class="code">F</code> and arity <code class="code">A</code> as a tuple <code class="code">{M,F,A}</code>.</p> </li> <li> <p><code class="code">Level = clause</code></p> <p><code class="code">Answer = [{Clause,Value}]</code>, one tuple for each clause in the module. A clause is specified by its module name <code class="code">M</code>, function name <code class="code">F</code>, arity <code class="code">A</code> and position in the function definition <code class="code">C</code> as a tuple <code class="code">{M,F,A,C}</code>.</p> </li> <li> <p><code class="code">Level = line</code></p> <p><code class="code">Answer = [{Line,Value}]</code>, one tuple for each executable line in the module. A line is specified by its module name <code class="code">M</code> and line number in the source file <code class="code">N</code> as a tuple <code class="code">{M,N}</code>.</p> </li> <li> <p><code class="code">Analysis = coverage</code></p> <p><code class="code">Value = {Cov,NotCov}</code> where <code class="code">Cov</code> is the number of executable lines in the module, function, clause or line that have been executed at least once and <code class="code">NotCov</code> is the number of executable lines that have not been executed.</p> </li> <li> <p><code class="code">Analysis = calls</code></p> <p><code class="code">Value = Calls</code> which is the number of times the module, function, or clause has been called. In the case of line level analysis, <code class="code">Calls</code> is the number of times the line has been executed.</p> </li> </ul> <p><strong>Distribution</strong></p> <p>Cover can be used in a distributed Erlang system. One of the nodes in the system must then be selected as the <strong>main node</strong>, and all Cover commands must be executed from this node. The error reason <code class="code">not_main_node</code> is returned if an interface function is called on one of the remote nodes.</p> <p>Use <code class="code">cover:start/1</code> and <code class="code">cover:stop/1</code> to add or remove nodes. The same Cover compiled code will be loaded on each node, and analysis will collect and sum up coverage data results from all nodes.</p> <p>To only collect data from remote nodes without stopping <code class="code">cover</code> on those nodes, use <code class="code">cover:flush/1</code></p> <p>If the connection to a remote node goes down, the main node will mark it as lost. If the node comes back it will be added again. If the remote node was alive during the disconnected periode, cover data from before and during this periode will be included in the analysis.</p>  <h2><span onmouseover="document.getElementById('ghlink-exports-id61935').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exports-id61935').style.visibility = 'hidden';" id="exports">Exports</span></h2> <div class="exports-body"> 
@@ -148,17 +148,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>file_sorter</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id217026').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id217026').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">file_sorter</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id217030').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id217030').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">File sorter.</p> <h2><span onmouseover="document.getElementById('ghlink-description-id217034').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id217034').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>This module contains functions for sorting terms on files, merging already sorted files, and checking files for sortedness. Chunks containing binary terms are read from a sequence of files, sorted internally in memory and written on temporary files, which are merged producing one sorted file as output. Merging is provided as an optimization; it is faster when the files are already sorted, but it always works to sort instead of merge.</p> <p>On a file, a term is represented by a header and a binary. Two options define the format of terms on files:</p> <dl> <dt><strong><code class="code">{header, HeaderLength}</code></strong></dt> <dd> <p><code class="code">HeaderLength</code> determines the number of bytes preceding each binary and containing the length of the binary in bytes. Defaults to 4. The order of the header bytes is defined as follows: if <code class="code">B</code> is a binary containing a header only, size <code class="code">Size</code> of the binary is calculated as <code class="code">&lt;&lt;Size:HeaderLength/unit:8&gt;&gt; = B</code>.</p> </dd> <dt><strong><code class="code">{format, Format}</code></strong></dt> <dd> <p>Option <code class="code">Format</code> determines the function that is applied to binaries to create the terms to be sorted. Defaults to <code class="code">binary_term</code>, which is equivalent to <code class="code">fun binary_to_term/1</code>. Value <code class="code">binary</code> is equivalent to <code class="code">fun(X) -&gt; X end</code>, which means that the binaries are sorted as they are. This is the fastest format. If <code class="code">Format</code> is <code class="code">term</code>, <code class="code">io:read/2</code> is called to read terms. In that case, only the default value of option <code class="code">header</code> is allowed.</p> <p>Option <code class="code">format</code> also determines what is written to the sorted output file: if <code class="code">Format</code> is <code class="code">term</code>, then <code class="code">io:format/3</code> is called to write each term, otherwise the binary prefixed by a header is written. Notice that the binary written is the same binary that was read; the results of applying function <code class="code">Format</code> are thrown away when the terms have been sorted. Reading and writing terms using the <code class="code">io</code> module is much slower than reading and writing binaries.</p> </dd> </dl> <p>Other options are:</p> <dl> <dt><strong><code class="code">{order, Order}</code></strong></dt> <dd> <p>The default is to sort terms in ascending order, but that can be changed by value <code class="code">descending</code> or by specifying an ordering function <code class="code">Fun</code>. An ordering function is antisymmetric, transitive, and total. <code class="code">Fun(A, B)</code> is to return <code class="code">true</code> if <code class="code">A</code> comes before <code class="code">B</code> in the ordering, otherwise <code class="code">false</code>. An example of a typical ordering function is less than or equal to, <code class="code">=&lt;/2</code>. Using an ordering function slows down the sort considerably. Functions <code class="code">keysort</code>, <code class="code">keymerge</code> and <code class="code">keycheck</code> do not accept ordering functions.</p> </dd> <dt><strong><code class="code">{unique, boolean()}</code></strong></dt> <dd> <p>When sorting or merging files, only the first of a sequence of terms that compare equal (<code class="code">==</code>) is output if this option is set to <code class="code">true</code>. Defaults to <code class="code">false</code>, which implies that all terms that compare equal are output. When checking files for sortedness, a check that no pair of consecutive terms compares equal is done if this option is set to <code class="code">true</code>.</p> </dd> <dt><strong><code class="code">{tmpdir, TempDirectory}</code></strong></dt> <dd> <p>The directory where temporary files are put can be chosen explicitly. The default, implied by value <code class="code">""</code>, is to put temporary files on the same directory as the sorted output file. If output is a function (see below), the directory returned by <code class="code">file:get_cwd()</code> is used instead. The names of temporary files are derived from the Erlang nodename (<code class="code">node()</code>), the process identifier of the current Erlang emulator (<code class="code">os:getpid()</code>), and a unique integer (<code class="code">erlang:unique_integer([positive])</code>). A typical name is <code class="code">fs_mynode@myhost_1763_4711.17</code>, where <code class="code">17</code> is a sequence number. Existing files are overwritten. Temporary files are deleted unless some uncaught <code class="code">EXIT</code> signal occurs.</p> </dd> <dt><strong><code class="code">{compressed, boolean()}</code></strong></dt> <dd> <p>Temporary files and the output file can be compressed. Defaults <code class="code">false</code>, which implies that written files are not compressed. Regardless of the value of option <code class="code">compressed</code>, compressed files can always be read. Notice that reading and writing compressed files are significantly slower than reading and writing uncompressed files.</p> </dd> <dt><strong><code class="code">{size, Size}</code></strong></dt> <dd> <p>By default about 512*1024 bytes read from files are sorted internally. This option is rarely needed.</p> </dd> <dt><strong><code class="code">{no_files, NoFiles}</code></strong></dt> <dd> <p>By default 16 files are merged at a time. This option is rarely needed.</p> </dd> </dl> <p>As an alternative to sorting files, a function of one argument can be specified as input. When called with argument <code class="code">read</code>, the function is assumed to return either of the following:</p> <ul> <li> <p><code class="code">end_of_input</code> or <code class="code">{end_of_input, Value}}</code> when there is no more input (<code class="code">Value</code> is explained below).</p> </li> <li> <p><code class="code">{Objects, Fun}</code>, where <code class="code">Objects</code> is a list of binaries or terms depending on the format, and <code class="code">Fun</code> is a new input function.</p> </li> </ul> <p>Any other value is immediately returned as value of the current call to <code class="code">sort</code> or <code class="code">keysort</code>. Each input function is called exactly once. If an error occurs, the last function is called with argument <code class="code">close</code>, the reply of which is ignored.</p> <p>A function of one argument can be specified as output. The results of sorting or merging the input is collected in a non-empty sequence of variable length lists of binaries or terms depending on the format. The output function is called with one list at a time, and is assumed to return a new output function. Any other return value is immediately returned as value of the current call to the sort or merge function. Each output function is called exactly once. When some output function has been applied to all of the results or an error occurs, the last function is called with argument <code class="code">close</code>, and the reply is returned as value of the current call to the sort or merge function.</p> <p>If a function is specified as input and the last input function returns <code class="code">{end_of_input, Value}</code>, the function specified as output is called with argument <code class="code">{value, Value}</code>. This makes it easy to initiate the sequence of output functions with a value calculated by the input functions.</p> <p>As an example, consider sorting the terms on a disk log file. A function that reads chunks from the disk log and returns a list of binaries is used as input. The results are collected in a list of terms.</p> <pre data-language="erlang">
@@ -139,17 +139,9 @@ output(L) -&gt;
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

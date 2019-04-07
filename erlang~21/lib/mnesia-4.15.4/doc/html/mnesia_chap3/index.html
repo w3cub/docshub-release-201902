@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>4 Build a Mnesia Database</h1> <p>This section describes the basic steps when designing a <code class="code">Mnesia</code> database and the programming constructs that make different solutions available to the programmer. The following topics are included:</p> <ul> <li>Define a schema</li> <li>Data model</li> <li>Start <code class="code">Mnesia</code> </li> <li>Create tables</li> </ul> <h2> <span onmouseover="document.getElementById('ghlink-define-a-schema-id69428').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-define-a-schema-id69428').style.visibility = 'hidden';" id="def_schema">4.1 Define a Schema</span> </h2> <p>The configuration of a <code class="code">Mnesia</code> system is described in a schema. The schema is a special table that includes information such as the table names and the storage type of each table (that is, whether a table is to be stored in RAM, on disc, or on both, as well as its location).</p> <p>Unlike data tables, information in schema tables can only be accessed and modified by using the schema-related functions described in this section.</p> <p><code class="code">Mnesia</code> has various functions for defining the database schema. Tables can be moved or deleted, and the table layout can be reconfigured.</p> <p>An important aspect of these functions is that the system can access a table while it is being reconfigured. For example, it is possible to move a table and simultaneously perform write operations to the same table. This feature is essential for applications that require continuous service.</p> <p>This section describes the functions available for schema management, all which return either of the following tuples:</p> <ul> <li> <code class="code">{atomic, ok}</code> if successful</li> <li> <code class="code">{aborted, Reason}</code> if unsuccessful</li> </ul> <h4><span onmouseover="document.getElementById('ghlink-schema-functions-id72417').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-schema-functions-id72417').style.visibility = 'hidden';" id="schema-functions">Schema Functions</span></h4> <p>The schema functions are as follows:</p> <ul> <li> <code><a href="../mnesia/#create_schema-1">mnesia:create_schema(NodeList)</a></code> initializes a new, empty schema. This is a mandatory requirement before <code class="code">Mnesia</code> can be started. <code class="code">Mnesia</code> is a truly distributed DBMS and the schema is a system table that is replicated on all nodes in a <code class="code">Mnesia</code> system. This function fails if a schema is already present on any of the nodes in <code class="code">NodeList</code>. The function requires <code class="code">Mnesia</code> to be stopped on the all <code class="code">db_nodes</code> contained in parameter <code class="code">NodeList</code>. Applications call this function only once, as it is usually a one-time activity to initialize a new database. </li> <li> <code><a href="../mnesia/#delete_schema-1">mnesia:delete_schema(DiscNodeList)</a></code> erases any old schemas on the nodes in <code class="code">DiscNodeList</code>. It also removes all old tables together with all data. This function requires <code class="code">Mnesia</code> to be stopped on all <code class="code">db_nodes</code>. </li> <li> <code><a href="../mnesia/#delete_table-1">mnesia:delete_table(Tab)</a></code> permanently deletes all replicas of table <code class="code">Tab</code>. </li> <li> <code><a href="../mnesia/#clear_table-1">mnesia:clear_table(Tab)</a></code> permanently deletes all entries in table <code class="code">Tab</code>. </li> <li> <code><a href="../mnesia/#move_table_copy-3">mnesia:move_table_copy(Tab, From, To)</a></code> moves the copy of table <code class="code">Tab</code> from node <code class="code">From</code> to node <code class="code">To</code>. The table storage type <code class="code">{type}</code> is preserved, so if a RAM table is moved from one node to another, it remains a RAM table on the new node. Other transactions can still perform read and write operation to the table while it is being moved. </li> <li> <code><a href="../mnesia/#add_table_copy-3">mnesia:add_table_copy(Tab, Node, Type)</a></code> creates a replica of table <code class="code">Tab</code> at node <code class="code">Node</code>. Argument <code class="code">Type</code> must be either of the atoms <code class="code">ram_copies</code>, <code class="code">disc_copies</code>, or <code class="code">disc_only_copies</code>. If you add a copy of the system table <code class="code">schema</code> to a node, you want the <code class="code">Mnesia</code> schema to reside there as well. This action extends the set of nodes that comprise this particular <code class="code">Mnesia</code> system. </li> <li> <code><a href="../mnesia/#del_table_copy-2">mnesia:del_table_copy(Tab, Node)</a></code> deletes the replica of table <code class="code">Tab</code> at node <code class="code">Node</code>. When the last replica of a table is removed, the table is deleted. </li> <li> <p><code><a href="../mnesia/#transform_table-4">mnesia:transform_table(Tab, Fun, NewAttributeList, NewRecordName)</a></code> changes the format on all records in table <code class="code">Tab</code>. It applies argument <code class="code">Fun</code> to all records in the table. <code class="code">Fun</code> must be a function that takes a record of the old type, and returns the record of the new type. The table key must not be changed.</p> <p><strong>Example:</strong></p> <pre data-language="erlang">-record(old, {key, val}).
 -record(new, {key, val, extra}).
@@ -142,17 +142,9 @@ mnesia:create_table(stuff, [])</pre>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

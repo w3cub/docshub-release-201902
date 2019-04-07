@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>3 Common Caveats</h1> <p>This section lists a few modules and BIFs to watch out for, not only from a performance point of view.</p> <h2><span onmouseover="document.getElementById('ghlink-timer-module-id65738').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-timer-module-id65738').style.visibility = 'hidden';" id="timer-module">3.1 Timer Module</span></h2> <p>Creating timers using <code>erlang:send_after/3</code> and <code>erlang:start_timer/3</code> , is much more efficient than using the timers provided by the <code>timer</code> module in STDLIB. The <code class="code">timer</code> module uses a separate process to manage the timers. That process can easily become overloaded if many processes create and cancel timers frequently (especially when using the SMP emulator).</p> <p>The functions in the <code class="code">timer</code> module that do not manage timers (such as <code class="code">timer:tc/3</code> or <code class="code">timer:sleep/1</code>), do not call the timer-server process and are therefore harmless.</p> <h2><span onmouseover="document.getElementById('ghlink-list_to_atom-1-id63071').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-list_to_atom-1-id63071').style.visibility = 'hidden';" id="list_to_atom-1">3.2 list_to_atom/1</span></h2> <p>Atoms are not garbage-collected. Once an atom is created, it is never removed. The emulator terminates if the limit for the number of atoms (1,048,576 by default) is reached.</p> <p>Therefore, converting arbitrary input strings to atoms can be dangerous in a system that runs continuously. If only certain well-defined atoms are allowed as input, <code>list_to_existing_atom/1</code> can be used to to guard against a denial-of-service attack. (All atoms that are allowed must have been created earlier, for example, by simply using all of them in a module and loading that module.)</p> <p>Using <code class="code">list_to_atom/1</code> to construct an atom that is passed to <code class="code">apply/3</code> as follows, is quite expensive and not recommended in time-critical code:</p> <pre data-language="erlang">apply(list_to_atom("some_prefix"++Var), foo, Args)</pre> <h2><span onmouseover="document.getElementById('ghlink-length-1-id65235').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-length-1-id65235').style.visibility = 'hidden';" id="length-1">3.3 length/1</span></h2> <p>The time for calculating the length of a list is proportional to the length of the list, as opposed to <code class="code">tuple_size/1</code>, <code class="code">byte_size/1</code>, and <code class="code">bit_size/1</code>, which all execute in constant time.</p> <p>Normally, there is no need to worry about the speed of <code class="code">length/1</code>, because it is efficiently implemented in C. In time-critical code, you might want to avoid it if the input list could potentially be very long.</p> <p>Some uses of <code class="code">length/1</code> can be replaced by matching. For example, the following code:</p> <pre data-language="erlang">foo(L) when length(L) &gt;= 3 -&gt;
     ...</pre> <p>can be rewritten to:</p> <pre data-language="erlang">foo([_,_,_|_]=L) -&gt;
@@ -97,17 +97,9 @@ ordsets:subtract(HugeSet1, HugeSet2)</pre> <p>Obviously, that code does not work
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

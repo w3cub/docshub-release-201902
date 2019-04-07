@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>ssh_connection</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id81359').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id81359').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">ssh_connection</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id81363').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id81363').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body"> This module provides API functions to send SSH Connection Protocol events to the other side of an SSH channel. </p> <h2><span onmouseover="document.getElementById('ghlink-description-id81367').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id81367').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>The <code><a href="http://www.ietf.org/rfc/rfc4254.txt" target="_blank">SSH Connection Protocol</a></code> is used by clients and servers, that is, SSH channels, to communicate over the SSH connection. The API functions in this module send SSH Connection Protocol events, which are received as messages by the remote channel. If the receiving channel is an Erlang process, the messages have the format <code class="code">{ssh_cm, connection_ref(), ssh_event_msg()}</code>. If the <code><a href="../ssh_client_channel/">ssh_client_channel</a></code> behavior is used to implement the channel process, these messages are handled by <code><a href="../ssh_client_channel/#Module:handle_ssh_msg-2">handle_ssh_msg/2</a></code>.</p>  <h2>Data types</h2>  <p>Type definitions that are used more than once in this module, or abstractions to indicate the intended use of the data type, or both:</p> <dl> <dt><strong><code class="code">boolean() =</code></strong></dt> <dd><p><code class="code">true | false</code></p></dd> <dt><strong><code class="code">string() =</code></strong></dt> <dd><p>list of ASCII characters</p></dd> <dt><strong><code class="code">timeout() =</code></strong></dt> <dd><p><code class="code">infinity | integer()</code> in milliseconds</p></dd> <dt><strong><code class="code">connection_ref() =</code></strong></dt> <dd><p>opaque() -as returned by <code class="code">ssh:connect/3</code> or sent to an SSH channel processes</p></dd> <dt><strong><code class="code">channel_id() =</code></strong></dt> <dd><p><code class="code">integer()</code></p></dd> <dt><strong><code class="code">ssh_data_type_code() =</code></strong></dt> <dd><p><code class="code">1</code> ("stderr") | <code class="code">0</code> ("normal") are valid values, see <code><a href="http://www.ietf.org/rfc/rfc4254.txt" target="_blank">RFC 4254</a></code> Section 5.2.</p></dd> <dt><strong><code class="code">ssh_request_status() =</code></strong></dt> <dd><p> <code class="code">success | failure</code></p></dd> <dt><strong><code class="code">event() =</code></strong></dt> <dd><p><code class="code">{ssh_cm, connection_ref(), ssh_event_msg()}</code></p></dd> <dt><strong><code class="code">ssh_event_msg() =</code></strong></dt> <dd><p><code class="code">data_events() | status_events() | terminal_events()</code></p></dd> <dt><strong><code class="code">reason() =</code></strong></dt> <dd><p><code class="code">timeout | closed</code></p></dd> </dl> <dl> <dt><strong><strong>data_events()</strong></strong></dt> <dd> <dl> <dt><strong><code class="code">{data, channel_id(), ssh_data_type_code(), Data :: binary()}</code></strong></dt> <dd><p>Data has arrived on the channel. This event is sent as a result of calling <code><a href="../ssh_connection/#send-3">ssh_connection:send/[3,4,5]</a></code>.</p></dd> <dt><strong><code class="code">{eof, channel_id()}</code></strong></dt> <dd><p>Indicates that the other side sends no more data. This event is sent as a result of calling <code><a href="../ssh_connection/#send_eof-2">ssh_connection:send_eof/2</a></code>. </p></dd> </dl> </dd> <dt><strong><strong>status_events()</strong></strong></dt> <dd> <dl> <dt><strong><code class="code">{signal, channel_id(), ssh_signal()}</code></strong></dt> <dd><p>A signal can be delivered to the remote process/service using the following message. Some systems do not support signals, in which case they are to ignore this message. There is currently no function to generate this event as the signals referred to are on OS-level and not something generated by an Erlang program.</p></dd> <dt><strong><code class="code">{exit_signal, channel_id(), ExitSignal :: string(), ErrorMsg ::string(), LanguageString :: string()}</code></strong></dt> <dd><p>A remote execution can terminate violently because of a signal. Then this message can be received. For details on valid string values, see <code><a href="http://www.ietf.org/rfc/rfc4254.txt" target="_blank">RFC 4254</a></code> Section 6.10, which shows a special case of these signals.</p></dd> <dt><strong><code class="code">{exit_status, channel_id(), ExitStatus :: integer()}</code></strong></dt> <dd><p>When the command running at the other end terminates, the following message can be sent to return the exit status of the command. A zero <code class="code">exit_status</code> usually means that the command terminated successfully. This event is sent as a result of calling <code><a href="../ssh_connection/#exit_status-3">ssh_connection:exit_status/3</a></code>.</p></dd> <dt><strong><code class="code">{closed, channel_id()}</code></strong></dt> <dd><p>This event is sent as a result of calling <code><a href="../ssh_connection/#close-2">ssh_connection:close/2</a></code>. Both the handling of this event and sending it are taken care of by the <code><a href="../ssh_client_channel/">ssh_client_channel</a></code> behavior.</p></dd> </dl> </dd> <dt><strong><strong>terminal_events()</strong></strong></dt> <dd> <p>Channels implementing a shell and command execution on the server side are to handle the following messages that can be sent by client- channel processes.</p> <p>Events that include a <code class="code">WantReply</code> expect the event handling process to call <code><a href="../ssh_connection/#reply_request-4">ssh_connection:reply_request/4</a></code> with the boolean value of <code class="code">WantReply</code> as the second argument.</p> <dl> <dt><strong><code class="code">{env, channel_id(), WantReply :: boolean(), Var ::string(), Value :: string()}</code></strong></dt> <dd><p>Environment variables can be passed to the shell/command to be started later. This event is sent as a result of calling <code><a href="../ssh_connection/#setenv-5">ssh_connection:setenv/5</a></code>. </p></dd> <dt><strong><code class="code">{pty, channel_id(), WantReply :: boolean(), {Terminal :: string(), CharWidth :: integer(), RowHeight :: integer(), PixelWidth :: integer(), PixelHeight :: integer(), TerminalModes :: [{Opcode :: atom() | integer(), Value :: integer()}]}}</code></strong></dt> <dd><p>A pseudo-terminal has been requested for the session. <code class="code">Terminal</code> is the value of the TERM environment variable value, that is, <code class="code">vt100</code>. Zero dimension parameters must be ignored. The character/row dimensions override the pixel dimensions (when non-zero). Pixel dimensions refer to the drawable area of the window. <code class="code">Opcode</code> in the <code class="code">TerminalModes</code> list is the mnemonic name, represented as a lowercase Erlang atom, defined in <code><a href="http://www.ietf.org/rfc/rfc4254.txt" target="_blank">RFC 4254</a></code>, Section 8. It can also be an <code class="code">Opcode</code> if the mnemonic name is not listed in the RFC. Example: <code class="code">OP code: 53, mnemonic name ECHO erlang atom: echo</code>. This event is sent as a result of calling <code><a href="../ssh_connection/#ptty_alloc-4">ssh_connection:ptty_alloc/4</a></code>.</p></dd> <dt><strong><code class="code">{shell, WantReply :: boolean()}</code></strong></dt> <dd><p>This message requests that the user default shell is started at the other end. This event is sent as a result of calling <code><a href="../ssh_connection/#shell-2">ssh_connection:shell/2</a></code>. </p></dd> <dt><strong><code class="code">{window_change, channel_id(), CharWidth() :: integer(), RowHeight :: integer(), PixWidth :: integer(), PixHeight :: integer()}</code></strong></dt> <dd><p>When the window (terminal) size changes on the client side, it <strong>can</strong> send a message to the server side to inform it of the new dimensions. No API function generates this event.</p></dd> <dt><strong><code class="code">{exec, channel_id(), WantReply :: boolean(), Cmd :: string()}</code></strong></dt> <dd><p>This message requests that the server starts execution of the given command. This event is sent as a result of calling <code><a href="../ssh_connection/#exec-4">ssh_connection:exec/4</a></code>. </p></dd> </dl> </dd> </dl>  <h2><span onmouseover="document.getElementById('ghlink-exports-id81832').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-exports-id81832').style.visibility = 'hidden';" id="exports">Exports</span></h2> <div class="exports-body"> 
@@ -122,17 +122,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

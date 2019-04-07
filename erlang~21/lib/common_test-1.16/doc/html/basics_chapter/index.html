@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>2 Common Test Basics</h1>  <h2 id="basics"><span onmouseover="document.getElementById('ghlink-general-id64426').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-general-id64426').style.visibility = 'hidden';" id="general">2.1 General</span></h2> <p>The <code class="code">Common Test</code> framework is a tool that supports implementation and automated execution of test cases to any types of target systems. <code class="code">Common Test</code> is the main tool being used in all testing- and verification activities that are part of Erlang/OTP system development and maintenance. </p> <p>Test cases can be executed individually or in batches. <code class="code">Common Test</code> also features a distributed testing mode with central control and logging. With this feature, multiple systems can be tested independently in one common session. This is useful, for example, when running automated large-scale regression tests. </p> <p> The System Under Test (SUT) can consist of one or more target nodes. <code class="code">Common Test</code> contains a generic test server that, together with other test utilities, is used to perform test case execution. The tests can be started from a GUI, from the OS shell, or from an Erlang shell. <strong>Test suites</strong> are files (Erlang modules) that contain the <strong>test cases</strong> (Erlang functions) to be executed. <strong>Support modules</strong> provide functions that the test cases use to do the tests. </p> <p>In a black-box testing scenario, <code class="code">Common Test</code>-based test programs connect to the target system(s) through standard O&amp;M and CLI protocols. <code class="code">Common Test</code> provides implementations of, and wrapper interfaces to, some of these protocols (most of which exist as standalone components and applications in OTP). The wrappers simplify configuration and add verbosity for logging purposes. <code class="code">Common Test</code> is continously extended with useful support modules. However, notice that it is a straightforward task to use any Erlang/OTP component for testing purposes with <code class="code">Common Test</code>, without needing a <code class="code">Common Test</code> wrapper for it. It is as simple as calling Erlang functions. A number of target-independent interfaces are supported in <code class="code">Common Test</code>, such as Generic Telnet and FTP. These can be specialized or used directly for controlling instruments, traffic load generators, and so on. </p> <p><code class="code">Common Test</code> is also a very useful tool for white-box testing Erlang code (for example, module testing), as the test programs can call exported Erlang functions directly. There is very little overhead required for implementing basic test suites and executing simple tests. For black-box testing Erlang software, Erlang RPC and standard O&amp;M interfaces can be used for example. </p> <p>A test case can handle several connections to one or more target systems, instruments, and traffic generators in parallel to perform the necessary actions for a test. The handling of many connections in parallel is one of the major strengths of <code class="code">Common Test</code>, thanks to the efficient support for concurrency in the Erlang runtime system, which <code class="code">Common Test</code> users can take great advantage of. </p> <h2><span onmouseover="document.getElementById('ghlink-test-suite-organisation-id63535').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-test-suite-organisation-id63535').style.visibility = 'hidden';" id="test-suite-organisation">2.2 Test Suite Organisation</span></h2> <p> Test suites are organized in test directories and each test suite can have a separate data directory. Typically, these files and directories are version-controlled similar to other forms of source code (possibly by a version control system like GIT or Subversion). However, <code class="code">Common Test</code> does not itself put any requirements on (or has any awareness of) possible file and directory versions. </p> <h2><span onmouseover="document.getElementById('ghlink-support-libraries-id63249').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-support-libraries-id63249').style.visibility = 'hidden';" id="support-libraries">2.3 Support Libraries</span></h2> <p> Support libraries contain functions that are useful for all test suites, or for test suites in a specific functional area or subsystem. In addition to the general support libraries provided by the <code class="code">Common Test</code> framework, and the various libraries and applications provided by Erlang/OTP, there can also be a need for customized (user specific) support libraries. </p> <h2><span onmouseover="document.getElementById('ghlink-suites-and-test-cases-id70914').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-suites-and-test-cases-id70914').style.visibility = 'hidden';" id="suites-and-test-cases">2.4 Suites and Test Cases</span></h2> <p> Testing is performed by running test suites (sets of test cases) or individual test cases. A test suite is implemented as an Erlang module named <code class="code">&lt;suite_name&gt;_SUITE.erl</code> which contains a number of test cases. A test case is an Erlang function that tests one or more things. The test case is the smallest unit that the <code class="code">Common Test</code> test server deals with. </p> <p> Subsets of test cases, called test case groups, can also be defined. A test case group can have execution properties associated with it. Execution properties specify if the test cases in the group are to be executed in random order, in parallel, or in sequence, and if the execution of the group is to be repeated. Test case groups can also be nested (that is, a group can, besides test cases, contain subgroups). </p> <p> Besides test cases and groups, the test suite can also contain configuration functions. These functions are meant to be used for setting up (and verifying) environment and state in the SUT (and/or the <code class="code">Common Test</code> host node), required for the tests to execute correctly. Examples of operations are: Opening a connection to the SUT, initializing a database, running an installation script, and so on. Configuration can be performed per suite, per test case group, and per individual test case. </p> <p> The test suite module must conform to a <code><a href="../common_test/">callback interface</a></code> specified by the <code class="code">Common Test</code> test server. For details, see section <code><a href="../write_test_chapter/#intro">Writing Test Suites</a></code>. </p> <p> A test case is considered successful if it returns to the caller, no matter what the returned value is. However, a few return values have special meaning as follows:</p> <ul> <li> <code class="code">{skip,Reason}</code> indicates that the test case is skipped.</li> <li> <code class="code">{comment,Comment}</code> prints a comment in the log for the test case.</li> <li> <code class="code">{save_config,Config}</code> makes the <code class="code">Common Test</code> test server pass <code class="code">Config</code> to the next test case.</li> </ul> <p> A test case failure is specified as a runtime error (a crash), no matter what the reason for termination is. If you use Erlang pattern matching effectively, you can take advantage of this property. The result is concise and readable test case functions that look much more like scripts than actual programs. A simple example: </p> <pre data-language="erlang">
 session(_Config) -&gt;
@@ -95,17 +95,9 @@ session(_Config) -&gt;
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>8 Running Tests and Analyzing Results</h1> <h2><span onmouseover="document.getElementById('ghlink-using-the-common-test-framework-id81569').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-using-the-common-test-framework-id81569').style.visibility = 'hidden';" id="using-the-common-test-framework">8.1 Using the Common Test Framework</span></h2> <p>The <code class="code">Common Test</code> framework provides a high-level operator interface for testing, providing the following features:</p> <ul> <li>Automatic compilation of test suites (and help modules)</li> <li>Creation of extra HTML pages for improved overview.</li> <li>Single-command interface for running all available tests</li> <li>Handling of configuration files specifying data related to the System Under Test (SUT) (and any other variable data)</li> <li>Mode for running multiple independent test sessions in parallel with central control and configuration</li> </ul> <h2><span onmouseover="document.getElementById('ghlink-automatic-compilation-of-test-suites-and-help-modules-id81614').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-automatic-compilation-of-test-suites-and-help-modules-id81614').style.visibility = 'hidden';" id="automatic-compilation-of-test-suites-and-help-modules">8.2 Automatic Compilation of Test Suites and Help Modules</span></h2> <p>When <code class="code">Common Test</code> starts, it automatically attempts to compile any suites included in the specified tests. If particular suites are specified, only those suites are compiled. If a particular test object directory is specified (meaning all suites in this directory are to be part of the test), <code class="code">Common Test</code> runs function <code class="code">make:all/1</code> in the directory to compile the suites.</p> <p>If compilation fails for one or more suites, the compilation errors are printed to tty and the operator is asked if the test run is to proceed without the missing suites, or be aborted. If the operator chooses to proceed, the tests having missing suites are noted in the HTML log. If <code class="code">Common Test</code> is unable to prompt the user after compilation failure (if <code class="code">Common Test</code> does not control <code class="code">stdin</code>), the test run proceeds automatically without the missing suites. This behavior can however be modified with the <code class="code">ct_run</code> flag <code class="code">-abort_if_missing_suites</code>, or the <code><a href="../ct/#run_test-1"><span class="code">ct:run_test/1</span></a></code> option <code class="code">{abort_if_missing_suites,TrueOrFalse}</code>. If <code class="code">abort_if_missing_suites</code> is set to <code class="code">true</code>, the test run stops immediately if some suites fail to compile.</p> <p>Any help module (that is, regular Erlang module with name not ending with "_SUITE") that resides in the same test object directory as a suite, which is part of the test, is also automatically compiled. A help module is not mistaken for a test suite (unless it has a "_SUITE" name). All help modules in a particular test object directory are compiled, no matter if all or only particular suites in the directory are part of the test.</p> <p>If test suites or help modules include header files stored in other locations than the test directory, these include directories can be specified by using flag <code class="code">-include</code> with <code><a href="../ct_run/"><span class="code">ct_run</span></a></code>, or option <code class="code">include</code> with <code class="code">ct:run_test/1</code>. Also, an include path can be specified with an OS environment variable, <code class="code">CT_INCLUDE_PATH</code>.</p> <p><strong>Example (bash):</strong></p> <p><code class="code">$ export CT_INCLUDE_PATH=~testuser/common_suite_files/include:~testuser/common_lib_files/include</code></p> <p><code class="code">Common Test</code> passes all include directories (specified either with flag/option <code class="code">include</code>, or variable <code class="code">CT_INCLUDE_PATH</code> , or both, to the compiler.</p> <p>Include directories can also be specified in test specifications, see <code><a href="#test_specifications">Test Specifications</a></code>.</p> <p>If the user wants to run all test suites for a test object (or an OTP application) by specifying only the top directory (for example, with start flag/option <code class="code">dir</code>), <code class="code">Common Test</code> primarily looks for test suite modules in a subdirectory named <code class="code">test</code>. If this subdirectory does not exist, the specified top directory is assumed to be the test directory, and test suites are read from there instead.</p> <p>To disable the automatic compilation feature, use flag <code class="code">-no_auto_compile</code> with <code class="code">ct_run</code>, or option <code class="code">{auto_compile,false}</code> with <code class="code">ct:run_test/1</code>. With automatic compilation disabled, the user is responsible for compiling the test suite modules (and any help modules) before the test run. If the modules cannot be loaded from the local file system during startup of <code class="code">Common Test</code>, the user must preload the modules before starting the test. <code class="code">Common Test</code> only verifies that the specified test suites exist (that is, that they are, or can be, loaded). This is useful, for example, if the test suites are transferred and loaded as binaries through RPC from a remote node.</p> <h2> <span onmouseover="document.getElementById('ghlink-running-tests-from-the-os-command-line-id81805').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-running-tests-from-the-os-command-line-id81805').style.visibility = 'hidden';" id="ct_run">8.3 Running Tests from the OS Command Line</span> </h2> <p>The <code><a href="../ct_run/"><span class="code">ct_run</span></a></code> program can be used for running tests from the OS command line, for example, as follows: </p> <ul> <li><code class="code">ct_run -config &lt;configfilenames&gt; -dir &lt;dirs&gt;</code></li> <li> <code class="code">ct_run -config &lt;configfilenames&gt; -suite &lt;suiteswithfullpath&gt;</code> </li> <li> <code class="code">ct_run -userconfig &lt;callbackmodulename&gt; &lt;configfilenames&gt; -suite &lt;suiteswithfullpath&gt;</code> </li> <li><code class="code">ct_run -config &lt;configfilenames&gt; -suite &lt;suitewithfullpath&gt; -group &lt;groups&gt; -case &lt;casenames&gt;</code></li> </ul> <p><strong>Examples:</strong></p> <pre data-language="erlang">
 $ ct_run -config $CFGS/sys1.cfg $CFGS/sys2.cfg -dir $SYS1_TEST $SYS2_TEST
@@ -424,17 +424,9 @@ my_testcase2(_) -&gt;
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

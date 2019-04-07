@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>3 Trace Tool Builder</h1> <h2><span onmouseover="document.getElementById('ghlink-introduction-id61321').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-introduction-id61321').style.visibility = 'hidden';" id="introduction">3.1 Introduction</span></h2> <p>Trace Tool Builder is a base for building trace tools for single node or distributed Erlang systems. It requires the Runtime_Tools application to be available on the traced node. </p> <p>The following are the main features of Trace Tool Builder:</p> <ul> <li>Start tracing to file ports on many nodes with one function call.</li> <li>Write more information to a trace information file, which is read during formatting.</li> <li>Restore previous configuration by maintaining a history buffer and handling configuration files.</li> <li>Provide some simple support for sequential tracing.</li> <li>Format binary trace logs and merge logs from multiple nodes.</li> </ul> <p>The intention of Trace Tool Builder is to serve as a base for tailor-made trace tools, but it can also be used directly from the Erlang shell (it can mimic <code class="code">dbg</code> behaviour while still providing useful additions, such as match specification shortcuts). Trace Tool Builder only allows the use of file port tracer, so to use other types of trace clients it is better to use <code class="code">dbg</code> directly.</p> <h2><span onmouseover="document.getElementById('ghlink-getting-started-id61381').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-getting-started-id61381').style.visibility = 'hidden';" id="getting-started">3.2 Getting Started</span></h2> <p>Module <code class="code">ttb</code> is the interface to all functions in Trace Tool Builder.</p> <p>To get started, the least you need to do is to start a tracer with <code><a href="../ttb/#tracer-0"><span class="code">ttb:tracer/0,1,2</span></a></code>, and set the required trace flags on the processes you want to trace with <code><a href="../ttb/#p-2"><span class="code">ttb:p/2</span></a></code>.</p> <p>When the tracing is completed, stop the tracer with <code><a href="../ttb/#stop-0"><span class="code">ttb:stop/0,1</span></a></code> and format the trace log with <code><a href="../ttb/#format-1"><span class="code">ttb:format/1,2</span></a></code> (if there is anything to format). </p> <p><strong>Useful functions:</strong></p> <dl> <dt><strong><code class="code">ttb:tracer/0,1,2</code></strong></dt> <dd><p>Opens a trace port on each node to be traced. By default, trace messages are written to binary files on remote nodes (the binary trace log).</p></dd> <dt><strong><code class="code">ttb:p/2</code></strong></dt> <dd><p>Specifies the processes to be traced. Trace flags specified in this call specify what to trace on each process. This function can be called many times if you like different trace flags to be set on different processes.</p></dd> <dt><strong><code class="code">ttb:tp/2,3,4</code> or <code class="code">ttb:tpl/2,3,4</code></strong></dt> <dd><p>If you want to trace function calls (that is, if you have trace flag <code class="code">call</code> set on any process), you must also set trace patterns on the required function(s) with <code><a href="../ttb/#-0"><span class="code">ttb:tp/2,3,4</span></a></code> or <code><a href="../ttb/#-0"><span class="code">ttb:tpl/2,3,4</span></a></code>. A function is only traced if it has a trace pattern. The trace pattern specifies how to trace the function by using match specifications. Match specifications are described in the <code>ERTS User's Guide</code>.</p></dd> <dt><strong><code class="code">ttb:stop/0,1</code></strong></dt> <dd><p>Stops tracing on all nodes, deletes all trace patterns, and flushes the trace port buffer.</p></dd> <dt><strong><code class="code">ttb:format/1/2</code></strong></dt> <dd> <p>Translates the binary trace logs into something readable. By default, <code class="code">ttb</code> presents each trace message as a line of text, but you can also write your own handler to make more complex interpretations of the trace information. A trace log can also be presented graphically with application Event Tracer (ET).</p> <p>If option <code class="code">format</code> is specified to <code class="code">ttb:stop/1</code>, the formatting is automatically done when stopping <code class="code">ttb</code>.</p> </dd> </dl> <h4><span onmouseover="document.getElementById('ghlink-tracing-local-node-from-erlang-shell-id62770').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-tracing-local-node-from-erlang-shell-id62770').style.visibility = 'hidden';" id="tracing-local-node-from-erlang-shell">Tracing Local Node from Erlang Shell</span></h4> <p>The following small module is used in the subsequent example:</p> <pre data-language="erlang">-module(m).
 -export([f/0]).
@@ -413,17 +413,9 @@ ok
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

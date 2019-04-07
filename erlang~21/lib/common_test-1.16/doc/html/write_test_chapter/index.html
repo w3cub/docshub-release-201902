@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>5 Writing Test Suites</h1> <h2> <span onmouseover="document.getElementById('ghlink-support-for-test-suite-authors-id65130').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-support-for-test-suite-authors-id65130').style.visibility = 'hidden';" id="intro">5.1 Support for Test Suite Authors</span> </h2> <p>The <code><a href="../ct/"><span class="code">ct</span></a></code> module provides the main interface for writing test cases. This includes for example, the following:</p> <ul> <li>Functions for printing and logging</li> <li>Functions for reading configuration data</li> <li>Function for terminating a test case with error reason</li> <li>Function for adding comments to the HTML overview page</li> </ul> <p>For details about these functions, see module <code><a href="../ct/"><span class="code">ct</span></a></code>.</p> <p>The <code class="code">Common Test</code> application also includes other modules named <code class="code">ct_&lt;component&gt;</code>, which provide various support, mainly simplified use of communication protocols such as RPC, SNMP, FTP, Telnet, and others.</p> <h2><span onmouseover="document.getElementById('ghlink-test-suites-id65202').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-test-suites-id65202').style.visibility = 'hidden';" id="test-suites">5.2 Test Suites</span></h2> <p>A test suite is an ordinary Erlang module that contains test cases. It is recommended that the module has a name on the form <code class="code">*_SUITE.erl</code>. Otherwise, the directory and auto compilation function in <code class="code">Common Test</code> cannot locate it (at least not by default). </p> <p>It is also recommended that the <code class="code">ct.hrl</code> header file is included in all test suite modules. </p> <p>Each test suite module must export function <code><a href="../common_test/#Module:all-0"><span class="code">all/0</span></a></code>, which returns the list of all test case groups and test cases to be executed in that module. </p> <p>The callback functions to be implemented by the test suite are all listed in module <code><a href="../common_test/">common_test</a></code>. They are also described in more detail later in this User's Guide. </p> <h2><span onmouseover="document.getElementById('ghlink-init-and-end-per-suite-id65255').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-init-and-end-per-suite-id65255').style.visibility = 'hidden';" id="init-and-end-per-suite">5.3 Init and End per Suite</span></h2> <p>Each test suite module can contain the optional configuration functions <code><a href="../common_test/#Module:init_per_suite-1"><span class="code">init_per_suite/1</span></a></code> and <code><a href="../common_test/#Module:end_per_suite-1"><span class="code">end_per_suite/1</span></a></code>. If the init function is defined, so must the end function be. </p> <p>If <code class="code">init_per_suite</code> exists, it is called initially before the test cases are executed. It typically contains initializations common for all test cases in the suite, which are only to be performed once. <code class="code">init_per_suite</code> is recommended for setting up and verifying state and environment on the System Under Test (SUT) or the <code class="code">Common Test</code> host node, or both, so that the test cases in the suite executes correctly. The following are examples of initial configuration operations: </p> <ul> <li>Opening a connection to the SUT</li> <li>Initializing a database</li> <li>Running an installation script</li> </ul> <p><code class="code">end_per_suite</code> is called as the final stage of the test suite execution (after the last test case has finished). The function is meant to be used for cleaning up after <code class="code">init_per_suite</code>. </p> <p><code class="code">init_per_suite</code> and <code class="code">end_per_suite</code> execute on dedicated Erlang processes, just like the test cases do. The result of these functions is however not included in the test run statistics of successful, failed, and skipped cases. </p> <p>The argument to <code class="code">init_per_suite</code> is <code class="code">Config</code>, that is, the same key-value list of runtime configuration data that each test case takes as input argument. <code class="code">init_per_suite</code> can modify this parameter with information that the test cases need. The possibly modified <code class="code">Config</code> list is the return value of the function. </p> <p>If <code class="code">init_per_suite</code> fails, all test cases in the test suite are skipped automatically (so called <strong>auto skipped</strong>), including <code class="code">end_per_suite</code>. </p> <p>Notice that if <code class="code">init_per_suite</code> and <code class="code">end_per_suite</code> do not exist in the suite, <code class="code">Common Test</code> calls dummy functions (with the same names) instead, so that output generated by hook functions can be saved to the log files for these dummies. For details, see <code><a href="../ct_hooks_chapter/#manipulating">Common Test Hooks</a></code>. </p> <h2> <span onmouseover="document.getElementById('ghlink-init-and-end-per-test-case-id77113').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-init-and-end-per-test-case-id77113').style.visibility = 'hidden';" id="per_testcase">5.4 Init and End per Test Case</span> </h2> <p>Each test suite module can contain the optional configuration functions <code><a href="../common_test/#Module:init_per_testcase-2"><span class="code">init_per_testcase/2</span></a></code> and <code><a href="../common_test/#Module:end_per_testcase-2"><span class="code">end_per_testcase/2</span></a></code>. If the init function is defined, so must the end function be.</p> <p>If <code class="code">init_per_testcase</code> exists, it is called before each test case in the suite. It typically contains initialization that must be done for each test case (analog to <code class="code">init_per_suite</code> for the suite).</p> <p><code class="code">end_per_testcase/2</code> is called after each test case has finished, enabling cleanup after <code class="code">init_per_testcase</code>.</p> <p>The first argument to these functions is the name of the test case. This value can be used with pattern matching in function clauses or conditional expressions to choose different initialization and cleanup routines for different test cases, or perform the same routine for many, or all, test cases.</p> <p>The second argument is the <code class="code">Config</code> key-value list of runtime configuration data, which has the same value as the list returned by <code class="code">init_per_suite</code>. <code class="code">init_per_testcase/2</code> can modify this parameter or return it "as is". The return value of <code class="code">init_per_testcase/2</code> is passed as parameter <code class="code">Config</code> to the test case itself.</p> <p>The return value of <code class="code">end_per_testcase/2</code> is ignored by the test server, with exception of the <code><a href="../dependencies_chapter/#save_config"><span class="code">save_config</span></a></code> and <code class="code">fail</code> tuple.</p> <p><code class="code">end_per_testcase</code> can check if the test case was successful. (which in turn can determine how cleanup is to be performed). This is done by reading the value tagged with <code class="code">tc_status</code> from <code class="code">Config</code>. The value is one of the following: </p> <ul> <li> <p><code class="code">ok</code></p> </li> <li> <p><code class="code">{failed,Reason}</code></p> <p>where <code class="code">Reason</code> is <code class="code">timetrap_timeout</code>, information from <code class="code">exit/1</code>, or details of a runtime error</p> </li> <li> <p><code class="code">{skipped,Reason}</code></p> <p>where <code class="code">Reason</code> is a user-specific term</p> </li> </ul> <p>Function <code class="code">end_per_testcase/2</code> is even called if a test case terminates because of a call to <code><a href="../ct/#abort_current_testcase-1"><span class="code">ct:abort_current_testcase/1</span></a></code>, or after a timetrap time-out. However, <code class="code">end_per_testcase</code> then executes on a different process than the test case function. In this situation, <code class="code">end_per_testcase</code> cannot change the reason for test case termination by returning <code class="code">{fail,Reason}</code> or save data with <code class="code">{save_config,Data}</code>.</p> <p>The test case is skipped in the following two cases: </p> <ul> <li>If <code class="code">init_per_testcase</code> crashes (called <strong>auto skipped</strong>).</li> <li>If <code class="code">init_per_testcase</code> returns a tuple <code class="code">{skip,Reason}</code> (called <strong>user skipped</strong>).</li> </ul> <p>The test case can also be marked as failed without executing it by returning a tuple <code class="code">{fail,Reason}</code> from <code class="code">init_per_testcase</code>.</p> <div class="note"> <div class="label">Note</div> <div class="content">
 
@@ -236,17 +236,9 @@ ct:pal(?ERROR, "Error report: ~p", [Error])</pre> <p>The functions <code><a href
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

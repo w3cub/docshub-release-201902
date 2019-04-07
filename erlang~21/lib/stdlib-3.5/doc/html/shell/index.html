@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>shell</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id273733').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id273733').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">shell</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id273736').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id273736').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">The Erlang shell.</p> <h2><span onmouseover="document.getElementById('ghlink-description-id273740').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id273740').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>This module provides an Erlang shell.</p> <p>The shell is a user interface program for entering expression sequences. The expressions are evaluated and a value is returned. A history mechanism saves previous commands and their values, which can then be incorporated in later commands. How many commands and results to save can be determined by the user, either interactively, by calling <code><a href="#history-1"><span class="code">history/1</span></a></code> and <code><a href="#results-1"><span class="code">results/1</span></a></code>, or by setting the application configuration parameters <code class="code">shell_history_length</code> and <code class="code">shell_saved_results</code> for the STDLIB application.</p> <p>The shell uses a helper process for evaluating commands to protect the history mechanism from exceptions. By default the evaluator process is killed when an exception occurs, but by calling <code><a href="#catch_exception-1"><span class="code">catch_exception/1</span></a></code> or by setting the application configuration parameter <code class="code">shell_catch_exception</code> for the STDLIB application this behavior can be changed. See also the example below.</p> <p>Variable bindings, and local process dictionary changes that are generated in user expressions are preserved, and the variables can be used in later commands to access their values. The bindings can also be forgotten so the variables can be reused.</p> <p>The special shell commands all have the syntax of (local) function calls. They are evaluated as normal function calls and many commands can be used in one expression sequence.</p> <p>If a command (local function call) is not recognized by the shell, an attempt is first made to find the function in module <code class="code">user_default</code>, where customized local commands can be placed. If found, the function is evaluated, otherwise an attempt is made to evaluate the function in module <code class="code">shell_default</code>. Module <code class="code">user_default</code> must be explicitly loaded.</p> <p>The shell also permits the user to start multiple concurrent jobs. A job can be regarded as a set of processes that can communicate with the shell.</p> <p>There is some support for reading and printing records in the shell. During compilation record expressions are translated to tuple expressions. In runtime it is not known whether a tuple represents a record, and the record definitions used by the compiler are unavailable at runtime. So, to read the record syntax and print tuples as records when possible, record definitions must be maintained by the shell itself.</p> <p>The shell commands for reading, defining, forgetting, listing, and printing records are described below. Notice that each job has its own set of record definitions. To facilitate matters, record definitions in modules <code class="code">shell_default</code> and <code class="code">user_default</code> (if loaded) are read each time a new job is started. For example, adding the following line to <code class="code">user_default</code> makes the definition of <code class="code">file_info</code> readily available in the shell:</p> <pre data-language="erlang">-include_lib("kernel/include/file.hrl").</pre> <p>The shell runs in two modes:</p> <ul> <li> <p><code class="code">Normal (possibly restricted)</code> mode, in which commands can be edited and expressions evaluated</p> </li> <li> <p>Job Control Mode, <code class="code">JCL</code>, in which jobs can be started, killed, detached, and connected</p> </li> </ul> <p>Only the currently connected job can 'talk' to the shell.</p>  <h2><span onmouseover="document.getElementById('ghlink-shell-commands-id273902').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-shell-commands-id273902').style.visibility = 'hidden';" id="shell-commands">Shell Commands</span></h2>  <dl> <dt><strong><code class="code">b()</code></strong></dt> <dd> <p>Prints the current variable bindings.</p> </dd> <dt><strong><code class="code">f()</code></strong></dt> <dd> <p>Removes all variable bindings.</p> </dd> <dt><strong><code class="code">f(X)</code></strong></dt> <dd> <p>Removes the binding of variable <code class="code">X</code>.</p> </dd> <dt><strong><code class="code">h()</code></strong></dt> <dd> <p>Prints the history list.</p> </dd> <dt><strong><code class="code">history(N)</code></strong></dt> <dd> <p>Sets the number of previous commands to keep in the history list to <code class="code">N</code>. The previous number is returned. Defaults to 20.</p> </dd> <dt><strong><code class="code">results(N)</code></strong></dt> <dd> <p>Sets the number of results from previous commands to keep in the history list to <code class="code">N</code>. The previous number is returned. Defaults to 20.</p> </dd> <dt><strong><code class="code">e(N)</code></strong></dt> <dd> <p>Repeats command <code class="code">N</code>, if <code class="code">N</code> is positive. If it is negative, the <code class="code">N</code>th previous command is repeated (that is, <code class="code">e(-1)</code> repeats the previous command).</p> </dd> <dt><strong><code class="code">v(N)</code></strong></dt> <dd> <p>Uses the return value of command <code class="code">N</code> in the current command, if <code class="code">N</code> is positive. If it is negative, the return value of the <code class="code">N</code>th previous command is used (that is, <code class="code">v(-1)</code> uses the value of the previous command).</p> </dd> <dt><strong><code class="code">help()</code></strong></dt> <dd> <p>Evaluates <code class="code">shell_default:help()</code>.</p> </dd> <dt><strong><code class="code">c(Mod)</code></strong></dt> <dd> <p>Evaluates <code class="code">shell_default:c(Mod)</code>. This compiles and loads the module <code class="code">Mod</code> and purges old versions of the code, if necessary. <code class="code">Mod</code> can be either a module name or a a source file path, with or without <code class="code">.erl</code> extension.</p> </dd> <dt><strong><code class="code">catch_exception(Bool)</code></strong></dt> <dd> <p>Sets the exception handling of the evaluator process. The previous exception handling is returned. The default (<code class="code">false</code>) is to kill the evaluator process when an exception occurs, which causes the shell to create a new evaluator process. When the exception handling is set to <code class="code">true</code>, the evaluator process lives on. This means, for example, that ports and ETS tables as well as processes linked to the evaluator process survive the exception.</p> </dd> <dt><strong><code class="code">rd(RecordName, RecordDefinition)</code></strong></dt> <dd> <p>Defines a record in the shell. <code class="code">RecordName</code> is an atom and <code class="code">RecordDefinition</code> lists the field names and the default values. Usually record definitions are made known to the shell by use of the <code class="code">rr/1,2,3</code> commands described below, but sometimes it is handy to define records on the fly.</p> </dd> <dt><strong><code class="code">rf()</code></strong></dt> <dd> <p>Removes all record definitions, then reads record definitions from the modules <code class="code">shell_default</code> and <code class="code">user_default</code> (if loaded). Returns the names of the records defined.</p> </dd> <dt><strong><code class="code">rf(RecordNames)</code></strong></dt> <dd> <p>Removes selected record definitions. <code class="code">RecordNames</code> is a record name or a list of record names. To remove all record definitions, use <code class="code">'_'</code>.</p> </dd> <dt><strong><code class="code">rl()</code></strong></dt> <dd> <p>Prints all record definitions.</p> </dd> <dt><strong><code class="code">rl(RecordNames)</code></strong></dt> <dd> <p>Prints selected record definitions. <code class="code">RecordNames</code> is a record name or a list of record names.</p> </dd> <dt><strong><code class="code">rp(Term)</code></strong></dt> <dd> <p>Prints a term using the record definitions known to the shell. All of <code class="code">Term</code> is printed; the depth is not limited as is the case when a return value is printed.</p> </dd> <dt><strong><code class="code">rr(Module)</code></strong></dt> <dd> <p>Reads record definitions from a module's BEAM file. If there are no record definitions in the BEAM file, the source file is located and read instead. Returns the names of the record definitions read. <code class="code">Module</code> is an atom.</p> </dd> <dt><strong><code class="code">rr(Wildcard)</code></strong></dt> <dd> <p>Reads record definitions from files. Existing definitions of any of the record names read are replaced. <code class="code">Wildcard</code> is a wildcard string as defined in <code><a href="../filelib/"><span class="code">filelib(3)</span></a></code>, but not an atom.</p> </dd> <dt><strong><code class="code">rr(WildcardOrModule, RecordNames)</code></strong></dt> <dd> <p>Reads record definitions from files but discards record names not mentioned in <code class="code">RecordNames</code> (a record name or a list of record names).</p> </dd> <dt><strong><code class="code">rr(WildcardOrModule, RecordNames, Options)</code></strong></dt> <dd> <p>Reads record definitions from files. The compiler options <code class="code">{i, Dir}</code>, <code class="code">{d, Macro}</code>, and <code class="code">{d, Macro, Value}</code> are recognized and used for setting up the include path and macro definitions. To read all record definitions, use <code class="code">'_'</code> as value of <code class="code">RecordNames</code>.</p> </dd> </dl>  <h2><span onmouseover="document.getElementById('ghlink-example-id274332').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-example-id274332').style.visibility = 'hidden';" id="example">Example</span></h2>  <p>The following example is a long dialog with the shell. Commands starting with <code class="code">&gt;</code> are inputs to the shell. All other lines are output from the shell.</p> <pre data-language="erlang">
@@ -246,17 +246,9 @@ q                 - quit erlang
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

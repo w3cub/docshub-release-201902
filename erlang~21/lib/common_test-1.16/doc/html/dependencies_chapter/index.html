@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>13 Dependencies between Test Cases and Suites</h1> <h2><span onmouseover="document.getElementById('ghlink-general-id89465').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-general-id89465').style.visibility = 'hidden';" id="general">13.1 General</span></h2> <p>When creating test suites, it is strongly recommended to not create dependencies between test cases, that is, letting test cases depend on the result of previous test cases. There are various reasons for this, such as, the following:</p> <ul> <li>It makes it impossible to run test cases individually.</li> <li>It makes it impossible to run test cases in a different order.</li> <li>It makes debugging difficult (as a fault can be the result of a problem in a different test case than the one failing).</li> <li>There are no good and explicit ways to declare dependencies, so it can be difficult to see and understand these in test suite code and in test logs.</li> <li>Extending, restructuring, and maintaining test suites with test case dependencies is difficult.</li> </ul> <p>There are often sufficient means to work around the need for test case dependencies. Generally, the problem is related to the state of the System Under Test (SUT). The action of one test case can change the system state. For some other test case to run properly, this new state must be known.</p> <p>Instead of passing data between test cases, it is recommended that the test cases read the state from the SUT and perform assertions (that is, let the test case run if the state is as expected, otherwise reset or fail). It is also recommended to use the state to set variables necessary for the test case to execute properly. Common actions can often be implemented as library functions for test cases to call to set the SUT in a required state. (Such common actions can also be separately tested, if necessary, to ensure that they work as expected). It is sometimes also possible, but not always desirable, to group tests together in one test case, that is, let a test case perform a "scenario" test (a test consisting of subtests).</p> <p>Consider, for example, a server application under test. The following functionality is to be tested:</p> <ul> <li>Starting the server</li> <li>Configuring the server</li> <li>Connecting a client to the server</li> <li>Disconnecting a client from the server</li> <li>Stopping the server</li> </ul> <p>There are obvious dependencies between the listed functions. The server cannot be configured if it has not first been started, a client connot be connectd until the server is properly configured, and so on. If we want to have one test case for each function, we might be tempted to try to always run the test cases in the stated order and carry possible data (identities, handles, and so on) between the cases and therefore introduce dependencies between them.</p> <p>To avoid this, we can consider starting and stopping the server for every test. We can thus implement the start and stop action as common functions to be called from <code><a href="../common_test/#Module:init_per_testcase-2"><span class="code">init_per_testcase</span></a></code> and <code><a href="../common_test/#Module:end_per_testcase-2"><span class="code">end_per_testcase</span></a></code>. (Remember to test the start and stop functionality separately.) The configuration can also be implemented as a common function, maybe grouped with the start function. Finally, the testing of connecting and disconnecting a client can be grouped into one test case. The resulting suite can look as follows:</p> <pre data-language="erlang">     
 -module(my_server_SUITE).
@@ -191,17 +191,9 @@ test3,
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/erlang~21/" class="_nav-link" title="" style="margin-left:0;">Erlang 21</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _erlang">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>ftp</h1> <h2><span onmouseover="document.getElementById('ghlink-module-id63850').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-id63850').style.visibility = 'hidden';" id="module">Module</span></h2> <p class="REFBODY module-body">ftp</p> <h2><span onmouseover="document.getElementById('ghlink-module-summary-id63854').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-module-summary-id63854').style.visibility = 'hidden';" id="module-summary">Module Summary</span></h2> <p class="REFBODY module-summary-body">A File Transfer Protocol client.</p> <h2><span onmouseover="document.getElementById('ghlink-description-id63910').style.visibility = 'visible';" onmouseout="document.getElementById('ghlink-description-id63910').style.visibility = 'hidden';" id="description">Description</span></h2> 
 <p>This module implements a client for file transfer according to a subset of the File Transfer Protocol (FTP), see <code><a href="http://www.ietf.org/rfc/rfc959.txt" target="_blank">RFC 959</a></code>.</p> <p>The FTP client always tries to use passive FTP mode and only resort to active FTP mode if this fails. This default behavior can be changed by start option <code><a href="#mode">mode</a></code>.</p>  <p id="two_start">An FTP client can be started in two ways. One is using the <code><a href="#service_start">service_start</a></code> function, the other is to start it directly as a standalone process using function <code><a href="#open">open</a></code>.</p> <p>For a simple example of an FTP session, see <code><a href="../ftp_client/">FTP User's Guide</a></code>.</p> <p>In addition to the ordinary functions for receiving and sending files (see <code class="code">recv/2</code>, <code class="code">recv/3</code>, <code class="code">send/2</code>, and <code class="code">send/3</code>) there are functions for receiving remote files as binaries (see <code class="code">recv_bin/2</code>) and for sending binaries to be stored as remote files (see <code class="code">send_bin/3</code>).</p> <p>A set of functions is provvided for sending and receiving contiguous parts of a file to be stored in a remote file. For send, see <code class="code">send_chunk_start/2</code>, <code class="code">send_chunk/2</code>, and <code class="code">send_chunk_end/1</code>. For receive, see <code class="code">recv_chunk_start/2</code> and <code class="code">recv_chunk/</code>).</p> <p>The return values of the following functions depend much on the implementation of the FTP server at the remote host. In particular, the results from <code class="code">ls</code> and <code class="code">nlist</code> varies. Often real errors are not reported as errors by <code class="code">ls</code>, even if, for example, a file or directory does not exist. <code class="code">nlist</code> is usually more strict, but some implementations have the peculiar behaviour of responding with an error if the request is a listing of the contents of a directory that exists but is empty.</p>   <h2>Ftp client service start/stop</h2>  <p>The FTP client can be started and stopped dynamically in runtime by calling the <code class="code">ftp</code> application API <code class="code">ftp:start_service(ServiceConfig)</code> and <code class="code">ftp:stop_service(Pid)</code>.</p> <p>The available configuration options are as follows:</p> <dl> <dt><strong>{host, Host}</strong></dt> <dd>  <p id="host">Host = <code class="code">string() | ip_address()</code></p> </dd> <dt><strong>{port, Port}</strong></dt> <dd>  <p id="port">Port = <code class="code">integer() &gt; 0</code></p> <p>Default is <code class="code">21</code>.</p> </dd> <dt><strong>{mode, Mode}</strong></dt> <dd>  <p id="mode">Mode = <code class="code">active | passive</code></p> <p>Default is <code class="code">passive</code>.</p> </dd> <dt><strong>{verbose, Verbose}</strong></dt> <dd>  <p id="verbose">Verbose = <code class="code">boolean()</code> </p> <p>Determines if the FTP communication is to be verbose or not.</p> <p>Default is <code class="code">false</code>.</p> </dd> <dt><strong>{debug, Debug}</strong></dt> <dd>  <p id="debug">Debug = <code class="code">trace | debug | disable</code> </p> <p>Debugging using the dbg toolkit. </p> <p>Default is <code class="code">disable</code>.</p> </dd> <dt><strong>{ipfamily, IpFamily}</strong></dt> <dd>  <p id="ipfamily">IpFamily = <code class="code">inet | inet6 | inet6fb4</code> </p> <p>With <code class="code">inet6fb4</code> the client behaves as before, that is, tries to use IPv6, and only if that does not work it uses IPv4).</p> <p>Default is <code class="code">inet</code> (IPv4).</p> </dd> <dt><strong>{timeout, Timeout}</strong></dt> <dd>  <p id="timeout">Timeout = <code class="code">non_neg_integer()</code></p> <p>Connection time-out.</p> <p>Default is <code class="code">60000</code> (milliseconds).</p> </dd> <dt><strong>{dtimeout, DTimeout}</strong></dt> <dd>  <p id="dtimeout">DTimeout = <code class="code">non_neg_integer() | infinity</code> </p> <p>Data connect time-out. The time the client waits for the server to connect to the data socket.</p> <p>Default is <code class="code">infinity</code>. </p> </dd> <dt><strong>{progress, Progress}</strong></dt> <dd>  <p id="progress">Progress = <code class="code">ignore | {CBModule, CBFunction, InitProgress}</code></p> <p><code class="code">CBModule = atom()</code>, <code class="code">CBFunction = atom()</code></p> <p><code class="code">InitProgress = term()</code></p> <p>Default is <code class="code">ignore</code>.</p> </dd> </dl> <p>Option <code class="code">progress</code> is intended to be used by applications that want to create some type of progress report, such as a progress bar in a GUI. Default for the progress option is <code class="code">ignore</code>, that is, the option is not used. When the progress option is specified, the following happens when <code class="code">ftp:send/[3,4]</code> or <code class="code">ftp:recv/[3,4]</code> are called:</p> <ul> <li> <p>Before a file is transferred, the following call is made to indicate the start of the file transfer and how large the file is. The return value of the callback function is to be a new value for the <code class="code">UserProgressTerm</code> that will be used as input the next time the callback function is called.</p> <p><code class="code">CBModule:CBFunction(InitProgress, File, {file_size, FileSize})</code></p> </li> <li> <p>Every time a chunk of bytes is transferred the following call is made:</p> <p><code class="code">CBModule:CBFunction(UserProgressTerm, File, {transfer_size, TransferSize})</code></p> </li> <li> <p>At the end of the file the following call is made to indicate the end of the transfer:</p> <p><code class="code">CBModule:CBFunction(UserProgressTerm, File, {transfer_size, 0})</code></p> </li> </ul> <p>The callback function is to be defined as follows:</p> <p><code class="code">CBModule:CBFunction(UserProgressTerm, File, Size) -&gt; UserProgressTerm</code></p> <p><code class="code">CBModule = CBFunction = atom()</code></p> <p><code class="code">UserProgressTerm = term()</code></p> <p><code class="code">File = string()</code></p> <p><code class="code">Size = {transfer_size, integer()} | {file_size, integer()} | {file_size, unknown}</code></p> <p>For remote files, <code class="code">ftp</code> cannot determine the file size in a platform independent way. In this case the size becomes <code class="code">unknown</code> and it is left to the application to determine the size.</p> <div class="note"> <div class="label">Note</div> <div class="content">
@@ -170,17 +170,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
