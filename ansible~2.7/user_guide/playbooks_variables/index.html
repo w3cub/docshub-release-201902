@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/playbooks_variables/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/ansible~2.7.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="playbooks-variables">Variables</h1>   <ul id="variables"> <li><a class="reference internal" href="#what-makes-a-valid-variable-name" id="id24">What Makes A Valid Variable Name</a></li> <li><a class="reference internal" href="#variables-defined-in-inventory" id="id25">Variables Defined in Inventory</a></li> <li><a class="reference internal" href="#variables-defined-in-a-playbook" id="id26">Variables Defined in a Playbook</a></li> <li><a class="reference internal" href="#variables-defined-from-included-files-and-roles" id="id27">Variables defined from included files and roles</a></li> <li><a class="reference internal" href="#using-variables-about-jinja2" id="id28">Using Variables: About Jinja2</a></li> <li><a class="reference internal" href="#jinja2-filters" id="id29">Jinja2 Filters</a></li> <li><a class="reference internal" href="#hey-wait-a-yaml-gotcha" id="id30">Hey Wait, A YAML Gotcha</a></li> <li><a class="reference internal" href="#information-discovered-from-systems-facts" id="id31">Information discovered from systems: Facts</a></li> <li><a class="reference internal" href="#turning-off-facts" id="id32">Turning Off Facts</a></li> <li><a class="reference internal" href="#local-facts-facts-d" id="id33">Local Facts (Facts.d)</a></li> <li><a class="reference internal" href="#ansible-version" id="id34">Ansible version</a></li> <li><a class="reference internal" href="#fact-caching" id="id35">Fact Caching</a></li> <li><a class="reference internal" href="#registered-variables" id="id36">Registered Variables</a></li> <li><a class="reference internal" href="#accessing-complex-variable-data" id="id37">Accessing Complex Variable Data</a></li> <li><a class="reference internal" href="#magic-variables-and-how-to-access-information-about-other-hosts" id="id38">Magic Variables, and How To Access Information About Other Hosts</a></li> <li><a class="reference internal" href="#variable-file-separation" id="id39">Variable File Separation</a></li> <li><a class="reference internal" href="#passing-variables-on-the-command-line" id="id40">Passing Variables On The Command Line</a></li> <li><a class="reference internal" href="#variable-precedence-where-should-i-put-a-variable" id="id41">Variable Precedence: Where Should I Put A Variable?</a></li> <li><a class="reference internal" href="#variable-scopes" id="id42">Variable Scopes</a></li> <li><a class="reference internal" href="#variable-examples" id="id43">Variable Examples</a></li> <li><a class="reference internal" href="#advanced-syntax" id="id44">Advanced Syntax</a></li> </ul>
   <p>While automation exists to make it easier to make things repeatable, all systems are not exactly alike; some may require configuration that is slightly different from others. In some instances, the observed behavior or state of one system might influence how you configure other systems. For example, you might need to find out the IP address of a system and use it as a configuration value on another system.</p> <p>Ansible uses <em>variables</em> to help deal with differences between systems.</p> <p>To understand variables you’ll also want to read <a class="reference internal" href="../playbooks_conditionals/"><span class="doc">Conditionals</span></a> and <a class="reference internal" href="../playbooks_loops/"><span class="doc">Loops</span></a>. Useful things like the <strong>group_by</strong> module and the <code>when</code> conditional can also be used with variables, and to help manage differences between systems.</p> <p>The ansible-examples github repository contains many examples of how variables are used in Ansible.</p> <p>For advice on best practices, refer to <a class="reference internal" href="../playbooks_best_practices/#best-practices-for-variables-and-vaults"><span class="std std-ref">Variables and Vaults</span></a> in the <em>Best Practices</em> chapter.</p>  <h2 id="valid-variable-names">What Makes A Valid Variable Name</h2> <p id="what-makes-a-valid-variable-name">Before we start using variables, it’s important to know what are valid variable names.</p> <p>Variable names should be letters, numbers, and underscores. Variables should always start with a letter.</p> <p><code>foo_port</code> is a great variable. <code>foo5</code> is fine too.</p> <p><code>foo-port</code>, <code>foo port</code>, <code>foo.port</code> and <code>12</code> are not valid variable names.</p> <p>YAML also supports dictionaries which map keys to values. For instance:</p> <pre data-language="YAML">foo:
@@ -517,17 +517,9 @@ http_port: 80
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

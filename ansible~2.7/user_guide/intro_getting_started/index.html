@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/intro_getting_started/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/ansible~2.7.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="intro-getting-started">Getting Started</h1>   <ul id="getting-started"> <li><a class="reference internal" href="#foreword" id="id4">Foreword</a></li> <li><a class="reference internal" href="#remote-connection-information" id="id5">Remote Connection Information</a></li> <li><a class="reference internal" href="#your-first-commands" id="id6">Your first commands</a></li> <li><a class="reference internal" href="#host-key-checking" id="id7">Host Key Checking</a></li> </ul>
    <h2 id="gs-about">Foreword</h2> <p id="foreword">Now that you’ve read the <a class="reference internal" href="../../installation_guide/intro_installation/#installation-guide"><span class="std std-ref">installation guide</span></a> and installed Ansible, it’s time to get started with some ad-hoc commands.</p> <p>What we are showing first are not the powerful configuration/deployment/orchestration features of Ansible. These features are handled by playbooks which are covered in a separate section.</p> <p>This section is about how to initially get Ansible running. Once you understand these concepts, read <a class="reference internal" href="../intro_adhoc/"><span class="doc">Introduction To Ad-Hoc Commands</span></a> for some more detail, and then you’ll be ready to begin learning about playbooks and explore the most interesting parts!</p>   <h2 id="id1">Remote Connection Information</h2> <p id="remote-connection-information">Before we get started, it’s important to understand how Ansible communicates with remote machines over SSH.</p> <p>By default, Ansible will try to use native OpenSSH for remote communication when possible. This enables ControlPersist (a performance feature), Kerberos, and options in <code>~/.ssh/config</code> such as Jump Host setup. However, when using Enterprise Linux 6 operating systems as the control machine (Red Hat Enterprise Linux and derivatives such as CentOS), the version of OpenSSH may be too old to support ControlPersist. On these operating systems, Ansible will fallback into using a high-quality Python implementation of OpenSSH called ‘paramiko’. If you wish to use features like Kerberized SSH and more, consider using Fedora, macOS, or Ubuntu as your control machine until a newer version of OpenSSH is available for your platform.</p> <p>Occasionally you’ll encounter a device that doesn’t support SFTP. This is rare, but should it occur, you can switch to SCP mode in <a class="reference internal" href="../../installation_guide/intro_configuration/#intro-configuration"><span class="std std-ref">Configuring Ansible</span></a>.</p> <p>When speaking with remote machines, Ansible by default assumes you are using SSH keys. SSH keys are encouraged but password authentication can also be used where needed by supplying the option <code>--ask-pass</code>. If using sudo features and when sudo requires a password, also supply <code>--ask-become-pass</code> (previously <code>--ask-sudo-pass</code> which has been deprecated).</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Ansible does not expose a channel to allow communication between the user and the ssh process to accept a password manually to decrypt an ssh key when using the ssh connection plugin (which is the default). The use of <code>ssh-agent</code> is highly recommended.</p> </div> <p>While it may be common sense, it is worth sharing: Any management system benefits from being run near the machines being managed. If you are running Ansible in a cloud, consider running it from a machine inside that cloud. In most cases this will work better than on the open Internet.</p> <p>As an advanced topic, Ansible doesn’t just have to connect remotely over SSH. The transports are pluggable, and there are options for managing things locally, as well as managing chroot, lxc, and jail containers. A mode called ‘ansible-pull’ can also invert the system and have systems ‘phone home’ via scheduled git checkouts to pull configuration directives from a central repository.</p>   <h2 id="id2">Your first commands</h2> <p id="your-first-commands">Now that you’ve installed Ansible, it’s time to get started with some basics.</p> <p>Edit (or create) <code>/etc/ansible/hosts</code> and put one or more remote systems in it. Your public SSH key should be located in <code>authorized_keys</code> on those systems:</p> <pre data-language="YAML">192.0.2.50
@@ -111,17 +111,9 @@ host_key_checking = False
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

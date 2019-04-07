@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/scenario_guides/guide_aci/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/ansible~2.7.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="aci-guide">Cisco ACI Guide</h1>  <h2 id="aci-guide-intro">What is Cisco ACI ?</h2>  <h3 id="cisco-aci-guide">Application Centric Infrastructure (ACI)</h3> <p>The Cisco Application Centric Infrastructure (ACI) allows application requirements to define the network. This architecture simplifies, optimizes, and accelerates the entire application deployment life cycle.</p>   <h3 id="application-policy-infrastructure-controller-apic">Application Policy Infrastructure Controller (APIC)</h3> <p>The APIC manages the scalable ACI multi-tenant fabric. The APIC provides a unified point of automation and management, policy programming, application deployment, and health monitoring for the fabric. The APIC, which is implemented as a replicated synchronized clustered controller, optimizes performance, supports any application anywhere, and provides unified operation of the physical and virtual infrastructure.</p> <p>The APIC enables network administrators to easily define the optimal network for applications. Data center operators can clearly see how applications consume network resources, easily isolate and troubleshoot application and infrastructure problems, and monitor and profile resource usage patterns.</p> <p>The Cisco Application Policy Infrastructure Controller (APIC) API enables applications to directly connect with a secure, shared, high-performance resource pool that includes network, compute, and storage capabilities.</p>   <h3 id="aci-fabric">ACI Fabric</h3> <p>The Cisco Application Centric Infrastructure (ACI) Fabric includes Cisco Nexus 9000 Series switches with the APIC to run in the leaf/spine ACI fabric mode. These switches form a “fat-tree” network by connecting each leaf node to each spine node; all other devices connect to the leaf nodes. The APIC manages the ACI fabric.</p> <p>The ACI fabric provides consistent low-latency forwarding across high-bandwidth links (40 Gbps, with a 100-Gbps future capability). Traffic with the source and destination on the same leaf switch is handled locally, and all other traffic travels from the ingress leaf to the egress leaf through a spine switch. Although this architecture appears as two hops from a physical perspective, it is actually a single Layer 3 hop because the fabric operates as a single Layer 3 switch.</p> <p>The ACI fabric object-oriented operating system (OS) runs on each Cisco Nexus 9000 Series node. It enables programming of objects for each configurable element of the system. The ACI fabric OS renders policies from the APIC into a concrete model that runs in the physical infrastructure. The concrete model is analogous to compiled software; it is the form of the model that the switch operating system can execute.</p> <p>All the switch nodes contain a complete copy of the concrete model. When an administrator creates a policy in the APIC that represents a configuration, the APIC updates the logical model. The APIC then performs the intermediate step of creating a fully elaborated policy that it pushes into all the switch nodes where the concrete model is updated.</p> <p>The APIC is responsible for fabric activation, switch firmware management, network policy configuration, and instantiation. While the APIC acts as the centralized policy and network management engine for the fabric, it is completely removed from the data path, including the forwarding topology. Therefore, the fabric can still forward traffic even when communication with the APIC is lost.</p>   <h3 id="more-information">More information</h3> <p>Various resources exist to start learning ACI, here is a list of interesting articles from the community.</p> <ul class="simple"> <li><a class="reference external" href="https://adamraffe.com/learning-aci/" target="_blank">Adam Raffe: Learning ACI</a></li> <li><a class="reference external" href="https://lucarelandini.blogspot.be/2015/03/aci-for-dummies.html" target="_blank">Luca Relandini: ACI for dummies</a></li> <li><a class="reference external" href="https://learninglabs.cisco.com/labs/tags/ACI" target="_blank">Cisco DevNet Learning Labs about ACI</a></li> </ul>    <h2 id="aci-guide-modules">Using the ACI modules</h2> <p id="using-the-aci-modules">The Ansible ACI modules provide a user-friendly interface to managing your ACI environment using Ansible playbooks.</p> <p>For instance ensuring that a specific tenant exists, is done using the following Ansible task using module <a class="reference internal" href="../../modules/aci_tenant_module/#aci-tenant-module"><span class="std std-ref">aci_tenant</span></a>:</p> <pre data-language="yaml">- name: Ensure tenant customer-xyz exists
   aci_tenant:
@@ -235,17 +235,9 @@ certificate_name: admin  # This could be left out !
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

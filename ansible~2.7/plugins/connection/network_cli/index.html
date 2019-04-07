@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/plugins/connection/network_cli/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/ansible~2.7.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="network-cli-connection">network_cli - Use network_cli to run command on network appliances</h1> <div class="versionadded" id="network-cli-use-network-cli-to-run-command-on-network-appliances"> <p><span class="versionmodified">New in version 2.3.</span></p> </div>  <ul class="simple"> <li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li> <li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li> <li>
 <a class="reference internal" href="#status" id="id3">Status</a><ul> <li><a class="reference internal" href="#author" id="id4">Author</a></li> </ul> </li> </ul>   <h2 id="synopsis">Synopsis</h2> <ul class="simple"> <li>This connection plugin provides a connection to remote devices over the SSH and implements a CLI shell. This connection plugin is typically used by network devices for sending and receiving CLi commands to network devices.</li> </ul>   <h2 id="parameters">Parameters</h2> <table class="documentation-table"> <tr> <th colspan="1">Parameter</th> <th>Choices/Defaults</th> <th>Configuration</th> <th width="100%">Comments</th> </tr> <tr> <td colspan="1"> <b>become</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td> <b>Default:</b><br><div style="color: blue">no</div> </td> <td> <div> ini entries: <p>[privilege_escalation]<br>become = no</p> </div> <div>env:ANSIBLE_BECOME</div> <div>var: ansible_become</div> </td> <td> <div>The become option will instruct the CLI session to attempt privilege escalation on platforms that support it. Normally this means transitioning from user mode to <code>enable</code> mode in the CLI session. If become is set to True and the remote device does not support privilege escalation or the privilege has already been elevated, then this option is silently ignored</div> <div>Can be configured form the CLI via the <code>--become</code> or <code>-b</code> options</div> </td> </tr> <tr> <td colspan="1"> <b>become_method</b> </td> <td> <b>Default:</b><br><div style="color: blue">sudo</div> </td> <td> <div> ini entries: <p>[privilege_escalation]<br>become_method = sudo</p> </div> <div>env:ANSIBLE_BECOME_METHOD</div> <div>var: ansible_become_method</div> </td> <td> <div>This option allows the become method to be specified in for handling privilege escalation. Typically the become_method value is set to <code>enable</code> but could be defined as other values.</div> </td> </tr> <tr> <td colspan="1"> <b>host</b> </td> <td> <b>Default:</b><br><div style="color: blue">inventory_hostname</div> </td> <td> <div>var: ansible_host</div> </td> <td> <div>Specifies the remote device FQDN or IP address to establish the SSH connection to.</div> </td> </tr> <tr> <td colspan="1"> <b>host_key_auto_add</b> <br><div style="font-size: small; color: red">boolean</div> </td> <td> <b>Default:</b><br><div style="color: blue">no</div> </td> <td> <div> ini entries: <p>[paramiko_connection]<br>host_key_auto_add = no</p> </div> <div>env:ANSIBLE_HOST_KEY_AUTO_ADD</div> </td> <td> <div>By default, Ansible will prompt the user before adding SSH keys to the known hosts file. Since persistent connections such as network_cli run in background processes, the user will never be prompted. By enabling this option, unknown host keys will automatically be added to the known hosts file.</div> <div>Be sure to fully understand the security implications of enabling this option on production systems as it could create a security vulnerability.</div> </td> </tr> <tr> <td colspan="1"> <b>network_os</b> </td> <td> </td> <td> <div>var: ansible_network_os</div> </td> <td> <div>Configures the device platform network operating system. This value is used to load the correct terminal and cliconf plugins to communicate with the remote device</div> </td> </tr> <tr> <td colspan="1"> <b>password</b> </td> <td> </td> <td> <div>var: ansible_password</div> <div>var: ansible_ssh_pass</div> </td> <td> <div>Configures the user password used to authenticate to the remote device when first establishing the SSH connection.</div> </td> </tr> <tr> <td colspan="1"> <b>persistent_buffer_read_timeout</b> <br><div style="font-size: small; color: red">float</div> </td> <td> <b>Default:</b><br><div style="color: blue">0.1</div> </td> <td> <div> ini entries: <p>[persistent_connection]<br>buffer_read_timeout = 0.1</p> </div> <div>env:ANSIBLE_PERSISTENT_BUFFER_READ_TIMEOUT</div> <div>var: ansible_buffer_read_timeout</div> </td> <td> <div>Configures, in seconds, the amount of time to wait for the data to be read from Paramiko channel after the command prompt is matched. This timeout value ensures that command prompt matched is correct and there is no more data left to be received from remote host.</div> </td> </tr> <tr> <td colspan="1"> <b>persistent_command_timeout</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">10</div> </td> <td> <div> ini entries: <p>[persistent_connection]<br>command_timeout = 10</p> </div> <div>env:ANSIBLE_PERSISTENT_COMMAND_TIMEOUT</div> <div>var: ansible_command_timeout</div> </td> <td> <div>Configures, in seconds, the amount of time to wait for a command to return from the remote device. If this timer is exceeded before the command returns, the connection plugin will raise an exception and close</div> </td> </tr> <tr> <td colspan="1"> <b>persistent_connect_timeout</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">30</div> </td> <td> <div> ini entries: <p>[persistent_connection]<br>connect_timeout = 30</p> </div> <div>env:ANSIBLE_PERSISTENT_CONNECT_TIMEOUT</div> </td> <td> <div>Configures, in seconds, the amount of time to wait when trying to initially establish a persistent connection. If this value expires before the connection to the remote device is completed, the connection will fail</div> </td> </tr> <tr> <td colspan="1"> <b>port</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">22</div> </td> <td> <div> ini entries: <p>[defaults]<br>remote_port = 22</p> </div> <div>env:ANSIBLE_REMOTE_PORT</div> <div>var: ansible_port</div> </td> <td> <div>Specifies the port on the remote device to listening for connections when establishing the SSH connection.</div> </td> </tr> <tr> <td colspan="1"> <b>private_key_file</b> </td> <td> </td> <td> <div> ini entries: <p>[defaults]<br>private_key_file = VALUE</p> </div> <div>env:ANSIBLE_PRIVATE_KEY_FILE</div> <div>var: ansible_private_key_file</div> </td> <td> <div>The private SSH key or certificate file used to to authenticate to the remote device when first establishing the SSH connection.</div> </td> </tr> <tr> <td colspan="1"> <b>remote_user</b> </td> <td> </td> <td> <div> ini entries: <p>[defaults]<br>remote_user = VALUE</p> </div> <div>env:ANSIBLE_REMOTE_USER</div> <div>var: ansible_user</div> </td> <td> <div>The username used to authenticate to the remote device when the SSH connection is first established. If the remote_user is not specified, the connection will use the username of the logged in user.</div> <div>Can be configured form the CLI via the <code>--user</code> or <code>-u</code> options</div> </td> </tr> <tr> <td colspan="1"> <b>timeout</b> <br><div style="font-size: small; color: red">int</div> </td> <td> <b>Default:</b><br><div style="color: blue">120</div> </td> <td> </td> <td> <div>Sets the connection time, in seconds, for the communicating with the remote device. This timeout is used as the default timeout value for commands when issuing a command to the network CLI. If the command does not return in timeout seconds, the an error is generated.</div> </td> </tr> </table> <br>  <h2 id="status">Status</h2>  <h3 id="author">Author</h3> <ul class="simple"> <li>Ansible Networking Team</li> </ul> <div class="admonition hint"> <p class="first admonition-title">Hint</p> <p class="last">If you notice any issues in this documentation you can <a class="reference external" href="https://github.com/ansible/ansible/edit/devel/lib/ansible/plugins/connection/network_cli.py" target="_blank">edit this document</a> to improve it.</p> </div>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

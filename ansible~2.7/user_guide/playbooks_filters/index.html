@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/ansible~2.7/user_guide/playbooks_filters/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/ansible~2.7.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.7/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="playbooks-filters">Filters</h1>   <ul id="filters"> <li><a class="reference internal" href="#filters-for-formatting-data" id="id10">Filters For Formatting Data</a></li> <li><a class="reference internal" href="#forcing-variables-to-be-defined" id="id11">Forcing Variables To Be Defined</a></li> <li><a class="reference internal" href="#defaulting-undefined-variables" id="id12">Defaulting Undefined Variables</a></li> <li><a class="reference internal" href="#omitting-parameters" id="id13">Omitting Parameters</a></li> <li><a class="reference internal" href="#list-filters" id="id14">List Filters</a></li> <li><a class="reference internal" href="#set-theory-filters" id="id15">Set Theory Filters</a></li> <li><a class="reference internal" href="#dict-filter" id="id16">Dict Filter</a></li> <li><a class="reference internal" href="#items2dict-filter" id="id17">items2dict filter</a></li> <li><a class="reference internal" href="#zip-and-zip-longest-filters" id="id18">zip and zip_longest filters</a></li> <li><a class="reference internal" href="#subelements-filter" id="id19">subelements Filter</a></li> <li><a class="reference internal" href="#random-mac-address-filter" id="id20">Random Mac Address Filter</a></li> <li><a class="reference internal" href="#random-number-filter" id="id21">Random Number Filter</a></li> <li><a class="reference internal" href="#shuffle-filter" id="id22">Shuffle Filter</a></li> <li><a class="reference internal" href="#math" id="id23">Math</a></li> <li><a class="reference internal" href="#json-query-filter" id="id24">JSON Query Filter</a></li> <li><a class="reference internal" href="#ip-address-filter" id="id25">IP address filter</a></li> <li><a class="reference internal" href="#network-cli-filters" id="id26">Network CLI filters</a></li> <li><a class="reference internal" href="#network-xml-filters" id="id27">Network XML filters</a></li> <li><a class="reference internal" href="#hashing-filters" id="id28">Hashing filters</a></li> <li><a class="reference internal" href="#combining-hashes-dictionaries" id="id29">Combining hashes/dictionaries</a></li> <li><a class="reference internal" href="#extracting-values-from-containers" id="id30">Extracting values from containers</a></li> <li><a class="reference internal" href="#comment-filter" id="id31">Comment Filter</a></li> <li><a class="reference internal" href="#url-split-filter" id="id32">URL Split Filter</a></li> <li><a class="reference internal" href="#regular-expression-filters" id="id33">Regular Expression Filters</a></li> <li><a class="reference internal" href="#id8" id="id34">Other Useful Filters</a></li> <li><a class="reference internal" href="#combination-filters" id="id35">Combination Filters</a></li> <li><a class="reference internal" href="#debugging-filters" id="id36">Debugging Filters</a></li> </ul>
   <p>Filters in Ansible are from Jinja2, and are used for transforming data inside a template expression. Jinja2 ships with many filters. See <a class="reference external" href="http://jinja.pocoo.org/docs/templates/#builtin-filters" target="_blank">builtin filters</a> in the official Jinja2 template documentation.</p> <p>Take into account that templating happens on the Ansible controller, <strong>not</strong> on the task’s target host, so filters also execute on the controller as they manipulate local data.</p> <p>In addition the ones provided by Jinja2, Ansible ships with it’s own and allows users to add their own custom filters.</p>  <h2 id="id1">Filters For Formatting Data</h2> <p id="filters-for-formatting-data">The following filters will take a data structure in a template and render it in a slightly different format. These are occasionally useful for debugging:</p> <pre data-language="YAML">{{ some_variable | to_json }}
@@ -562,17 +562,9 @@ ansible_managed = This file is managed by Ansible.%n
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
