@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/angular~5/guide/universal/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/angular~5.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="angular-universal-server-side-rendering">Angular Universal: server-side rendering</h1> <p>This guide describes <strong>Angular Universal</strong>, a technology that runs your Angular application on the server.</p> <p>A normal Angular application executes in the <em>browser</em>, rendering pages in the DOM in response to user actions.</p> <p><strong>Angular Universal</strong> generates <em>static</em> application pages on the <em>server</em> through a process called <strong>server-side rendering (SSR)</strong>.</p> <p>It can generate and serve those pages in response to requests from browsers. It can also pre-generate pages as HTML files that you serve later.</p> <p>This guide describes a Universal sample application that launches quickly as a server-rendered page. Meanwhile, the browser downloads the full client version and switches to it automatically after the code loads.</p> <blockquote class="l-sub-section"> <p><a href="https://v5.angular.io/generated/zips/universal/universal.zip" target="_blank">Download the finished sample code</a>, which runs in a <a href="https://expressjs.com/" target="_blank">node express</a> server.</p> </blockquote>  <h3 id="why-universal">Why Universal</h3> <p>There are three main reasons to create a Universal version of your app.</p> <ol> <li>Facilitate web crawlers (SEO)</li> <li>Improve performance on mobile and low-powered devices</li> <li>Show the first page quickly</li> </ol>   <h4 id="facilitate-web-crawlers">Facilitate web crawlers</h4> <p>Google, Bing, Facebook, Twitter and other social media sites rely on web crawlers to index your application content and make that content searchable on the web.</p> <p>These web crawlers may be unable to navigate and index your highly-interactive, Angular application as a human user could do.</p> <p>Angular Universal can generate a static version of your app that is easily searchable, linkable, and navigable without JavaScript. It also makes a site preview available since each URL returns a fully-rendered page.</p> <p>Enabling web crawlers is often referred to as <a href="https://static.googleusercontent.com/media/www.google.com/en//webmasters/docs/search-engine-optimization-starter-guide.pdf" target="_blank">Search Engine Optimization (SEO)</a>.</p>  <h4 id="performance-on-mobile-and-low-performance-devices">Performance on mobile and low performance devices</h4> <p>Some devices don't support JavaScript or execute JavaScript so poorly that the user experience is unacceptable. For these cases, you may require a server-rendered, no-JavaScript version of the app. This version, however limited, may be the only practical alternative for people who otherwise would not be able to use the app at all.</p>  <h4 id="show-the-first-page-quickly">Show the first page quickly</h4> <p>Displaying the first page quickly can be critical for user engagement.</p> <p><a href="https://www.doubleclickbygoogle.com/articles/mobile-speed-matters/" target="_blank">53% of mobile site visits are abandoned</a> if pages take longer than 3 seconds to load. Your app may have to launch faster to engage these users before they decide to do something else.</p> <p>With Angular Universal, you can generate landing pages for the app that look like the complete app. The pages are pure HTML, and can display even if JavaScript is disabled. The pages do not handle browser events, but they <em>do</em> support navigation through the site using <a href="../router/#router-link">routerLink</a>.</p> <p>In practice, you'll serve a static version of the landing page to hold the user's attention. At the same time, you'll load the full Angular app behind it in the manner <a href="../universal/#transition">explained below</a>. The user perceives near-instant performance from the landing page and gets the full interactive experience after the full app loads.</p>  <h3 id="how-it-works">How it works</h3> <p>To make a Universal app, you install the <code>platform-server</code> package. The <code>platform-server</code> package has server implementations of the DOM, <code>XMLHttpRequest</code>, and other low-level features that do not rely on a browser.</p> <p>You compile the client application with the <code>platform-server</code> module instead of the <code>platform-browser</code> module. and run the resulting Universal app on a web server.</p> <p>The server (a <a href="https://expressjs.com/" target="_blank">Node Express</a> server in <em>this</em> guide's example) passes client requests for application pages to Universal's <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> function.</p> <p>The <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> function takes as inputs a <em>template</em> HTML page (usually <code>index.html</code>), an Angular <em>module</em> containing components, and a <em>route</em> that determines which components to display.</p> <p>The route comes from the client's request to the server. Each request results in the appropriate view for the requested route.</p> <p>The <code><a href="../../api/platform-server/rendermodulefactory/" class="code-anchor">renderModuleFactory</a></code> renders that view within the <code>&lt;app&gt;</code> tag of the template, creating a finished HTML page for the client.</p> <p>Finally, the server returns the rendered page to the client.</p> <h3 id="working-around-the-browser-apis">Working around the browser APIs</h3> <p>Because a Universal <code>platform-server</code> app doesn't execute in the browser, you may have to work around some of the browser APIs and capabilities that are missing on the server.</p> <p>You won't be able reference browser-only native objects such as <code>window</code>, <code>document</code>, <code>navigator</code> or <code>location</code>. If you don't need them on the server-rendered page, side-step them with conditional logic.</p> <p>Alternatively, look for an injectable Angular abstraction over the object you need such as <code><a href="../../api/common/location/" class="code-anchor">Location</a></code> or <code>Document</code>; it may substitute adequately for the specific API that you're calling. If Angular doesn't provide it, you may be able to write your own abstraction that delegates to the browser API while in the browser and to a satisfactory alternative implementation while on the server.</p> <p>Without mouse or keyboard events, a universal app can't rely on a user clicking a button to show a component. A universal app should determine what to render based solely on the incoming client request. This is a good argument for making the app <a href="../router/">routeable</a>.</p> <p>Because the user of a server-rendered page can't do much more than click links, you should <a href="../universal/#transition">swap in the real client app</a> as quickly as possible for a proper interactive experience.</p>  <h2 id="the-example">The example</h2> <p>The <em>Tour of Heroes</em> tutorial is the foundation for the Universal sample described in this guide.</p> <p>The core application files are mostly untouched, with a few exceptions described below. You'll add more files to support building and serving with Universal.</p> <p>In this example, the Angular CLI compiles and bundles the Universal version of the app with the <a href="../aot-compiler/">AOT (Ahead-of-Time) compiler</a>. A node/express web server turns client requests into the HTML pages rendered by Universal.</p> <p>You will create:</p> <ul> <li>a server-side app module, <code>app.server.module.ts</code>
 </li> <li>an entry point for the server-side, <code>main.server.ts</code>
@@ -270,17 +270,9 @@ module.exports = {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

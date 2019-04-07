@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/angular~5/guide/architecture/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/angular~5.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~5/" class="_nav-link" title="" style="margin-left:0;">Angular 5</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="architecture-overview">Architecture overview</h1> <p>Angular is a platform and framework for building client applications in HTML and TypeScript. Angular is itself written in TypeScript. It implements core and optional functionality as a set of TypeScript libraries that you import into your apps.</p> <p>The basic building blocks of an Angular application are <em>NgModules</em>, which provide a compilation context for <em>components</em>. NgModules collect related code into functional sets; an Angular app is defined by a set of NgModules. An app always has at least a <em>root module</em> that enables bootstrapping, and typically has many more <em>feature modules</em>.</p> <ul> <li> <p>Components define <em>views</em>, which are sets of screen elements that Angular can choose among and modify according to your program logic and data. Every app has at least a root component.</p> </li> <li> <p>Components use <em>services</em>, which provide specific functionality not directly related to views. Service providers can be <em>injected</em> into components as <em>dependencies</em>, making your code modular, reusable, and efficient.</p> </li> </ul> <p>Both components and services are simply classes, with <em>decorators</em> that mark their type and provide metadata that tells Angular how to use them.</p> <ul> <li> <p>The metadata for a component class associates it with a <em>template</em> that defines a view. A template combines ordinary HTML with Angular <em>directives</em> and <em>binding markup</em> that allow Angular to modify the HTML before rendering it for display.</p> </li> <li> <p>The metadata for a service class provides the information Angular needs to make it available to components through <em>Dependency Injection (DI)</em>.</p> </li> </ul> <p>An app's components typically define many views, arranged hierarchically. Angular provides the <code><a href="../../api/router/router/" class="code-anchor">Router</a></code> service to help you define navigation paths among views. The router provides sophisticated in-browser navigational capabilities.</p> <h2 id="modules">Modules</h2> <p>Angular defines the <code><a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code>, which differs from and complements the JavaScript (ES2015) module. An NgModule declares a compilation context for a set of components that is dedicated to an application domain, a workflow, or a closely related set of capabilities. An NgModule can associate its components with related code, such as services, to form functional units.</p> <p>Every Angular app has a <em>root module</em>, conventionally named <code>AppModule</code>, which provides the bootstrap mechanism that launches the application. An app typically contains many functional modules.</p> <p>Like JavaScript modules, NgModules can import functionality from other NgModules, and allow their own functionality to be exported and used by other NgModules. For example, to use the router service in your app, you import the <code><a href="../../api/router/router/" class="code-anchor">Router</a></code> NgModule.</p> <p>Organizing your code into distinct functional modules helps in managing development of complex applications, and in designing for reusability. In addition, this technique lets you take advantage of <em>lazy-loading</em>—that is, loading modules on demand—in order to minimize the amount of code that needs to be loaded at startup.</p> <blockquote class="l-sub-section"> <p> For a more detailed discussion, see <a href="../architecture-modules/">Introduction to modules</a>.</p> </blockquote> <h2 id="components">Components</h2> <p>Every Angular application has at least one component, the <em>root component</em> that connects a component hierarchy with the page DOM. Each component defines a class that contains application data and logic, and is associated with an HTML <em>template</em> that defines a view to be displayed in a target environment.</p> <p>The <code>@<a href="../../api/core/component/" class="code-anchor">Component</a></code> decorator identifies the class immediately below it as a component, and provides the template and related component-specific metadata.</p> <blockquote class="l-sub-section"> <p> Decorators are functions that modify JavaScript classes. Angular defines a number of such decorators that attach specific kinds of metadata to classes, so that it knows what those classes mean and how they should work.</p> <p> <a href="https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841#.x5c2ndtx0" target="_blank">Learn more about decorators on the web.</a></p> </blockquote> <h3 id="templates-directives-and-data-binding">Templates, directives, and data binding</h3> <p>A template combines HTML with Angular markup that can modify the HTML elements before they are displayed. Template <em>directives</em> provide program logic, and <em>binding markup</em> connects your application data and the document object model (DOM).</p> <ul> <li>
 <em>Event binding</em> lets your app respond to user input in the target environment by updating your application data.</li> <li>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
