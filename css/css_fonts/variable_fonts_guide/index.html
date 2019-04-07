@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/css/" class="_nav-link" title="" style="margin-left:0;">CSS</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>CSS Fonts: Variable Fonts Guide</h1> <p class="summary"><strong>Variable fonts</strong> are an evolution of the OpenType font specification that enables many different variations of a typeface to be incorporated into a single file, rather than having a separate font file for every width, weight, or style. They let you access all the variations contained in a given font file via CSS and a single <a href="../../@font-face/"><code>@font-face</code></a> reference. This article will give you all you need to know to get you started using variable fonts.</p> <div class="warning"> <p><strong>Warning</strong>: In order to use variable fonts on your operating system, you need to make sure that it is up to date. For example Linux OSes need the latest Linux Freetype version, and macOS prior to 10.13 does not support variable fonts. If your operating system is not up to date, you will not be able to use variable fonts in web pages or the Firefox Developer Tools.</p> </div> <h2 id="Variable_Fonts_what_they_are_and_how_they_differ">Variable Fonts: what they are, and how they differ</h2> <p>To better understand what's different about variable fonts, it is worth reviewing what non-variable ones are like and how they compare.</p> <h3 id="Standard_(or_Static)_fonts">Standard (or Static) fonts</h3> <p>In the past, a typeface would be produced as a number of individual fonts, and each font would represent one specific width/weight/style combination. So you would have separate files for 'Roboto Regular', 'Roboto Bold', and 'Roboto Bold Italic' — meaning that you could end up with 20 or 30 different font files to represent a complete typeface (it could be several times that for a large typeface that has different widths as well).</p> <p>In such a scenario, in order to use a typeface for typical use on a site for body copy you would need at least four files: regular, italic, bold, and bold italic. If you wanted to add more weights, like a lighter one for captions or a heavier one for extra emphasis, that would mean several more files. This results in more HTTP requests, and more data being downloaded (usually around 20k or more per file).</p> <h3 id="Variable_fonts">Variable fonts</h3> <p>With a variable font, all of those permutations can be contained in a single file. That file would be larger than a single font, but in most cases smaller or about the same size as the 4 you might load for body copy. The advantage in choosing the variable font is that you have access to the entire range of weights, widths, and styles available, rather than being constrained to only the few that you previously would have loaded separately.</p> <p>This allows for common typographic techniques such as setting different size headings in different weights for better readability at each size, or using a slightly narrower width for data-dense displays. For comparison, it is typical in a typographic system for a magazine to use 10–15 or more different weight and width combinations throughout the publication — giving a much wider range of styles than currently typical on the web (or indeed practical for performance reasons alone).</p> <h4 id="A_note_about_font_families_weights_and_variants">A note about font families, weights, and variants</h4> <p>You might notice that we have been talking about having a specific font file for every weight and style (i.e. bold and italic and bold italic), rather than relying upon the browser to synthesize them. The reason for this is that most typefaces have very specific designs for bolder weights and italics that often include completely different characters (lower-case 'a' and 'g' are often quite different in italics, for example). In order to most accurately reflect the typeface design and avoid differences between browsers and how they may or may not synthesize the different styles, it's more accurate to load the specific font files where needed when using a non-variable font.</p> <p>You may also find that some variable fonts come split into two files: one for uprights and all their variations, and one containing the italic variations. This is sometimes done to reduce the overall file size in cases where the italics aren't needed or used. In all cases, it is still possible to link them with a common <a href="../../font-family/"><code>font-family</code></a> name so you can call them using the same <code>font-family</code> and appropriate <a href="../../font-style/"><code>font-style</code></a>.</p> <h2 id="Introducing_the_'variation_axis'">Introducing the 'variation axis'</h2> <p>The heart of the new variable fonts format is the concept of an <strong>axis of variation</strong> describing the allowable range of that particular aspect of the typeface design. So the 'weight axis' describes how light or how bold the letterforms can be; the 'width axis' describes how narrow or how wide they can be; the 'italic axis' describes if italic letterforms are present and can be turned on or off accordingly, etc. Note that an axis can be a range or a binary choice. Weight might range from 1–999, whereas italic might simply be 0 or 1 (off or on).</p> <p>As defined in the specification, there are two kinds of axes: <strong>registered</strong> and <strong>custom</strong>:</p> <ul> <li> <p>Registered axes are simply those that are most frequently encountered, and common enough that the authors of the specification felt it was worth standardizing. The five currently registered axes are weight, width, slant, italic, and optical size. The W3C has undertaken mapping them to existing CSS attributes, and in one case introduced a new one, which you'll see below.</p> </li> <li> <p>Custom axes are in fact limitless: the typeface designer can define and scope any axis they like, and are just required to give it a four-letter <strong>tag</strong> to identify it within the font file format itself. You can use these four-letter tags in CSS to specify a point along that axis of variation, as will be show in the code examples below.</p> </li> </ul> <h3 id="Registered_axes_and_existing_CSS_attributes">Registered axes and existing CSS attributes</h3> <p>In this section we'll demonstrate the five registered axes defined with examples and the corresponding CSS. Where possible, both the standard and lower-level syntax are included. The lower-level syntax (<a href="../../font-variation-settings/"><code>font-variation-settings</code></a>) was the first mechanism implemented in order to test the early implementations of variable font support, and is necessary to utilize new or custom axes beyond the five registered ones. However, the W3C’s intent was for this syntax not to be used when other attributes are available. Therefore wherever possible, the appropriate property should be used, with the lower-level syntax of <code>font-variation-settings</code> only being used to set values or axes not available otherwise.</p> <h4 id="Notes">Notes</h4> <ol> <li> <p>When using <code>font-variation-settings</code> it is important to note that axis names are case-sensitive. The registered axis names must be in lower case, and custom axes must be in upper case. For example:</p> <pre data-language="css">font-variation-settings: 'wght' 375, 'GRAD' 88;</pre> <p><code>wght</code> (weight) is a registered axis, and <code>GRAD</code> (grade) is a custom one.</p> </li> <li> <p>If you have set values using <code>font-variation-settings</code> and want to change one of those values, you must redeclare all of them (in the same way as when you set OpenType font features using <a href="../../font-feature-settings/"><code>font-feature-settings</code></a>). You can work around this limitation by using <a href="../../using_css_variables/">CSS Custom Properties</a> (CSS variables) for the individual values, and simply modifying the value of an individual custom property. Example code follows at the end of the guide.</p> </li> </ol> <h3 id="Weight">Weight</h3> <p>Weight (represented by the <code>wght</code> tag) defines the design axis of how thin or thick (light or heavy, in typical typographic terms) the strokes of the letterforms can be. For a long time in CSS there has existed the ability to specify this via the <a href="../../font-weight/"><code>font-weight</code></a> property, which takes numeric values ranging from 100 to 900 in increments of 100, and keywords like <code>normal</code> or <code>bold</code>, which are were simply aliases for their corresponding numeric values (400 and 700 in this case). These are still applied when dealing with non-variable or variable fonts, but with variable ones, any number from 1 to 1000 is now valid.</p> <p>It should be noted that at this point there is no way in the <code>@font-face</code> declaration to 'map' a specific point on the variation axis of a variable font to the keyword <code>bold</code> (or any other keyword). This can generally be resolved fairly easily, but does require an extra step in writing your CSS:</p> <pre data-language="css">font-weight: 375;
 
@@ -142,17 +142,9 @@ font-variation-settings: 'opsz' 36;</pre> <p>The following live example's CSS ca
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

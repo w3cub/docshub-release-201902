@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/css/" class="_nav-link" title="" style="margin-left:0;">CSS</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Cascade</h1> <p>The <strong>cascade</strong> is an algorithm that defines how to combine property values originating from different sources. It lies at the core of CSS, as emphasized by the name: <em>Cascading</em> Style Sheets. This article explains what the cascade is, the order in which <a href="https://developer.mozilla.org/en-US/docs/Glossary/CSS" target="_blank">CSS</a> <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration" target="_blank">declarations</a> cascade, and how this affects you, the web developer.</p> <h2 id="Which_CSS_entities_participate_in_the_cascade">Which CSS entities participate in the cascade</h2> <p>Only CSS declarations, that is property/value pairs, participate in the cascade. This means that <a href="../at-rule/">at-rules</a> containing entities other than declarations, such as a <a href="../@font-face/"><code>@font-face</code></a> rule containing <em>descriptors</em>, don't participate in the cascade. In these cases, only the at-rule as a whole participates in the cascade: here, the <code>@font-face</code> identified by its <code><a href="../@font-face/font-family/">font-family</a></code> descriptor. If several <code>@font-face</code> rules with the same descriptor are defined, only the most appropriate <code>@font-face</code>, as a whole, is considered.</p> <p>While the declarations contained in most at-rules — such as those in <a href="../@media/"><code>@media</code></a>, <a href="../@document/"><code>@document</code></a>, or <a href="../@supports/"><code>@supports</code></a> — participate in the cascade, declarations contained in <a href="../@keyframes/"><code>@keyframes</code></a> don't. As with <code>@font-face</code>, only the at-rule as a whole is selected via the cascade algorithm.</p> <p>Finally, note that <a href="../@import/"><code>@import</code></a> and <a href="../@charset/"><code>@charset</code></a> obey specific algorithms and aren't affected by the cascade algorithm.</p> <h2 id="Origin_of_CSS_declarations">Origin of CSS declarations</h2> <p>The CSS cascade algorithm's job is to select CSS declarations in order to determine the correct values for CSS properties. CSS declarations originate from different origins: the <strong><a href="#User-agent_stylesheets">User-agent stylesheets</a></strong>, the <strong><a href="#Author_stylesheets">Author stylesheets</a></strong>, and the <strong><a href="#User_stylesheets">User stylesheets</a></strong>.</p> <p>Though style sheets come from these different origins, they overlap in scope; to make this work, the cascade algorithm defines how they interact.</p> <h3 id="User-agent_stylesheets">User-agent stylesheets</h3> <p>The browser has a basic style sheet that gives a default style to any document. These style sheets are named <strong>user-agent stylesheets</strong>. Some browsers use actual style sheets for this purpose, while others simulate them in code, but the end result is the same.</p> <p>Some browsers let users modify the user-agent stylesheet. Although some constraints on user-agent stylesheets are set by the HTML specification, browsers still have a lot of latitude: that means that significant differences exist from one browser to another. To simplify the development process, Web developers often use a CSS reset style sheet, forcing common properties values to a known state before beginning to make alterations to suit their specific needs.</p> <h3 id="Author_stylesheets">Author stylesheets</h3> <p><strong>Author stylesheets</strong> are the most common type of style sheet. These are style sheets that define styles as part of the design of a given web page or site. The author of the page defines the styles for the document using one or more stylesheets, which define the look and feel of the website — its theme.</p> <h3 id="User_stylesheets">User stylesheets</h3> <p>The user (or reader) of the web site can choose to override styles in many browsers using a custom <strong>user stylesheet</strong> designed to tailor the experience to the user's wishes.</p> <h3 name="Override_stylesheets" id="Override_stylesheets">Override stylesheets 
 </h3> <p>This feature was never implemented outside of Gecko, where it was only ever used for the non-standard <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XBL" target="_blank">XBL stylesheets</a>.</p> <h2 id="Cascading_order">Cascading order</h2> <p>The cascading algorithm determines how to find the value to apply for each property for each document element.</p> <ol> <li>It first filters all the rules from the different sources to keep only the rules that apply to a given element. That means rules whose selector matches the given element and which are part of an appropriate media at-rule.</li> <li>Then it sorts these rules according to their importance, that is, whether or not they are followed by <code>!important</code>, and by their origin. The cascade is in ascending order, which means that <code>!important</code> values from a user-defined style sheet have precedence over normal values originated from a user-agent style sheet: <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col"> </th> <th scope="col">Origin</th> <th scope="col">Importance</th> </tr> </thead> <tbody> <tr> <td>1</td> <td>CSS Transitions</td> <td><em>see below</em></td> </tr> <tr> <td>2</td> <td>user agent</td> <td>normal</td> </tr> <tr> <td>3</td> <td>user</td> <td>normal</td> </tr> <tr> <td> </td> <td>override 
@@ -105,17 +105,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/css/" class="_nav-link" title="" style="margin-left:0;">CSS</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>CSSOM View: Coordinate systems</h1> <p>When specifying the location of a pixel in a graphics context (just like when specifying coordinate systems in <a href="https://en.wikipedia.org/wiki/algebra" target="_blank">algebra</a>), its position is defined relative to a fixed point in the context. This fixed point is called the <a href="https://en.wikipedia.org/wiki/Origin_(mathematics)" target="_blank">origin</a>. The position is specified as the number of pixels offset from the origin along each dimension of the context.</p> <p>This guide describes the standard coordinate systems used by the CSS object model. These are generally only different in terms of where their origin is located.</p> <h2 id="Dimensions">Dimensions</h2> <p>In the coordinate systems used by web technologies, convention dictates that the horizontal offset is called the <em>x-coordinate</em>, where a negative value indicates a position to the left of the origin and a positive value is to the right of the origin. The <em>y-coordinate</em> specifies the vertical offset, with a negative value being above the origin and a positive value being below the origin.</p> <p>On the web, the default origin is the <em>top</em>-left corner of a given context (with positive y-coordinate values being below the origin). Note that this is unlike most mathematical models, where the origin is at the <em>bottom</em>-left corner, with positive y-coordinate values being above the origin.</p> <p>When drawing 3D graphics, or using a third dimension to layer objects from front to back, the <em>z-coordinate</em> is also used. This specifies the distance away from the viewer if positive and toward the viewer if negative.</p> <div class="note"> <p>It's actually possible to change the definitions and orientations of these coordinate systems using CSS properties such as <a href="../../transform/"><code>transform</code></a>. However, we'll only talk about the standard coordinate system for now.</p> </div> <h2 id="Standard_CSSOM_coordinate_systems">Standard CSSOM coordinate systems</h2> <p>There are four standard coordinate systems used by the CSS object model, as described below.</p> <h3 id="Offset">Offset</h3> <p>Coordinates specified using the "offset" model use the top-left corner of the element being examined, or on which an event has occurred.</p> <p>For example, when a <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank">mouse event</a> occurs, the position of the mouse as specified in the event's <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX" target="_blank"><code>offsetX</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetY" target="_blank"><code>offsetY</code></a> properties are given relative to the top-left corner of the node to which the event has been delivered. The origin is inset by the distances specified by <a href="../../padding-left/"><code>padding-left</code></a> and <a href="../../padding-top/"><code>padding-top</code></a>.</p> <h3 id="Client">Client</h3> <p>The "client" coordinate system uses as its origin the top-left corner of the viewport or browsing context in which the event occurred. This is the entire viewing area in which the document is presented. Scrolling is not a factor.</p> <p>On a desktop computer, for example, the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/clientX" target="_blank"><code>MouseEvent.clientX</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/clientY" target="_blank"><code>MouseEvent.clientY</code></a> properties indicate the position of the mouse cursor at the moment the event occurred, relative to the top-left corner of the browser window. The top-left corner of the window is always (0, 0), regardless of the content of the document or any scrolling that may have been done. In other words, scrolling the document will change the client coordinates of a given position within the document.</p> <h3 id="Page">Page</h3> <p>The "page" coordinate system gives the position of a pixel relative to the top-left corner of the entire <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank"><code>Document</code></a> in which the pixel is located. That means that a given point in an element within the document will keep the same coordinates in the page model unless the element moves (either directly by changing its position or indirectly by adding or resizing other content).</p> <p>Mouse events' <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/pageX" target="_blank"><code>pageX</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/pageY" target="_blank"><code>pageY</code></a> properties provide the position of the mouse at the time the event was generated, given relative to the top-left corner of the document.</p> <h3 id="Screen">Screen</h3> <p>Finally, we come to the "screen" model. It's probably fairly obvious what this is: it's the coordinate system where the origin is located at the top-left corner of the user's entire screen space. This means that the position of a given point within a document will change if the containing window is moved, for example, or if the user's screen geometry changes (by changing display resolution or by adding or removing monitors to their system).</p> <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/screenX" target="_blank"><code>MouseEvent.screenX</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/screenY" target="_blank"><code>MouseEvent.screenY</code></a> properties give the coordinates of a mouse event's position relative to the screen's origin.</p> <h2 name="Example" id="Example">Example</h2> <p>Let's take a look at an example. This simple example creates a set of nested boxes. Whenever the mouse enters, moves around inside, or exits the inner box, the corresponding event is handled by updating a set of informational messages within the box, listing out the current mouse coordinates in each of the four available <a href="../coordinate_systems/">coordinate systems</a>.</p> <h3 id="JavaScript">JavaScript</h3> <p>Let's look at the script in two sections. First, the code that logs the coordinates to the screen. This code will be called by the event handler for the various mouse events we watch.</p> <h4 id="Displaying_the_coordinates">Displaying the coordinates</h4> <p>As we'll see in the HTML, the inner box (the one we're watching for events on) contains several paragraphs; one for each of the four coordinate systems we'll be reporting on.</p> <pre data-language="js">let inner = document.querySelector(".inner");
 let log = document.querySelector(".log");
@@ -165,17 +165,9 @@ inner.addEventListener("mouseleave", update, false);</pre> <p>The event handler 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
