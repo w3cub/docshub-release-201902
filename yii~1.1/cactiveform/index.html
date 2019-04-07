@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/yii~1.1/" class="_nav-link" title="" style="margin-left:0;">Yii 1.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _yii">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>CActiveForm</h1>  <table class="summaryTable docClass"> <colgroup> <col class="col-name"> <col class="col-value"> </colgroup> <tr> <th>Package</th> <td><a href="../#system.web.widgets">system.web.widgets</a></td> </tr> <tr> <th>Inheritance</th> <td>class CActiveForm » <a href="../cwidget/">CWidget</a> » <a href="../cbasecontroller/">CBaseController</a> » <a href="../ccomponent/">CComponent</a>
 </td> </tr> <tr> <th>Subclasses</th> <td><a href="../ccodeform/">CCodeForm</a></td> </tr> <tr> <th>Since</th> <td>1.1.1</td> </tr> <tr> <th>Source Code</th> <td><a class="sourceLink" href="https://github.com/yiisoft/yii/blob/1.1.19/framework/web/widgets/CActiveForm.php" target="_blank">framework/web/widgets/CActiveForm.php</a></td> </tr> </table> <div id="classDescription"> CActiveForm provides a set of methods that can help to simplify the creation of complex and interactive HTML forms that are associated with data models. <br><br> The 'beginWidget' and 'endWidget' call of CActiveForm widget will render the open and close form tags. Most other methods of CActiveForm are wrappers of the corresponding 'active' methods in <a href="../chtml/">CHtml</a>. Calling them in between the 'beginWidget' and 'endWidget' calls will render text labels, input fields, etc. For example, calling <a href="../cactiveform/#textField">CActiveForm::textField</a> would generate an input field for a specified model attribute. <br><br> What makes CActiveForm extremely useful is its support for data validation. CActiveForm supports data validation at three levels: <ul> <li>server-side validation: the validation is performed at server side after the whole page containing the form is submitted. If there is any validation error, CActiveForm will render the error in the page back to user.</li> <li>AJAX-based validation: when the user enters data into an input field, an AJAX request is triggered which requires server-side validation. The validation result is sent back in AJAX response and the input field changes its appearance accordingly.</li> <li>client-side validation (available since version 1.1.7): when the user enters data into an input field, validation is performed on the client side using JavaScript. No server contact will be made, which reduces the workload on the server.</li> </ul> <br><br> All these validations share the same set of validation rules declared in the associated model class. CActiveForm is designed in such a way that all these validations will lead to the same user interface changes and error message content. <br><br> To ensure data validity, server-side validation is always performed. By setting <a href="../cactiveform/#enableAjaxValidation">enableAjaxValidation</a> to true, one can enable AJAX-based validation; and by setting <a href="../cactiveform/#enableClientValidation">enableClientValidation</a> to true, one can enable client-side validation. Note that in order to make the latter two validations work, the user's browser must has its JavaScript enabled. If not, only the server-side validation will be performed. <br><br> The AJAX-based validation and client-side validation may be used together or separately. For example, in a user registration form, one may use AJAX-based validation to check if the user has picked a unique username, and use client-side validation to ensure all required fields are entered with data. Because the AJAX-based validation may bring extra workload on the server, if possible, one should mainly use client-side validation. <br><br> The AJAX-based validation has a few limitations. First, it does not work with file upload fields. Second, it should not be used to perform validations that may cause server-side state changes. Third, it is not designed to work with tabular data input for the moment. <br><br> Support for client-side validation varies for different validators. A validator will support client-side validation only if it implements <a href="../cvalidator/#clientValidateAttribute">CValidator::clientValidateAttribute</a> and has its <a href="../cvalidator/#enableClientValidation">CValidator::enableClientValidation</a> property set true. At this moment, the following core validators support client-side validation: <ul> <li><a href="../cbooleanvalidator/">CBooleanValidator</a></li> <li><a href="../ccaptchavalidator/">CCaptchaValidator</a></li> <li><a href="../ccomparevalidator/">CCompareValidator</a></li> <li><a href="../cemailvalidator/">CEmailValidator</a></li> <li><a href="../cnumbervalidator/">CNumberValidator</a></li> <li><a href="../crangevalidator/">CRangeValidator</a></li> <li><a href="../cregularexpressionvalidator/">CRegularExpressionValidator</a></li> <li><a href="../crequiredvalidator/">CRequiredValidator</a></li> <li><a href="../cstringvalidator/">CStringValidator</a></li> <li><a href="../curlvalidator/">CUrlValidator</a></li> </ul> <br><br> CActiveForm relies on CSS to customize the appearance of input fields which are in different validation states. In particular, each input field may be one of the four states: initial (not validated), validating, error and success. To differentiate these states, CActiveForm automatically assigns different CSS classes for the last three states to the HTML element containing the input field. By default, these CSS classes are named as 'validating', 'error' and 'success', respectively. We may customize these CSS classes by configuring the <a href="../cactiveform/#clientOptions">clientOptions</a> property or specifying in the <a href="../cactiveform/#error">error</a> method. <br><br> The following is a piece of sample view code showing how to use CActiveForm: <br><br> <pre>
@@ -159,17 +159,9 @@ public function actionCreate()
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
