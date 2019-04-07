@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/jquery/" class="_nav-link" title="" style="margin-left:0;">jQuery</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _jquery">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="entry-title">.attr()</h1> <div class="entry-content"> Get the value of an attribute for the first element in the set of matched elements or set one or more attributes for every matched element.<div class="toc"> <h4><span>Contents:</span></h4> <ul class="toc-list"> <li> <a href="#attr1">.attr( attributeName )</a><ul><li><a href="#attr-attributeName">.attr( attributeName )</a></li></ul> </li> <li> <a href="#attr2">.attr( attributeName, value )</a><ul> <li><a href="#attr-attributeName-value">.attr( attributeName, value )</a></li> <li><a href="#attr-attributes">.attr( attributes )</a></li> <li><a href="#attr-attributeName-function">.attr( attributeName, function )</a></li> </ul> </li> </ul> </div>
 <article id="attr1" class="entry method"><h2 class="section-title"> <span class="name">.attr( attributeName )</span><span class="returns">Returns: <a href="../types/#String">String</a></span> </h2> <div class="entry-wrapper"> <p class="desc"><strong>Description: </strong>Get the value of an attribute for the first element in the set of matched elements.</p> <ul class="signatures"><li class="signature"> <h4 class="name"> <span class="version-details">version added: <a href="https://api.jquery.com/category/version/1.0/" target="_blank">1.0</a></span><a id="attr-attributeName" href="#attr-attributeName">.attr( attributeName )</a> </h4> <ul><li> <div><strong>attributeName</strong></div> <div>Type: <a href="../types/#String">String</a> </div> <div>The name of the attribute to get.</div> </li></ul> </li></ul> <div class="longdesc" id="entry-longdesc"> <p>The <code>.attr()</code> method gets the attribute value for only the <em>first</em> element in the matched set. To get the value for each element individually, use a looping construct such as jQuery's <code>.each()</code> or <code>.map()</code> method.</p> <p>Using jQuery's <code>.attr()</code> method to get the value of an element's attribute has two main benefits:</p> <ol> <li> <strong>Convenience</strong>: It can be called directly on a jQuery object and chained to other jQuery methods.</li> <li> <strong>Cross-browser consistency</strong>: The values of some attributes are reported inconsistently across browsers, and even across versions of a single browser. The <code>.attr()</code> method reduces such inconsistencies.</li> </ol> <div class="warning"> <p><strong>Note:</strong> Attribute values are strings with the exception of a few attributes such as value and tabindex.</p> </div> <p>As of jQuery 1.6, the <code>.attr()</code> method returns <code>undefined</code> for attributes that have not been set. <strong>To retrieve and change DOM properties such as the <code>checked</code>, <code>selected</code>, or <code>disabled</code> state of form elements, use the <a href="../prop/">.prop()</a> method.</strong></p>  <h4>Attributes vs. Properties</h4> <p>The difference between <em>attributes</em> and <em>properties</em> can be important in specific situations. <strong>Before jQuery 1.6</strong>, the <code>.attr()</code> method sometimes took property values into account when retrieving some attributes, which could cause inconsistent behavior. <strong>As of jQuery 1.6</strong>, the <code>.prop()</code> method provides a way to explicitly retrieve property values, while <code>.attr()</code> retrieves attributes.</p> <p>For example, <code>selectedIndex</code>, <code>tagName</code>, <code>nodeName</code>, <code>nodeType</code>, <code>ownerDocument</code>, <code>defaultChecked</code>, and <code>defaultSelected</code> should be retrieved and set with the <code><a href="../prop/">.prop()</a></code> method. Prior to jQuery 1.6, these properties were retrievable with the <code>.attr()</code> method, but this was not within the scope of <code>attr</code>. These do not have corresponding attributes and are only properties.</p> <p>Concerning boolean attributes, consider a DOM element defined by the HTML markup <code>&lt;input type="checkbox" checked="checked" /&gt;</code>, and assume it is in a JavaScript variable named <code>elem</code>:</p> <table> <tr> <th> <code>elem.checked</code> </th> <td> <code>true</code> (Boolean) Will change with checkbox state</td> </tr> <tr> <th> <code>$( elem ).prop( "checked" )</code> </th> <td> <code>true</code> (Boolean) Will change with checkbox state</td> </tr> <tr> <th> <code>elem.getAttribute( "checked" )</code> </th> <td> <code>"checked"</code> (String) Initial state of the checkbox; does not change</td> </tr> <tr> <th> <code>$( elem ).attr( "checked" )</code> <em>(1.6)</em> </th> <td> <code>"checked"</code> (String) Initial state of the checkbox; does not change</td> </tr> <tr> <th> <code>$( elem ).attr( "checked" )</code> <em>(1.6.1+)</em> </th> <td> <code>"checked"</code> (String) Will change with checkbox state</td> </tr> <tr> <th> <code>$( elem ).attr( "checked" )</code> <em>(pre-1.6)</em> </th> <td> <code>true</code> (Boolean) Changed with checkbox state</td> </tr> </table> <br> <p>According to the <a href="https://www.w3.org/TR/html401/interact/forms.html#h-17.4" target="_blank">W3C forms specification</a>, the <code>checked</code> attribute is a <em><a href="https://www.w3.org/TR/html4/intro/sgmltut.html#h-3.3.4.2" target="_blank">boolean attribute</a></em>, which means the corresponding property is <strong>true</strong> if the attribute is present at all—even if, for example, the attribute has no value or is set to empty string value or even "false". This is true of all boolean attributes.</p> <p>Nevertheless, the most important concept to remember about the <code>checked</code> attribute is that it does not correspond to the <code>checked</code> property. The attribute actually corresponds to the <code>defaultChecked</code> property and should be used only to set the <em>initial</em> value of the checkbox. The <code>checked</code> attribute value does not change with the state of the checkbox, while the <code>checked</code> property does. Therefore, the cross-browser-compatible way to determine if a checkbox is checked is to use the property:</p> <ul> <li> <code>if ( elem.checked )</code> </li> <li> <code>if ( $( elem ).prop( "checked" ) )</code> </li> <li> <code>if ( $( elem ).is( ":checked" ) )</code> </li> </ul> <p>The same is true for other dynamic attributes, such as <code>selected</code> and <code>value</code>.</p> </div> <h3>Additional Notes:</h3> <div class="longdesc"><ul><li> In Internet Explorer prior to version 9, using <code><a href="../prop/">.prop()</a></code> to set a DOM element property to anything other than a simple primitive value (number, string, or boolean) can cause memory leaks if the property is not removed (using <a href="../removeprop/"><code>.removeProp()</code></a>) before the DOM element is removed from the document. To safely set values on DOM objects without memory leaks, use <a href="../data/"><code>.data()</code></a>. </li></ul></div> <section class="entry-examples" id="entry-examples"><h2>Examples:</h2>
@@ -242,17 +242,9 @@ $( "img" ).attr( "src", function() {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
