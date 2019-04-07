@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _angular">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="reactive-forms">Reactive Forms</h1> <p><em>Reactive forms</em> is an Angular technique for creating forms in a <em>reactive</em> style. This guide explains reactive forms as you follow the steps to build a "Hero Detail Editor" form.</p>  <p>Try the <span stackblitz="final" title="Reactive Forms (final) in Stackblitz">Reactive Forms live-example</span>.</p> <p>You can also run the <span title="Reactive Forms Demo in Stackblitz">Reactive Forms Demo</span> version and choose one of the intermediate steps from the "demo picker" at the top.</p>  <h2 id="introduction-to-reactive-forms">Introduction to Reactive Forms</h2> <p>Angular offers two form-building technologies: <em>reactive</em> forms and <em>template-driven</em> forms. The two technologies belong to the <code>@angular/forms</code> library and share a common set of form control classes.</p> <p>But they diverge markedly in philosophy, programming style, and technique. They even have their own modules: the <code><a href="../../api/forms/reactiveformsmodule/" class="code-anchor">ReactiveFormsModule</a></code> and the <code><a href="../../api/forms/formsmodule/" class="code-anchor">FormsModule</a></code>.</p> <h3 id="reactive-forms-1">Reactive forms</h3> <p>Angular <em>reactive</em> forms facilitate a <em>reactive style</em> of programming that favors explicit management of the data flowing between a non-UI <em>data model</em> (typically retrieved from a server) and a UI-oriented <em>form model</em> that retains the states and values of the HTML controls on screen. Reactive forms offer the ease of using reactive patterns, testing, and validation.</p> <p>With <em>reactive</em> forms, you create a tree of Angular form control objects in the component class and bind them to native form control elements in the component template, using techniques described in this guide.</p> <p>You create and manipulate form control objects directly in the component class. As the component class has immediate access to both the data model and the form control structure, you can push data model values into the form controls and pull user-changed values back out. The component can observe changes in form control state and react to those changes.</p> <p>One advantage of working with form control objects directly is that value and validity updates are <a href="../reactive-forms/#async-vs-sync" title="Async vs sync">always synchronous and under your control</a>. You won't encounter the timing issues that sometimes plague a template-driven form and reactive forms can be easier to unit test.</p> <p>In keeping with the reactive paradigm, the component preserves the immutability of the <em>data model</em>, treating it as a pure source of original values. Rather than update the data model directly, the component extracts user changes and forwards them to an external component or service, which does something with them (such as saving them) and returns a new <em>data model</em> to the component that reflects the updated model state.</p> <p>Using reactive form directives does not require you to follow all reactive priniciples, but it does facilitate the reactive programming approach should you choose to use it.</p> <h3 id="template-driven-forms">Template-driven forms</h3> <p><em>Template-driven</em> forms, introduced in the <a href="../forms/">Template guide</a>, take a completely different approach.</p> <p>You place HTML form controls (such as <code>&lt;input&gt;</code> and <code>&lt;select&gt;</code>) in the component template and bind them to <em>data model</em> properties in the component, using directives like <code><a href="../../api/forms/ngmodel/" class="code-anchor">ngModel</a></code>.</p> <p>You don't create Angular form control objects. Angular directives create them for you, using the information in your data bindings. You don't push and pull data values. Angular handles that for you with <code><a href="../../api/forms/ngmodel/" class="code-anchor">ngModel</a></code>. Angular updates the mutable <em>data model</em> with user changes as they happen.</p> <p>For this reason, the <code><a href="../../api/forms/ngmodel/" class="code-anchor">ngModel</a></code> directive is not part of the ReactiveFormsModule.</p> <p>While this means less code in the component class, <a href="../reactive-forms/#async-vs-sync" title="Async vs sync">template-driven forms are asynchronous</a> which may complicate development in more advanced scenarios.</p>  <h3 id="async-vs-sync">Async vs. sync</h3> <p>Reactive forms are synchronous while template-driven forms are asynchronous.</p> <p>In reactive forms, you create the entire form control tree in code. You can immediately update a value or drill down through the descendants of the parent form because all controls are always available.</p> <p>Template-driven forms delegate creation of their form controls to directives. To avoid "<em>changed after checked</em>" errors, these directives take more than one cycle to build the entire control tree. That means you must wait a tick before manipulating any of the controls from within the component class.</p> <p>For example, if you inject the form control with a <code>@<a href="../../api/core/viewchild/" class="code-anchor">ViewChild</a>(<a href="../../api/forms/ngform/" class="code-anchor">NgForm</a>)</code> query and examine it in the <a href="../lifecycle-hooks/#afterview" title="Lifecycle hooks guide: AfterView"><code>ngAfterViewInit</code> lifecycle hook</a>, you'll discover that it has no children. You must wait a tick, using <code>setTimeout</code>, before you can extract a value from a control, test its validity, or set it to a new value.</p> <p>The asynchrony of template-driven forms also complicates unit testing. You must wrap your test block in <code><a href="../../api/core/testing/async/" class="code-anchor">async</a>()</code> or <code><a href="../../api/core/testing/fakeasync/" class="code-anchor">fakeAsync</a>()</code> to avoid looking for values in the form that aren't there yet. With reactive forms, everything is available when you expect it to be.</p> <h3 id="choosing-reactive-or-template-driven-forms">Choosing reactive or template-driven forms</h3> <p>Reactive and template-driven forms are two different architectural paradigms, with their own strengths and weaknesses. Choose the approach that works best for you. You may decide to use both in the same application.</p> <p>The rest of this page explores the <em>reactive</em> paradigm and concentrates exclusively on reactive forms techniques. For information on <em>template-driven forms</em>, see the <a href="../forms/"><em>Forms</em></a> guide.</p> <p>In the next section, you'll set up your project for the reactive form demo. Then you'll learn about the <a href="../reactive-forms/#essentials">Angular form classes</a> and how to use them in a reactive form.</p>  <h2 id="setup">Setup</h2> <p>Create a new project named <code>angular-reactive-forms</code>:</p> <pre data-language="sh">ng new angular-reactive-forms</pre>  <h2 id="create-a-data-model">Create a data model</h2> <p>The focus of this guide is a reactive forms component that edits a hero. You'll need a <code>hero</code> class and some hero data.</p> <p>Using the CLI, generate a new class named <code>data-model</code>:</p> <pre data-language="sh">ng generate class data-model</pre> <p>And copy the following into <code>data-model.ts</code>:</p> <div class="pre-title">src/app/data-model.ts</div>
 <pre data-language="typescript">export class Hero {
@@ -924,17 +924,9 @@ export class HeroService {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
