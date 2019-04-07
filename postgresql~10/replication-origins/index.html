@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Chapter 49. Replication Progress Tracking</h1>     <p>Replication origins are intended to make it easier to implement logical replication solutions on top of <a class="link" href="https://www.postgresql.org/docs/10/static/logicaldecoding.html" title="Chapter 48. Logical Decoding" target="_blank">logical decoding</a>. They provide a solution to two common problems:</p>  <ul> <li> <p>How to safely keep track of replication progress</p> </li> <li> <p>How to change replication behavior based on the origin of a row; for example, to prevent loops in bi-directional replication setups</p> </li> </ul>  <p>Replication origins have just two properties, a name and an OID. The name, which is what should be used to refer to the origin across systems, is free-form <code class="type">text</code>. It should be used in a way that makes conflicts between replication origins created by different replication solutions unlikely; e.g. by prefixing the replication solution's name to it. The OID is used only to avoid having to store the long version in situations where space efficiency is important. It should never be shared across systems.</p> <p>Replication origins can be created using the function <a class="link" href="../functions-admin/#PG-REPLICATION-ORIGIN-CREATE"><code class="function">pg_replication_origin_create()</code></a>; dropped using <a class="link" href="../functions-admin/#PG-REPLICATION-ORIGIN-DROP"><code class="function">pg_replication_origin_drop()</code></a>; and seen in the <a class="link" href="../catalog-pg-replication-origin/" title="51.43. pg_replication_origin"><code class="structname">pg_replication_origin</code></a> system catalog.</p> <p>One nontrivial part of building a replication solution is to keep track of replay progress in a safe manner. When the applying process, or the whole cluster, dies, it needs to be possible to find out up to where data has successfully been replicated. Naive solutions to this, such as updating a row in a table for every replayed transaction, have problems like run-time overhead and database bloat.</p> <p>Using the replication origin infrastructure a session can be marked as replaying from a remote node (using the <a class="link" href="../functions-admin/#PG-REPLICATION-ORIGIN-SESSION-SETUP"><code class="function"> pg_replication_origin_session_setup()</code></a> function). Additionally the LSN and commit time stamp of every source transaction can be configured on a per transaction basis using <a class="link" href="../functions-admin/#PG-REPLICATION-ORIGIN-XACT-SETUP"><code class="function"> pg_replication_origin_xact_setup()</code></a>. If that's done replication progress will persist in a crash safe manner. Replay progress for all replication origins can be seen in the <a class="link" href="../view-pg-replication-origin-status/" title="51.79. pg_replication_origin_status"><code class="structname">pg_replication_origin_status</code></a> view. An individual origin's progress, e.g. when resuming replication, can be acquired using <a class="link" href="../functions-admin/#PG-REPLICATION-ORIGIN-PROGRESS"><code class="function">pg_replication_origin_progress()</code></a> for any origin or <a class="link" href="../functions-admin/#PG-REPLICATION-ORIGIN-SESSION-PROGRESS"><code class="function"> pg_replication_origin_session_progress()</code></a> for the origin configured in the current session.</p> <p>In replication topologies more complex than replication from exactly one system to one other system, another problem can be that it is hard to avoid replicating replayed rows again. That can lead both to cycles in the replication and inefficiencies. Replication origins provide an optional mechanism to recognize and prevent that. When configured using the functions referenced in the previous paragraph, every change and transaction passed to output plugin callbacks (see <a class="xref" href="https://www.postgresql.org/docs/10/static/logicaldecoding-output-plugin.html" title="48.6. Logical Decoding Output Plugins" target="_blank">Section 48.6</a>) generated by the session is tagged with the replication origin of the generating session. This allows treating them differently in the output plugin, e.g. ignoring all but locally-originating rows. Additionally the <a class="link" href="https://www.postgresql.org/docs/10/static/logicaldecoding-output-plugin.html#LOGICALDECODING-OUTPUT-PLUGIN-FILTER-ORIGIN" title="48.6.4.6. Origin Filter Callback" target="_blank"><code class="function">filter_by_origin_cb</code></a> callback can be used to filter the logical decoding change stream based on the source. While less flexible, filtering via that callback is considerably more efficient than doing it in the output plugin.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="https://www.postgresql.org/docs/10/static/logicaldecoding-synchronous.html" target="_blank">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/server-programming.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

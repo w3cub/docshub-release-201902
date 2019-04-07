@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>8.1. Numeric Types</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../datatype-numeric/#DATATYPE-INT">8.1.1. Integer Types</a></dt> <dt><a href="../datatype-numeric/#DATATYPE-NUMERIC-DECIMAL">8.1.2. Arbitrary Precision Numbers</a></dt> <dt><a href="../datatype-numeric/#DATATYPE-FLOAT">8.1.3. Floating-Point Types</a></dt> <dt><a href="../datatype-numeric/#DATATYPE-SERIAL">8.1.4. Serial Types</a></dt> </dl> </div>  <p>Numeric types consist of two-, four-, and eight-byte integers, four- and eight-byte floating-point numbers, and selectable-precision decimals. <a class="xref" href="../datatype-numeric/#DATATYPE-NUMERIC-TABLE" title="Table 8.2. Numeric Types">Table 8.2</a> lists the available types.</p> <div class="table" id="DATATYPE-NUMERIC-TABLE"> <p class="title"><strong>Table 8.2. Numeric Types</strong></p> <div class="table-contents"> <table class="table" summary="Numeric Types"> <colgroup> <col> <col> <col> <col>
 </colgroup> <thead> <tr> <th>Name</th> <th>Storage Size</th> <th>Description</th> <th>Range</th> </tr> </thead> <tbody> <tr> <td><code class="type" id="smallint">smallint</code></td> <td>2 bytes</td> <td>small-range integer</td> <td>-32768 to +32767</td> </tr> <tr> <td><code class="type" id="integer">integer</code></td> <td>4 bytes</td> <td>typical choice for integer</td> <td>-2147483648 to +2147483647</td> </tr> <tr> <td><code class="type" id="bigint">bigint</code></td> <td>8 bytes</td> <td>large-range integer</td> <td>-9223372036854775808 to +9223372036854775807</td> </tr> <tr> <td><code class="type" id="decimal">decimal</code></td> <td>variable</td> <td>user-specified precision, exact</td> <td>up to 131072 digits before the decimal point; up to 16383 digits after the decimal point</td> </tr> <tr> <td><code class="type" id="numeric">numeric</code></td> <td>variable</td> <td>user-specified precision, exact</td> <td>up to 131072 digits before the decimal point; up to 16383 digits after the decimal point</td> </tr> <tr> <td><code class="type" id="real">real</code></td> <td>4 bytes</td> <td>variable-precision, inexact</td> <td>6 decimal digits precision</td> </tr> <tr> <td><code class="type" id="double32precision">double precision</code></td> <td>8 bytes</td> <td>variable-precision, inexact</td> <td>15 decimal digits precision</td> </tr> <tr> <td><code class="type" id="smallserial">smallserial</code></td> <td>2 bytes</td> <td>small autoincrementing integer</td> <td>1 to 32767</td> </tr> <tr> <td><code class="type" id="serial">serial</code></td> <td>4 bytes</td> <td>autoincrementing integer</td> <td>1 to 2147483647</td> </tr> <tr> <td><code class="type" id="bigserial">bigserial</code></td> <td>8 bytes</td> <td>large autoincrementing integer</td> <td>1 to 9223372036854775807</td> </tr> </tbody> </table> </div> </div>  <p>The syntax of constants for the numeric types is described in <a class="xref" href="../sql-syntax-lexical/#SQL-SYNTAX-CONSTANTS" title="4.1.2. Constants">Section 4.1.2</a>. The numeric types have a full set of corresponding arithmetic operators and functions. Refer to <a class="xref" href="https://www.postgresql.org/docs/10/static/functions.html" title="Chapter 9. Functions and Operators" target="_blank">Chapter 9</a> for more information. The following sections describe the types in detail.</p> <div class="sect2" id="DATATYPE-INT">    <h2 class="title">8.1.1. Integer Types</h2>     <p>The types <code class="type">smallint</code>, <code class="type">integer</code>, and <code class="type">bigint</code> store whole numbers, that is, numbers without fractional components, of various ranges. Attempts to store values outside of the allowed range will result in an error.</p> <p>The type <code class="type">integer</code> is the common choice, as it offers the best balance between range, storage size, and performance. The <code class="type">smallint</code> type is generally only used if disk space is at a premium. The <code class="type">bigint</code> type is designed to be used when the range of the <code class="type">integer</code> type is insufficient.</p> <p>SQL only specifies the integer types <code class="type">integer</code> (or <code class="type">int</code>), <code class="type">smallint</code>, and <code class="type">bigint</code>. The type names <code class="type">int2</code>, <code class="type">int4</code>, and <code class="type">int8</code> are extensions, which are also used by some other SQL database systems.</p> </div> <div class="sect2" id="DATATYPE-NUMERIC-DECIMAL">    <h2 class="title">8.1.2. Arbitrary Precision Numbers</h2>     <p>The type <code class="type">numeric</code> can store numbers with a very large number of digits. It is especially recommended for storing monetary amounts and other quantities where exactness is required. Calculations with <code class="type">numeric</code> values yield exact results where possible, e.g. addition, subtraction, multiplication. However, calculations on <code class="type">numeric</code> values are very slow compared to the integer types, or to the floating-point types described in the next section.</p> <p>We use the following terms below: The <em class="firstterm">scale</em> of a <code class="type">numeric</code> is the count of decimal digits in the fractional part, to the right of the decimal point. The <em class="firstterm">precision</em> of a <code class="type">numeric</code> is the total count of significant digits in the whole number, that is, the number of digits to both sides of the decimal point. So the number 23.5141 has a precision of 6 and a scale of 4. Integers can be considered to have a scale of zero.</p> <p>Both the maximum precision and the maximum scale of a <code class="type">numeric</code> column can be configured. To declare a column of type <code class="type">numeric</code> use the syntax:</p> <pre data-language="sql">NUMERIC(precision, scale)</pre> <p>The precision must be positive, the scale zero or positive. Alternatively:</p> <pre data-language="sql">NUMERIC(precision)</pre> <p>selects a scale of 0. Specifying:</p> <pre data-language="sql">NUMERIC</pre> <p>without any precision or scale creates a column in which numeric values of any precision and scale can be stored, up to the implementation limit on precision. A column of this kind will not coerce input values to any particular scale, whereas <code class="type">numeric</code> columns with a declared scale will coerce input values to that scale. (The SQL standard requires a default scale of 0, i.e., coercion to integer precision. We find this a bit useless. If you're concerned about portability, always specify the precision and scale explicitly.)</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>The maximum allowed precision when explicitly specified in the type declaration is 1000; <code class="type">NUMERIC</code> without a specified precision is subject to the limits described in <a class="xref" href="../datatype-numeric/#DATATYPE-NUMERIC-TABLE" title="Table 8.2. Numeric Types">Table 8.2</a>.</p> </blockquote> <p>If the scale of a value to be stored is greater than the declared scale of the column, the system will round the value to the specified number of fractional digits. Then, if the number of digits to the left of the decimal point exceeds the declared precision minus the declared scale, an error is raised.</p> <p>Numeric values are physically stored without any extra leading or trailing zeroes. Thus, the declared precision and scale of a column are maximums, not fixed allocations. (In this sense the <code class="type">numeric</code> type is more akin to <code class="type">varchar(n)</code> than to <code class="type">char(n)</code>.) The actual storage requirement is two bytes for each group of four decimal digits, plus three to eight bytes overhead.</p>  <p>In addition to ordinary numeric values, the <code class="type">numeric</code> type allows the special value <code class="literal">NaN</code>, meaning <span class="quote">“<span class="quote">not-a-number</span>”</span>. Any operation on <code class="literal">NaN</code> yields another <code class="literal">NaN</code>. When writing this value as a constant in an SQL command, you must put quotes around it, for example <code class="literal">UPDATE table SET x = 'NaN'</code>. On input, the string <code class="literal">NaN</code> is recognized in a case-insensitive manner.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>In most implementations of the <span class="quote">“<span class="quote">not-a-number</span>”</span> concept, <code class="literal">NaN</code> is not considered equal to any other numeric value (including <code class="literal">NaN</code>). In order to allow <code class="type">numeric</code> values to be sorted and used in tree-based indexes, PostgreSQL treats <code class="literal">NaN</code> values as equal, and greater than all non-<code class="literal">NaN</code> values.</p> </blockquote> <p>The types <code class="type">decimal</code> and <code class="type">numeric</code> are equivalent. Both types are part of the SQL standard.</p> <p>When rounding values, the <code class="type">numeric</code> type rounds ties away from zero, while (on most machines) the <code class="type">real</code> and <code class="type">double precision</code> types round ties to the nearest even number. For example:</p> <pre data-language="sql">SELECT x,
@@ -110,17 +110,9 @@ ALTER SEQUENCE tablename_colname_seq OWNED BY tablename.colname;</pre> <p>Thus, 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1> 63.4. Implementation</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../spgist-implementation/#SPGIST-LIMITS">63.4.1. SP-GiST Limits</a></dt> <dt><a href="../spgist-implementation/#SPGIST-NULL-LABELS">63.4.2. SP-GiST Without Node Labels</a></dt> <dt><a href="../spgist-implementation/#SPGIST-ALL-THE-SAME">63.4.3. <span class="quote">“<span class="quote">All-the-same</span>”</span> Inner Tuples</a></dt> </dl> </div> <p>This section covers implementation details and other tricks that are useful for implementers of SP-GiST operator classes to know.</p> <div class="sect2" id="SPGIST-LIMITS">    <h2 class="title">63.4.1. SP-GiST Limits</h2>    <p>Individual leaf tuples and inner tuples must fit on a single index page (8kB by default). Therefore, when indexing values of variable-length data types, long values can only be supported by methods such as radix trees, in which each level of the tree includes a prefix that is short enough to fit on a page, and the final leaf level includes a suffix also short enough to fit on a page. The operator class should set <code class="structfield">longValuesOK</code> to TRUE only if it is prepared to arrange for this to happen. Otherwise, the SP-GiST core will reject any request to index a value that is too large to fit on an index page.</p> <p>Likewise, it is the operator class's responsibility that inner tuples do not grow too large to fit on an index page; this limits the number of child nodes that can be used in one inner tuple, as well as the maximum size of a prefix value.</p> <p>Another limitation is that when an inner tuple's node points to a set of leaf tuples, those tuples must all be in the same index page. (This is a design decision to reduce seeking and save space in the links that chain such tuples together.) If the set of leaf tuples grows too large for a page, a split is performed and an intermediate inner tuple is inserted. For this to fix the problem, the new inner tuple <span class="emphasis"><em>must</em></span> divide the set of leaf values into more than one node group. If the operator class's <code class="function">picksplit</code> function fails to do that, the SP-GiST core resorts to extraordinary measures described in <a class="xref" href="../spgist-implementation/#SPGIST-ALL-THE-SAME" title="63.4.3. “All-the-same” Inner Tuples">Section 63.4.3</a>.</p> </div> <div class="sect2" id="SPGIST-NULL-LABELS">    <h2 class="title">63.4.2. SP-GiST Without Node Labels</h2>    <p>Some tree algorithms use a fixed set of nodes for each inner tuple; for example, in a quad-tree there are always exactly four nodes corresponding to the four quadrants around the inner tuple's centroid point. In such a case the code typically works with the nodes by number, and there is no need for explicit node labels. To suppress node labels (and thereby save some space), the <code class="function">picksplit</code> function can return NULL for the <code class="structfield">nodeLabels</code> array, and likewise the <code class="function">choose</code> function can return NULL for the <code class="structfield">prefixNodeLabels</code> array during a <code class="literal">spgSplitTuple</code> action. This will in turn result in <code class="structfield">nodeLabels</code> being NULL during subsequent calls to <code class="function">choose</code> and <code class="function">inner_consistent</code>. In principle, node labels could be used for some inner tuples and omitted for others in the same index.</p> <p>When working with an inner tuple having unlabeled nodes, it is an error for <code class="function">choose</code> to return <code class="literal">spgAddNode</code>, since the set of nodes is supposed to be fixed in such cases.</p> </div> <div class="sect2" id="SPGIST-ALL-THE-SAME">    <h2 class="title">63.4.3. <span class="quote">“<span class="quote">All-the-same</span>”</span> Inner Tuples</h2>    <p>The SP-GiST core can override the results of the operator class's <code class="function">picksplit</code> function when <code class="function">picksplit</code> fails to divide the supplied leaf values into at least two node categories. When this happens, the new inner tuple is created with multiple nodes that each have the same label (if any) that <code class="function">picksplit</code> gave to the one node it did use, and the leaf values are divided at random among these equivalent nodes. The <code class="literal">allTheSame</code> flag is set on the inner tuple to warn the <code class="function">choose</code> and <code class="function">inner_consistent</code> functions that the tuple does not have the node set that they might otherwise expect.</p> <p>When dealing with an <code class="literal">allTheSame</code> tuple, a <code class="function">choose</code> result of <code class="literal">spgMatchNode</code> is interpreted to mean that the new value can be assigned to any of the equivalent nodes; the core code will ignore the supplied <code class="structfield">nodeN</code> value and descend into one of the nodes at random (so as to keep the tree balanced). It is an error for <code class="function">choose</code> to return <code class="literal">spgAddNode</code>, since that would make the nodes not all equivalent; the <code class="literal">spgSplitTuple</code> action must be used if the value to be inserted doesn't match the existing nodes.</p> <p>When dealing with an <code class="literal">allTheSame</code> tuple, the <code class="function">inner_consistent</code> function should return either all or none of the nodes as targets for continuing the index search, since they are all equivalent. This may or may not require any special-case code, depending on how much the <code class="function">inner_consistent</code> function normally assumes about the meaning of the nodes.</p> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="../spgist-extensibility/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/spgist.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../spgist-examples/">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

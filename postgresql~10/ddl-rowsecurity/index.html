@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>5.7. Row Security Policies</h1>     <p>In addition to the SQL-standard <a class="link" href="../ddl-priv/" title="5.6. Privileges">privilege system</a> available through <a class="xref" href="../sql-grant/" title="GRANT">GRANT</a>, tables can have <em class="firstterm">row security policies</em> that restrict, on a per-user basis, which rows can be returned by normal queries or inserted, updated, or deleted by data modification commands. This feature is also known as <em class="firstterm">Row-Level Security</em>. By default, tables do not have any policies, so that if a user has access privileges to a table according to the SQL privilege system, all rows within it are equally available for querying or updating.</p> <p>When row security is enabled on a table (with <a class="link" href="../sql-altertable/" title="ALTER TABLE">ALTER TABLE ... ENABLE ROW LEVEL SECURITY</a>), all normal access to the table for selecting rows or modifying rows must be allowed by a row security policy. (However, the table's owner is typically not subject to row security policies.) If no policy exists for the table, a default-deny policy is used, meaning that no rows are visible or can be modified. Operations that apply to the whole table, such as <code class="command">TRUNCATE</code> and <code class="literal">REFERENCES</code>, are not subject to row security.</p> <p>Row security policies can be specific to commands, or to roles, or to both. A policy can be specified to apply to <code class="literal">ALL</code> commands, or to <code class="literal">SELECT</code>, <code class="literal">INSERT</code>, <code class="literal">UPDATE</code>, or <code class="literal">DELETE</code>. Multiple roles can be assigned to a given policy, and normal role membership and inheritance rules apply.</p> <p>To specify which rows are visible or modifiable according to a policy, an expression is required that returns a Boolean result. This expression will be evaluated for each row prior to any conditions or functions coming from the user's query. (The only exceptions to this rule are <code class="literal">leakproof</code> functions, which are guaranteed to not leak information; the optimizer may choose to apply such functions ahead of the row-security check.) Rows for which the expression does not return <code class="literal">true</code> will not be processed. Separate expressions may be specified to provide independent control over the rows which are visible and the rows which are allowed to be modified. Policy expressions are run as part of the query and with the privileges of the user running the query, although security-definer functions can be used to access data not available to the calling user.</p> <p>Superusers and roles with the <code class="literal">BYPASSRLS</code> attribute always bypass the row security system when accessing a table. Table owners normally bypass row security as well, though a table owner can choose to be subject to row security with <a class="link" href="../sql-altertable/" title="ALTER TABLE">ALTER TABLE ... FORCE ROW LEVEL SECURITY</a>.</p> <p>Enabling and disabling row security, as well as adding policies to a table, is always the privilege of the table owner only.</p> <p>Policies are created using the <a class="xref" href="../sql-createpolicy/" title="CREATE POLICY">CREATE POLICY</a> command, altered using the <a class="xref" href="../sql-alterpolicy/" title="ALTER POLICY">ALTER POLICY</a> command, and dropped using the <a class="xref" href="../sql-droppolicy/" title="DROP POLICY">DROP POLICY</a> command. To enable and disable row security for a given table, use the <a class="xref" href="../sql-altertable/" title="ALTER TABLE">ALTER TABLE</a> command.</p> <p>Each policy has a name and multiple policies can be defined for a table. As policies are table-specific, each policy for a table must have a unique name. Different tables may have policies with the same name.</p> <p>When multiple policies apply to a given query, they are combined using either <code class="literal">OR</code> (for permissive policies, which are the default) or using <code class="literal">AND</code> (for restrictive policies). This is similar to the rule that a given role has the privileges of all roles that they are a member of. Permissive vs. restrictive policies are discussed further below.</p> <p>As a simple example, here is how to create a policy on the <code class="literal">account</code> relation to allow only members of the <code class="literal">managers</code> role to access rows, and only rows of their accounts:</p> <pre data-language="sql">
 CREATE TABLE accounts (manager text, company text, contact_email text);
@@ -260,17 +260,9 @@ SELECT * FROM information WHERE group_id = 2 FOR UPDATE;</pre> <p>and her transa
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

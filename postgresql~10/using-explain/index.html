@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>14.1. Using <code class="command">EXPLAIN</code>
 </h1>    <div class="toc"> <dl class="toc"> <dt><a href="../using-explain/#USING-EXPLAIN-BASICS">14.1.1. <code class="command">EXPLAIN</code> Basics</a></dt> <dt><a href="../using-explain/#USING-EXPLAIN-ANALYZE">14.1.2. <code class="command">EXPLAIN ANALYZE</code></a></dt> <dt><a href="../using-explain/#USING-EXPLAIN-CAVEATS">14.1.3. Caveats</a></dt> </dl> </div>  <p>PostgreSQL devises a <em class="firstterm">query plan</em> for each query it receives. Choosing the right plan to match the query structure and the properties of the data is absolutely critical for good performance, so the system includes a complex <em class="firstterm">planner</em> that tries to choose good plans. You can use the <a class="xref" href="../sql-explain/" title="EXPLAIN">EXPLAIN</a> command to see what query plan the planner creates for any query. Plan-reading is an art that requires some experience to master, but this section attempts to cover the basics.</p> <p>Examples in this section are drawn from the regression test database after doing a <code class="command">VACUUM ANALYZE</code>, using 9.3 development sources. You should be able to get similar results if you try the examples yourself, but your estimated costs and row counts might vary slightly because <code class="command">ANALYZE</code>'s statistics are random samples rather than exact, and because costs are inherently somewhat platform-dependent.</p> <p>The examples use <code class="command">EXPLAIN</code>'s default <span class="quote">“<span class="quote">text</span>”</span> output format, which is compact and convenient for humans to read. If you want to feed <code class="command">EXPLAIN</code>'s output to a program for further analysis, you should use one of its machine-readable output formats (XML, JSON, or YAML) instead.</p> <div class="sect2" id="USING-EXPLAIN-BASICS">    <h2 class="title">14.1.1. <code class="command">EXPLAIN</code> Basics</h2>    <p>The structure of a query plan is a tree of <em class="firstterm">plan nodes</em>. Nodes at the bottom level of the tree are scan nodes: they return raw rows from a table. There are different types of scan nodes for different table access methods: sequential scans, index scans, and bitmap index scans. There are also non-table row sources, such as <code class="literal">VALUES</code> clauses and set-returning functions in <code class="literal">FROM</code>, which have their own scan node types. If the query requires joining, aggregation, sorting, or other operations on the raw rows, then there will be additional nodes above the scan nodes to perform these operations. Again, there is usually more than one possible way to do these operations, so different node types can appear here too. The output of <code class="command">EXPLAIN</code> has one line for each node in the plan tree, showing the basic node type plus the cost estimates that the planner made for the execution of that plan node. Additional lines might appear, indented from the node's summary line, to show additional properties of the node. The very first line (the summary line for the topmost node) has the estimated total execution cost for the plan; it is this number that the planner seeks to minimize.</p> <p>Here is a trivial example, just to show what the output looks like:</p> <pre>EXPLAIN SELECT * FROM tenk1;
@@ -328,17 +328,9 @@ EXPLAIN ANALYZE SELECT * FROM tenk1 WHERE unique1 &lt; 100 AND unique2 &gt; 9000
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

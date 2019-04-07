@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>50.6. Executor</h1>    <p>The <em class="firstterm">executor</em> takes the plan created by the planner/optimizer and recursively processes it to extract the required set of rows. This is essentially a demand-pull pipeline mechanism. Each time a plan node is called, it must deliver one more row, or report that it is done delivering rows.</p> <p>To provide a concrete example, assume that the top node is a <code class="literal">MergeJoin</code> node. Before any merge can be done two rows have to be fetched (one from each subplan). So the executor recursively calls itself to process the subplans (it starts with the subplan attached to <code class="literal">lefttree</code>). The new top node (the top node of the left subplan) is, let's say, a <code class="literal">Sort</code> node and again recursion is needed to obtain an input row. The child node of the <code class="literal">Sort</code> might be a <code class="literal">SeqScan</code> node, representing actual reading of a table. Execution of this node causes the executor to fetch a row from the table and return it up to the calling node. The <code class="literal">Sort</code> node will repeatedly call its child to obtain all the rows to be sorted. When the input is exhausted (as indicated by the child node returning a NULL instead of a row), the <code class="literal">Sort</code> code performs the sort, and finally is able to return its first output row, namely the first one in sorted order. It keeps the remaining rows stored so that it can deliver them in sorted order in response to later demands.</p> <p>The <code class="literal">MergeJoin</code> node similarly demands the first row from its right subplan. Then it compares the two rows to see if they can be joined; if so, it returns a join row to its caller. On the next call, or immediately if it cannot join the current pair of inputs, it advances to the next row of one table or the other (depending on how the comparison came out), and again checks for a match. Eventually, one subplan or the other is exhausted, and the <code class="literal">MergeJoin</code> node returns NULL to indicate that no more join rows can be formed.</p> <p>Complex queries can involve many levels of plan nodes, but the general approach is the same: each node computes and returns its next output row each time it is called. Each node is also responsible for applying any selection or projection expressions that were assigned to it by the planner.</p> <p>The executor mechanism is used to evaluate all four basic SQL query types: <code class="command">SELECT</code>, <code class="command">INSERT</code>, <code class="command">UPDATE</code>, and <code class="command">DELETE</code>. For <code class="command">SELECT</code>, the top-level executor code only needs to send each row returned by the query plan tree off to the client. For <code class="command">INSERT</code>, each returned row is inserted into the target table specified for the <code class="command">INSERT</code>. This is done in a special top-level plan node called <code class="literal">ModifyTable</code>. (A simple <code class="command">INSERT ... VALUES</code> command creates a trivial plan tree consisting of a single <code class="literal">Result</code> node, which computes just one result row, and <code class="literal">ModifyTable</code> above it to perform the insertion. But <code class="command">INSERT ... SELECT</code> can demand the full power of the executor mechanism.) For <code class="command">UPDATE</code>, the planner arranges that each computed row includes all the updated column values, plus the <em class="firstterm">TID</em> (tuple ID, or row ID) of the original target row; this data is fed into a <code class="literal">ModifyTable</code> node, which uses the information to create a new updated row and mark the old row deleted. For <code class="command">DELETE</code>, the only column that is actually returned by the plan is the TID, and the <code class="literal">ModifyTable</code> node simply uses the TID to visit each target row and mark it deleted.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="../planner-optimizer/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/overview.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="https://www.postgresql.org/docs/10/static/catalogs.html" target="_blank">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>12.1. Introduction</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../textsearch-intro/#TEXTSEARCH-DOCUMENT">12.1.1. What Is a Document?</a></dt> <dt><a href="../textsearch-intro/#TEXTSEARCH-MATCHING">12.1.2. Basic Text Matching</a></dt> <dt><a href="../textsearch-intro/#TEXTSEARCH-INTRO-CONFIGURATIONS">12.1.3. Configurations</a></dt> </dl> </div> <p>Full Text Searching (or just <em class="firstterm">text search</em>) provides the capability to identify natural-language <em class="firstterm">documents</em> that satisfy a <em class="firstterm">query</em>, and optionally to sort them by relevance to the query. The most common type of search is to find all documents containing given <em class="firstterm">query terms</em> and return them in order of their <em class="firstterm">similarity</em> to the query. Notions of <code class="varname">query</code> and <code class="varname">similarity</code> are very flexible and depend on the specific application. The simplest search considers <code class="varname">query</code> as a set of words and <code class="varname">similarity</code> as the frequency of query words in the document.</p> <p>Textual search operators have existed in databases for years. PostgreSQL has <code class="literal">~</code>, <code class="literal">~*</code>, <code class="literal">LIKE</code>, and <code class="literal">ILIKE</code> operators for textual data types, but they lack many essential properties required by modern information systems:</p>  <ul> <li> <p>There is no linguistic support, even for English. Regular expressions are not sufficient because they cannot easily handle derived words, e.g., <code class="literal">satisfies</code> and <code class="literal">satisfy</code>. You might miss documents that contain <code class="literal">satisfies</code>, although you probably would like to find them when searching for <code class="literal">satisfy</code>. It is possible to use <code class="literal">OR</code> to search for multiple derived forms, but this is tedious and error-prone (some words can have several thousand derivatives).</p> </li> <li> <p>They provide no ordering (ranking) of search results, which makes them ineffective when thousands of matching documents are found.</p> </li> <li> <p>They tend to be slow because there is no index support, so they must process all documents for every search.</p> </li> </ul>  <p>Full text indexing allows documents to be <span class="emphasis"><em>preprocessed</em></span> and an index saved for later rapid searching. Preprocessing includes:</p>  <ul> <li> <p><span class="emphasis"><em>Parsing documents into <em class="firstterm">tokens</em></em></span>. It is useful to identify various classes of tokens, e.g., numbers, words, complex words, email addresses, so that they can be processed differently. In principle token classes depend on the specific application, but for most purposes it is adequate to use a predefined set of classes. PostgreSQL uses a <em class="firstterm">parser</em> to perform this step. A standard parser is provided, and custom parsers can be created for specific needs.</p> </li> <li> <p><span class="emphasis"><em>Converting tokens into <em class="firstterm">lexemes</em></em></span>. A lexeme is a string, just like a token, but it has been <em class="firstterm">normalized</em> so that different forms of the same word are made alike. For example, normalization almost always includes folding upper-case letters to lower-case, and often involves removal of suffixes (such as <code class="literal">s</code> or <code class="literal">es</code> in English). This allows searches to find variant forms of the same word, without tediously entering all the possible variants. Also, this step typically eliminates <em class="firstterm">stop words</em>, which are words that are so common that they are useless for searching. (In short, then, tokens are raw fragments of the document text, while lexemes are words that are believed useful for indexing and searching.) PostgreSQL uses <em class="firstterm">dictionaries</em> to perform this step. Various standard dictionaries are provided, and custom ones can be created for specific needs.</p> </li> <li> <p><span class="emphasis"><em>Storing preprocessed documents optimized for searching</em></span>. For example, each document can be represented as a sorted array of normalized lexemes. Along with the lexemes it is often desirable to store positional information to use for <em class="firstterm">proximity ranking</em>, so that a document that contains a more <span class="quote">“<span class="quote">dense</span>”</span> region of query words is assigned a higher rank than one with scattered query words.</p> </li> </ul>  <p>Dictionaries allow fine-grained control over how tokens are normalized. With appropriate dictionaries, you can:</p>  <ul> <li> <p>Define stop words that should not be indexed.</p> </li> <li> <p>Map synonyms to a single word using Ispell.</p> </li> <li> <p>Map phrases to a single word using a thesaurus.</p> </li> <li> <p>Map different variations of a word to a canonical form using an Ispell dictionary.</p> </li> <li> <p>Map different variations of a word to a canonical form using Snowball stemmer rules.</p> </li> </ul>  <p>A data type <code class="type">tsvector</code> is provided for storing preprocessed documents, along with a type <code class="type">tsquery</code> for representing processed queries (<a class="xref" href="../datatype-textsearch/" title="8.11. Text Search Types">Section 8.11</a>). There are many functions and operators available for these data types (<a class="xref" href="../functions-textsearch/" title="9.13. Text Search Functions and Operators">Section 9.13</a>), the most important of which is the match operator <code class="literal">@@</code>, which we introduce in <a class="xref" href="../textsearch-intro/#TEXTSEARCH-MATCHING" title="12.1.2. Basic Text Matching">Section 12.1.2</a>. Full text searches can be accelerated using indexes (<a class="xref" href="../textsearch-indexes/" title="12.9. GIN and GiST Index Types">Section 12.9</a>).</p> <div class="sect2" id="TEXTSEARCH-DOCUMENT">    <h2 class="title">12.1.1. What Is a Document?</h2>     <p>A <em class="firstterm">document</em> is the unit of searching in a full text search system; for example, a magazine article or email message. The text search engine must be able to parse documents and store associations of lexemes (key words) with their parent document. Later, these associations are used to search for documents that contain query words.</p> <p>For searches within PostgreSQL, a document is normally a textual field within a row of a database table, or possibly a combination (concatenation) of such fields, perhaps stored in several tables or obtained dynamically. In other words, a document can be constructed from different parts for indexing and it might not be stored anywhere as a whole. For example:</p> <pre data-language="sql">
 SELECT title || ' ' ||  author || ' ' ||  abstract || ' ' || body AS document
@@ -133,17 +133,9 @@ SELECT phraseto_tsquery('the cats ate the rats');
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

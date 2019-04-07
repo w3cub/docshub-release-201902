@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>28.2. The Statistics Collector</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../monitoring-stats/#MONITORING-STATS-SETUP">28.2.1. Statistics Collection Configuration</a></dt> <dt><a href="../monitoring-stats/#MONITORING-STATS-VIEWS">28.2.2. Viewing Statistics</a></dt> <dt><a href="../monitoring-stats/#MONITORING-STATS-FUNCTIONS">28.2.3. Statistics Functions</a></dt> </dl> </div>  <p>PostgreSQL's <em class="firstterm">statistics collector</em> is a subsystem that supports collection and reporting of information about server activity. Presently, the collector can count accesses to tables and indexes in both disk-block and individual-row terms. It also tracks the total number of rows in each table, and information about vacuum and analyze actions for each table. It can also count calls to user-defined functions and the total time spent in each one.</p> <p>PostgreSQL also supports reporting dynamic information about exactly what is going on in the system right now, such as the exact command currently being executed by other server processes, and which other connections exist in the system. This facility is independent of the collector process.</p> <div class="sect2" id="MONITORING-STATS-SETUP">    <h2 class="title">28.2.1. Statistics Collection Configuration</h2>    <p>Since collection of statistics adds some overhead to query execution, the system can be configured to collect or not collect information. This is controlled by configuration parameters that are normally set in <code class="filename">postgresql.conf</code>. (See <a class="xref" href="https://www.postgresql.org/docs/10/static/runtime-config.html" title="Chapter 19. Server Configuration" target="_blank">Chapter 19</a> for details about setting configuration parameters.)</p> <p>The parameter <a class="xref" href="../runtime-config-statistics/#GUC-TRACK-ACTIVITIES">track_activities</a> enables monitoring of the current command being executed by any server process.</p> <p>The parameter <a class="xref" href="../runtime-config-statistics/#GUC-TRACK-COUNTS">track_counts</a> controls whether statistics are collected about table and index accesses.</p> <p>The parameter <a class="xref" href="../runtime-config-statistics/#GUC-TRACK-FUNCTIONS">track_functions</a> enables tracking of usage of user-defined functions.</p> <p>The parameter <a class="xref" href="../runtime-config-statistics/#GUC-TRACK-IO-TIMING">track_io_timing</a> enables monitoring of block read and write times.</p> <p>Normally these parameters are set in <code class="filename">postgresql.conf</code> so that they apply to all server processes, but it is possible to turn them on or off in individual sessions using the <a class="xref" href="../sql-set/" title="SET">SET</a> command. (To prevent ordinary users from hiding their activity from the administrator, only superusers are allowed to change these parameters with <code class="command">SET</code>.)</p> <p>The statistics collector transmits the collected information to other PostgreSQL processes through temporary files. These files are stored in the directory named by the <a class="xref" href="../runtime-config-statistics/#GUC-STATS-TEMP-DIRECTORY">stats_temp_directory</a> parameter, <code class="filename">pg_stat_tmp</code> by default. For better performance, <code class="varname">stats_temp_directory</code> can be pointed at a RAM-based file system, decreasing physical I/O requirements. When the server shuts down cleanly, a permanent copy of the statistics data is stored in the <code class="filename">pg_stat</code> subdirectory, so that statistics can be retained across server restarts. When recovery is performed at server start (e.g. after immediate shutdown, server crash, and point-in-time recovery), all statistics counters are reset.</p> </div> <div class="sect2" id="MONITORING-STATS-VIEWS">    <h2 class="title">28.2.2. Viewing Statistics</h2>    <p>Several predefined views, listed in <a class="xref" href="../monitoring-stats/#MONITORING-STATS-DYNAMIC-VIEWS-TABLE" title="Table 28.1. Dynamic Statistics Views">Table 28.1</a>, are available to show the current state of the system. There are also several other views, listed in <a class="xref" href="../monitoring-stats/#MONITORING-STATS-VIEWS-TABLE" title="Table 28.2. Collected Statistics Views">Table 28.2</a>, available to show the results of statistics collection. Alternatively, one can build custom views using the underlying statistics functions, as discussed in <a class="xref" href="../monitoring-stats/#MONITORING-STATS-FUNCTIONS" title="28.2.3. Statistics Functions">Section 28.2.3</a>.</p> <p>When using the statistics to monitor collected data, it is important to realize that the information does not update instantaneously. Each individual server process transmits new statistical counts to the collector just before going idle; so a query or transaction still in progress does not affect the displayed totals. Also, the collector itself emits a new report at most once per <code class="varname">PGSTAT_STAT_INTERVAL</code> milliseconds (500 ms unless altered while building the server). So the displayed information lags behind actual activity. However, current-query information collected by <code class="varname">track_activities</code> is always up-to-date.</p> <p>Another important point is that when a server process is asked to display any of these statistics, it first fetches the most recent report emitted by the collector process and then continues to use this snapshot for all statistical views and functions until the end of its current transaction. So the statistics will show static information as long as you continue the current transaction. Similarly, information about the current queries of all sessions is collected when any such information is first requested within a transaction, and the same information will be displayed throughout the transaction. This is a feature, not a bug, because it allows you to perform several queries on the statistics and correlate the results without worrying that the numbers are changing underneath you. But if you want to see new results with each query, be sure to do the queries outside any transaction block. Alternatively, you can invoke <code class="function">pg_stat_clear_snapshot</code>(), which will discard the current transaction's statistics snapshot (if any). The next use of statistical information will cause a new snapshot to be fetched.</p> <p>A transaction can also see its own statistics (as yet untransmitted to the collector) in the views <code class="structname">pg_stat_xact_all_tables</code>, <code class="structname">pg_stat_xact_sys_tables</code>, <code class="structname">pg_stat_xact_user_tables</code>, and <code class="structname">pg_stat_xact_user_functions</code>. These numbers do not act as stated above; instead they update continuously throughout the transaction.</p> <div class="table" id="MONITORING-STATS-DYNAMIC-VIEWS-TABLE"> <p class="title"><strong>Table 28.1. Dynamic Statistics Views</strong></p> <div class="table-contents"> <table class="table" summary="Dynamic Statistics Views"> <colgroup> <col> <col>
 </colgroup> <thead> <tr> <th>View Name</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td>
@@ -118,17 +118,9 @@ SELECT pg_stat_get_backend_pid(s.backendid) AS pid,
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

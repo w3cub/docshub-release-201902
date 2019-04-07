@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>28.4. Progress Reporting</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../progress-reporting/#VACUUM-PROGRESS-REPORTING">28.4.1. VACUUM Progress Reporting</a></dt> </dl> </div> <p>PostgreSQL has the ability to report the progress of certain commands during command execution. Currently, the only command which supports progress reporting is <code class="command">VACUUM</code>. This may be expanded in the future.</p> <div class="sect2" id="VACUUM-PROGRESS-REPORTING">    <h2 class="title">28.4.1. VACUUM Progress Reporting</h2>    <p>Whenever <code class="command">VACUUM</code> is running, the <code class="structname">pg_stat_progress_vacuum</code> view will contain one row for each backend (including autovacuum worker processes) that is currently vacuuming. The tables below describe the information that will be reported and provide information about how to interpret it. Progress reporting is not currently supported for <code class="command">VACUUM FULL</code> and backends running <code class="command">VACUUM FULL</code> will not be listed in this view.</p> <div class="table" id="PG-STAT-PROGRESS-VACUUM-VIEW"> <p class="title"><strong>Table 28.21. <code class="structname">pg_stat_progress_vacuum</code> View</strong></p> <div class="table-contents"> <table class="table" summary="pg_stat_progress_vacuum View"> <colgroup> <col> <col> <col>
 </colgroup> <thead> <tr> <th>Column</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code class="structfield">pid</code></td> <td><code class="type">integer</code></td> <td>Process ID of backend.</td> </tr> <tr> <td><code class="structfield">datid</code></td> <td><code class="type">oid</code></td> <td>OID of the database to which this backend is connected.</td> </tr> <tr> <td><code class="structfield">datname</code></td> <td><code class="type">name</code></td> <td>Name of the database to which this backend is connected.</td> </tr> <tr> <td><code class="structfield">relid</code></td> <td><code class="type">oid</code></td> <td>OID of the table being vacuumed.</td> </tr> <tr> <td><code class="structfield">phase</code></td> <td><code class="type">text</code></td> <td>Current processing phase of vacuum. See <a class="xref" href="../progress-reporting/#VACUUM-PHASES" title="Table 28.22. VACUUM phases">Table 28.22</a>.</td> </tr> <tr> <td><code class="structfield">heap_blks_total</code></td> <td><code class="type">bigint</code></td> <td>Total number of heap blocks in the table. This number is reported as of the beginning of the scan; blocks added later will not be (and need not be) visited by this <code class="command">VACUUM</code>.</td> </tr> <tr> <td><code class="structfield">heap_blks_scanned</code></td> <td><code class="type">bigint</code></td> <td>Number of heap blocks scanned. Because the <a class="link" href="../storage-vm/" title="66.4. Visibility Map">visibility map</a> is used to optimize scans, some blocks will be skipped without inspection; skipped blocks are included in this total, so that this number will eventually become equal to <code class="structfield">heap_blks_total</code> when the vacuum is complete. This counter only advances when the phase is <code class="literal">scanning heap</code>.</td> </tr> <tr> <td><code class="structfield">heap_blks_vacuumed</code></td> <td><code class="type">bigint</code></td> <td>Number of heap blocks vacuumed. Unless the table has no indexes, this counter only advances when the phase is <code class="literal">vacuuming heap</code>. Blocks that contain no dead tuples are skipped, so the counter may sometimes skip forward in large increments.</td> </tr> <tr> <td><code class="structfield">index_vacuum_count</code></td> <td><code class="type">bigint</code></td> <td>Number of completed index vacuum cycles.</td> </tr> <tr> <td><code class="structfield">max_dead_tuples</code></td> <td><code class="type">bigint</code></td> <td>Number of dead tuples that we can store before needing to perform an index vacuum cycle, based on <a class="xref" href="../runtime-config-resource/#GUC-MAINTENANCE-WORK-MEM">maintenance_work_mem</a>.</td> </tr> <tr> <td><code class="structfield">num_dead_tuples</code></td> <td><code class="type">bigint</code></td> <td>Number of dead tuples collected since the last index vacuum cycle.</td> </tr> </tbody> </table> </div> </div>  <div class="table" id="VACUUM-PHASES"> <p class="title"><strong>Table 28.22. VACUUM phases</strong></p> <div class="table-contents"> <table class="table" summary="VACUUM phases"> <colgroup> <col> <col>
@@ -97,17 +97,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>31.2. Subscription</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../logical-replication-subscription/#LOGICAL-REPLICATION-SUBSCRIPTION-SLOT"> 31.2.1. Replication Slot Management</a></dt> </dl> </div> <p>A <em class="firstterm">subscription</em> is the downstream side of logical replication. The node where a subscription is defined is referred to as the <em class="firstterm">subscriber</em>. A subscription defines the connection to another database and set of publications (one or more) to which it wants to subscribe.</p> <p>The subscriber database behaves in the same way as any other PostgreSQL instance and can be used as a publisher for other databases by defining its own publications.</p> <p>A subscriber node may have multiple subscriptions if desired. It is possible to define multiple subscriptions between a single publisher-subscriber pair, in which case care must be taken to ensure that the subscribed publication objects don't overlap.</p> <p>Each subscription will receive changes via one replication slot (see <a class="xref" href="../warm-standby/#STREAMING-REPLICATION-SLOTS" title="26.2.6. Replication Slots">Section 26.2.6</a>). Additional temporary replication slots may be required for the initial data synchronization of pre-existing table data.</p> <p>A logical replication subscription can be a standby for synchronous replication (see <a class="xref" href="../warm-standby/#SYNCHRONOUS-REPLICATION" title="26.2.8. Synchronous Replication">Section 26.2.8</a>). The standby name is by default the subscription name. An alternative name can be specified as <code class="literal">application_name</code> in the connection information of the subscription.</p> <p>Subscriptions are dumped by <code class="command">pg_dump</code> if the current user is a superuser. Otherwise a warning is written and subscriptions are skipped, because non-superusers cannot read all subscription information from the <code class="structname">pg_subscription</code> catalog.</p> <p>The subscription is added using <a class="xref" href="../sql-createsubscription/" title="CREATE SUBSCRIPTION">CREATE SUBSCRIPTION</a> and can be stopped/resumed at any time using the <a class="xref" href="../sql-altersubscription/" title="ALTER SUBSCRIPTION">ALTER SUBSCRIPTION</a> command and removed using <a class="xref" href="../sql-dropsubscription/" title="DROP SUBSCRIPTION">DROP SUBSCRIPTION</a>.</p> <p>When a subscription is dropped and recreated, the synchronization information is lost. This means that the data has to be resynchronized afterwards.</p> <p>The schema definitions are not replicated, and the published tables must exist on the subscriber. Only regular tables may be the target of replication. For example, you can't replicate to a view.</p> <p>The tables are matched between the publisher and the subscriber using the fully qualified table name. Replication to differently-named tables on the subscriber is not supported.</p> <p>Columns of a table are also matched by name. A different order of columns in the target table is allowed, but the column types have to match. The target table can have additional columns not provided by the published table. Those will be filled with their default values.</p> <div class="sect2" id="LOGICAL-REPLICATION-SUBSCRIPTION-SLOT">    <h2 class="title">31.2.1. Replication Slot Management</h2>    <p>As mentioned earlier, each (active) subscription receives changes from a replication slot on the remote (publishing) side. Normally, the remote replication slot is created automatically when the subscription is created using <code class="command">CREATE SUBSCRIPTION</code> and it is dropped automatically when the subscription is dropped using <code class="command">DROP SUBSCRIPTION</code>. In some situations, however, it can be useful or necessary to manipulate the subscription and the underlying replication slot separately. Here are some scenarios:</p>  <ul> <li> <p>When creating a subscription, the replication slot already exists. In that case, the subscription can be created using the <code class="literal">create_slot = false</code> option to associate with the existing slot.</p> </li> <li> <p>When creating a subscription, the remote host is not reachable or in an unclear state. In that case, the subscription can be created using the <code class="literal">connect = false</code> option. The remote host will then not be contacted at all. This is what pg_dump uses. The remote replication slot will then have to be created manually before the subscription can be activated.</p> </li> <li> <p>When dropping a subscription, the replication slot should be kept. This could be useful when the subscriber database is being moved to a different host and will be activated from there. In that case, disassociate the slot from the subscription using <code class="command">ALTER SUBSCRIPTION</code> before attempting to drop the subscription.</p> </li> <li> <p>When dropping a subscription, the remote host is not reachable. In that case, disassociate the slot from the subscription using <code class="command">ALTER SUBSCRIPTION</code> before attempting to drop the subscription. If the remote database instance no longer exists, no further action is then necessary. If, however, the remote database instance is just unreachable, the replication slot should then be dropped manually; otherwise it would continue to reserve WAL and might eventually cause the disk to fill up. Such cases should be carefully investigated.</p> </li> </ul>  </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="../logical-replication-publication/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/logical-replication.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../logical-replication-conflicts/">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

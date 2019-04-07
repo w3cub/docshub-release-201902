@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>pg_rewind</h1> <p>pg_rewind — synchronize a PostgreSQL data directory with another data directory that was forked from it</p>   <h2>Synopsis</h2> <div class="cmdsynopsis"> <p id="id-1.9.5.8.4.1"><code class="command">pg_rewind</code> [<code>option</code>...] { <code class="option">-D</code> | <code class="option">--target-pgdata</code> } <code>directory</code> { <code class="option">--source-pgdata=directory</code> | <code class="option">--source-server=connstr</code> }</p> </div>  <div class="refsect1" id="id-1.9.5.8.5"> <h2>Description</h2> <p>pg_rewind is a tool for synchronizing a PostgreSQL cluster with another copy of the same cluster, after the clusters' timelines have diverged. A typical scenario is to bring an old master server back online after failover as a standby that follows the new master.</p> <p>The result is equivalent to replacing the target data directory with the source one. Only changed blocks from relation files are copied; all other files are copied in full, including configuration files. The advantage of pg_rewind over taking a new base backup, or tools like rsync, is that pg_rewind does not require reading through unchanged blocks in the cluster. This makes it a lot faster when the database is large and only a small fraction of blocks differ between the clusters.</p> <p>pg_rewind examines the timeline histories of the source and target clusters to determine the point where they diverged, and expects to find WAL in the target cluster's <code class="filename">pg_wal</code> directory reaching all the way back to the point of divergence. The point of divergence can be found either on the target timeline, the source timeline, or their common ancestor. In the typical failover scenario where the target cluster was shut down soon after the divergence, this is not a problem, but if the target cluster ran for a long time after the divergence, the old WAL files might no longer be present. In that case, they can be manually copied from the WAL archive to the <code class="filename">pg_wal</code> directory, or fetched on startup by configuring <code class="filename">recovery.conf</code>. The use of pg_rewind is not limited to failover, e.g. a standby server can be promoted, run some write transactions, and then rewinded to become a standby again.</p> <p>When the target server is started for the first time after running pg_rewind, it will go into recovery mode and replay all WAL generated in the source server after the point of divergence. If some of the WAL was no longer available in the source server when pg_rewind was run, and therefore could not be copied by the pg_rewind session, it must be made available when the target server is started. This can be done by creating a <code class="filename">recovery.conf</code> file in the target data directory with a suitable <code class="varname">restore_command</code>.</p> <p>pg_rewind requires that the target server either has the <a class="xref" href="../runtime-config-wal/#GUC-WAL-LOG-HINTS">wal_log_hints</a> option enabled in <code class="filename">postgresql.conf</code> or data checksums enabled when the cluster was initialized with initdb. Neither of these are currently on by default. <a class="xref" href="../runtime-config-wal/#GUC-FULL-PAGE-WRITES">full_page_writes</a> must also be set to <code class="literal">on</code>, but is enabled by default.</p> </div> <div class="refsect1" id="id-1.9.5.8.6"> <h2>Options</h2> <p>pg_rewind accepts the following command-line arguments:</p> <div class="variablelist"> <dl class="variablelist"> <dt>
 <code class="option">-D directory</code><code class="option">--target-pgdata=directory</code>
@@ -98,17 +98,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

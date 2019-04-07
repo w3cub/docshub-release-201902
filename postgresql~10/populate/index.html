@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>14.4. Populating a Database</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../populate/#DISABLE-AUTOCOMMIT">14.4.1. Disable Autocommit</a></dt> <dt><a href="../populate/#POPULATE-COPY-FROM">14.4.2. Use <code class="command">COPY</code></a></dt> <dt><a href="../populate/#POPULATE-RM-INDEXES">14.4.3. Remove Indexes</a></dt> <dt><a href="../populate/#POPULATE-RM-FKEYS">14.4.4. Remove Foreign Key Constraints</a></dt> <dt><a href="../populate/#POPULATE-WORK-MEM">14.4.5. Increase <code class="varname">maintenance_work_mem</code></a></dt> <dt><a href="../populate/#POPULATE-MAX-WAL-SIZE">14.4.6. Increase <code class="varname">max_wal_size</code></a></dt> <dt><a href="../populate/#POPULATE-PITR">14.4.7. Disable WAL Archival and Streaming Replication</a></dt> <dt><a href="../populate/#POPULATE-ANALYZE">14.4.8. Run <code class="command">ANALYZE</code> Afterwards</a></dt> <dt><a href="../populate/#POPULATE-PG-DUMP">14.4.9. Some Notes About pg_dump</a></dt> </dl> </div> <p>One might need to insert a large amount of data when first populating a database. This section contains some suggestions on how to make this process as efficient as possible.</p> <div class="sect2" id="DISABLE-AUTOCOMMIT">    <h2 class="title">14.4.1. Disable Autocommit</h2>     <p>When using multiple <code class="command">INSERT</code>s, turn off autocommit and just do one commit at the end. (In plain SQL, this means issuing <code class="command">BEGIN</code> at the start and <code class="command">COMMIT</code> at the end. Some client libraries might do this behind your back, in which case you need to make sure the library does it when you want it done.) If you allow each insertion to be committed separately, PostgreSQL is doing a lot of work for each row that is added. An additional benefit of doing all insertions in one transaction is that if the insertion of one row were to fail then the insertion of all rows inserted up to that point would be rolled back, so you won't be stuck with partially loaded data.</p> </div> <div class="sect2" id="POPULATE-COPY-FROM">    <h2 class="title">14.4.2. Use <code class="command">COPY</code>
 </h2>    <p>Use <a class="xref" href="../sql-copy/" title="COPY">COPY</a> to load all the rows in one command, instead of using a series of <code class="command">INSERT</code> commands. The <code class="command">COPY</code> command is optimized for loading large numbers of rows; it is less flexible than <code class="command">INSERT</code>, but incurs significantly less overhead for large data loads. Since <code class="command">COPY</code> is a single command, there is no need to disable autocommit if you use this method to populate a table.</p> <p>If you cannot use <code class="command">COPY</code>, it might help to use <a class="xref" href="../sql-prepare/" title="PREPARE">PREPARE</a> to create a prepared <code class="command">INSERT</code> statement, and then use <code class="command">EXECUTE</code> as many times as required. This avoids some of the overhead of repeatedly parsing and planning <code class="command">INSERT</code>. Different interfaces provide this facility in different ways; look for <span class="quote">“<span class="quote">prepared statements</span>”</span> in the interface documentation.</p> <p>Note that loading a large number of rows using <code class="command">COPY</code> is almost always faster than using <code class="command">INSERT</code>, even if <code class="command">PREPARE</code> is used and multiple insertions are batched into a single transaction.</p> <p><code class="command">COPY</code> is fastest when used within the same transaction as an earlier <code class="command">CREATE TABLE</code> or <code class="command">TRUNCATE</code> command. In such cases no WAL needs to be written, because in case of an error, the files containing the newly loaded data will be removed anyway. However, this consideration only applies when <a class="xref" href="../runtime-config-wal/#GUC-WAL-LEVEL">wal_level</a> is <code class="literal">minimal</code> as all commands must write WAL otherwise.</p> </div> <div class="sect2" id="POPULATE-RM-INDEXES">    <h2 class="title">14.4.3. Remove Indexes</h2>    <p>If you are loading a freshly created table, the fastest method is to create the table, bulk load the table's data using <code class="command">COPY</code>, then create any indexes needed for the table. Creating an index on pre-existing data is quicker than updating it incrementally as each row is loaded.</p> <p>If you are adding large amounts of data to an existing table, it might be a win to drop the indexes, load the table, and then recreate the indexes. Of course, the database performance for other users might suffer during the time the indexes are missing. One should also think twice before dropping a unique index, since the error checking afforded by the unique constraint will be lost while the index is missing.</p> </div> <div class="sect2" id="POPULATE-RM-FKEYS">    <h2 class="title">14.4.4. Remove Foreign Key Constraints</h2>    <p>Just as with indexes, a foreign key constraint can be checked <span class="quote">“<span class="quote">in bulk</span>”</span> more efficiently than row-by-row. So it might be useful to drop foreign key constraints, load data, and re-create the constraints. Again, there is a trade-off between data load speed and loss of error checking while the constraint is missing.</p> <p>What's more, when you load data into a table with existing foreign key constraints, each new row requires an entry in the server's list of pending trigger events (since it is the firing of a trigger that checks the row's foreign key constraint). Loading many millions of rows can cause the trigger event queue to overflow available memory, leading to intolerable swapping or even outright failure of the command. Therefore it may be <span class="emphasis"><em>necessary</em></span>, not just desirable, to drop and re-apply foreign keys when loading large amounts of data. If temporarily removing the constraint isn't acceptable, the only other recourse may be to split up the load operation into smaller transactions.</p> </div> <div class="sect2" id="POPULATE-WORK-MEM">    <h2 class="title">14.4.5. Increase <code class="varname">maintenance_work_mem</code>
@@ -91,17 +91,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

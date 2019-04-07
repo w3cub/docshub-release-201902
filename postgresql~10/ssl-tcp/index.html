@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>18.9. Secure TCP/IP Connections with SSL</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../ssl-tcp/#SSL-CLIENT-CERTIFICATES">18.9.1. Using Client Certificates</a></dt> <dt><a href="../ssl-tcp/#SSL-SERVER-FILES">18.9.2. SSL Server File Usage</a></dt> <dt><a href="../ssl-tcp/#SSL-CERTIFICATE-CREATION">18.9.3. Creating Certificates</a></dt> </dl> </div>  <p>PostgreSQL has native support for using SSL connections to encrypt client/server communications for increased security. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time (see <a class="xref" href="https://www.postgresql.org/docs/10/static/installation.html" title="Chapter 16.  Installation from Source Code" target="_blank">Chapter 16</a>).</p> <p>With SSL support compiled in, the PostgreSQL server can be started with SSL enabled by setting the parameter <a class="xref" href="../runtime-config-connection/#GUC-SSL">ssl</a> to <code class="literal">on</code> in <code class="filename">postgresql.conf</code>. The server will listen for both normal and SSL connections on the same TCP port, and will negotiate with any connecting client on whether to use SSL. By default, this is at the client's option; see <a class="xref" href="../auth-pg-hba-conf/" title="20.1. The pg_hba.conf File">Section 20.1</a> about how to set up the server to require use of SSL for some or all connections.</p> <p>PostgreSQL reads the system-wide OpenSSL configuration file. By default, this file is named <code class="filename">openssl.cnf</code> and is located in the directory reported by <code class="literal">openssl version -d</code>. This default can be overridden by setting environment variable <code class="envar">OPENSSL_CONF</code> to the name of the desired configuration file.</p> <p>OpenSSL supports a wide range of ciphers and authentication algorithms, of varying strength. While a list of ciphers can be specified in the OpenSSL configuration file, you can specify ciphers specifically for use by the database server by modifying <a class="xref" href="../runtime-config-connection/#GUC-SSL-CIPHERS">ssl_ciphers</a> in <code class="filename">postgresql.conf</code>.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>It is possible to have authentication without encryption overhead by using <code class="literal">NULL-SHA</code> or <code class="literal">NULL-MD5</code> ciphers. However, a man-in-the-middle could read and pass communications between client and server. Also, encryption overhead is minimal compared to the overhead of authentication. For these reasons NULL ciphers are not recommended.</p> </blockquote> <p>To start in SSL mode, files containing the server certificate and private key must exist. By default, these files are expected to be named <code class="filename">server.crt</code> and <code class="filename">server.key</code>, respectively, in the server's data directory, but other names and locations can be specified using the configuration parameters <a class="xref" href="../runtime-config-connection/#GUC-SSL-CERT-FILE">ssl_cert_file</a> and <a class="xref" href="../runtime-config-connection/#GUC-SSL-KEY-FILE">ssl_key_file</a>.</p> <p>On Unix systems, the permissions on <code class="filename">server.key</code> must disallow any access to world or group; achieve this by the command <code class="command">chmod 0600 server.key</code>. Alternatively, the file can be owned by root and have group read access (that is, <code class="literal">0640</code> permissions). That setup is intended for installations where certificate and key files are managed by the operating system. The user under which the PostgreSQL server runs should then be made a member of the group that has access to those certificate and key files.</p> <p>If the private key is protected with a passphrase, the server will prompt for the passphrase and will not start until it has been entered. Using a passphrase also disables the ability to change the server's SSL configuration without a server restart. Furthermore, passphrase-protected private keys cannot be used at all on Windows.</p> <p>The first certificate in <code class="filename">server.crt</code> must be the server's certificate because it must match the server's private key. The certificates of <span class="quote">“<span class="quote">intermediate</span>”</span> certificate authorities can also be appended to the file. Doing this avoids the necessity of storing intermediate certificates on clients, assuming the root and intermediate certificates were created with <code class="literal">v3_ca</code> extensions. This allows easier expiration of intermediate certificates.</p> <p>It is not necessary to add the root certificate to <code class="filename">server.crt</code>. Instead, clients must have the root certificate of the server's certificate chain.</p> <div class="sect2" id="SSL-CLIENT-CERTIFICATES">    <h2 class="title">18.9.1. Using Client Certificates</h2>    <p>To require the client to supply a trusted certificate, place certificates of the root certificate authorities (CAs) you trust in a file in the data directory, set the parameter <a class="xref" href="../runtime-config-connection/#GUC-SSL-CA-FILE">ssl_ca_file</a> in <code class="filename">postgresql.conf</code> to the new file name, and add the authentication option <code class="literal">clientcert=1</code> to the appropriate <code class="literal">hostssl</code> line(s) in <code class="filename">pg_hba.conf</code>. A certificate will then be requested from the client during SSL connection startup. (See <a class="xref" href="https://www.postgresql.org/docs/10/static/libpq-ssl.html" title="33.18. SSL Support" target="_blank">Section 33.18</a> for a description of how to set up certificates on the client.) The server will verify that the client's certificate is signed by one of the trusted certificate authorities.</p> <p>Intermediate certificates that chain up to existing root certificates can also appear in the file <code class="filename">root.crt</code> if you wish to avoid storing them on clients (assuming the root and intermediate certificates were created with <code class="literal">v3_ca</code> extensions). Certificate Revocation List (CRL) entries are also checked if the parameter <a class="xref" href="../runtime-config-connection/#GUC-SSL-CRL-FILE">ssl_crl_file</a> is set. (See <a class="ulink" href="http://h71000.www7.hp.com/doc/83final/ba554_90007/ch04s02.html" target="_blank">http://h71000.www7.hp.com/doc/83final/ba554_90007/ch04s02.html</a> for diagrams showing SSL certificate usage.)</p> <p>The <code class="literal">clientcert</code> authentication option is available for all authentication methods, but only in <code class="filename">pg_hba.conf</code> lines specified as <code class="literal">hostssl</code>. When <code class="literal">clientcert</code> is not specified or is set to 0, the server will still verify any presented client certificates against its CA file, if one is configured — but it will not insist that a client certificate be presented.</p> <p>If you are setting up client certificates, you may wish to use the <code class="literal">cert</code> authentication method, so that the certificates control user authentication as well as providing connection security. See <a class="xref" href="../auth-methods/#AUTH-CERT" title="20.3.9. Certificate Authentication">Section 20.3.9</a> for details. (It is not necessary to specify <code class="literal">clientcert=1</code> explicitly when using the <code class="literal">cert</code> authentication method.)</p> </div> <div class="sect2" id="SSL-SERVER-FILES">    <h2 class="title">18.9.2. SSL Server File Usage</h2>    <p><a class="xref" href="../ssl-tcp/#SSL-FILE-USAGE" title="Table 18.2. SSL Server File Usage">Table 18.2</a> summarizes the files that are relevant to the SSL setup on the server. (The shown file names are default or typical names. The locally configured names could be different.)</p> <div class="table" id="SSL-FILE-USAGE"> <p class="title"><strong>Table 18.2. SSL Server File Usage</strong></p> <div class="table-contents"> <table class="table" summary="SSL Server File Usage"> <colgroup> <col> <col> <col>
 </colgroup> <thead> <tr> <th>File</th> <th>Contents</th> <th>Effect</th> </tr> </thead> <tbody> <tr> <td>
@@ -131,17 +131,9 @@ openssl x509 -req -in server.csr -text -days 365 \
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

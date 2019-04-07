@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>5.10. Table Partitioning</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../ddl-partitioning/#DDL-PARTITIONING-OVERVIEW">5.10.1. Overview</a></dt> <dt><a href="../ddl-partitioning/#DDL-PARTITIONING-DECLARATIVE">5.10.2. Declarative Partitioning</a></dt> <dt><a href="../ddl-partitioning/#DDL-PARTITIONING-IMPLEMENTATION-INHERITANCE"> 5.10.3. Implementation Using Inheritance</a></dt> <dt><a href="../ddl-partitioning/#DDL-PARTITIONING-CONSTRAINT-EXCLUSION">5.10.4. Partitioning and Constraint Exclusion</a></dt> </dl> </div>  <p>PostgreSQL supports basic table partitioning. This section describes why and how to implement partitioning as part of your database design.</p> <div class="sect2" id="DDL-PARTITIONING-OVERVIEW">    <h2 class="title">5.10.1. Overview</h2>    <p>Partitioning refers to splitting what is logically one large table into smaller physical pieces. Partitioning can provide several benefits:</p>  <ul> <li> <p>Query performance can be improved dramatically in certain situations, particularly when most of the heavily accessed rows of the table are in a single partition or a small number of partitions. The partitioning substitutes for leading columns of indexes, reducing index size and making it more likely that the heavily-used parts of the indexes fit in memory.</p> </li> <li> <p>When queries or updates access a large percentage of a single partition, performance can be improved by taking advantage of sequential scan of that partition instead of using an index and random access reads scattered across the whole table.</p> </li> <li> <p>Bulk loads and deletes can be accomplished by adding or removing partitions, if that requirement is planned into the partitioning design. Doing <code class="command">ALTER TABLE DETACH PARTITION</code> or dropping an individual partition using <code class="command">DROP TABLE</code> is far faster than a bulk operation. These commands also entirely avoid the <code class="command">VACUUM</code> overhead caused by a bulk <code class="command">DELETE</code>.</p> </li> <li> <p>Seldom-used data can be migrated to cheaper and slower storage media.</p> </li> </ul>  <p>The benefits will normally be worthwhile only when a table would otherwise be very large. The exact point at which a table will benefit from partitioning depends on the application, although a rule of thumb is that the size of the table should exceed the physical memory of the database server.</p> <p>PostgreSQL offers built-in support for the following forms of partitioning:</p> <div class="variablelist"> <dl class="variablelist"> <dt>Range Partitioning</dt> <dd> <p>The table is partitioned into <span class="quote">“<span class="quote">ranges</span>”</span> defined by a key column or set of columns, with no overlap between the ranges of values assigned to different partitions. For example, one might partition by date ranges, or by ranges of identifiers for particular business objects.</p> </dd> <dt>List Partitioning</dt> <dd> <p>The table is partitioned by explicitly listing which key values appear in each partition.</p> </dd> </dl> </div> <p>If your application needs to use other forms of partitioning not listed above, alternative methods such as inheritance and <code class="literal">UNION ALL</code> views can be used instead. Such methods offer flexibility but do not have some of the performance benefits of built-in declarative partitioning.</p> </div> <div class="sect2" id="DDL-PARTITIONING-DECLARATIVE">    <h2 class="title">5.10.2. Declarative Partitioning</h2>    <p>PostgreSQL offers a way to specify how to divide a table into pieces called partitions. The table that is divided is referred to as a <em class="firstterm">partitioned table</em>. The specification consists of the <em class="firstterm">partitioning method</em> and a list of columns or expressions to be used as the <em class="firstterm">partition key</em>.</p> <p>All rows inserted into a partitioned table will be routed to one of the <em class="firstterm">partitions</em> based on the value of the partition key. Each partition has a subset of the data defined by its <em class="firstterm">partition bounds</em>. Currently supported partitioning methods include range and list, where each partition is assigned a range of keys and a list of keys, respectively.</p> <p>Partitions may themselves be defined as partitioned tables, using what is called <em class="firstterm">sub-partitioning</em>. Partitions may have their own indexes, constraints and default values, distinct from those of other partitions. Indexes must be created separately for each partition. See <a class="xref" href="../sql-createtable/" title="CREATE TABLE">CREATE TABLE</a> for more details on creating partitioned tables and partitions.</p> <p>It is not possible to turn a regular table into a partitioned table or vice versa. However, it is possible to add a regular or partitioned table containing data as a partition of a partitioned table, or remove a partition from a partitioned table turning it into a standalone table; see <a class="xref" href="../sql-altertable/" title="ALTER TABLE">ALTER TABLE</a> to learn more about the <code class="command">ATTACH PARTITION</code> and <code class="command">DETACH PARTITION</code> sub-commands.</p> <p>Individual partitions are linked to the partitioned table with inheritance behind-the-scenes; however, it is not possible to use some of the inheritance features discussed in the previous section with partitioned tables and partitions. For example, a partition cannot have any parents other than the partitioned table it is a partition of, nor can a regular table inherit from a partitioned table making the latter its parent. That means partitioned tables and partitions do not participate in inheritance with regular tables. Since a partition hierarchy consisting of the partitioned table and its partitions is still an inheritance hierarchy, all the normal rules of inheritance apply as described in <a class="xref" href="../ddl-inherit/" title="5.9. Inheritance">Section 5.9</a> with some exceptions, most notably:</p>  <ul> <li> <p>Both <code class="literal">CHECK</code> and <code class="literal">NOT NULL</code> constraints of a partitioned table are always inherited by all its partitions. <code class="literal">CHECK</code> constraints that are marked <code class="literal">NO INHERIT</code> are not allowed to be created on partitioned tables.</p> </li> <li> <p>Using <code class="literal">ONLY</code> to add or drop a constraint on only the partitioned table is supported when there are no partitions. Once partitions exist, using <code class="literal">ONLY</code> will result in an error as adding or dropping constraints on only the partitioned table, when partitions exist, is not supported. Instead, constraints can be added or dropped, when they are not present in the parent table, directly on the partitions. As a partitioned table does not have any data directly, attempts to use <code class="command">TRUNCATE</code> <code class="literal">ONLY</code> on a partitioned table will always return an error.</p> </li> <li> <p>Partitions cannot have columns that are not present in the parent. It is neither possible to specify columns when creating partitions with <code class="command">CREATE TABLE</code> nor is it possible to add columns to partitions after-the-fact using <code class="command">ALTER TABLE</code>. Tables may be added as a partition with <code class="command">ALTER TABLE ... ATTACH PARTITION</code> only if their columns exactly match the parent, including any <code class="literal">oid</code> column.</p> </li> <li> <p>You cannot drop the <code class="literal">NOT NULL</code> constraint on a partition's column if the constraint is present in the parent table.</p> </li> </ul>  <p>Partitions can also be foreign tables (see <a class="xref" href="../sql-createforeigntable/" title="CREATE FOREIGN TABLE">CREATE FOREIGN TABLE</a>), although these have some limitations that normal tables do not. For example, data inserted into the partitioned table is not routed to foreign table partitions.</p> <div class="sect3" id="DDL-PARTITIONING-DECLARATIVE-EXAMPLE">    <h3 class="title">5.10.2.1. Example</h3>    <p>Suppose we are constructing a database for a large ice cream company. The company measures peak temperatures every day as well as ice cream sales in each region. Conceptually, we want a table like:</p> <pre data-language="sql">CREATE TABLE measurement (
     city_id         int not null,
@@ -256,17 +256,9 @@ EXPLAIN SELECT count(*) FROM measurement WHERE logdate &gt;= DATE '2008-01-01';
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

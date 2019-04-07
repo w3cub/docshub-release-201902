@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>11.9. Operator Classes and Operator Families</h1>     <p>An index definition can specify an <em class="firstterm">operator class</em> for each column of an index.</p> <pre data-language="sql">CREATE INDEX name ON table (column opclass [sort options] [, ...]);</pre> <p>The operator class identifies the operators to be used by the index for that column. For example, a B-tree index on the type <code class="type">int4</code> would use the <code class="literal">int4_ops</code> class; this operator class includes comparison functions for values of type <code class="type">int4</code>. In practice the default operator class for the column's data type is usually sufficient. The main reason for having operator classes is that for some data types, there could be more than one meaningful index behavior. For example, we might want to sort a complex-number data type either by absolute value or by real part. We could do this by defining two operator classes for the data type and then selecting the proper class when making an index. The operator class determines the basic sort ordering (which can then be modified by adding sort options <code class="literal">COLLATE</code>, <code class="literal">ASC</code>/<code class="literal">DESC</code> and/or <code class="literal">NULLS FIRST</code>/<code class="literal">NULLS LAST</code>).</p> <p>There are also some built-in operator classes besides the default ones:</p>  <ul> <li> <p>The operator classes <code class="literal">text_pattern_ops</code>, <code class="literal">varchar_pattern_ops</code>, and <code class="literal">bpchar_pattern_ops</code> support B-tree indexes on the types <code class="type">text</code>, <code class="type">varchar</code>, and <code class="type">char</code> respectively. The difference from the default operator classes is that the values are compared strictly character by character rather than according to the locale-specific collation rules. This makes these operator classes suitable for use by queries involving pattern matching expressions (<code class="literal">LIKE</code> or POSIX regular expressions) when the database does not use the standard <span class="quote">“<span class="quote">C</span>”</span> locale. As an example, you might index a <code class="type">varchar</code> column like this:</p> <pre data-language="sql">
 CREATE INDEX test_index ON test_table (col varchar_pattern_ops);</pre> <p>Note that you should also create an index with the default operator class if you want queries involving ordinary <code class="literal">&lt;</code>, <code class="literal">&lt;=</code>, <code class="literal">&gt;</code>, or <code class="literal">&gt;=</code> comparisons to use an index. Such queries cannot use the <code class="literal">xxx_pattern_ops</code> operator classes. (Ordinary equality comparisons can use these operator classes, however.) It is possible to create multiple indexes on the same column with different operator classes. If you do use the C locale, you do not need the <code class="literal">xxx_pattern_ops</code> operator classes, because an index with the default operator class is usable for pattern-matching queries in the C locale.</p> </li> </ul>  <p>The following query shows all defined operator classes:</p> <pre data-language="sql">SELECT am.amname AS index_method,
@@ -109,17 +109,9 @@ CREATE INDEX test_index ON test_table (col varchar_pattern_ops);</pre> <p>Note t
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

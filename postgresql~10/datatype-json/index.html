@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>8.14. JSON Types</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../datatype-json/#JSON-KEYS-ELEMENTS">8.14.1. JSON Input and Output Syntax</a></dt> <dt><a href="../datatype-json/#JSON-DOC-DESIGN">8.14.2. Designing JSON documents effectively</a></dt> <dt><a href="../datatype-json/#JSON-CONTAINMENT">8.14.3. <code class="type">jsonb</code> Containment and Existence</a></dt> <dt><a href="../datatype-json/#JSON-INDEXING">8.14.4. <code class="type">jsonb</code> Indexing</a></dt> </dl> </div>  <p>JSON data types are for storing JSON (JavaScript Object Notation) data, as specified in <a class="ulink" href="https://tools.ietf.org/html/rfc7159" target="_blank">RFC 7159</a>. Such data can also be stored as <code class="type">text</code>, but the JSON data types have the advantage of enforcing that each stored value is valid according to the JSON rules. There are also assorted JSON-specific functions and operators available for data stored in these data types; see <a class="xref" href="../functions-json/" title="9.15. JSON Functions and Operators">Section 9.15</a>.</p> <p>There are two JSON data types: <code class="type">json</code> and <code class="type">jsonb</code>. They accept <span class="emphasis"><em>almost</em></span> identical sets of values as input. The major practical difference is one of efficiency. The <code class="type">json</code> data type stores an exact copy of the input text, which processing functions must reparse on each execution; while <code class="type">jsonb</code> data is stored in a decomposed binary format that makes it slightly slower to input due to added conversion overhead, but significantly faster to process, since no reparsing is needed. <code class="type">jsonb</code> also supports indexing, which can be a significant advantage.</p> <p>Because the <code class="type">json</code> type stores an exact copy of the input text, it will preserve semantically-insignificant white space between tokens, as well as the order of keys within JSON objects. Also, if a JSON object within the value contains the same key more than once, all the key/value pairs are kept. (The processing functions consider the last value as the operative one.) By contrast, <code class="type">jsonb</code> does not preserve white space, does not preserve the order of object keys, and does not keep duplicate object keys. If duplicate keys are specified in the input, only the last value is kept.</p> <p>In general, most applications should prefer to store JSON data as <code class="type">jsonb</code>, unless there are quite specialized needs, such as legacy assumptions about ordering of object keys.</p> <p>PostgreSQL allows only one character set encoding per database. It is therefore not possible for the JSON types to conform rigidly to the JSON specification unless the database encoding is UTF8. Attempts to directly include characters that cannot be represented in the database encoding will fail; conversely, characters that can be represented in the database encoding but not in UTF8 will be allowed.</p> <p>RFC 7159 permits JSON strings to contain Unicode escape sequences denoted by <code class="literal">\uXXXX</code>. In the input function for the <code class="type">json</code> type, Unicode escapes are allowed regardless of the database encoding, and are checked only for syntactic correctness (that is, that four hex digits follow <code class="literal">\u</code>). However, the input function for <code class="type">jsonb</code> is stricter: it disallows Unicode escapes for non-ASCII characters (those above <code class="literal">U+007F</code>) unless the database encoding is UTF8. The <code class="type">jsonb</code> type also rejects <code class="literal">\u0000</code> (because that cannot be represented in PostgreSQL's <code class="type">text</code> type), and it insists that any use of Unicode surrogate pairs to designate characters outside the Unicode Basic Multilingual Plane be correct. Valid Unicode escapes are converted to the equivalent ASCII or UTF8 character for storage; this includes folding surrogate pairs into a single character.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>Many of the JSON processing functions described in <a class="xref" href="../functions-json/" title="9.15. JSON Functions and Operators">Section 9.15</a> will convert Unicode escapes to regular characters, and will therefore throw the same types of errors just described even if their input is of type <code class="type">json</code> not <code class="type">jsonb</code>. The fact that the <code class="type">json</code> input function does not make these checks may be considered a historical artifact, although it does allow for simple storage (without processing) of JSON Unicode escapes in a non-UTF8 database encoding. In general, it is best to avoid mixing Unicode escapes in JSON with a non-UTF8 database encoding, if possible.</p> </blockquote> <p>When converting textual JSON input into <code class="type">jsonb</code>, the primitive types described by RFC 7159 are effectively mapped onto native PostgreSQL types, as shown in <a class="xref" href="../datatype-json/#JSON-TYPE-MAPPING-TABLE" title="Table 8.23. JSON primitive types and corresponding PostgreSQL types"> Table 8.23</a>. Therefore, there are some minor additional constraints on what constitutes valid <code class="type">jsonb</code> data that do not apply to the <code class="type">json</code> type, nor to JSON in the abstract, corresponding to limits on what can be represented by the underlying data type. Notably, <code class="type">jsonb</code> will reject numbers that are outside the range of the PostgreSQL <code class="type">numeric</code> data type, while <code class="type">json</code> will not. Such implementation-defined restrictions are permitted by RFC 7159. However, in practice such problems are far more likely to occur in other implementations, as it is common to represent JSON's <code class="type">number</code> primitive type as IEEE 754 double precision floating point (which RFC 7159 explicitly anticipates and allows for). When using JSON as an interchange format with such systems, the danger of losing numeric precision compared to data originally stored by PostgreSQL should be considered.</p> <p>Conversely, as noted in the table there are some minor restrictions on the input format of JSON primitive types that do not apply to the corresponding PostgreSQL types.</p> <div class="table" id="JSON-TYPE-MAPPING-TABLE"> <p class="title"><strong>Table 8.23. JSON primitive types and corresponding PostgreSQL types</strong></p> <div class="table-contents"> <table class="table" summary="JSON primitive types and corresponding PostgreSQL types"> <colgroup> <col> <col> <col>
 </colgroup> <thead> <tr> <th>JSON primitive type</th> <th>PostgreSQL type</th> <th>Notes</th> </tr> </thead> <tbody> <tr> <td><code class="type" id="string">string</code></td> <td><code class="type">text</code></td> <td>
@@ -197,17 +197,9 @@ Array with n elements &gt; array with n - 1 elements</pre> <p>Objects with equal
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

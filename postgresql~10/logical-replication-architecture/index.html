@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>31.5. Architecture</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../logical-replication-architecture/#LOGICAL-REPLICATION-SNAPSHOT"> 31.5.1. Initial Snapshot</a></dt> </dl> </div> <p>Logical replication starts by copying a snapshot of the data on the publisher database. Once that is done, changes on the publisher are sent to the subscriber as they occur in real time. The subscriber applies data in the order in which commits were made on the publisher so that transactional consistency is guaranteed for the publications within any single subscription.</p> <p>Logical replication is built with an architecture similar to physical streaming replication (see <a class="xref" href="../warm-standby/#STREAMING-REPLICATION" title="26.2.5. Streaming Replication">Section 26.2.5</a>). It is implemented by <span class="quote">“<span class="quote">walsender</span>”</span> and <span class="quote">“<span class="quote">apply</span>”</span> processes. The walsender process starts logical decoding (described in <a class="xref" href="https://www.postgresql.org/docs/10/static/logicaldecoding.html" title="Chapter 48. Logical Decoding" target="_blank">Chapter 48</a>) of the WAL and loads the standard logical decoding plugin (pgoutput). The plugin transforms the changes read from WAL to the logical replication protocol (see <a class="xref" href="https://www.postgresql.org/docs/10/static/protocol-logical-replication.html" title="52.5. Logical Streaming Replication Protocol" target="_blank">Section 52.5</a>) and filters the data according to the publication specification. The data is then continuously transferred using the streaming replication protocol to the apply worker, which maps the data to local tables and applies the individual changes as they are received, in correct transactional order.</p> <p>The apply process on the subscriber database always runs with <code class="varname">session_replication_role</code> set to <code class="literal">replica</code>, which produces the usual effects on triggers and constraints.</p> <p>The logical replication apply process currently only fires row triggers, not statement triggers. The initial table synchronization, however, is implemented like a <code class="command">COPY</code> command and thus fires both row and statement triggers for <code class="command">INSERT</code>.</p> <div class="sect2" id="LOGICAL-REPLICATION-SNAPSHOT">    <h2 class="title">31.5.1. Initial Snapshot</h2>    <p>The initial data in existing subscribed tables are snapshotted and copied in a parallel instance of a special kind of apply process. This process will create its own temporary replication slot and copy the existing data. Once existing data is copied, the worker enters synchronization mode, which ensures that the table is brought up to a synchronized state with the main apply process by streaming any changes that happened during the initial data copy using standard logical replication. Once the synchronization is done, the control of the replication of the table is given back to the main apply process where the replication continues as normal.</p> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="../logical-replication-restrictions/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/logical-replication.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../logical-replication-monitoring/">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>62.3. Extensibility</h1>    <p>Traditionally, implementing a new index access method meant a lot of difficult work. It was necessary to understand the inner workings of the database, such as the lock manager and Write-Ahead Log. The GiST interface has a high level of abstraction, requiring the access method implementer only to implement the semantics of the data type being accessed. The GiST layer itself takes care of concurrency, logging and searching the tree structure.</p> <p>This extensibility should not be confused with the extensibility of the other standard search trees in terms of the data they can handle. For example, PostgreSQL supports extensible B-trees and hash indexes. That means that you can use PostgreSQL to build a B-tree or hash over any data type you want. But B-trees only support range predicates (<code class="literal">&lt;</code>, <code class="literal">=</code>, <code class="literal">&gt;</code>), and hash indexes only support equality queries.</p> <p>So if you index, say, an image collection with a PostgreSQL B-tree, you can only issue queries such as <span class="quote">“<span class="quote">is imagex equal to imagey</span>”</span>, <span class="quote">“<span class="quote">is imagex less than imagey</span>”</span> and <span class="quote">“<span class="quote">is imagex greater than imagey</span>”</span>. Depending on how you define <span class="quote">“<span class="quote">equals</span>”</span>, <span class="quote">“<span class="quote">less than</span>”</span> and <span class="quote">“<span class="quote">greater than</span>”</span> in this context, this could be useful. However, by using a GiST based index, you could create ways to ask domain-specific questions, perhaps <span class="quote">“<span class="quote">find all images of horses</span>”</span> or <span class="quote">“<span class="quote">find all over-exposed images</span>”</span>.</p> <p>All it takes to get a GiST access method up and running is to implement several user-defined methods, which define the behavior of keys in the tree. Of course these methods have to be pretty fancy to support fancy queries, but for all the standard queries (B-trees, R-trees, etc.) they're relatively straightforward. In short, GiST combines extensibility along with generality, code reuse, and a clean interface.</p> <p>There are seven methods that an index operator class for GiST must provide, and two that are optional. Correctness of the index is ensured by proper implementation of the <code class="function">same</code>, <code class="function">consistent</code> and <code class="function">union</code> methods, while efficiency (size and speed) of the index will depend on the <code class="function">penalty</code> and <code class="function">picksplit</code> methods. The remaining two basic methods are <code class="function">compress</code> and <code class="function">decompress</code>, which allow an index to have internal tree data of a different type than the data it indexes. The leaves are to be of the indexed data type, while the other tree nodes can be of any C struct (but you still have to follow PostgreSQL data type rules here, see about <code class="literal">varlena</code> for variable sized data). If the tree's internal data type exists at the SQL level, the <code class="literal">STORAGE</code> option of the <code class="command">CREATE OPERATOR CLASS</code> command can be used. The optional eighth method is <code class="function">distance</code>, which is needed if the operator class wishes to support ordered scans (nearest-neighbor searches). The optional ninth method <code class="function">fetch</code> is needed if the operator class wishes to support index-only scans.</p> <div class="variablelist"> <dl class="variablelist"> <dt><code class="function">consistent</code></dt> <dd> <p>Given an index entry <code class="literal">p</code> and a query value <code class="literal">q</code>, this function determines whether the index entry is <span class="quote">“<span class="quote">consistent</span>”</span> with the query; that is, could the predicate <span class="quote">“<span class="quote"><code>indexed_column</code> <code>indexable_operator</code> <code class="literal">q</code></span>”</span> be true for any row represented by the index entry? For a leaf index entry this is equivalent to testing the indexable condition, while for an internal tree node this determines whether it is necessary to scan the subtree of the index represented by the tree node. When the result is <code class="literal">true</code>, a <code class="literal">recheck</code> flag must also be returned. This indicates whether the predicate is certainly true or only possibly true. If <code class="literal">recheck</code> = <code class="literal">false</code> then the index has tested the predicate condition exactly, whereas if <code class="literal">recheck</code> = <code class="literal">true</code> the row is only a candidate match. In that case the system will automatically evaluate the <code>indexable_operator</code> against the actual row value to see if it is really a match. This convention allows GiST to support both lossless and lossy index structures.</p> <p>The SQL declaration of the function must look like this:</p> <pre data-language="sql">
 CREATE OR REPLACE FUNCTION my_consistent(internal, data_type, smallint, oid, internal)
@@ -349,17 +349,9 @@ my_fetch(PG_FUNCTION_ARGS)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

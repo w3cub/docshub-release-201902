@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>7.2. Table Expressions</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../queries-table-expressions/#QUERIES-FROM">7.2.1. The <code class="literal">FROM</code> Clause</a></dt> <dt><a href="../queries-table-expressions/#QUERIES-WHERE">7.2.2. The <code class="literal">WHERE</code> Clause</a></dt> <dt><a href="../queries-table-expressions/#QUERIES-GROUP">7.2.3. The <code class="literal">GROUP BY</code> and <code class="literal">HAVING</code> Clauses</a></dt> <dt><a href="../queries-table-expressions/#QUERIES-GROUPING-SETS">7.2.4. <code class="literal">GROUPING SETS</code>, <code class="literal">CUBE</code>, and <code class="literal">ROLLUP</code></a></dt> <dt><a href="../queries-table-expressions/#QUERIES-WINDOW">7.2.5. Window Function Processing</a></dt> </dl> </div>  <p>A <em class="firstterm">table expression</em> computes a table. The table expression contains a <code class="literal">FROM</code> clause that is optionally followed by <code class="literal">WHERE</code>, <code class="literal">GROUP BY</code>, and <code class="literal">HAVING</code> clauses. Trivial table expressions simply refer to a table on disk, a so-called base table, but more complex expressions can be used to modify or combine base tables in various ways.</p> <p>The optional <code class="literal">WHERE</code>, <code class="literal">GROUP BY</code>, and <code class="literal">HAVING</code> clauses in the table expression specify a pipeline of successive transformations performed on the table derived in the <code class="literal">FROM</code> clause. All these transformations produce a virtual table that provides the rows that are passed to the select list to compute the output rows of the query.</p> <div class="sect2" id="QUERIES-FROM">    <h2 class="title">7.2.1. The <code class="literal">FROM</code> Clause</h2>    <p>The <a class="xref" href="../sql-select/#SQL-FROM" title="FROM Clause"><code class="literal">FROM</code> Clause</a> derives a table from one or more other tables given in a comma-separated table reference list.</p> <pre data-language="sql">FROM table_reference [, table_reference [, ...]]</pre> <p>A table reference can be a table name (possibly schema-qualified), or a derived table such as a subquery, a <code class="literal">JOIN</code> construct, or complex combinations of these. If more than one table reference is listed in the <code class="literal">FROM</code> clause, the tables are cross-joined (that is, the Cartesian product of their rows is formed; see below). The result of the <code class="literal">FROM</code> list is an intermediate virtual table that can then be subject to transformations by the <code class="literal">WHERE</code>, <code class="literal">GROUP BY</code>, and <code class="literal">HAVING</code> clauses and is finally the result of the overall table expression.</p>  <p>When a table reference names a table that is the parent of a table inheritance hierarchy, the table reference produces rows of not only that table but all of its descendant tables, unless the key word <code class="literal">ONLY</code> precedes the table name. However, the reference produces only the columns that appear in the named table — any columns added in subtables are ignored.</p> <p>Instead of writing <code class="literal">ONLY</code> before the table name, you can write <code class="literal">*</code> after the table name to explicitly specify that descendant tables are included. There is no real reason to use this syntax any more, because searching descendant tables is now always the default behavior. However, it is supported for compatibility with older releases.</p> <div class="sect3" id="QUERIES-JOIN">    <h3 class="title">7.2.1.1. Joined Tables</h3>     <p>A joined table is a table derived from two other (real or derived) tables according to the rules of the particular join type. Inner, outer, and cross-joins are available. The general syntax of a joined table is</p> <pre data-language="sql">T1 join_type T2 [ join_condition ]</pre> <p>Joins of all types can be chained together, or nested: either or both <code>T1</code> and <code>T2</code> can be joined tables. Parentheses can be used around <code class="literal">JOIN</code> clauses to control the join order. In the absence of parentheses, <code class="literal">JOIN</code> clauses nest left-to-right.</p> <div class="variablelist"> <p class="title"><strong>Join Types</strong></p> <dl class="variablelist"> <dt>Cross join  </dt> <dd> <pre data-language="sql">T1 CROSS JOIN T2</pre> <p>For every possible combination of rows from <code>T1</code> and <code>T2</code> (i.e., a Cartesian product), the joined table will contain a row consisting of all columns in <code>T1</code> followed by all columns in <code>T2</code>. If the tables have N and M rows respectively, the joined table will have N * M rows.</p> <p><code class="literal">FROM T1 CROSS JOIN T2</code> is equivalent to <code class="literal">FROM T1 INNER JOIN T2 ON TRUE</code> (see below). It is also equivalent to <code class="literal">FROM T1, T2</code>.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>This latter equivalence does not hold exactly when more than two tables appear, because <code class="literal">JOIN</code> binds more tightly than comma. For example <code class="literal">FROM T1 CROSS JOIN T2 INNER JOIN T3 ON condition</code> is not the same as <code class="literal">FROM T1, T2 INNER JOIN T3 ON condition</code> because the <code>condition</code> can reference <code>T1</code> in the first case but not the second.</p> </blockquote> </dd> <dt>Qualified joins  </dt> <dd> <pre data-language="sql">T1 { [INNER] | { LEFT | RIGHT | FULL } [OUTER] } JOIN T2 ON boolean_expression
 T1 { [INNER] | { LEFT | RIGHT | FULL } [OUTER] } JOIN T2 USING ( join column list )
@@ -328,17 +328,9 @@ GROUP BY a, CUBE (b, c), GROUPING SETS ((d), (e))</pre> <p>is equivalent to</p> 
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

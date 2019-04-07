@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>66.6. Database Page Layout</h1>    <p>This section provides an overview of the page format used within PostgreSQL tables and indexes.<a href="#ftn.id-1.10.19.8.2.2" class="footnote"><sup class="footnote" id="id-1.10.19.8.2.2">[12]</sup></a> Sequences and TOAST tables are formatted just like a regular table.</p> <p>In the following explanation, a <em class="firstterm">byte</em> is assumed to contain 8 bits. In addition, the term <em class="firstterm">item</em> refers to an individual data value that is stored on a page. In a table, an item is a row; in an index, an item is an index entry.</p> <p>Every table and index is stored as an array of <em class="firstterm">pages</em> of a fixed size (usually 8 kB, although a different page size can be selected when compiling the server). In a table, all the pages are logically equivalent, so a particular item (row) can be stored in any page. In indexes, the first page is generally reserved as a <em class="firstterm">metapage</em> holding control information, and there can be different types of pages within the index, depending on the index access method.</p> <p><a class="xref" href="../storage-page-layout/#PAGE-TABLE" title="Table 66.2. Overall Page Layout">Table 66.2</a> shows the overall layout of a page. There are five parts to each page.</p> <div class="table" id="PAGE-TABLE"> <p class="title"><strong>Table 66.2. Overall Page Layout</strong></p> <div class="table-contents"> <table class="table" summary="Overall Page Layout"> <colgroup> <col> <col>
 </colgroup> <thead> <tr> <th>Item</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td>PageHeaderData</td> <td>24 bytes long. Contains general information about the page, including free space pointers.</td> </tr> <tr> <td>ItemIdData</td> <td>Array of (offset,length) pairs pointing to the actual items. 4 bytes per item.</td> </tr> <tr> <td>Free space</td> <td>The unallocated space. New item pointers are allocated from the start of this area, new items from the end.</td> </tr> <tr> <td>Items</td> <td>The actual items themselves.</td> </tr> <tr> <td>Special space</td> <td>Index access method specific data. Different methods store different data. Empty in ordinary tables.</td> </tr> </tbody> </table> </div> </div>  <p>The first 24 bytes of each page consists of a page header (<code class="structname">PageHeaderData</code>). Its format is detailed in <a class="xref" href="../storage-page-layout/#PAGEHEADERDATA-TABLE" title="Table 66.3. PageHeaderData Layout">Table 66.3</a>. The first field tracks the most recent WAL entry related to this page. The second field contains the page checksum if <a class="xref" href="../app-initdb/#APP-INITDB-DATA-CHECKSUMS">data checksums</a> are enabled. Next is a 2-byte field containing flag bits. This is followed by three 2-byte integer fields (<code class="structfield">pd_lower</code>, <code class="structfield">pd_upper</code>, and <code class="structfield">pd_special</code>). These contain byte offsets from the page start to the start of unallocated space, to the end of unallocated space, and to the start of the special space. The next 2 bytes of the page header, <code class="structfield">pd_pagesize_version</code>, store both the page size and a version indicator. Beginning with PostgreSQL 8.3 the version number is 4; PostgreSQL 8.1 and 8.2 used version number 3; PostgreSQL 8.0 used version number 2; PostgreSQL 7.3 and 7.4 used version number 1; prior releases used version number 0. (The basic page layout and header format has not changed in most of these versions, but the layout of heap row headers has.) The page size is basically only present as a cross-check; there is no support for having more than one page size in an installation. The last field is a hint that shows whether pruning the page is likely to be profitable: it tracks the oldest un-pruned XMAX on the page.</p> <div class="table" id="PAGEHEADERDATA-TABLE"> <p class="title"><strong>Table 66.3. PageHeaderData Layout</strong></p> <div class="table-contents"> <table class="table" summary="PageHeaderData Layout"> <colgroup> <col> <col> <col> <col>
@@ -91,17 +91,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

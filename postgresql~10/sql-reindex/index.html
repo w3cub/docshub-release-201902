@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>REINDEX</h1> <p>REINDEX — rebuild indexes</p>   <h2>Synopsis</h2> <pre data-language="sql">
 REINDEX [ ( VERBOSE ) ] { INDEX | TABLE | SCHEMA | DATABASE | SYSTEM } name</pre> <div class="refsect1" id="id-1.9.3.156.5"> <h2>Description</h2> <p><code class="command">REINDEX</code> rebuilds an index using the data stored in the index's table, replacing the old copy of the index. There are several scenarios in which to use <code class="command">REINDEX</code>:</p>  <ul> <li> <p>An index has become corrupted, and no longer contains valid data. Although in theory this should never happen, in practice indexes can become corrupted due to software bugs or hardware failures. <code class="command">REINDEX</code> provides a recovery method.</p> </li> <li> <p>An index has become <span class="quote">“<span class="quote">bloated</span>”</span>, that is it contains many empty or nearly-empty pages. This can occur with B-tree indexes in PostgreSQL under certain uncommon access patterns. <code class="command">REINDEX</code> provides a way to reduce the space consumption of the index by writing a new version of the index without the dead pages. See <a class="xref" href="../routine-reindex/" title="24.2. Routine Reindexing">Section 24.2</a> for more information.</p> </li> <li> <p>You have altered a storage parameter (such as fillfactor) for an index, and wish to ensure that the change has taken full effect.</p> </li> <li> <p>An index build with the <code class="literal">CONCURRENTLY</code> option failed, leaving an <span class="quote">“<span class="quote">invalid</span>”</span> index. Such indexes are useless but it can be convenient to use <code class="command">REINDEX</code> to rebuild them. Note that <code class="command">REINDEX</code> will not perform a concurrent build. To build the index without interfering with production you should drop the index and reissue the <code class="command">CREATE INDEX CONCURRENTLY</code> command.</p> </li> </ul>  </div> <div class="refsect1" id="id-1.9.3.156.6"> <h2>Parameters</h2> <div class="variablelist"> <dl class="variablelist"> <dt><code class="literal">INDEX</code></dt> <dd> <p>Recreate the specified index.</p> </dd> <dt><code class="literal">TABLE</code></dt> <dd> <p>Recreate all indexes of the specified table. If the table has a secondary <span class="quote">“<span class="quote">TOAST</span>”</span> table, that is reindexed as well.</p> </dd> <dt><code class="literal">SCHEMA</code></dt> <dd> <p>Recreate all indexes of the specified schema. If a table of this schema has a secondary <span class="quote">“<span class="quote">TOAST</span>”</span> table, that is reindexed as well. Indexes on shared system catalogs are also processed. This form of <code class="command">REINDEX</code> cannot be executed inside a transaction block.</p> </dd> <dt><code class="literal">DATABASE</code></dt> <dd> <p>Recreate all indexes within the current database. Indexes on shared system catalogs are also processed. This form of <code class="command">REINDEX</code> cannot be executed inside a transaction block.</p> </dd> <dt><code class="literal">SYSTEM</code></dt> <dd> <p>Recreate all indexes on system catalogs within the current database. Indexes on shared system catalogs are included. Indexes on user tables are not processed. This form of <code class="command">REINDEX</code> cannot be executed inside a transaction block.</p> </dd> <dt><code>name</code></dt> <dd> <p>The name of the specific index, table, or database to be reindexed. Index and table names can be schema-qualified. Presently, <code class="command">REINDEX DATABASE</code> and <code class="command">REINDEX SYSTEM</code> can only reindex the current database, so their parameter must match the current database's name.</p> </dd> <dt><code class="literal">VERBOSE</code></dt> <dd> <p>Prints a progress report as each index is reindexed.</p> </dd> </dl> </div> </div> <div class="refsect1" id="id-1.9.3.156.7"> <h2>Notes</h2> <p>If you suspect corruption of an index on a user table, you can simply rebuild that index, or all indexes on the table, using <code class="command">REINDEX INDEX</code> or <code class="command">REINDEX TABLE</code>.</p> <p>Things are more difficult if you need to recover from corruption of an index on a system table. In this case it's important for the system to not have used any of the suspect indexes itself. (Indeed, in this sort of scenario you might find that server processes are crashing immediately at start-up, due to reliance on the corrupted indexes.) To recover safely, the server must be started with the <code class="option">-P</code> option, which prevents it from using indexes for system catalog lookups.</p> <p>One way to do this is to shut down the server and start a single-user PostgreSQL server with the <code class="option">-P</code> option included on its command line. Then, <code class="command">REINDEX DATABASE</code>, <code class="command">REINDEX SYSTEM</code>, <code class="command">REINDEX TABLE</code>, or <code class="command">REINDEX INDEX</code> can be issued, depending on how much you want to reconstruct. If in doubt, use <code class="command">REINDEX SYSTEM</code> to select reconstruction of all system indexes in the database. Then quit the single-user server session and restart the regular server. See the <a class="xref" href="../app-postgres/" title="postgres">postgres</a> reference page for more information about how to interact with the single-user server interface.</p> <p>Alternatively, a regular server session can be started with <code class="option">-P</code> included in its command line options. The method for doing this varies across clients, but in all libpq-based clients, it is possible to set the <code class="envar">PGOPTIONS</code> environment variable to <code class="literal">-P</code> before starting the client. Note that while this method does not require locking out other clients, it might still be wise to prevent other users from connecting to the damaged database until repairs have been completed.</p> <p><code class="command">REINDEX</code> is similar to a drop and recreate of the index in that the index contents are rebuilt from scratch. However, the locking considerations are rather different. <code class="command">REINDEX</code> locks out writes but not reads of the index's parent table. It also takes an exclusive lock on the specific index being processed, which will block reads that attempt to use that index. In contrast, <code class="command">DROP INDEX</code> momentarily takes an exclusive lock on the parent table, blocking both writes and reads. The subsequent <code class="command">CREATE INDEX</code> locks out writes but not reads; since the index is not there, no read will attempt to use it, meaning that there will be no blocking but reads might be forced into expensive sequential scans.</p> <p>Reindexing a single index or table requires being the owner of that index or table. Reindexing a database requires being the owner of the database (note that the owner can therefore rebuild indexes of tables owned by other users). Of course, superusers can always reindex anything.</p> </div> <div class="refsect1" id="id-1.9.3.156.8"> <h2>Examples</h2> <p>Rebuild a single index:</p> <pre data-language="sql">REINDEX INDEX my_index;</pre> <p>Rebuild all the indexes on the table <code class="literal">my_table</code>:</p> <pre data-language="sql">REINDEX TABLE my_table;</pre> <p>Rebuild all indexes in a particular database, without trusting the system indexes to be valid already:</p> <pre data-language="sql">$ <strong class="userinput">export PGOPTIONS="-P"</strong>
@@ -94,17 +94,9 @@ broken_db=&gt; \q</pre>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

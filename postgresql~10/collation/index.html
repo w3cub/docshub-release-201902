@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>23.2. Collation Support</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../collation/#id-1.6.10.4.4">23.2.1. Concepts</a></dt> <dt><a href="../collation/#COLLATION-MANAGING">23.2.2. Managing Collations</a></dt> </dl> </div>  <p>The collation feature allows specifying the sort order and character classification behavior of data per-column, or even per-operation. This alleviates the restriction that the <code class="symbol">LC_COLLATE</code> and <code class="symbol">LC_CTYPE</code> settings of a database cannot be changed after its creation.</p> <div class="sect2" id="id-1.6.10.4.4">    <h2 class="title">23.2.1. Concepts</h2>    <p>Conceptually, every expression of a collatable data type has a collation. (The built-in collatable data types are <code class="type">text</code>, <code class="type">varchar</code>, and <code class="type">char</code>. User-defined base types can also be marked collatable, and of course a domain over a collatable data type is collatable.) If the expression is a column reference, the collation of the expression is the defined collation of the column. If the expression is a constant, the collation is the default collation of the data type of the constant. The collation of a more complex expression is derived from the collations of its inputs, as described below.</p> <p>The collation of an expression can be the <span class="quote">“<span class="quote">default</span>”</span> collation, which means the locale settings defined for the database. It is also possible for an expression's collation to be indeterminate. In such cases, ordering operations and other operations that need to know the collation will fail.</p> <p>When the database system has to perform an ordering or a character classification, it uses the collation of the input expression. This happens, for example, with <code class="literal">ORDER BY</code> clauses and function or operator calls such as <code class="literal">&lt;</code>. The collation to apply for an <code class="literal">ORDER BY</code> clause is simply the collation of the sort key. The collation to apply for a function or operator call is derived from the arguments, as described below. In addition to comparison operators, collations are taken into account by functions that convert between lower and upper case letters, such as <code class="function">lower</code>, <code class="function">upper</code>, and <code class="function">initcap</code>; by pattern matching operators; and by <code class="function">to_char</code> and related functions.</p> <p>For a function or operator call, the collation that is derived by examining the argument collations is used at run time for performing the specified operation. If the result of the function or operator call is of a collatable data type, the collation is also used at parse time as the defined collation of the function or operator expression, in case there is a surrounding expression that requires knowledge of its collation.</p> <p>The <em class="firstterm">collation derivation</em> of an expression can be implicit or explicit. This distinction affects how collations are combined when multiple different collations appear in an expression. An explicit collation derivation occurs when a <code class="literal">COLLATE</code> clause is used; all other collation derivations are implicit. When multiple collations need to be combined, for example in a function call, the following rules are used:</p> <div class="orderedlist"> <ol class="orderedlist" type="1"> <li> <p>If any input expression has an explicit collation derivation, then all explicitly derived collations among the input expressions must be the same, otherwise an error is raised. If any explicitly derived collation is present, that is the result of the collation combination.</p> </li> <li> <p>Otherwise, all input expressions must have the same implicit collation derivation or the default collation. If any non-default collation is present, that is the result of the collation combination. Otherwise, the result is the default collation.</p> </li> <li> <p>If there are conflicting non-default implicit collations among the input expressions, then the combination is deemed to have indeterminate collation. This is not an error condition unless the particular function being invoked requires knowledge of the collation it should apply. If it does, an error will be raised at run-time.</p> </li> </ol> </div> <p>For example, consider this table definition:</p> <pre data-language="sql">CREATE TABLE test1 (
     a text COLLATE "de_DE",
@@ -116,17 +116,9 @@ CREATE COLLATION french FROM "fr-x-icu";</pre>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>15.2. When Can Parallel Query Be Used?</h1>    <p>There are several settings which can cause the query planner not to generate a parallel query plan under any circumstances. In order for any parallel query plans whatsoever to be generated, the following settings must be configured as indicated.</p>  <ul> <li> <p><a class="xref" href="../runtime-config-resource/#GUC-MAX-PARALLEL-WORKERS-PER-GATHER">max_parallel_workers_per_gather</a> must be set to a value which is greater than zero. This is a special case of the more general principle that no more workers should be used than the number configured via <code class="varname">max_parallel_workers_per_gather</code>.</p> </li> <li> <p><a class="xref" href="../runtime-config-resource/#GUC-DYNAMIC-SHARED-MEMORY-TYPE">dynamic_shared_memory_type</a> must be set to a value other than <code class="literal">none</code>. Parallel query requires dynamic shared memory in order to pass data between cooperating processes.</p> </li> </ul>  <p>In addition, the system must not be running in single-user mode. Since the entire database system is running in single process in this situation, no background workers will be available.</p> <p>Even when it is in general possible for parallel query plans to be generated, the planner will not generate them for a given query if any of the following are true:</p>  <ul> <li> <p>The query writes any data or locks any database rows. If a query contains a data-modifying operation either at the top level or within a CTE, no parallel plans for that query will be generated. This is a limitation of the current implementation which could be lifted in a future release.</p> </li> <li> <p>The query might be suspended during execution. In any situation in which the system thinks that partial or incremental execution might occur, no parallel plan is generated. For example, a cursor created using <a class="link" href="../sql-declare/" title="DECLARE">DECLARE CURSOR</a> will never use a parallel plan. Similarly, a PL/pgSQL loop of the form <code class="literal">FOR x IN query LOOP .. END LOOP</code> will never use a parallel plan, because the parallel query system is unable to verify that the code in the loop is safe to execute while parallel query is active.</p> </li> <li> <p>The query uses any function marked <code class="literal">PARALLEL UNSAFE</code>. Most system-defined functions are <code class="literal">PARALLEL SAFE</code>, but user-defined functions are marked <code class="literal">PARALLEL UNSAFE</code> by default. See the discussion of <a class="xref" href="../parallel-safety/" title="15.4. Parallel Safety">Section 15.4</a>.</p> </li> <li> <p>The query is running inside of another query that is already parallel. For example, if a function called by a parallel query issues an SQL query itself, that query will never use a parallel plan. This is a limitation of the current implementation, but it may not be desirable to remove this limitation, since it could result in a single query using a very large number of processes.</p> </li> <li> <p>The transaction isolation level is serializable. This is a limitation of the current implementation.</p> </li> </ul>  <p>Even when parallel query plan is generated for a particular query, there are several circumstances under which it will be impossible to execute that plan in parallel at execution time. If this occurs, the leader will execute the portion of the plan below the <code class="literal">Gather</code> node entirely by itself, almost as if the <code class="literal">Gather</code> node were not present. This will happen if any of the following conditions are met:</p>  <ul> <li> <p>No background workers can be obtained because of the limitation that the total number of background workers cannot exceed <a class="xref" href="../runtime-config-resource/#GUC-MAX-WORKER-PROCESSES">max_worker_processes</a>.</p> </li> <li> <p>No background workers can be obtained because of the limitation that the total number of background workers launched for purposes of parallel query cannot exceed <a class="xref" href="../runtime-config-resource/#GUC-MAX-PARALLEL-WORKERS">max_parallel_workers</a>.</p> </li> <li> <p>The client sends an Execute message with a non-zero fetch count. See the discussion of the <a class="link" href="https://www.postgresql.org/docs/10/static/protocol-flow.html#PROTOCOL-FLOW-EXT-QUERY" title="52.2.3. Extended Query" target="_blank">extended query protocol</a>. Since <a class="link" href="https://www.postgresql.org/docs/10/static/libpq.html" title="Chapter 33. libpq - C Library" target="_blank">libpq</a> currently provides no way to send such a message, this can only occur when using a client that does not rely on libpq. If this is a frequent occurrence, it may be a good idea to set <a class="xref" href="../runtime-config-resource/#GUC-MAX-PARALLEL-WORKERS-PER-GATHER">max_parallel_workers_per_gather</a> to zero in sessions where it is likely, so as to avoid generating query plans that may be suboptimal when run serially.</p> </li> <li> <p>A prepared statement is executed using a <code class="literal">CREATE TABLE .. AS EXECUTE ..</code> statement. This construct converts what otherwise would have been a read-only operation into a read-write operation, making it ineligible for parallel query.</p> </li> <li> <p>The transaction isolation level is serializable. This situation does not normally arise, because parallel query plans are not generated when the transaction isolation level is serializable. However, it can happen if the transaction isolation level is changed to serializable after the plan is generated and before it is executed.</p> </li> </ul>   <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="../how-parallel-query-works/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/parallel-query.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../parallel-plans/">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

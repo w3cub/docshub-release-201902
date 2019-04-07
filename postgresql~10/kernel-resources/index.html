@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>18.4. Managing Kernel Resources</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../kernel-resources/#SYSVIPC">18.4.1. Shared Memory and Semaphores</a></dt> <dt><a href="../kernel-resources/#SYSTEMD-REMOVEIPC">18.4.2. systemd RemoveIPC</a></dt> <dt><a href="../kernel-resources/#id-1.6.5.6.5">18.4.3. Resource Limits</a></dt> <dt><a href="../kernel-resources/#LINUX-MEMORY-OVERCOMMIT">18.4.4. Linux Memory Overcommit</a></dt> <dt><a href="../kernel-resources/#LINUX-HUGE-PAGES">18.4.5. Linux Huge Pages</a></dt> </dl> </div> <p>PostgreSQL can sometimes exhaust various operating system resource limits, especially when multiple copies of the server are running on the same system, or in very large installations. This section explains the kernel resources used by PostgreSQL and the steps you can take to resolve problems related to kernel resource consumption.</p> <div class="sect2" id="SYSVIPC">    <h2 class="title">18.4.1. Shared Memory and Semaphores</h2>     <p>PostgreSQL requires the operating system to provide inter-process communication (IPC) features, specifically shared memory and semaphores. Unix-derived systems typically provide <span class="quote">“<span class="quote"><span class="systemitem">System V</span></span>”</span> IPC, <span class="quote">“<span class="quote"><span class="systemitem">POSIX</span></span>”</span> IPC, or both. <span class="systemitem">Windows</span> has its own implementation of these features and is not discussed here.</p> <p>The complete lack of these facilities is usually manifested by an <span class="quote">“<span class="quote"><span class="errorname">Illegal system call</span></span>”</span> error upon server start. In that case there is no alternative but to reconfigure your kernel. PostgreSQL won't work without them. This situation is rare, however, among modern operating systems.</p> <p>Upon starting the server, PostgreSQL normally allocates a very small amount of System V shared memory, as well as a much larger amount of POSIX (<code class="function">mmap</code>) shared memory. In addition a significant number of semaphores, which can be either System V or POSIX style, are created at server startup. Currently, POSIX semaphores are used on Linux and FreeBSD systems while other platforms use System V semaphores.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>Prior to PostgreSQL 9.3, only System V shared memory was used, so the amount of System V shared memory required to start the server was much larger. If you are running an older version of the server, please consult the documentation for your server version.</p> </blockquote> <p>System V IPC features are typically constrained by system-wide allocation limits. When PostgreSQL exceeds one of these limits, the server will refuse to start and should leave an instructive error message describing the problem and what to do about it. (See also <a class="xref" href="../server-start/#SERVER-START-FAILURES" title="18.3.1. Server Start-up Failures">Section 18.3.1</a>.) The relevant kernel parameters are named consistently across different systems; <a class="xref" href="../kernel-resources/#SYSVIPC-PARAMETERS" title="Table 18.1. System V IPC Parameters">Table 18.1</a> gives an overview. The methods to set them, however, vary. Suggestions for some platforms are given below.</p> <div class="table" id="SYSVIPC-PARAMETERS"> <p class="title"><strong>Table 18.1. <span class="systemitem">System V</span> IPC Parameters</strong></p> <div class="table-contents"> <table class="table" summary="System V IPC Parameters"> <colgroup> <col> <col> <col>
 </colgroup> <thead> <tr> <th>Name</th> <th>Description</th> <th>Values needed to run one PostgreSQL instance</th> </tr> </thead> <tbody> <tr> <td><code class="varname">SHMMAX</code></td> <td>Maximum size of shared memory segment (bytes)</td> <td>at least 1kB, but the default is usually much higher</td> </tr> <tr> <td><code class="varname">SHMMIN</code></td> <td>Minimum size of shared memory segment (bytes)</td> <td>1</td> </tr> <tr> <td><code class="varname">SHMALL</code></td> <td>Total amount of shared memory available (bytes or pages)</td> <td>same as <code class="varname">SHMMAX</code> if bytes, or <code class="literal">ceil(SHMMAX/PAGE_SIZE)</code> if pages, plus room for other applications</td> </tr> <tr> <td><code class="varname">SHMSEG</code></td> <td>Maximum number of shared memory segments per process</td> <td>only 1 segment is needed, but the default is much higher</td> </tr> <tr> <td><code class="varname">SHMMNI</code></td> <td>Maximum number of shared memory segments system-wide</td> <td>like <code class="varname">SHMSEG</code> plus room for other applications</td> </tr> <tr> <td><code class="varname">SEMMNI</code></td> <td>Maximum number of semaphore identifiers (i.e., sets)</td> <td>at least <code class="literal">ceil((max_connections + autovacuum_max_workers + max_worker_processes + 5) / 16)</code> plus room for other applications</td> </tr> <tr> <td><code class="varname">SEMMNS</code></td> <td>Maximum number of semaphores system-wide</td> <td>
@@ -147,17 +147,9 @@ Hugepagesize:       2048 kB</pre> <p><code class="literal">6490428</code> / <cod
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

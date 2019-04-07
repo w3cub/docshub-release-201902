@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>26.4. Alternative Method for Log Shipping</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../log-shipping-alternative/#WARM-STANDBY-CONFIG">26.4.1. Implementation</a></dt> <dt><a href="../log-shipping-alternative/#WARM-STANDBY-RECORD">26.4.2. Record-based Log Shipping</a></dt> </dl> </div> <p>An alternative to the built-in standby mode described in the previous sections is to use a <code class="varname">restore_command</code> that polls the archive location. This was the only option available in versions 8.4 and below. In this setup, set <code class="varname">standby_mode</code> off, because you are implementing the polling required for standby operation yourself. See the <a class="xref" href="https://www.postgresql.org/docs/10/static/pgstandby.html" title="pg_standby" target="_blank">pg_standby</a> module for a reference implementation of this.</p> <p>Note that in this mode, the server will apply WAL one file at a time, so if you use the standby server for queries (see Hot Standby), there is a delay between an action in the master and when the action becomes visible in the standby, corresponding the time it takes to fill up the WAL file. <code class="varname">archive_timeout</code> can be used to make that delay shorter. Also note that you can't combine streaming replication with this method.</p> <p>The operations that occur on both primary and standby servers are normal continuous archiving and recovery tasks. The only point of contact between the two database servers is the archive of WAL files that both share: primary writing to the archive, standby reading from the archive. Care must be taken to ensure that WAL archives from separate primary servers do not become mixed together or confused. The archive need not be large if it is only required for standby operation.</p> <p>The magic that makes the two loosely coupled servers work together is simply a <code class="varname">restore_command</code> used on the standby that, when asked for the next WAL file, waits for it to become available from the primary. The <code class="varname">restore_command</code> is specified in the <code class="filename">recovery.conf</code> file on the standby server. Normal recovery processing would request a file from the WAL archive, reporting failure if the file was unavailable. For standby processing it is normal for the next WAL file to be unavailable, so the standby must wait for it to appear. For files ending in <code class="literal">.backup</code> or <code class="literal">.history</code> there is no need to wait, and a non-zero return code must be returned. A waiting <code class="varname">restore_command</code> can be written as a custom script that loops after polling for the existence of the next WAL file. There must also be some way to trigger failover, which should interrupt the <code class="varname">restore_command</code>, break the loop and return a file-not-found error to the standby server. This ends recovery and the standby will then come up as a normal server.</p> <p>Pseudocode for a suitable <code class="varname">restore_command</code> is:</p> <pre data-language="sql">triggered = false;
 while (!NextWALFileReady() &amp;&amp; !triggered)
@@ -96,17 +96,9 @@ if (!triggered)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

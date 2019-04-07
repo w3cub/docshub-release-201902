@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>F.15. file_fdw</h1>     <p>The <code class="filename">file_fdw</code> module provides the foreign-data wrapper <code class="function">file_fdw</code>, which can be used to access data files in the server's file system, or to execute programs on the server and read their output. The data file or program output must be in a format that can be read by <code class="command">COPY FROM</code>; see <a class="xref" href="../sql-copy/" title="COPY">COPY</a> for details. Access to data files is currently read-only.</p> <p>A foreign table created using this wrapper can have the following options:</p> <div class="variablelist"> <dl class="variablelist"> <dt><code class="literal">filename</code></dt> <dd> <p>Specifies the file to be read. Must be an absolute path name. Either <code class="literal">filename</code> or <code class="literal">program</code> must be specified, but not both.</p> </dd> <dt><code class="literal">program</code></dt> <dd> <p>Specifies the command to be executed. The standard output of this command will be read as though <code class="command">COPY FROM PROGRAM</code> were used. Either <code class="literal">program</code> or <code class="literal">filename</code> must be specified, but not both.</p> </dd> <dt><code class="literal">format</code></dt> <dd> <p>Specifies the data format, the same as <code class="command">COPY</code>'s <code class="literal">FORMAT</code> option.</p> </dd> <dt><code class="literal">header</code></dt> <dd> <p>Specifies whether the data has a header line, the same as <code class="command">COPY</code>'s <code class="literal">HEADER</code> option.</p> </dd> <dt><code class="literal">delimiter</code></dt> <dd> <p>Specifies the data delimiter character, the same as <code class="command">COPY</code>'s <code class="literal">DELIMITER</code> option.</p> </dd> <dt><code class="literal">quote</code></dt> <dd> <p>Specifies the data quote character, the same as <code class="command">COPY</code>'s <code class="literal">QUOTE</code> option.</p> </dd> <dt><code class="literal">escape</code></dt> <dd> <p>Specifies the data escape character, the same as <code class="command">COPY</code>'s <code class="literal">ESCAPE</code> option.</p> </dd> <dt><code class="literal">null</code></dt> <dd> <p>Specifies the data null string, the same as <code class="command">COPY</code>'s <code class="literal">NULL</code> option.</p> </dd> <dt><code class="literal">encoding</code></dt> <dd> <p>Specifies the data encoding, the same as <code class="command">COPY</code>'s <code class="literal">ENCODING</code> option.</p> </dd> </dl> </div> <p>Note that while <code class="command">COPY</code> allows options such as <code class="literal">HEADER</code> to be specified without a corresponding value, the foreign table option syntax requires a value to be present in all cases. To activate <code class="command">COPY</code> options typically written without a value, you can pass the value TRUE, since all such options are Booleans.</p> <p>A column of a foreign table created using this wrapper can have the following options:</p> <div class="variablelist"> <dl class="variablelist"> <dt><code class="literal">force_not_null</code></dt> <dd> <p>This is a Boolean option. If true, it specifies that values of the column should not be matched against the null string (that is, the table-level <code class="literal">null</code> option). This has the same effect as listing the column in <code class="command">COPY</code>'s <code class="literal">FORCE_NOT_NULL</code> option.</p> </dd> <dt><code class="literal">force_null</code></dt> <dd> <p>This is a Boolean option. If true, it specifies that values of the column which match the null string are returned as <code class="literal">NULL</code> even if the value is quoted. Without this option, only unquoted values matching the null string are returned as <code class="literal">NULL</code>. This has the same effect as listing the column in <code class="command">COPY</code>'s <code class="literal">FORCE_NULL</code> option.</p> </dd> </dl> </div> <p><code class="command">COPY</code>'s <code class="literal">OIDS</code> and <code class="literal">FORCE_QUOTE</code> options are currently not supported by <code class="literal">file_fdw</code>.</p> <p>These options can only be specified for a foreign table or its columns, not in the options of the <code class="literal">file_fdw</code> foreign-data wrapper, nor in the options of a server or user mapping using the wrapper.</p> <p>Changing table-level options requires superuser privileges, for security reasons: only a superuser should be able to control which file is read or which program is run. In principle non-superusers could be allowed to change the other options, but that's not supported at present.</p> <p>When specifying the <code class="literal">program</code> option, keep in mind that the option string is executed by the shell. If you need to pass any arguments to the command that come from an untrusted source, you must be careful to strip or escape any characters that might have special meaning to the shell. For security reasons, it is best to use a fixed command string, or at least avoid passing any user input in it.</p> <p>For a foreign table using <code class="literal">file_fdw</code>, <code class="command">EXPLAIN</code> shows the name of the file to be read or program to be run. For a file, unless <code class="literal">COSTS OFF</code> is specified, the file size (in bytes) is shown as well.</p> <div class="example" id="id-1.11.7.24.14"> <p class="title"><strong>Example F.1. Create a Foreign Table for PostgreSQL CSV Logs</strong></p> <div class="example-contents"> <p>One of the obvious uses for <code class="literal">file_fdw</code> is to make the PostgreSQL activity log available as a table for querying. To do this, first you must be logging to a CSV file, which here we will call <code class="literal">pglog.csv</code>. First, install <code class="literal">file_fdw</code> as an extension:</p> <pre data-language="sql">CREATE EXTENSION file_fdw;</pre> <p>Then create a foreign server:</p> <pre data-language="sql">
 CREATE SERVER pglog FOREIGN DATA WRAPPER file_fdw;</pre> <p>Now you are ready to create the foreign data table. Using the <code class="command">CREATE FOREIGN TABLE</code> command, you will need to define the columns for the table, the CSV file name, and its format:</p> <pre data-language="sql">CREATE FOREIGN TABLE pglog (
@@ -114,17 +114,9 @@ OPTIONS ( filename '/home/josh/data/log/pglog.csv', format 'csv' );</pre> <p>Tha
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

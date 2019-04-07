@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>4.2. Value Expressions</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../sql-expressions/#SQL-EXPRESSIONS-COLUMN-REFS">4.2.1. Column References</a></dt> <dt><a href="../sql-expressions/#SQL-EXPRESSIONS-PARAMETERS-POSITIONAL">4.2.2. Positional Parameters</a></dt> <dt><a href="../sql-expressions/#SQL-EXPRESSIONS-SUBSCRIPTS">4.2.3. Subscripts</a></dt> <dt><a href="../sql-expressions/#FIELD-SELECTION">4.2.4. Field Selection</a></dt> <dt><a href="../sql-expressions/#SQL-EXPRESSIONS-OPERATOR-CALLS">4.2.5. Operator Invocations</a></dt> <dt><a href="../sql-expressions/#SQL-EXPRESSIONS-FUNCTION-CALLS">4.2.6. Function Calls</a></dt> <dt><a href="../sql-expressions/#SYNTAX-AGGREGATES">4.2.7. Aggregate Expressions</a></dt> <dt><a href="../sql-expressions/#SYNTAX-WINDOW-FUNCTIONS">4.2.8. Window Function Calls</a></dt> <dt><a href="../sql-expressions/#SQL-SYNTAX-TYPE-CASTS">4.2.9. Type Casts</a></dt> <dt><a href="../sql-expressions/#SQL-SYNTAX-COLLATE-EXPRS">4.2.10. Collation Expressions</a></dt> <dt><a href="../sql-expressions/#SQL-SYNTAX-SCALAR-SUBQUERIES">4.2.11. Scalar Subqueries</a></dt> <dt><a href="../sql-expressions/#SQL-SYNTAX-ARRAY-CONSTRUCTORS">4.2.12. Array Constructors</a></dt> <dt><a href="../sql-expressions/#SQL-SYNTAX-ROW-CONSTRUCTORS">4.2.13. Row Constructors</a></dt> <dt><a href="../sql-expressions/#SYNTAX-EXPRESS-EVAL">4.2.14. Expression Evaluation Rules</a></dt> </dl> </div>  <p>Value expressions are used in a variety of contexts, such as in the target list of the <code class="command">SELECT</code> command, as new column values in <code class="command">INSERT</code> or <code class="command">UPDATE</code>, or in search conditions in a number of commands. The result of a value expression is sometimes called a <em class="firstterm">scalar</em>, to distinguish it from the result of a table expression (which is a table). Value expressions are therefore also called <em class="firstterm">scalar expressions</em> (or even simply <em class="firstterm">expressions</em>). The expression syntax allows the calculation of values from primitive parts using arithmetic, logical, set, and other operations.</p> <p>A value expression is one of the following:</p>  <ul> <li> <p>A constant or literal value</p> </li> <li> <p>A column reference</p> </li> <li> <p>A positional parameter reference, in the body of a function definition or prepared statement</p> </li> <li> <p>A subscripted expression</p> </li> <li> <p>A field selection expression</p> </li> <li> <p>An operator invocation</p> </li> <li> <p>A function call</p> </li> <li> <p>An aggregate expression</p> </li> <li> <p>A window function call</p> </li> <li> <p>A type cast</p> </li> <li> <p>A collation expression</p> </li> <li> <p>A scalar subquery</p> </li> <li> <p>An array constructor</p> </li> <li> <p>A row constructor</p> </li> <li> <p>Another value expression in parentheses (used to group subexpressions and override precedence)</p> </li> </ul>  <p>In addition to this list, there are a number of constructs that can be classified as an expression but do not follow any general syntax rules. These generally have the semantics of a function or operator and are explained in the appropriate location in <a class="xref" href="https://www.postgresql.org/docs/10/static/functions.html" title="Chapter 9. Functions and Operators" target="_blank">Chapter 9</a>. An example is the <code class="literal">IS NULL</code> clause.</p> <p>We have already discussed constants in <a class="xref" href="../sql-syntax-lexical/#SQL-SYNTAX-CONSTANTS" title="4.1.2. Constants">Section 4.1.2</a>. The following sections discuss the remaining options.</p> <div class="sect2" id="SQL-EXPRESSIONS-COLUMN-REFS">    <h2 class="title">4.2.1. Column References</h2>     <p>A column can be referenced in the form:</p> <pre data-language="sql">correlation.columnname</pre> <p><code>correlation</code> is the name of a table (possibly qualified with a schema name), or an alias for a table defined by means of a <code class="literal">FROM</code> clause. The correlation name and separating dot can be omitted if the column name is unique across all the tables being used in the current query. (See also <a class="xref" href="https://www.postgresql.org/docs/10/static/queries.html" title="Chapter 7. Queries" target="_blank">Chapter 7</a>.)</p> </div> <div class="sect2" id="SQL-EXPRESSIONS-PARAMETERS-POSITIONAL">    <h2 class="title">4.2.2. Positional Parameters</h2>     <p>A positional parameter reference is used to indicate a value that is supplied externally to an SQL statement. Parameters are used in SQL function definitions and in prepared queries. Some client libraries also support specifying data values separately from the SQL command string, in which case parameters are used to refer to the out-of-line data values. The form of a parameter reference is:</p> <pre data-language="sql">$number</pre> <p>For example, consider the definition of a function, <code class="function">dept</code>, as:</p> <pre data-language="sql">CREATE FUNCTION dept(text) RETURNS dept
     AS $$ SELECT * FROM dept WHERE name = $1 $$
@@ -218,17 +218,9 @@ SELECT CASE WHEN x &gt; 0 THEN x ELSE 1/0 END FROM tab;</pre> <p>is likely to re
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

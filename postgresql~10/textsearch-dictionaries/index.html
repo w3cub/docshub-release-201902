@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>12.6. Dictionaries</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../textsearch-dictionaries/#TEXTSEARCH-STOPWORDS">12.6.1. Stop Words</a></dt> <dt><a href="../textsearch-dictionaries/#TEXTSEARCH-SIMPLE-DICTIONARY">12.6.2. Simple Dictionary</a></dt> <dt><a href="../textsearch-dictionaries/#TEXTSEARCH-SYNONYM-DICTIONARY">12.6.3. Synonym Dictionary</a></dt> <dt><a href="../textsearch-dictionaries/#TEXTSEARCH-THESAURUS">12.6.4. Thesaurus Dictionary</a></dt> <dt><a href="../textsearch-dictionaries/#TEXTSEARCH-ISPELL-DICTIONARY">12.6.5. Ispell Dictionary</a></dt> <dt><a href="../textsearch-dictionaries/#TEXTSEARCH-SNOWBALL-DICTIONARY">12.6.6. Snowball Dictionary</a></dt> </dl> </div> <p>Dictionaries are used to eliminate words that should not be considered in a search (<em class="firstterm">stop words</em>), and to <em class="firstterm">normalize</em> words so that different derived forms of the same word will match. A successfully normalized word is called a <em class="firstterm">lexeme</em>. Aside from improving search quality, normalization and removal of stop words reduce the size of the <code class="type">tsvector</code> representation of a document, thereby improving performance. Normalization does not always have linguistic meaning and usually depends on application semantics.</p> <p>Some examples of normalization:</p>  <ul> <li> <p>Linguistic - Ispell dictionaries try to reduce input words to a normalized form; stemmer dictionaries remove word endings</p> </li> <li> <p>URL locations can be canonicalized to make equivalent URLs match:</p>  <ul> <li> <p>http://www.pgsql.ru/db/mw/index.html</p> </li> <li> <p>http://www.pgsql.ru/db/mw/</p> </li> <li> <p>http://www.pgsql.ru/db/../db/mw/index.html</p> </li> </ul>  </li> <li> <p>Color names can be replaced by their hexadecimal values, e.g., <code class="literal">red, green, blue, magenta -&gt; FF0000, 00FF00, 0000FF, FF00FF</code></p> </li> <li> <p>If indexing numbers, we can remove some fractional digits to reduce the range of possible numbers, so for example <span class="emphasis"><em>3.14</em></span>159265359, <span class="emphasis"><em>3.14</em></span>15926, <span class="emphasis"><em>3.14</em></span> will be the same after normalization if only two digits are kept after the decimal point.</p> </li> </ul>  <p>A dictionary is a program that accepts a token as input and returns:</p>  <ul> <li> <p>an array of lexemes if the input token is known to the dictionary (notice that one token can produce more than one lexeme)</p> </li> <li> <p>a single lexeme with the <code class="literal">TSL_FILTER</code> flag set, to replace the original token with a new token to be passed to subsequent dictionaries (a dictionary that does this is called a <em class="firstterm">filtering dictionary</em>)</p> </li> <li> <p>an empty array if the dictionary knows the token, but it is a stop word</p> </li> <li> <p><code class="literal">NULL</code> if the dictionary does not recognize the input token</p> </li> </ul>  <p>PostgreSQL provides predefined dictionaries for many languages. There are also several predefined templates that can be used to create new dictionaries with custom parameters. Each predefined dictionary template is described below. If no existing template is suitable, it is possible to create new ones; see the <code class="filename">contrib/</code> area of the PostgreSQL distribution for examples.</p> <p>A text search configuration binds a parser together with a set of dictionaries to process the parser's output tokens. For each token type that the parser can return, a separate list of dictionaries is specified by the configuration. When a token of that type is found by the parser, each dictionary in the list is consulted in turn, until some dictionary recognizes it as a known word. If it is identified as a stop word, or if no dictionary recognizes the token, it will be discarded and not indexed or searched for. Normally, the first dictionary that returns a non-<code class="literal">NULL</code> output determines the result, and any remaining dictionaries are not consulted; but a filtering dictionary can replace the given word with a modified word, which is then passed to subsequent dictionaries.</p> <p>The general rule for configuring a list of dictionaries is to place first the most narrow, most specific dictionary, then the more general dictionaries, finishing with a very general dictionary, like a Snowball stemmer or <code class="literal">simple</code>, which recognizes everything. For example, for an astronomy-specific search (<code class="literal">astro_en</code> configuration) one could bind token type <code class="type">asciiword</code> (ASCII word) to a synonym dictionary of astronomical terms, a general English dictionary and a Snowball English stemmer:</p> <pre data-language="sql">
 ALTER TEXT SEARCH CONFIGURATION astro_en
@@ -257,17 +257,9 @@ CREATE TEXT SEARCH DICTIONARY english_stem (
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

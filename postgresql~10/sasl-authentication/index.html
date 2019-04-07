@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~10/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 10</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _postgres">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>52.3. SASL Authentication</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../sasl-authentication/#SASL-SCRAM-SHA-256">52.3.1. SCRAM-SHA-256 authentication</a></dt> </dl> </div> <p><em class="firstterm">SASL</em> is a framework for authentication in connection-oriented protocols. At the moment, PostgreSQL implements only one SASL authentication mechanism, SCRAM-SHA-256, but more might be added in the future. The below steps illustrate how SASL authentication is performed in general, while the next subsection gives more details on SCRAM-SHA-256.</p> <div class="procedure" id="id-1.10.5.8.3"> <p class="title"><strong>SASL Authentication Message Flow</strong></p> <ol class="procedure" type="1"> <li id="SASL-AUTH-BEGIN"> <p>To begin a SASL authentication exchange, the server sends an AuthenticationSASL message. It includes a list of SASL authentication mechanisms that the server can accept, in the server's preferred order.</p> </li> <li id="SASL-AUTH-INITIAL-RESPONSE"> <p>The client selects one of the supported mechanisms from the list, and sends a SASLInitialResponse message to the server. The message includes the name of the selected mechanism, and an optional Initial Client Response, if the selected mechanism uses that.</p> </li> <li id="SASL-AUTH-CONTINUE"> <p>One or more server-challenge and client-response message will follow. Each server-challenge is sent in an AuthenticationSASLContinue message, followed by a response from client in an SASLResponse message. The particulars of the messages are mechanism specific.</p> </li> <li id="SASL-AUTH-END"> <p>Finally, when the authentication exchange is completed successfully, the server sends an AuthenticationSASLFinal message, followed immediately by an AuthenticationOk message. The AuthenticationSASLFinal contains additional server-to-client data, whose content is particular to the selected authentication mechanism. If the authentication mechanism doesn't use additional data that's sent at completion, the AuthenticationSASLFinal message is not sent.</p> </li> </ol> </div> <p>On error, the server can abort the authentication at any stage, and send an ErrorMessage.</p> <div class="sect2" id="SASL-SCRAM-SHA-256">    <h2 class="title">52.3.1. SCRAM-SHA-256 authentication</h2>    <p><em class="firstterm">SCRAM-SHA-256</em> (called just <em class="firstterm">SCRAM</em> from now on) is the only implemented SASL mechanism, at the moment. It is described in detail in RFC 7677 and RFC 5802.</p> <p>When SCRAM-SHA-256 is used in PostgreSQL, the server will ignore the user name that the client sends in the <code class="structname">client-first-message</code>. The user name that was already sent in the startup message is used instead. PostgreSQL supports multiple character encodings, while SCRAM dictates UTF-8 to be used for the user name, so it might be impossible to represent the PostgreSQL user name in UTF-8.</p> <p>The SCRAM specification dictates that the password is also in UTF-8, and is processed with the <em class="firstterm">SASLprep</em> algorithm. PostgreSQL, however, does not require UTF-8 to be used for the password. When a user's password is set, it is processed with SASLprep as if it was in UTF-8, regardless of the actual encoding used. However, if it is not a legal UTF-8 byte sequence, or it contains UTF-8 byte sequences that are prohibited by the SASLprep algorithm, the raw password will be used without SASLprep processing, instead of throwing an error. This allows the password to be normalized when it is in UTF-8, but still allows a non-UTF-8 password to be used, and doesn't require the system to know which encoding the password is in.</p> <p><em class="firstterm">Channel binding</em> has not been implemented yet.</p> <div class="procedure" id="id-1.10.5.8.5.6"> <p class="title"><strong>Example</strong></p> <ol class="procedure" type="1"> <li id="SCRAM-BEGIN"> <p>The server sends an AuthenticationSASL message. It includes a list of SASL authentication mechanisms that the server can accept.</p> </li> <li id="SCRAM-CLIENT-FIRST"> <p>The client responds by sending a SASLInitialResponse message, which indicates the chosen mechanism, <code class="literal">SCRAM-SHA-256</code>. In the Initial Client response field, the message contains the SCRAM <code class="structname">client-first-message</code>.</p> </li> <li id="SCRAM-SERVER-FIRST"> <p>Server sends an AuthenticationSASLContinue message, with a SCRAM <code class="structname">server-first message</code> as the content.</p> </li> <li id="SCRAM-CLIENT-FINAL"> <p>Client sends a SASLResponse message, with SCRAM <code class="structname">client-final-message</code> as the content.</p> </li> <li id="SCRAM-SERVER-FINAL"> <p>Server sends an AuthenticationSASLFinal message, with the SCRAM <code class="structname">server-final-message</code>, followed immediately by an AuthenticationOk message.</p> </li> </ol> </div> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
 <a accesskey="p" href="https://www.postgresql.org/docs/10/static/protocol-flow.html" target="_blank">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/10/static/protocol.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="https://www.postgresql.org/docs/10/static/protocol-replication.html" target="_blank">Next</a>
@@ -88,17 +88,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
