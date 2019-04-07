@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/opentsdb/" class="_nav-link" title="" style="margin-left:0;">OpenTSDB</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Writing Data</h1> <p>You may want to jump right in and start throwing data into your TSD, but to really take advantage of OpenTSDB's power and flexibility, you may want to pause and think about your naming schema. After you've done that, you can proceed to pushing data over the Telnet or HTTP APIs, or use an existing tool with OpenTSDB support such as 'tcollector'.</p>  <h2>Naming Schema</h2> <p>Many metrics administrators are used to supplying a single name for their time series. For example, systems administrators used to RRD-style systems may name their time series <code class="docutils literal"><span class="pre">webserver01.sys.cpu.0.user</span></code>. The name tells us that the time series is recording the amount of time in user space for cpu <code class="docutils literal"><span class="pre">0</span></code> on <code class="docutils literal"><span class="pre">webserver01</span></code>. This works great if you want to retrieve just the user time for that cpu core on that particular web server later on.</p> <p>But what if the web server has 64 cores and you want to get the average time across all of them? Some systems allow you to specify a wild card such as <code class="docutils literal"><span class="pre">webserver01.sys.cpu.*.user</span></code> that would read all 64 files and aggregate the results. Alternatively, you could record a new time series called <code class="docutils literal"><span class="pre">webserver01.sys.cpu.user.all</span></code> that represents the same aggregate but you must now write '64 + 1' different time series. What if you had a thousand web servers and you wanted the average cpu time for all of your servers? You could craft a wild card query like <code class="docutils literal"><span class="pre">*.sys.cpu.*.user</span></code> and the system would open all 64,000 files, aggregate the results and return the data. Or you setup a process to pre-aggregate the data and write it to <code class="docutils literal"><span class="pre">webservers.sys.cpu.user.all</span></code>.</p> <p>OpenTSDB handles things a bit differently by introducing the idea of 'tags'. Each time series still has a 'metric' name, but it's much more generic, something that can be shared by many unique time series. Instead, the uniqueness comes from a combination of tag key/value pairs that allows for flexible queries with very fast aggregations.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Every time series in OpenTSDB must have at least one tag.</p> </div> <p>Take the previous example where the metric was <code class="docutils literal"><span class="pre">webserver01.sys.cpu.0.user</span></code>. In OpenTSDB, this may become <code class="docutils literal"><span class="pre">sys.cpu.user</span> <span class="pre">host=webserver01,</span> <span class="pre">cpu=0</span></code>. Now if we want the data for an individual core, we can craft a query like <code class="docutils literal"><span class="pre">sum:sys.cpu.user{host=webserver01,cpu=42}</span></code>. If we want all of the cores, we simply drop the cpu tag and ask for <code class="docutils literal"><span class="pre">sum:sys.cpu.user{host=webserver01}</span></code>. This will give us the aggregated results for all 64 cores. If we want the results for all 1,000 servers, we simply request <code class="docutils literal"><span class="pre">sum:sys.cpu.user</span></code>. The underlying data schema will store all of the <code class="docutils literal"><span class="pre">sys.cpu.user</span></code> time series next to each other so that aggregating the individual values is very fast and efficient. OpenTSDB was designed to make these aggregate queries as fast as possible since most users start out at a high level, then drill down for detailed information.</p> <div class="section" id="aggregations"> <h3>Aggregations</h3> <p>While the tagging system is flexible, some problems can arise if you don't understand the querying side of OpenTSDB, hence the need for some forethought. Take the example query above: <code class="docutils literal"><span class="pre">sum:sys.cpu.user{host=webserver01}</span></code>. We recorded 64 unique time series for <code class="docutils literal"><span class="pre">webserver01</span></code>, one time series for each of the CPU cores. When we issued that query, all of the time series for metric <code class="docutils literal"><span class="pre">sys.cpu.user</span></code> with the tag <code class="docutils literal"><span class="pre">host=webserver01</span></code> were retrieved, averaged, and returned as one series of numbers. Let's say the resulting average was <code class="docutils literal"><span class="pre">50</span></code> for timestamp <code class="docutils literal"><span class="pre">1356998400</span></code>. Now we were migrating from another system to OpenTSDB and had a process that pre-aggregated all 64 cores so that we could quickly get the average value and simply wrote a new time series <code class="docutils literal"><span class="pre">sys.cpu.user</span> <span class="pre">host=webserver01</span></code>. If we run the same query, we'll get a value of <code class="docutils literal"><span class="pre">100</span></code> at <code class="docutils literal"><span class="pre">1356998400</span></code>. What happened? OpenTSDB aggregated all 64 time series <em>and</em> the pre-aggregated time series to get to that 100. In storage, we would have something like this:</p> <pre data-language="python">sys.cpu.user host=webserver01    1356998400  50
 sys.cpu.user host=webserver01,cpu=0  1356998400  1
@@ -98,17 +98,9 @@ sys.cpu.user host=webserver01,cpu=63 1356998400  1
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
