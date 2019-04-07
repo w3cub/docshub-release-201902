@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~2.1/" class="_nav-link" title="" style="margin-left:0;">Django 2.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="databases">Databases</h1> <p id="s-databases">Django attempts to support as many features as possible on all database backends. However, not all database backends are alike, and we’ve had to make design decisions on which features to support and which assumptions we can make safely.</p> <p>This file describes some of the features that might be relevant to Django usage. Of course, it is not intended as a replacement for server-specific documentation or reference manuals.</p>  <h2 id="general-notes">General notes</h2>  <h3 id="persistent-database-connections">Persistent connections</h3> <p id="s-general-notes">Persistent connections avoid the overhead of re-establishing a connection to the database in each request. They’re controlled by the <a class="reference internal" href="../settings/#std:setting-CONN_MAX_AGE"><code>CONN_MAX_AGE</code></a> parameter which defines the maximum lifetime of a connection. It can be set independently for each database.</p> <p>The default value is <code>0</code>, preserving the historical behavior of closing the database connection at the end of each request. To enable persistent connections, set <a class="reference internal" href="../settings/#std:setting-CONN_MAX_AGE"><code>CONN_MAX_AGE</code></a> to a positive number of seconds. For unlimited persistent connections, set it to <code>None</code>.</p>  <h4 id="connection-management">Connection management</h4> <p id="s-connection-management">Django opens a connection to the database when it first makes a database query. It keeps this connection open and reuses it in subsequent requests. Django closes the connection once it exceeds the maximum age defined by <a class="reference internal" href="../settings/#std:setting-CONN_MAX_AGE"><code>CONN_MAX_AGE</code></a> or when it isn’t usable any longer.</p> <p>In detail, Django automatically opens a connection to the database whenever it needs one and doesn’t have one already — either because this is the first connection, or because the previous connection was closed.</p> <p>At the beginning of each request, Django closes the connection if it has reached its maximum age. If your database terminates idle connections after some time, you should set <a class="reference internal" href="../settings/#std:setting-CONN_MAX_AGE"><code>CONN_MAX_AGE</code></a> to a lower value, so that Django doesn’t attempt to use a connection that has been terminated by the database server. (This problem may only affect very low traffic sites.)</p> <p>At the end of each request, Django closes the connection if it has reached its maximum age or if it is in an unrecoverable error state. If any database errors have occurred while processing the requests, Django checks whether the connection still works, and closes it if it doesn’t. Thus, database errors affect at most one request; if the connection becomes unusable, the next request gets a fresh connection.</p>   <h4 id="caveats">Caveats</h4> <p id="s-caveats">Since each thread maintains its own connection, your database must support at least as many simultaneous connections as you have worker threads.</p> <p>Sometimes a database won’t be accessed by the majority of your views, for example because it’s the database of an external system, or thanks to caching. In such cases, you should set <a class="reference internal" href="../settings/#std:setting-CONN_MAX_AGE"><code>CONN_MAX_AGE</code></a> to a low value or even <code>0</code>, because it doesn’t make sense to maintain a connection that’s unlikely to be reused. This will help keep the number of simultaneous connections to this database small.</p> <p>The development server creates a new thread for each request it handles, negating the effect of persistent connections. Don’t enable them during development.</p> <p>When Django establishes a connection to the database, it sets up appropriate parameters, depending on the backend being used. If you enable persistent connections, this setup is no longer repeated every request. If you modify parameters such as the connection’s isolation level or time zone, you should either restore Django’s defaults at the end of each request, force an appropriate value at the beginning of each request, or disable persistent connections.</p>    <h3 id="encoding">Encoding</h3> <p id="s-encoding">Django assumes that all databases use UTF-8 encoding. Using other encodings may result in unexpected behavior such as “value too long” errors from your database for data that is valid in Django. See the database specific notes below for information on how to set up your database correctly.</p>    <h2 id="id1">PostgreSQL notes</h2> <p id="s-postgresql-notes">Django supports PostgreSQL 9.4 and higher. <a class="reference external" href="http://initd.org/psycopg/" target="_blank">psycopg2</a> 2.5.4 or higher is required, though the latest release is recommended.</p>  <h3 id="postgresql-connection-settings">PostgreSQL connection settings</h3> <p id="s-postgresql-connection-settings">See <a class="reference internal" href="../settings/#std:setting-HOST"><code>HOST</code></a> for details.</p>   <h3 id="optimizing-postgresql-s-configuration">Optimizing PostgreSQL’s configuration</h3> <p id="s-optimizing-postgresql-s-configuration">Django needs the following parameters for its database connections:</p> <ul class="simple"> <li>
 <code>client_encoding</code>: <code>'UTF8'</code>,</li> <li>
@@ -183,17 +183,9 @@ class ForeignModel(models.Model):
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

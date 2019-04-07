@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~2.1/" class="_nav-link" title="" style="margin-left:0;">Django 2.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="database-access-optimization">Database access optimization</h1> <p id="s-database-access-optimization">Django’s database layer provides various ways to help developers get the most out of their databases. This document gathers together links to the relevant documentation, and adds various tips, organized under a number of headings that outline the steps to take when attempting to optimize your database usage.</p>  <h2 id="profile-first">Profile first</h2> <p id="s-profile-first">As general programming practice, this goes without saying. Find out <a class="reference internal" href="https://docs.djangoproject.com/en/2.1/faq/models/#faq-see-raw-sql-queries" target="_blank"><span class="std std-ref">what queries you are doing and what they are costing you</span></a>. Use <a class="reference internal" href="../../../ref/models/querysets/#django.db.models.query.QuerySet.explain" title="django.db.models.query.QuerySet.explain"><code>QuerySet.explain()</code></a> to understand how specific <code>QuerySet</code>s are executed by your database. You may also want to use an external project like <a class="reference external" href="https://github.com/jazzband/django-debug-toolbar/" target="_blank">django-debug-toolbar</a>, or a tool that monitors your database directly.</p> <p>Remember that you may be optimizing for speed or memory or both, depending on your requirements. Sometimes optimizing for one will be detrimental to the other, but sometimes they will help each other. Also, work that is done by the database process might not have the same cost (to you) as the same amount of work done in your Python process. It is up to you to decide what your priorities are, where the balance must lie, and profile all of these as required since this will depend on your application and server.</p> <p>With everything that follows, remember to profile after every change to ensure that the change is a benefit, and a big enough benefit given the decrease in readability of your code. <strong>All</strong> of the suggestions below come with the caveat that in your circumstances the general principle might not apply, or might even be reversed.</p>   <h2 id="use-standard-db-optimization-techniques">Use standard DB optimization techniques</h2> <p id="s-use-standard-db-optimization-techniques">…including:</p> <ul class="simple"> <li>
 <a class="reference external" href="https://en.wikipedia.org/wiki/Database_index" target="_blank">Indexes</a>. This is a number one priority, <em>after</em> you have determined from profiling what indexes should be added. Use <a class="reference internal" href="../../../ref/models/fields/#django.db.models.Field.db_index" title="django.db.models.Field.db_index"><code>Field.db_index</code></a> or <a class="reference internal" href="../../../ref/models/options/#django.db.models.Options.index_together" title="django.db.models.Options.index_together"><code>Meta.index_together</code></a> to add these from Django. Consider adding indexes to fields that you frequently query using <a class="reference internal" href="../../../ref/models/querysets/#django.db.models.query.QuerySet.filter" title="django.db.models.query.QuerySet.filter"><code>filter()</code></a>, <a class="reference internal" href="../../../ref/models/querysets/#django.db.models.query.QuerySet.exclude" title="django.db.models.query.QuerySet.exclude"><code>exclude()</code></a>, <a class="reference internal" href="../../../ref/models/querysets/#django.db.models.query.QuerySet.order_by" title="django.db.models.query.QuerySet.order_by"><code>order_by()</code></a>, etc. as indexes may help to speed up lookups. Note that determining the best indexes is a complex database-dependent topic that will depend on your particular application. The overhead of maintaining an index may outweigh any gains in query speed.</li> </ul> <ul class="simple"> <li>Appropriate use of field types.</li> </ul> <p>We will assume you have done the obvious things above. The rest of this document focuses on how to use Django in such a way that you are not doing unnecessary work. This document also does not address other optimization techniques that apply to all expensive operations, such as <a class="reference internal" href="../../cache/"><span class="doc">general purpose caching</span></a>.</p>   <h2 id="understand-querysets">Understand <code>QuerySet</code>s</h2> <p id="s-understand-querysets">Understanding <a class="reference internal" href="../../../ref/models/querysets/"><span class="doc">QuerySets</span></a> is vital to getting good performance with simple code. In particular:</p>  <h3 id="understand-queryset-evaluation">Understand <code>QuerySet</code> evaluation</h3> <p id="s-understand-queryset-evaluation">To avoid performance problems, it is important to understand:</p> <ul class="simple"> <li>that <a class="reference internal" href="../queries/#querysets-are-lazy"><span class="std std-ref">QuerySets are lazy</span></a>.</li> <li>when <a class="reference internal" href="../../../ref/models/querysets/#when-querysets-are-evaluated"><span class="std std-ref">they are evaluated</span></a>.</li> <li>how <a class="reference internal" href="../queries/#caching-and-querysets"><span class="std std-ref">the data is held in memory</span></a>.</li> </ul>   <h3 id="understand-cached-attributes">Understand cached attributes</h3> <p id="s-understand-cached-attributes">As well as caching of the whole <code>QuerySet</code>, there is caching of the result of attributes on ORM objects. In general, attributes that are not callable will be cached. For example, assuming the <a class="reference internal" href="../queries/#queryset-model-example"><span class="std std-ref">example Weblog models</span></a>:</p> <pre data-language="python">&gt;&gt;&gt; entry = Entry.objects.get(id=1)
@@ -130,17 +130,9 @@ my_band.members.add(my_friend)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

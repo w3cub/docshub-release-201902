@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~2.1/" class="_nav-link" title="" style="margin-left:0;">Django 2.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="database-transactions">Database transactions</h1> <p id="s-module-django.db.transaction">Django gives you a few ways to control how database transactions are managed.</p>  <h2 id="managing-database-transactions">Managing database transactions</h2>  <h3 id="django-s-default-transaction-behavior">Django’s default transaction behavior</h3> <p id="s-managing-database-transactions">Django’s default behavior is to run in autocommit mode. Each query is immediately committed to the database, unless a transaction is active. <a class="reference internal" href="#autocommit-details"><span class="std std-ref">See below for details</span></a>.</p> <p>Django uses transactions or savepoints automatically to guarantee the integrity of ORM operations that require multiple queries, especially <a class="reference internal" href="../queries/#topics-db-queries-delete"><span class="std std-ref">delete()</span></a> and <a class="reference internal" href="../queries/#topics-db-queries-update"><span class="std std-ref">update()</span></a> queries.</p> <p>Django’s <a class="reference internal" href="../../testing/tools/#django.test.TestCase" title="django.test.TestCase"><code>TestCase</code></a> class also wraps each test in a transaction for performance reasons.</p>   <h3 id="id1">Tying transactions to HTTP requests</h3> <p id="s-tying-transactions-to-http-requests">A common way to handle transactions on the web is to wrap each request in a transaction. Set <a class="reference internal" href="../../../ref/settings/#std:setting-DATABASE-ATOMIC_REQUESTS"><code>ATOMIC_REQUESTS</code></a> to <code>True</code> in the configuration of each database for which you want to enable this behavior.</p> <p>It works like this. Before calling a view function, Django starts a transaction. If the response is produced without problems, Django commits the transaction. If the view produces an exception, Django rolls back the transaction.</p> <p>You may perform subtransactions using savepoints in your view code, typically with the <a class="reference internal" href="#django.db.transaction.atomic" title="django.db.transaction.atomic"><code>atomic()</code></a> context manager. However, at the end of the view, either all or none of the changes will be committed.</p> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">While the simplicity of this transaction model is appealing, it also makes it inefficient when traffic increases. Opening a transaction for every view has some overhead. The impact on performance depends on the query patterns of your application and on how well your database handles locking.</p> </div> <div class="admonition-per-request-transactions-and-streaming-responses admonition"> <p class="first admonition-title">Per-request transactions and streaming responses</p> <p>When a view returns a <a class="reference internal" href="../../../ref/request-response/#django.http.StreamingHttpResponse" title="django.http.StreamingHttpResponse"><code>StreamingHttpResponse</code></a>, reading the contents of the response will often execute code to generate the content. Since the view has already returned, such code runs outside of the transaction.</p> <p class="last">Generally speaking, it isn’t advisable to write to the database while generating a streaming response, since there’s no sensible way to handle errors after starting to send the response.</p> </div> <p>In practice, this feature simply wraps every view function in the <a class="reference internal" href="#django.db.transaction.atomic" title="django.db.transaction.atomic"><code>atomic()</code></a> decorator described below.</p> <p>Note that only the execution of your view is enclosed in the transactions. Middleware runs outside of the transaction, and so does the rendering of template responses.</p> <p>When <a class="reference internal" href="../../../ref/settings/#std:setting-DATABASE-ATOMIC_REQUESTS"><code>ATOMIC_REQUESTS</code></a> is enabled, it’s still possible to prevent views from running in a transaction.</p> <dl class="function"> <dt id="django.db.transaction.non_atomic_requests">
 <code>non_atomic_requests(using=None)</code> <a class="reference internal" href="https://docs.djangoproject.com/en/2.1/_modules/django/db/transaction/#non_atomic_requests" target="_blank"><span class="viewcode-link">[source]</span></a>
@@ -239,17 +239,9 @@ c.save() # Succeeds, and a.save() is never undone
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~2.1/" class="_nav-link" title="" style="margin-left:0;">Django 2.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="customizing-authentication-in-django">Customizing authentication in Django</h1> <p id="s-customizing-authentication-in-django">The authentication that comes with Django is good enough for most common cases, but you may have needs not met by the out-of-the-box defaults. Customizing authentication in your projects requires understanding what points of the provided system are extensible or replaceable. This document provides details about how the auth system can be customized.</p> <p><a class="reference internal" href="#authentication-backends"><span class="std std-ref">Authentication backends</span></a> provide an extensible system for when a username and password stored with the user model need to be authenticated against a different service than Django’s default.</p> <p>You can give your models <a class="reference internal" href="#custom-permissions"><span class="std std-ref">custom permissions</span></a> that can be checked through Django’s authorization system.</p> <p>You can <a class="reference internal" href="#extending-user"><span class="std std-ref">extend</span></a> the default <code>User</code> model, or <a class="reference internal" href="#auth-custom-user"><span class="std std-ref">substitute</span></a> a completely customized model.</p>  <h2 id="authentication-backends">Other authentication sources</h2> <p id="s-other-authentication-sources">There may be times you have the need to hook into another authentication source – that is, another source of usernames and passwords or authentication methods.</p> <p>For example, your company may already have an LDAP setup that stores a username and password for every employee. It’d be a hassle for both the network administrator and the users themselves if users had separate accounts in LDAP and the Django-based applications.</p> <p>So, to handle situations like this, the Django authentication system lets you plug in other authentication sources. You can override Django’s default database-based scheme, or you can use the default system in tandem with other systems.</p> <p>See the <a class="reference internal" href="../../../ref/contrib/auth/#authentication-backends-reference"><span class="std std-ref">authentication backend reference</span></a> for information on the authentication backends included with Django.</p>  <h3 id="specifying-authentication-backends">Specifying authentication backends</h3> <p id="s-specifying-authentication-backends">Behind the scenes, Django maintains a list of “authentication backends” that it checks for authentication. When somebody calls <a class="reference internal" href="../default/#django.contrib.auth.authenticate" title="django.contrib.auth.authenticate"><code>django.contrib.auth.authenticate()</code></a> – as described in <a class="reference internal" href="../default/#how-to-log-a-user-in"><span class="std std-ref">How to log a user in</span></a> – Django tries authenticating across all of its authentication backends. If the first authentication method fails, Django tries the second one, and so on, until all backends have been attempted.</p> <p>The list of authentication backends to use is specified in the <a class="reference internal" href="../../../ref/settings/#std:setting-AUTHENTICATION_BACKENDS"><code>AUTHENTICATION_BACKENDS</code></a> setting. This should be a list of Python path names that point to Python classes that know how to authenticate. These classes can be anywhere on your Python path.</p> <p>By default, <a class="reference internal" href="../../../ref/settings/#std:setting-AUTHENTICATION_BACKENDS"><code>AUTHENTICATION_BACKENDS</code></a> is set to:</p> <pre data-language="python">['django.contrib.auth.backends.ModelBackend']
 </pre> <p>That’s the basic authentication backend that checks the Django users database and queries the built-in permissions. It does not provide protection against brute force attacks via any rate limiting mechanism. You may either implement your own rate limiting mechanism in a custom auth backend, or use the mechanisms provided by most Web servers.</p> <p>The order of <a class="reference internal" href="../../../ref/settings/#std:setting-AUTHENTICATION_BACKENDS"><code>AUTHENTICATION_BACKENDS</code></a> matters, so if the same username and password is valid in multiple backends, Django will stop processing at the first positive match.</p> <p>If a backend raises a <a class="reference internal" href="../../../ref/exceptions/#django.core.exceptions.PermissionDenied" title="django.core.exceptions.PermissionDenied"><code>PermissionDenied</code></a> exception, authentication will immediately fail. Django won’t check the backends that follow.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Once a user has authenticated, Django stores which backend was used to authenticate the user in the user’s session, and re-uses the same backend for the duration of that session whenever access to the currently authenticated user is needed. This effectively means that authentication sources are cached on a per-session basis, so if you change <a class="reference internal" href="../../../ref/settings/#std:setting-AUTHENTICATION_BACKENDS"><code>AUTHENTICATION_BACKENDS</code></a>, you’ll need to clear out session data if you need to force users to re-authenticate using different methods. A simple way to do that is simply to execute <code>Session.objects.all().delete()</code>.</p> </div>   <h3 id="writing-an-authentication-backend">Writing an authentication backend</h3> <p id="s-writing-an-authentication-backend">An authentication backend is a class that implements two required methods: <code>get_user(user_id)</code> and <code>authenticate(request, **credentials)</code>, as well as a set of optional permission related <a class="reference internal" href="#authorization-methods"><span class="std std-ref">authorization methods</span></a>.</p> <p>The <code>get_user</code> method takes a <code>user_id</code> – which could be a username, database ID or whatever, but has to be the primary key of your user object – and returns a user object.</p> <p>The <code>authenticate</code> method takes a <code>request</code> argument and credentials as keyword arguments. Most of the time, it’ll just look like this:</p> <pre data-language="python">class MyBackend:
@@ -520,17 +520,9 @@ admin.site.unregister(Group)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

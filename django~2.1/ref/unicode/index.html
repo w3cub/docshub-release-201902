@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~2.1/" class="_nav-link" title="" style="margin-left:0;">Django 2.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="unicode-data">Unicode data</h1> <p id="s-unicode-data">Django natively supports Unicode data everywhere. Providing your database can somehow store the data, you can safely pass around strings to templates, models, and the database.</p> <p>This document tells you what you need to know if you’re writing applications that use data or templates that are encoded in something other than ASCII.</p>  <h2 id="creating-the-database">Creating the database</h2> <p id="s-creating-the-database">Make sure your database is configured to be able to store arbitrary string data. Normally, this means giving it an encoding of UTF-8 or UTF-16. If you use a more restrictive encoding – for example, latin1 (iso8859-1) – you won’t be able to store certain characters in the database, and information will be lost.</p> <ul class="simple"> <li>MySQL users, refer to the <a class="reference external" href="https://dev.mysql.com/doc/refman/en/charset-database.html" target="_blank">MySQL manual</a> for details on how to set or alter the database character set encoding.</li> <li>PostgreSQL users, refer to the <a class="reference external" href="https://www.postgresql.org/docs/current/static/multibyte.html" target="_blank">PostgreSQL manual</a> (section 22.3.2 in PostgreSQL 9) for details on creating databases with the correct encoding.</li> <li>Oracle users, refer to the <a class="reference external" href="https://docs.oracle.com/database/121/NLSPG/toc.htm" target="_blank">Oracle manual</a> for details on how to set (<a class="reference external" href="https://docs.oracle.com/database/121/NLSPG/ch2charset.htm#NLSPG002" target="_blank">section 2</a>) or alter (<a class="reference external" href="https://docs.oracle.com/database/121/NLSPG/ch11charsetmig.htm#NLSPG011" target="_blank">section 11</a>) the database character set encoding.</li> <li>SQLite users, there is nothing you need to do. SQLite always uses UTF-8 for internal encoding.</li> </ul> <p>All of Django’s database backends automatically convert strings into the appropriate encoding for talking to the database. They also automatically convert strings retrieved from the database into strings. You don’t even need to tell Django what encoding your database uses: that is handled transparently.</p> <p>For more, see the section “The database API” below.</p>   <h2 id="general-string-handling">General string handling</h2> <p id="s-general-string-handling">Whenever you use strings with Django – e.g., in database lookups, template rendering or anywhere else – you have two choices for encoding those strings. You can use normal strings or bytestrings (starting with a ‘b’).</p> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p>A bytestring does not carry any information with it about its encoding. For that reason, we have to make an assumption, and Django assumes that all bytestrings are in UTF-8.</p> <p class="last">If you pass a string to Django that has been encoded in some other format, things will go wrong in interesting ways. Usually, Django will raise a <code>UnicodeDecodeError</code> at some point.</p> </div> <p>If your code only uses ASCII data, it’s safe to use your normal strings, passing them around at will, because ASCII is a subset of UTF-8.</p> <p>Don’t be fooled into thinking that if your <a class="reference internal" href="../settings/#std:setting-DEFAULT_CHARSET"><code>DEFAULT_CHARSET</code></a> setting is set to something other than <code>'utf-8'</code> you can use that other encoding in your bytestrings! <a class="reference internal" href="../settings/#std:setting-DEFAULT_CHARSET"><code>DEFAULT_CHARSET</code></a> only applies to the strings generated as the result of template rendering (and email). Django will always assume UTF-8 encoding for internal bytestrings. The reason for this is that the <a class="reference internal" href="../settings/#std:setting-DEFAULT_CHARSET"><code>DEFAULT_CHARSET</code></a> setting is not actually under your control (if you are the application developer). It’s under the control of the person installing and using your application – and if that person chooses a different setting, your code must still continue to work. Ergo, it cannot rely on that setting.</p> <p>In most cases when Django is dealing with strings, it will convert them to strings before doing anything else. So, as a general rule, if you pass in a bytestring, be prepared to receive a string back in the result.</p>  <h3 id="translated-strings">Translated strings</h3> <p id="s-translated-strings">Aside from strings and bytestrings, there’s a third type of string-like object you may encounter when using Django. The framework’s internationalization features introduce the concept of a “lazy translation” – a string that has been marked as translated but whose actual translation result isn’t determined until the object is used in a string. This feature is useful in cases where the translation locale is unknown until the string is used, even though the string might have originally been created when the code was first imported.</p> <p>Normally, you won’t have to worry about lazy translations. Just be aware that if you examine an object and it claims to be a <code>django.utils.functional.__proxy__</code> object, it is a lazy translation. Calling <code>str()</code> with the lazy translation as the argument will generate a string in the current locale.</p> <p>For more details about lazy translation objects, refer to the <a class="reference internal" href="../../topics/i18n/"><span class="doc">internationalization</span></a> documentation.</p>   <h3 id="useful-utility-functions">Useful utility functions</h3> <p id="s-useful-utility-functions">Because some string operations come up again and again, Django ships with a few useful functions that should make working with string and bytestring objects a bit easier.</p>  <h4 id="conversion-functions">Conversion functions</h4> <p id="s-conversion-functions">The <code>django.utils.encoding</code> module contains a few functions that are handy for converting back and forth between strings and bytestrings.</p> <ul class="simple"> <li>
 <code>smart_text(s, encoding='utf-8', strings_only=False, errors='strict')</code> converts its input to a string. The <code>encoding</code> parameter specifies the input encoding. (For example, Django uses this internally when processing form input data, which might not be UTF-8 encoded.) The <code>strings_only</code> parameter, if set to True, will result in Python numbers, booleans and <code>None</code> not being converted to a string (they keep their original types). The <code>errors</code> parameter takes any of the values that are accepted by Python’s <code>str()</code> function for its error handling.</li> <li>
@@ -122,17 +122,9 @@ sys.getfilesystemencoding()
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

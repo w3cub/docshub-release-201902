@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/django~2.1/" class="_nav-link" title="" style="margin-left:0;">Django 2.1</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="writing-your-first-patch-for-django">Writing your first patch for Django</h1>  <h2 id="introduction">Introduction</h2> <p id="s-writing-your-first-patch-for-django">Interested in giving back to the community a little? Maybe you’ve found a bug in Django that you’d like to see fixed, or maybe there’s a small feature you want added.</p> <p>Contributing back to Django itself is the best way to see your own concerns addressed. This may seem daunting at first, but it’s really pretty simple. We’ll walk you through the entire process, so you can learn by example.</p>  <h3 id="who-s-this-tutorial-for">Who’s this tutorial for?</h3> <div class="admonition seealso" id="s-who-s-this-tutorial-for"> <p class="first admonition-title">See also</p> <p class="last">If you are looking for a reference on how to submit patches, see the <a class="reference internal" href="https://docs.djangoproject.com/en/2.1/internals/contributing/writing-code/submitting-patches/" target="_blank"><span class="doc">Submitting patches</span></a> documentation.</p> </div> <p>For this tutorial, we expect that you have at least a basic understanding of how Django works. This means you should be comfortable going through the existing tutorials on <a class="reference internal" href="../tutorial01/"><span class="doc">writing your first Django app</span></a>. In addition, you should have a good understanding of Python itself. But if you don’t, <a class="reference external" href="http://www.diveintopython3.net/" target="_blank">Dive Into Python</a> is a fantastic (and free) online book for beginning Python programmers.</p> <p>Those of you who are unfamiliar with version control systems and Trac will find that this tutorial and its links include just enough information to get started. However, you’ll probably want to read some more about these different tools if you plan on contributing to Django regularly.</p> <p>For the most part though, this tutorial tries to explain as much as possible, so that it can be of use to the widest audience.</p> <div class="admonition-where-to-get-help admonition"> <p class="first admonition-title">Where to get help:</p> <p class="last">If you’re having trouble going through this tutorial, please post a message to <a class="reference internal" href="https://docs.djangoproject.com/en/2.1/internals/mailing-lists/#django-developers-mailing-list" target="_blank"><span class="std std-ref">django-developers</span></a> or drop by <a class="reference external" href="../irc://irc.freenode.net/django-dev/">#django-dev on irc.freenode.net</a> to chat with other Django users who might be able to help.</p> </div>   <h3 id="what-does-this-tutorial-cover">What does this tutorial cover?</h3> <p id="s-what-does-this-tutorial-cover">We’ll be walking you through contributing a patch to Django for the first time. By the end of this tutorial, you should have a basic understanding of both the tools and the processes involved. Specifically, we’ll be covering the following:</p> <ul class="simple"> <li>Installing Git.</li> <li>How to download a development copy of Django.</li> <li>Running Django’s test suite.</li> <li>Writing a test for your patch.</li> <li>Writing the code for your patch.</li> <li>Testing your patch.</li> <li>Submitting a pull request.</li> <li>Where to look for more information.</li> </ul> <p>Once you’re done with the tutorial, you can look through the rest of <a class="reference internal" href="https://docs.djangoproject.com/en/2.1/internals/contributing/index/" target="_blank"><span class="doc">Django’s documentation on contributing</span></a>. It contains lots of great information and is a must read for anyone who’d like to become a regular contributor to Django. If you’ve got questions, it’s probably got the answers.</p> <div class="admonition-python-3-required admonition"> <p class="first admonition-title">Python 3 required!</p> <p class="last">The current version of Django doesn’t support Python 2.7. Get Python 3 at <a class="reference external" href="https://www.python.org/downloads/" target="_blank">Python’s download page</a> or with your operating system’s package manager.</p> </div> <div class="admonition-for-windows-users admonition"> <p class="first admonition-title">For Windows users</p> <p class="last">When installing Python on Windows, make sure you check the option “Add python.exe to Path”, so that it is always available on the command line.</p> </div>    <h2 id="code-of-conduct">Code of Conduct</h2> <p id="s-code-of-conduct">As a contributor, you can help us keep the Django community open and inclusive. Please read and follow our <a class="reference external" href="https://www.djangoproject.com/conduct/" target="_blank">Code of Conduct</a>.</p>   <h2 id="installing-git">Installing Git</h2> <p id="s-installing-git">For this tutorial, you’ll need Git installed to download the current development version of Django and to generate patch files for the changes you make.</p> <p>To check whether or not you have Git installed, enter <code>git</code> into the command line. If you get messages saying that this command could not be found, you’ll have to download and install it, see <a class="reference external" href="https://git-scm.com/download" target="_blank">Git’s download page</a>.</p> <p>If you’re not that familiar with Git, you can always find out more about its commands (once it’s installed) by typing <code>git help</code> into the command line.</p>   <h2 id="getting-a-copy-of-django-s-development-version">Getting a copy of Django’s development version</h2> <p id="s-getting-a-copy-of-django-s-development-version">The first step to contributing to Django is to get a copy of the source code. First, <a class="reference external" href="https://github.com/django/django/fork" target="_blank">fork Django on GitHub</a>. Then, from the command line, use the <code>cd</code> command to navigate to the directory where you’ll want your local copy of Django to live.</p> <p>Download the Django source code repository using the following command:</p> <div class="console-block" id="console-block-0"> <input class="c-tab-unix" id="c-tab-0-unix" type="radio" name="console-0" checked> <label for="c-tab-0-unix" title="Linux/macOS">/</label> <input class="c-tab-win" id="c-tab-0-win" type="radio" name="console-0"> <label for="c-tab-0-win" title="Windows"></label> <section class="c-content-unix" id="c-content-0-unix"> <pre data-language="console">$ git clone git@github.com:YourGitHubName/django.git
 </pre> </section> <section class="c-content-win" id="c-content-0-win"> <div class="highlight"><pre><span class="gp">...\&gt;</span> git clone git@github.com:YourGitHubName/django.git
@@ -234,17 +234,9 @@ index 690f205..e07fae2 100644
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
