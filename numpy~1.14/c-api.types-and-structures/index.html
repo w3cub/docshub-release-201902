@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/numpy~1.14/c-api.types-and-structures/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/numpy~1.14.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/numpy~1.14/" class="_nav-link" title="" style="margin-left:0;">NumPy 1.14</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="python-types-and-c-structures">Python Types and C-Structures</h1> <p>Several new types are defined in the C-code. Most of these are accessible from Python, but a few are not exposed due to their limited use. Every new Python type has an associated <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject" title="(in Python v3.8)" target="_blank"><code>PyObject *</code></a> with an internal structure that includes a pointer to a “method table” that defines how the new object behaves in Python. When you receive a Python object into C code, you always get a pointer to a <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject" title="(in Python v3.8)" target="_blank"><code>PyObject</code></a> structure. Because a <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject" title="(in Python v3.8)" target="_blank"><code>PyObject</code></a> structure is very generic and defines only <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject_HEAD" title="(in Python v3.8)" target="_blank"><code>PyObject_HEAD</code></a>, by itself it is not very interesting. However, different objects contain more details after the <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject_HEAD" title="(in Python v3.8)" target="_blank"><code>PyObject_HEAD</code></a> (but you have to cast to the correct type to access them — or use accessor functions or macros).</p>  <h2 id="new-python-types-defined">New Python Types Defined</h2> <p>Python types are the functional equivalent in C of classes in Python. By constructing a new Python type you make available a new object for Python. The ndarray object is an example of a new type defined in C. New types are defined in C by two basic steps:</p> <ol class="arabic simple"> <li>creating a C-structure (usually named <code>Py{Name}Object</code>) that is binary- compatible with the <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject" title="(in Python v3.8)" target="_blank"><code>PyObject</code></a> structure itself but holds the additional information needed for that particular object;</li> <li>populating the <a class="reference external" href="https://docs.python.org/dev/c-api/type.html#c.PyTypeObject" title="(in Python v3.8)" target="_blank"><code>PyTypeObject</code></a> table (pointed to by the ob_type member of the <a class="reference external" href="https://docs.python.org/dev/c-api/structures.html#c.PyObject" title="(in Python v3.8)" target="_blank"><code>PyObject</code></a> structure) with pointers to functions that implement the desired behavior for the type.</li> </ol> <p>Instead of special method names which define behavior for Python classes, there are “function tables” which point to functions that implement the desired results. Since Python 2.2, the PyTypeObject itself has become dynamic which allows C types that can be “sub-typed “from other C-types in C, and sub-classed in Python. The children types inherit the attributes and methods from their parent(s).</p> <p>There are two major new types: the ndarray ( <a class="reference internal" href="#c.PyArray_Type" title="PyArray_Type"><code>PyArray_Type</code></a> ) and the ufunc ( <a class="reference internal" href="#c.PyUFunc_Type" title="PyUFunc_Type"><code>PyUFunc_Type</code></a> ). Additional types play a supportive role: the <a class="reference internal" href="#c.PyArrayIter_Type" title="PyArrayIter_Type"><code>PyArrayIter_Type</code></a>, the <a class="reference internal" href="#c.PyArrayMultiIter_Type" title="PyArrayMultiIter_Type"><code>PyArrayMultiIter_Type</code></a>, and the <a class="reference internal" href="#c.PyArrayDescr_Type" title="PyArrayDescr_Type"><code>PyArrayDescr_Type</code></a> . The <a class="reference internal" href="#c.PyArrayIter_Type" title="PyArrayIter_Type"><code>PyArrayIter_Type</code></a> is the type for a flat iterator for an ndarray (the object that is returned when getting the flat attribute). The <a class="reference internal" href="#c.PyArrayMultiIter_Type" title="PyArrayMultiIter_Type"><code>PyArrayMultiIter_Type</code></a> is the type of the object returned when calling <code>broadcast</code> (). It handles iteration and broadcasting over a collection of nested sequences. Also, the <a class="reference internal" href="#c.PyArrayDescr_Type" title="PyArrayDescr_Type"><code>PyArrayDescr_Type</code></a> is the data-type-descriptor type whose instances describe the data. Finally, there are 21 new scalar-array types which are new Python scalars corresponding to each of the fundamental data types available for arrays. An additional 10 other types are place holders that allow the array scalars to fit into a hierarchy of actual Python types.</p>  <h3 id="pyarray-type">PyArray_Type</h3> <dl class="var"> <dt id="c.PyArray_Type">
 <code>PyArray_Type</code> </dt> <dd>
@@ -578,17 +578,9 @@ dims_m1[k]</code>, but it is stored here as an optimization.</p> </dd>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

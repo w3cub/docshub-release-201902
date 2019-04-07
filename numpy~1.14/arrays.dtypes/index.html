@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/numpy~1.14/arrays.dtypes/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/numpy~1.14.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/numpy~1.14/" class="_nav-link" title="" style="margin-left:0;">NumPy 1.14</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="arrays-dtypes">Data type objects (dtype)</h1> <p id="data-type-objects-dtype">A data type object (an instance of <a class="reference internal" href="../generated/numpy.dtype/#numpy.dtype" title="numpy.dtype"><code>numpy.dtype</code></a> class) describes how the bytes in the fixed-size block of memory corresponding to an array item should be interpreted. It describes the following aspects of the data:</p> <ol class="arabic simple"> <li>Type of the data (integer, float, Python object, etc.)</li> <li>Size of the data (how many bytes is in <em>e.g.</em> the integer)</li> <li>Byte order of the data (<span class="xref std std-term">little-endian</span> or <span class="xref std std-term">big-endian</span>)</li> <li>If the data type is <span class="xref std std-term">structured</span>, an aggregate of other data types, (<em>e.g.</em>, describing an array item consisting of an integer and a float),<ol class="arabic"> <li>what are the names of the “<span class="xref std std-term">fields</span>” of the structure, by which they can be <a class="reference internal" href="../arrays.indexing/#arrays-indexing-fields"><span class="std std-ref">accessed</span></a>,</li> <li>what is the data-type of each <span class="xref std std-term">field</span>, and</li> <li>which part of the memory block each field takes.</li> </ol> </li> <li>If the data type is a sub-array, what is its shape and data type.</li> </ol> <p id="index-0">To describe the type of scalar data, there are several <a class="reference internal" href="../arrays.scalars/#arrays-scalars-built-in"><span class="std std-ref">built-in scalar types</span></a> in NumPy for various precision of integers, floating-point numbers, <em>etc</em>. An item extracted from an array, <em>e.g.</em>, by indexing, will be a Python object whose type is the scalar type associated with the data type of the array.</p> <p>Note that the scalar types are not <a class="reference internal" href="../generated/numpy.dtype/#numpy.dtype" title="numpy.dtype"><code>dtype</code></a> objects, even though they can be used in place of one whenever a data type specification is needed in NumPy.</p> <p id="index-1">Structured data types are formed by creating a data type whose <span class="xref std std-term">fields</span> contain other data types. Each field has a name by which it can be <a class="reference internal" href="../arrays.indexing/#arrays-indexing-fields"><span class="std std-ref">accessed</span></a>. The parent data type should be of sufficient size to contain all its fields; the parent is nearly always based on the <code>void</code> type which allows an arbitrary item size. Structured data types may also contain nested structured sub-array data types in their fields.</p> <p id="index-2">Finally, a data type can describe items that are themselves arrays of items of another data type. These sub-arrays must, however, be of a fixed size.</p> <p>If an array is created using a data-type describing a sub-array, the dimensions of the sub-array are appended to the shape of the array when the array is created. Sub-arrays in a field of a structured type behave differently, see <a class="reference internal" href="../arrays.indexing/#arrays-indexing-fields"><span class="std std-ref">Field Access</span></a>.</p> <p>Sub-arrays always have a C-contiguous memory layout.</p>  <h4>Example</h4> <p>A simple data type containing a 32-bit big-endian integer: (see <a class="reference internal" href="#arrays-dtypes-constructing"><span class="std std-ref">Specifying and constructing data types</span></a> for details on construction)</p> <pre data-language="python">&gt;&gt;&gt; dt = np.dtype('&gt;i4')
 &gt;&gt;&gt; dt.byteorder
@@ -205,17 +205,9 @@ array([ 6.,  7.])
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

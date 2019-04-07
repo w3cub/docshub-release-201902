@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/npm/misc/scripts/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/npm.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/npm/" class="_nav-link" title="" style="margin-left:0;">npm</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _npm">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>npm-scripts</h1> <p class="subtitle">How npm handles the "scripts" field.</p> <h2 id="description">Description</h2> <p>npm supports the "scripts" property of the package.json file, for the following scripts:</p> <ul> <li>prepublish: Run BEFORE the package is packed and published, as well as on local <code>npm install</code> without any arguments. (See below)</li> <li>prepare: Run both BEFORE the package is packed and published, and on local <code>npm install</code> without any arguments (See below). This is run AFTER <code>prepublish</code>, but BEFORE <code>prepublishOnly</code>.</li> <li>prepublishOnly: Run BEFORE the package is prepared and packed, ONLY on <code>npm publish</code>. (See below.)</li> <li>prepack: run BEFORE a tarball is packed (on <code>npm pack</code>, <code>npm publish</code>, and when installing git dependencies)</li> <li>postpack: Run AFTER the tarball has been generated and moved to its final destination.</li> <li>publish, postpublish: Run AFTER the package is published.</li> <li>preinstall: Run BEFORE the package is installed</li> <li>install, postinstall: Run AFTER the package is installed.</li> <li>preuninstall, uninstall: Run BEFORE the package is uninstalled.</li> <li>postuninstall: Run AFTER the package is uninstalled.</li> <li>preversion: Run BEFORE bumping the package version.</li> <li>version: Run AFTER bumping the package version, but BEFORE commit.</li> <li>postversion: Run AFTER bumping the package version, and AFTER commit.</li> <li>pretest, test, posttest: Run by the <code>npm test</code> command.</li> <li>prestop, stop, poststop: Run by the <code>npm stop</code> command.</li> <li>prestart, start, poststart: Run by the <code>npm start</code> command.</li> <li>prerestart, restart, postrestart: Run by the <code>npm restart</code> command. Note: <code>npm restart</code> will run the stop and start scripts if no <code>restart</code> script is provided.</li> <li>preshrinkwrap, shrinkwrap, postshrinkwrap: Run by the <code>npm shrinkwrap</code> command.</li> </ul> <p>Additionally, arbitrary scripts can be executed by running <code>npm run-script &lt;stage&gt;</code>. <em>Pre</em> and <em>post</em> commands with matching names will be run for those as well (e.g. <code>premyscript</code>, <code>myscript</code>, <code>postmyscript</code>). Scripts from dependencies can be run with <code>npm explore &lt;pkg&gt; -- npm run &lt;stage&gt;</code>.</p> <h2 id="prepublish-and-prepare">PREPUBLISH AND PREPARE</h2> <h3 id="deprecation-note">DEPRECATION NOTE</h3> <p>Since <code>npm@1.1.71</code>, the npm CLI has run the <code>prepublish</code> script for both <code>npm publish</code> and <code>npm install</code>, because it's a convenient way to prepare a package for use (some common use cases are described in the section below). It has also turned out to be, in practice, <a href="https://github.com/npm/npm/issues/10074" target="_blank">very confusing</a>. As of <code>npm@4.0.0</code>, a new event has been introduced, <code>prepare</code>, that preserves this existing behavior. A <em>new</em> event, <code>prepublishOnly</code> has been added as a transitional strategy to allow users to avoid the confusing behavior of existing npm versions and only run on <code>npm publish</code> (for instance, running the tests one last time to ensure they're in good shape).</p> <p>See <a href="https://github.com/npm/npm/issues/10074" target="_blank">https://github.com/npm/npm/issues/10074</a> for a much lengthier justification, with further reading, for this change.</p> <h3 id="use-cases">USE CASES</h3> <p>If you need to perform operations on your package before it is used, in a way that is not dependent on the operating system or architecture of the target system, use a <code>prepublish</code> script. This includes tasks such as:</p> <ul> <li>Compiling CoffeeScript source code into JavaScript.</li> <li>Creating minified versions of JavaScript source code.</li> <li>Fetching remote resources that your package will use.</li> </ul> <p>The advantage of doing these things at <code>prepublish</code> time is that they can be done once, in a single place, thus reducing complexity and variability. Additionally, this means that:</p> <ul> <li>You can depend on <code>coffee-script</code> as a <code>devDependency</code>, and thus your users don't need to have it installed.</li> <li>You don't need to include minifiers in your package, reducing the size for your users.</li> <li>You don't need to rely on your users having <code>curl</code> or <code>wget</code> or other system tools on the target machines.</li> </ul> <h2 id="default-values">DEFAULT VALUES</h2> <p>npm will default some script values based on package contents.</p> <ul> <li> <p><code>"start": "node server.js"</code>:</p> <p>If there is a <code>server.js</code> file in the root of your package, then npm will default the <code>start</code> command to <code>node server.js</code>.</p> </li> <li> <p><code>"install": "node-gyp rebuild"</code>:</p> <p>If there is a <code>binding.gyp</code> file in the root of your package and you haven't defined your own <code>install</code> or <code>preinstall</code> scripts, npm will default the <code>install</code> command to compile using node-gyp.</p> </li> </ul> <h2 id="user">USER</h2> <p>If npm was invoked with root privileges, then it will change the uid to the user account or uid specified by the <code>user</code> config, which defaults to <code>nobody</code>. Set the <code>unsafe-perm</code> flag to run scripts with root privileges.</p> <h2 id="environment">ENVIRONMENT</h2> <p>Package scripts run in an environment where many pieces of information are made available regarding the setup of npm and the current state of the process.</p> <h3 id="path">path</h3> <p>If you depend on modules that define executable scripts, like test suites, then those executables will be added to the <code>PATH</code> for executing the scripts. So, if your package.json has this:</p> <pre>{ "name" : "foo"
 , "dependencies" : { "bar" : "0.1.x" }
@@ -107,17 +107,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
