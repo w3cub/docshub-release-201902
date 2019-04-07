@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/react/" class="_nav-link" title="" style="margin-left:0;">React</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="css-1a9m1x6">Reconciliation</h1>
 <p>React provides a declarative API so that you don’t have to worry about exactly what changes on every update. This makes writing applications a lot easier, but it might not be obvious how this is implemented within React. This article explains the choices we made in React’s “diffing” algorithm so that component updates are predictable while being fast enough for high-performance apps.</p> <h2 id="motivation">Motivation</h2> <p>When you use React, at a single point in time you can think of the <code class="gatsby-code-text">render()</code> function as creating a tree of React elements. On the next state or props update, that <code class="gatsby-code-text">render()</code> function will return a different tree of React elements. React then needs to figure out how to efficiently update the UI to match the most recent tree.</p> <p>There are some generic solutions to this algorithmic problem of generating the minimum number of operations to transform one tree into another. However, the <a href="http://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey_bille.pdf" target="_blank">state of the art algorithms</a> have a complexity in the order of O(n<sup>3</sup>) where n is the number of elements in the tree.</p> <p>If we used this in React, displaying 1000 elements would require in the order of one billion comparisons. This is far too expensive. Instead, React implements a heuristic O(n) algorithm based on two assumptions:</p> <ol> <li>Two elements of different types will produce different trees.</li> <li>The developer can hint at which child elements may be stable across different renders with a <code class="gatsby-code-text">key</code> prop.</li> </ol> <p>In practice, these assumptions are valid for almost all practical use cases.</p> <h2 id="the-diffing-algorithm">The Diffing Algorithm</h2> <p>When diffing two trees, React first compares the two root elements. The behavior is different depending on the types of the root elements.</p> <h3 id="elements-of-different-types">Elements Of Different Types</h3> <p>Whenever the root elements have different types, React will tear down the old tree and build the new tree from scratch. Going from <code class="gatsby-code-text">&lt;a&gt;</code> to <code class="gatsby-code-text">&lt;img&gt;</code>, or from <code class="gatsby-code-text">&lt;Article&gt;</code> to <code class="gatsby-code-text">&lt;Comment&gt;</code>, or from <code class="gatsby-code-text">&lt;Button&gt;</code> to <code class="gatsby-code-text">&lt;div&gt;</code> - any of those will lead to a full rebuild.</p> <p>When tearing down a tree, old DOM nodes are destroyed. Component instances receive <code class="gatsby-code-text">componentWillUnmount()</code>. When building up a new tree, new DOM nodes are inserted into the DOM. Component instances receive <code class="gatsby-code-text">componentWillMount()</code> and then <code class="gatsby-code-text">componentDidMount()</code>. Any state associated with the old tree is lost.</p> <p>Any components below the root will also get unmounted and have their state destroyed. For example, when diffing:</p> <pre data-language="xml">&lt;div&gt;
@@ -124,17 +124,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
