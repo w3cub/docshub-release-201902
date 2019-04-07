@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/bottle~0.12/deployment/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/bottle~0.12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/bottle~0.12/" class="_nav-link" title="" style="margin-left:0;">Bottle 0.12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="tutorial-deployment">Deployment</h1> <p id="deployment">The bottle <code>run()</code> function, when called without any parameters, starts a local development server on port 8080. You can access and test your application via <a class="reference external" href="http://localhost:8080/" target="_blank">http://localhost:8080/</a> if you are on the same host.</p> <p>To get your application available to the outside world, specify the IP of the interface the server should listen to (e.g. <code>run(host='192.168.0.1')</code>) or let the server listen to all interfaces at once (e.g. <code>run(host='0.0.0.0')</code>). The listening port can be changed in a similar way, but you need root or admin rights to choose a port below 1024. Port 80 is the standard for HTTP servers:</p> <pre data-language="python">run(host='0.0.0.0', port=80) # Listen to HTTP requests on all interfaces
 </pre>  <h2 id="server-options">Server Options</h2> <p>The built-in default server is based on <a class="reference external" href="http://docs.python.org/library/wsgiref.html#module-wsgiref.simple_server" target="_blank">wsgiref WSGIServer</a>. This non-threading HTTP server is perfectly fine for development and early production, but may become a performance bottleneck when server load increases. There are three ways to eliminate this bottleneck:</p> <ul class="simple"> <li>Use a different server that is either multi-threaded or asynchronous.</li> <li>Start multiple server processes and spread the load with a load-balancer.</li> <li>Do both.</li> </ul> <p><strong>Multi-threaded</strong> servers are the ‘classic’ way to do it. They are very robust, reasonably fast and easy to manage. As a drawback, they can only handle a limited number of connections at the same time and utilize only one CPU core due to the “Global Interpreter Lock” (GIL). This does not hurt most applications, they are waiting for network IO most of the time anyway, but may slow down CPU intensive tasks (e.g. image processing).</p> <p><strong>Asynchronous</strong> servers are very fast, can handle a virtually unlimited number of concurrent connections and are easy to manage, but can get a bit tricky. To take full advantage of their potential, you need to design your application accordingly and understand the concepts of the specific server.</p> <p><strong>Multi-processing</strong> (forking) servers are not limited by the GIL and utilize more than one CPU core, but make communication between server instances more expensive. You need a database or external message query to share state between processes, or design your application so that it does not need any shared state. The setup is also a bit more complicated, but there are good tutorials available.</p>   <h2 id="switching-the-server-backend">Switching the Server Backend</h2> <p>The easiest way to increase performance is to install a multi-threaded server library like <a class="reference external" href="http://pythonpaste.org/" target="_blank">paste</a> or <a class="reference external" href="http://www.cherrypy.org/" target="_blank">cherrypy</a> and tell Bottle to use that instead of the single-threaded server:</p> <pre data-language="python">bottle.run(server='paste')
@@ -170,17 +170,9 @@ proxy.server = (
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

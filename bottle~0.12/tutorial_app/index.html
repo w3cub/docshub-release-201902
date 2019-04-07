@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/bottle~0.12/tutorial_app/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/bottle~0.12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/bottle~0.12/" class="_nav-link" title="" style="margin-left:0;">Bottle 0.12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="tutorial-todo-list-application">Tutorial: Todo-List Application</h1> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">This tutorial is a work in progess and written by <a class="reference external" href="http://github.com/noisefloor" target="_blank">noisefloor</a>.</p> </div> <p>This tutorial should give a brief introduction to the <a class="reference external" href="http://bottle.paws.org" target="_blank">Bottle</a> WSGI Framework. The main goal is to be able, after reading through this tutorial, to create a project using Bottle. Within this document, not all abilities will be shown, but at least the main and important ones like routing, utilizing the Bottle template abilities to format output and handling GET / POST parameters.</p> <p>To understand the content here, it is not necessary to have a basic knowledge of WSGI, as Bottle tries to keep WSGI away from the user anyway. You should have a fair understanding of the <a class="reference external" href="http://www.python.org" target="_blank">Python</a> programming language. Furthermore, the example used in the tutorial retrieves and stores data in a SQL databse, so a basic idea about SQL helps, but is not a must to understand the concepts of Bottle. Right here, <a class="reference external" href="http://www.sqlite.org" target="_blank">SQLite</a> is used. The output of Bottle sent to the browser is formatted in some examples by the help of HTML. Thus, a basic idea about the common HTML tags does help as well.</p> <p>For the sake of introducing Bottle, the Python code “in between” is kept short, in order to keep the focus. Also all code within the tutorial is working fine, but you may not necessarily use it “in the wild”, e.g. on a public web server. In order to do so, you may add e.g. more error handling, protect the database with a password, test and escape the input etc.</p>  <p class="topic-title first">Table of Contents</p> <ul class="simple"> <li>
 <a class="reference internal" href="#tutorial-todo-list-application" id="id1">Tutorial: Todo-List Application</a><ul> <li><a class="reference internal" href="#goals" id="id2">Goals</a></li> <li><a class="reference internal" href="#before-we-start" id="id3">Before We Start...</a></li> <li><a class="reference internal" href="#using-bottle-for-a-web-based-todo-list" id="id4">Using Bottle for a Web-Based ToDo List</a></li> <li><a class="reference internal" href="#server-setup" id="id5">Server Setup</a></li> <li><a class="reference internal" href="#final-words" id="id6">Final Words</a></li> <li><a class="reference internal" href="#complete-example-listing" id="id7">Complete Example Listing</a></li> </ul> </li> </ul>   <h2 id="goals">Goals</h2> <p>At the end of this tutorial, we will have a simple, web-based ToDo list. The list contains a text (with max 100 characters) and a status (0 for closed, 1 for open) for each item. Through the web-based user interface, open items can be view and edited and new items can be added.</p> <p>During development, all pages will be available on <code>localhost</code> only, but later on it will be shown how to adapt the application for a “real” server, including how to use with Apache’s mod_wsgi.</p> <p>Bottle will do the routing and format the output, with the help of templates. The items of the list will be stored inside a SQLite database. Reading and writing the database will be done by Python code.</p> <p>We will end up with an application with the following pages and functionality:</p>  <ul class="simple"> <li>start page <code>http://localhost:8080/todo</code>
@@ -439,17 +439,9 @@ run(reloader=True)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/bootstrap~4/migration/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/bootstrap~4.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/bootstrap~4/" class="_nav-link" title="" style="margin-left:0;">Bootstrap 4</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _bootstrap">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="bs-title" id="content">Migrating to v4</h1> <p class="bs-lead">Bootstrap 4 is a major rewrite of the entire project. The most notable changes are summarized below, followed by more specific changes to relevant components.</p>  <h2 id="stable-changes">Stable changes</h2> <p>Moving from Beta 3 to our stable v4.0 release, there are no breaking changes, but there are some notable changes.</p> <h3 id="printing">Printing</h3> <ul> <li> <p>Fixed broken print utilities. Previously, using a <code>.d-print-*</code> class would unexpectedly overrule any other <code>.d-*</code> class. Now, they match our other display utilities and only apply to that media (<code>@media print</code>).</p> </li> <li> <p>Expanded available print display utilities to match other utilities. Beta 3 and older only had <code>block</code>, <code>inline-block</code>, <code>inline</code>, and <code>none</code>. Stable v4 added <code>flex</code>, <code>inline-flex</code>, <code>table</code>, <code>table-row</code>, and <code>table-cell</code>.</p> </li> <li> <p>Fixed print preview rendering across browsers with new print styles that specify <code>@page</code> <code>size</code>.</p> </li> </ul> <h2 id="beta-3-changes">Beta 3 changes</h2> <p>While Beta 2 saw the bulk of our breaking changes during the beta phase, but we still have a few that needed to be addressed in the Beta 3 release. These changes apply if you’re updating to Beta 3 from Beta 2 or any older version of Bootstrap.</p> <h3 id="miscellaneous">Miscellaneous</h3> <ul> <li>Removed the unused <code>$thumbnail-transition</code> variable. We weren’t transitioning anything, so it was just extra code.</li> <li>The npm package no longer includes any files other than our source and dist files; if you relied on them and were running our scripts via the <code>node_modules</code> folder, you should adapt your workflow.</li> </ul> <h3 id="forms">Forms</h3> <ul> <li> <p>Rewrote both custom and default checkboxes and radios. Now, both have matching HTML structure (outer <code>&lt;div&gt;</code> with sibling <code>&lt;input&gt;</code> and <code>&lt;label&gt;</code>) and the same layout styles (stacked default, inline with modifier class). This allows us to style the label based on the input’s state, simplifying support for the <code>disabled</code> attribute (previously requiring a parent class) and better supporting our form validation.</p> <p>As part of this, we’ve changed the CSS for managing multiple <code>background-image</code>s on custom form checkboxes and radios. Previously, the now removed <code>.custom-control-indicator</code> element had the background color, gradient, and SVG icon. Customizing the background gradient meant replacing all of those every time you needed to change just one. Now, we have <code>.custom-control-label::before</code> for the fill and gradient and <code>.custom-control-label::after</code> handles the icon.</p> <p>To make a custom check inline, add <code>.custom-control-inline</code>.</p> </li> <li> <p>Updated selector for input-based button groups. Instead of <code>[data-toggle="buttons"] { }</code> for style and behavior, we use the <code>data</code> attribute just for JS behaviors and rely on a new <code>.btn-group-toggle</code> class for styling.</p> </li> <li> <p>Removed <code>.col-form-legend</code> in favor of a slightly improved <code>.col-form-label</code>. This way <code>.col-form-label-sm</code> and <code>.col-form-label-lg</code> can be used on <code>&lt;legend&gt;</code> elements with ease.</p> </li> <li> <p>Custom file inputs received a change to their <code>$custom-file-text</code> Sass variable. It’s no longer a nested Sass map and now only powers one string—the <code>Browse</code> button as that is now the only pseudo-element generated from our Sass. The <code>Choose file</code> text now comes from the <code>.custom-file-label</code>.</p> </li> </ul> <h3 id="input-groups">Input groups</h3> <ul> <li> <p>Input group addons are now specific to their placement relative to an input. We’ve dropped <code>.input-group-addon</code> and <code>.input-group-btn</code> for two new classes, <code>.input-group-prepend</code> and <code>.input-group-append</code>. You must explicitly use an append or a prepend now, simplifying much of our CSS. Within an append or prepend, place your buttons as they would exist anywhere else, but wrap text in <code>.input-group-text</code>.</p> </li> <li> <p>Validation styles are now supported, as are multiple inputs (though you can only validate one input per group).</p> </li> <li> <p>Sizing classes must be on the parent <code>.input-group</code> and not the individual form elements.</p> </li> </ul> <h2 id="beta-2-changes">Beta 2 changes</h2> <p>While in beta, we aim to have no breaking changes. However, things don’t always go as planned. Below are the breaking changes to bear in mind when moving from Beta 1 to Beta 2.</p> <h3 id="breaking">Breaking</h3> <ul> <li>Removed <code>$badge-color</code> variable and its usage on <code>.badge</code>. We use a color contrast function to pick a <code>color</code> based on the <code>background-color</code>, so the variable is unnecessary.</li> <li>Renamed <code>grayscale()</code> function to <code>gray()</code> to avoid breaking conflict with the CSS native <code>grayscale</code> filter.</li> <li>Renamed <code>.table-inverse</code>, <code>.thead-inverse</code>, and <code>.thead-default</code> to <code>.*-dark</code> and <code>.*-light</code>, matching our color schemes used elsewhere.</li> <li>Responsive tables now generate classes for each grid breakpoint. This breaks from Beta 1 in that the <code>.table-responsive</code> you’ve been using is more like <code>.table-responsive-md</code>. You may now use <code>.table-responsive</code> or <code>.table-responsive-{sm,md,lg,xl}</code> as needed.</li> <li>Dropped Bower support as the package manager has been deprecated for alternatives (e.g., Yarn or npm). <a href="https://github.com/bower/bower/issues/2298" target="_blank">See bower/bower#2298</a> for details.</li> <li>Bootstrap still requires jQuery 1.9.1 or higher, but you’re advised to use version 3.x since v3.x’s supported browsers are the ones Bootstrap supports plus v3.x has some security fixes.</li> <li>Removed the unused <code>.form-control-label</code> class. If you did make use of this class, it was duplicate of the <code>.col-form-label</code> class that vertically centered a <code>&lt;label&gt;</code> with it’s associated input in horizontal form layouts.</li> <li>Changed the <code>color-yiq</code> from a mixin that included the <code>color</code> property to a function that returns a value, allowing you to use it for any CSS property. For example, instead of <code>color-yiq(#000)</code>, you’d write <code>color: color-yiq(#000);</code>.</li> </ul> <h3 id="highlights">Highlights</h3> <ul> <li>Introduced new <code>pointer-events</code> usage on modals. The outer <code>.modal-dialog</code> passes through events with <code>pointer-events: none</code> for custom click handling (making it possible to just listen on the <code>.modal-backdrop</code> for any clicks), and then counteracts it for the actual <code>.modal-content</code> with <code>pointer-events: auto</code>.</li> </ul> <h2 id="summary">Summary</h2> <p>Here are the big ticket items you’ll want to be aware of when moving from v3 to v4.</p> <h3 id="browser-support">Browser support</h3> <ul> <li>Dropped IE8, IE9, and iOS 6 support. v4 is now only IE10+ and iOS 7+. For sites needing either of those, use v3.</li> <li>Added official support for Android v5.0 Lollipop’s Browser and WebView. Earlier versions of the Android Browser and WebView remain only unofficially supported.</li> </ul> <h3 id="global-changes">Global changes</h3> <ul> <li>
 <strong>Flexbox is enabled by default.</strong> In general this means a move away from floats and more across our components.</li> <li>Switched from <a href="http://lesscss.org/" target="_blank">Less</a> to <a href="https://sass-lang.com/" target="_blank">Sass</a> for our source CSS files.</li> <li>Switched from <code>px</code> to <code>rem</code> as our primary CSS unit, though pixels are still used for media queries and grid behavior as device viewports are not affected by type size.</li> <li>Global font-size increased from <code>14px</code> to <code>16px</code>.</li> <li>Revamped grid tiers to add a fifth option (addressing smaller devices at <code>576px</code> and below) and removed the <code>-xs</code> infix from those classes. Example: <code>.col-6.col-sm-4.col-md-3</code>.</li> <li>Replaced the separate optional theme with configurable options via SCSS variables (e.g., <code>$enable-gradients: true</code>).</li> <li>Build system overhauled to use a series of npm scripts instead of Grunt. See <code>package.json</code> for all scripts, or our project readme for local development needs.</li> <li>Non-responsive usage of Bootstrap is no longer supported.</li> <li>Dropped the online Customizer in favor of more extensive setup documentation and customized builds.</li> <li>Added dozens of new <a href="../utilities/">utility classes</a> for common CSS property-value pairs and margin/padding spacing shortcuts.</li> </ul> <h3 id="grid-system">Grid system</h3> <ul> <li>
@@ -129,17 +129,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
