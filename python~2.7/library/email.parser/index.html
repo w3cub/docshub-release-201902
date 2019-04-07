@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/python~2.7/" class="_nav-link" title="" style="margin-left:0;">Python 2.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="email-parser-parsing-email-messages"> email.parser: Parsing email messages</h1> <p id="module-email.parser">Message object structures can be created in one of two ways: they can be created from whole cloth by instantiating <a class="reference internal" href="../email.message/#email.message.Message" title="email.message.Message"><code>Message</code></a> objects and stringing them together via <a class="reference internal" href="../email.message/#email.message.Message.attach" title="email.message.Message.attach"><code>attach()</code></a> and <a class="reference internal" href="../email.message/#email.message.Message.set_payload" title="email.message.Message.set_payload"><code>set_payload()</code></a> calls, or they can be created by parsing a flat text representation of the email message.</p> <p>The <a class="reference internal" href="../email/#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code>email</code></a> package provides a standard parser that understands most email document structures, including MIME documents. You can pass the parser a string or a file object, and the parser will return to you the root <a class="reference internal" href="../email.message/#email.message.Message" title="email.message.Message"><code>Message</code></a> instance of the object structure. For simple, non-MIME messages the payload of this root object will likely be a string containing the text of the message. For MIME messages, the root object will return <code>True</code> from its <a class="reference internal" href="../email.message/#email.message.Message.is_multipart" title="email.message.Message.is_multipart"><code>is_multipart()</code></a> method, and the subparts can be accessed via the <a class="reference internal" href="../email.message/#email.message.Message.get_payload" title="email.message.Message.get_payload"><code>get_payload()</code></a> and <a class="reference internal" href="../email.message/#email.message.Message.walk" title="email.message.Message.walk"><code>walk()</code></a> methods.</p> <p>There are actually two parser interfaces available for use, the classic <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code>Parser</code></a> API and the incremental <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a> API. The classic <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code>Parser</code></a> API is fine if you have the entire text of the message in memory as a string, or if the entire message lives in a file on the file system. <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a> is more appropriate for when you’re reading the message from a stream which might block waiting for more input (e.g. reading an email message from a socket). The <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a> can consume and parse the message incrementally, and only returns the root object when you close the parser <a class="footnote-reference" href="#id2" id="id1">[1]</a>.</p> <p>Note that the parser can be extended in limited ways, and of course you can implement your own parser completely from scratch. There is no magical connection between the <a class="reference internal" href="../email/#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><code>email</code></a> package’s bundled parser and the <a class="reference internal" href="../email.message/#email.message.Message" title="email.message.Message"><code>Message</code></a> class, so your custom parser can create message object trees any way it finds necessary.</p>  <h2 id="feedparser-api">1. FeedParser API</h2> <div class="versionadded"> <p><span class="versionmodified">New in version 2.4.</span></p> </div> <p>The <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a>, imported from the <code>email.feedparser</code> module, provides an API that is conducive to incremental parsing of email messages, such as would be necessary when reading the text of an email message from a source that can block (e.g. a socket). The <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a> can of course be used to parse an email message fully contained in a string or a file, but the classic <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code>Parser</code></a> API may be more convenient for such use cases. The semantics and results of the two parser APIs are identical.</p> <p>The <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a>‘s API is simple; you create an instance, feed it a bunch of text until there’s no more to feed it, then close the parser to retrieve the root message object. The <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a> is extremely accurate when parsing standards-compliant messages, and it does a very good job of parsing non-compliant messages, providing information about how a message was deemed broken. It will populate a message object’s <em>defects</em> attribute with a list of any problems it found in a message. See the <a class="reference internal" href="../email.errors/#module-email.errors" title="email.errors: The exception classes used by the email package."><code>email.errors</code></a> module for the list of defects that it can find.</p> <p>Here is the API for the <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code>FeedParser</code></a>:</p> <dl class="class"> <dt id="email.parser.FeedParser">
 <code>class email.parser.FeedParser([_factory])</code> </dt> <dd>
@@ -115,17 +115,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
