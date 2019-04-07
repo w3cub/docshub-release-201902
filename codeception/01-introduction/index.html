@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/codeception/01-introduction/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/codeception.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeception/" class="_nav-link" title="" style="margin-left:0;">Codeception</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _codeception">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="introduction">Introduction</h1> <p>The idea behind testing is not new. You can’t sleep well if you are not confident that your last commit didn’t take down the whole application. Having your application covered with tests gives you more trust in the stability of your application. That’s all.</p> <p>In most cases tests don’t guarantee that the application works 100% as it is supposed to. You can’t predict all possible scenarios and exceptional situations for complex apps, but with tests you can cover the most important parts of your app and at least be sure they work as predicted.</p> <p>There are plenty of ways to test your application. The most popular paradigm is <a href="https://en.wikipedia.org/wiki/Unit_testing" target="_blank">Unit Testing</a>. For web applications, testing just the controller and/or the model doesn’t prove that your application is working. To test the behavior of your application as a whole, you should write functional or acceptance tests.</p> <p>Codeception supports all three testing types. Out of the box you have tools for writing unit, functional, and acceptance tests in a unified framework.</p> <table> <thead> <tr> <th> </th> <th>Codeception Unit Tests</th> <th>Codeception Functional Tests</th> <th>Codeception Acceptance Tests</th> </tr> </thead> <tbody> <tr> <td>Scope of the test</td> <td>Single PHP class</td> <td>PHP Framework (Routing, Controllers, etc.)</td> <td>Page in browser (Chrome, Firefox, or PhpBrowser)</td> </tr> <tr> <td>Testing computer needs access to project’s PHP files</td> <td>Yes</td> <td>Yes</td> <td>No</td> </tr> <tr> <td>Webserver required</td> <td>No</td> <td>No</td> <td>Yes</td> </tr> <tr> <td>JavaScript</td> <td>No</td> <td>No</td> <td>Yes</td> </tr> <tr> <td>Additional software required</td> <td>None</td> <td>None</td> <td>&lt;ul&gt;&lt;li&gt;For WebDriver: Selenium Server or PhantomJS (deprecated)&lt;/li&gt;&lt;li&gt;For PhpBrowser: None&lt;/li&gt;&lt;/ul&gt;</td> </tr> <tr> <td>Test execution speed</td> <td>High</td> <td>High</td> <td>Low</td> </tr> <tr> <td>Configuration file</td> <td><code class="highlighter-rouge">unit.suite.yml</code></td> <td><code class="highlighter-rouge">functional.suite.yml</code></td> <td><code class="highlighter-rouge">acceptance.suite.yml</code></td> </tr> </tbody> </table> <p>One of the main advantages of Codeception is that you don’t have to decide on just <em>one</em> type of testing. You can have all three! And chances are, that you will (sooner or later) need all three. That’s why Codeception consists of three so-called “suites”: A “unit suite” for all unit tests, a “functional suite” for all functional tests, and an “acceptance suite” for all acceptance tests.</p> <p>Let’s review those three testing types in reverse order.</p> <h3 id="acceptance-tests">Acceptance Tests</h3> <p>How does your client, manager, tester, or any other non-technical person know your website is working? By opening the browser, accessing the site, clicking on links, filling in the forms, and actually seeing the content on a web page. They have no idea of the programming language, framework, database, web-server, or why the application did (or did not) behave as expected.</p> <p>This is what acceptance tests are doing. They cover scenarios from a user’s perspective. With acceptance tests, you can be confident that users, following all the defined scenarios, won’t get errors.</p> <p><strong>Any website</strong> can be covered with acceptance tests, even if you use a very exotic CMS or framework.</p> <h4 id="sample-acceptance-test">Sample acceptance test</h4> <pre data-language="php">&lt;?php
 $I-&gt;amOnPage('/');
@@ -105,17 +105,9 @@ function testSavingUser()
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

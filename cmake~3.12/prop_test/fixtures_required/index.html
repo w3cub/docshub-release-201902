@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/cmake~3.12/prop_test/fixtures_required/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/cmake~3.12.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cmake~3.12/" class="_nav-link" title="" style="margin-left:0;">CMake 3.12</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sphinx_simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="prop_test:FIXTURES_REQUIRED">FIXTURES_REQUIRED</h1> <p id="fixtures-required">Specifies a list of fixtures the test requires. Fixture names are case sensitive and they are not required to have any similarity to test names.</p> <p>Fixtures are a way to attach setup and cleanup tasks to a set of tests. If a test requires a given fixture, then all tests marked as setup tasks for that fixture will be executed first (once for the whole set of tests, not once per test requiring the fixture). After all tests requiring a particular fixture have completed, CTest will ensure all tests marked as cleanup tasks for that fixture are then executed. Tests are marked as setup tasks with the <a class="reference internal" href="../fixtures_setup/#prop_test:FIXTURES_SETUP" title="FIXTURES_SETUP" id="index-0-prop_test:FIXTURES_SETUP"><code>FIXTURES_SETUP</code></a> property and as cleanup tasks with the <a class="reference internal" href="../fixtures_cleanup/#prop_test:FIXTURES_CLEANUP" title="FIXTURES_CLEANUP" id="index-0-prop_test:FIXTURES_CLEANUP"><code>FIXTURES_CLEANUP</code></a> property. If any of a fixture’s setup tests fail, all tests listing that fixture in their <code>FIXTURES_REQUIRED</code> property will not be executed. The cleanup tests for the fixture will always be executed, even if some setup tests fail.</p> <p>When CTest is asked to execute only a subset of tests (e.g. by the use of regular expressions or when run with the <code>--rerun-failed</code> command line option), it will automatically add any setup or cleanup tests for fixtures required by any of the tests that are in the execution set. This behavior can be overridden with the <code>-FS</code>, <code>-FC</code> and <code>-FA</code> command line options to <a class="reference internal" href="../../manual/ctest.1/#manual:ctest(1)" title="ctest(1)" id="index-0-manual:ctest(1)"><code>ctest(1)</code></a> if desired.</p> <p>Since setup and cleanup tasks are also tests, they can have an ordering specified by the <a class="reference internal" href="../depends/#prop_test:DEPENDS" title="DEPENDS" id="index-0-prop_test:DEPENDS"><code>DEPENDS</code></a> test property just like any other tests. This can be exploited to implement setup or cleanup using multiple tests for a single fixture to modularise setup or cleanup logic.</p> <p>The concept of a fixture is different to that of a resource specified by <a class="reference internal" href="../resource_lock/#prop_test:RESOURCE_LOCK" title="RESOURCE_LOCK" id="index-0-prop_test:RESOURCE_LOCK"><code>RESOURCE_LOCK</code></a>, but they may be used together. A fixture defines a set of tests which share setup and cleanup requirements, whereas a resource lock has the effect of ensuring a particular set of tests do not run in parallel. Some situations may need both, such as setting up a database, serialising test access to that database and deleting the database again at the end. For such cases, tests would populate both <code>FIXTURES_REQUIRED</code> and <a class="reference internal" href="../resource_lock/#prop_test:RESOURCE_LOCK" title="RESOURCE_LOCK" id="index-1-prop_test:RESOURCE_LOCK"><code>RESOURCE_LOCK</code></a> to combine the two behaviours. Names used for <a class="reference internal" href="../resource_lock/#prop_test:RESOURCE_LOCK" title="RESOURCE_LOCK" id="index-2-prop_test:RESOURCE_LOCK"><code>RESOURCE_LOCK</code></a> have no relationship with names of fixtures, so note that a resource lock does not imply a fixture and vice versa.</p> <p>Consider the following example which represents a database test scenario similar to that mentioned above:</p> <pre data-language="cmake">add_test(NAME testsDone   COMMAND emailResults)
 add_test(NAME fooOnly     COMMAND testFoo)
@@ -110,17 +110,9 @@ set_tests_properties(dbOnly dbWithFoo createDB setupUsers cleanupDB
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
