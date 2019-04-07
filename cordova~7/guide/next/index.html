@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cordova~7/" class="_nav-link" title="" style="margin-left:0;">Cordova 7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _cordova">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="next-steps">Next Steps</h1> <p>For developers who have an understanding of how to use the Cordova CLI and make use of plugins, there are a few things you may want to consider researching next to build better, more performant Cordova applications. The following document offers advice on various topics relating to best practices, testing, upgrades, and other topics, but is not meant to be prescriptive. Consider this your launching point for your growth as a Cordova developer. Also, if you see something that can be improved, please <a href="http://cordova.apache.org/contribute/" target="_blank">contribute</a>!</p> <p>This guide contains the following topics:</p> <ul> <li>Best Practices</li> <li>Handling Upgrades</li> <li>Testing Cordova apps</li> <li>Debugging Cordova apps</li> <li>User Interface</li> <li>Special Considerations</li> <li>Keeping Up</li> <li>Getting Help</li> </ul> <h1 id="best-practices-cordova-app-development">Best Practices Cordova app development</h1> <h2 id="1-spa-is-your-friend">1) SPA Is Your Friend</h2> <p>First and foremost - your Cordova applications should adopt the SPA (Single Page Application) design. Loosely defined, a SPA is a client-side application that is run from one request of a web page. The user loads an initial set of resources (HTML, CSS, and JavaScript) and further updates (showing a new view, loading data) is done via AJAX. SPAs are commonly used for more complex client-side applications. GMail is a great example of this. After you load GMail, mail views, editing, and organization are all done by updating the DOM instead of actually leaving the current page to load a completely new one.</p> <p>Using a SPA can help you organize your application in a more efficient manner, but it also has specific benefits for Cordova applications. A Cordova application must wait for the <a href="../../cordova/events/events/#deviceready/index.html">deviceready</a> event to fire before any plugins may be used. If you do not use a SPA, and your user clicks to go from one page to another, you will have to wait for <a href="../../cordova/events/events/#deviceready/index.html">deviceready</a> to fire again before you make use of a plugin. This is easy to forget as your application gets larger.</p> <p>Even if you choose not to use Cordova, creating a mobile application without using a single page architecture will have serious performance implications. This is because navigating between pages will require scripts, assets, etc., to be reloaded. Even if these assets are cached, there will still be performance issues.</p> <p>Examples of SPA libraries you can use in your Cordova applications are:</p> <ul> <li><a href="http://angularjs.org" target="_blank">AngularJS</a></li> <li><a href="http://emberjs.com" target="_blank">EmberJS</a></li> <li><a href="http://backbonejs.org" target="_blank">Backbone</a></li> <li><a href="http://www.telerik.com/kendo-ui" target="_blank">Kendo UI</a></li> <li><a href="http://monaca.mobi/en/" target="_blank">Monaca</a></li> <li><a href="http://facebook.github.io/react/" target="_blank">ReactJS</a></li> <li><a href="http://www.sencha.com/products/touch/" target="_blank">Sencha Touch</a></li> <li><a href="http://jquerymobile.com" target="_blank">jQuery Mobile</a></li> </ul> <p>And many, many, more.</p> <h2 id="2-performance-considerations">2) Performance Considerations</h2> <p>Consider the following issues to improve the performance in your mobile applications:</p> <p><strong>Click versus Touch</strong> - The biggest and simplest mistake you can make is to use click events. While these "work" just fine on mobile, most devices impose a 300ms delay on them in order to distinguish between a touch and a touch "hold" event. Using <code>touchstart</code>, or <code>touchend</code>, will result in a dramatic improvement - 300ms doesn't sound like much, but it can result in jerky UI updates and behavior. You should also consider the fact that “touch” events are not supported on non-webkit browsers, see <a href="http://caniuse.com/#search=touch" target="_blank">CanIUse</a>. In order to deal with these limitations, you can checkout various libraries like HandJS and Fastclick.</p> <p><strong>CSS Transitions versus DOM Manipulation</strong> - Using hardware accelerated CSS transitions will be dramatically better than using JavaScript to create animations. See the list of resources at the end of this section for examples.</p> <p><strong>Networks Suck</strong> - Ok, networks don't always suck, but the latency of mobile networks, even good mobile networks, is far worse than you probably think. A desktop app that slurps down 500 rows of JSON data, every 30 seconds, will be both slower on a mobile device as well as a battery hog. Keep in mind that Cordova apps have multiple ways to persist data in the app (LocalStorage and the file system for example). Cache that data locally and be cognizant of the amount of data you are sending back and forth. This is an especially important consideration when your application is connected over a cellular network.</p> <p><strong>Additional Performance Articles and Resources</strong></p> <ul> <li><a href="http://sintaxi.com/you-half-assed-it" target="_blank">"You half assed it"</a></li> <li><a href="http://coenraets.org/blog/2013/10/top-10-performance-techniques-for-phonegap-and-hybrid-apps-slides-available/" target="_blank">"Top Ten Performance Tips for PhoneGap and Hybrid Apps"</a></li> <li><a href="https://channel9.msdn.com/Events/Build/2013/4-313" target="_blank">"Fast Apps and Sites with JavaScript"</a></li> </ul> <h2 id="3-recognize-and-handle-offline-status">3) Recognize and Handle Offline Status</h2> <p>See the previous tip about networks. Not only can you be on a slow network, it is entirely possible for your application to be completely offline. Your application should handle this in an intelligent manner. If your application does not, people will think your application is broken. Given how easy it is to handle (Cordova supports listening for both an offline and online event), there is absolutely no reason for your application to not respond well when run offline. Be sure to test (see the Testing section below) your application and be sure to test how your application handles when you start in one state and then switch to another.</p> <p>Note that the online and offline events, as well as the Network Connection API is not perfect. You may need to rely on using an XHR request to see if the device is truly offline or online. At the end of the day, be sure add some form of support for network issues - in fact, the Apple store (and probably other stores) will reject apps that don’t properly handle offline/online states. For more discussion on this topic, see <a href="http://blogs.telerik.com/appbuilder/posts/13-04-23/is-this-thing-on-%28part-1%29" target="_blank">"Is This Thing On?"</a></p> <h1 id="handling-upgrades">Handling Upgrades</h1> <h2 id="upgrading-cordova-projects">Upgrading Cordova Projects</h2> <p>If your existing project was created using Cordova 3.x, you can upgrade the project by issuing the following:</p> <pre data-language="">cordova platform update platform-name ios, android, etc.
 </pre> <p>If your existing project was created under a version prior to Cordova 3.x, it would probably be best to create a new Cordova 3.x project, and then copy your existing project’s code and assets to the new project. Typical steps:</p> <ul> <li>Create a new Cordova 3.x project (cordova create ...)</li> <li>Copy the www folder from your old project to the new project</li> <li>Copy any configuration settings from the old project to the new project</li> <li>Add any plugins used in the old project to the new project</li> <li>Build your project</li> <li>Test, test, test!</li> </ul> <p>Regardless of the project's prior version, it is absolutely critical that you read up on what was changed in the updated version, as the update may break your code. The best place to find this information will be in the release notes published both in the repositories and on the Cordova blog. You will want to test your app thoroughly in order to verify that it is working correctly after you perform the update.</p> <p>Note: some plugins may not be compatible with the new version of Cordova. If a plugin is not compatible, you may be able to find a replacement plugin that does what you need, or you may need to delay upgrading your project. Alternatively, alter the plugin so that it does work under the new version and contribute back to the community.</p> <h2 id="plugin-upgrades">Plugin Upgrades</h2> <p>Currently there is no mechanism for upgrading changed plugins using a single command. Instead, remove the plugin and add it back to your project, and the new version will be installed:</p> <pre data-language="">cordova plugin rm "some-plugin"
@@ -95,17 +95,9 @@ cordova plugin add "some-plugin"
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
