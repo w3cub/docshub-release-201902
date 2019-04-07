@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _terraform">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="remote-service-discovery">  Remote Service Discovery </h1> <p>Terraform implements much of its functionality in terms of remote services. While in many cases these are generic third-party services that are useful to many applications, some of these services are tailored specifically to Terraform's needs. We call these <em>Terraform-native services</em>, and Terraform interacts with them via the remote service discovery protocol described below.</p> <h2 id="user-facing-hostname">  User-facing Hostname </h2> <p>Terraform-native services are provided, from a user's perspective, at a user-facing "friendly hostname" which serves as the key for configuration and for any authentication credentials required.</p> <p>The discovery protocol's purpose is to map from a user-provided hostname to the base URL of a particular service. Each host can provide different combinations of services -- or no services at all! -- and so the discovery protocol has a secondary purpose of allowing Terraform to identify <em>which</em> services are valid for a given hostname.</p> <p>For example, module source strings can include a module registry hostname as their first segment, like <code>example.com/namespace/name/provider</code>, and Terraform uses service discovery to determine whether <code>example.com</code> <em>has</em> a module registry, and if so where its API is available.</p> <p>A user-facing hostname is a fully-specified <a href="https://en.wikipedia.org/wiki/Internationalized_domain_name" target="_blank">internationalized domain name</a> expressed in its Unicode form (the corresponding "punycode" form is not allowed) which must be resolvable in DNS to an address that has an HTTPS server running on port 443.</p> <p>User-facing hostnames are normalized for internal comparison using the standard Unicode <a href="https://en.wikipedia.org/wiki/Nameprep" target="_blank">Nameprep</a> algorithm, which includes converting all letters to lowercase, normalizing combining diacritics to precomposed form where possible, and various other normalization steps.</p> <h2 id="discovery-process">  Discovery Process </h2> <p>Given a hostname, discovery begins by forming an initial discovery URL using that hostname with the <code>https:</code> scheme and the fixed path <code>/.well-known/terraform.json</code>.</p> <p>For example, given the hostname <code>example.com</code> the initial discovery URL would be <code>https://example.com/.well-known/terraform.json</code>.</p> <p>Terraform then sends a <code>GET</code> request to this discovery URL and expects a JSON response. If the response does not have status 200, does not have a media type of <code>application/json</code> or, if the body cannot be parsed as a JSON object, then discovery fails and Terraform considers the host to not support <em>any</em> Terraform-native services.</p> <p>If the response is an HTTP redirect then Terraform repeats this step with the new location as its discovery URL. Terraform is guaranteed to follow at least one redirect, but nested redirects are not guaranteed nor recommended.</p> <p>If the response is a valid JSON object then its keys are Terraform native service identifiers, consisting of a service type name and a version string separated by a period. For example, the service identifier for version 1 of the module registry protocol is <code>modules.v1</code>.</p> <p>The value of each object element is the base URL for the service in question. This URL may be either absolute or relative, and if relative it is resolved against the final discovery URL (<em>after</em> following redirects).</p> <p>The following is an example discovery document declaring support for version 1 of the module registry protocol:</p> <pre data-language="json">{
   "modules.v1": "https://modules.example.com/v1/"
@@ -91,17 +91,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

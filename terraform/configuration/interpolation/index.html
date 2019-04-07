@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _terraform">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="interpolation-syntax">  Interpolation Syntax </h1> <p>Embedded within strings in Terraform, whether you're using the Terraform syntax or JSON syntax, you can interpolate other values. These interpolations are wrapped in <code>${}</code>, such as <code>${var.foo}</code>.</p> <p>The interpolation syntax is powerful and allows you to reference variables, attributes of resources, call functions, etc.</p> <p>You can perform <a href="#math">simple math</a> in interpolations, allowing you to write expressions such as <code>${count.index + 1}</code>. And you can also use <a href="#conditionals">conditionals</a> to determine a value based on some logic.</p> <p>You can escape interpolation with double dollar signs: <code>$${foo}</code> will be rendered as a literal <code>${foo}</code>.</p> <h2 id="available-variables">  Available Variables </h2> <p>There are a variety of available variable references you can use.</p> <h4 id="user-string-variables">  User string variables </h4> <p>Use the <code>var.</code> prefix followed by the variable name. For example, <code>${var.foo}</code> will interpolate the <code>foo</code> variable value.</p> <h4 id="user-map-variables">  User map variables </h4> <p>The syntax is <code>var.MAP["KEY"]</code>. For example, <code>${var.amis["us-east-1"]}</code> would get the value of the <code>us-east-1</code> key within the <code>amis</code> map variable.</p> <h4 id="user-list-variables">  User list variables </h4> <p>The syntax is <code>"${var.LIST}"</code>. For example, <code>"${var.subnets}"</code> would get the value of the <code>subnets</code> list, as a list. You can also return list elements by index: <code>${var.subnets[idx]}</code>.</p> <h4 id="attributes-of-your-own-resource">  Attributes of your own resource </h4> <p>The syntax is <code>self.ATTRIBUTE</code>. For example <code>${self.private_ip}</code> will interpolate that resource's private IP address.</p> <blockquote class="alert alert-info" role="alert"> <p><strong>Note</strong>: The <code>self.ATTRIBUTE</code> syntax is only allowed and valid within provisioners.</p> </blockquote> <h4 id="attributes-of-other-resources">  Attributes of other resources </h4> <p>The syntax is <code>TYPE.NAME.ATTRIBUTE</code>. For example, <code>${aws_instance.web.id}</code> will interpolate the ID attribute from the <code>aws_instance</code> resource named <code>web</code>. If the resource has a <code>count</code> attribute set, you can access individual attributes with a zero-based index, such as <code>${aws_instance.web.0.id}</code>. You can also use the splat syntax to get a list of all the attributes: <code>${aws_instance.web.*.id}</code>.</p> <h4 id="attributes-of-a-data-source">  Attributes of a data source </h4> <p>The syntax is <code>data.TYPE.NAME.ATTRIBUTE</code>. For example. <code>${data.aws_ami.ubuntu.id}</code> will interpolate the <code>id</code> attribute from the <code>aws_ami</code> <a href="../data-sources/">data source</a> named <code>ubuntu</code>. If the data source has a <code>count</code> attribute set, you can access individual attributes with a zero-based index, such as <code>${data.aws_subnet.example.0.cidr_block}</code>. You can also use the splat syntax to get a list of all the attributes: <code>${data.aws_subnet.example.*.cidr_block}</code>.</p> <h4 id="outputs-from-a-module">  Outputs from a module </h4> <p>The syntax is <code>MODULE.NAME.OUTPUT</code>. For example <code>${module.foo.bar}</code> will interpolate the <code>bar</code> output from the <code>foo</code> <a href="../../modules/">module</a>.</p> <h4 id="count-information">  Count information </h4> <p>The syntax is <code>count.FIELD</code>. For example, <code>${count.index}</code> will interpolate the current index in a multi-count resource. For more information on <code>count</code>, see the <a href="../resources/">resource configuration page</a>.</p> <h4 id="path-information">  Path information </h4> <p>The syntax is <code>path.TYPE</code>. TYPE can be <code>cwd</code>, <code>module</code>, or <code>root</code>. <code>cwd</code> will interpolate the current working directory. <code>module</code> will interpolate the path to the current module. <code>root</code> will interpolate the path of the root module. In general, you probably want the <code>path.module</code> variable.</p> <h4 id="terraform-meta-information">  Terraform meta information </h4> <p>The syntax is <code>terraform.FIELD</code>. This variable type contains metadata about the currently executing Terraform run. FIELD can currently only be <code>env</code> to reference the currently active <a href="../../state/environments/">state environment</a>.</p> <h2 id="conditionals">  Conditionals </h2> <p>Interpolations may contain conditionals to branch on the final value.</p> <pre data-language="ruby">resource "aws_instance" "web" {
   subnet = "${var.env == "production" ? var.prod_subnet : var.dev_subnet}"
@@ -241,17 +241,9 @@ resource "aws_instance" "web" {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

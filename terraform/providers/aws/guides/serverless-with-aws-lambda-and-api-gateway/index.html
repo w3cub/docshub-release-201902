@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _terraform">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="serverless-applications-with-aws-lambda-and-api-gateway">  Serverless Applications with AWS Lambda and API Gateway </h1> <p><em>Serverless computing</em> is a cloud computing model in which a cloud provider automatically manages the provisioning and allocation of compute resources. This contrasts with traditional cloud computing where the user is responsible for directly managing virtual servers.</p> <p>A popular approach to running "serverless" web applications is to implement the application functionality as one or more functions in <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a> and then expose these for public consumption using <a href="https://aws.amazon.com/api-gateway/" target="_blank">Amazon API Gateway</a>.</p> <p>This guide will show how to deploy such an architecture using Terraform. The guide assumes some basic familiarity with Lambda and API Gateway but does not assume any pre-existing deployment. It also assumes that you are familiar with the usual Terraform plan/apply workflow; if you're new to Terraform itself, refer first to <a href="https://www.terraform.io/intro/getting-started/install.html" target="_blank">the Getting Started guide</a>.</p> <p>This is a slightly-opinionated guide, which chooses to ignore the built-in versioning and staged deployment mechanisms in AWS Lambda and API Gateway. In many cases these features are not necessary when using Terraform because changes can be tracked and deployed by keeping the Terraform configuration in a version-control repository. It also uses API Gateway in a very simple way, proxying all requests to a single AWS Lambda function that is expected to contain its own request routing logic.</p> <p>As usual, there are other valid ways to use these services that make different tradeoffs. We encourage readers to consult the official documentation for the respective services for additional context and best-practices. This guide can still serve as an introduction to the main resources associated with these services, even if you choose a different architecture.</p> <h2 id="preparation">  Preparation </h2> <p>In order to follow this guide you will need an AWS account and to have Terraform installed. <a href="../../#authentication">Configure your credentials</a> so that Terraform is able to act on your behalf.</p> <p>For simplicity here we will assume you are already using a set of IAM credentials with suitable access to create Lambda functions and work with API Gateway. If you aren't sure and are working in an AWS account used only for development, the simplest approach to get started is to use credentials with full administrative access to the target AWS account.</p> <p>In the following section we will manually emulate an automatic build process using the <code>zip</code> command line tool and the <a href="https://aws.amazon.com/cli/" target="_blank">AWS CLI</a>. The latter must also have access to your AWS credentials, and the easiest way to achieve this is to provide them via environment variables so that they can be used by both the AWS CLI and Terraform.</p> <blockquote class="alert alert-warning" role="alert"> <p><strong>Warning:</strong> Following this tutorial will create objects in your AWS account that will cost you money against your AWS bill.</p> </blockquote> <h2 id="building-the-lambda-function-package">  Building the Lambda Function Package </h2> <p>AWS Lambda expects a function's implementation to be provided as an archive containing the function source code and any other static files needed to execute the function.</p> <p>Terraform is not a build tool, so the zip file must be prepared using a separate build process prior to deploying it with Terraform. For a real application we recommend automating your build via a CI system, whose job is to run any necessary build actions (library installation, compilation, etc), produce the deployment zip file as a build artifact, and then upload that artifact into an Amazon S3 bucket from which it will be read for deployment.</p> <p>For the sake of this tutorial we will perform these build steps manually and build a very simple AWS Lambda function. Start by creating a new directory called <code>example</code> that will be used to create the archive, and place in it a single source file. We will use the JavaScript runtime in this example, so our file is called <code>main.js</code> and will contain the following source code:</p> <pre>'use strict';
 
@@ -368,17 +368,9 @@ Plan: 0 to add, 1 to change, 0 to destroy.
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

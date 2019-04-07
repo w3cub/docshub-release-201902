@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _terraform">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="vsphere_virtual_machine">  vsphere_virtual_machine </h1> <p>The <code>vsphere_virtual_machine</code> resource can be used to manage the complex lifecycle of a virtual machine. It supports management of disk, network interface, and CDROM devices, creation from scratch or cloning from template, and migration through both host and storage vMotion.</p> <p>For more details on working with virtual machines in vSphere, see <a href="https://docs.vmware.com/en/VMware-vSphere/6.5/com.vmware.vsphere.vm_admin.doc/GUID-55238059-912E-411F-A0E9-A7A536972A91.html" target="_blank">this page</a>.</p> <h2 id="about-working-with-virtual-machines-in-terraform">  About Working with Virtual Machines in Terraform </h2> <p>A high degree of control and flexibility is afforded to a vSphere user when it comes to how to configure, deploy, and manage virtual machines - much more control than given in a traditional cloud provider. As such, Terraform has to make some decisions on how to manage the virtual machines it creates and manages. This section documents things you need to know about your virtual machine configuration that you should consider when setting up virtual machines, creating templates to clone from, or migrating from previous versions of this resource.</p> <h3 id="disks">  Disks </h3> <p>The <code>vsphere_virtual_machine</code> resource currently only supports standard VMDK-backed virtual disks - it does not support other special kinds of disk devices like RDM disks.</p> <p>Disks are managed by an arbitrary label supplied to the <a href="#label"><code>label</code></a> attribute of a <a href="#disk-options"><code>disk</code> sub-resource</a>. This is separate from the automatic naming that vSphere picks for you when creating a virtual machine. Control over a virtual disk's name is not supported unless you are attaching an external disk with the <a href="#attach"><code>attach</code></a> attribute.</p> <p>Virtual disks can be SCSI disks only. The SCSI controllers managed by Terraform can vary, depending on the value supplied to <a href="#scsi_controller_count"><code>scsi_controller_count</code></a>. This also dictates the controllers that are checked when looking for disks during a cloning process. By default, this value is <code>1</code>, meaning that you can have up to 15 disks configured on a virtual machine. These are all configured with the controller type defined by the <a href="#scsi_type"><code>scsi_type</code></a> setting. If you are cloning from a template, devices will be added or re-configured as necessary.</p> <p>When cloning from a template, you must specify disks of either the same or greater size than the disks in the source template when creating a traditional clone, or exactly the same size when cloning from snapshot (also known as a linked clone). For more details, see the section on <a href="#creating-a-virtual-machine-from-a-template">creating a virtual machine from a template</a>.</p> <p>A maximum of 60 virtual disks can be configured when the <a href="#scsi_controller_count"><code>scsi_controller_count</code></a> setting is configured to its maximum of <code>4</code> controllers. See the <a href="#disk-options">disk options</a> section for more details.</p> <h3 id="customization-and-network-waiters">  Customization and network waiters </h3> <p>Terraform waits during various parts of a virtual machine deployment to ensure that it is in a correct expected state before proceeding. These happen when a VM is created, or also when it's updated, depending on the waiter.</p> <p>Two waiters of note are:</p> <ul> <li>
 <strong>The customization waiter:</strong> This waiter watches events in vSphere to monitor when customization on a virtual machine completes during VM creation. Depending on your vSphere or VM configuration it may be necessary to change the timeout or turn it off. This can be controlled by the <a href="#timeout-1"><code>timeout</code></a> setting in the <a href="#virtual-machine-customization">customization settings</a> block. </li> <li>
@@ -613,17 +613,9 @@ resource "vsphere_virtual_machine" "vm" {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

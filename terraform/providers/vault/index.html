@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _terraform">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="vault-provider">  Vault Provider </h1> <p>The Vault provider allows Terraform to read from, write to, and configure <a href="https://vaultproject.io/" target="_blank">Hashicorp Vault</a>.</p> <blockquote class="alert alert-warning" role="alert"> <p><strong>Important</strong> Interacting with Vault from Terraform causes any secrets that you read and write to be persisted in both Terraform's state file <em>and</em> in any generated plan files. For any Terraform module that reads or writes Vault secrets, these files should be treated as sensitive and protected accordingly.</p> </blockquote> <p>This provider serves two pretty-distinct use-cases, which each have their own security trade-offs and caveats that are covered in the sections that follow. Consider these carefully before using this provider within your Terraform configuration.</p> <h2 id="configuring-and-populating-vault">  Configuring and Populating Vault </h2> <p>Terraform can be used by the Vault adminstrators to configure Vault and populate it with secrets. In this case, the state and any plans associated with the configuration must be stored and communicated with care, since they will contain in cleartext any values that were written into Vault.</p> <p>Currently Terraform has no mechanism to redact or protect secrets that are provided via configuration, so teams choosing to use Terraform for populating Vault secrets should pay careful attention to the notes on each resource's documentation page about how any secrets are persisted to the state and consider carefully whether such usage is compatible with their security policies.</p> <p>Except as otherwise noted, the resources that write secrets into Vault are designed such that they require only the <em>create</em> and <em>update</em> capabilities on the relevant resources, so that distinct tokens can be used for reading vs. writing and thus limit the exposure of a compromised token.</p> <h2 id="using-vault-credentials-in-terraform-configuration">  Using Vault credentials in Terraform configuration </h2> <p>Most Terraform providers require credentials to interact with a third-party service that they wrap. This provider allows such credentials to be obtained from Vault, which means that operators or systems running Terraform need only access to a suitably-privileged Vault token in order to temporarily lease the credentials for other providers.</p> <p>Currently Terraform has no mechanism to redact or protect secrets that are returned via data sources, so secrets read via this provider will be persisted into the Terraform state, into any plan files, and in some cases in the console output produced while planning and applying. These artifacts must therefore all be protected accordingly.</p> <p>To reduce the exposure of such secrets, the provider requests a Vault token with a relatively-short TTL (20 minutes, by default) which in turn means that where possible Vault will revoke any issued credentials after that time, but in particular it is unable to retract any static secrets such as those stored in Vault's "generic" secret backend.</p> <p>The requested token TTL can be controlled by the <code>max_lease_ttl_seconds</code> provider argument described below. It is important to consider that Terraform reads from data sources during the <code>plan</code> phase and writes the result into the plan. Thus a subsequent <code>apply</code> will likely fail if it is run after the intermediate token has expired, due to the revocation of the secrets that are stored in the plan.</p> <p>Except as otherwise noted, the resources that read secrets from Vault are designed such that they require only the <em>read</em> capability on the relevant resources.</p> <h2 id="provider-arguments">  Provider Arguments </h2> <p>The provider configuration block accepts the following arguments. In most cases it is recommended to set them via the indicated environment variables in order to keep credential information out of the configuration.</p> <ul> <li>
 <p><a href="#address"><code>address</code></a> - (Required) Origin URL of the Vault server. This is a URL with a scheme, a hostname and a port but with no path. May be set via the <code>VAULT_ADDR</code> environment variable.</p> </li> <li>
@@ -115,17 +115,9 @@ EOT
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
