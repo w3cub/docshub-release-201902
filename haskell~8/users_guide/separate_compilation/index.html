@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/haskell~8/users_guide/separate_compilation/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/haskell~8.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/haskell~8/" class="_nav-link" title="" style="margin-left:0;">Haskell 8</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _haskell">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="separate-compilation">7.8. Filenames and separate compilation</h1>
 <div class="_sphinx">   <p id="filenames-and-separate-compilation">This section describes what files GHC expects to find, what files it creates, where these files are stored, and what options affect this behaviour.</p> <p>Pathname conventions vary from system to system. In particular, the directory separator is “<code>/</code>” on Unix systems and “<code>\</code>” on Windows systems. In the sections that follow, we shall consistently use “<code>/</code>” as the directory separator; substitute this for the appropriate character for your system.</p>  <h2 id="source-files">7.8.1. Haskell source files</h2> <p id="haskell-source-files">Each Haskell source module should be placed in a file on its own.</p> <p>Usually, the file should be named after the module name, replacing dots in the module name by directory separators. For example, on a Unix system, the module <code>A.B.C</code> should be placed in the file <code>A/B/C.hs</code>, relative to some base directory. If the module is not going to be imported by another module (<code>Main</code>, for example), then you are free to use any filename for it.</p> <p id="index-2">GHC assumes that source files are ASCII or UTF-8 only, other encoding are not recognised. However, invalid UTF-8 sequences will be ignored in comments, so it is possible to use other encodings such as Latin-1, as long as the non-comment source code is ASCII only.</p>   <h2 id="id1">7.8.2. Output files</h2> <p id="output-files">When asked to compile a source file, GHC normally generates two files: an object file, and an interface file.</p> <p>The object file, which normally ends in a <code>.o</code> suffix, contains the compiled code for the module.</p> <p>The interface file, which normally ends in a <code>.hi</code> suffix, contains the information that GHC needs in order to compile further modules that depend on this module. It contains things like the types of exported functions, definitions of data types, and so on. It is stored in a binary format, so don’t try to read one; use the <a class="reference internal" href="#"><code>--show-iface ⟨file⟩</code></a> option instead (see <a class="reference internal" href="#hi-options">Other options related to interface files</a>).</p> <p>You should think of the object file and the interface file as a pair, since the interface file is in a sense a compiler-readable description of the contents of the object file. If the interface file and object file get out of sync for any reason, then the compiler may end up making assumptions about the object file that aren’t true; trouble will almost certainly follow. For this reason, we recommend keeping object files and interface files in the same place (GHC does this by default, but it is possible to override the defaults as we’ll explain shortly).</p> <p>Every module has a <em>module name</em> defined in its source code (<code>module A.B.C where ...</code>).</p> <p>The name of the object file generated by GHC is derived according to the following rules, where ⟨osuf⟩ is the object-file suffix (this can be changed with the <code>-osuf</code> option).</p> <ul class="simple"> <li>If there is no <code>-odir</code> option (the default), then the object filename is derived from the source filename (ignoring the module name) by replacing the suffix with ⟨osuf⟩.</li> <li>If <code>-odir ⟨dir⟩</code> has been specified, then the object filename is ⟨dir⟩/⟨mod⟩.⟨osuf⟩, where ⟨mod⟩ is the module name with dots replaced by slashes. GHC will silently create the necessary directory structure underneath ⟨dir⟩, if it does not already exist.</li> </ul> <p>The name of the interface file is derived using the same rules, except that the suffix is ⟨hisuf⟩ (<code>.hi</code> by default) instead of ⟨osuf⟩, and the relevant options are <a class="reference internal" href="#ghc-flag--hidir%20%E2%9F%A8dir%E2%9F%A9"><code>-hidir ⟨dir⟩</code></a> and <a class="reference internal" href="#ghc-flag--hisuf%20%E2%9F%A8suffix%E2%9F%A9"><code>-hisuf ⟨suffix⟩</code></a> instead of <a class="reference internal" href="#ghc-flag--odir%20%E2%9F%A8dir%E2%9F%A9"><code>-odir ⟨dir⟩</code></a> and <a class="reference internal" href="#ghc-flag--osuf%20%E2%9F%A8suffix%E2%9F%A9"><code>-osuf ⟨suffix⟩</code></a> respectively.</p> <p>For example, if GHC compiles the module <code>A.B.C</code> in the file <code>src/A/B/C.hs</code>, with no <code>-odir</code> or <code>-hidir</code> flags, the interface file will be put in <code>src/A/B/C.hi</code> and the object file in <code>src/A/B/C.o</code>.</p> <p>For any module that is imported, GHC requires that the name of the module in the import statement exactly matches the name of the module in the interface file (or source file) found using the strategy specified in <a class="reference internal" href="#search-path">The search path</a>. This means that for most modules, the source file name should match the module name.</p> <p>However, note that it is reasonable to have a module <code>Main</code> in a file named <code>foo.hs</code>, but this only works because GHC never needs to search for the interface for module <code>Main</code> (because it is never imported). It is therefore possible to have several <code>Main</code> modules in separate source files in the same directory, and GHC will not get confused.</p> <p>In batch compilation mode, the name of the object file can also be overridden using the <a class="reference internal" href="#ghc-flag--o%20%E2%9F%A8file%E2%9F%A9"><code>-o ⟨file⟩</code></a> option, and the name of the interface file can be specified directly using the <a class="reference internal" href="#ghc-flag--ohi%20%E2%9F%A8file%E2%9F%A9"><code>-ohi ⟨file⟩</code></a> option.</p>   <h2 id="search-path">7.8.3. The search path</h2> <p id="the-search-path">In your program, you import a module <code>Foo</code> by saying <code>import Foo</code>. In <a class="reference internal" href="../using/#ghc-flag---make"><code>--make</code></a> mode or GHCi, GHC will look for a source file for <code>Foo</code> and arrange to compile it first. Without <a class="reference internal" href="../using/#ghc-flag---make"><code>--make</code></a>, GHC will look for the interface file for <code>Foo</code>, which should have been created by an earlier compilation of <code>Foo</code>. GHC uses the same strategy in each of these cases for finding the appropriate file.</p> <p>This strategy is as follows: GHC keeps a list of directories called the search path. For each of these directories, it tries appending <code>⟨basename⟩.⟨extension⟩</code> to the directory, and checks whether the file exists. The value of ⟨basename⟩ is the module name with dots replaced by the directory separator (“<code>/</code>” or “<code>\\"</code>, depending on the system), and ⟨extension⟩ is a source extension (<code>hs</code>, <code>lhs</code>) if we are in <a class="reference internal" href="../using/#ghc-flag---make"><code>--make</code></a> mode or GHCi, or ⟨hisuf⟩ otherwise.</p> <p>For example, suppose the search path contains directories <code>d1</code>, <code>d2</code>, and <code>d3</code>, and we are in <a class="reference internal" href="../using/#ghc-flag---make"><code>--make</code></a> mode looking for the source file for a module <code>A.B.C</code>. GHC will look in <code>d1/A/B/C.hs</code>, <code>d1/A/B/C.lhs</code>, <code>d2/A/B/C.hs</code>, and so on.</p> <p>The search path by default contains a single directory: “<code>.</code>” (i.e. the current directory). The following options can be used to add to or change the contents of the search path:</p> <dl class="ghc-flag"> <dt id="ghc-flag--i⟨dir⟩[:⟨dir⟩]*">
@@ -377,17 +377,9 @@ Main.o Main.hc Main.s : Foo.hi Baz.hi   # Main imports Foo and Baz
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

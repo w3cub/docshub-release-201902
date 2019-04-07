@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/haskell~8/users_guide/safe_haskell/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/haskell~8.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/haskell~8/" class="_nav-link" title="" style="margin-left:0;">Haskell 8</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _haskell">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="id1">10.40. Safe Haskell</h1>
 <div class="_sphinx">   <p id="safe-haskell">Safe Haskell is an extension to the Haskell language that is implemented in GHC as of version 7.2. It allows for unsafe code to be securely included in a trusted code base by restricting the features of GHC Haskell the code is allowed to use. Put simply, it makes the types of programs trustable.</p> <p>While a primary use case of Safe Haskell is running untrusted code, Safe Haskell doesn’t provide this directly. Instead, Safe Haskell provides strict type safety. Without Safe Haskell, GHC allows many exceptions to the type system which can subvert any abstractions. By providing strict type safety, Safe Haskell enables developers to build their own library level sandbox mechanisms to run untrusted code.</p> <p>While Safe Haskell is an extension, it actually runs in the background for every compilation with GHC. It does this to track the type violations of modules to infer their safety, even when they aren’t explicitly using Safe Haskell. Please refer to section <a class="reference internal" href="#safe-inference">Safe Haskell Inference</a> for more details of this.</p> <p>The design of Safe Haskell covers the following aspects:</p> <ul class="simple"> <li>A <a class="reference internal" href="#safe-language">safe language</a> dialect of Haskell that provides stricter guarantees about the code. It allows types and module boundaries to be trusted.</li> <li>A <em>safe import</em> extension that specifies that the module being imported must be trusted.</li> <li>A definition of <em>trust</em> (or safety) and how it operates, along with ways of defining and changing the trust of modules and packages.</li> </ul> <p>Safe Haskell, however, <em>does not offer</em> compilation safety. During compilation time it is possible for arbitrary processes to be launched, using for example the <a class="reference internal" href="../phases/#pre-processor">custom pre-processor</a> flag. This can be manipulated to either compromise a user’s system at compilation time, or to modify the source code just before compilation to try to alter Safe Haskell flags. This is discussed further in section <a class="reference internal" href="#safe-compilation">Safe Compilation</a>.</p>  <h2 id="safe-use-cases">10.40.1. Uses of Safe Haskell</h2> <p id="uses-of-safe-haskell">Safe Haskell has been designed with two use cases in mind:</p> <ul class="simple"> <li>Enforcing strict type safety at compile time</li> <li>Compiling and executing untrusted code</li> </ul>  <h3 id="strict-type-safety-good-style">10.40.1.1. Strict type-safety (good style)</h3> <p>Haskell offers a powerful type system and separation of pure and effectual functions through the <code>IO</code> monad. However, there are several loop holes in the type system, the most obvious being the <code>unsafePerformIO :: IO a -&gt; a</code> function. The safe language dialect of Safe Haskell disallows the use of such functions. This can be useful restriction as it makes Haskell code easier to analyse and reason about. It also codifies the existing culture in the Haskell community of trying to avoid unsafe functions unless absolutely necessary. As such, using the safe language (through the <code>-XSafe</code> flag) can be thought of as a way of enforcing good style, similar to the function of <code>-Wall</code>.</p>   <h3 id="building-secure-systems-restricted-io-monads">10.40.1.2. Building secure systems (restricted IO Monads)</h3> <p id="index-2">Systems such as information flow control security, capability based security systems and DSLs for working with encrypted data.. etc can be built in the Haskell language as a library. However they require guarantees about the properties of Haskell that aren’t true in general due to the presence of functions like <code>unsafePerformIO</code>. Safe Haskell gives users enough guarantees about the type system to allow them to build such secure systems.</p> <p>As an example, let’s define an interface for a plugin system where the plugin authors are untrusted, possibly malicious third-parties. We do this by restricting the plugin interface to pure functions or to a restricted <code>IO</code> monad that we have defined. The restricted <code>IO</code> monad will only allow a safe subset of <code>IO</code> actions to be executed. We define the plugin interface so that it requires the plugin module, <code>Danger</code>, to export a single computation, <code>Danger.runMe</code>, of type <code>RIO ()</code>, where <code>RIO</code> is a monad defined as follows:</p> <pre data-language="haskell">-- While we use `Safe', the `Trustworthy' pragma would also be
@@ -229,17 +229,9 @@ Package P:
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
