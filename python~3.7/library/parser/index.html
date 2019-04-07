@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/python~3.7/" class="_nav-link" title="" style="margin-left:0;">Python 3.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _python">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="parser-access-python-parse-trees">parser — Access Python parse trees</h1>  <p id="module-parser">The <a class="reference internal" href="#module-parser" title="parser: Access parse trees for Python source code."><code>parser</code></a> module provides an interface to Python’s internal parser and byte-code compiler. The primary purpose for this interface is to allow Python code to edit the parse tree of a Python expression and create executable code from this. This is better than trying to parse and modify an arbitrary Python code fragment as a string because parsing is performed in a manner identical to the code forming the application. It is also faster.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">From Python 2.5 onward, it’s much more convenient to cut in at the Abstract Syntax Tree (AST) generation and compilation stage, using the <a class="reference internal" href="../ast/#module-ast" title="ast: Abstract Syntax Tree classes and manipulation."><code>ast</code></a> module.</p> </div> <p>There are a few things to note about this module which are important to making use of the data structures created. This is not a tutorial on editing the parse trees for Python code, but some examples of using the <a class="reference internal" href="#module-parser" title="parser: Access parse trees for Python source code."><code>parser</code></a> module are presented.</p> <p>Most importantly, a good understanding of the Python grammar processed by the internal parser is required. For full information on the language syntax, refer to <a class="reference internal" href="https://docs.python.org/3.7/reference/index.html#reference-index" target="_blank"><span class="std std-ref">The Python Language Reference</span></a>. The parser itself is created from a grammar specification defined in the file <code>Grammar/Grammar</code> in the standard Python distribution. The parse trees stored in the ST objects created by this module are the actual output from the internal parser when created by the <a class="reference internal" href="#parser.expr" title="parser.expr"><code>expr()</code></a> or <a class="reference internal" href="#parser.suite" title="parser.suite"><code>suite()</code></a> functions, described below. The ST objects created by <a class="reference internal" href="#parser.sequence2st" title="parser.sequence2st"><code>sequence2st()</code></a> faithfully simulate those structures. Be aware that the values of the sequences which are considered “correct” will vary from one version of Python to another as the formal grammar for the language is revised. However, transporting code from one Python version to another as source text will always allow correct parse trees to be created in the target version, with the only restriction being that migrating to an older version of the interpreter will not support more recent language constructs. The parse trees are not typically compatible from one version to another, whereas source code has always been forward-compatible.</p> <p>Each element of the sequences returned by <a class="reference internal" href="#parser.st2list" title="parser.st2list"><code>st2list()</code></a> or <a class="reference internal" href="#parser.st2tuple" title="parser.st2tuple"><code>st2tuple()</code></a> has a simple form. Sequences representing non-terminal elements in the grammar always have a length greater than one. The first element is an integer which identifies a production in the grammar. These integers are given symbolic names in the C header file <code>Include/graminit.h</code> and the Python module <a class="reference internal" href="../symbol/#module-symbol" title="symbol: Constants representing internal nodes of the parse tree."><code>symbol</code></a>. Each additional element of the sequence represents a component of the production as recognized in the input string: these are always sequences which have the same form as the parent. An important aspect of this structure which should be noted is that keywords used to identify the parent node type, such as the keyword <a class="reference internal" href="https://docs.python.org/3.7/reference/compound_stmts.html#if" target="_blank"><code>if</code></a> in an <code>if_stmt</code>, are included in the node tree without any special treatment. For example, the <a class="reference internal" href="https://docs.python.org/3.7/reference/compound_stmts.html#if" target="_blank"><code>if</code></a> keyword is represented by the tuple <code>(1, 'if')</code>, where <code>1</code> is the numeric value associated with all <code>NAME</code> tokens, including variable and function names defined by the user. In an alternate form returned when line number information is requested, the same token might be represented as <code>(1, 'if', 12)</code>, where the <code>12</code> represents the line number at which the terminal symbol was found.</p> <p>Terminal elements are represented in much the same way, but without any child elements and the addition of the source text which was identified. The example of the <a class="reference internal" href="https://docs.python.org/3.7/reference/compound_stmts.html#if" target="_blank"><code>if</code></a> keyword above is representative. The various types of terminal symbols are defined in the C header file <code>Include/token.h</code> and the Python module <a class="reference internal" href="../token/#module-token" title="token: Constants representing terminal nodes of the parse tree."><code>token</code></a>.</p> <p>The ST objects are not required to support the functionality of this module, but are provided for three purposes: to allow an application to amortize the cost of processing complex parse trees, to provide a parse tree representation which conserves memory space when compared to the Python list or tuple representation, and to ease the creation of additional modules in C which manipulate parse trees. A simple “wrapper” class may be created in Python to hide the use of ST objects.</p> <p>The <a class="reference internal" href="#module-parser" title="parser: Access parse trees for Python source code."><code>parser</code></a> module defines functions for a few distinct purposes. The most important purposes are to create ST objects and to convert ST objects to other representations such as parse trees and compiled code objects, but there are also functions which serve to query the type of parse tree represented by an ST object.</p> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt>
 <code>Module</code> <a class="reference internal" href="../symbol/#module-symbol" title="symbol: Constants representing internal nodes of the parse tree."><code>symbol</code></a>
@@ -158,17 +158,9 @@ def load_expression(source_string):
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

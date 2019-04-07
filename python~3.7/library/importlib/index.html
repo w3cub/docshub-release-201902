@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/python~3.7/" class="_nav-link" title="" style="margin-left:0;">Python 3.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _python">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="importlib-the-implementation-of-import">importlib — The implementation of import</h1> <div class="versionadded" id="module-importlib"> <p><span class="versionmodified">New in version 3.1.</span></p> </div> <p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.7/Lib/importlib/__init__.py" target="_blank">Lib/importlib/__init__.py</a></p>   <h2 id="introduction">Introduction</h2> <p>The purpose of the <a class="reference internal" href="#module-importlib" title="importlib: The implementation of the import machinery."><code>importlib</code></a> package is two-fold. One is to provide the implementation of the <a class="reference internal" href="https://docs.python.org/3.7/reference/simple_stmts.html#import" target="_blank"><code>import</code></a> statement (and thus, by extension, the <a class="reference internal" href="../functions/#__import__" title="__import__"><code>__import__()</code></a> function) in Python source code. This provides an implementation of <a class="reference internal" href="https://docs.python.org/3.7/reference/simple_stmts.html#import" target="_blank"><code>import</code></a> which is portable to any Python interpreter. This also provides an implementation which is easier to comprehend than one implemented in a programming language other than Python.</p> <p>Two, the components to implement <a class="reference internal" href="https://docs.python.org/3.7/reference/simple_stmts.html#import" target="_blank"><code>import</code></a> are exposed in this package, making it easier for users to create their own custom objects (known generically as an <a class="reference internal" href="https://docs.python.org/3.7/glossary.html#term-importer" target="_blank"><span class="xref std std-term">importer</span></a>) to participate in the import process.</p> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <dl class="last docutils"> <dt><a class="reference internal" href="https://docs.python.org/3.7/reference/simple_stmts.html#import" target="_blank"><span class="std std-ref">The import statement</span></a></dt> <dd>The language reference for the <a class="reference internal" href="https://docs.python.org/3.7/reference/simple_stmts.html#import" target="_blank"><code>import</code></a> statement.</dd> <dt><a class="reference external" href="https://www.python.org/doc/essays/packages/" target="_blank">Packages specification</a></dt> <dd>Original specification of packages. Some semantics have changed since the writing of this document (e.g. redirecting based on <code>None</code> in <a class="reference internal" href="../sys/#sys.modules" title="sys.modules"><code>sys.modules</code></a>).</dd> <dt>
 <code>The __import__() function</code> </dt> <dd>The <a class="reference internal" href="https://docs.python.org/3.7/reference/simple_stmts.html#import" target="_blank"><code>import</code></a> statement is syntactic sugar for this function.</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0235" id="index-0" target="_blank"><strong>PEP 235</strong></a></dt> <dd>Import on Case-Insensitive Platforms</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0263" id="index-1" target="_blank"><strong>PEP 263</strong></a></dt> <dd>Defining Python Source Code Encodings</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0302" id="index-2" target="_blank"><strong>PEP 302</strong></a></dt> <dd>New Import Hooks</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0328" id="index-3" target="_blank"><strong>PEP 328</strong></a></dt> <dd>Imports: Multi-Line and Absolute/Relative</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0366" id="index-4" target="_blank"><strong>PEP 366</strong></a></dt> <dd>Main module explicit relative imports</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0420" id="index-5" target="_blank"><strong>PEP 420</strong></a></dt> <dd>Implicit namespace packages</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0451" id="index-6" target="_blank"><strong>PEP 451</strong></a></dt> <dd>A ModuleSpec Type for the Import System</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0488" id="index-7" target="_blank"><strong>PEP 488</strong></a></dt> <dd>Elimination of PYO files</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0489" id="index-8" target="_blank"><strong>PEP 489</strong></a></dt> <dd>Multi-phase extension module initialization</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0552" id="index-9" target="_blank"><strong>PEP 552</strong></a></dt> <dd>Deterministic pycs</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3120" id="index-10" target="_blank"><strong>PEP 3120</strong></a></dt> <dd>Using UTF-8 as the Default Source Encoding</dd> <dt><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3147" id="index-11" target="_blank"><strong>PEP 3147</strong></a></dt> <dd>PYC Repository Directories</dd> </dl> </div>   <h2 id="functions">Functions</h2> <dl class="function"> <dt id="importlib.__import__">
@@ -579,17 +579,9 @@ def import_module(name, package=None):
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

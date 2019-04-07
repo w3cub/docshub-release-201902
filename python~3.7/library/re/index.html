@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/python~3.7/" class="_nav-link" title="" style="margin-left:0;">Python 3.7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _python">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="re-regular-expression-operations">re — Regular expression operations</h1> <p id="module-re"><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.7/Lib/re.py" target="_blank">Lib/re.py</a></p>  <p>This module provides regular expression matching operations similar to those found in Perl.</p> <p>Both patterns and strings to be searched can be Unicode strings (<a class="reference internal" href="../stdtypes/#str" title="str"><code>str</code></a>) as well as 8-bit strings (<a class="reference internal" href="../stdtypes/#bytes" title="bytes"><code>bytes</code></a>). However, Unicode strings and 8-bit strings cannot be mixed: that is, you cannot match a Unicode string with a byte pattern or vice-versa; similarly, when asking for a substitution, the replacement string must be of the same type as both the pattern and the search string.</p> <p>Regular expressions use the backslash character (<code>'\'</code>) to indicate special forms or to allow special characters to be used without invoking their special meaning. This collides with Python’s usage of the same character for the same purpose in string literals; for example, to match a literal backslash, one might have to write <code>'\\\\'</code> as the pattern string, because the regular expression must be <code>\\</code>, and each backslash must be expressed as <code>\\</code> inside a regular Python string literal.</p> <p>The solution is to use Python’s raw string notation for regular expression patterns; backslashes are not handled in any special way in a string literal prefixed with <code>'r'</code>. So <code>r"\n"</code> is a two-character string containing <code>'\'</code> and <code>'n'</code>, while <code>"\n"</code> is a one-character string containing a newline. Usually patterns will be expressed in Python code using this raw string notation.</p> <p>It is important to note that most regular expression operations are available as module-level functions and methods on <a class="reference internal" href="#re-objects"><span class="std std-ref">compiled regular expressions</span></a>. The functions are shortcuts that don’t require you to compile a regex object first, but miss some fine-tuning parameters.</p> <div class="admonition seealso"> <p class="first admonition-title">See also</p> <p class="last">The third-party <a class="reference external" href="https://pypi.org/project/regex/" target="_blank">regex</a> module, which has an API compatible with the standard library <a class="reference internal" href="#module-re" title="re: Regular expression operations."><code>re</code></a> module, but offers additional functionality and a more thorough Unicode support.</p> </div>  <h2 id="re-syntax">Regular Expression Syntax</h2> <p id="regular-expression-syntax">A regular expression (or RE) specifies a set of strings that matches it; the functions in this module let you check if a particular string matches a given regular expression (or if a given regular expression matches a particular string, which comes down to the same thing).</p> <p>Regular expressions can be concatenated to form new regular expressions; if <em>A</em> and <em>B</em> are both regular expressions, then <em>AB</em> is also a regular expression. In general, if a string <em>p</em> matches <em>A</em> and another string <em>q</em> matches <em>B</em>, the string <em>pq</em> will match AB. This holds unless <em>A</em> or <em>B</em> contain low precedence operations; boundary conditions between <em>A</em> and <em>B</em>; or have numbered group references. Thus, complex expressions can easily be constructed from simpler primitive expressions like the ones described here. For details of the theory and implementation of regular expressions, consult the Friedl book <a class="reference internal" href="#frie09" id="id1">[Frie09]</a>, or almost any textbook about compiler construction.</p> <p>A brief explanation of the format of regular expressions follows. For further information and a gentler presentation, consult the <a class="reference internal" href="https://docs.python.org/3.7/howto/regex.html#regex-howto" target="_blank"><span class="std std-ref">Regular Expression HOWTO</span></a>.</p> <p>Regular expressions can contain both special and ordinary characters. Most ordinary characters, like <code>'A'</code>, <code>'a'</code>, or <code>'0'</code>, are the simplest regular expressions; they simply match themselves. You can concatenate ordinary characters, so <code>last</code> matches the string <code>'last'</code>. (In the rest of this section, we’ll write RE’s in <code>this special style</code>, usually without quotes, and strings to be matched <code>'in single quotes'</code>.)</p> <p>Some characters, like <code>'|'</code> or <code>'('</code>, are special. Special characters either stand for classes of ordinary characters, or affect how the regular expressions around them are interpreted.</p> <p>Repetition qualifiers (<code>*</code>, <code>+</code>, <code>?</code>, <code>{m,n}</code>, etc) cannot be directly nested. This avoids ambiguity with the non-greedy modifier suffix <code>?</code>, and with other modifiers in other implementations. To apply a second repetition to an inner repetition, parentheses may be used. For example, the expression <code>(?:a{6})*</code> matches any multiple of six <code>'a'</code> characters.</p> <p>The special characters are:</p> <dl class="docutils"> <dt>
 <code>.</code> </dt> <dd>(Dot.) In the default mode, this matches any character except a newline. If the <a class="reference internal" href="#re.DOTALL" title="re.DOTALL"><code>DOTALL</code></a> flag has been specified, this matches any character including a newline.</dd> <dt>
@@ -589,17 +589,9 @@ Token(typ='END', value=';', line=5, column=9)
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
