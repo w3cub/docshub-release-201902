@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rethinkdb~javascript/" class="_nav-link" title="" style="margin-left:0;">RethinkDB JavaScript</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _rethinkdb">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title">RethinkDB 2.1.5 performance &amp; scaling report</h1> <div class="toc">  <ul id="markdown-toc"> <li><a href="#a-quick-overview-of-the-results" id="markdown-toc-a-quick-overview-of-the-results">A quick overview of the results</a></li> <li><a href="#selecting-workloads-and-hardware" id="markdown-toc-selecting-workloads-and-hardware">Selecting workloads and hardware</a></li> <li><a href="#hardware" id="markdown-toc-hardware">Hardware</a></li> <li><a href="#configuration" id="markdown-toc-configuration">Configuration</a></li> <li><a href="#detailed-results" id="markdown-toc-detailed-results">Detailed results</a></li> <li><a href="#workload-c" id="markdown-toc-workload-c">Workload C</a></li> <li><a href="#conclusion" id="markdown-toc-conclusion">Conclusion</a></li> <li><a href="#ongoing" id="markdown-toc-ongoing">Ongoing</a></li> </ul> </div> <p>This report describes a recent effort that the RethinkDB team took to measure our database product, RethinkDB, under different workloads and in different clustering configurations. We seek to provide a general overview of RethinkDB’s performance metrics for a variety of workloads and potential use cases. In this report some of the questions we’ll address include:</p> <ul> <li>What sort of performance can I expect from a RethinkDB cluster?</li> <li>How well does RethinkDB scale?</li> <li>Can I trade consistency for performance?</li> </ul> <p>We’ll attempt to answer these questions by using workloads from the YCSB benchmark suite. You can <a href="https://labs.yahoo.com/news/yahoo-cloud-serving-benchmark" target="_blank">learn more about YCSB here</a>, and <a href="https://github.com/rethinkdb/ycsb" target="_blank">review the source code here</a>. Expanding beyond the YCSB workloads we selected, we created an additional test which investigates scalability for analytic workloads.</p> <p>In the results, we’ll see how RethinkDB scales to perform 1.3 million individual reads per second. We will also demonstrate how RethinkDB performs well above 100 thousand operations per second in a mixed 50:50 read/write workload - while at the full level of durability and data integrity guarantees. We performed all benchmarks across a range of cluster sizes, scaling up from one to 16 nodes.</p> <blockquote class="infobox ">
 <p><strong>Note</strong>: This performance report is based on RethinkDB version 2.1.5. It takes a large amount of effort to create a quality performance report that covers multiple use cases. In the future, we plan to update this report for subsequent releases of RethinkDB.</p> </blockquote> <h2 id="a-quick-overview-of-the-results">A quick overview of the results</h2> <p>We found that in a mixed read/write workload, RethinkDB with two servers was able to perform nearly 16K queries per second (QPS) and scaled to almost 120K QPS while in a 16-node cluster. Under a read only workload and synchronous read settings, RethinkDB was able to scale from about 150K QPS on a single node up to over 550K QPS on 16 nodes. Under the same workload, in an asynchronous “outdated read” setting, RethinkDB went from 150K QPS on one server to 1.3M in a 16-node cluster.</p> <p>Finally, we used a MapReduce query to compute word counts across the whole data set. This test evaluates RethinkDB’s scalability for analytic workloads in a simplistic but very common fashion. These types of workloads involve doing information processing on the server itself versus typical single or ranged reads and writes of information processed at the application level.</p> <p>Here we we show how RethinkDB scales up to 16-nodes with these various workloads:</p> <p><img src="https://rethinkdb.com/assets/images/docs/performance-report/w-a.png" alt=""> <img src="https://rethinkdb.com/assets/images/docs/performance-report/w-c-sync.png" alt=""> <img src="https://rethinkdb.com/assets/images/docs/performance-report/w-c-async.png" alt=""> <img src="https://rethinkdb.com/assets/images/docs/performance-report/analytical.png" alt=""></p> <h2 id="selecting-workloads-and-hardware">Selecting workloads and hardware</h2> <p>YCSB comes with a variety of default workloads, but for the purposes of our testing we chose two of them to run against RethinkDB. Out of the YCSB workload options, we chose to run workload A which comprises 50% reads and 50% update operations, and workload C which performs strictly read operations. All documents stored by the YCSB tests contain 10 fields with randomized 100 byte strings as values, with each document totaling about 1 KB in size.</p> <p>We used a port of YCSB based on our official Java driver and intend to submit a pull request for it in the near future. <a href="https://github.com/rethinkdb/ycsb" target="_blank">Our fork is available for review here</a>.</p> <p>Given the ease of scaling RethinkDB clusters across multiple instances, we deemed it necessary to observe performance when moving from a single RethinkDB instance to a larger cluster. We tested all of our workloads on a single instance of RethinkDB up to a 16-node cluster in varying increments of cluster size.</p> <h2 id="hardware">Hardware</h2> <p>In terms of hardware, we used the <a href="https://www.rackspace.com/en-us/cloud/servers/onmetal" target="_blank">OnMetal offerings from Rackspace</a> to run both RethinkDB server and RethinkDB client nodes. We used different hardware configurations for the server and client nodes as shown below:</p> <table> <thead> <tr> <th>1-16 RethinkDB servers</th> <th>8 RethinkDB clients</th> </tr> </thead> <tbody> <tr> <td>Rackspace OnMetal I/O</td> <td>Rackspace OnMetal Compute</td> </tr> <tr> <td>2x Intel Xeon E5-2680 v2 CPU 2.8 GHz (2x10 cores)</td> <td>Intel Xeon E5-2680 v2 CPU 2.8 GHz (10 cores)</td> </tr> <tr> <td>128 GB RAM</td> <td>32 GB RAM</td> </tr> <tr> <td>10Gbps Ethernet</td> <td>10Gbps Ethernet</td> </tr> <tr> <td>Seagate Nytro WarpDrive BLP4-1600 storage</td> <td> </td> </tr> </tbody> </table> <h2 id="configuration">Configuration</h2> <p>At the time of the test, we used RethinkDB 2.1.5 which was compiled from source on Ubuntu 14.04 LTS. During the performance test we used the RethinkDB Java driver with Oracle Java 1.8.0. A full list of configuration settings follows below:</p> <ul> <li>RethinkDB version 2.1.5</li> <li>Ubuntu 14.04</li> <li>RethinkDB cache size set to 64,000 MB per server, otherwise default parameters</li> <li>Oracle Java 1.8.0 on the client nodes</li> <li>The <a href="https://github.com/rethinkdb/YCSB/tree/a15e249d6b10147e615ddfaf03672bad35e85e7f" target="_blank">RethinkDB port of YCSB</a>
@@ -91,17 +91,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
