@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sqlite">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="fancy_title"> Atomic Commit In SQLite </h1> <div class="fancy_toc">  <div id="toc_sub">
 <div class="fancy-toc1"><a href="#_introduction">1. Introduction</a></div> <div class="fancy-toc1"><a href="#_hardware_assumptions">2. Hardware Assumptions</a></div> <div class="fancy-toc1"><a href="#_single_file_commit">3. Single File Commit</a></div> <div class="fancy-toc2"><a href="#_initial_state">3.1. Initial State</a></div> <div class="fancy-toc2"><a href="#_acquiring_a_read_lock">3.2. Acquiring A Read Lock</a></div> <div class="fancy-toc2"><a href="#_reading_information_out_of_the_database">3.3. Reading Information Out Of The Database</a></div> <div class="fancy-toc2"><a href="#_obtaining_a_reserved_lock">3.4. Obtaining A Reserved Lock</a></div> <div class="fancy-toc2"><a href="#_creating_a_rollback_journal_file">3.5. Creating A Rollback Journal File</a></div> <div class="fancy-toc2"><a href="#_changing_database_pages_in_user_space">3.6. Changing Database Pages In User Space</a></div> <div class="fancy-toc2"><a href="#_flushing_the_rollback_journal_file_to_mass_storage">3.7. Flushing The Rollback Journal File To Mass Storage</a></div> <div class="fancy-toc2"><a href="#_obtaining_an_exclusive_lock">3.8. Obtaining An Exclusive Lock</a></div> <div class="fancy-toc2"><a href="#_writing_changes_to_the_database_file">3.9. Writing Changes To The Database File</a></div> <div class="fancy-toc2"><a href="#0_flushing_changes_to_mass_storage">3.10. 0 Flushing Changes To Mass Storage</a></div> <div class="fancy-toc2"><a href="#1_deleting_the_rollback_journal">3.11. 1 Deleting The Rollback Journal</a></div> <div class="fancy-toc2"><a href="#2_releasing_the_lock">3.12. 2 Releasing The Lock</a></div> <div class="fancy-toc1"><a href="#_rollback">4. Rollback</a></div> <div class="fancy-toc2"><a href="#_when_something_goes_wrong_">4.1. When Something Goes Wrong...</a></div> <div class="fancy-toc2"><a href="#_hot_rollback_journals">4.2. Hot Rollback Journals</a></div> <div class="fancy-toc2"><a href="#_obtaining_an_exclusive_lock_on_the_database">4.3. Obtaining An Exclusive Lock On The Database</a></div> <div class="fancy-toc2"><a href="#_rolling_back_incomplete_changes">4.4. Rolling Back Incomplete Changes</a></div> <div class="fancy-toc2"><a href="#_deleting_the_hot_journal">4.5. Deleting The Hot Journal</a></div> <div class="fancy-toc2"><a href="#_continue_as_if_the_uncompleted_writes_had_never_happened">4.6. Continue As If The Uncompleted Writes Had Never Happened</a></div> <div class="fancy-toc1"><a href="#_multi_file_commit">5. Multi-file Commit</a></div> <div class="fancy-toc2"><a href="#_separate_rollback_journals_for_each_database">5.1. Separate Rollback Journals For Each Database</a></div> <div class="fancy-toc2"><a href="#_the_master_journal_file">5.2. The Master Journal File</a></div> <div class="fancy-toc2"><a href="#_updating_rollback_journal_headers">5.3. Updating Rollback Journal Headers</a></div> <div class="fancy-toc2"><a href="#_updating_the_database_files">5.4. Updating The Database Files</a></div> <div class="fancy-toc2"><a href="#_delete_the_master_journal_file">5.5. Delete The Master Journal File</a></div> <div class="fancy-toc2"><a href="#_clean_up_the_rollback_journals">5.6. Clean Up The Rollback Journals</a></div> <div class="fancy-toc1"><a href="#_additional_details_of_the_commit_process">6. Additional Details Of The Commit Process</a></div> <div class="fancy-toc2"><a href="#_always_journal_complete_sectors">6.1. Always Journal Complete Sectors</a></div> <div class="fancy-toc2"><a href="#_dealing_with_garbage_written_into_journal_files">6.2. Dealing With Garbage Written Into Journal Files</a></div> <div class="fancy-toc2"><a href="#_cache_spill_prior_to_commit">6.3. Cache Spill Prior To Commit</a></div> <div class="fancy-toc1"><a href="#_optimizations">7. Optimizations</a></div> <div class="fancy-toc2"><a href="#_cache_retained_between_transactions">7.1. Cache Retained Between Transactions</a></div> <div class="fancy-toc2"><a href="#_exclusive_access_mode">7.2. Exclusive Access Mode</a></div> <div class="fancy-toc2"><a href="#_do_not_journal_freelist_pages">7.3. Do Not Journal Freelist Pages</a></div> <div class="fancy-toc2"><a href="#_single_page_updates_and_atomic_sector_writes">7.4. Single Page Updates And Atomic Sector Writes</a></div> <div class="fancy-toc2"><a href="#_filesystems_with_safe_append_semantics">7.5. Filesystems With Safe Append Semantics</a></div> <div class="fancy-toc2"><a href="#_persistent_rollback_journals">7.6. Persistent Rollback Journals</a></div> <div class="fancy-toc1"><a href="#_testing_atomic_commit_behavior">8. Testing Atomic Commit Behavior</a></div> <div class="fancy-toc1"><a href="#_things_that_can_go_wrong">9. Things That Can Go Wrong</a></div> <div class="fancy-toc2"><a href="#_broken_locking_implementations">9.1. Broken Locking Implementations</a></div> <div class="fancy-toc2"><a href="#_incomplete_disk_flushes">9.2. Incomplete Disk Flushes</a></div> <div class="fancy-toc2"><a href="#_partial_file_deletions">9.3. Partial File Deletions</a></div> <div class="fancy-toc2"><a href="#_garbage_written_into_files">9.4. Garbage Written Into Files</a></div> <div class="fancy-toc2"><a href="#_deleting_or_renaming_a_hot_journal">9.5. Deleting Or Renaming A Hot Journal</a></div> <div class="fancy-toc1"><a href="#10_0_future_directions_and_conclusion">10. 10.0 Future Directions And Conclusion</a></div> </div> </div>   <h1 id="_introduction">
@@ -150,17 +150,9 @@ PRAGMA journal_mode=TRUNCATE;
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sqlite">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="fancy_title"> How To Corrupt An SQLite Database File </h1> <div class="fancy_toc">  <div id="toc_sub">
 <div class="fancy-toc1"><a href="#_file_overwrite_by_a_rogue_thread_or_process">1. File overwrite by a rogue thread or process</a></div> <div class="fancy-toc2"><a href="#_continuing_to_use_a_file_descriptor_after_it_has_been_closed">1.1. Continuing to use a file descriptor after it has been closed</a></div> <div class="fancy-toc2"><a href="#_backup_or_restore_while_a_transaction_is_active">1.2. Backup or restore while a transaction is active</a></div> <div class="fancy-toc2"><a href="#_deleting_a_hot_journal">1.3. Deleting a hot journal</a></div> <div class="fancy-toc2"><a href="#_mispairing_database_files_and_hot_journals_">1.4. Mispairing database files and hot journals </a></div> <div class="fancy-toc1"><a href="#_file_locking_problems">2. File locking problems</a></div> <div class="fancy-toc2"><a href="#_filesystems_with_broken_or_missing_lock_implementations">2.1. Filesystems with broken or missing lock implementations</a></div> <div class="fancy-toc2"><a href="#_posix_advisory_locks_canceled_by_a_separate_thread_doing_close_">2.2. Posix advisory locks canceled by a separate thread doing close()</a></div> <div class="fancy-toc3"><a href="#multiple_copies_of_sqlite_linked_into_the_same_application">2.2.1. Multiple copies of SQLite linked into the same application</a></div> <div class="fancy-toc2"><a href="#_two_processes_using_different_locking_protocols">2.3. Two processes using different locking protocols</a></div> <div class="fancy-toc2"><a href="#_unlinking_or_renaming_a_database_file_while_in_use">2.4. Unlinking or renaming a database file while in use</a></div> <div class="fancy-toc2"><a href="#_multiple_links_to_the_same_file">2.5. Multiple links to the same file</a></div> <div class="fancy-toc2"><a href="#_carrying_an_open_database_connection_across_a_fork_">2.6. Carrying an open database connection across a fork() </a></div> <div class="fancy-toc1"><a href="#_failure_to_sync">3. Failure to sync</a></div> <div class="fancy-toc2"><a href="#_disk_drives_that_do_not_honor_sync_requests">3.1. Disk drives that do not honor sync requests</a></div> <div class="fancy-toc2"><a href="#_disabling_sync_using_pragmas">3.2. Disabling sync using PRAGMAs</a></div> <div class="fancy-toc1"><a href="#_disk_drive_and_flash_memory_failures">4. Disk Drive and Flash Memory Failures</a></div> <div class="fancy-toc2"><a href="#_non_powersafe_flash_memory_controllers">4.1. Non-powersafe flash memory controllers</a></div> <div class="fancy-toc2"><a href="#_fake_capacity_usb_sticks">4.2. Fake capacity USB sticks</a></div> <div class="fancy-toc1"><a href="#_memory_corruption">5. Memory corruption</a></div> <div class="fancy-toc1"><a href="#_other_operating_system_problems">6. Other operating system problems</a></div> <div class="fancy-toc2"><a href="#_linux_threads">6.1. Linux Threads</a></div> <div class="fancy-toc2"><a href="#_failures_of_mmap_on_qnx">6.2. Failures of mmap() on QNX</a></div> <div class="fancy-toc2"><a href="#_filesystem_corruption">6.3. Filesystem Corruption</a></div> <div class="fancy-toc1"><a href="#sqlite_configuration_errors">7. SQLite Configuration Errors</a></div> <div class="fancy-toc1"><a href="#_bugs_in_sqlite">8. Bugs in SQLite</a></div> <div class="fancy-toc2"><a href="#_false_corruption_reports_due_to_database_shrinkage">8.1. False corruption reports due to database shrinkage</a></div> <div class="fancy-toc2"><a href="#_corruption_following_switches_between_rollback_and_wal_modes">8.2. Corruption following switches between rollback and WAL modes</a></div> <div class="fancy-toc2"><a href="#_i_o_error_while_obtaining_a_lock_leads_to_corruption">8.3. I/O error while obtaining a lock leads to corruption</a></div> <div class="fancy-toc2"><a href="#_database_pages_leak_from_the_free_page_list">8.4. Database pages leak from the free page list</a></div> <div class="fancy-toc2"><a href="#_corruption_following_alternating_writes_from_3_6_and_3_7_">8.5. Corruption following alternating writes from 3.6 and 3.7.</a></div> <div class="fancy-toc2"><a href="#_race_condition_in_recovery_on_windows_system_">8.6. Race condition in recovery on windows system.</a></div> </div> </div>   <h2 notoc="1" id="overview"> Overview</h2> <p>An SQLite database is highly resistant to corruption. If an application crash, or an operating-system crash, or even a power failure occurs in the middle of a transaction, the partially written transaction should be automatically rolled back the next time the database file is accessed. The recovery process is fully automatic and does not require any action on the part of the user or the application. </p> <p>Though SQLite is resistant to database corruption, it is not immune. This document describes the various ways that an SQLite database might go corrupt.</p> <h1 id="_file_overwrite_by_a_rogue_thread_or_process">
@@ -135,17 +135,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

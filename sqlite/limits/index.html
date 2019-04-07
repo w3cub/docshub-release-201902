@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _sqlite">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Implementation Limits For SQLite</h1>   <h2>Limits In SQLite</h2> <p> "Limits" in the context of this article means sizes or quantities that can not be exceeded. We are concerned with things like the maximum number of bytes in a BLOB or the maximum number of columns in a table. </p> <p> SQLite was originally designed with a policy of avoiding arbitrary limits. Of course, every program that runs on a machine with finite memory and disk space has limits of some kind. But in SQLite, those limits were not well defined. The policy was that if it would fit in memory and you could count it with a 32-bit integer, then it should work. </p> <p> Unfortunately, the no-limits policy has been shown to create problems. Because the upper bounds were not well defined, they were not tested, and bugs (including possible security exploits) were often found when pushing SQLite to extremes. For this reason, newer versions of SQLite have well-defined limits and those limits are tested as part of the <a href="../testing/">test suite</a>. </p> <p> This article defines what the limits of SQLite are and how they can be customized for specific applications. The default settings for limits are normally quite large and adequate for almost every application. Some applications may want to increase a limit here or there, but we expect such needs to be rare. More commonly, an application might want to recompile SQLite with much lower limits to avoid excess resource utilization in the event of bug in higher-level SQL statement generators or to help thwart attackers who inject malicious SQL statements. </p> <p> Some limits can be changed at run-time on a per-connection basis using the <a href="../c3ref/limit/">sqlite3_limit()</a> interface with one of the <a href="../c3ref/c_limit_attached/#sqlitelimitlength">limit categories</a> defined for that interface. Run-time limits are designed for applications that have multiple databases, some of which are for internal use only and others which can be influenced or controlled by potentially hostile external agents. For example, a web browser application might use an internal database to track historical page views but have one or more separate databases that are created and controlled by javascript applications that are downloaded from the internet. The <a href="../c3ref/limit/">sqlite3_limit()</a> interface allows internal databases managed by trusted code to be unconstrained while simultaneously placing tight limitations on databases created or controlled by untrusted external code in order to help prevent a denial of service attack. </p> <ol>  <li id="max_length">
 <p><b>Maximum length of a string or BLOB</b></p> <p> The maximum number of bytes in a string or BLOB in SQLite is defined by the preprocessor macro SQLITE_MAX_LENGTH. The default value of this macro is 1 billion (1 thousand million or 1,000,000,000). You can raise or lower this value at compile-time using a command-line option like this: </p> <blockquote>-DSQLITE_MAX_LENGTH=123456789</blockquote> <p> The current implementation will only support a string or BLOB length up to 2<small><sup>31</sup></small>-1 or 2147483647. And some built-in functions such as hex() might fail well before that point. In security-sensitive applications it is best not to try to increase the maximum string and blob length. In fact, you might do well to lower the maximum string and blob length to something more in the range of a few million if that is possible. </p> <p> During part of SQLite's INSERT and SELECT processing, the complete content of each row in the database is encoded as a single BLOB. So the SQLITE_MAX_LENGTH parameter also determines the maximum number of bytes in a row. </p> <p> The maximum string or BLOB length can be lowered at run-time using the <a href="../c3ref/limit/">sqlite3_limit</a>(db,<a href="../c3ref/c_limit_attached/#sqlitelimitlength">SQLITE_LIMIT_LENGTH</a>,size) interface. </p> </li> <li id="max_column">
@@ -110,17 +110,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
