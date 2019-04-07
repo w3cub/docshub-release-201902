@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/gcc~7/" class="_nav-link" title="" style="margin-left:0;">GCC 7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="section" id="Options-Controlling-the-Preprocessor">3.12 Options Controlling the Preprocessor</h1>   <p id="index-options_002c-preprocessor">These options control the C preprocessor, which is run on each C source file before actual compilation. </p> <p>If you use the <samp>-E</samp> option, nothing is done except preprocessing. Some of these options make sense only together with <samp>-E</samp> because they cause the preprocessor output to be unsuitable for actual compilation. </p> <p>In addition to the options listed here, there are a number of options to control search paths for include files documented in <a href="../directory-options/#Directory-Options">Directory Options</a>. Options to control preprocessor diagnostics are listed in <a href="../warning-options/#Warning-Options">Warning Options</a>. </p> <dl compact> <dt><code>-D <var>name</var></code></dt> <dd> <p id="index-D">Predefine <var>name</var> as a macro, with definition <code>1</code>. </p> </dd> <dt><code>-D <var>name</var>=<var>definition</var></code></dt> <dd>
 <p>The contents of <var>definition</var> are tokenized and processed as if they appeared during translation phase three in a ‘<samp>#define</samp>’ directive. In particular, the definition is truncated by embedded newline characters. </p> <p>If you are invoking the preprocessor from a shell or shell-like program you may need to use the shell’s quoting syntax to protect characters such as spaces that have a meaning in the shell syntax. </p> <p>If you wish to define a function-like macro on the command line, write its argument list with surrounding parentheses before the equals sign (if any). Parentheses are meaningful to most shells, so you should quote the option. With <code>sh</code> and <code>csh</code>, <samp>-D'<var>name</var>(<var>args…</var>)=<var>definition</var>'</samp> works. </p> <p><samp>-D</samp> and <samp>-U</samp> options are processed in the order they are given on the command line. All <samp>-imacros <var>file</var></samp> and <samp>-include <var>file</var></samp> options are processed after all <samp>-D</samp> and <samp>-U</samp> options. </p> </dd> <dt><code>-U <var>name</var></code></dt> <dd> <p id="index-U">Cancel any previous definition of <var>name</var>, either built in or provided with a <samp>-D</samp> option. </p> </dd> <dt><code>-include <var>file</var></code></dt> <dd> <p id="index-include">Process <var>file</var> as if <code>#include "file"</code> appeared as the first line of the primary source file. However, the first directory searched for <var>file</var> is the preprocessor’s working directory <em>instead of</em> the directory containing the main source file. If not found there, it is searched for in the remainder of the <code>#include "…"</code> search chain as normal. </p> <p>If multiple <samp>-include</samp> options are given, the files are included in the order they appear on the command line. </p> </dd> <dt><code>-imacros <var>file</var></code></dt> <dd> <p id="index-imacros">Exactly like <samp>-include</samp>, except that any output produced by scanning <var>file</var> is thrown away. Macros it defines remain defined. This allows you to acquire all the macros from a header without also processing its declarations. </p> <p>All files specified by <samp>-imacros</samp> are processed before all files specified by <samp>-include</samp>. </p> </dd> <dt><code>-undef</code></dt> <dd> <p id="index-undef">Do not predefine any system-specific or GCC-specific macros. The standard predefined macros remain defined. </p> </dd> <dt><code>-pthread</code></dt> <dd> <p id="index-pthread">Define additional macros required for using the POSIX threads library. You should use this option consistently for both compilation and linking. This option is supported on GNU/Linux targets, most other Unix derivatives, and also on x86 Cygwin and MinGW targets. </p> </dd> <dt><code>-M</code></dt> <dd>   <p id="index-dependencies_002c-make">Instead of outputting the result of preprocessing, output a rule suitable for <code>make</code> describing the dependencies of the main source file. The preprocessor outputs one <code>make</code> rule containing the object file name for that source file, a colon, and the names of all the included files, including those coming from <samp>-include</samp> or <samp>-imacros</samp> command-line options. </p> <p>Unless specified explicitly (with <samp>-MT</samp> or <samp>-MQ</samp>), the object file name consists of the name of the source file with any suffix replaced with object file suffix and with any leading directory parts removed. If there are many included files then the rule is split into several lines using ‘<samp>\</samp>’-newline. The rule has no commands. </p> <p>This option does not suppress the preprocessor’s debug output, such as <samp>-dM</samp>. To avoid mixing such debug output with the dependency rules you should explicitly specify the dependency output file with <samp>-MF</samp>, or use an environment variable like <code>DEPENDENCIES_OUTPUT</code> (see <a href="../environment-variables/#Environment-Variables">Environment Variables</a>). Debug output is still sent to the regular output stream as normal. </p> <p>Passing <samp>-M</samp> to the driver implies <samp>-E</samp>, and suppresses warnings with an implicit <samp>-w</samp>. </p> </dd> <dt><code>-MM</code></dt> <dd id="dashMF"> <p id="index-MM">Like <samp>-M</samp> but do not mention header files that are found in system header directories, nor header files that are included, directly or indirectly, from such a header. </p> <p>This implies that the choice of angle brackets or double quotes in an ‘<samp>#include</samp>’ directive does not in itself determine whether that header appears in <samp>-MM</samp> dependency output. </p> </dd> <dt><code>-MF <var>file</var></code></dt> <dd> <p id="index-MF">When used with <samp>-M</samp> or <samp>-MM</samp>, specifies a file to write the dependencies to. If no <samp>-MF</samp> switch is given the preprocessor sends the rules to the same place it would send preprocessed output. </p> <p>When used with the driver options <samp>-MD</samp> or <samp>-MMD</samp>, <samp>-MF</samp> overrides the default dependency output file. </p> </dd> <dt><code>-MG</code></dt> <dd> <p id="index-MG">In conjunction with an option such as <samp>-M</samp> requesting dependency generation, <samp>-MG</samp> assumes missing header files are generated files and adds them to the dependency list without raising an error. The dependency filename is taken directly from the <code>#include</code> directive without prepending any path. <samp>-MG</samp> also suppresses preprocessed output, as a missing header file renders this useless. </p> <p>This feature is used in automatic updating of makefiles. </p> </dd> <dt><code>-MP</code></dt> <dd> <p id="index-MP">This option instructs CPP to add a phony target for each dependency other than the main file, causing each to depend on nothing. These dummy rules work around errors <code>make</code> gives if you remove header files without updating the <samp>Makefile</samp> to match. </p> <p>This is typical output: </p> <div class="smallexample"> <pre class="smallexample">test.o: test.c test.h
@@ -97,17 +97,9 @@ Replacement:      [    ]    {    }    #    \    ^    |    ~</pre>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

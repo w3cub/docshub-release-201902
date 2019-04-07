@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/gcc~7/" class="_nav-link" title="" style="margin-left:0;">GCC 7</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="section" id="Built_002din-Functions-for-Memory-Model-Aware-Atomic-Operations">6.53 Built-in Functions for Memory Model Aware Atomic Operations</h1> <p>The following built-in functions approximately match the requirements for the C++11 memory model. They are all identified by being prefixed with ‘<samp>__atomic</samp>’ and most are overloaded so that they work with multiple types. </p> <p>These functions are intended to replace the legacy ‘<samp>__sync</samp>’ builtins. The main difference is that the memory order that is requested is a parameter to the functions. New code should always use the ‘<samp>__atomic</samp>’ builtins rather than the ‘<samp>__sync</samp>’ builtins. </p> <p>Note that the ‘<samp>__atomic</samp>’ builtins assume that programs will conform to the C++11 memory model. In particular, they assume that programs are free of data races. See the C++11 standard for detailed requirements. </p> <p>The ‘<samp>__atomic</samp>’ builtins can be used with any integral scalar or pointer type that is 1, 2, 4, or 8 bytes in length. 16-byte integral types are also allowed if ‘<samp>__int128</samp>’ (see <a href="../_005f_005fint128/#g_t_005f_005fint128">__int128</a>) is supported by the architecture. </p> <p>The four non-arithmetic functions (load, store, exchange, and compare_exchange) all have a generic version as well. This generic version works on any data type. It uses the lock-free built-in function if the specific data type size makes that possible; otherwise, an external call is left to be resolved at run time. This external call is the same format with the addition of a ‘<samp>size_t</samp>’ parameter inserted as the first parameter indicating the size of the object being pointed to. All objects must be the same size. </p> <p>There are 6 different memory orders that can be specified. These map to the C++11 memory orders with the same names, see the C++11 standard or the <a href="http://gcc.gnu.org/wiki/Atomic/GCCMM/AtomicSync" target="_blank">GCC wiki on atomic synchronization</a> for detailed definitions. Individual targets may also support additional memory orders for use on specific architectures. Refer to the target documentation for details of these. </p> <p>An atomic operation can both constrain code motion and be mapped to hardware instructions for synchronization between threads (e.g., a fence). To which extent this happens is controlled by the memory orders, which are listed here in approximately ascending order of strength. The description of each memory order is only meant to roughly illustrate the effects and is not a specification; see the C++11 memory model for precise semantics. </p> <dl compact> <dt><code>__ATOMIC_RELAXED</code></dt> <dd><p>Implies no inter-thread ordering constraints. </p></dd> <dt><code>__ATOMIC_CONSUME</code></dt> <dd><p>This is currently implemented using the stronger <code>__ATOMIC_ACQUIRE</code> memory order because of a deficiency in C++11’s semantics for <code>memory_order_consume</code>. </p></dd> <dt><code>__ATOMIC_ACQUIRE</code></dt> <dd><p>Creates an inter-thread happens-before constraint from the release (or stronger) semantic store to this acquire load. Can prevent hoisting of code to before the operation. </p></dd> <dt><code>__ATOMIC_RELEASE</code></dt> <dd><p>Creates an inter-thread happens-before constraint to acquire (or stronger) semantic loads that read from this release store. Can prevent sinking of code to after the operation. </p></dd> <dt><code>__ATOMIC_ACQ_REL</code></dt> <dd><p>Combines the effects of both <code>__ATOMIC_ACQUIRE</code> and <code>__ATOMIC_RELEASE</code>. </p></dd> <dt><code>__ATOMIC_SEQ_CST</code></dt> <dd><p>Enforces total ordering with all other <code>__ATOMIC_SEQ_CST</code> operations. </p></dd> </dl> <p>Note that in the C++11 memory model, <em>fences</em> (e.g., ‘<samp>__atomic_thread_fence</samp>’) take effect in combination with other atomic operations on specific memory locations (e.g., atomic loads); operations on specific memory locations do not necessarily affect other operations in the same way. </p> <p>Target architectures are encouraged to provide their own patterns for each of the atomic built-in functions. If no target is provided, the original non-memory model set of ‘<samp>__sync</samp>’ atomic built-in functions are used, along with any required synchronization fences surrounding it in order to achieve the proper behavior. Execution in this case is subject to the same restrictions as those built-in functions. </p> <p>If there is no pattern or mechanism to provide a lock-free instruction sequence, a call is made to an external routine with the same parameters to be resolved at run time. </p> <p>When implementing patterns for these built-in functions, the memory order parameter can be ignored as long as the pattern implements the most restrictive <code>__ATOMIC_SEQ_CST</code> memory order. Any of the other memory orders execute correctly with this memory order but they may not execute as efficiently as they could with a more appropriate implementation of the relaxed requirements. </p> <p>Note that the C++11 standard allows for the memory order parameter to be determined at run time rather than at compile time. These built-in functions map any run-time value to <code>__ATOMIC_SEQ_CST</code> rather than invoke a runtime library call or inline a switch statement. This is standard compliant, safe, and the simplest approach for now. </p> <p>The memory order parameter is a signed int, but only the lower 16 bits are reserved for the memory order. The remainder of the signed int is reserved for target use and should be 0. Use of the predefined atomic values ensures proper usage. </p> <dl> <dt>Built-in Function: <var id="index-_005f_005fatomic_005fload_005fn">type</var> <strong>__atomic_load_n</strong> (<var>type</var> *ptr, int memorder)</dt> <dd>
 <p>This built-in function implements an atomic load operation. It returns the contents of <code>*<var>ptr</var></code>. </p> <p>The valid memory order variants are <code>__ATOMIC_RELAXED</code>, <code>__ATOMIC_SEQ_CST</code>, <code>__ATOMIC_ACQUIRE</code>, and <code>__ATOMIC_CONSUME</code>. </p> </dd>
@@ -116,17 +116,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
