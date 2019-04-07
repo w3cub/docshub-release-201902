@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ruby~2.5/" class="_nav-link" title="" style="margin-left:0;">Ruby 2.5</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _rdoc">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 id="module-DRb" class="module"> module DRb </h1> <section class="description"> <h2 id="module-DRb-label-Overview">Overview</h2> <p>dRuby is a distributed object system for Ruby. It is written in pure Ruby and uses its own protocol. No add-in services are needed beyond those provided by the Ruby runtime, such as TCP sockets. It does not rely on or interoperate with other distributed object systems such as CORBA, RMI, or .NET.</p> <p>dRuby allows methods to be called in one Ruby process upon a Ruby object located in another Ruby process, even on another machine. References to objects can be passed between processes. <a href="../method/">Method</a> arguments and return values are dumped and loaded in marshalled format. All of this is done transparently to both the caller of the remote method and the object that it is called upon.</p> <p>An object in a remote process is locally represented by a <a href="../drb/drbobject/">DRb::DRbObject</a> instance. This acts as a sort of proxy for the remote object. Methods called upon this <a href="../drb/drbobject/">DRbObject</a> instance are forwarded to its remote object. This is arranged dynamically at run time. There are no statically declared interfaces for remote objects, such as CORBA's IDL.</p> <p>dRuby calls made into a process are handled by a DRb::DRbServer instance within that process. This reconstitutes the method call, invokes it upon the specified local object, and returns the value to the remote caller. Any object can receive calls over dRuby. There is no need to implement a special interface, or mixin special functionality. Nor, in the general case, does an object need to explicitly register itself with a DRbServer in order to receive dRuby calls.</p> <p>One process wishing to make dRuby calls upon another process must somehow obtain an initial reference to an object in the remote process by some means other than as the return value of a remote method call, as there is initially no remote object reference it can invoke a method upon. This is done by attaching to the server by <a href="../uri/">URI</a>. Each DRbServer binds itself to a <a href="../uri/">URI</a> such as 'druby://example.com:8787'. A DRbServer can have an object attached to it that acts as the server's <strong>front</strong> <strong>object</strong>. A <a href="../drb/drbobject/">DRbObject</a> can be explicitly created from the server's <a href="../uri/">URI</a>. This DRbObject's remote object will be the server's front object. This front object can then return references to other Ruby objects in the DRbServer's process.</p> <p><a href="../method/">Method</a> calls made over dRuby behave largely the same as normal Ruby method calls made within a process. <a href="../method/">Method</a> calls with blocks are supported, as are raising exceptions. In addition to a method's standard errors, a dRuby call may also raise one of the dRuby-specific errors, all of which are subclasses of <a href="../drb/drberror/">DRb::DRbError</a>.</p> <p>Any type of object can be passed as an argument to a dRuby call or returned as its return value. By default, such objects are dumped or marshalled at the local end, then loaded or unmarshalled at the remote end. The remote end therefore receives a copy of the local object, not a distributed reference to it; methods invoked upon this copy are executed entirely in the remote process, not passed on to the local original. This has semantics similar to pass-by-value.</p> <p>However, if an object cannot be marshalled, a dRuby reference to it is passed or returned instead. This will turn up at the remote end as a <a href="../drb/drbobject/">DRbObject</a> instance. All methods invoked upon this remote proxy are forwarded to the local object, as described in the discussion of DRbObjects. This has semantics similar to the normal Ruby pass-by-reference.</p> <p>The easiest way to signal that we want an otherwise marshallable object to be passed or returned as a <a href="../drb/drbobject/">DRbObject</a> reference, rather than marshalled and sent as a copy, is to include the <a href="../drb/drbundumped/">DRb::DRbUndumped</a> mixin module.</p> <p>dRuby supports calling remote methods with blocks. As blocks (or rather the <a href="../proc/">Proc</a> objects that represent them) are not marshallable, the block executes in the local, not the remote, context. Each value yielded to the block is passed from the remote object to the local block, then the value returned by each block invocation is passed back to the remote execution context to be collected, before the collected values are finally returned to the local context as the return value of the method invocation.</p> <h2 id="module-DRb-label-Examples+of+usage">Examples of usage</h2> <p>For more dRuby samples, see the <code>samples</code> directory in the full dRuby distribution.</p> <h3 id="module-DRb-label-dRuby+in+client-2Fserver+mode">dRuby in client/server mode</h3> <p>This illustrates setting up a simple client-server drb system. Run the server and client code in different terminals, starting the server code first.</p> <h4 id="module-DRb-label-Server+code">Server code</h4> <pre class="ruby" data-language="ruby">require 'drb/drb'
 
@@ -359,17 +359,9 @@ end</pre> </div> <p>Get the <a href="../uri/">URI</a> defining the local dRuby s
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
