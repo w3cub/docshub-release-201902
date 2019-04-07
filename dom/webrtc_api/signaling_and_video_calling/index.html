@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>WebRTC API: Signaling and video calling</h1> <p><a href="../../webrtc_api/">WebRTC</a> allows real-time, peer-to-peer, media exchange between two devices. A connection is established through a discovery and negotiation process called <strong>signaling</strong>. This tutorial will guide you through building a two-way video-call.</p> <p><a href="../../webrtc_api/">WebRTC</a> is a fully peer-to-peer technology for the real-time exchange of audio, video, and data, with one central caveat. A form of discovery and media format negotiation must take place, <a href="../session_lifetime/#Establishing_a_connection">as discussed elsewhere</a>, in order for two devices on different networks to locate one another. This process is called <strong>signaling</strong> and involves both devices connecting to a third, mutually agreed-upon server. Through this third server, the two devices can locate one another, and exchange negotiation messages.</p> <p>In this article, we will further enhance the <a rel="noopener" href="https://mdn-samples.mozilla.org/s/websocket-chat" target="_blank">WebSocket chat</a> first created as part of our WebSocket documentation (this article link is forthcoming; it isn't actually online yet) to support opening a two-way video call between users. You can <a href="https://webrtc-from-chat.glitch.me/" target="_blank">try out this example on Glitch</a>, and you can <a href="https://glitch.com/edit/#!/remix/webrtc-from-chat" target="_blank">remix the example</a> to experiment with it as well. You can also <a href="https://github.com/mdn/samples-server/tree/master/s/webrtc-from-chat" target="_blank">look at the full project</a> on GitHub.</p> <div class="note"> <p><strong>Note:</strong> If you try out the example on Glitch, please note that any changes made to the code will immediately reset any connections. In addition, there is a short timeout period; the Glitch instance is for quick experiments and testing only.</p> </div> <h2 id="The_signaling_server">The signaling server</h2> <p>Establishing a WebRTC connection between two devices requires the use of a <strong>signaling server</strong> to resolve how to connect them over the internet. A signaling server's job is to serve as an intermediary to let two peers find and establish a connection while minimizing exposure of potentially private information as much as possible. How do we create this server and how does the signaling process actually work?</p> <p>First we need the signaling server itself. WebRTC doesn't specify a transport mechanism for the signaling information. You can use anything you like, from <a href="../../websockets_api/">WebSocket</a> to <a href="../../xmlhttprequest/"><code>XMLHttpRequest</code></a> to carrier pigeons to exchange the signaling information between the two peers.</p> <p>It's important to note that the server doesn't need to understand or interpret the signaling data content. Although it's <a href="https://developer.mozilla.org/en-US/docs/Glossary/SDP" target="_blank">SDP</a>, even this doesn't matter so much: the content of the message going through the signaling server is, in effect, a black box. What does matter is when the <a href="https://developer.mozilla.org/en-US/docs/Glossary/ICE" target="_blank">ICE</a> subsystem instructs you to send signaling data to the other peer, you do so, and the other peer knows how to receive this information and deliver it to its own ICE subsystem. All you have to do is channel the information back and forth. The contents don't matter at all to the signaling server.</p> <h3 id="Readying_the_chat_server_for_signaling">Readying the chat server for signaling</h3> <p>Our <a href="https://github.com/mdn/samples-server/tree/master/s/websocket-chat" target="_blank">chat server</a> uses the <a href="../../websockets_api/">WebSocket API</a> to send information as <a href="https://developer.mozilla.org/en-US/docs/Glossary/JSON" target="_blank">JSON</a> strings between each client and the server. The server supports several message types to handle tasks, such as registering new users, setting usernames, and sending public chat messages.</p> <p>To allow the server to support signaling and ICE negotiation, we need to update the code. We'll have to to allow directing messages to one specific user instead of broadcasting to all connected users, and ensure unrecognized message types are passed through and delivered, without the server needing to know what they are. This lets us send signaling messages using this same server, instead of needing a separate server.</p> <p>Let's take a look which changes we need to make to the chat server support WebRTC signaling. This is in the file <a href="https://github.com/mdn/samples-server/tree/master/s/webrtc-from-chat/chatserver.js" target="_blank">chatserver.js</a>.</p> <p>First up is the addition of the function <code>sendToOneUser()</code>. As the name suggests, this sends a stringified JSON message to a particular username.</p> <pre data-language="js">function sendToOneUser(target, msgString) {
   var isUnique = true;
@@ -327,17 +327,9 @@ function invite(evt) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

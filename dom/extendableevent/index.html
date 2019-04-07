@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>ExtendableEvent</h1>
 <div class="notice overheadIndicator experimental"> <p> <strong>This is an <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental" target="_blank">experimental technology</a></strong><br>Check the <a href="#Browser_compatibility">Browser compatibility table</a> carefully before using this in production.</p> </div> <p>The <code>ExtendableEvent</code> interface extends the lifetime of the <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/install" target="_blank">install</a></code> and <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/activate" target="_blank">activate</a></code> events dispatched on the global scope as part of the service worker lifecycle. This ensures that any functional events (like <a href="../fetchevent/"><code>FetchEvent</code></a>) are not dispatched until it upgrades database schemas and deletes the outdated cache entries.</p> <p>If <a href="../extendableevent/waituntil/"><code>waitUntil()</code></a> is called outside of the <code>ExtendableEvent</code> handler, the browser should throw an <code>InvalidStateError</code>; note also that multiple calls will stack up, and the resulting promises will be added to the list of <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#dfn-extend-lifetime-promises" target="_blank">extend lifetime promises</a>.</p> <div class="note"> <p><strong>Note</strong>: The behaviour described in the above paragraph was fixed in Firefox 43 (see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1189644" target="_blank">bug 1189644</a>.)</p> </div> <p>This interface inherits from the <a href="../event/"><code>Event</code></a> interface.</p>  <iframe src="https://mdn.mozillademos.org/en-US/docs/Web/API/ExtendableEvent%24samples/inheritance_diagram?revision=1409824" height="60" class="live-sample-frame inheritance-diagram-frame" width="700" frameborder="0" id="frame_inheritance_diagram"></iframe> <div class="note"> <p><strong>Note</strong>: This interface is only available when the global scope is a <a href="../serviceworkerglobalscope/"><code>ServiceWorkerGlobalScope</code></a>. It is not available when it is a <a href="../window/"><code>Window</code></a>, or the scope of another kind of worker.</p> </div> <h2 id="Constructor">Constructor</h2> <dl> <dt><a href="../extendableevent/extendableevent/"><code>ExtendableEvent()</code></a></dt> <dd>Creates a new <code>ExtendableEvent</code> object.</dd> </dl> <h2 id="Properties">Properties</h2> <p><em>Doesn't implement any specific properties, but inherits properties from its parent, <a href="../event/"><code>Event</code></a>.</em></p> <h2 id="Methods">Methods</h2> <p><em>Inherits methods from its parent, </em><em><a href="../event/"><code>Event</code></a></em>.</p> <dl> <dt><a href="../extendableevent/waituntil/"><code>ExtendableEvent.waitUntil()</code></a></dt> <dd> <p>Extends the lifetime of the event. It is intended to be called in the <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/install" target="_blank">install</a></code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventHandler" target="_blank"><code>EventHandler</code></a> for the <a href="../serviceworkerregistration/installing/"><code>installing</code></a> worker and on the <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/active" target="_blank">active</a></code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventHandler" target="_blank"><code>EventHandler</code></a> for the <a href="../serviceworkerregistration/active/"><code>active</code></a> worker.</p> </dd> </dl> <h2 id="Examples">Examples</h2> <p>This code snippet is from the <a href="https://github.com/GoogleChrome/samples/blob/gh-pages/service-worker/prefetch/service-worker.js" target="_blank">service worker prefetch sample</a> (see <a href="https://googlechrome.github.io/samples/service-worker/prefetch/" target="_blank">prefetch example live</a>.) The code calls <a href="../extendableevent/waituntil/"><code>ExtendableEvent.waitUntil()</code></a> in <a href="../serviceworkerglobalscope/oninstall/"><code>ServiceWorkerGlobalScope.oninstall</code></a>, delaying treating the <a href="../serviceworkerregistration/installing/"><code>ServiceWorkerRegistration.installing</code></a> worker as installed until the passed promise resolves successfully. The promise resolves when all resources have been fetched and cached, or else when any exception occurs.</p> <p>The code snippet also shows a best practice for versioning caches used by the service worker. Though there's only one cache in this example, the same approach can be used for multiple caches. It maps a shorthand identifier for a cache to a specific, versioned cache name.</p> <div class="note"> <p><strong>Note</strong>: In Chrome, logging statements are visible via the "Inspect" interface for the relevant service worker accessed via chrome://serviceworker-internals.</p> </div> <pre data-language="js">var CACHE_VERSION = 1;
@@ -238,17 +238,9 @@ self.addEventListener('install', function(event) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Canvas API: Using images</h1> <div class="prevnext" style="text-align: right;"> <p><a href="../drawing_text/" style="float: left;">« Previous</a><a href="../transformations/">Next »</a></p> </div> <div class="summary"> <p>Until now we have created our own <a href="../drawing_shapes/">shapes</a> and <a href="../applying_styles_and_colors/">applied styles</a> to them. One of the more exciting features of <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas" target="_blank"><code>&lt;canvas&gt;</code></a> is the ability to use images. These can be used to do dynamic photo compositing or as backdrops of graphs, for sprites in games, and so forth. External images can be used in any format supported by the browser, such as PNG, GIF, or JPEG. You can even use the image produced by other canvas elements on the same page as the source!</p> </div> <p>Importing images into a canvas is basically a two step process:</p> <ol> <li>Get a reference to an <a href="../../../htmlimageelement/"><code>HTMLImageElement</code></a> object or to another canvas element as a source. It is also possible to use images by providing a URL.</li> <li>Draw the image on the canvas using the <code>drawImage()</code> function.</li> </ol> <p>Let's take a look at how to do this.</p> <h2 id="Getting_images_to_draw">Getting images to draw</h2> <p>The canvas API is able to use any of the following data types as an image source:</p> <dl> <dt><a href="../../../htmlimageelement/"><code>HTMLImageElement</code></a></dt> <dd>These are images created using the <code>Image()</code> constructor, as well as any <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank"><code>&lt;img&gt;</code></a> element.</dd> <dt><a href="../../../svgimageelement/"><code>SVGImageElement</code></a></dt> <dd>These are images embedded using the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/image" target="_blank"><code>&lt;image&gt;</code></a> element.</dd> <dt><a href="../../../htmlvideoelement/"><code>HTMLVideoElement</code></a></dt> <dd>Using an HTML <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video" target="_blank"><code>&lt;video&gt;</code></a> element as your image source grabs the current frame from the video and uses it as an image.</dd> <dt><a href="../../../htmlcanvaselement/"><code>HTMLCanvasElement</code></a></dt> <dd>You can use another <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas" target="_blank"><code>&lt;canvas&gt;</code></a> element as your image source.</dd> </dl> <p>These sources are collectively referred to by the type <a href="../../../canvasimagesource/"><code>CanvasImageSource</code></a>.</p> <p>There are several ways to get images for use on a canvas.</p> <h3 id="Using_images_from_the_same_page">Using images from the same page</h3> <p>We can obtain a reference to images on the same page as the canvas by using one of:</p> <ul> <li>The <a href="../../../document/images/"><code>document.images</code></a> collection</li> <li>The <a href="../../../document/getelementsbytagname/"><code>document.getElementsByTagName()</code></a> method</li> <li>If you know the ID of the specific image you wish to use, you can use <a href="../../../document/getelementbyid/"><code>document.getElementById()</code></a> to retrieve that specific image</li> </ul> <h3 id="Using_images_from_other_domains">Using images from other domains</h3> <p>Using the <code><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-crossorigin" target="_blank">crossorigin</a></code> attribute of an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank"><code>&lt;img&gt;</code></a> element (reflected by the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/crossOrigin" target="_blank"><code>HTMLImageElement.crossOrigin</code></a> property), you can request permission to load an image from another domain for use in your call to <code>drawImage()</code>. If the hosting domain permits cross-domain access to the image, the image can be used in your canvas without tainting it; otherwise using the image will <a rel="internal" href="https://developer.mozilla.org/en-US/docs/HTML/CORS_Enabled_Image#What_is_a_.22tainted.22_canvas.3F" target="_blank">taint the canvas</a>.</p> <h3 id="Using_other_canvas_elements">Using other canvas elements</h3> <p>Just as with normal images, we access other canvas elements using either the <a href="../../../document/getelementsbytagname/"><code>document.getElementsByTagName()</code></a> or <a href="../../../document/getelementbyid/"><code>document.getElementById()</code></a> method. Be sure you've drawn something to the source canvas before using it in your target canvas.</p> <p>One of the more practical uses of this would be to use a second canvas element as a thumbnail view of the other larger canvas.</p> <h3 id="Creating_an_image_from_scratch">Creating an image from scratch</h3> <p>Another option is to create new <a href="../../../htmlimageelement/"><code>HTMLImageElement</code></a> objects in our script. To do this, you can use the convenient <code>Image()</code> constructor:</p> <pre data-language="js">var img = new Image();   // Create new img element
 img.src = 'myImage.png'; // Set source path
@@ -242,17 +242,9 @@ ctx.imageSmoothingEnabled = false;
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

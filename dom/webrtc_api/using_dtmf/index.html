@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>WebRTC API: Using DTMF</h1> <p>In order to more fully support audio/video conferencing, <a href="../../webrtc_api/">WebRTC</a> supports sending <a href="https://developer.mozilla.org/en-US/docs/Glossary/DTMF" target="_blank">DTMF</a> to the remote peer on an <a href="../../rtcpeerconnection/"><code>RTCPeerConnection</code></a>. This article offers a brief high-level overview of how DTMF works over WebRTC, then provides a guide for everyday developers about how to send DTMF over an <code>RTCPeerConnection</code>. The DTMF system is often referred to as "touch tone," after an old trade name for the system.</p> <p>WebRTC doesn't send DTMF codes as audio data. Instead, they're sent out-of-band, as RTP payloads. Note, however, that although it's possible to <em>send</em> DTMF using WebRTC, there is currently no way to detect or receive <em>incoming</em> DTMF. WebRTC currently ignores these payloads; this is because WebRTC's DTMF support is primarily intended for use with legacy telephone services that rely on DTMF tones to perform tasks such as:</p> <ul> <li>Teleconferencing systems</li> <li>Menu systems</li> <li>Voicemail systems</li> <li>Entry of credit card or other payment information</li> <li>Passcode entry</li> </ul> <div class="note"> <p><strong>Note</strong>: While the DTMF is not sent to the remote peer as audio, browsers may choose to play the corresponding tone to the local user as part of their user experience, since users are typically used to hearing their phone play the tones audibly.</p> </div> <h2 id="Sending_DTMF_on_an_RTCPeerConnection">Sending DTMF on an RTCPeerConnection</h2> <p>A given <a href="../../rtcpeerconnection/"><code>RTCPeerConnection</code></a> can have multiple media tracks sent or received on it. When you wish to transmit DTMF signals, you first need to decide which track to send them on, since DTMF is sent as a series of out-of-band payloads on the <a href="../../rtcrtpsender/"><code>RTCRtpSender</code></a> responsible for transmitting that track's data to the other peer.</p> <p>Once the track is selected, you can obtain from its <code>RTCRtpSender</code> the <a href="../../rtcdtmfsender/"><code>RTCDTMFSender</code></a> object you'll use for sending DTMF. From there, you can simply call <a href="../../rtcdtmfsender/insertdtmf/"><code>RTCDTMFSender.insertDTMF()</code></a> to enqueue DTMF signals to be sent on the track to the other peer. The <code>RTCRtpSender</code> will then send the tones to the other peer as packets alongside the track's audio data.</p> <p>Each time a tone is sent, the <code>RTCPeerConnection</code> receives a <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/tonechange" target="_blank">tonechange</a></code> event with a <a href="../../rtcdtmftonechangeevent/tone/"><code>tone</code></a> property specifying which tone finished playing, which is an opportunity to update interface elements, for example. When the tone buffer is empty, indicating that all the tones have been sent, a <code>tonechange</code> event with its <code>tone</code> property set to "" (an empty string) is delivered to the connection object.</p> <p>If you'd like to know more about how this works, read <a href="https://tools.ietf.org/html/rfc3550" target="_blank">RFC 3550: RTP: A Transport Protocol for Real-Time Applications</a> and <a href="https://tools.ietf.org/html/rfc4733" target="_blank">RFC 4733: RTP Payload for DTMF Digits, Telephony Tones, and Telephony Signals</a>. The details of how DTMF payloads are handled on RTP are beyond the scope of this article. Instead, we'll focus on how to use DTMF within the context of an <a href="../../rtcpeerconnection/"><code>RTCPeerConnection</code></a> by studying how an example works.</p> <h2 name="Simple_example" id="Simple_example">Simple example</h2> <p>This simple example constructs two <a href="../../rtcpeerconnection/"><code>RTCPeerConnection</code></a>s, establishes a connection between them, then waits for the user to click a "Dial" button. When the button is clicked, a DTMF string is sent over the connection using <a href="../../rtcdtmfsender/insertdtmf/"><code>RTCDTMFSender.insertDTMF()</code></a>. Once the tones finish transmitting, the connection is closed.</p> <div class="note"> <p><strong>Note</strong>: This example is obviously somewhat contrived, since normally the two <code>RTCPeerConnection</code> objects would exist on different devices, and signaling would be done over the network instead of it all being simply linked up inline as it is here.</p> </div> <h3 id="HTML">HTML</h3> <p>The HTML for this example is very basic; there are only three elements of importance:</p> <ul> <li>An <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio" target="_blank"><code>&lt;audio&gt;</code></a> element to play the audio received by the <code>RTCPeerConnection</code> being "called."</li> <li>A <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button" target="_blank"><code>&lt;button&gt;</code></a> element to trigger creating and connecting the two <code>RTCPeerConnection</code> objects, then sending the DTMF tones.</li> <li>A <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div" target="_blank"><code>&lt;div&gt;</code></a> to receive and display log text to show status information.</li> </ul> <pre data-language="html">  &lt;p&gt;This example demonstrates the use of DTMF in WebRTC. Note that this
      example is "cheating" by generating both peers in one code stream,
@@ -269,17 +269,9 @@ function handleReceiverAddStreamEvent(event) {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

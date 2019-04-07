@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>WebRTC API: Intro to RTP</h1>
 <div class="overheadIndicator draft"> <p><strong>Draft</strong><br> This page is not complete.</p> </div> <p>The <strong>Real-time Transport Protocol</strong> (<strong>RTP</strong>), defined in <a href="https://tools.ietf.org/html/rfc3550" target="_blank">RFC 3550</a>, is an IETF standard protocol to enable real-time connectivity for exchanging data that needs real-time priority. This article provides an overview of what RTP is and how it functions in the context of WebRTC.</p> <div class="note"> <p><strong>Note:</strong> WebRTC actually uses <strong>SRTP</strong> (Secure Real-time Transport Protocol) to ensure that the exchanged data is secure and authenticated as appropriate.</p> </div> <p>Keeping latency to a minimum is especially important for WebRTC, since face-to-face communication needs to be performed with as little <a href="https://developer.mozilla.org/en-US/docs/Glossary/latency" target="_blank">latency</a> as possible. The more time lag there is between one user saying something and another hearing it, the more likely there is to be episodes of cross-talking and other forms of confusion.</p> <h2 id="Key_features_of_RTP">Key features of RTP</h2> <p>Before examining RTP's use in WebRTC contexts, it's useful to have a general idea of what RTP does and does not offer. RTP is a data transport protocol, whose mission is to move data between two endpoints as efficiently as possible under current conditions. Those conditions may be affected by everything from the underlying layers of the network stack to the physical network connection, the intervening networks, the performance of the remote endpoint, noise levels, traffic levels, and so forth.</p> <p>Since RTP is simply a data transport, it is augmented by the closely-related <strong>RTP Control Protocol</strong> (<strong>RTCP</strong>), which is defined in <a href="https://tools.ietf.org/html/rfc3550#section-6" target="_blank">RFC 3550, section 6</a>. RTCP adds features including <strong>Quality of Service</strong> (<strong>QoS</strong>) monitoring, participant information sharing, and the like. It isn't adequate for the purposes of fully managing users, memberships, permissions, and so forth, but provides the basics needed for an unrestricted multi-user communication session.</p> <p>The very fact that RTCP is defined in the same RFC as RTP is a clue as to just how closely-interrelated these two protocols are.</p> <h3 id="Capabilities_of_RTP">Capabilities of RTP</h3> <p>RTP's primary benefits in terms of WebRTC include:</p> <ul> <li>Generally low latency.</li> <li>Packets are sequence-numbered and time-stamped for reassembly if they arrive out of order. This lets data sent using RTP be delivered on transports that don't guarantee ordering or even guarantee delivery at all.</li> <li>This means RTP can be — but is not required to be — used atop <a href="https://developer.mozilla.org/en-US/docs/Glossary/UDP" target="_blank">UDP</a> for its performance as well as its multiplexing and checksum features.</li> <li>RTP supports multicast; while this isn't yet important for WebRTC, it's likely to matter in the future, when WebRTC is (hopefully) enhanced to support multi-user conversations.</li> <li>RTP isn't limited to use in audiovisual communication. It can be used for any form of continuous or active data transfer, including data streaming, active badges or status display updates, or control and measurement information transport.</li> </ul> <h3 id="Things_RTP_doesn't_do">Things RTP doesn't do</h3> <p>RTP itself doesn't provide every possible feature, which is why other protocols are also used by WebRTC. Some of the more noteworthy things RTP doesn't include:</p> <div class="callout-box">Editor's note: we should add information about where these deficiencies are compensated for, if they are at all.</div> <ul> <li>RTP does <em>not</em> guarantee <strong><a href="https://en.wikipedia.org/wiki/quality-of-service" target="_blank">quality-of-service</a></strong> (<strong>QoS</strong>).</li> <li>While RTP is intended for use in latency-critical scenarios, it doesn't inherently offer any features that ensure QoS. Instead, it only offers the information necessary to allow QoS to be implemented elsewhere in the stack.</li> <li>RTP doesn't handle allocation or reservation of resources that may be needed.</li> </ul> <p>Where it matters for WebRTC purposes, these are dealt with in a variety of places within the WebRTC infrastructure. For example, RTCP handles QoS monitoring.</p> <h2 id="RTCPeerConnection_and_RTP">RTCPeerConnection and RTP</h2> <p>Each <a href="../../rtcpeerconnection/"><code>RTCPeerConnection</code></a> has methods which provide access to the list of RTP transports that service the peer connection. These correspond to the following three types of transport supported by <code>RTCPeerConnection</code>:</p> <dl> <dt><a href="../../rtcrtpsender/"><code>RTCRtpSender</code></a></dt> <dd>
@@ -126,17 +126,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

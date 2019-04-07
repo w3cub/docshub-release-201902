@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>WindowBase64.Base64 encoding and decoding</h1>
 <p><strong>Base64</strong> is a group of similar <a href="https://en.wikipedia.org/wiki/Binary-to-text_encoding" target="_blank">binary-to-text encoding</a> schemes that represent binary data in an ASCII string format by translating it into a radix-64 representation. The term <em>Base64</em> originates from a specific <a href="https://en.wikipedia.org/wiki/MIME#Content-Transfer-Encoding" target="_blank">MIME content transfer encoding</a>.</p> <p>Base64 encoding schemes are commonly used when there is a need to encode binary data that needs to be stored and transferred over media that are designed to deal with textual data. This is to ensure that the data remain intact without modification during transport. Base64 is commonly used in a number of applications including email via <a href="https://en.wikipedia.org/wiki/MIME" target="_blank">MIME</a>, and storing complex data in <a href="https://developer.mozilla.org/en-US/docs/XML" target="_blank">XML</a>.</p> <p>In JavaScript there are two functions respectively for decoding and encoding <em>base64</em> strings:</p> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/atob" target="_blank"><code>atob()</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/btoa" target="_blank"><code>btoa()</code></a></li> </ul> <p>The <code>atob()</code> function decodes a string of data which has been encoded using base-64 encoding. Conversely, the <code>btoa()</code> function creates a base-64 encoded ASCII string from a "string" of binary data.</p> <p>Both <code>atob()</code> and <code>btoa()</code> work on strings. If you want to work on <a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer" target="_blank"><code>ArrayBuffers</code></a>, please, read <a href="#Solution_2_%E2%80%93_rewrite_the_DOMs_atob()_and_btoa()_using_JavaScript's_TypedArrays_and_UTF-8">this paragraph</a>.</p> <div class="_table"><table class="topicpage-table"> <tbody> <tr> <td> <h2 class="Documentation" id="Documentation" name="Documentation">Documentation</h2> <dl> <dt><a href="https://developer.mozilla.org/en-US/docs/data_URIs" target="_blank"><code>data</code> URIs</a></dt> <dd><small><code>data</code> URIs, defined by <a href="http://tools.ietf.org/html/rfc2397" target="_blank">RFC 2397</a>, allow content creators to embed small files inline in documents.</small></dd> <dt><a href="https://en.wikipedia.org/wiki/Base64" target="_blank">Base64</a></dt> <dd><small>Wikipedia article about Base64 encoding.</small></dd> <dt><a href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope-mixin" target="_blank">WindowOrWorkerGlobalScope mixin</a></dt> <dd>Specifies the <code>atob</code> and <code>btoa</code> methods and states that they encode to base64 as specified by <a href="https://tools.ietf.org/html/rfc4648" target="_blank">RFC 4648</a>.</dd> <dt><a href="https://tools.ietf.org/html/rfc4648" target="_blank">RFC 4648</a></dt> <dd>Specifies the base64 algorithm in section 4, and also defines an alternate base64url algorithm for URLs in section 5 (which is not the one used by <code>atob</code>/<code>btoa</code>).</dd> <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/atob" target="_blank"><code>atob()</code></a></dt> <dd><small>Decodes a string of data which has been encoded using base-64 encoding.</small></dd> <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/btoa" target="_blank"><code>btoa()</code></a></dt> <dd><small>Creates a base-64 encoded ASCII string from a "string" of binary data.</small></dd> <dt><a href="#The_Unicode_Problem">The "Unicode Problem"</a></dt> <dd><small>In most browsers, calling <code>btoa()</code> on a Unicode string will cause a <code>Character Out Of Range</code> exception. This paragraph shows some solutions.</small></dd> <dt><a href="https://developer.mozilla.org/en-US/docs/URIScheme" target="_blank">URIScheme</a></dt> <dd><small>List of Mozilla supported URI schemes</small></dd> <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/StringView" target="_blank"><code>StringView</code></a></dt> <dd>In this article is published a library of ours whose aims are: <ul> <li>creating a <a href="http://en.wikipedia.org/wiki/C_%28programming_language%29" target="_blank">C</a>-like interface for strings (i.e. array of characters codes —<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/ArrayBufferView" target="_blank"> <code>ArrayBufferView</code></a> in JavaScript) based upon the JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/ArrayBuffer" target="_blank"><code>ArrayBuffer</code></a> interface,</li> <li>creating a collection of methods for such string-like objects (since now: <code>stringView</code>s) which work <strong>strictly on array of numbers</strong> rather than on immutable JavaScript strings,</li> <li>working with other Unicode encodings, different from default JavaScript's UTF-16 <a href="../../domstring/"><code>DOMString</code></a>s,</li> </ul> </dd> </dl> <p><span class="alllinks"><a href="https://developer.mozilla.org/en-US/docs/tag/Base64" target="_blank">View All...</a></span></p> </td> <td> <h2 class="Tools" id="Tools" name="Tools">Tools</h2> <ul> <li><a href="#Solution_2_%E2%80%93_rewrite_the_DOMs_atob()_and_btoa()_using_JavaScript's_TypedArrays_and_UTF-8">Rewriting <code>atob()</code> and <code>btoa()</code> using <code>TypedArray</code>s and UTF-8</a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/StringView" target="_blank"><code>StringView</code> – a C-like representation of strings based on typed arrays</a></li> </ul> <p><span class="alllinks"><a href="https://developer.mozilla.org/en-US/docs/tag/Base64" target="_blank">View All...</a></span></p> <h2 class="Related_Topics" id="Related_Topics" name="Related_Topics">Related Topics</h2> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/ArrayBuffer" target="_blank"><code>ArrayBuffer</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank">Typed arrays</a></li> <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/ArrayBufferView" target="_blank">ArrayBufferView</a></code></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/Uint8Array" target="_blank"><code>Uint8Array</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays/StringView" target="_blank"><code>StringView</code> – a C-like representation of strings based on typed arrays</a></li> <li><a href="../../domstring/"><code>DOMString</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/URI" target="_blank"><code>URI</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI" target="_blank"><code>encodeURI()</code></a></li> </ul> </td> </tr> </tbody> </table></div> <h2 id="The_Unicode_Problem">The "Unicode Problem"</h2> <p>Since <a href="../../domstring/"><code>DOMString</code></a>s are 16-bit-encoded strings, in most browsers calling <code>window.btoa</code> on a Unicode string will cause a <code>Character Out Of Range</code> exception if a character exceeds the range of a 8-bit byte (0x00~0xFF). There are two possible methods to solve this problem:</p> <ul> <li>the first one is to escape the whole string (with UTF-8, see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank"><code>encodeURIComponent</code></a>) and then encode it;</li> <li>the second one is to convert the UTF-16 <a href="../../domstring/"><code>DOMString</code></a> to an UTF-8 array of characters and then encode it.</li> </ul> <p>Here is the prefered method along with two other "possible" methods.</p> <h3 id="Solution_1_–UTF-16_&gt;_binary_UTF8-in-16">Solution #1 –UTF-16 =&gt; binary UTF8-in-16</h3> <p>The fastest, most widely useable, most standard, and most future-ready way to solve the unicode problem is by transforming the UTF16 into UTF8-in-16 then use <code>btoa</code> on the UTF8-in-16 string. To understand this deeper, UTF16 uses 16 bits as the smallest unit of measure whereas UTF8 uses 8 bits as the smallest unit of measure. This means that the smallest a UTF16 character can be is 16 bits (2 bytes) meanwhile the smallest a UTF8 character can be is 8 bits (1 byte). Then, UTF8-in-16 is making the string encoded as UTF-8, but storing it as a UTF-16 string by only using 8 (from UTF8) of the 16 bits in each unit of measure of a UTF-16 string. This method is incredibly efficient because all it takes is a single simple super fast <code>String.prototype.replace</code> to convert between UTF-16 and UTF8-in-16. There is no need to encode the string as an array buffer then reencode it as a string. Rather, the below code simply and straightforwardly converts it in a single <code>String.prototype.replace</code>.</p> <pre data-language="js">(function(window){
@@ -194,17 +194,9 @@ function Base64Decode(str, encoding = 'utf-8') {
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

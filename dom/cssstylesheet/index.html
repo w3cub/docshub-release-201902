@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>CSSStyleSheet</h1> <p>The <code>CSSStyleSheet</code> interface represents a single <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">CSS</a> style sheet. It inherits properties and methods from its parent, <a href="../stylesheet/"><code>StyleSheet</code></a>.</p> <p>A style sheet consists of <em><a href="../cssrule/">rules</a></em>, such as <em><a href="../cssstylerule/">style rules</a></em>("<code>h1,h2 { font-size: 16pt }"</code>), various <em>at-rules</em> (<code>@import</code>, <code>@media</code>, ...), etc. This interface lets you inspect and modify the list of rules in the stylesheet.</p> <p>See the <a href="#Notes">Notes</a> section for the various ways a CSSStyleSheet object can be obtained.</p> <h2 id="Properties">Properties</h2> <p><em>Inherits properties from its parent, <a href="../stylesheet/"><code>StyleSheet</code></a>.</em></p> <dl> <dt id="cssRules"><a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/cssRules" target="_blank"><code>CSSStyleSheet.cssRules</code></a></dt> <dd>Returns a live <a href="../cssrulelist/"><code>CSSRuleList</code></a>, listing the <a href="../cssrule/"><code>CSSRule</code></a> objects in the style sheet.<br> This is normally used to access individual rules like this:<br> <pre>   styleSheet.cssRules[i] // where i = 0..cssRules.length-1</pre> To add or remove items in <code>cssRules</code>, use the <code>CSSStyleSheet</code>'s <code>deleteRule()</code> and <code>insertRule()</code> methods, described below.</dd> <dt id="ownerRule"><a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/ownerRule" target="_blank"><code>CSSStyleSheet.ownerRule</code></a></dt> <dd>If this style sheet is imported into the document using an <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@import" target="_blank"><code>@import</code></a> rule, the <code>ownerRule</code> property will return that <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSImportRule" target="_blank"><code>CSSImportRule</code></a>, otherwise it returns <code>null</code>.</dd> </dl> <h2 id="Methods">Methods</h2> <p><em>Inherits methods from its parent, <a href="../stylesheet/"><code>Stylesheet</code></a>.</em></p> <dl> <dt id="deleteRule"><a href="../cssstylesheet/deleterule/"><code>CSSStyleSheet.deleteRule()</code></a></dt> <dd>Deletes a rule at the specified position from the style sheet.</dd> <dt id="insertRule"><a href="../cssstylesheet/insertrule/"><code>CSSStyleSheet.insertRule()</code></a></dt> <dd>Inserts a new rule at the specified position in the style sheet, given the textual representation of the rule.</dd> </dl> <h2 id="Notes">Notes</h2> <p>In some browsers, if a stylesheet is loaded from a different domain, calling <code>cssRules</code> results in <code>SecurityError</code>.</p> <p>A stylesheet is associated with at most one <a href="../document/"><code>Document</code></a>, which it applies to (unless <a href="../stylesheet/disabled/">disabled</a>). A list of <code>CSSStyleSheet</code> objects for a given document can be obtained using the <a href="../documentorshadowroot/stylesheets/"><code>document.styleSheets</code></a> property. A specific style sheet can also be accessed from its <em>owner</em> object (<code>Node</code> or <code>CSSImportRule</code>), if any.</p> <p>A <code>CSSStyleSheet</code> object is created and inserted into the document's <code>styleSheets</code> list automatically by the browser, when a style sheet is loaded for a document. As the <a href="../documentorshadowroot/stylesheets/"><code>document.styleSheets</code></a> list cannot be modified directly, there's no useful way to create a new <code>CSSStyleSheet</code> object manually (although <a href="http://tabatkins.github.io/specs/construct-stylesheets/" target="_blank">Constructable Stylesheet Objects</a> might get added to the Web APIs at some point). To create a new stylesheet, insert a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style" target="_blank"><code>&lt;style&gt;</code></a> or <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link" target="_blank"><code>&lt;link&gt;</code></a> element into the document.</p> <p>A (possibly incomplete) list of ways a style sheet can be associated with a document follows:</p> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col">Reason for the style sheet to be associated with the document</th> <th scope="col">Appears in <code>document.<br>
     styleSheets</code> list</th> <th scope="col">Getting the owner element/rule given the style sheet object</th> <th scope="col">The interface for the owner object</th> <th scope="col">Getting the CSSStyleSheet object from the owner</th> </tr> </thead> <tbody> <tr> <td>
@@ -232,17 +232,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

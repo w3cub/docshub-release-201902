@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>IndexedDB API</h1> <p>IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes to enable high-performance searches of this data. While <a href="../web_storage_api/">Web Storage</a> is useful for storing smaller amounts of data, it is less useful for storing larger amounts of structured data. IndexedDB provides a solution. This is the main landing page for MDN's IndexedDB coverage — here we provide links to the full API reference and usage guides, browser support details, and some explanation of key concepts.</p> <div class="blockIndicator note">
 <strong>Note:</strong> This feature is available in <a href="../web_workers_api/">Web Workers</a>.</div> <div class="note"> <p><strong>Note</strong>: IndexedDB API is powerful, but may seem too complicated for simple cases. If you'd prefer a simple API, try libraries such as <a href="https://localforage.github.io/localForage/" target="_blank">localForage</a>, <a href="http://www.dexie.org/" target="_blank">dexie.js</a>, <a href="https://github.com/erikolson186/zangodb" target="_blank">ZangoDB</a>, <a href="https://pouchdb.com/" target="_blank">PouchDB</a>, and <a href="http://jsstore.net/" target="_blank">JsStore</a> that make IndexedDB more programmer-friendly.</p> </div> <h2 id="Key_concepts_and_usage">Key concepts and usage</h2> <p>IndexedDB is a transactional database system, like an SQL-based RDBMS. However, unlike SQL-based RDBMSes, which use fixed-column tables, IndexedDB is a JavaScript-based object-oriented database. IndexedDB lets you store and retrieve objects that are indexed with a <strong>key</strong>; any objects supported by the <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/The_structured_clone_algorithm" target="_blank">structured clone algorithm</a> can be stored. You need to specify the database schema, open a connection to your database, and then retrieve and update data within a series of <strong>transactions</strong>.</p> <ul> <li>Read more about the <a href="../indexeddb_api/basic_concepts_behind_indexeddb/">Concepts behind IndexedDB</a>.</li> <li>Learn to use IndexedDB asynchronously from first principles with our <a href="../indexeddb_api/using_indexeddb/">Using IndexedDB</a> guide.</li> <li>Find developer recommendations for making web apps work offline at our <a href="https://developer.mozilla.org/en-US/Apps/Build/Offline" target="_blank">Offline Apps</a> page.</li> </ul> <div class="note"> <p><strong>Note</strong>: Like most web storage solutions, IndexedDB follows a <a href="http://www.w3.org/Security/wiki/Same_Origin_Policy" target="_blank">same-origin policy</a>. So while you can access stored data within a domain, you cannot access data across different domains.</p> </div> <h3 id="Synchronous_and_asynchronous">Synchronous and asynchronous</h3> <p>Operations performed using IndexedDB are done asynchronously, so as not to block applications. IndexedDB originally included both synchronous and <span style="background-color: #f5f6f5;">asynchronous</span> APIs. The synchronous API was intended for use only with <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers" target="_blank">Web Workers</a> but was removed from the spec because it was unclear whether it was needed. However, <span style="background-color: #f5f6f5;"> the synchronous API</span> may be reintroduced if there is enough demand from web developers.</p> <h3 id="Storage_limits_and_eviction_criteria">Storage limits and eviction criteria</h3> <p>There are a number of web technologies that store data of one kind or another on the client side (i.e. on your local disk). IndexedDB is the most commonly talked about one. The process by which the browser works out how much space to allocate to web data storage and what to delete when that limit is reached is not simple, and differs between browsers. <a href="../indexeddb_api/browser_storage_limits_and_eviction_criteria/">Browser storage limits and eviction criteria</a> attempts to explain how this works, at least in the case of Firefox.</p> <h2 id="Interfaces">Interfaces</h2> <p>To get access to a database, call <a href="../idbfactory/open/"><code>open()</code></a> on the <a href="../windoworworkerglobalscope/indexeddb/"><code>indexedDB</code></a> attribute of a <a href="../window/">window</a> object. This method returns an <a href="../idbrequest/"><code>IDBRequest</code></a> object; asynchronous operations communicate to the calling application by firing events on <a href="../idbrequest/"><code>IDBRequest</code></a> objects.</p> <h3 id="Connecting_to_a_database">Connecting to a database</h3> <dl> <dt><a href="../idbenvironment/"><code>IDBEnvironment</code></a></dt> <dd>Provides access to IndexedDB functionality. It is implemented by the <a href="../window/"><code>window</code></a> and <a href="../worker/"><code>worker</code></a> objects. This interface isn't part of the 2.0 specification.</dd> <dt><a href="../idbfactory/"><code>IDBFactory</code></a></dt> <dd>Provides access to a database. This is the interface implemented by the global object <a href="../windoworworkerglobalscope/indexeddb/"><code>indexedDB</code></a> and is therefore the entry point for the API.</dd> <dt><a href="../idbopendbrequest/"><code>IDBOpenDBRequest</code></a></dt> <dd>Represents a request to open a database.</dd> <dt><a href="../idbdatabase/"><code>IDBDatabase</code></a></dt> <dd>Represents a connection to a database. It's the only way to get a transaction on the database.</dd> <dt>Retrieving and modifying data</dt> </dl> <dl> <dt><a href="../idbtransaction/"><code>IDBTransaction</code></a></dt> <dd>Represents a transaction. You create a transaction on a database, specify the scope (such as which object stores you want to access), and determine the kind of access (read only or readwrite) that you want.</dd> <dt><a href="../idbrequest/"><code>IDBRequest</code></a></dt> <dd>Generic interface that handles database requests and provides access to results.</dd> <dt><a href="../idbobjectstore/"><code>IDBObjectStore</code></a></dt> <dd>Represents an object store that allows access to a set of data in an IndexedDB database, looked up via primary key.</dd> <dt><a href="../idbindex/"><code>IDBIndex</code></a></dt> <dd>Also allows access to a subset of data in an IndexedDB database, but uses an index to retrieve the record(s) rather than the primary key. This is sometimes faster than using <a href="../idbobjectstore/"><code>IDBObjectStore</code></a>.</dd> <dt><a href="../idbcursor/"><code>IDBCursor</code></a></dt> <dd>Iterates over object stores and indexes.</dd> <dt><a href="../idbcursorwithvalue/"><code>IDBCursorWithValue</code></a></dt> <dd>Iterates over object stores and indexes and returns the cursor's current value.</dd> <dt><a href="../idbkeyrange/"><code>IDBKeyRange</code></a></dt> <dd>Defines a key range that can be used to retrieve data from a database in a certain range.</dd> <dt>
@@ -137,17 +137,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

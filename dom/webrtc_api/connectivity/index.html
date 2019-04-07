@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _mdn">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>WebRTC API: Connectivity</h1>
 <div class="blockIndicator draft"> <p><strong>Draft</strong><br> This page is not complete.</p> </div> <p>This article describes how the various WebRTC-related protocols interact with one another in order to create a connection and transfer data and/or media among peers.</p> <div class="note"> <p><strong>Note:</strong> This page needs heavy rewriting for structural integrity and content completeness. Lots of info here is good but the organization is a mess since this is sort of a dumping ground right now.</p> </div> <h2 id="Signaling">Signaling</h2> <p>Unfortunately, WebRTC can’t create connections without some sort of server in the middle. We call this the <strong>signal channel</strong> or <strong>signaling service</strong>. It’s any sort of channel of communication to exchange information before setting up a connection, whether by email, post card or a carrier pigeon... it’s up to you.</p> <p>The information we need to exchange is the Offer and Answer which just contains the <a href="https://developer.mozilla.org/en-US/docs/Glossary/SDP" target="_blank">SDP</a> mentioned below.</p> <p>Peer A who will be the initiator of the connection, will create an Offer. They will then send this offer to Peer B using the chosen signal channel. Peer B will receive the Offer from the signal channel and create an Answer. They will then send this back to Peer A along the signal channel.</p> <h3 id="Session_descriptions">Session descriptions</h3> <p>The configuration of an endpoint on a WebRTC connection is called a <strong>session description</strong>. The description includes information about the kind of media being sent, its format, the transfer protocol being used, the endpoint's IP address and port, and other information needed to describe a media transfer endpoint. This information is exchanged and stored using <strong>Session Description Protocol</strong> (<a href="https://developer.mozilla.org/en-US/docs/Glossary/SDP" target="_blank">SDP</a>); if you want details on the format of SDP data, you can find it in <a href="https://tools.ietf.org/html/rfc2327" target="_blank">RFC 2327</a>.</p> <p>When a user starts a WebRTC call to another user, a special description is created called an <strong>offer</strong>. This description includes all the information about the caller's proposed configuration for the call. The recipient then responds with an <strong>answer</strong>, which is a description of their end of the call. In this way, both devices share with one another the information needed in order to exchange media data. This exchange is handled using Interactive Connectivity Establishment (<a href="https://developer.mozilla.org/en-US/docs/Glossary/ICE" target="_blank">ICE</a>, a protocol which lets two devices use an intermediary to exchange offers and answers even if the two devices are separated by Network Address Translation (<a href="https://developer.mozilla.org/en-US/docs/Glossary/NAT" target="_blank">NAT</a>).</p> <p>Each peer, then, keeps two descriptions on hand: the <strong>local description</strong>, describing itself, and the <strong>remote description</strong>, describing the other end of the call.</p> <p>The offer/answer process is performed both when a call is first established, but also any time the call's format or other configuration needs to change. Regardless of whether it's a new call, or reconfiguring an existing one, these are the basic steps which must occur to exchange the offer and answer, leaving out the ICE layer for the moment:</p> <ol> <li>The caller captures local Media via <a href="../../mediadevices/getusermedia/"><code>navigator.mediaDevices.getUserMedia()</code></a> </li> <li>The caller creates <code>RTCPeerConnection</code> and called <a href="../../rtcpeerconnection/addtrack/"><code>RTCPeerConnection.addTrack()</code></a> (Since <code>addStream</code> is deprecating)</li> <li>The caller calls <a href="../../rtcpeerconnection/createoffer/"><code>RTCPeerConnection.createOffer()</code></a> to create an offer.</li> <li>The caller calls <a href="../../rtcpeerconnection/setlocaldescription/"><code>RTCPeerConnection.setLocalDescription()</code></a> to set that offer as the <em>local description</em> (that is, the description of the local end of the connection).</li> <li>After setLocalDescription(), the caller asks STUN servers to generate the ice candidates</li> <li>The caller uses the signaling server to transmit the offer to the intended receiver of the call.</li> <li>The recipient receives the offer and calls <a href="../../rtcpeerconnection/setremotedescription/"><code>RTCPeerConnection.setRemoteDescription()</code></a> to record it as the <em>remote description</em> (the description of the other end of the connection).</li> <li>The recipient does any setup it needs to do for its end of the call: capture its local media, and attach each media tracks into the peer connection via <a href="../../rtcpeerconnection/addtrack/"><code>RTCPeerConnection.addTrack()</code></a>
@@ -93,17 +93,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
