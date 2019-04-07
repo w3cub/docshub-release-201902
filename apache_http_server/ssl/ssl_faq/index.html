@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/ssl/ssl_faq/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>SSL/TLS Strong Encryption: FAQ</h1>  <blockquote> <p>The wise man doesn't give the right answers, he poses the right questions.</p> <p class="cite">-- <cite>Claude Levi-Strauss</cite></p> </blockquote>     <h2 id="installation">Installation</h2> <ul> <li><a href="#mutex">Why do I get permission errors related to SSLMutex when I start Apache?</a></li> <li><a href="#entropy">Why does mod_ssl stop with the error "Failed to generate temporary 512 bit RSA private key" when I start Apache?</a></li> </ul> <h3><a name="mutex" id="mutex">Why do I get permission errors related to SSLMutex when I start Apache?</a></h3> <p>Errors such as ``<code>mod_ssl: Child could not open SSLMutex lockfile /opt/apache/logs/ssl_mutex.18332 (System error follows) [...] System: Permission denied (errno: 13)</code>'' are usually caused by overly restrictive permissions on the <em>parent</em> directories. Make sure that all parent directories (here <code>/opt</code>, <code>/opt/apache</code> and <code>/opt/apache/logs</code>) have the x-bit set for, at minimum, the UID under which Apache's children are running (see the <code class="directive"><a href="../../mod/mod_unixd/#user">User</a></code> directive).</p> <h3><a name="entropy" id="entropy">Why does mod_ssl stop with the error "Failed to generate temporary 512 bit RSA private key" when I start Apache?</a></h3> <p>Cryptographic software needs a source of unpredictable data to work correctly. Many open source operating systems provide a "randomness device" that serves this purpose (usually named <code>/dev/random</code>). On other systems, applications have to seed the OpenSSL Pseudo Random Number Generator (PRNG) manually with appropriate data before generating keys or performing public key encryption. As of version 0.9.5, the OpenSSL functions that need randomness report an error if the PRNG has not been seeded with at least 128 bits of randomness.</p> <p>To prevent this error, <code class="module"><a href="../../mod/mod_ssl/">mod_ssl</a></code> has to provide enough entropy to the PRNG to allow it to work correctly. This can be done via the <code class="directive"><a href="../../mod/mod_ssl/#sslrandomseed">SSLRandomSeed</a></code> directive.</p>   <h2 id="aboutconfig">Configuration</h2> <ul> <li><a href="#parallel">Is it possible to provide HTTP and HTTPS from the same server?</a></li> <li><a href="#ports">Which port does HTTPS use?</a></li> <li><a href="#httpstest">How do I speak HTTPS manually for testing purposes?</a></li> <li><a href="#hang">Why does the connection hang when I connect to my SSL-aware Apache server?</a></li> <li><a href="#refused">Why do I get ``Connection Refused'' errors, when trying to access my newly installed Apache+mod_ssl server via HTTPS?</a></li> <li><a href="#envvars">Why are the <code>SSL_XXX</code> variables not available to my CGI &amp; SSI scripts?</a></li> <li><a href="#relative">How can I switch between HTTP and HTTPS in relative hyperlinks?</a></li> </ul> <h3><a name="parallel" id="parallel">Is it possible to provide HTTP and HTTPS from the same server?</a></h3> <p>Yes. HTTP and HTTPS use different server ports (HTTP binds to port 80, HTTPS to port 443), so there is no direct conflict between them. You can either run two separate server instances bound to these ports, or use Apache's elegant virtual hosting facility to create two virtual servers, both served by the same instance of Apache - one responding over HTTP to requests on port 80, and the other responding over HTTPS to requests on port 443.</p> <h3><a name="ports" id="ports">Which port does HTTPS use?</a></h3> <p>You can run HTTPS on any port, but the standards specify port 443, which is where any HTTPS compliant browser will look by default. You can force your browser to look on a different port by specifying it in the URL. For example, if your server is set up to serve pages over HTTPS on port 8080, you can access them at <code>https://example.com:8080/</code></p> <h3><a name="httpstest" id="httpstest">How do I speak HTTPS manually for testing purposes?</a></h3> <p>While you usually just use</p> <div class="example"><pre>$ telnet localhost 80
 GET / HTTP/1.0</pre></div> <p>for simple testing of Apache via HTTP, it's not so easy for HTTPS because of the SSL protocol between TCP and HTTP. With the help of OpenSSL's <code>s_client</code> command, however, you can do a similar check via HTTPS:</p> <div class="example"><pre>$ openssl s_client -connect localhost:443 -state -debug
@@ -102,17 +102,9 @@ Sgh5jjQE3e+VGbPNOkMbMCsKbfJfFDdP4TVtbVHCReSFtXZiXn7G9ExC6aY37WsL
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

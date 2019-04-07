@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_pig~0.17/perf/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_pig~0.17.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_pig~0.17/" class="_nav-link" title="" style="margin-left:0;">Apache Pig 0.17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Performance and Efficiency</h1> <div id="front-matter"> <div id="minitoc-area"> <ul class="minitoc"> <li> <a href="#tez-mode">Tez mode</a> <ul class="minitoc"> <li> <a href="#enable-tez">How to enable Tez</a> </li> <li> <a href="#tez-dag">Tez DAG generation</a> </li> <li> <a href="#container-reuse">Tez session/container reuse</a> </li> <li> <a href="#auto-parallelism">Automatic parallelism</a> </li> <li> <a href="#api-change">API change</a> </li> <li> <a href="#known-issue">Known issues</a> </li> </ul> </li> <li> <a href="#profiling">Timing your UDFs</a> </li> <li> <a href="#combiner">Combiner</a> <ul class="minitoc"> <li> <a href="#When+the+Combiner+is+Used">When the Combiner is Used</a> </li> <li> <a href="#When+the+Combiner+is+Not+Used">When the Combiner is Not Used</a> </li> </ul> </li> <li> <a href="#hash-based-aggregation">Hash-based Aggregation in Map Task</a> </li> <li> <a href="#memory-management">Memory Management</a> </li> <li> <a href="#reducer-estimation">Reducer Estimation</a> </li> <li> <a href="#multi-query-execution">Multi-Query Execution</a> <ul class="minitoc"> <li> <a href="#Turning+it+On+or+Off">Turning it On or Off</a> </li> <li> <a href="#How+it+Works">How it Works</a> </li> <li> <a href="#store-dump">Store vs. Dump</a> </li> <li> <a href="#error-handling">Error Handling</a> </li> <li> <a href="#backward-compatibility">Backward Compatibility</a> </li> <li> <a href="#Implicit-Dependencies">Implicit Dependencies</a> </li> </ul> </li> <li> <a href="#optimization-rules">Optimization Rules</a> <ul class="minitoc"> <li> <a href="#PartitionFilterOptimizer">PartitionFilterOptimizer</a> </li> <li> <a href="#PredicatePushdownOptimizer">PredicatePushdownOptimizer</a> </li> <li> <a href="#ConstantCalculator">ConstantCalculator</a> </li> <li> <a href="#SplitFilter">SplitFilter</a> </li> <li> <a href="#PushUpFilter">PushUpFilter</a> </li> <li> <a href="#MergeFilter">MergeFilter</a> </li> <li> <a href="#PushDownForEachFlatten">PushDownForEachFlatten</a> </li> <li> <a href="#LimitOptimizer">LimitOptimizer</a> </li> <li> <a href="#ColumnMapKeyPrune">ColumnMapKeyPrune</a> </li> <li> <a href="#AddForEach">AddForEach</a> </li> <li> <a href="#MergeForEach">MergeForEach</a> </li> <li> <a href="#GroupByConstParallelSetter">GroupByConstParallelSetter</a> </li> </ul> </li> <li> <a href="#performance-enhancers">Performance Enhancers</a> <ul class="minitoc"> <li> <a href="#Use+Optimization">Use Optimization</a> </li> <li> <a href="#types">Use Types</a> </li> <li> <a href="#projection">Project Early and Often </a> </li> <li> <a href="#filter">Filter Early and Often</a> </li> <li> <a href="#pipeline">Reduce Your Operator Pipeline</a> </li> <li> <a href="#algebraic-interface">Make Your UDFs Algebraic</a> </li> <li> <a href="#accumulator-interface">Use the Accumulator Interface</a> </li> <li> <a href="#nulls">Drop Nulls Before a Join</a> </li> <li> <a href="#join-optimizations">Take Advantage of Join Optimizations</a> </li> <li> <a href="#parallel">Use the Parallel Features</a> </li> <li> <a href="#limit">Use the LIMIT Operator</a> </li> <li> <a href="#distinct">Prefer DISTINCT over GROUP BY/GENERATE</a> </li> <li> <a href="#compression">Compress the Results of Intermediate Jobs</a> </li> <li> <a href="#combine-files">Combine Small Input Files</a> </li> <li> <a href="#direct-fetch">Direct Fetch</a> </li> <li> <a href="#auto-local-mode">Auto Local Mode</a> </li> <li> <a href="#user-jar-cache">User Jar Cache</a> </li> </ul> </li> <li> <a href="#specialized-joins">Specialized Joins</a> <ul class="minitoc"> <li> <a href="#replicated-joins">Replicated Joins</a> </li> <li> <a href="#bloom-joins">Bloom Joins</a> </li> <li> <a href="#skewed-joins">Skewed Joins</a> </li> <li> <a href="#merge-joins">Merge Joins</a> </li> <li> <a href="#merge-sparse-joins">Merge-Sparse Joins</a> </li> <li> <a href="#specialized-joins-performance">Performance Considerations</a> </li> </ul> </li> </ul> </div> </div>  <h2 id="tez-mode">Tez mode</h2> <div class="section"> <p> <a href="http://tez.apache.org" target="_blank">Apache Tez</a> provides an alternative execution engine than MapReduce focusing on performance. By using optimized job flow, edge semantics and container reuse, we see consistent performance boost for both large job and small job. </p>  <h3 id="enable-tez">How to enable Tez</h3> <p>To run Pig in tez mode, simply add "-x tez" in pig command line. Alternatively, you can add "exectype=tez" to conf/pig.properties to change the default exec type to Tez. Java system property "-Dexectype=tez" is also good to trigger the Tez mode.</p> <p>Prerequisite: Tez requires the tez tarball to be available in hdfs while running a job on the cluster and a tez-site.xml with tez.lib.uris setting pointing to that hdfs location in classpath. Copy the tez tarball to hdfs and add the tez conf directory($TEZ_HOME/conf) containing tez-site.xml to environmental variable "PIG_CLASSPATH" if pig on tez fails with "tez.lib.uris is not defined". This is required by the Apache Pig distribution.</p> <pre class="code">
   &lt;property&gt;
@@ -472,17 +472,9 @@ store c into 'results';
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/platform/netware/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Using Apache With Novell NetWare</h1>  <p>This document explains how to install, configure and run Apache 2.0 under Novell NetWare 6.0 and above. If you find any bugs, or wish to contribute in other ways, please use our <a href="http://httpd.apache.org/bug_report.html" target="_blank">bug reporting page.</a></p> <p>The bug reporting page and dev-httpd mailing list are <em>not</em> provided to answer questions about configuration or running Apache. Before you submit a bug report or request, first consult this document, the <a href="http://wiki.apache.org/httpd/FAQ" target="_blank">Frequently Asked Questions</a> page and the other relevant documentation topics. If you still have a question or problem, post it to the <a href="../news://developer-forums.novell.com/novell.devsup.webserver/"> novell.devsup.webserver</a> newsgroup, where many Apache users are more than willing to answer new and obscure questions about using Apache on NetWare.</p> <p>Most of this document assumes that you are installing Apache from a binary distribution. If you want to compile Apache yourself (possibly to help with development, or to track down bugs), see the section on <a href="#comp">Compiling Apache for NetWare</a> below.</p>     <h2 id="req">Requirements</h2> <p>Apache 2.0 is designed to run on NetWare 6.0 service pack 3 and above. If you are running a service pack less than SP3, you must install the latest <a href="http://developer.novell.com/ndk/libc.htm" target="_blank">NetWare Libraries for C (LibC)</a>.</p> <p>NetWare service packs are available <a href="http://support.novell.com/misc/patlst.htm#nw" target="_blank">here</a>.</p> <p>Apache 2.0 for NetWare can also be run in a NetWare 5.1 environment as long as the latest service pack or the latest version of the <a href="http://developer.novell.com/ndk/libc.htm" target="_blank">NetWare Libraries for C (LibC)</a> has been installed . <strong>WARNING:</strong> Apache 2.0 for NetWare has not been targeted for or tested in this environment.</p>   <h2 id="down">Downloading Apache for NetWare</h2> <p>Information on the latest version of Apache can be found on the Apache web server at <a href="http://www.apache.org/" target="_blank">http://www.apache.org/</a>. This will list the current release, any more recent alpha or beta-test releases, together with details of mirror web and anonymous ftp sites. Binary builds of the latest releases of Apache 2.0 for NetWare can be downloaded from <a href="http://www.apache.org/dist/httpd/binaries/netware" target="_blank">here</a>.</p>   <h2 id="inst">Installing Apache for NetWare</h2> <p>There is no Apache install program for NetWare currently. If you are building Apache 2.0 for NetWare from source, you will need to copy the files over to the server manually.</p> <p>Follow these steps to install Apache on NetWare from the binary download (assuming you will install to <code>sys:/apache2</code>):</p> <ul> <li>Unzip the binary download file to the root of the <code>SYS:</code> volume (may be installed to any volume)</li> <li>Edit the <code>httpd.conf</code> file setting <code class="directive"><a href="../../mod/core/#serverroot">ServerRoot</a></code> and <code class="directive"><a href="../../mod/core/#servername">ServerName</a></code> along with any file path values to reflect your correct server settings</li> <li>Add <code>SYS:/APACHE2</code> to the search path, for example: <div class="example"><pre>SEARCH ADD SYS:\APACHE2</pre></div> </li> </ul> <p>Follow these steps to install Apache on NetWare manually from your own build source (assuming you will install to <code>sys:/apache2</code>):</p> <ul> <li>Create a directory called <code>Apache2</code> on a NetWare volume</li> <li>Copy <code>APACHE2.NLM</code>, <code>APRLIB.NLM</code> to <code>SYS:/APACHE2</code>
 </li> <li>Create a directory under <code>SYS:/APACHE2</code> called <code>BIN</code>
@@ -118,17 +118,9 @@ Set WITH_MOD_SSL=1</pre></div>
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_pig~0.17/udf/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_pig~0.17.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_pig~0.17/" class="_nav-link" title="" style="margin-left:0;">Apache Pig 0.17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>User Defined Functions</h1> <div id="front-matter"> <div id="minitoc-area"> <ul class="minitoc"> <li> <a href="#udfs">Introduction</a> </li> <li> <a href="#udf-java">Writing Java UDFs</a> <ul class="minitoc"> <li> <a href="#eval-functions">Eval Functions</a> </li> <li> <a href="#load-store-functions"> Load/Store Functions</a> </li> <li> <a href="#use-short-names">Using Short Names</a> </li> <li> <a href="#Advanced+Topics">Advanced Topics</a> </li> </ul> </li> <li> <a href="#jython-udfs">Writing Jython UDFs</a> <ul class="minitoc"> <li> <a href="#register-jython">Registering the UDF</a> </li> <li> <a href="#python_decorators">Decorators and Schemas</a> </li> <li> <a href="#Example+Scripts">Example Scripts</a> </li> <li> <a href="#jython-advanced">Advanced Topics</a> </li> </ul> </li> <li> <a href="#js-udfs">Writing JavaScript UDFs</a> <ul class="minitoc"> <li> <a href="#register-js">Registering the UDF</a> </li> <li> <a href="#schema-return-types">Return Types and Schemas</a> </li> <li> <a href="#js-example">Example Scripts</a> </li> <li> <a href="#js-advanced">Advanced Topics</a> </li> </ul> </li> <li> <a href="#jruby-udfs">Writing Ruby UDFs</a> <ul class="minitoc"> <li> <a href="#write-jruby">Writing a Ruby UDF</a> </li> <li> <a href="#jruby-schema-return-types">Return Types and Schemas</a> </li> <li> <a href="#register-jruby">Registering the UDF</a> </li> <li> <a href="#jruby-example">Example Scripts</a> </li> <li> <a href="#jruby-advanced">Advanced Topics</a> </li> </ul> </li> <li> <a href="#groovy-udfs">Writing Groovy UDFs</a> <ul class="minitoc"> <li> <a href="#register-groovy">Registering the UDF</a> </li> <li> <a href="#groovy-schema-return-types">Return Types and Schemas</a> </li> <li> <a href="#groovy-type-conversions">Type Conversions</a> </li> <li> <a href="#groovy-advanced">Advanced Topics</a> </li> </ul> </li> <li> <a href="#python-udfs">Writing Python UDFs</a> <ul class="minitoc"> <li> <a href="#register-python">Registering the UDF</a> </li> <li> <a href="#decorators">Decorators and Schemas</a> </li> </ul> </li> <li> <a href="#piggybank">Piggy Bank</a> <ul class="minitoc"> <li> <a href="#piggbank-access">Accessing Functions</a> </li> <li> <a href="#piggybank-contribute">Contributing Functions</a> </li> </ul> </li> </ul> </div> </div>  <h2 id="udfs">Introduction</h2> <div class="section"> <p> Pig provides extensive support for user defined functions (UDFs) as a way to specify custom processing. Pig UDFs can currently be implemented in six languages: Java, Jython, Python, JavaScript, Ruby and Groovy. </p> <p> The most extensive support is provided for Java functions. You can customize all parts of the processing including data load/store, column transformation, and aggregation. Java functions are also more efficient because they are implemented in the same language as Pig and because additional interfaces are supported such as the <a href="#algebraic-interface">Algebraic Interface</a> and the <a href="#accumulator-interface">Accumulator Interface</a>. </p> <p> Limited support is provided for Jython, Python, JavaScript, Ruby and Groovy functions. These functions are new, still evolving, additions to the system. Currently only the basic interface is supported; load/store functions are not supported. Furthermore, JavaScript, Ruby and Groovy are provided as experimental features because they did not go through the same amount of testing as Java or Jython. At runtime note that Pig will automatically detect the usage of a scripting UDF in the Pig script and will automatically ship the corresponding scripting jar, either Jython, Rhino, JRuby or Groovy-all, to the backend. Python does not require any runtime engine since it invoke python command line and stream data in and out of it.</p>  <p> Pig also provides support for Piggy Bank, a repository for JAVA UDFs. Through Piggy Bank you can access Java UDFs written by other users and contribute Java UDFs that you have written. </p> </div>    <h2 id="udf-java">Writing Java UDFs</h2> <div class="section">  <h3 id="eval-functions">Eval Functions</h3>  <h4 id="eval-functions-use">How to Use a Simple Eval Function</h4> <p>Eval is the most common type of function. It can be used in <span class="codefrag">FOREACH</span> statements as shown in this script: </p> <pre class="code">
 -- myscript.pig
@@ -1267,17 +1267,9 @@ STORE TweetsInaug INTO 'meta/inaug/tweets_inaug' ;
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

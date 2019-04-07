@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/content-negotiation/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Content Negotiation</h1>  <p>Apache HTTPD supports content negotiation as described in the HTTP/1.1 specification. It can choose the best representation of a resource based on the browser-supplied preferences for media type, languages, character set and encoding. It also implements a couple of features to give more intelligent handling of requests from browsers that send incomplete negotiation information.</p> <p>Content negotiation is provided by the <code class="module"><a href="../mod/mod_negotiation/">mod_negotiation</a></code> module, which is compiled in by default.</p>     <h2 id="about">About Content Negotiation</h2> <p>A resource may be available in several different representations. For example, it might be available in different languages or different media types, or a combination. One way of selecting the most appropriate choice is to give the user an index page, and let them select. However it is often possible for the server to choose automatically. This works because browsers can send, as part of each request, information about what representations they prefer. For example, a browser could indicate that it would like to see information in French, if possible, else English will do. Browsers indicate their preferences by headers in the request. To request only French representations, the browser would send</p> <div class="example"><pre>Accept-Language: fr</pre></div> <p>Note that this preference will only be applied when there is a choice of representations and they vary by language.</p> <p>As an example of a more complex request, this browser has been configured to accept French and English, but prefer French, and to accept various media types, preferring HTML over plain text or other text types, and preferring GIF or JPEG over other media types, but also allowing any other media type as a last resort:</p> <div class="example"><pre>Accept-Language: fr; q=1.0, en; q=0.5
 Accept: text/html; q=1.0, text/*; q=0.8, image/gif; q=0.6, image/jpeg; q=0.6, image/*; q=0.5, */*; q=0.1</pre></div> <p>httpd supports 'server driven' content negotiation, as defined in the HTTP/1.1 specification. It fully supports the <code>Accept</code>, <code>Accept-Language</code>, <code>Accept-Charset</code> and <code>Accept-Encoding</code> request headers. httpd also supports 'transparent' content negotiation, which is an experimental negotiation protocol defined in RFC 2295 and RFC 2296. It does not offer support for 'feature negotiation' as defined in these RFCs.</p> <p>A <strong>resource</strong> is a conceptual entity identified by a URI (RFC 2396). An HTTP server like Apache HTTP Server provides access to <strong>representations</strong> of the resource(s) within its namespace, with each representation in the form of a sequence of bytes with a defined media type, character set, encoding, etc. Each resource may be associated with zero, one, or more than one representation at any given time. If multiple representations are available, the resource is referred to as <strong>negotiable</strong> and each of its representations is termed a <strong>variant</strong>. The ways in which the variants for a negotiable resource vary are called the <strong>dimensions</strong> of negotiation.</p>   <h2 id="negotiation">Negotiation in httpd</h2> <p>In order to negotiate a resource, the server needs to be given information about each of the variants. This is done in one of two ways:</p> <ul> <li>Using a type map (<em>i.e.</em>, a <code>*.var</code> file) which names the files containing the variants explicitly, or</li> <li>Using a 'MultiViews' search, where the server does an implicit filename pattern match and chooses from among the results.</li> </ul> <h3><a name="type-map" id="type-map">Using a type-map file</a></h3> <p>A type map is a document which is associated with the handler named <code>type-map</code> (or, for backwards-compatibility with older httpd configurations, the <a class="glossarylink" href="https://httpd.apache.org/docs/2.4/en/glossary.html#mime-type" title="see glossary" target="_blank">MIME-type</a> <code>application/x-type-map</code>). Note that to use this feature, you must have a handler set in the configuration that defines a file suffix as <code>type-map</code>; this is best done with</p> <pre class="prettyprint lang-config">AddHandler type-map .var</pre> <p>in the server configuration file.</p> <p>Type map files should have the same name as the resource which they are describing, followed by the extension <code>.var</code>. In the examples shown below, the resource is named <code>foo</code>, so the type map file is named <code>foo.var</code>.</p> <p>This file should have an entry for each available variant; these entries consist of contiguous HTTP-format header lines. Entries for different variants are separated by blank lines. Blank lines are illegal within an entry. It is conventional to begin a map file with an entry for the combined entity as a whole (although this is not required, and if present will be ignored). An example map file is shown below.</p> <p>URIs in this file are relative to the location of the type map file. Usually, these files will be located in the same directory as the type map file, but this is not required. You may provide absolute or relative URIs for any file located on the same server as the map file.</p> <div class="example"><pre>URI: foo
@@ -109,17 +109,9 @@ Header append Vary cookie</pre> </div>   <h2 id="extensions">Extensions to Trans
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

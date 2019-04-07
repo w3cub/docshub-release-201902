@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/misc/security_tips/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Security Tips</h1>  <p>Some hints and tips on security issues in setting up a web server. Some of the suggestions will be general, others specific to Apache.</p>     <h2 id="uptodate">Keep up to Date</h2> <p>The Apache HTTP Server has a good record for security and a developer community highly concerned about security issues. But it is inevitable that some problems -- small or large -- will be discovered in software after it is released. For this reason, it is crucial to keep aware of updates to the software. If you have obtained your version of the HTTP Server directly from Apache, we highly recommend you subscribe to the <a href="http://httpd.apache.org/lists.html#http-announce" target="_blank">Apache HTTP Server Announcements List</a> where you can keep informed of new releases and security updates. Similar services are available from most third-party distributors of Apache software.</p> <p>Of course, most times that a web server is compromised, it is not because of problems in the HTTP Server code. Rather, it comes from problems in add-on code, CGI scripts, or the underlying Operating System. You must therefore stay aware of problems and updates with all the software on your system.</p>   <h2 id="dos">Denial of Service (DoS) attacks</h2> <p>All network servers can be subject to denial of service attacks that attempt to prevent responses to clients by tying up the resources of the server. It is not possible to prevent such attacks entirely, but you can do certain things to mitigate the problems that they create.</p> <p>Often the most effective anti-DoS tool will be a firewall or other operating-system configurations. For example, most firewalls can be configured to restrict the number of simultaneous connections from any individual IP address or network, thus preventing a range of simple attacks. Of course this is no help against Distributed Denial of Service attacks (DDoS).</p> <p>There are also certain Apache HTTP Server configuration settings that can help mitigate problems:</p> <ul> <li>The <code class="directive"><a href="../../mod/mod_reqtimeout/#requestreadtimeout">RequestReadTimeout</a></code> directive allows to limit the time a client may take to send the request.</li> <li>The <code class="directive"><a href="../../mod/core/#timeout">TimeOut</a></code> directive should be lowered on sites that are subject to DoS attacks. Setting this to as low as a few seconds may be appropriate. As <code class="directive"><a href="../../mod/core/#timeout">TimeOut</a></code> is currently used for several different operations, setting it to a low value introduces problems with long running CGI scripts.</li> <li>The <code class="directive"><a href="../../mod/core/#keepalivetimeout">KeepAliveTimeout</a></code> directive may be also lowered on sites that are subject to DoS attacks. Some sites even turn off the keepalives completely via <code class="directive"><a href="../../mod/core/#keepalive">KeepAlive</a></code>, which has of course other drawbacks on performance.</li> <li>The values of various timeout-related directives provided by other modules should be checked.</li> <li>The directives <code class="directive"><a href="../../mod/core/#limitrequestbody">LimitRequestBody</a></code>, <code class="directive"><a href="../../mod/core/#limitrequestfields">LimitRequestFields</a></code>, <code class="directive"><a href="../../mod/core/#limitrequestfieldsize">LimitRequestFieldSize</a></code>, <code class="directive"><a href="../../mod/core/#limitrequestline">LimitRequestLine</a></code>, and <code class="directive"><a href="../../mod/core/#limitxmlrequestbody">LimitXMLRequestBody</a></code> should be carefully configured to limit resource consumption triggered by client input.</li> <li>On operating systems that support it, make sure that you use the <code class="directive"><a href="../../mod/core/#acceptfilter">AcceptFilter</a></code> directive to offload part of the request processing to the operating system. This is active by default in Apache httpd, but may require reconfiguration of your kernel.</li> <li>Tune the <code class="directive"><a href="../../mod/mpm_common/#maxrequestworkers">MaxRequestWorkers</a></code> directive to allow the server to handle the maximum number of simultaneous connections without running out of resources. See also the <a href="../perf-tuning/">performance tuning documentation</a>.</li> <li>The use of a threaded <a href="../../mpm/">mpm</a> may allow you to handle more simultaneous connections, thereby mitigating DoS attacks. Further, the <code class="module"><a href="../../mod/event/">event</a></code> mpm uses asynchronous processing to avoid devoting a thread to each connection. Due to the nature of the OpenSSL library the <code class="module"><a href="../../mod/event/">event</a></code> mpm is currently incompatible with <code class="module"><a href="../../mod/mod_ssl/">mod_ssl</a></code> and other input filters. In these cases it falls back to the behaviour of the <code class="module"><a href="../../mod/worker/">worker</a></code> mpm.</li> <li>There are a number of third-party modules available through <a href="http://modules.apache.org/" target="_blank">http://modules.apache.org/</a> that can restrict certain client behaviors and thereby mitigate DoS problems.</li> </ul>   <h2 id="serverroot">Permissions on ServerRoot Directories</h2> <p>In typical operation, Apache is started by the root user, and it switches to the user defined by the <code class="directive"><a href="../../mod/mod_unixd/#user">User</a></code> directive to serve hits. As is the case with any command that root executes, you must take care that it is protected from modification by non-root users. Not only must the files themselves be writeable only by root, but so must the directories, and parents of all directories. For example, if you choose to place ServerRoot in <code>/usr/local/apache</code> then it is suggested that you create that directory as root, with commands like these:</p> <div class="example"><pre>mkdir /usr/local/apache 
 cd /usr/local/apache 
@@ -107,17 +107,9 @@ grep "client denied" error_log | tail -n 10</pre></div> <p>The first example wil
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

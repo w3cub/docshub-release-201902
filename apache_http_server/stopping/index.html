@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/stopping/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Stopping and Restarting Apache HTTP Server</h1>  <p>This document covers stopping and restarting Apache HTTP Server on Unix-like systems. Windows NT, 2000 and XP users should see <a href="../platform/windows/#winsvc">Running httpd as a Service</a> and Windows 9x and ME users should see <a href="../platform/windows/#wincons">Running httpd as a Console Application</a> for information on how to control httpd on those platforms.</p>     <h2 id="introduction">Introduction</h2> <p>In order to stop or restart the Apache HTTP Server, you must send a signal to the running <code class="program"><a href="../programs/httpd/">httpd</a></code> processes. There are two ways to send the signals. First, you can use the unix <code>kill</code> command to directly send signals to the processes. You will notice many <code class="program"><a href="../programs/httpd/">httpd</a></code> executables running on your system, but you should not send signals to any of them except the parent, whose pid is in the <code class="directive"><a href="../mod/mpm_common/#pidfile">PidFile</a></code>. That is to say you shouldn't ever need to send signals to any process except the parent. There are four signals that you can send the parent: <code><a href="#term">TERM</a></code>, <code><a href="#graceful">USR1</a></code>, <code><a href="#hup">HUP</a></code>, and <code><a href="#gracefulstop">WINCH</a></code>, which will be described in a moment.</p> <p>To send a signal to the parent you should issue a command such as:</p> <div class="example"><pre>kill -TERM `cat /usr/local/apache2/logs/httpd.pid`</pre></div> <p>The second method of signaling the <code class="program"><a href="../programs/httpd/">httpd</a></code> processes is to use the <code>-k</code> command line options: <code>stop</code>, <code>restart</code>, <code>graceful</code> and <code>graceful-stop</code>, as described below. These are arguments to the <code class="program"><a href="../programs/httpd/">httpd</a></code> binary, but we recommend that you send them using the <code class="program"><a href="../programs/apachectl/">apachectl</a></code> control script, which will pass them through to <code class="program"><a href="../programs/httpd/">httpd</a></code>.</p> <p>After you have signaled <code class="program"><a href="../programs/httpd/">httpd</a></code>, you can read about its progress by issuing:</p> <div class="example"><pre>tail -f /usr/local/apache2/logs/error_log</pre></div> <p>Modify those examples to match your <code class="directive"><a href="../mod/core/#serverroot">ServerRoot</a></code> and <code class="directive"><a href="../mod/mpm_common/#pidfile">PidFile</a></code> settings.</p>   <h2 id="term">Stop Now</h2> <dl>
 <dt>Signal: TERM</dt> <dd><code>apachectl -k stop</code></dd> </dl> <p>Sending the <code>TERM</code> or <code>stop</code> signal to the parent causes it to immediately attempt to kill off all of its children. It may take it several seconds to complete killing off its children. Then the parent itself exits. Any requests in progress are terminated, and no further requests are served.</p>   <h2 id="graceful">Graceful Restart</h2> <dl>
@@ -93,17 +93,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

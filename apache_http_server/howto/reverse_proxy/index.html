@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/howto/reverse_proxy/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Reverse Proxy Guide</h1>  <p>In addition to being a "basic" web server, and providing static and dynamic content to end-users, Apache httpd (as well as most other web servers) can also act as a reverse proxy server, also-known-as a "gateway" server.</p> <p>In such scenarios, httpd itself does not generate or host the data, but rather the content is obtained by one or several backend servers, which normally have no direct connection to the external network. As httpd receives a request from a client, the request itself is <em>proxied</em> to one of these backend servers, which then handles the request, generates the content and then sends this content back to httpd, which then generates the actual HTTP response back to the client.</p> <p>There are numerous reasons for such an implementation, but generally the typical rationales are due to security, high-availability, load-balancing and centralized authentication/authorization. It is critical in these implementations that the layout, design and architecture of the backend infrastructure (those servers which actually handle the requests) are insulated and protected from the outside; as far as the client is concerned, the reverse proxy server <em>is</em> the sole source of all content.</p> <p>A typical implementation is below:</p> <p class="centered"><img src="data:image/png;base64,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" alt="reverse-proxy-arch"></p>     <h2 id="related">Reverse Proxy</h2> <table class="related">
 <tr>
@@ -179,17 +179,9 @@ ProxyPassReverse "/images/"  "balancer://myset/"</pre> <p> For failover, hot spa
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

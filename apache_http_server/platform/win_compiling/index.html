@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/platform/win_compiling/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Compiling Apache for Microsoft Windows</h1>  <p>There are many important points to consider before you begin compiling Apache HTTP Server (httpd). See <a href="../windows/">Using Apache HTTP Server on Microsoft Windows</a> before you begin.</p> <p>httpd can be built on Windows using a cmake-based build system or with Visual Studio project files maintained by httpd developers. The cmake-based build system directly supports more versions of Visual Studio but currently has considerable functional limitations.</p>     <h2 id="vstudio">Building httpd with the included Visual Studio project files</h2> <h3><a name="requirements" id="requirements">Requirements</a></h3> <p>Compiling Apache requires the following environment to be properly installed:</p> <ul> <li> <p>Disk Space</p> <p>Make sure you have at least 200 MB of free disk space available. After installation Apache requires approximately 80 MB of disk space, plus space for log and cache files, which can grow rapidly. The actual disk space requirements will vary considerably based on your chosen configuration and any third-party modules or libraries, especially when OpenSSL is also built. Because many files are text and very easily compressed, NTFS filesystem compression cuts these requirements in half.</p> </li> <li> <p>Appropriate Patches</p> <p>The httpd binary is built with the help of several patches to third party packages, which ensure the released code is buildable and debuggable. These patches are available and distributed from <a href="http://www.apache.org/dist/httpd/binaries/win32/patches_applied/" target="_blank">http://www.apache.org/dist/httpd/binaries/win32/patches_applied/</a> and are recommended to be applied to obtain identical results as the "official" ASF distributed binaries.</p> </li> <li> <p>Microsoft Visual C++ 6.0 (Visual Studio 97) or later.</p> <p>Apache can be built using the command line tools, or from within the Visual Studio IDE Workbench. The command line build requires the environment to reflect the <code>PATH</code>, <code>INCLUDE</code>, <code>LIB</code> and other variables that can be configured with the <code>vcvars32.bat</code> script.</p> <div class="note">You may want the Visual Studio Processor Pack for your older version of Visual Studio, or a full (not Express) version of newer Visual Studio editions, for the ml.exe assembler. This will allow you to build OpenSSL, if desired, using the more efficient assembly code implementation.</div> <div class="note">Only the Microsoft compiler tool chain is actively supported by the active httpd contributors. Although the project regularly accepts patches to ensure MinGW and other alternative builds work and improve upon them, they are not actively maintained and are often broken in the course of normal development.</div> </li> <li> <p>Updated Microsoft Windows Platform SDK, February 2003 or later.</p> <p>An appropriate Windows Platform SDK is included by default in the full (not express/lite) versions of Visual C++ 7.1 (Visual Studio 2002) and later, these users can ignore these steps unless explicitly choosing a newer or different version of the Platform SDK.</p> <p>To use Visual C++ 6.0 or 7.0 (Studio 2000 .NET), the Platform SDK environment must be prepared using the <code>setenv.bat</code> script (installed by the Platform SDK) before starting the command line build or launching the msdev/devenv GUI environment. Installing the Platform SDK for Visual Studio Express versions (2003 and later) should adjust the default environment appropriately.</p> <div class="example"><pre>"c:\Program Files\Microsoft Visual Studio\VC98\Bin\VCVARS32"
 "c:\Program Files\Platform SDK\setenv.bat"</pre></div> </li> <li> <p>Perl and awk</p> <p>Several steps recommended here require a perl interpreter during the build preparation process, but it is otherwise not required.</p> <p>To install Apache within the build system, several files are modified using the <code>awk.exe</code> utility. awk was chosen since it is a very small download (compared with Perl or WSH/VB) and accomplishes the task of modifying configuration files upon installation. Brian Kernighan's <a href="http://www.cs.princeton.edu/~bwk/btl.mirror/" target="_blank">http://www.cs.princeton.edu/~bwk/btl.mirror/</a> site has a compiled native Win32 binary, <a href="http://www.cs.princeton.edu/~bwk/btl.mirror/awk95.exe" target="_blank">http://www.cs.princeton.edu/~bwk/btl.mirror/awk95.exe</a> which you must save with the name <code>awk.exe</code> (rather than <code>awk95.exe</code>).</p> <div class="note">If awk.exe is not found, Makefile.win's install target will not perform substitutions in the installed .conf files. You must manually modify the installed .conf files to allow the server to start. Search and replace all "@token@" tags as appropriate.</div> <div class="note">The Visual Studio IDE will only find <code>awk.exe</code> from the PATH, or executable path specified in the menu option Tools -&gt; Options -&gt; (Projects -&gt;) Directories. Ensure awk.exe is in your system path.</div> <div class="note">Also note that if you are using Cygwin tools (<a href="http://www.cygwin.com/" target="_blank">http://www.cygwin.com/</a>) the awk utility is named <code>gawk.exe</code> and that the file <code>awk.exe</code> is really a symlink to the <code>gawk.exe</code> file. The Windows command shell does not recognize symlinks, and because of this building InstallBin will fail. A workaround is to delete <code>awk.exe</code> from the cygwin installation and copy <code>gawk.exe</code> to <code>awk.exe</code>. Also note the cygwin/mingw ports of gawk 3.0.x were buggy, please upgrade to 3.1.x before attempting to use any gawk port.</div> </li> <li> <p>[Optional] zlib library (for <code class="module"><a href="../../mod/mod_deflate/">mod_deflate</a></code>)</p> <p>Zlib must be installed into a <code>srclib</code> subdirectory named <code>zlib</code>. This must be built in-place. Zlib can be obtained from <a href="http://www.zlib.net/" target="_blank">http://www.zlib.net/</a> -- the <code class="module"><a href="../../mod/mod_deflate/">mod_deflate</a></code> is confirmed to work correctly with version 1.2.3.</p> <div class="example"><pre>nmake -f win32\Makefile.msc
@@ -94,17 +94,9 @@ nmake /f Makefile.win installd INSTDIR=dir</pre></div> <p>The <em>dir</em> argum
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

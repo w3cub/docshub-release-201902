@@ -16,8 +16,8 @@
   
   <link rel="canonical" href="http://docs.w3cub.com/apache_http_server/howto/access/">
   <link href="/favicon.png" rel="icon">
-  <link rel="stylesheet" type="text/css" href="/assets/application-6cc8ff3c95d062e2cd87636799240e79e4553263ad7de9cda9464063203db436.css" integrity="sha256-bMj/PJXQYuLNh2NnmSQOeeRVMmOtfenNqUZAYyA9tDY=" crossorigin="anonymous">
-  <script type="text/javascript" integrity="sha256-JOOcjTvTbt5QE9AmOH1rrXz8aKKfHMsOthbsjt9CNfk=" crossorigin="anonymous" src="/assets/application-24e39c8d3bd36ede5013d026387d6bad7cfc68a29f1ccb0eb616ec8edf4235f9.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/application-6ca5be81b81eb73e654078d9aaa623884afe18900617ed9a60729a4905026f77.css">
+  <script type="text/javascript" src="/assets/application-2fa35d54abf92f248ac868261a14d3f99b325c34fcc70df314719245e248d73c.js"></script>
   <script src="/json/apache_http_server.js"></script>
   
   <script type="text/javascript">
@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/apache_http_server/" class="_nav-link" title="" style="margin-left:0;">Apache HTTP Server</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _apache">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Access Control</h1>  <p>Access control refers to any means of controlling access to any resource. This is separate from <a href="../auth/">authentication and authorization</a>.</p>     <h2 id="related">Related Modules and Directives</h2> <p>Access control can be done by several different modules. The most important of these are <code class="module"><a href="../../mod/mod_authz_core/">mod_authz_core</a></code> and <code class="module"><a href="../../mod/mod_authz_host/">mod_authz_host</a></code>. Also discussed in this document is access control using <code class="module"><a href="../../mod/mod_rewrite/">mod_rewrite</a></code>.</p>   <h2 id="host">Access control by host</h2> <p> If you wish to restrict access to portions of your site based on the host address of your visitors, this is most easily done using <code class="module"><a href="../../mod/mod_authz_host/">mod_authz_host</a></code>. </p> <p>The <code class="directive"><a href="../../mod/mod_authz_core/#require">Require</a></code> provides a variety of different ways to allow or deny access to resources. In conjunction with the <code class="directive"><a href="../../mod/mod_authz_core/#requireall">RequireAll</a></code>, <code class="directive"><a href="../../mod/mod_authz_core/#requireany">RequireAny</a></code>, and <code class="directive"><a href="../../mod/mod_authz_core/#requirenone">RequireNone</a></code> directives, these requirements may be combined in arbitrarily complex ways, to enforce whatever your access policy happens to be.</p> <div class="warning"><p> The <code class="directive"><a href="../../mod/mod_access_compat/#allow">Allow</a></code>, <code class="directive"><a href="../../mod/mod_access_compat/#deny">Deny</a></code>, and <code class="directive"><a href="../../mod/mod_access_compat/#order">Order</a></code> directives, provided by <code class="module"><a href="../../mod/mod_access_compat/">mod_access_compat</a></code>, are deprecated and will go away in a future version. You should avoid using them, and avoid outdated tutorials recommending their use. </p></div> <p>The usage of these directives is:</p> <pre class="prettyprint lang-config">Require host address
 Require ip ip.address</pre> <p>In the first form, <var>address</var> is a fully qualified domain name (or a partial domain name); you may provide multiple addresses or domain names, if desired.</p> <p>In the second form, <var>ip.address</var> is an IP address, a partial IP address, a network/netmask pair, or a network/nnn CIDR specification. Either IPv4 or IPv6 addresses may be used.</p> <p>See <a href="../../mod/mod_authz_host/#requiredirectives">the mod_authz_host documentation</a> for further examples of this syntax.</p> <p>You can insert <code>not</code> to negate a particular requirement. Note, that since a <code>not</code> is a negation of a value, it cannot be used by itself to allow or deny a request, as <em>not true</em> does not constitute <em>false</em>. Thus, to deny a visit using a negation, the block must have one element that evaluates as true or false. For example, if you have someone spamming your message board, and you want to keep them out, you could do the following:</p> <pre class="prettyprint lang-config">&lt;RequireAll&gt;
@@ -99,17 +99,9 @@ RewriteRule "^/fridge"     "-" [F]</pre> <p>This will return a 403 Forbidden res
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
