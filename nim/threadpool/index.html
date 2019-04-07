@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/nim/" class="_nav-link" title="" style="margin-left:0;">Nim</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title">Module threadpool</h1>  <p class="module-desc">Implements Nim's 'spawn'.</p>  <h2 id="6">Imports</h2> <dl> <a href="../cpuinfo/">cpuinfo</a>, <a href="../cpuload/">cpuload</a>, <a href="../locks/">locks</a> </dl>  <h2 id="7">Types</h2> <dl>  <dt><pre>FlowVarBase = ref FlowVarBaseObj</pre></dt> <dd> untyped base class for 'FlowVar[T]'   </dd>  <dt><pre data-language="nim">FlowVar {...}{.compilerProc.}[T] = ref FlowVarObj[T]</pre></dt> <dd> a data flow variable   </dd>  <dt><pre data-language="nim">ThreadId = range[0 .. 32 - 1]</pre></dt>  </dl>  <h2 id="10">Consts</h2> <dl>  <dt><pre>MaxThreadPoolSize = 256</pre></dt> <dd> maximal size of the thread pool. 256 threads should be good enough for anybody ;-)   </dd>  <dt><pre>MaxDistinguishedThread = 32</pre></dt> <dd> maximal number of "distinguished" threads.   </dd> </dl>  <h2 id="12">Procs</h2> <dl>  <dt><pre data-language="nim">proc blockUntil(fv: FlowVarBase) {...}{.raises: [], tags: [].}</pre></dt> <dd> waits until the value for the flowVar arrives. Usually it is not necessary to call this explicitly.   </dd>  <dt><pre data-language="nim">proc awaitAndThen[T](fv: FlowVar[T]; action: proc (x: T) {...}{.closure.})</pre></dt> <dd> blocks until the <code>fv</code> is available and then passes its value to <code>action</code>. Note that due to Nim's parameter passing semantics this means that <code>T</code> doesn't need to be copied and so <code>awaitAndThen</code> can sometimes be more efficient than <code>^</code>.   </dd>  <dt><pre data-language="nim">proc unsafeRead[T](fv: FlowVar[ref T]): ptr T</pre></dt> <dd> blocks until the value is available and then returns this value.   </dd>  <dt><pre data-language="nim">proc `^`[T](fv: FlowVar[ref T]): ref T</pre></dt> <dd> blocks until the value is available and then returns this value.   </dd>  <dt><pre data-language="nim">proc `^`[T](fv: FlowVar[T]): T</pre></dt> <dd> blocks until the value is available and then returns this value.   </dd>  <dt><pre data-language="nim">proc blockUntilAny(flowVars: openArray[FlowVarBase]): int {...}{.raises: [], tags: [].}</pre></dt> <dd> awaits any of the given flowVars. Returns the index of one flowVar for which a value arrived. A flowVar only supports one call to 'blockUntilAny' at the same time. That means if you blockUntilAny([a,b]) and blockUntilAny([b,c]) the second call will only blockUntil 'c'. If there is no flowVar left to be able to wait on, -1 is returned. <strong>Note</strong>: This results in non-deterministic behaviour and should be avoided.   </dd>  <dt><pre data-language="nim">proc isReady(fv: FlowVarBase): bool {...}{.raises: [], tags: [].}</pre></dt> <dd> <p>Determines whether the specified <code>FlowVarBase</code>'s value is available.</p> <p>If <code>true</code> awaiting <code>fv</code> will not block.</p>   </dd>  <dt><pre data-language="nim">proc setMinPoolSize(size: range[1 .. MaxThreadPoolSize]) {...}{.raises: [], tags: [].}</pre></dt> <dd> sets the minimal thread pool size. The default value of this is 4.   </dd>  <dt><pre data-language="nim">proc setMaxPoolSize(size: range[1 .. MaxThreadPoolSize]) {...}{.raises: [], tags: [].}</pre></dt> <dd> sets the maximal thread pool size. The default value of this is <code>MaxThreadPoolSize</code>.   </dd>  <dt><pre data-language="nim">proc preferSpawn(): bool {...}{.raises: [], tags: [].}</pre></dt> <dd> Use this proc to determine quickly if a 'spawn' or a direct call is preferable. If it returns 'true' a 'spawn' may make sense. In general it is not necessary to call this directly; use 'spawnX' instead.   </dd>  <dt><pre data-language="nim">proc spawn(call: typed): void {...}{.magic: "Spawn".}</pre></dt> <dd> always spawns a new task, so that the 'call' is never executed on the calling thread. 'call' has to be proc call 'p(...)' where 'p' is gcsafe and has a return type that is either 'void' or compatible with <code>FlowVar[T]</code>.   </dd>  <dt><pre data-language="nim">proc pinnedSpawn(id: ThreadId; call: typed): void {...}{.magic: "Spawn".}</pre></dt> <dd> always spawns a new task on the worker thread with <code>id</code>, so that the 'call' is <strong>always</strong> executed on the thread. 'call' has to be proc call 'p(...)' where 'p' is gcsafe and has a return type that is either 'void' or compatible with <code>FlowVar[T]</code>.   </dd>  <dt><pre data-language="nim">proc parallel(body: untyped) {...}{.magic: "Parallel".}</pre></dt> <dd> a parallel section can be used to execute a block in parallel. <code>body</code> has to be in a DSL that is a particular subset of the language. Please refer to the manual for further information.   </dd>  <dt><pre data-language="nim">proc sync() {...}{.raises: [], tags: [].}</pre></dt> <dd> a simple barrier to wait for all spawn'ed tasks. If you need more elaborate waiting, you have to use an explicit barrier.   </dd> </dl>  <h2 id="18">Templates</h2> <dl>  <dt><pre data-language="nim">template spawnX(call): void</pre></dt> <dd> spawns a new task if a CPU core is ready, otherwise executes the call in the calling thread. Usually it is advised to use 'spawn' in order to not block the producer for an unknown amount of time. 'call' has to be proc call 'p(...)' where 'p' is gcsafe and has a return type that is either 'void' or compatible with <code>FlowVar[T]</code>.   </dd> </dl>
 <div class="_attribution">
@@ -86,17 +86,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/nim/" class="_nav-link" title="" style="margin-left:0;">Nim</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1 class="title">Module unicode</h1>  <p class="module-desc">This module provides support to handle the Unicode UTF-8 encoding.</p>  <h2 id="7">Types</h2> <dl>  <dt><pre>Rune = distinct RuneImpl</pre></dt> <dd> type that can hold any Unicode character   </dd>  <dt><pre>Rune16 = distinct int16</pre></dt> <dd> 16 bit Unicode character   </dd> </dl>  <h2 id="12">Procs</h2> <dl>  <dt><pre data-language="nim">proc `&lt;=%`(a, b: Rune): bool {...}{.raises: [], tags: [].}</pre></dt>   <dt><pre data-language="nim">proc `&lt;%`(a, b: Rune): bool {...}{.raises: [], tags: [].}</pre></dt>   <dt><pre data-language="nim">proc `==`(a, b: Rune): bool {...}{.raises: [], tags: [].}</pre></dt>   <dt><pre data-language="nim">proc runeLen(s: string): int {...}{.gcsafe, extern: "nuc$1", raises: [], tags: [].}</pre></dt> <dd> Returns the number of Unicode characters of the string <code>s</code>   </dd>  <dt><pre data-language="nim">proc runeLenAt(s: string; i: Natural): int {...}{.raises: [], tags: [].}</pre></dt> <dd> Returns the number of bytes the rune starting at <code>s[i]</code> takes   </dd>  <dt><pre data-language="nim">proc validateUtf8(s: string): int {...}{.raises: [], tags: [].}</pre></dt> <dd> Returns the position of the invalid byte in <code>s</code> if the string <code>s</code> does not hold valid UTF-8 data. Otherwise <code>-1</code> is returned.   </dd>  <dt><pre data-language="nim">proc runeAt(s: string; i: Natural): Rune {...}{.raises: [], tags: [].}</pre></dt> <dd> Returns the unicode character in <code>s</code> at byte index <code>i</code>   </dd>  <dt><pre data-language="nim">proc toUTF8(c: Rune): string {...}{.gcsafe, extern: "nuc$1", raises: [], tags: [].}</pre></dt> <dd> Converts a rune into its UTF-8 representation   </dd>  <dt><pre data-language="nim">proc `$`(rune: Rune): string {...}{.raises: [], tags: [].}</pre></dt> <dd> Converts a Rune to a string   </dd>  <dt><pre data-language="nim">proc `$`(runes: seq[Rune]): string {...}{.raises: [], tags: [].}</pre></dt> <dd> Converts a sequence of Runes to a string   </dd>  <dt><pre data-language="nim">proc runeOffset(s: string; pos: Natural; start: Natural = 0): int {...}{.raises: [], tags: [].}</pre></dt> <dd> <p>Returns the byte position of unicode character at position pos in s with an optional start byte position. returns the special value -1 if it runs out of the string</p> <p>Beware: This can lead to unoptimized code and slow execution! Most problems are solve more efficient by using an iterator or conversion to a seq of Rune.</p>   </dd>  <dt><pre data-language="nim">proc runeAtPos(s: string; pos: int): Rune {...}{.raises: [], tags: [].}</pre></dt> <dd> <p>Returns the unicode character at position pos</p> <p>Beware: This can lead to unoptimized code and slow execution! Most problems are solve more efficient by using an iterator or conversion to a seq of Rune.</p>   </dd>  <dt><pre data-language="nim">proc runeStrAtPos(s: string; pos: Natural): string {...}{.raises: [], tags: [].}</pre></dt> <dd> <p>Returns the unicode character at position pos as UTF8 String</p> <p>Beware: This can lead to unoptimized code and slow execution! Most problems are solve more efficient by using an iterator or conversion to a seq of Rune.</p>   </dd>  <dt><pre data-language="nim">proc runeReverseOffset(s: string; rev: Positive): (int, int) {...}{.raises: [], tags: [].}</pre></dt> <dd> <p>Returns a tuple with the the byte offset of the unicode character at position <code>rev</code> in s counting from the end (starting with 1) and the total number of runes in the string. Returns a negative value for offset if there are to few runes in the string to satisfy the request.</p> <p>Beware: This can lead to unoptimized code and slow execution! Most problems are solve more efficient by using an iterator or conversion to a seq of Rune.</p>   </dd>  <dt><pre data-language="nim">proc runeSubStr(s: string; pos: int; len: int = int.high): string {...}{.raises: [], tags: [].}</pre></dt> <dd> <p>Returns the UTF-8 substring starting at codepoint pos with len codepoints. If pos or len is negative they count from the end of the string. If len is not given it means the longest possible string.</p> <p>(Needs some examples)</p>   </dd>  <dt><pre data-language="nim">proc toLower(c: Rune): Rune {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Converts <code>c</code> into lower case. This works for any Unicode character. If possible, prefer <code>toLower</code> over <code>toUpper</code>.   </dd>  <dt><pre data-language="nim">proc toUpper(c: Rune): Rune {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Converts <code>c</code> into upper case. This works for any Unicode character. If possible, prefer <code>toLower</code> over <code>toUpper</code>.   </dd>  <dt><pre data-language="nim">proc toTitle(c: Rune): Rune {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Converts <code>c</code> to title case   </dd>  <dt><pre data-language="nim">proc isLower(c: Rune): bool {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Returns true iff <code>c</code> is a lower case Unicode character. If possible, prefer <code>isLower</code> over <code>isUpper</code>.   </dd>  <dt><pre data-language="nim">proc isUpper(c: Rune): bool {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Returns true iff <code>c</code> is a upper case Unicode character. If possible, prefer <code>isLower</code> over <code>isUpper</code>.   </dd>  <dt><pre data-language="nim">proc isAlpha(c: Rune): bool {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Returns true iff <code>c</code> is an <em>alpha</em> Unicode character (i.e., a letter)   </dd>  <dt><pre data-language="nim">proc isTitle(c: Rune): bool {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Returns true iff <code>c</code> is a Unicode titlecase character   </dd>  <dt><pre data-language="nim">proc isWhiteSpace(c: Rune): bool {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Returns true iff <code>c</code> is a Unicode whitespace character   </dd>  <dt><pre data-language="nim">proc isCombining(c: Rune): bool {...}{.gcsafe, extern: "nuc$1", procvar, raises: [], tags: [].}</pre></dt> <dd> Returns true iff <code>c</code> is a Unicode combining character   </dd>  <dt><pre data-language="nim">proc isAlpha(s: string): bool {...}{.noSideEffect, procvar, gcsafe, extern: "nuc$1Str",
                             raises: [], tags: [].}</pre></dt> <dd> Returns true iff <em>s</em> contains all alphabetic unicode characters.   </dd>  <dt><pre data-language="nim">proc isSpace(s: string): bool {...}{.noSideEffect, procvar, gcsafe, extern: "nuc$1Str",
@@ -99,17 +99,9 @@ assert reversed("a⃞b⃞c⃞") == "c⃞b⃞a⃞"</pre>   </dd>  <dt><pre data-l
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
