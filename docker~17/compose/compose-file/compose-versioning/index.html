@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Compose file versions and upgrading</h1>  <p>The Compose file is a <a href="http://yaml.org/" target="_blank">YAML</a> file defining services, networks, and volumes for a Docker application.</p> <p>The Compose file formats are now described in these references, specific to each version.</p> <table> <thead> <tr> <th style="text-align: left"><strong>Reference file</strong></th> <th style="text-align: left"><strong>What changed in this version</strong></th> </tr> </thead> <tbody> <tr> <td style="text-align: left">
 <a href="../">Version 3</a> (most current, and recommended)</td> <td style="text-align: left"><a href="#version-3">Version 3 updates</a></td> </tr> <tr> <td style="text-align: left"><a href="../compose-file-v2/">Version 2</a></td> <td style="text-align: left"><a href="#version-2">Version 2 updates</a></td> </tr> <tr> <td style="text-align: left"><a href="../compose-file-v1/">Version 1</a></td> <td style="text-align: left"><a href="#version-1">Version 1 updates</a></td> </tr> </tbody> </table> <p>The topics below explain the differences among the versions, Docker Engine compatibility, and <a href="#upgrading">how to upgrade</a>.</p> <h2 id="compatibility-matrix">Compatibility matrix</h2> <p>There are several versions of the Compose file format – 1, 2, 2.x, and 3.x</p> <p>This table shows which Compose file versions support specific Docker releases.</p> <table> <thead> <tr> <th><strong>Compose file format</strong></th> <th><strong>Docker Engine release</strong></th> </tr> </thead> <tbody> <tr> <td>3.3</td> <td>17.06.0+</td> </tr> <tr> <td>3.2</td> <td>17.04.0+</td> </tr> <tr> <td>3.1</td> <td>1.13.1+</td> </tr> <tr> <td>3.0</td> <td>1.13.0+</td> </tr> <tr> <td>2.3</td> <td>17.06.0+</td> </tr> <tr> <td>2.2</td> <td>1.13.0+</td> </tr> <tr> <td>2.1</td> <td>1.12.0+</td> </tr> <tr> <td>2.0</td> <td>1.10.0+</td> </tr> <tr> <td>1.0</td> <td>1.9.1.+</td> </tr> </tbody> </table> <p>In addition to Compose file format versions shown in the table, the Compose itself is on a release schedule, as shown in <a href="https://github.com/docker/compose/releases/" target="_blank">Compose releases</a>, but file format versions do not necessairly increment with each release. For example, Compose file format 3.0 was first introduced in <a href="https://github.com/docker/compose/releases/tag/1.10.0" target="_blank">Compose release 1.10.0</a>, and versioned gradually in subsequent releases.</p> <blockquote> <p>Looking for more detail on Docker and Compose compatibility?</p> <p>We recommend keeping up-to-date with newer releases as much as possible. However, if you are using an older version of Docker and want to determine which Compose release is compatible, please refer to the <a href="https://github.com/docker/compose/releases/" target="_blank">Compose release notes</a>. Each set of release notes gives details on which versions of Docker Engine are supported, along with compatible Compose file format versions. (See also, the discussion in <a href="https://github.com/docker/docker.github.io/issues/3404" target="_blank">issue #3404</a>.)</p> </blockquote> <p>For details on versions and how to upgrade, see <a href="/#versioning">Versioning</a> and <a href="/#upgrading">Upgrading</a>.</p> <h2 id="versioning">Versioning</h2> <p>There are currently three versions of the Compose file format:</p> <ul> <li> <p>Version 1, the legacy format. This is specified by omitting a <code class="highlighter-rouge">version</code> key at the root of the YAML.</p> </li> <li> <p>Version 2.x. This is specified with a <code class="highlighter-rouge">version: '2'</code> or <code class="highlighter-rouge">version: '2.1'</code>, etc., entry at the root of the YAML.</p> </li> <li> <p>Version 3.x, the latest and recommended version, designed to be cross-compatible between Compose and the Docker Engine’s <a href="../../../engine/swarm/">swarm mode</a>. This is specified with a <code class="highlighter-rouge">version: '3'</code> or <code class="highlighter-rouge">version: '3.1'</code>, etc., entry at the root of the YAML.</p> </li> </ul> <p>The <a href="#compatibility-matrix">Compatibility Matrix</a> shows Compose file versions mapped to Docker Engine releases.</p> <p>To move your project to a later version, see the <a href="#upgrading">Upgrading</a> section.</p> <blockquote> <p><strong>Note</strong>: If you’re using <a href="../extends/#different-environments">multiple Compose files</a> or <a href="../extends/#extending-services">extending services</a>, each file must be of the same version - you cannot, for example, mix version 1 and 2 in a single project.</p> </blockquote> <p>Several things differ depending on which version you use:</p> <ul> <li>The structure and permitted configuration keys</li> <li>The minimum Docker Engine version you must be running</li> <li>Compose’s behaviour with regards to networking</li> </ul> <p>These differences are explained below.</p> <h3 id="version-1">Version 1</h3> <p>Compose files that do not declare a version are considered “version 1”. In those files, all the <a href="../#service-configuration-reference">services</a> are declared at the root of the document.</p> <p>Version 1 is supported by <strong>Compose up to 1.6.x</strong>. It will be deprecated in a future Compose release.</p> <p>Version 1 files cannot declare named <a href="../#volume-configuration-reference">volumes</a>, <a href="../#network-configuration-reference">networks</a> or <a href="../#args">build arguments</a>.</p> <p>Compose does not take advantage of <a href="../../networking/">networking</a> when you use version 1: every container is placed on the default <code class="highlighter-rouge">bridge</code> network and is reachable from every other container at its IP address. You will need to use <a href="../compose-file-v1/#links">links</a> to enable discovery between containers.</p> <p>Example:</p> <pre class="highlight" data-language="">web:
@@ -194,17 +194,9 @@ volumes:
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

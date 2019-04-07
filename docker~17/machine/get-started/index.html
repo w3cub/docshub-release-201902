@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Get started with Docker Machine and a local VM</h1>  <p>Let’s take a look at using <code class="highlighter-rouge">docker-machine</code> to create, use and manage a Docker host inside of a local virtual machine.</p> <h2 id="prerequisite-information">Prerequisite Information</h2> <p>With the advent of <a href="https://docs.docker.com/docker-for-mac/" target="_blank">Docker for Mac</a> and <a href="https://docs.docker.com/docker-for-windows/" target="_blank">Docker for Windows</a> as replacements for <a href="https://docs.docker.com/toolbox/overview/" target="_blank">Docker Toolbox</a>, we recommend that you use these for your primary Docker workflows. You can use these applications to run Docker natively on your local system without using Docker Machine at all. (See <a href="https://docs.docker.com/docker-for-mac/docker-toolbox/" target="_blank">Docker for Mac vs. Docker Toolbox</a> for an explanation on the Mac side.)</p> <p>For now, however, if you want to create <em>multiple</em> local machines, you still need Docker Machine to create and manage machines for multi-node experimentation. Both Docker for Mac and Docker for Windows include the newest version of Docker Machine, so when you install either of these, you get <code class="highlighter-rouge">docker-machine</code>.</p> <p>The new solutions come with their own native virtualization solutions rather than Oracle VirtualBox, so keep the following considerations in mind when using Machine to create local VMs.</p> <ul> <li> <p><strong>Docker for Mac</strong> - You can use <code class="highlighter-rouge">docker-machine create</code> with the <code class="highlighter-rouge">virtualbox</code> driver to create additional local machines.</p> </li> <li> <p><strong>Docker for Windows</strong> - You can use <code class="highlighter-rouge">docker-machine create</code> with the <code class="highlighter-rouge">hyperv</code> driver to create additional local machines.</p> </li> </ul> <h4 id="if-you-are-using-docker-for-windows">If you are using Docker for Windows</h4> <p>Docker for Windows uses <a href="https://msdn.microsoft.com/en-us/virtualization/hyperv_on_windows/windows_welcome" target="_blank">Microsoft Hyper-V</a> for virtualization, and Hyper-V is not compatible with Oracle VirtualBox. Therefore, you cannot run the two solutions simultaneously. But you can still use <code class="highlighter-rouge">docker-machine</code> to create more local VMs by using the Microsoft Hyper-V driver.</p> <p>The prerequisites are:</p> <ul> <li> <p>Have Docker for Windows installed, and running (which requires that virtualization and Hyper-V are enabled, as described in <a href="https://docs.docker.com/docker-for-windows/install/#what-to-know-before-you-install" target="_blank">What to know before you install Docker for Windows</a>).</p> </li> <li> <p>Set up the Hyper-V driver to use an external virtual network switch See the <a href="../drivers/hyper-v/">Docker Machine driver for Microsoft Hyper-V</a> topic, which includes an /machine/drivers/hyper-v.md#example of how to do this.</p> </li> </ul> <h4 id="if-you-are-using-docker-for-mac">If you are using Docker for Mac</h4> <p>Docker for Mac uses <a href="https://github.com/docker/HyperKit/" target="_blank">HyperKit</a>, a lightweight macOS virtualization solution built on top of the <a href="https://developer.apple.com/reference/hypervisor" target="_blank">Hypervisor.framework</a> in macOS 10.10 Yosemite and higher.</p> <p>Currently, there is no <code class="highlighter-rouge">docker-machine create</code> driver for HyperKit, so you will use <code class="highlighter-rouge">virtualbox</code> driver to create local machines. (See the <a href="../drivers/virtualbox/">Docker Machine driver for Oracle VirtualBox</a>.) Note that you can run both HyperKit and Oracle VirtualBox on the same system. To learn more, see <a href="https://docs.docker.com/docker-for-mac/docker-toolbox/" target="_blank">Docker for Mac vs. Docker Toolbox</a>.</p> <ul> <li>Make sure you have <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" class="_">the latest VirtualBox</a> correctly installed on your system (either as part of an earlier Toolbox install, or manual install).</li> </ul> <h4 id="if-you-are-using-docker-toolbox">If you are using Docker Toolbox</h4> <p>Docker for Mac and Docker for Windows both require newer versions of their respective operating systems, so users with older OS versions must use Docker Toolbox.</p> <ul> <li> <p>If you are using Docker Toolbox on either Mac or an older version Windows system (without Hyper-V), you will use the <code class="highlighter-rouge">virtualbox</code> driver to create a local machine based on Oracle <a href="https://www.virtualbox.org/" target="_blank" class="_">VirtualBox</a>. (See the <a href="../drivers/virtualbox/">Docker Machine driver for Oracle VirtualBox</a>.)</p> </li> <li> <p>If you are using Docker Toolbox on a Windows system that has Hyper-V but cannot run Docker for Windows (for example Windows 8 Pro), you must use the <code class="highlighter-rouge">hyperv</code> driver to create local machines. (See the <a href="../drivers/hyper-v/">Docker Machine driver for Microsoft Hyper-V</a>.)</p> </li> <li> <p>Make sure you have <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" class="_">the latest VirtualBox</a> correctly installed on your system. If you used <a href="https://www.docker.com/products/docker-toolbox" target="_blank" class="_">Toolbox</a> or <a href="https://docs.docker.com/docker-for-windows/" target="_blank" class="_">Docker for Windows</a> to install Docker Machine, VirtualBox is automatically installed.</p> </li> <li> <p>If you used the Quickstart Terminal to launch your first machine and set your terminal environment to point to it, a default machine was automatically created. If this is the case, you can still follow along with these steps, but create another machine and name it something other than “default” (e.g., staging or sandbox).</p> </li> </ul> <h2 id="use-machine-to-run-docker-containers">Use Machine to run Docker containers</h2> <p>To run a Docker container, you:</p> <ul> <li>create a new (or start an existing) Docker virtual machine</li> <li>switch your environment to your new VM</li> <li>use the docker client to create, load, and manage containers</li> </ul> <p>Once you create a machine, you can reuse it as often as you like. Like any VirtualBox VM, it maintains its configuration between uses.</p> <p>The examples here show how to create and start a machine, run Docker commands, and work with containers.</p> <h2 id="create-a-machine">Create a machine</h2> <ol> <li> <p>Open a command shell or terminal window.</p> <p>These command examples shows a Bash shell. For a different shell, such as C Shell, the same commands are the same except where noted.</p> </li> <li> <p>Use <code class="highlighter-rouge">docker-machine ls</code> to list available machines.</p> <p>In this example, no machines have been created yet.</p> <pre class="highlight" data-language=""> $ docker-machine ls
  NAME   ACTIVE   DRIVER   STATE   URL   SWARM   DOCKER   ERRORS
@@ -225,17 +225,9 @@ unset DOCKER_MACHINE_NAME
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

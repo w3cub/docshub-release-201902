@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Manage keys for content trust</h1>  <p>Trust for an image tag is managed through the use of keys. Docker’s content trust makes use of five different types of keys:</p> <table> <thead> <tr> <th style="text-align: left">Key</th> <th style="text-align: left">Description</th> </tr> </thead> <tbody> <tr> <td style="text-align: left">root key</td> <td style="text-align: left">Root of content trust for an image tag. When content trust is enabled, you create the root key once. Also known as the offline key, because it should be kept offline.</td> </tr> <tr> <td style="text-align: left">targets</td> <td style="text-align: left">This key allows you to sign image tags, to manage delegations including delegated keys or permitted delegation paths. Also known as the repository key, since this key determines what tags can be signed into an image repository.</td> </tr> <tr> <td style="text-align: left">snapshot</td> <td style="text-align: left">This key signs the current collection of image tags, preventing mix and match attacks.</td> </tr> <tr> <td style="text-align: left">timestamp</td> <td style="text-align: left">This key allows Docker image repositories to have freshness security guarantees without requiring periodic content refreshes on the client’s side.</td> </tr> <tr> <td style="text-align: left">delegation</td> <td style="text-align: left">Delegation keys are optional tagging keys and allow you to delegate signing image tags to other publishers without having to share your targets key.</td> </tr> </tbody> </table> <p>When doing a <code class="highlighter-rouge">docker push</code> with Content Trust enabled for the first time, the root, targets, snapshot, and timestamp keys are generated automatically for the image repository:</p> <ul> <li> <p>The root and targets key are generated and stored locally client-side.</p> </li> <li> <p>The timestamp and snapshot keys are safely generated and stored in a signing server that is deployed alongside the Docker registry. These keys are generated in a backend service that isn’t directly exposed to the internet and are encrypted at rest.</p> </li> </ul> <p>Delegation keys are optional, and not generated as part of the normal <code class="highlighter-rouge">docker</code> workflow. They need to be <a href="../trust_delegation/#generating-delegation-keys">manually generated and added to the repository</a>.</p> <p><strong>Note</strong>: Prior to Docker Engine 1.11, the snapshot key was also generated and stored locally client-side. <a href="../../../../notary/advanced_usage/#rotate-keys">Use the Notary CLI to manage your snapshot key locally again</a> for repositories created with newer versions of Docker.</p> <h2 id="choosing-a-passphrase">Choosing a passphrase</h2> <p>The passphrases you chose for both the root key and your repository key should be randomly generated and stored in a password manager. Having the repository key allows users to sign image tags on a repository. Passphrases are used to encrypt your keys at rest and ensure that a lost laptop or an unintended backup doesn’t put the private key material at risk.</p> <h2 id="back-up-your-keys">Back up your keys</h2> <p>All the Docker trust keys are stored encrypted using the passphrase you provide on creation. Even so, you should still take care of the location where you back them up. Good practice is to create two encrypted USB keys.</p> <p>It is very important that you back up your keys to a safe, secure location. Loss of the repository key is recoverable; loss of the root key is not.</p> <p>The Docker client stores the keys in the <code class="highlighter-rouge">~/.docker/trust/private</code> directory. Before backing them up, you should <code class="highlighter-rouge">tar</code> them into an archive:</p> <pre class="highlight" data-language="bash">$ umask 077; tar -zcvf private_keys_backup.tar.gz ~/.docker/trust/private; umask 022
 </pre>  <h2 id="hardware-storage-and-signing">Hardware storage and signing</h2> <p>Docker Content Trust can store and sign with root keys from a Yubikey 4. The Yubikey is prioritized over keys stored in the filesystem. When you initialize a new repository with content trust, Docker Engine looks for a root key locally. If a key is not found and the Yubikey 4 exists, Docker Engine creates a root key in the Yubikey 4. Please consult the <a href="../../../../notary/advanced_usage/#use-a-yubikey">Notary documentation</a> for more details.</p> <p>Prior to Docker Engine 1.11, this feature was only in the experimental branch.</p> <h2 id="lost-keys">Lost keys</h2> <p>If a publisher loses keys it means losing the ability to sign trusted content for your repositories. If you lose a key, contact <a href="https://support.docker.com" target="_blank">Docker Support</a> (support@docker.com) to reset the repository state.</p> <p>This loss also requires <strong>manual intervention</strong> from every consumer that pulled the tagged image prior to the loss. Image consumers would get an error for content that they already downloaded:</p> <pre class="highlight" data-language="">Warning: potential malicious behavior - trust data has insufficient signatures for remote repository docker.io/my/image: valid signatures did not meet threshold
@@ -89,17 +89,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

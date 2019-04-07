@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Get Started, Part 6: Deploy your app</h1>  <ul class="pagination"> <li><a href="../">1: Orientation</a></li> <li><a href="../part2/">2: Containers</a></li> <li><a href="../part3/">3: Services</a></li> <li><a href="../part4/">4: Swarms</a></li> <li><a href="../part5/">5: Stacks</a></li> <li class="active"><a href="/">6: Deploy your app</a></li> </ul> <h2 id="prerequisites">Prerequisites</h2> <ul> <li>
 <a href="../../engine/installation/">Install Docker version 1.13 or higher</a>.</li> <li>Get <a href="../../compose/overview/">Docker Compose</a> as described in <a href="../part3/#prerequisites">Part 3 prerequisites</a>.</li> <li>Get <a href="../../machine/overview/">Docker Machine</a> as described in <a href="../part4/#prerequisites">Part 4 prerequisites</a>.</li> <li>Read the orientation in <a href="../">Part 1</a>.</li> <li> <p>Learn how to create containers in <a href="../part2/">Part 2</a>.</p> </li> <li> <p>Make sure you have published the <code class="highlighter-rouge">friendlyhello</code> image you created by <a href="../part2/#share-your-image">pushing it to a registry</a>. We’ll be using that shared image here.</p> </li> <li> <p>Be sure your image works as a deployed container. Run this command, slotting in your info for <code class="highlighter-rouge">username</code>, <code class="highlighter-rouge">repo</code>, and <code class="highlighter-rouge">tag</code>: <code class="highlighter-rouge">docker run -p 80:80 username/repo:tag</code>, then visit <code class="highlighter-rouge">http://localhost/</code>.</p> </li> <li>Have <a href="../part5/#persist-the-data">the final version of <code class="highlighter-rouge">docker-compose.yml</code> from Part 5</a> handy.</li> </ul> <h2 id="introduction">Introduction</h2> <p>You’ve been editing the same Compose file for this entire tutorial. Well, we have good news. That Compose file works just as well in production as it does on your machine. Here, we’ll go through some options for running your Dockerized application.</p> <h2 id="choose-an-option">Choose an option</h2> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" href="#cloud">Docker CE (Cloud provider)</a></li> <li><a data-toggle="tab" href="#enterprisecloud">Enterprise (Cloud provider)</a></li> <li><a data-toggle="tab" href="#enterpriseonprem">Enterprise (On-premise)</a></li> </ul> <div class="tab-content"> <div id="cloud" class="tab-pane fade in active"> <p>If you’re okay with using Docker Community Edition in production, you can use Docker Cloud to help manage your app on popular service providers such as Amazon Web Services, DigitalOcean, and Microsoft Azure.</p> <p>To set up and deploy:</p> <ul> <li>Connect Docker Cloud with your preferred provider, granting Docker Cloud permission to automatically provision and “Dockerize” VMs for you.</li> <li>Use Docker Cloud to create your computing resources and create your swarm.</li> <li>Deploy your app.</li> </ul> <blockquote> <p><strong>Note</strong>: We will be linking into the Docker Cloud documentation here; be sure to come back to this page after completing each step.</p> </blockquote> <h3 id="connect-docker-cloud">Connect Docker Cloud</h3> <p>You can run Docker Cloud in <a href="https://docs.docker.com/docker-cloud/infrastructure/" target="_blank">standard mode</a> or in <a href="https://docs.docker.com/docker-cloud/cloud-swarm/" target="_blank">Swarm mode</a>.</p> <p>If you are running Docker Cloud in standard mode, follow instructions below to link your service provider to Docker Cloud.</p> <ul> <li><a href="https://docs.docker.com/docker-cloud/cloud-swarm/link-aws-swarm/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'AWS');" target="_blank">Amazon Web Services setup guide</a></li> <li><a href="https://docs.docker.com/docker-cloud/infrastructure/link-do/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'DigitalOcean');" target="_blank">DigitalOcean setup guide</a></li> <li><a href="https://docs.docker.com/docker-cloud/infrastructure/link-azure/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'Azure');" target="_blank">Microsoft Azure setup guide</a></li> <li><a href="https://docs.docker.com/docker-cloud/infrastructure/link-packet/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'Packet');" target="_blank">Packet setup guide</a></li> <li><a href="https://docs.docker.com/docker-cloud/infrastructure/link-softlayer/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'SoftLayer');" target="_blank">SoftLayer setup guide</a></li> <li><a href="https://docs.docker.com/docker-cloud/infrastructure/byoh/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'BYOH');" target="_blank">Use the Docker Cloud Agent to bring your own host</a></li> </ul> <p>If you are running in Swarm mode (recommended for Amazon Web Services or Microsoft Azure), then skip to the next section on how to <a href="#create-your-swarm">create your swarm</a>.</p> <h3 id="create-your-swarm">Create your swarm</h3> <p>Ready to create a swarm?</p> <ul> <li> <p>If you’re on Amazon Web Services (AWS) you can <a href="https://docs.docker.com/docker-cloud/cloud-swarm/create-cloud-swarm-aws/" onclick="ga('send', 'event', 'Get Started Referral AWS', 'Cloud', 'Create AWS Swarm');" target="_blank">automatically create a swarm on AWS</a>.</p> </li> <li> <p>If you are on Microsoft Azure, you can <a href="https://docs.docker.com/docker-cloud/cloud-swarm/create-cloud-swarm-azure/" onclick="ga('send', 'event', 'Get Started Referral Azure', 'Cloud', 'Create Azure Swarm');" target="_blank">automatically create a swarm on Azure</a>.</p> </li> <li> <p>Otherwise, <a href="https://docs.docker.com/docker-cloud/getting-started/your_first_node/" onclick="ga('send', 'event', 'Get Started Referral', 'Cloud', 'Create Nodes');" target="_blank">create your nodes</a> in the Docker Cloud UI, and run the <code class="highlighter-rouge">docker swarm init</code> and <code class="highlighter-rouge">docker swarm join</code> commands you learned in <a href="../part4/">part 4</a> over <a href="https://docs.docker.com/docker-cloud/infrastructure/ssh-into-a-node/" target="_blank">SSH via Docker Cloud</a>. Finally, <a href="https://docs.docker.com/docker-cloud/cloud-swarm/using-swarm-mode/" target="_blank">enable Swarm Mode</a> by clicking the toggle at the top of the screen, and <a href="https://docs.docker.com/docker-cloud/cloud-swarm/register-swarms/" target="_blank">register the swarm</a> you just created.</p> </li> </ul> <blockquote> <p><strong>Note</strong>: If you are <a href="https://docs.docker.com/docker-cloud/infrastructure/byoh/" onclick="ga('send', 'event', 'Get
@@ -96,17 +96,9 @@ Started Referral', 'Cloud', 'BYOH');" target="_blank">Using the Docker Cloud Age
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

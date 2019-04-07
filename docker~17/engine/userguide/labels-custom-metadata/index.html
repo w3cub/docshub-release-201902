@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Docker object labels</h1>  <p>Labels are a mechanism for applying metadata to Docker objects, including:</p> <ul> <li>Images</li> <li>Containers</li> <li>Local daemons</li> <li>Volumes</li> <li>Networks</li> <li>Swarm nodes</li> <li>Swarm services</li> </ul> <p>You can use labels to organize your images, record licensing information, annotate relationships between containers, volumes, and networks, or in any way that makes sense for your business or application.</p> <h2 id="label-keys-and-values">Label keys and values</h2> <p>A label is a key-value pair, stored as a string. You can specify multiple labels for an object, but each key-value pair must be unique within an object. If the same key is given multiple values, the most-recently-written value overwrites all previous values.</p> <h3 id="key-format-recommendations">Key format recommendations</h3> <p>A label <em>key</em> is the left-hand side of the key-value pair. Keys are alphanumeric strings which may contain periods (<code class="highlighter-rouge">.</code>) and hyphens (<code class="highlighter-rouge">-</code>). Most Docker users use images created by other organizations, and the following guidelines help to prevent inadvertent duplication of labels across objects, especially if you plan to use labels as a mechanism for automation.</p> <ul> <li> <p>Authors of third-party tools should prefix each label key with the reverse DNS notation of a domain they own, such as <code class="highlighter-rouge">com.example.some-label</code>.</p> </li> <li> <p>Do not use a domain in your label key without the domain owner’s permission.</p> </li> <li> <p>The <code class="highlighter-rouge">com.docker.*</code>, <code class="highlighter-rouge">io.docker.*</code>, and <code class="highlighter-rouge">org.dockerproject.*</code> namespaces are reserved by Docker for internal use.</p> </li> <li> <p>Label keys should begin and end with a lower-case letter and should only contain lower-case alphanumeric characters, the period character (<code class="highlighter-rouge">.</code>), and the hyphen character (<code class="highlighter-rouge">-</code>). Consecutive periods or hyphens are not allowed.</p> </li> <li> <p>The period character (<code class="highlighter-rouge">.</code>) separates namespace “fields”. Label keys without namespaces are reserved for CLI use, allowing users of the CLI to interactively label Docker objects using shorter typing-friendly strings.</p> </li> </ul> <p>These guidelines are not currently enforced and additional guidelines may apply to specific use cases.</p> <h3 id="value-guidelines">Value guidelines</h3> <p>Label values can contain any data type that can be represented as a string, including (but not limited to) JSON, XML, CSV, or YAML. The only requirement is that the value be serialized to a string first, using a mechanism specific to the type of structure. For instance, to serialize JSON into a string, you might use the <code class="highlighter-rouge">JSON.stringify()</code> JavaScript method.</p> <p>Since Docker does not deserialize the value, you cannot treat a JSON or XML document as a nested structure when querying or filtering by label value unless you build this functionality into third-party tooling.</p> <h2 id="manage-labels-on-objects">Manage labels on objects</h2> <p>Each type of object with support for labels has mechanisms for adding and managing them and using them as they relate to that type of object. These links provide a good place to start learning about how you can use labels in your Docker deployments.</p> <p>Labels on images, containers, local daemons, volumes, and networks are static for the lifetime of the object. To change these labels you must recreate the object. Labels on swarm nodes and services can be updated dynamically.</p> <ul> <li>Images and containers <ul> <li><a href="../../reference/builder/#label">Adding labels to images</a></li> <li><a href="../../reference/commandline/run/#set-metadata-on-container--l---label---label-file">Overriding a container’s labels at runtime</a></li> <li><a href="../../reference/commandline/inspect/">Inspecting labels on images or containers</a></li> <li><a href="../../reference/commandline/inspect/#filtering">Filtering images by label</a></li> <li><a href="../../reference/commandline/ps/#filtering">Filtering containers by label</a></li> </ul> </li> <li>Local Docker daemons <ul> <li><a href="../../reference/commandline/dockerd/">Adding labels to a Docker daemon at runtime</a></li> <li><a href="../../reference/commandline/info/">Inspecting a Docker daemon’s labels</a></li> </ul> </li> <li>Volumes <ul> <li><a href="../../reference/commandline/volume_create/">Adding labels to volumes</a></li> <li><a href="../../reference/commandline/volume_inspect/">Inspecting a volume’s labels</a></li> <li><a href="../../reference/commandline/volume_ls/#filtering">Filtering volumes by label</a></li> </ul> </li> <li>Networks <ul> <li><a href="../../reference/commandline/network_create/">Adding labels to a network</a></li> <li><a href="../../reference/commandline/network_inspect/">Inspecting a network’s labels</a></li> <li><a href="../../reference/commandline/network_ls/#filtering">Filtering networks by label</a></li> </ul> </li> <li>Swarm nodes <ul> <li><a href="../../reference/commandline/node_update/#add-label-metadata-to-a-node">Adding or updating a swarm node’s labels</a></li> <li><a href="../../reference/commandline/node_inspect/">Inspecting a swarm node’s labels</a></li> <li><a href="../../reference/commandline/node_ls/#filtering">Filtering swarm nodes by label</a></li> </ul> </li> <li>Swarm services <ul> <li><a href="../../reference/commandline/service_create/#set-metadata-on-a-service-l-label">Adding labels when creating a swarm service</a></li> <li><a href="../../reference/commandline/service_update/">Updating a swarm service’s labels</a></li> <li><a href="../../reference/commandline/service_inspect/">Inspecting a swarm service’s labels</a></li> <li><a href="../../reference/commandline/service_ls/#filtering">Filtering swarm services by label</a></li> </ul> </li> </ul>  
 <p><a href="https://docs.docker.com/glossary/?term=Usage" target="_blank">Usage</a>, <a href="https://docs.docker.com/glossary/?term=user%20guide" target="_blank">user guide</a>, <a href="https://docs.docker.com/glossary/?term=labels" target="_blank">labels</a>, <a href="https://docs.docker.com/glossary/?term=metadata" target="_blank">metadata</a>, <a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=documentation" target="_blank">documentation</a>, <a href="https://docs.docker.com/glossary/?term=examples" target="_blank">examples</a>, <a href="https://docs.docker.com/glossary/?term=annotating" target="_blank">annotating</a></p>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

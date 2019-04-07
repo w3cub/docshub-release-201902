@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Get Started, Part 4: Swarms</h1>  <ul class="pagination"> <li><a href="../">1: Orientation</a></li> <li><a href="../part2/">2: Containers</a></li> <li><a href="../part3/">3: Services</a></li> <li class="active"><a href="/">4: Swarms</a></li> <li><a href="../part5/">5: Stacks</a></li> <li><a href="../part6/">6: Deploy your app</a></li> </ul> <h2 id="prerequisites">Prerequisites</h2> <ul> <li> <p><a href="../../engine/installation/">Install Docker version 1.13 or higher</a>.</p> </li> <li> <p>Get <a href="../../compose/overview/">Docker Compose</a> as described in <a href="../part3/#prerequisites">Part 3 prerequisites</a>.</p> </li> <li> <p>Get <a href="../../machine/overview/">Docker Machine</a>, which is pre-installed with <a href="https://docs.docker.com/docker-for-mac/" target="_blank">Docker for Mac</a> and <a href="https://docs.docker.com/docker-for-windows/" target="_blank">Docker for Windows</a>, but on Linux systems you need to <a href="../../machine/install-machine/#installing-machine-directly">install it directly</a>. On pre Windows 10 systems <em>without Hyper-V</em>, as well as Windows 10 Home, use <a href="https://docs.docker.com/toolbox/overview/" target="_blank">Docker Toolbox</a>.</p> </li> <li> <p>Read the orientation in <a href="../">Part 1</a>.</p> </li> <li> <p>Learn how to create containers in <a href="../part2/">Part 2</a>.</p> </li> <li> <p>Make sure you have published the <code class="highlighter-rouge">friendlyhello</code> image you created by <a href="../part2/#share-your-image">pushing it to a registry</a>. We’ll be using that shared image here.</p> </li> <li> <p>Be sure your image works as a deployed container. Run this command, slotting in your info for <code class="highlighter-rouge">username</code>, <code class="highlighter-rouge">repo</code>, and <code class="highlighter-rouge">tag</code>: <code class="highlighter-rouge">docker run -p 80:80 username/repo:tag</code>, then visit <code class="highlighter-rouge">http://localhost/</code>.</p> </li> <li> <p>Have a copy of your <code class="highlighter-rouge">docker-compose.yml</code> from <a href="../part3/">Part 3</a> handy.</p> </li> </ul> <h2 id="introduction">Introduction</h2> <p>In <a href="../part3/">part 3</a>, you took an app you wrote in <a href="../part2/">part 2</a>, and defined how it should run in production by turning it into a service, scaling it up 5x in the process.</p> <p>Here in part 4, you deploy this application onto a cluster, running it on multiple machines. Multi-container, multi-machine applications are made possible by joining multiple machines into a “Dockerized” cluster called a <strong>swarm</strong>.</p> <h2 id="understanding-swarm-clusters">Understanding Swarm clusters</h2> <p>A swarm is a group of machines that are running Docker and joined into a cluster. After that has happened, you continue to run the Docker commands you’re used to, but now they are executed on a cluster by a <strong>swarm manager</strong>. The machines in a swarm can be physical or virtual. After joining a swarm, they are referred to as <strong>nodes</strong>.</p> <p>Swarm managers can use several strategies to run containers, such as “emptiest node” – which fills the least utilized machines with containers. Or “global”, which ensures that each machine gets exactly one instance of the specified container. You instruct the swarm manager to use these strategies in the Compose file, just like the one you have already been using.</p> <p>Swarm managers are the only machines in a swarm that can execute your commands, or authorize other machines to join the swarm as <strong>workers</strong>. Workers are just there to provide capacity and do not have the authority to tell any other machine what it can and cannot do.</p> <p>Up until now, you have been using Docker in a single-host mode on your local machine. But Docker also can be switched into <strong>swarm mode</strong>, and that’s what enables the use of swarms. Enabling swarm mode instantly makes the current machine a swarm manager. From then on, Docker will run the commands you execute on the swarm you’re managing, rather than just on the current machine.</p> <h2 id="set-up-your-swarm">Set up your swarm</h2> <p>A swarm is made up of multiple nodes, which can be either physical or virtual machines. The basic concept is simple enough: run <code class="highlighter-rouge">docker swarm init</code> to enable swarm mode and make your current machine a swarm manager, then run <code class="highlighter-rouge">docker swarm join</code> on other machines to have them join the swarm as workers. Choose a tab below to see how this plays out in various contexts. We’ll use VMs to quickly create a two-machine cluster and turn it into a swarm.</p> <h3 id="create-a-cluster">Create a cluster</h3> <ul class="nav nav-tabs"> <li class="active"><a data-toggle="tab" href="#local">Local VMs (Mac, Linux, Windows 7 and 8)</a></li> <li><a data-toggle="tab" href="#localwin">Local VMs (Windows 10/Hyper-V)</a></li> </ul> <div class="tab-content"> <div id="local" class="tab-pane fade in active"> <h4 id="vms-on-your-local-machine-mac-linux-windows-7-and-8">VMs on your local machine (Mac, Linux, Windows 7 and 8)</h4> <p>First, you’ll need a hypervisor that can create VMs, so <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">install VirtualBox</a> for your machine’s OS.</p> <blockquote> <p><strong>Note</strong>: If you’re on a Windows system that has Hyper-V installed, such as Windows 10, there is no need to install VirtualBox and you should use Hyper-V instead. View the instructions for Hyper-V systems by clicking the Hyper-V tab above.</p> </blockquote> <p>Now, create a couple of VMs using <code class="highlighter-rouge">docker-machine</code>, using the VirtualBox driver:</p> <pre data-language="">$ docker-machine create --driver virtualbox myvm1
 $ docker-machine create --driver virtualbox myvm2
@@ -155,17 +155,9 @@ docker-machine ssh myvm1 "docker stack deploy -c &lt;file&gt; &lt;app&gt;"   # D
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>

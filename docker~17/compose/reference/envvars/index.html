@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/docker~17/" class="_nav-link" title="" style="margin-left:0;">Docker 17</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _simple">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <h1>Compose CLI environment variables</h1>  <p>Several environment variables are available for you to configure the Docker Compose command-line behaviour.</p> <p>Variables starting with <code class="highlighter-rouge">DOCKER_</code> are the same as those used to configure the Docker command-line client. If you’re using <code class="highlighter-rouge">docker-machine</code>, then the <code class="highlighter-rouge">eval "$(docker-machine env my-docker-vm)"</code> command should set them to their correct values. (In this example, <code class="highlighter-rouge">my-docker-vm</code> is the name of a machine you created.)</p> <blockquote> <p><strong>Note</strong>: Some of these variables can also be provided using an <a href="../../env-file/">environment file</a></p> </blockquote> <h2 id="compose_project_name">COMPOSE_PROJECT_NAME</h2> <p>Sets the project name. This value is prepended along with the service name to the container on start up. For example, if your project name is <code class="highlighter-rouge">myapp</code> and it includes two services <code class="highlighter-rouge">db</code> and <code class="highlighter-rouge">web</code> then compose starts containers named <code class="highlighter-rouge">myapp_db_1</code> and <code class="highlighter-rouge">myapp_web_1</code> respectively.</p> <p>Setting this is optional. If you do not set this, the <code class="highlighter-rouge">COMPOSE_PROJECT_NAME</code> defaults to the <code class="highlighter-rouge">basename</code> of the project directory. See also the <code class="highlighter-rouge">-p</code> <a href="../overview/">command-line option</a>.</p> <h2 id="compose_file">COMPOSE_FILE</h2> <p>Specify the path to a Compose file. If not provided, Compose looks for a file named <code class="highlighter-rouge">docker-compose.yml</code> in the current directory and then each parent directory in succession until a file by that name is found.</p> <p>This variable supports multiple Compose files separated by a path separator (on Linux and macOS the path separator is <code class="highlighter-rouge">:</code>, on Windows it is <code class="highlighter-rouge">;</code>). For example: <code class="highlighter-rouge">COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml</code>. The path separator can also be customized using <code class="highlighter-rouge">COMPOSE_PATH_SEPARATOR</code>.</p> <p>See also the <code class="highlighter-rouge">-f</code> <a href="../overview/">command-line option</a>.</p> <h2 id="compose_api_version">COMPOSE_API_VERSION</h2> <p>The Docker API only supports requests from clients which report a specific version. If you receive a <code class="highlighter-rouge">client and server don't have same version</code> error using <code class="highlighter-rouge">docker-compose</code>, you can workaround this error by setting this environment variable. Set the version value to match the server version.</p> <p>Setting this variable is intended as a workaround for situations where you need to run temporarily with a mismatch between the client and server version. For example, if you can upgrade the client but need to wait to upgrade the server.</p> <p>Running with this variable set and a known mismatch does prevent some Docker features from working properly. The exact features that fail would depend on the Docker client and server versions. For this reason, running with this variable set is only intended as a workaround and it is not officially supported.</p> <p>If you run into problems running with this set, resolve the mismatch through upgrade and remove this setting to see if your problems resolve before notifying support.</p> <h2 id="docker_host">DOCKER_HOST</h2> <p>Sets the URL of the <code class="highlighter-rouge">docker</code> daemon. As with the Docker client, defaults to <code class="highlighter-rouge">unix:///var/run/docker.sock</code>.</p> <h2 id="docker_tls_verify">DOCKER_TLS_VERIFY</h2> <p>When set to anything other than an empty string, enables TLS communication with the <code class="highlighter-rouge">docker</code> daemon.</p> <h2 id="docker_cert_path">DOCKER_CERT_PATH</h2> <p>Configures the path to the <code class="highlighter-rouge">ca.pem</code>, <code class="highlighter-rouge">cert.pem</code>, and <code class="highlighter-rouge">key.pem</code> files used for TLS verification. Defaults to <code class="highlighter-rouge">~/.docker</code>.</p> <h2 id="compose_http_timeout">COMPOSE_HTTP_TIMEOUT</h2> <p>Configures the time (in seconds) a request to the Docker daemon is allowed to hang before Compose considers it failed. Defaults to 60 seconds.</p> <h2 id="compose_tls_version">COMPOSE_TLS_VERSION</h2> <p>Configure which TLS version is used for TLS communication with the <code class="highlighter-rouge">docker</code> daemon. Defaults to <code class="highlighter-rouge">TLSv1</code>. Supported values are: <code class="highlighter-rouge">TLSv1</code>, <code class="highlighter-rouge">TLSv1_1</code>, <code class="highlighter-rouge">TLSv1_2</code>.</p> <h2 id="compose_convert_windows_paths">COMPOSE_CONVERT_WINDOWS_PATHS</h2> <p>Enable path conversion from Windows-style to Unix-style in volume definitions. Users of Docker Machine and Docker Toolbox on Windows should always set this. Defaults to <code class="highlighter-rouge">0</code>. Supported values: <code class="highlighter-rouge">true</code> or <code class="highlighter-rouge">1</code> to enable, <code class="highlighter-rouge">false</code> or <code class="highlighter-rouge">0</code> to disable.</p> <h2 id="compose_path_separator">COMPOSE_PATH_SEPARATOR</h2> <p>If set, the value of the <code class="highlighter-rouge">COMPOSE_FILE</code> environment variable will be separated using this character as path separator.</p> <h2 id="related-information">Related Information</h2> <ul> <li><a href="../../">User guide</a></li> <li><a href="../../install/">Installing Compose</a></li> <li><a href="../../compose-file/">Compose file reference</a></li> <li><a href="../../env-file/">Environment file</a></li> </ul>  
 <p><a href="https://docs.docker.com/glossary/?term=fig" target="_blank">fig</a>, <a href="https://docs.docker.com/glossary/?term=composition" target="_blank">composition</a>, <a href="https://docs.docker.com/glossary/?term=compose" target="_blank">compose</a>, <a href="https://docs.docker.com/glossary/?term=docker" target="_blank">docker</a>, <a href="https://docs.docker.com/glossary/?term=orchestration" target="_blank">orchestration</a>, <a href="https://docs.docker.com/glossary/?term=cli" target="_blank">cli</a>, <a href="https://docs.docker.com/glossary/?term=reference" target="_blank">reference</a></p>
@@ -87,17 +87,9 @@
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
