@@ -31,6 +31,16 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
 
 
 </head>
@@ -54,7 +64,7 @@
   <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/php/" class="_nav-link" title="" style="margin-left:0;">PHP</a></span>
   
   <nav class="_nav">
-    <a href="/app/" class="_nav-link ">App</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
     <a href="/about/" class="_nav-link ">About</a>
   </nav>
 </header>
@@ -66,17 +76,7 @@
 	<section class="_container ">
 		<div class="_content">
 			<div class="_page _php">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档开头内嵌 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2572770204602497"
-     data-ad-slot="8852552735"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				
 				
 <div class="refnamediv"> <h1 class="refname">crypt</h1> <p class="verinfo">(PHP 4, PHP 5, PHP 7)</p>
 <p class="refpurpose"><span class="refname">crypt</span> — <span class="dc-title">One-way string hashing</span></p> </div> <div class="refsect1 description" id="refsect1-function.crypt-description"> <h3 class="title">Description</h3> <pre class="methodsynopsis dc-description" data-language="php">string crypt ( string $str [, string $salt ] )</pre> <p class="para rdfs-comment"> <span class="function"><strong>crypt()</strong></span> will return a hashed string using the standard Unix <abbr class="abbrev">DES</abbr>-based algorithm or alternative algorithms that may be available on the system. </p> <p class="para"> The <code class="parameter">salt</code> parameter is optional. However, <span class="function"><strong>crypt()</strong></span> creates a weak hash without the <code class="parameter">salt</code>. PHP 5.6 or later raise an E_NOTICE error without it. Make sure to specify a strong enough salt for better security. </p> <p class="para"> <span class="function"><a href="../function.password-hash/" class="function">password_hash()</a></span> uses a strong hash, generates a strong salt, and applies proper rounds automatically. <span class="function"><a href="../function.password-hash/" class="function">password_hash()</a></span> is a simple <span class="function"><strong>crypt()</strong></span> wrapper and compatible with existing password hashes. Use of <span class="function"><a href="../function.password-hash/" class="function">password_hash()</a></span> is encouraged. </p> <p class="para"> Some operating systems support more than one type of hash. In fact, sometimes the standard DES-based algorithm is replaced by an MD5-based algorithm. The hash type is triggered by the salt argument. Prior to 5.3, PHP would determine the available algorithms at install-time based on the system's crypt(). If no salt is provided, PHP will auto-generate either a standard two character (DES) salt, or a twelve character (MD5), depending on the availability of MD5 crypt(). PHP sets a constant named <strong><code>CRYPT_SALT_LENGTH</code></strong> which indicates the longest valid salt allowed by the available hashes. </p> <p class="para"> The standard DES-based <span class="function"><strong>crypt()</strong></span> returns the salt as the first two characters of the output. It also only uses the first eight characters of <code class="parameter">str</code>, so longer strings that start with the same eight characters will generate the same result (when the same salt is used). </p> <p class="simpara"> On systems where the crypt() function supports multiple hash types, the following constants are set to 0 or 1 depending on whether the given type is available: </p> <ul class="itemizedlist"> <li class="listitem"> <span class="simpara"> <strong><code>CRYPT_STD_DES</code></strong> - Standard DES-based hash with a two character salt from the alphabet "./0-9A-Za-z". Using invalid characters in the salt will cause crypt() to fail. </span> </li> <li class="listitem"> <span class="simpara"> <strong><code>CRYPT_EXT_DES</code></strong> - Extended DES-based hash. The "salt" is a 9-character string consisting of an underscore followed by 4 bytes of iteration count and 4 bytes of salt. These are encoded as printable characters, 6 bits per character, least significant character first. The values 0 to 63 are encoded as "./0-9A-Za-z". Using invalid characters in the salt will cause crypt() to fail. </span> </li> <li class="listitem"> <span class="simpara"> <strong><code>CRYPT_MD5</code></strong> - MD5 hashing with a twelve character salt starting with $1$ </span> </li> <li class="listitem"> <span class="simpara"> <strong><code>CRYPT_BLOWFISH</code></strong> - Blowfish hashing with a salt as follows: "$2a$", "$2x$" or "$2y$", a two digit cost parameter, "$", and 22 characters from the alphabet "./0-9A-Za-z". Using characters outside of this range in the salt will cause crypt() to return a zero-length string. The two digit cost parameter is the base-2 logarithm of the iteration count for the underlying Blowfish-based hashing algorithmeter and must be in range 04-31, values outside this range will cause crypt() to fail. Versions of PHP before 5.3.7 only support "$2a$" as the salt prefix: PHP 5.3.7 introduced the new prefixes to fix a security weakness in the Blowfish implementation. Please refer to <a href="http://www.php.net/security/crypt_blowfish.php" class="link external" target="_blank">» this document</a> for full details of the security fix, but to summarise, developers targeting only PHP 5.3.7 and later should use "$2y$" in preference to "$2a$". </span> </li> <li class="listitem"> <span class="simpara"> <strong><code>CRYPT_SHA256</code></strong> - SHA-256 hash with a sixteen character salt prefixed with $5$. If the salt string starts with 'rounds=&lt;N&gt;$', the numeric value of N is used to indicate how many times the hashing loop should be executed, much like the cost parameter on Blowfish. The default number of rounds is 5000, there is a minimum of 1000 and a maximum of 999,999,999. Any selection of N outside this range will be truncated to the nearest limit. </span> </li> <li class="listitem"> <span class="simpara"> <strong><code>CRYPT_SHA512</code></strong> - SHA-512 hash with a sixteen character salt prefixed with $6$. If the salt string starts with 'rounds=&lt;N&gt;$', the numeric value of N is used to indicate how many times the hashing loop should be executed, much like the cost parameter on Blowfish. The default number of rounds is 5000, there is a minimum of 1000 and a maximum of 999,999,999. Any selection of N outside this range will be truncated to the nearest limit. </span> </li> </ul> <blockquote class="note">
@@ -149,17 +149,9 @@ SHA-512:      $6$rounds=5000$usesomesillystri$D4IrlXatmP7rx3P3InaxBeoomnAihCKRVQ
   </p>
 </div>
 
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 文档结尾内嵌 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-2572770204602497"
-    data-ad-slot="5446239318"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+				<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
 			</div>
 		</div>
 	</section>
